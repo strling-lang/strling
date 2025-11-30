@@ -63,15 +63,18 @@ WARNING_EXCLUDE_PATTERNS = [
 SEMANTIC_CHECKS = {
     "DupNames": [
         "test_semantic_duplicate_capture_group",
+        "test_semantic_duplicates",  # Rust outputs this
         "semantic_duplicates",
         "duplicate_capture_group",
         "dup_names",
         "DupNames",
+        "semantic_duplicates.json",  # For runners that output filename directly
     ],
     "Ranges": [
         "test_semantic_ranges",
         "semantic_ranges",
         "Ranges",
+        "semantic_ranges.json",  # For runners that output filename directly
     ],
 }
 

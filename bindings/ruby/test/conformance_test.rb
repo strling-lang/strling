@@ -15,7 +15,16 @@ class ConformanceTest < Minitest::Test
       next
     end
 
-    test_name = "test_conformance_#{File.basename(file, '.json').gsub(/[^a-zA-Z0-9_]/, '_')}"
+    # Generate test name with special handling for semantic tests
+    base_name = File.basename(file, '.json')
+    test_name = case base_name
+                when 'semantic_duplicates'
+                  'test_semantic_duplicate_capture_group'
+                when 'semantic_ranges'
+                  'test_semantic_ranges'
+                else
+                  "test_conformance_#{base_name.gsub(/[^a-zA-Z0-9_]/, '_')}"
+                end
     
     define_method(test_name) do
       spec = JSON.parse(File.read(file))

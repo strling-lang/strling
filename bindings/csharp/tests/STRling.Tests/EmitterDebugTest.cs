@@ -65,12 +65,12 @@ public class EmitterDebugTest
     [Fact]
     public void InspectPhoneCompiledChars()
     {
-        var phone = Strling.Simply.S.Sequence(
+        var phone = Strling.Simply.S.Merge(
             Strling.Simply.S.Start(),
             Strling.Simply.S.Digit(3).Capture(),
-            Strling.Simply.S.AnyOf("-. ").Optional(),
+            Strling.Simply.S.AnyOf("-. ").May(),
             Strling.Simply.S.Digit(3).Capture(),
-            Strling.Simply.S.AnyOf("-. ").Optional(),
+            Strling.Simply.S.AnyOf("-. ").May(),
             Strling.Simply.S.Digit(4).Capture(),
             Strling.Simply.S.End()
         );
@@ -87,12 +87,12 @@ public class EmitterDebugTest
     [Fact]
     public void DumpPhoneRegexToFile()
     {
-        var phone = Strling.Simply.S.Sequence(
+        var phone = Strling.Simply.S.Merge(
             Strling.Simply.S.Start(),
             Strling.Simply.S.Digit(3).Capture(),
-            Strling.Simply.S.AnyOf("-. ").Optional(),
+            Strling.Simply.S.AnyOf("-. ").May(),
             Strling.Simply.S.Digit(3).Capture(),
-            Strling.Simply.S.AnyOf("-. ").Optional(),
+            Strling.Simply.S.AnyOf("-. ").May(),
             Strling.Simply.S.Digit(4).Capture(),
             Strling.Simply.S.End()
         );

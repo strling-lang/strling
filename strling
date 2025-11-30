@@ -68,8 +68,8 @@ if [ "$COMMAND" == "clean" ]; then
         echo ">> Cleaning global artifacts..."
         # Remove common build directories recursively
         # Exclude node_modules and .luarocks to avoid breaking dependencies
-        # Use ! -path to exclude subdirectories of node_modules
-        find "$DIR" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".pytest_cache" -o -name ".mypy_cache" \) ! -path "*/node_modules/*" ! -path "*/.luarocks/*" -prune -exec rm -rf {} +
+        # Path exclusions must come before -type d to be evaluated first
+        find "$DIR" ! -path "*/node_modules/*" ! -path "*/.luarocks/*" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".pytest_cache" -o -name ".mypy_cache" \) -prune -exec rm -rf {} +
         echo ">> Global clean complete."
         exit 0
     else

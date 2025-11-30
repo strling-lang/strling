@@ -286,7 +286,7 @@ def main():
             r"Tests run:\s+(\d+), Failures: 0",
             r"Files=\d+, Tests=(\d+)",
             r"OK \((\d+) tests?[,\)]",
-            r"Tests: (\d+)",
+            r"^Tests:\s*(\d+)",
             r"\[ FAIL 0 \| WARN 0 \| SKIP 0 \| PASS (\d+) \]",
             r"\+(\d+): All tests passed",
             r"(\d+)/\d+ tests passed",

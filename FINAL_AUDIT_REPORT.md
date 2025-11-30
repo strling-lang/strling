@@ -2,20 +2,20 @@
 
 | Binding | Build | Tests | Zero Skips | Zero Warnings | Semantic: DupNames | Semantic: Ranges | Verdict |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| c | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| cpp | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| csharp | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| dart | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| fsharp | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| go | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| java | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| kotlin | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| lua | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| perl | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| php | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| python | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| r | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| ruby | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| rust | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| swift | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
-| typescript | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
+| c | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| cpp | ✅ | 548 | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Semantic) |
+| csharp | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| dart | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| fsharp | ✅ | 596 | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Semantic) |
+| go | ✅ | 5 pkgs | ❌ (48 Skip) | ✅ | ✅ Verified | ✅ Verified | 🔴 FAIL (Skips) |
+| java | ✅ | 3 | ❌ (25 Skip) | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Skips) |
+| kotlin | ✅ | Unknown | ❌ (1 Skip) | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Skips) |
+| lua | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| perl | ✅ | 0 | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| php | ✅ | 593 | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Semantic) |
+| python | ✅ | 716 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
+| r | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| ruby | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Semantic) |
+| rust | ✅ | 23 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
+| swift | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| typescript | ✅ | 892 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |

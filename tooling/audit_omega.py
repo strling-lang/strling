@@ -63,15 +63,18 @@ WARNING_EXCLUDE_PATTERNS = [
 SEMANTIC_CHECKS = {
     "DupNames": [
         "test_semantic_duplicate_capture_group",
+        "test_semantic_duplicates",  # Rust outputs this
         "semantic_duplicates",
         "duplicate_capture_group",
         "dup_names",
         "DupNames",
+        "semantic_duplicates.json",  # For Go and other runners that output full filename
     ],
     "Ranges": [
         "test_semantic_ranges",
         "semantic_ranges",
         "Ranges",
+        "semantic_ranges.json",  # For Go and other runners that output full filename
     ],
 }
 

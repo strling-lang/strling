@@ -23,36 +23,83 @@ else
     echo "Parson already present."
 fi
 
-# Install jansson library if not present
-if ! pkg-config --exists jansson 2>/dev/null; then
-    echo "jansson library not found, attempting to install..."
+# Install system libraries if not present (jansson for JSON, cmocka for testing)
+install_system_deps() {
+    local deps_to_install=""
+    
+    # Check for jansson
+    if ! pkg-config --exists jansson 2>/dev/null; then
+        deps_to_install="$deps_to_install libjansson-dev"
+    fi
+    
+    # Check for cmocka (test framework)
+    if ! pkg-config --exists cmocka 2>/dev/null; then
+        deps_to_install="$deps_to_install libcmocka-dev"
+    fi
+    
+    if [ -z "$deps_to_install" ]; then
+        echo "All system dependencies are already installed."
+        return 0
+    fi
+    
+    echo "Installing missing system dependencies: $deps_to_install"
     
     # Detect OS and install accordingly
     if [ -f /etc/debian_version ] || [ -f /etc/ubuntu_version ] || command -v apt-get &> /dev/null; then
         # Debian/Ubuntu
-        sudo apt-get update -qq && sudo apt-get install -y -qq libjansson-dev
+        sudo apt-get update -qq && sudo apt-get install -y -qq $deps_to_install
     elif [ -f /etc/redhat-release ] || command -v dnf &> /dev/null; then
-        # Fedora/RHEL
-        sudo dnf install -y jansson-devel
+        # Fedora/RHEL - different package names
+        local fedora_deps=""
+        for dep in $deps_to_install; do
+            case "$dep" in
+                libjansson-dev) fedora_deps="$fedora_deps jansson-devel" ;;
+                libcmocka-dev) fedora_deps="$fedora_deps libcmocka-devel" ;;
+            esac
+        done
+        sudo dnf install -y $fedora_deps
     elif [ -f /etc/arch-release ] || command -v pacman &> /dev/null; then
         # Arch Linux
-        sudo pacman -Sy --noconfirm jansson
+        local arch_deps=""
+        for dep in $deps_to_install; do
+            case "$dep" in
+                libjansson-dev) arch_deps="$arch_deps jansson" ;;
+                libcmocka-dev) arch_deps="$arch_deps cmocka" ;;
+            esac
+        done
+        sudo pacman -Sy --noconfirm $arch_deps
     elif command -v brew &> /dev/null; then
         # macOS
-        brew install jansson
+        local brew_deps=""
+        for dep in $deps_to_install; do
+            case "$dep" in
+                libjansson-dev) brew_deps="$brew_deps jansson" ;;
+                libcmocka-dev) brew_deps="$brew_deps cmocka" ;;
+            esac
+        done
+        brew install $brew_deps
     else
-        echo "Warning: Could not auto-install jansson. Please install manually:"
-        echo "  Ubuntu/Debian: sudo apt-get install libjansson-dev"
-        echo "  macOS: brew install jansson"
-        echo "  Fedora: sudo dnf install jansson-devel"
+        echo "Warning: Could not auto-install dependencies. Please install manually:"
+        echo "  Ubuntu/Debian: sudo apt-get install $deps_to_install"
+        echo "  macOS: brew install jansson cmocka"
+        echo "  Fedora: sudo dnf install jansson-devel libcmocka-devel"
     fi
+}
+
+install_system_deps
+
+# Verify dependencies
+echo "Verifying dependencies..."
+if pkg-config --exists jansson 2>/dev/null; then
+    echo "  ✓ jansson library is available."
+else
+    echo "  ✗ jansson library not found."
 fi
 
-# Verify jansson is now available
-if pkg-config --exists jansson 2>/dev/null; then
-    echo "jansson library is available."
+if pkg-config --exists cmocka 2>/dev/null; then
+    echo "  ✓ cmocka library is available."
 else
-    echo "Warning: jansson library still not found."
+    echo "  ✗ cmocka library not found."
 fi
 
 echo "C binding setup complete."

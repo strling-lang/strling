@@ -8,7 +8,7 @@ class ConformanceTest < Minitest::Test
 
   Dir.glob(File.join(SPEC_DIR, '*.json')).each do |file|
     base_name = File.basename(file, '.json')
-    
+
     # Generate test name with special handling for semantic tests
     test_name = case base_name
                 when 'semantic_duplicates'

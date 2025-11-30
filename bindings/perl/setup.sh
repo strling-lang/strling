@@ -13,8 +13,20 @@ install_module() {
         cpanm --notest "$module" || cpanm --notest --sudo "$module"
     else
         # Fall back to cpan (less friendly but available)
-        echo "yes" | cpan "$module" || true
+        # cpan returns non-zero on some systems even on success, so we verify installation
+        echo "yes" | cpan "$module" 2>&1
+        # Verify the module was installed
+        if perl -e "use $module" 2>/dev/null; then
+            echo "$module installed successfully."
+        else
+            echo "Warning: $module may not have installed correctly."
+        fi
     fi
+}
+
+# Cleanup temp file function
+cleanup_temp() {
+    rm -f /tmp/cpanm_installer
 }
 
 # Install cpanminus if not present and we have network
@@ -24,9 +36,10 @@ if ! command -v cpanm &> /dev/null; then
         perl /tmp/cpanm_installer --sudo App::cpanminus 2>/dev/null || \
         perl /tmp/cpanm_installer App::cpanminus 2>/dev/null || \
         echo "Could not install cpanm, will use cpan instead"
-        rm -f /tmp/cpanm_installer
+        cleanup_temp
     else
         echo "Network unavailable or cpanmin.us unreachable, will use cpan"
+        cleanup_temp
     fi
 fi
 

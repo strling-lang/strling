@@ -9,11 +9,15 @@ echo "Setting up STRling C binding dependencies..."
 # Create deps directory if it doesn't exist
 mkdir -p deps
 
+# Parson commit to use (pinned for reproducibility and security)
+# Using commit from 2024 release for stability
+PARSON_COMMIT="a0e93b2cdea28aa44e48b7cf8e635131ada3fd86"
+
 # Download parson (public domain JSON parser) if not present
 if [ ! -f deps/parson.c ] || [ ! -f deps/parson.h ]; then
-    echo "Downloading parson JSON parser..."
-    curl -sL https://raw.githubusercontent.com/kgabis/parson/master/parson.c -o deps/parson.c
-    curl -sL https://raw.githubusercontent.com/kgabis/parson/master/parson.h -o deps/parson.h
+    echo "Downloading parson JSON parser (commit: ${PARSON_COMMIT})..."
+    curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.c" -o deps/parson.c
+    curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.h" -o deps/parson.h
     echo "Parson downloaded successfully."
 else
     echo "Parson already present."

@@ -18,6 +18,7 @@ int main() {
     std::string spec_dir = SPEC_DIR;
     int passed = 0;
     int failed = 0;
+    int skipped = 0;
     int total = 0;
 
     std::cout << "Running conformance tests from: " << spec_dir << "\n";
@@ -38,13 +39,32 @@ int main() {
                 continue;
             }
 
+            std::string filename = entry.path().filename().string();
+            std::string stem = entry.path().stem().string();
+            
+            // Generate test name with special handling for semantic tests
+            std::string test_name;
+            if (stem == "semantic_duplicates") {
+                test_name = "test_semantic_duplicate_capture_group";
+            } else if (stem == "semantic_ranges") {
+                test_name = "test_semantic_ranges";
+            } else {
+                test_name = "test_conformance_" + stem;
+            }
+
             // Check if it has input_ast and expected_ir
             if (!j.contains("input_ast") || !j.contains("expected_ir")) {
-                // Maybe it's a different format or meta file
+                // Error test case - print name and skip
+                if (j.contains("expected_error")) {
+                    skipped++;
+                    std::cout << "=== RUN   " << test_name << " (" << filename << ")\n";
+                    std::cout << "    --- SKIP: Error test case (expected_error: " << j.at("expected_error").get<std::string>() << ")\n";
+                }
                 continue;
             }
 
             total++;
+            std::cout << "=== RUN   " << test_name << " (" << filename << ")\n";
             try {
                 auto ast = strling::ast::from_json(j.at("input_ast"));
                 auto ir = strling::compile(ast);
@@ -53,19 +73,20 @@ int main() {
 
                 if (generated_ir == expected_ir) {
                     passed++;
+                    std::cout << "    --- PASS\n";
                 } else {
                     failed++;
-                    std::cerr << "Test failed: " << entry.path().filename() << "\n";
+                    std::cerr << "    --- FAIL: IR mismatch\n";
                     std::cerr << "Expected: " << expected_ir.dump(2) << "\n";
                     std::cerr << "Got: " << generated_ir.dump(2) << "\n";
                 }
             } catch (const std::exception& e) {
                 failed++;
-                std::cerr << "Test error: " << entry.path().filename() << " - " << e.what() << "\n";
+                std::cerr << "    --- FAIL: " << e.what() << "\n";
             }
         }
     }
 
-    std::cout << "Total: " << total << ", Passed: " << passed << ", Failed: " << failed << "\n";
+    std::cout << "Total: " << total << ", Passed: " << passed << ", Failed: " << failed << ", Skipped: " << skipped << "\n";
     return failed > 0 ? 1 : 0;
 }

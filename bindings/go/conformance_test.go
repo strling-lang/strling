@@ -50,11 +50,9 @@ func TestConformance(t *testing.T) {
 				t.Fatalf("failed to unmarshal spec: %v", err)
 			}
 
-			// Handle test cases without input_ast (error test cases)
-			// These are silently skipped to match Java/Kotlin behavior
-			// Note: Error test cases have expected_error but no input_ast
+			// Skip test cases without input_ast (typically parser error test cases)
+			// This matches Java/Kotlin behavior which also return early for such cases
 			if spec.InputAST.Node == nil {
-				// No input_ast - nothing to compile and test
 				return
 			}
 

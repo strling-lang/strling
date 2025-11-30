@@ -8,14 +8,24 @@ TOOLCHAIN_PATH = "toolchain.json"
 REPORT_PATH = "FINAL_AUDIT_REPORT.md"
 STRLING_CLI = "./strling"
 
-# Regex patterns
+# Regex patterns for detecting skipped tests
+# These patterns should match actual skipped test indicators, not summary counts
 SKIP_PATTERNS = [
-    r"skipped",
-    r"SKIPPED",
-    r"ignored",
-    r"pending",
-    r"TODO",
+    r"\s+skipped\b",  # " skipped" (space before, word boundary after)
+    r"SKIPPED\b",
+    r"\s+ignored\b",  # " ignored" but not "0 ignored"
+    r"\bpending\b",
+    r"\bTODO\b",
     r"\[-\]",  # Some runners use [-] for skipped
+    r"\bskip:",  # "skip:" at word boundary
+    r"\bSkip:",
+]
+
+# Skip exclusion patterns (to avoid false positives from summary lines)
+SKIP_EXCLUDE_PATTERNS = [
+    r"\b0 ignored\b",
+    r"\b0 skipped\b",
+    r"skipped 0",
 ]
 
 # Warning patterns for test/build output
@@ -94,8 +104,23 @@ def analyze_output(stdout: str, stderr: str) -> Tuple[int, int]:
     combined = stdout + "\n" + stderr
     lines = combined.split("\n")
 
-    for pattern in SKIP_PATTERNS:
-        skips += len(re.findall(pattern, combined))
+    # Count skips per line, excluding false positives like "0 ignored"
+    for line in lines:
+        has_skip = False
+        for pattern in SKIP_PATTERNS:
+            if re.search(pattern, line, re.IGNORECASE):
+                has_skip = True
+                break
+
+        if has_skip:
+            # Check if this skip should be excluded (e.g., "0 ignored" summary)
+            is_excluded = False
+            for exclude_pattern in SKIP_EXCLUDE_PATTERNS:
+                if re.search(exclude_pattern, line, re.IGNORECASE):
+                    is_excluded = True
+                    break
+            if not is_excluded:
+                skips += 1
 
     # Count warnings per line, excluding false positives
     for line in lines:

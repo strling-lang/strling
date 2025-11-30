@@ -27,11 +27,26 @@ WARNING_PATTERNS = [
 ]
 
 # Patterns that should NOT be counted as warnings (false positives)
+# These include locale warnings and compiler warnings that aren't test failures
 WARNING_EXCLUDE_PATTERNS = [
     r"locale",
     r"Setting locale failed",
     r"LANGUAGE",
     r"LC_ALL",
+    # Rust/Cargo compiler warnings
+    r"unused variable",
+    r"unused import",
+    r"never used",
+    r"never read",
+    r"unnecessary parentheses",
+    r"generated \d+ warnings?",
+    r"run `cargo fix",
+    # GCC/Clang warnings
+    r"-Wunused",
+    r"-Wdeprecated",
+    # General build warnings to ignore
+    r"deprecated",
+    r"prerequisite",  # Perl prereq warnings
 ]
 
 # Semantic checks (filenames/patterns that must appear in output)

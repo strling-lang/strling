@@ -39,7 +39,7 @@ WARNING_EXCLUDE_PATTERNS = [
     r"never used",
     r"never read",
     r"unnecessary parentheses",
-    r"generated \d+ warnings?",
+    r"generated \d+ warnings?\b",
     r"run `cargo fix",
     # GCC/Clang warnings
     r"-Wunused",
@@ -261,13 +261,12 @@ def main():
             r"test result: ok\. (\d+) passed",
             r"Tests run:\s+(\d+), Failures: 0",
             r"Files=\d+, Tests=(\d+)",
-            r"OK \((\d+) tests?",
+            r"OK \((\d+) tests?[,\)]",
             r"Tests: (\d+)",
             r"\[ FAIL 0 \| WARN 0 \| SKIP 0 \| PASS (\d+) \]",
             r"\+(\d+): All tests passed",
             r"(\d+)/\d+ tests passed",
             r"Passed:\s+(\d+)",
-            r"(\d+)% tests passed, \d+ tests failed out of (\d+)",
         ]
 
         for pat in patterns:
@@ -275,6 +274,14 @@ def main():
             if match:
                 test_count = match.group(1)
                 break
+
+        # Special handling for CTest: "100% tests passed, 0 tests failed out of X"
+        if test_count == "Unknown":
+            ctest_match = re.search(
+                r"\d+% tests passed, \d+ tests failed out of (\d+)", combined
+            )
+            if ctest_match:
+                test_count = ctest_match.group(1)
 
         # Special handling for Go: count "ok" lines
         if test_count == "Unknown":

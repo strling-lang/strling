@@ -10,7 +10,7 @@ echo "Setting up STRling C binding dependencies..."
 mkdir -p deps
 
 # Parson commit to use (pinned for reproducibility and security)
-# Using commit from 2024 release for stability
+# Commit a0e93b2cdea28aa44e48b7cf8e635131ada3fd86 is from v1.5.3 (2024-01-14)
 PARSON_COMMIT="a0e93b2cdea28aa44e48b7cf8e635131ada3fd86"
 
 # Download parson (public domain JSON parser) if not present
@@ -45,8 +45,10 @@ install_system_deps() {
     echo "Installing missing system dependencies: $deps_to_install"
     
     # Detect OS and install accordingly
+    # Note: Package names are controlled by the case statement, so no injection risk
     if [ -f /etc/debian_version ] || [ -f /etc/ubuntu_version ] || command -v apt-get &> /dev/null; then
-        # Debian/Ubuntu
+        # Debian/Ubuntu - use word-splitting intentionally for multiple packages
+        # shellcheck disable=SC2086
         sudo apt-get update -qq && sudo apt-get install -y -qq $deps_to_install
     elif [ -f /etc/redhat-release ] || command -v dnf &> /dev/null; then
         # Fedora/RHEL - different package names
@@ -57,6 +59,7 @@ install_system_deps() {
                 libcmocka-dev) fedora_deps="$fedora_deps libcmocka-devel" ;;
             esac
         done
+        # shellcheck disable=SC2086
         sudo dnf install -y $fedora_deps
     elif [ -f /etc/arch-release ] || command -v pacman &> /dev/null; then
         # Arch Linux
@@ -67,6 +70,7 @@ install_system_deps() {
                 libcmocka-dev) arch_deps="$arch_deps cmocka" ;;
             esac
         done
+        # shellcheck disable=SC2086
         sudo pacman -Sy --noconfirm $arch_deps
     elif command -v brew &> /dev/null; then
         # macOS
@@ -77,6 +81,7 @@ install_system_deps() {
                 libcmocka-dev) brew_deps="$brew_deps cmocka" ;;
             esac
         done
+        # shellcheck disable=SC2086
         brew install $brew_deps
     else
         echo "Warning: Could not auto-install dependencies. Please install manually:"

@@ -12,9 +12,9 @@ install_module() {
     if command -v cpanm &> /dev/null; then
         cpanm --notest "$module" || cpanm --notest --sudo "$module"
     else
-        # Fall back to cpan (less friendly but available)
-        # cpan returns non-zero on some systems even on success, so we verify installation
-        echo "yes" | cpan "$module" 2>&1
+        # Fall back to cpan with non-interactive mode
+        # Use environment variables to avoid interactive prompts
+        PERL_MM_USE_DEFAULT=1 PERL_AUTOINSTALL=--skipdeps cpan -T "$module" 2>&1 || true
         # Verify the module was installed
         if perl -e "use $module" 2>/dev/null; then
             echo "$module installed successfully."

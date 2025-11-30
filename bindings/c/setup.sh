@@ -16,8 +16,14 @@ PARSON_COMMIT="a0e93b2cdea28aa44e48b7cf8e635131ada3fd86"
 # Download parson (public domain JSON parser) if not present
 if [ ! -f deps/parson.c ] || [ ! -f deps/parson.h ]; then
     echo "Downloading parson JSON parser (commit: ${PARSON_COMMIT})..."
-    curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.c" -o deps/parson.c
-    curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.h" -o deps/parson.h
+    if ! curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.c" -o deps/parson.c; then
+        echo "Error: Failed to download parson.c"
+        exit 1
+    fi
+    if ! curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.h" -o deps/parson.h; then
+        echo "Error: Failed to download parson.h"
+        exit 1
+    fi
     echo "Parson downloaded successfully."
 else
     echo "Parson already present."
@@ -60,7 +66,9 @@ install_system_deps() {
             esac
         done
         # shellcheck disable=SC2086
-        sudo dnf install -y $fedora_deps
+        if [ -n "$fedora_deps" ]; then
+            sudo dnf install -y $fedora_deps
+        fi
     elif [ -f /etc/arch-release ] || command -v pacman &> /dev/null; then
         # Arch Linux
         local arch_deps=""
@@ -71,7 +79,9 @@ install_system_deps() {
             esac
         done
         # shellcheck disable=SC2086
-        sudo pacman -Sy --noconfirm $arch_deps
+        if [ -n "$arch_deps" ]; then
+            sudo pacman -Sy --noconfirm $arch_deps
+        fi
     elif command -v brew &> /dev/null; then
         # macOS
         local brew_deps=""
@@ -82,7 +92,9 @@ install_system_deps() {
             esac
         done
         # shellcheck disable=SC2086
-        brew install $brew_deps
+        if [ -n "$brew_deps" ]; then
+            brew install $brew_deps
+        fi
     else
         echo "Warning: Could not auto-install dependencies. Please install manually:"
         echo "  Ubuntu/Debian: sudo apt-get install $deps_to_install"
@@ -95,16 +107,24 @@ install_system_deps
 
 # Verify dependencies
 echo "Verifying dependencies..."
+deps_ok=true
 if pkg-config --exists jansson 2>/dev/null; then
     echo "  ✓ jansson library is available."
 else
     echo "  ✗ jansson library not found."
+    deps_ok=false
 fi
 
 if pkg-config --exists cmocka 2>/dev/null; then
     echo "  ✓ cmocka library is available."
 else
     echo "  ✗ cmocka library not found."
+    deps_ok=false
+fi
+
+if [ "$deps_ok" = false ]; then
+    echo "Error: Required dependencies are missing. Please install them manually."
+    exit 1
 fi
 
 echo "C binding setup complete."

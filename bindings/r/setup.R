@@ -13,7 +13,19 @@ packages <- c("testthat", "devtools", "jsonlite")
 for (pkg in packages) {
   if (!requireNamespace(pkg, quietly = TRUE)) {
     cat(sprintf("Installing %s...\n", pkg))
-    install.packages(pkg)
+    result <- tryCatch(
+      {
+        install.packages(pkg)
+        TRUE
+      },
+      error = function(e) {
+        cat(sprintf("Error installing %s: %s\n", pkg, e$message))
+        FALSE
+      }
+    )
+    if (!result || !requireNamespace(pkg, quietly = TRUE)) {
+      stop(sprintf("Failed to install required package: %s", pkg))
+    }
   } else {
     cat(sprintf("%s is already installed.\n", pkg))
   }

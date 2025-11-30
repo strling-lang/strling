@@ -32,14 +32,13 @@ cleanup_temp() {
 # Install cpanminus if not present and we have network
 if ! command -v cpanm &> /dev/null; then
     echo "cpanm not found, attempting to install..."
+    trap cleanup_temp EXIT
     if curl -sL --connect-timeout 5 https://cpanmin.us -o /tmp/cpanm_installer 2>/dev/null; then
         perl /tmp/cpanm_installer --sudo App::cpanminus 2>/dev/null || \
         perl /tmp/cpanm_installer App::cpanminus 2>/dev/null || \
         echo "Could not install cpanm, will use cpan instead"
-        cleanup_temp
     else
         echo "Network unavailable or cpanmin.us unreachable, will use cpan"
-        cleanup_temp
     fi
 fi
 

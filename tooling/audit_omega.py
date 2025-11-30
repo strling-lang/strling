@@ -11,9 +11,9 @@ STRLING_CLI = "./strling"
 # Regex patterns for detecting skipped tests
 # These patterns should match actual skipped test indicators, not summary counts
 SKIP_PATTERNS = [
-    r"\s+skipped\b",  # " skipped" (space before, word boundary after)
+    r"\s+skipped\b",  # whitespace + "skipped" + word boundary
     r"SKIPPED\b",
-    r"\s+ignored\b",  # " ignored" but not "0 ignored"
+    r"\s+ignored\b",  # whitespace + "ignored" + word boundary
     r"\bpending\b",
     r"\bTODO\b",
     r"\[-\]",  # Some runners use [-] for skipped

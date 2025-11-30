@@ -55,7 +55,6 @@ WARNING_EXCLUDE_PATTERNS = [
     r"-Wunused",
     r"-Wdeprecated",
     # General build warnings to ignore
-    r"deprecated",
     r"prerequisite",  # Perl prereq warnings
 ]
 

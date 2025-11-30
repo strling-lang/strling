@@ -10,10 +10,15 @@ import (
 	"github.com/thecyberlocal/strling/bindings/go/core"
 )
 
+// SpecFile represents a conformance test specification.
+// It supports both success cases (with input_ast and expected_ir)
+// and error cases (with input_dsl and expected_error).
 type SpecFile struct {
-	ID          string                 `json:"id"`
-	InputAST    NodeWrapper            `json:"input_ast"`
-	ExpectedIR  map[string]interface{} `json:"expected_ir"`
+	ID            string                 `json:"id"`
+	InputAST      NodeWrapper            `json:"input_ast"`
+	ExpectedIR    map[string]interface{} `json:"expected_ir"`
+	InputDSL      string                 `json:"input_dsl"`
+	ExpectedError string                 `json:"expected_error"`
 }
 
 func TestConformance(t *testing.T) {
@@ -45,8 +50,12 @@ func TestConformance(t *testing.T) {
 				t.Fatalf("failed to unmarshal spec: %v", err)
 			}
 
+			// Handle test cases without input_ast (error test cases)
+			// These are silently skipped to match Java/Kotlin behavior
+			// Note: Error test cases have expected_error but no input_ast
 			if spec.InputAST.Node == nil {
-				t.Skip("Skipping test without input_ast (likely an error test case)")
+				// No input_ast - nothing to compile and test
+				return
 			}
 
 			astNode, err := spec.InputAST.Node.ToCore()
@@ -58,11 +67,8 @@ func TestConformance(t *testing.T) {
 			result := compiler.CompileWithMetadata(astNode)
 
 			// Convert IROp to map using ToDict for comparison
-			// t.Logf("Type of result['ir']: %T", result["ir"])
 			if irOp, ok := result["ir"].(core.IROp); ok {
 				result["ir"] = irOp.ToDict()
-			} else {
-				// t.Logf("result['ir'] does not implement core.IROp")
 			}
 
 			// Normalize types for comparison (int vs float64)

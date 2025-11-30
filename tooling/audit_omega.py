@@ -68,13 +68,13 @@ SEMANTIC_CHECKS = {
         "duplicate_capture_group",
         "dup_names",
         "DupNames",
-        "semantic_duplicates.json",  # For runners that output filename directly
+        "semantic_duplicates.json",  # For Go and other runners that output full filename
     ],
     "Ranges": [
         "test_semantic_ranges",
         "semantic_ranges",
         "Ranges",
-        "semantic_ranges.json",  # For runners that output filename directly
+        "semantic_ranges.json",  # For Go and other runners that output full filename
     ],
 }
 

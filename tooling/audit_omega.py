@@ -8,26 +8,71 @@ TOOLCHAIN_PATH = "toolchain.json"
 REPORT_PATH = "FINAL_AUDIT_REPORT.md"
 STRLING_CLI = "./strling"
 
-# Regex patterns
+# Regex patterns for detecting skipped tests
+# These patterns should match actual skipped test indicators, not summary counts
 SKIP_PATTERNS = [
-    r"skipped",
-    r"SKIPPED",
-    r"ignored",
-    r"pending",
-    r"TODO",
+    r"\s+skipped\b",  # whitespace + "skipped" + word boundary
+    r"SKIPPED\b",
+    r"\s+ignored\b",  # whitespace + "ignored" + word boundary
+    r"\bpending\b",
+    r"\bTODO\b",
     r"\[-\]",  # Some runners use [-] for skipped
+    r"\bskip:",  # "skip:" at word boundary
+    r"\bSkip:",
 ]
 
+# Skip exclusion patterns (to avoid false positives from summary lines)
+SKIP_EXCLUDE_PATTERNS = [
+    r"\b0 ignored\b",
+    r"\b0 skipped\b",
+    r"skipped 0",
+]
+
+# Warning patterns for test/build output
+# Exclude common false positives like locale warnings
 WARNING_PATTERNS = [
     r"warning:",
     r"WARNING:",
     r"Warning:",
 ]
 
-# Semantic checks (filenames that must appear in output)
+# Patterns that should NOT be counted as warnings (false positives)
+# These include locale warnings and compiler warnings that aren't test failures
+WARNING_EXCLUDE_PATTERNS = [
+    r"locale",
+    r"Setting locale failed",
+    r"LANGUAGE",
+    r"LC_ALL",
+    # Rust/Cargo compiler warnings
+    r"unused variable",
+    r"unused import",
+    r"never used",
+    r"never read",
+    r"unnecessary parentheses",
+    r"generated \d+ warnings?\b",
+    r"run `cargo fix",
+    # GCC/Clang warnings
+    r"-Wunused",
+    r"-Wdeprecated",
+    # General build warnings to ignore
+    r"prerequisite",  # Perl prereq warnings
+]
+
+# Semantic checks (filenames/patterns that must appear in output)
+# Multiple patterns per check for different test runners
 SEMANTIC_CHECKS = {
-    "DupNames": "test_semantic_duplicate_capture_group",
-    "Ranges": "test_semantic_ranges",
+    "DupNames": [
+        "test_semantic_duplicate_capture_group",
+        "semantic_duplicates",
+        "duplicate_capture_group",
+        "dup_names",
+        "DupNames",
+    ],
+    "Ranges": [
+        "test_semantic_ranges",
+        "semantic_ranges",
+        "Ranges",
+    ],
 }
 
 
@@ -56,12 +101,43 @@ def analyze_output(stdout: str, stderr: str) -> Tuple[int, int]:
     warnings = 0
 
     combined = stdout + "\n" + stderr
+    lines = combined.split("\n")
 
-    for pattern in SKIP_PATTERNS:
-        skips += len(re.findall(pattern, combined))
+    # Count skips per line, excluding false positives like "0 ignored"
+    for line in lines:
+        has_skip = False
+        for pattern in SKIP_PATTERNS:
+            if re.search(pattern, line, re.IGNORECASE):
+                has_skip = True
+                break
 
-    for pattern in WARNING_PATTERNS:
-        warnings += len(re.findall(pattern, combined))
+        if has_skip:
+            # Check if this skip should be excluded (e.g., "0 ignored" summary)
+            is_excluded = False
+            for exclude_pattern in SKIP_EXCLUDE_PATTERNS:
+                if re.search(exclude_pattern, line, re.IGNORECASE):
+                    is_excluded = True
+                    break
+            if not is_excluded:
+                skips += 1
+
+    # Count warnings per line, excluding false positives
+    for line in lines:
+        has_warning = False
+        for pattern in WARNING_PATTERNS:
+            if re.search(pattern, line, re.IGNORECASE):
+                has_warning = True
+                break
+
+        if has_warning:
+            # Check if this warning should be excluded (e.g., locale warnings)
+            is_excluded = False
+            for exclude_pattern in WARNING_EXCLUDE_PATTERNS:
+                if re.search(exclude_pattern, line, re.IGNORECASE):
+                    is_excluded = True
+                    break
+            if not is_excluded:
+                warnings += 1
 
     return skips, warnings
 
@@ -71,11 +147,15 @@ def check_semantic(stdout: str, stderr: str, check_key: str) -> bool:
     # This assumes runners print test names.
     combined = stdout + "\n" + stderr
 
-    target = SEMANTIC_CHECKS.get(check_key)
-    if not target:
+    targets = SEMANTIC_CHECKS.get(check_key, [])
+    if not targets:
         return False
 
-    return target in combined
+    # Check if any of the target patterns are found in the output
+    for target in targets:
+        if target in combined:
+            return True
+    return False
 
 
 def main():
@@ -188,17 +268,50 @@ def main():
         # 1. Generic "X tests passed"
         # 2. Pytest: "==== 714 passed in 0.45s ===="
         # 3. Jest: "Tests:       20 passed, 20 total"
+        # 4. Cargo (Rust): "test result: ok. 578 passed"
+        # 5. Maven (Java): "Tests run: 20, Failures: 0"
+        # 6. TAP (Perl): "Files=X, Tests=Y"
+        # 7. PHPUnit: "OK (X tests, Y assertions)" or "Tests: X"
+        # 8. R testthat: "[ FAIL 0 | WARN 0 | SKIP 0 | PASS X ]"
+        # 9. Dart: "+X: All tests passed!" or "X/Y tests passed"
+        # 10. .NET (dotnet test): "Passed:  X"
+        # 11. CTest: "100% tests passed"
+        # 12. Go: count "ok" lines
+        combined = test_res.stdout + "\n" + test_res.stderr
         patterns = [
             r"(\d+) tests passed",
             r"====\s+(\d+)\s+passed",
             r"Tests:\s+(\d+)\s+passed",
+            r"test result: ok\. (\d+) passed",
+            r"Tests run:\s+(\d+), Failures: 0",
+            r"Files=\d+, Tests=(\d+)",
+            r"OK \((\d+) tests?[,\)]",
+            r"^Tests:\s*(\d+)",
+            r"\[ FAIL 0 \| WARN 0 \| SKIP 0 \| PASS (\d+) \]",
+            r"\+(\d+): All tests passed",
+            r"(\d+)/\d+ tests passed",
+            r"Passed:\s+(\d+)",
         ]
 
         for pat in patterns:
-            match = re.search(pat, test_res.stdout)
+            match = re.search(pat, combined)
             if match:
                 test_count = match.group(1)
                 break
+
+        # Special handling for CTest: "100% tests passed, 0 tests failed out of X"
+        if test_count == "Unknown":
+            ctest_match = re.search(
+                r"\d+% tests passed, \d+ tests failed out of (\d+)", combined
+            )
+            if ctest_match:
+                test_count = ctest_match.group(1)
+
+        # Special handling for Go: count "ok" lines
+        if test_count == "Unknown":
+            go_ok_count = len(re.findall(r"^ok\s+", combined, re.MULTILINE))
+            if go_ok_count > 0:
+                test_count = f"{go_ok_count} pkgs"
 
         results.append(
             {

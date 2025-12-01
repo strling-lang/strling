@@ -129,7 +129,14 @@
             "check_bin": "swift",
             "setup": [],
             "clean": ["swift", "package", "clean"],
-            "test": ["swift", "test", "-Xswiftc", "-warnings-as-errors"]
+            "test": [
+                "swift",
+                "test",
+                "--jobs",
+                "1",
+                "-Xswiftc",
+                "-warnings-as-errors"
+            ]
         },
         "typescript": {
             "path": "bindings/typescript",

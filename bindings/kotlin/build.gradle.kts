@@ -22,6 +22,11 @@ tasks.test {
         showStandardStreams = true
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
+    afterSuite { desc, result ->
+        if (desc.parent == null) {
+            println("STRling Test Count: ${result.testCount}")
+        }
+    }
 }
 
 kotlin {

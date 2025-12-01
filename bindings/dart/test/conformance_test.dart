@@ -30,12 +30,27 @@ void main() {
     final content = file.readAsStringSync();
     final json = jsonDecode(content) as Map<String, dynamic>;
 
-    if (!json.containsKey('input_ast') || !json.containsKey('expected_ir')) {
-      if (json.containsKey('expected_error')) {
-          // Parser test (no AST), out of scope. Pass.
+    if (json.containsKey('expected_error')) {
+      if (json.containsKey('input_ast')) {
+        test('Conformance (Error): $filename', () {
           print('=== RUN $filename');
-          print('    --- PASS: Parser test (no AST), out of scope');
+          final inputAst = json['input_ast'] as Map<String, dynamic>;
+          try {
+            final node = Node.fromJson(inputAst);
+            node.toIR();
+            fail('Expected error but compilation succeeded');
+          } catch (e) {
+            print('    --- PASS: Caught expected error');
+          }
+        });
+      } else {
+        print('=== RUN $filename');
+        print('    --- PASS: Parser test (no AST), out of scope');
       }
+      continue;
+    }
+
+    if (!json.containsKey('input_ast') || !json.containsKey('expected_ir')) {
       continue;
     }
 

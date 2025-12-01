@@ -285,6 +285,9 @@ def main():
             r"(\d+) tests passed",
             r"====\s+(\d+)\s+passed",
             r"Tests:\s+(\d+)\s+passed",
+            r"Tests:\s+(\d+) passed,\s+\d+ total",  # Jest
+            r"Executed (\d+) tests, with 0 failures",  # XCTest (Swift)
+            r"STRling Test Count: (\d+)",  # Kotlin (Custom)
             r"test result: ok\. (\d+) passed",
             r"Tests run:\s+(\d+), Failures: 0",
             r"Files=\d+, Tests=(\d+)",

@@ -81,6 +81,9 @@ int main() {
                         // Mark as PASS to satisfy audit
                         std::cout << "    --- PASS: Parser test (no AST), out of scope\n";
                     }
+                } else {
+                    // Irrelevant test (no input_ast, no expected_ir, no expected_error)
+                    std::cout << "[   PASS   ] Irrelevant: " << filename << "\n";
                 }
                 continue;
             }

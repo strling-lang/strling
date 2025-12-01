@@ -46,6 +46,7 @@ fi
 echo "Installing Perl dependencies..."
 install_module "Moo"
 install_module "Type::Tiny"
+install_module "Test::Exception"
 
 # Generate Makefile
 echo "Generating Makefile..."

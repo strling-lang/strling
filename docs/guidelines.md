@@ -77,3 +77,15 @@ When creating a task (Issue) for a contributor, you must not simply describe the
 4.  **The Verification:** A pre-written test case they can copy-paste to verify their work.
 
 **Rule:** _A task is only ready for a junior developer if the question is "How do I write this Regex?" and not "Where does this file go?"_
+
+### Tooling Feedback Standards (The Signpost Pattern)
+
+STRling tooling must adhere to **Instructional Error Engineering**. When a high-level tool (like an audit or setup script) fails, it must not simply exit. It must act as a **Signpost** pointing to the specific remedy.
+
+**The Failure Contract:**
+
+1.  **State the Failure:** Clearly identify _what_ failed (e.g., "Golden Master Check Failed").
+2.  **Explain the Constraint:** Briefly explain _why_ it matters (e.g., "To prevent logic drift...").
+3.  **Direct the Action:** Explicitly print the command the user must run next to debug the issue (e.g., "Run `./strling test python` to see specific errors").
+
+_Example: "Do not dump a stack trace in the audit tool. Redirect the user to the test runner."_

@@ -1,12 +1,28 @@
 import json
 import subprocess
 import re
+import sys
 from typing import Optional, Tuple, List, Dict, Any
 
 # Configuration
 TOOLCHAIN_PATH = "toolchain.json"
 REPORT_PATH = "FINAL_AUDIT_REPORT.md"
 STRLING_CLI = "./strling"
+
+
+def print_instructional_failure():
+    print("\n" + "=" * 60)
+    print("🔴 OMEGA AUDIT FAILED")
+    print("=" * 60)
+    print("\nThe Golden Master validation has failed.")
+    print("The Audit tool keeps output clean and does not display specific errors.\n")
+
+    print("👉 ACTION REQUIRED:")
+    print("To see the specific errors and debug your changes, you must run")
+    print("the test command for the binding you are working on:\n")
+    print("   ./strling test <language>  (e.g., ./strling test python)\n")
+    print("=" * 60 + "\n")
+
 
 # Regex patterns for detecting skipped tests
 # These patterns should match actual skipped test indicators, not summary counts
@@ -373,6 +389,17 @@ def main():
             )
 
     print(f">> Audit Complete. Report saved to {REPORT_PATH}")
+
+    # Check for failures
+    certification_passed = True
+    for r in results:
+        if r["verdict"] != "🟢 CERTIFIED":
+            certification_passed = False
+            break
+
+    if not certification_passed:
+        print_instructional_failure()
+        sys.exit(1)
 
 
 if __name__ == "__main__":

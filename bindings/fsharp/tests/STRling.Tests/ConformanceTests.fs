@@ -51,15 +51,19 @@ type ConformanceTests(output: ITestOutputHelper) =
         use doc = JsonDocument.Parse(json)
         let root = doc.RootElement
         
-        // Always output test name for audit visibility using Console
-        Console.WriteLine(sprintf "=== RUN   %s (%s)" testName filename)
+        // Output test name for audit visibility (Console) and xUnit logging (output)
+        let runMsg = sprintf "=== RUN   %s (%s)" testName filename
+        Console.WriteLine(runMsg)
+        output.WriteLine(runMsg)
         
         // Check for error test case
         let mutable expectedErrorElem = Unchecked.defaultof<JsonElement>
         if root.TryGetProperty("expected_error", &expectedErrorElem) then
             // Error test case - mark as skipped
             let expectedError = expectedErrorElem.GetString()
-            Console.WriteLine(sprintf "    --- SKIP: Error test case (expected_error: %s)" expectedError)
+            let skipMsg = sprintf "    --- SKIP: Error test case (expected_error: %s)" expectedError
+            Console.WriteLine(skipMsg)
+            output.WriteLine(skipMsg)
             // Don't fail, just return (test passes but is effectively skipped)
             ()
         else

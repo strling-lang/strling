@@ -14,6 +14,18 @@ using json = nlohmann::json;
 #define SPEC_DIR "."
 #endif
 
+// Test name generation logic is duplicated across C++, F#, PHP, and Ruby bindings.
+// If you change this logic, update the other bindings as well to keep naming conventions in sync.
+std::string generate_test_name(const std::string& stem) {
+    if (stem == "semantic_duplicates") {
+        return "test_semantic_duplicate_capture_group";
+    } else if (stem == "semantic_ranges") {
+        return "test_semantic_ranges";
+    } else {
+        return "test_conformance_" + stem;
+    }
+}
+
 int main() {
     std::string spec_dir = SPEC_DIR;
     int passed = 0;
@@ -42,20 +54,14 @@ int main() {
             std::string filename = entry.path().filename().string();
             std::string stem = entry.path().stem().string();
             
-            // Generate test name with special handling for semantic tests
-            std::string test_name;
-            if (stem == "semantic_duplicates") {
-                test_name = "test_semantic_duplicate_capture_group";
-            } else if (stem == "semantic_ranges") {
-                test_name = "test_semantic_ranges";
-            } else {
-                test_name = "test_conformance_" + stem;
-            }
+            // Generate test name
+            std::string test_name = generate_test_name(stem);
 
             // Check if it has input_ast and expected_ir
             if (!j.contains("input_ast") || !j.contains("expected_ir")) {
                 // Error test case - print name and skip
                 if (j.contains("expected_error")) {
+                    total++;
                     skipped++;
                     std::cout << "=== RUN   " << test_name << " (" << filename << ")\n";
                     std::cout << "    --- SKIP: Error test case (expected_error: " << j.at("expected_error").get<std::string>() << ")\n";
@@ -73,7 +79,6 @@ int main() {
 
                 if (generated_ir == expected_ir) {
                     passed++;
-                    std::cout << "    --- PASS\n";
                 } else {
                     failed++;
                     std::cerr << "    --- FAIL: IR mismatch\n";

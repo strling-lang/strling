@@ -48,8 +48,10 @@ class ConformanceTest extends TestCase
     #[DataProvider('provideErrorSpecFiles')]
     public function test_semantic_error(string $filename, array $spec): void
     {
-        // Error test cases are currently skipped as they require parser implementation
-        // The test name ensures visibility in audit output for semantic verification
+        // Error test cases are currently skipped because they are error validation tests
+        // (i.e., they contain 'expected_error' instead of 'input_ast'/'expected_ir') and
+        // error handling is not yet implemented in the compiler. The test name ensures
+        // visibility in audit output for semantic verification.
         $this->markTestSkipped("Error test case (expected_error: {$spec['expected_error']})");
     }
 

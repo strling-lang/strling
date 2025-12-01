@@ -28,9 +28,10 @@ class ConformanceTest < Minitest::Test
     
     # Define test method based on spec type
     if pre_spec['input_ast'] && pre_spec['expected_ir']
-      # Standard conformance test
+      # Standard conformance test - capture pre_spec in closure to avoid re-reading file
+      captured_spec = pre_spec
       define_method(test_name) do
-        spec = JSON.parse(File.read(file))
+        spec = captured_spec
         
         # Hydrate AST
         ast = Strling::Nodes::NodeFactory.from_json(spec['input_ast'])

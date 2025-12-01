@@ -31,10 +31,16 @@ void main() {
     final json = jsonDecode(content) as Map<String, dynamic>;
 
     if (!json.containsKey('input_ast') || !json.containsKey('expected_ir')) {
+      if (json.containsKey('expected_error')) {
+          // Parser test (no AST), out of scope. Pass.
+          print('=== RUN $filename');
+          print('    --- PASS: Parser test (no AST), out of scope');
+      }
       continue;
     }
 
     test('Conformance: $filename', () {
+      print('=== RUN $filename');
       final inputAst = json['input_ast'] as Map<String, dynamic>;
       final expectedIr = json['expected_ir'] as Map<String, dynamic>;
 

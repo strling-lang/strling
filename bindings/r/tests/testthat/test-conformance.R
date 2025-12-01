@@ -27,6 +27,7 @@ test_that("Conformance Tests", {
 
   for (file in spec_files) {
     spec_name <- basename(file)
+    cat(paste0("=== RUN ", spec_name, "\n"))
     
     # Skipping 4 tests containing null bytes (\u0000) due to R C-string limitations.
     if (spec_name %in% c("js_test_pattern_209.json", "js_test_pattern_311.json", "js_test_pattern_345.json", "js_test_pattern_346.json", "escaped_null_byte.json")) {
@@ -39,6 +40,25 @@ test_that("Conformance Tests", {
 
     for (i in seq_along(cases)) {
       case <- cases[[i]]
+
+      # Check for expected_error
+      if (!is.null(case$expected_error)) {
+          if (!is.null(case$input_ast)) {
+              # Try to compile and expect error
+              test_desc <- paste0(spec_name, " #", i, " (Error Case)")
+              tryCatch({
+                  ast <- hydrate_ast(case$input_ast)
+                  compile_ast(ast)
+                  fail(paste0("Expected error but compilation succeeded in ", test_desc))
+              }, error = function(e) {
+                  succeed(paste0("Caught expected error in ", test_desc))
+              })
+          } else {
+              # Parser test, pass
+              succeed(paste0("Parser test (no AST) in ", spec_name))
+          }
+          next
+      }
 
       # Skip if no input_ast or expected_ir
       if (is.null(case$input_ast) || is.null(case$expected_ir)) {

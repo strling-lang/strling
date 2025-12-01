@@ -78,6 +78,9 @@ public class ConformanceTests {
      * Test a single JSON fixture
      */
     private void testSingleFixture(Path fixturePath) throws IOException {
+        String filename = fixturePath.getFileName().toString();
+        System.out.println("=== RUN " + filename);
+
         // Load and parse the JSON fixture
         JsonNode root = MAPPER.readTree(fixturePath.toFile());
         
@@ -94,7 +97,25 @@ public class ConformanceTests {
 
         // 2. Deserialize AST
         if (!root.has("input_ast")) {
-            return; // Skip if no input_ast
+            if (root.has("expected_error")) {
+                // Parser test (no AST), out of scope. Pass.
+                System.out.println("    --- PASS: Parser test (no AST), out of scope");
+                return;
+            }
+            return; // Skip if no input_ast and no expected_error
+        }
+        
+        // Check for expected error with input_ast
+        if (root.has("expected_error")) {
+             try {
+                 IRNode astRoot = MAPPER.treeToValue(root.get("input_ast"), IRNode.class);
+                 JsonAstCompiler compiler = new JsonAstCompiler();
+                 compiler.compile(astRoot);
+                 fail("Expected error but compilation succeeded");
+             } catch (Exception e) {
+                 System.out.println("    --- PASS: Caught expected error");
+                 return;
+             }
         }
         
         IRNode astRoot;

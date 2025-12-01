@@ -9,17 +9,26 @@ echo "Setting up STRling Lua binding dependencies..."
 # Ensure luarocks local paths are set up
 eval "$(luarocks path --bin)"
 
-# Install dependencies from rockspec (use --local to avoid permission issues)
+# Check if running as root
+if [ "$(id -u)" -eq 0 ]; then
+    LOCAL_FLAG=""
+    echo "Running as root, installing globally..."
+else
+    LOCAL_FLAG="--local"
+    echo "Running as non-root, installing locally..."
+fi
+
+# Install dependencies from rockspec
 echo "Installing dependencies from rockspec..."
-luarocks install --local --only-deps strling-scm-1.rockspec
+luarocks install $LOCAL_FLAG --only-deps strling-scm-1.rockspec
 
 # Install test runner
 echo "Installing busted test runner..."
-luarocks install --local busted
+luarocks install $LOCAL_FLAG busted
 
 # Build/Install the rock locally to ensure paths are correct
 echo "Building and installing strling rock..."
-luarocks make --local
+luarocks make $LOCAL_FLAG
 
 echo "Lua binding setup complete."
 echo ""

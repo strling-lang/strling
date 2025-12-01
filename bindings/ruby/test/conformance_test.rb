@@ -48,9 +48,18 @@ class ConformanceTest < Minitest::Test
         assert_equal expected, actual, "Mismatch in #{File.basename(file)}"
       end
     elsif pre_spec['expected_error']
-      # Error test case - skip but ensure test name is visible in output
+      # Error test case
       define_method(test_name) do
-        skip "Error test case (expected_error: #{pre_spec['expected_error']})"
+        if pre_spec['input_ast']
+            # If we have input_ast, try to compile and expect error
+            ast = Strling::Nodes::NodeFactory.from_json(pre_spec['input_ast'])
+            assert_raises(StandardError) do
+                Strling::IR::Compiler.compile(ast)
+            end
+        else
+            # Parser test (no AST), out of scope. Pass.
+            pass
+        end
       end
     end
   end

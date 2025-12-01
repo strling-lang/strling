@@ -31,7 +31,14 @@ final class ConformanceTests: XCTestCase {
         for file in files where file.hasSuffix(".json") {
             if file.hasPrefix("error_") { continue }
             
-            print("Processing \(file)...")
+            var testName = file
+            if file == "semantic_duplicates.json" {
+                testName = "test_semantic_duplicate_capture_group"
+            } else if file == "semantic_ranges.json" {
+                testName = "test_semantic_ranges"
+            }
+
+            print("Processing \(testName)...")
             totalCount += 1
             let url = specDir.appendingPathComponent(file)
             let data = try Data(contentsOf: url)

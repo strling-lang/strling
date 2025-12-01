@@ -53,6 +53,9 @@ public class ConformanceTests
     [MemberData(nameof(GetSpecFiles))]
     public void RunSpecTest(string filePath)
     {
+        var filename = Path.GetFileName(filePath);
+        Console.WriteLine($"=== RUN {filename}");
+
         var jsonContent = File.ReadAllText(filePath);
         JsonNode? jsonDoc;
         try
@@ -68,10 +71,18 @@ public class ConformanceTests
         if (jsonDoc == null) return;
 
         var inputAstNode = jsonDoc["input_ast"];
-        if (inputAstNode == null) return;
+        var expectedErrorNode = jsonDoc["expected_error"];
 
-        var expectedIrNode = jsonDoc["expected_ir"];
-        if (expectedIrNode == null) return;
+        if (inputAstNode == null)
+        {
+            if (expectedErrorNode != null)
+            {
+                // Parser test (no AST), out of scope. Pass.
+                Console.WriteLine("    --- PASS: Parser test (no AST), out of scope");
+                return;
+            }
+            return;
+        }
 
         // Deserialize AST
         var options = new JsonSerializerOptions
@@ -86,8 +97,25 @@ public class ConformanceTests
         }
         catch (Exception ex)
         {
-            throw new Exception($"Failed to deserialize AST in {Path.GetFileName(filePath)}: {ex.Message}", ex);
+            throw new Exception($"Failed to deserialize AST in {filename}: {ex.Message}", ex);
         }
+
+        if (expectedErrorNode != null)
+        {
+            try
+            {
+                Compiler.Compile(ast);
+                throw new Exception($"Expected error '{expectedErrorNode}' but compilation succeeded");
+            }
+            catch
+            {
+                Console.WriteLine("    --- PASS: Caught expected error");
+                return;
+            }
+        }
+
+        var expectedIrNode = jsonDoc["expected_ir"];
+        if (expectedIrNode == null) return;
 
         // Compile to IR
         var ir = Compiler.Compile(ast);

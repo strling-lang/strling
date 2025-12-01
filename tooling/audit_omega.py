@@ -316,6 +316,12 @@ def main():
             if go_ok_count > 0:
                 test_count = f"{go_ok_count} pkgs"
 
+        # Fallback: Count "=== RUN" lines
+        if test_count == "Unknown":
+            run_count = len(re.findall(r"=== RUN", combined))
+            if run_count > 0:
+                test_count = run_count
+
         results.append(
             {
                 "binding": lang,

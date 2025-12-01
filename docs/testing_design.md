@@ -97,7 +97,7 @@ test("digit parser edge case - zero count", () => {
 -   Validates logical constraints (e.g., duplicate group names, invalid ranges).
 -   Ensures specific, descriptive error messages are thrown.
 -   Prevents "valid syntax, invalid logic" scenarios.
--   **Critical for Omega Audit:** These tests must be detectable in test output for audit compliance.
+-   **Critical for Omega Audit:** These tests must be detected in test output for audit compliance.
 
 **Required Test Cases:**
 
@@ -121,6 +121,8 @@ All bindings **must** include tests for these semantic violations:
    - **Note:** Statically-typed languages may catch this at compile time rather than runtime.
 
 **Example Implementation:**
+
+**Note:** The examples below use pseudocode. Actual API calls vary by language binding. Refer to your language-specific binding documentation for exact syntax.
 
 **Python:**
 

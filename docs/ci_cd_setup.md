@@ -76,7 +76,7 @@ Deployment jobs execute **only** when all quality gates pass:
 -   **Java, Perl:** Deployment not yet implemented
 
 **Idempotency Protection:**
--   Before publishing, the `check_version_exists.py` script validates if the version already exists
+-   Before publishing, the `check_version_exists.py` script (located in `tooling/`) validates if the version already exists
 -   If the version exists, the deployment step is skipped with a success status
 -   This prevents CI failures when re-running deployments or creating tags on already-published versions
 
@@ -336,7 +336,7 @@ STRling uses a **Single Source of Truth (SSOT)** approach for version management
 
 **Rule:** Never manually edit version numbers in non-Python manifests. Always use the SSOT + propagation workflow.
 
-**Note:** The TypeScript binding is the Logic SSOT (reference implementation), but Python is the Versioning SSOT. This separation ensures clarity of responsibility.
+**Note:** The TypeScript binding is the Logic SSOT (the reference implementation for all language behavior and features), but Python is the Versioning SSOT (the single source for version numbers). This separation ensures clarity of responsibility.
 
 ## Monitoring
 

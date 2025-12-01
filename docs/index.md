@@ -1,60 +1,27 @@
 # STRling Developer Documentation Hub
 
+[← Back to Project Overview](../README.md)
+
 This is the **central landing page** for all STRling technical documentation. Use this hub to navigate to architecture, testing standards, contribution guidelines, and formal specifications.
-
-## Navigation
-
-### [← Back to Project Overview](../README.md)
-
-Return to the main STRling project overview for a high-level introduction and feature highlights.
 
 ---
 
-## Core Documentation
+## Documentation Index
 
-### [Architectural Principles](architecture.md)
+### Core Concepts
 
-Learn about STRling's foundational design decisions, including the `parse → compile (IR) → emit` pipeline, the Iron Law of Emitters, and grammar-semantics alignment.
+-   **[Architectural Principles](architecture.md)**: The `parse → compile → emit` pipeline and Iron Law of Emitters.
+-   **[Formal Language Specification (Links)](spec_links.md)**: Index of grammar, semantics, and schemas.
 
-### Testing Documentation
+### Guides & Tutorials
 
-STRling's testing system is organized into three specialized guides:
-
-#### [Test Environment Setup](testing_setup.md)
-
-The "Golden Path" guide for setting up your local environment using the unified `./strling` CLI.
-
-#### [Test Design Standard](testing_design.md)
-
-The technical, normative standard for writing new tests: the 3-Test Standard, Combinatorial E2E Testing, and Golden Pattern Testing.
-
-#### [Testing Philosophy & Workflow](testing_workflow.md)
-
-High-level testing principles, the Iron Law of test parity, and contribution workflow requirements.
-
-### Real-Time Syntax Validation & Instructional Error Handling
-
-STRling now provides real-time syntax validation and instructional error feedback in compatible editors via the Language Server (LSP) integration. This feature delivers:
-
--   **Live diagnostics**: Syntax and semantic issues are surfaced as you type.
--   **Instructional hints**: Errors include short, actionable guidance produced by `to_lsp_diagnostic()` for common mistakes and suggested fixes.
--   **Binding-agnostic behavior**: The diagnostic flow is supported for all bindings through a standard `Editor → LSP Server → CLI Server → Parser` contract (see `architecture.md`).
-
-Benefits:
-
--   Faster iteration for users writing STRling patterns.
--   Better onboarding for new contributors via contextual, example-driven hints.
--   Consistent diagnostic content across editors and bindings.
-
-See also: [Architectural Principles](architecture.md), [Contribution & Documentation Guidelines](guidelines.md), and [Testing Philosophy & Workflow](testing_workflow.md).
-
-### [CI/CD Pipeline Setup](ci_cd_setup.md)
-
-Complete guide for setting up and managing the automated CI/CD pipeline. Includes instructions for configuring GitHub Secrets, understanding workflow triggers, and managing deployments to PyPI and NPM.
-
-### [Formal Language Specification (Links)](spec_links.md)
-
-A curated index linking to the formal grammar (EBNF), semantics, and JSON schemas that define the STRling DSL.
+-   **[Your First Contribution](tutorial/first_contribution.md)**: The "Zip Code" tutorial for new contributors.
+-   **[Test Environment Setup](testing_setup.md)**: The "Golden Path" setup guide using `./strling`.
+-   **[Testing Philosophy & Workflow](testing_workflow.md)**: Principles of Test Parity and contribution workflow.
+-   **[Test Design Standard](testing_design.md)**: The 3-Test Standard and Golden Pattern Testing.
+-   **[Releasing STRling](releasing.md)**: Release process and Omega Certification.
+-   **[CI/CD Pipeline Setup](ci_cd_setup.md)**: GitHub Actions configuration and deployment.
+-   **[Contribution & Documentation Guidelines](guidelines.md)**: Standards for code and documentation.
 
 ### Tooling & Utilities
 
@@ -62,12 +29,3 @@ STRling provides a unified CLI and certification suite to streamline development
 
 -   **`./strling`**: The root CLI utility for setup, testing, and maintenance. Replaces manual `pip`/`npm` workflows.
 -   **`tooling/audit_omega.py`**: The unified Final Certification harness. Must return 100% Green before any release.
-
----
-
-## Related Documentation
-
--   **[Specification Hub](../spec/README.md)**: Formal language specification (grammar, semantics, schemas)
--   **[Test Suite Guide](../tests/README.md)**: Test directory structure and quick reference
--   **[Python Binding Quick Start](../bindings/python/README.md)**: Installation and usage for Python
--   **[JavaScript Binding Quick Start](../bindings/javascript/README.md)**: Installation and usage for JavaScript

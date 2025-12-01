@@ -37,33 +37,43 @@ This ensures:
 
 ## The Iron Law of Test Parity
 
-**The Python binding is the normative reference implementation.**
+**The TypeScript binding is the normative reference implementation.**
 
 ### What This Means
 
-1. **Python tests define the contract**: All STRling features are first implemented and tested in Python
-2. **JavaScript tests must match 1:1**: Every Python test must have a corresponding JavaScript test with identical behavior
-3. **New features start in Python**: Features are not considered complete until both bindings have matching tests
+1. **TypeScript tests define the contract**: All STRling features are first implemented and tested in TypeScript.
+2. **Other bindings must match 1:1**: Every TypeScript test must have a corresponding test in other bindings with identical behavior.
+3. **New features start in TypeScript**: Features are not considered complete until the Reference Implementation has them.
 
-### Why Python is Normative
+### Why TypeScript is Normative
 
--   **Development velocity**: Python's dynamic nature allows faster iteration
--   **Expressiveness**: Python's syntax is closer to STRling's DSL design
--   **Tooling maturity**: Python testing ecosystem is more established
--   **Consistency**: A single source of truth prevents divergence between bindings
+-   **Single Source of Truth**: The TypeScript implementation generates the JSON specifications used by all other bindings.
+-   **Strict Typing**: TypeScript's type system helps define the AST and IR structures precisely.
+-   **Ecosystem**: The JS/TS ecosystem is ideal for the web-based playground and VS Code extension.
 
 ### Maintaining Test Parity
 
 When adding a feature:
 
-1. Implement and test in Python first
-2. Translate tests to JavaScript, ensuring:
+1. Implement and test in TypeScript first.
+2. Generate the specs (`npm run build:specs` in `bindings/typescript`).
+3. Implement in other bindings, ensuring:
     - Same test names (adapted to language conventions)
     - Same test cases
     - Same assertions and expected values
     - Same edge cases and error conditions
 
 **Example of Test Parity:**
+
+**TypeScript (`__tests__/unit/parser.test.ts`):**
+
+```typescript
+test("digit parser simple case", () => {
+    const result = parse("digit(1)");
+    expect(result.type).toBe("digit");
+    expect(result.count).toBe(1);
+});
+```
 
 **Python (`tests/unit/test_parser.py`):**
 
@@ -73,16 +83,6 @@ def test_digit_parser_simple():
     result = parse("digit(1)")
     assert result.type == "digit"
     assert result.count == 1
-```
-
-**JavaScript (`__tests__/unit/parser.test.js`):**
-
-```javascript
-test("digit parser simple case", () => {
-    const result = parse("digit(1)");
-    expect(result.type).toBe("digit");
-    expect(result.count).toBe(1);
-});
 ```
 
 ### Exceptions to the Iron Law

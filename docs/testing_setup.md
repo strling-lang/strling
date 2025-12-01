@@ -62,9 +62,3 @@ If you encounter issues, you can clean the environment and start over:
 ./strling clean python
 ./strling setup python
 ```
-
----
-
-## Related Documentation
-
--   **[Developer Hub](index.md)**: Return to the central documentation hub for all testing guides and standards

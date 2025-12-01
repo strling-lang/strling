@@ -1,5 +1,7 @@
 # Your First Contribution: The "Zip Code" Test
 
+[← Back to Developer Hub](../index.md)
+
 This tutorial guides you through the **Golden Path** contribution workflow. You will add a new conformance test case to STRling and verify it across multiple languages using the CLI.
 
 ---
@@ -50,50 +52,49 @@ The TypeScript binding is the **Reference Implementation**. We use it to generat
     npm run build:specs
     ```
 
-    _This compiles `zip.strl` into `tests/spec/zip.json`, containing the AST, IR, and expected regexes._
+    _Note: This command compiles the TypeScript binding and runs the spec generator, creating a corresponding `zip.json` in `tests/spec/`._
 
 ---
 
 ## Step 3: Verify with Python
 
-Now, let's verify that the Python binding correctly implements this logic.
+Now that the spec exists, we can verify that the Python binding correctly implements it.
 
-1.  Run the Python tests:
+1.  Setup the Python environment (if not already done):
+
+    ```bash
+    ./strling setup python
+    ```
+
+2.  Run the tests:
 
     ```bash
     ./strling test python
     ```
 
-    _The test runner will pick up `tests/spec/zip.json` and execute it against the Python implementation._
+    You should see the new "US Zip Code" test case passing!
 
 ---
 
-## Step 4: Verify with Rust (Optional)
+## Step 4: Verify with Other Languages
 
-If you have Rust installed, verify it there too. This is the power of STRling's conformance suite—one test file validates the entire ecosystem.
+If you have other language toolchains installed (e.g., Rust, Go), you can verify them too. The beauty of the Golden Master is that once the spec is generated, _all_ bindings can test against it immediately.
 
-1.  Run the Rust tests:
-    ```bash
-    ./strling test rust
-    ```
+```bash
+# Optional: Verify Rust
+./strling setup rust
+./strling test rust
+```
 
 ---
 
-## Step 5: Submit your PR
+## Step 5: Commit
 
-1.  Check the status of your changes:
+Once verified, commit your changes.
 
-    ```bash
-    git status
-    ```
+```bash
+git add tests/conformance/cases/zip.strl tests/spec/zip.json
+git commit -m "feat: add US Zip Code conformance test"
+```
 
-    _You should see the new `.strl` file and the generated `.json` file._
-
-2.  Commit and push:
-    ```bash
-    git add tests/conformance/cases/zip.strl tests/spec/zip.json
-    git commit -m "feat: add US zip code conformance test"
-    git push origin feat/zip-code
-    ```
-
-**Congratulations!** You've just added a portable test case that strengthens the entire STRling ecosystem.
+Congratulations! You've just added a portable, cross-language test case to STRling.

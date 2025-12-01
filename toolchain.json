@@ -77,7 +77,7 @@
             "check_bin": "perl",
             "setup": ["./setup.sh"],
             "clean": ["make", "clean"],
-            "test": ["prove", "-lv", "t"]
+            "test": ["prove", "-lv", "t/conformance.t"]
         },
         "php": {
             "path": "bindings/php",

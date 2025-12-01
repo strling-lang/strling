@@ -32,7 +32,11 @@ test_that("phone AST compiles to IR sequence", {
   expect_true(length(parts) >= 3)
   # at least one part should be a quantifier for digits (min >= 3)
   has_digits_quant <- any(sapply(parts, function(p) {
-    is.list(p) && p$ir == "Quant" && !is.null(p$min) && p$min >= 3
+    # Check if it's a Quant directly
+    if (is.list(p) && p$ir == "Quant" && !is.null(p$min) && p$min >= 3) return(TRUE)
+    # Check if it's a Group containing a Quant
+    if (is.list(p) && p$ir == "Group" && is.list(p$body) && p$body$ir == "Quant" && !is.null(p$body$min) && p$body$min >= 3) return(TRUE)
+    FALSE
   }))
   expect_true(has_digits_quant)
 })

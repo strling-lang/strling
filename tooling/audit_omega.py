@@ -81,6 +81,27 @@ SEMANTIC_CHECKS = {
     ],
 }
 
+# Test count patterns (Generic to Specific)
+TEST_PATTERNS = [
+    r"(\d+) tests passed",
+    r"====\s+(\d+)\s+passed",
+    r"Tests:\s+(\d+)\s+passed",
+    r"Tests:\s+(\d+) passed,\s+\d+ total",  # Jest
+    r"Executed (\d+) tests, with 0 failures",  # XCTest (Swift)
+    r"\[STRling Audit\] Tests: (\d+), Skipped: \d+",  # Kotlin (Strict)
+    r"test result: ok\. (\d+) passed",
+    r"Tests run:\s+(\d+), Failures: 0",
+    r"Files=\d+, Tests=(\d+)",
+    r"OK \((\d+) tests?[,\)]",
+    r"^Tests:\s*(\d+)",
+    r"\[\s*FAIL\s*\d+\s*\|\s*WARN\s*\d+\s*\|\s*SKIP\s*\d+\s*\|\s*PASS\s*(\d+)\s*\]",  # R (Strict)
+    r"^(\d+) successes / \d+ failures / \d+ errors",  # Lua (Strict)
+    r"(\d+) runs, \d+ assertions",  # Ruby
+    r"\+(\d+): All tests passed",
+    r"(\d+)/\d+ tests passed",
+    r"Passed:\s+(\d+)",
+]
+
 
 def load_toolchain():
     with open(TOOLCHAIN_PATH, "r") as f:
@@ -284,28 +305,8 @@ def main():
         # 11. CTest: "100% tests passed"
         # 12. Go: count "ok" lines
         combined = test_res.stdout + "\n" + test_res.stderr
-        patterns = [
-            r"(\d+) tests passed",
-            r"====\s+(\d+)\s+passed",
-            r"Tests:\s+(\d+)\s+passed",
-            r"Tests:\s+(\d+) passed,\s+\d+ total",  # Jest
-            r"Executed (\d+) tests, with 0 failures",  # XCTest (Swift)
-            r"STRling Test Count: (\d+)",  # Kotlin (Custom)
-            r"test result: ok\. (\d+) passed",
-            r"Tests run:\s+(\d+), Failures: 0",
-            r"Files=\d+, Tests=(\d+)",
-            r"OK \((\d+) tests?[,\)]",
-            r"^Tests:\s*(\d+)",
-            r"\[ FAIL 0 \| WARN 0 \| SKIP 0 \| PASS (\d+) \]",
-            r"\[ PASS (\d+) \|",  # R (Robust)
-            r"(\d+) successes / \d+ failures",  # Lua
-            r"(\d+) runs, \d+ assertions",  # Ruby
-            r"\+(\d+): All tests passed",
-            r"(\d+)/\d+ tests passed",
-            r"Passed:\s+(\d+)",
-        ]
 
-        for pat in patterns:
+        for pat in TEST_PATTERNS:
             match = re.search(pat, combined)
             if match:
                 test_count = match.group(1)

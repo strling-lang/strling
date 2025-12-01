@@ -26,7 +26,7 @@ tasks.test {
         override fun beforeSuite(suite: org.gradle.api.tasks.testing.TestDescriptor) {}
         override fun afterSuite(suite: org.gradle.api.tasks.testing.TestDescriptor, result: org.gradle.api.tasks.testing.TestResult) {
             if (suite.parent == null) {
-                println("STRling Test Count: ${result.testCount}")
+                println("[STRling Audit] Tests: ${result.testCount}, Skipped: ${result.skippedTestCount}")
             }
         }
         override fun beforeTest(testDescriptor: org.gradle.api.tasks.testing.TestDescriptor) {}

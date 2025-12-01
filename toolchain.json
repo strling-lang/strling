@@ -70,7 +70,7 @@
             "runtime": "Lua >= 5.1",
             "setup": ["./setup.sh"],
             "clean": ["rm", "-f", "strling.so"],
-            "test": ["./run_tests.sh"]
+            "test": ["./run_tests.sh", "-o", "plainTerminal"]
         },
         "perl": {
             "path": "bindings/perl",
@@ -104,11 +104,7 @@
             "check_bin": "Rscript",
             "setup": ["Rscript", "setup.R"],
             "clean": ["rm", "-f", "src/*.o", "src/*.so"],
-            "test": [
-                "Rscript",
-                "-e",
-                "devtools::load_all(); testthat::test_dir('tests/testthat')"
-            ]
+            "test": ["Rscript", "run_tests.R"]
         },
         "ruby": {
             "path": "bindings/ruby",

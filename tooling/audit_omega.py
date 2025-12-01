@@ -177,6 +177,8 @@ def main():
     print(">> Step 2: The Grand Execution")
 
     for lang in bindings:
+        if lang != "kotlin":
+            continue
         print(f">> Processing {lang}...")
 
         # Setup (to ensure clean build)

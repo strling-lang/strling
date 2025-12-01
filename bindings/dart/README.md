@@ -31,9 +31,9 @@ import 'package:strling/simply.dart';
 final usPhonePattern = Simply.merge([
   Simply.start(),
   Simply.digit(3, 3).asCapture(),       // Area code
-  Simply.anyOf('-. ').may(),      // Optional separator
+  Simply.inChars('-. ').may(),      // Optional separator
   Simply.digit(3, 3).asCapture(),       // Prefix
-  Simply.anyOf('-. ').may(),      // Optional separator
+  Simply.inChars('-. ').may(),      // Optional separator
   Simply.digit(4, 4).asCapture(),       // Line number
   Simply.end(),
 ]);

@@ -6,6 +6,16 @@ This document outlines the process for releasing new versions of STRling and its
 
 STRling follows a "Single Source of Truth" (SSOT) model for versioning. The version is defined in `bindings/python/pyproject.toml` and propagated to all other bindings using the `tooling/sync_versions.py` script.
 
+### 0. Certification (The Green Wall)
+
+Before bumping any version, you must certify the codebase using the Omega Audit. This ensures no critical tests are skipped and all bindings are compliant.
+
+```bash
+python3 tooling/audit_omega.py
+```
+
+**Constraint:** Do not proceed unless the audit returns **100% Green/Certified**.
+
 ### 1. Update Version
 
 1.  Edit `bindings/python/pyproject.toml` and update the `version` field.

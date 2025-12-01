@@ -137,15 +137,13 @@ Run the complete test suite for both bindings:
 **Python:**
 
 ```bash
-cd bindings/python
-pytest
+./strling test python
 ```
 
 **JavaScript:**
 
 ```bash
-cd bindings/javascript
-npm test
+./strling test typescript
 ```
 
 Ensure:
@@ -188,13 +186,13 @@ Use coverage tools to verify:
 **Python:**
 
 ```bash
-pytest --cov=src --cov-report=html
+./strling test python
 ```
 
 **JavaScript:**
 
 ```bash
-npm test -- --coverage
+./strling test typescript
 ```
 
 #### 2. Test Quality
@@ -325,7 +323,7 @@ Required test commands:
 **Run parser unit tests:**
 
 ```bash
-pytest tests/unit
+./strling test python
 ```
 
 **Run CLI/LSP tests:**

@@ -22,7 +22,7 @@ STRling's testing system is organized into three specialized guides:
 
 #### [Test Environment Setup](testing_setup.md)
 
-Copy-pasteable commands for setting up your local test environment for Python and JavaScript bindings.
+The "Golden Path" guide for setting up your local environment using the unified `./strling` CLI.
 
 #### [Test Design Standard](testing_design.md)
 
@@ -55,6 +55,13 @@ Complete guide for setting up and managing the automated CI/CD pipeline. Include
 ### [Formal Language Specification (Links)](spec_links.md)
 
 A curated index linking to the formal grammar (EBNF), semantics, and JSON schemas that define the STRling DSL.
+
+### Tooling & Utilities
+
+STRling provides a unified CLI and certification suite to streamline development.
+
+-   **`./strling`**: The root CLI utility for setup, testing, and maintenance. Replaces manual `pip`/`npm` workflows.
+-   **`tooling/audit_omega.py`**: The unified Final Certification harness. Must return 100% Green before any release.
 
 ---
 

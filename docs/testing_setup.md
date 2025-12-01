@@ -2,149 +2,69 @@
 
 [← Back to Developer Hub](index.md)
 
-This guide provides **copy-pasteable commands** for setting up your local test environment for both STRling bindings. It assumes you have Python 3.x and Node.js already installed on your system.
+This guide provides the **Golden Path** for setting up your local development environment. STRling uses a unified CLI tool to manage dependencies and run tests across all bindings.
 
 ---
 
-## Python Binding (`STRling.py`)
+## Prerequisites
 
-### 1. Create Virtual Environment
+Before starting, ensure you have the following installed:
 
-```bash
-python3 -m venv ./bindings/python/.venv
-```
+1.  **Python 3.10+** (Required for the CLI and Python binding)
+2.  **Node.js 20+** (Required for TypeScript binding)
+3.  **Git**
 
-### 2. Activate Virtual Environment
-
-**On Linux/macOS:**
-```bash
-source ./bindings/python/.venv/bin/activate
-```
-
-**On Windows:**
-```bash
-./bindings/python/.venv/Scripts/activate
-```
-
-### 3. Install Dependencies
-
-```bash
-pip install -r ./bindings/python/requirements.txt
-```
-
-### 4. Install STRling in Editable Mode
-
-```bash
-pip install -e ./bindings/python
-```
-
-### 5. Run Tests
-
-```bash
-pytest
-```
-
-Or, to run tests from the Python binding directory:
-
-```bash
-cd bindings/python
-pytest
-```
+_Note: Specific bindings (Rust, Go, etc.) require their respective toolchains (Cargo, Go) if you intend to work on them._
 
 ---
 
-## JavaScript Binding (`STRling.js`)
+## The Golden Path
 
-### 1. Set Node Version (if using nvm)
+### 1. Discovery
 
-```bash
-nvm use 20
-```
-
-If you don't have Node.js 20 installed:
+Run the root CLI to see available commands and supported bindings:
 
 ```bash
-nvm install 20
-nvm use 20
+./strling list
 ```
 
-### 2. Install Dependencies
+### 2. Setup
+
+Initialize the environment for your target language. This handles virtual environments, dependency installation, and build steps automatically.
 
 ```bash
-cd bindings/javascript
-npm install
+# Setup Python environment
+./strling setup python
+
+# Setup TypeScript environment
+./strling setup typescript
+
+# Setup Rust environment (if applicable)
+./strling setup rust
 ```
 
-### 3. Run Tests
+### 3. Verification
+
+Verify your setup by running the test suite:
 
 ```bash
-npm test
+./strling test python
+./strling test typescript
 ```
-
----
-
-## Quick Reference
-
-### Python Test Commands
-
-| Command | Description |
-|---------|-------------|
-| `pytest` | Run all tests |
-| `pytest -v` | Run tests with verbose output |
-| `pytest tests/unit/` | Run only unit tests |
-| `pytest tests/e2e/` | Run only E2E tests |
-| `pytest -k "test_name"` | Run specific test by name |
-
-### JavaScript Test Commands
-
-| Command | Description |
-|---------|-------------|
-| `npm test` | Run all tests |
-| `npm test -- --verbose` | Run tests with verbose output |
-| `npm test -- __tests__/unit/` | Run only unit tests |
-| `npm test -- __tests__/e2e/` | Run only E2E tests |
-| `npm test -- -t "test_name"` | Run specific test by name |
 
 ---
 
 ## Troubleshooting
 
-### Python Issues
+If you encounter issues, you can clean the environment and start over:
 
-**Problem:** `ModuleNotFoundError: No module named 'strling'`
-
-**Solution:** Ensure you've installed the package in editable mode:
 ```bash
-pip install -e ./bindings/python
-```
-
-**Problem:** Tests fail with import errors
-
-**Solution:** Make sure your virtual environment is activated and all dependencies are installed:
-```bash
-source ./bindings/python/.venv/bin/activate
-pip install -r ./bindings/python/requirements.txt
-```
-
-### JavaScript Issues
-
-**Problem:** `Cannot find module` errors
-
-**Solution:** Ensure dependencies are installed:
-```bash
-cd bindings/javascript
-npm install
-```
-
-**Problem:** Wrong Node.js version
-
-**Solution:** Use Node.js 20 or later:
-```bash
-nvm use 20
+./strling clean python
+./strling setup python
 ```
 
 ---
 
 ## Related Documentation
 
-- **[Developer Hub](index.md)**: Return to the central documentation hub for all testing guides and standards
+-   **[Developer Hub](index.md)**: Return to the central documentation hub for all testing guides and standards

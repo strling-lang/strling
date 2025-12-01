@@ -302,7 +302,7 @@ class SchemaValidationTests: XCTestCase {
                 
                 let message = validationError.message
                 let matchesPyError = message.range(of: expectedSubstring) != nil
-                let matchesJsError = message.range(of: jsErrorSubstring) != nil
+                _ = message.range(of: jsErrorSubstring) != nil
                 
                 // In our mock, we just throw the Python string, so we only need to
                 // check for that one.

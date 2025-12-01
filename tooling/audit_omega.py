@@ -177,8 +177,6 @@ def main():
     print(">> Step 2: The Grand Execution")
 
     for lang in bindings:
-        if lang != "kotlin":
-            continue
         print(f">> Processing {lang}...")
 
         # Setup (to ensure clean build)
@@ -314,6 +312,17 @@ def main():
             )
             if ctest_match:
                 test_count = ctest_match.group(1)
+
+        # Special handling for XCTest (Swift): "Executed N tests"
+        # We take the maximum value found to capture the "All tests" aggregate
+        xctest_matches = re.findall(r"Executed (\d+) tests", combined)
+        if xctest_matches:
+            counts = [int(c) for c in xctest_matches]
+            max_count = max(counts)
+            if test_count == "Unknown" or (
+                test_count.isdigit() and int(test_count) < max_count
+            ):
+                test_count = str(max_count)
 
         # Special handling for Go: count "ok" lines
         if test_count == "Unknown":

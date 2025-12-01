@@ -108,14 +108,19 @@ fileprivate func strlingParse(src: String) throws -> ParseResult {
     var astString = src
     
     if src.starts(with: "%flags") {
-        let parts = src.split(separator: "\n", maxSplits: 1)
-        let flagLine = String(parts.first ?? "")
-        if flagLine.contains("i") { flags.i = true }
-        if flagLine.contains("m") { flags.m = true }
-        if flagLine.contains("s") { flags.s = true }
-        if flagLine.contains("u") { flags.u = true }
-        if flagLine.contains("x") { flags.x = true }
-        astString = String(parts.last ?? "")
+        let parts = src.components(separatedBy: "\n")
+        if parts.count >= 2 {
+            let flagLine = parts[0]
+            let flagsPart = flagLine.dropFirst("%flags".count)
+            
+            if flagsPart.contains("i") { flags.i = true }
+            if flagsPart.contains("m") { flags.m = true }
+            if flagsPart.contains("s") { flags.s = true }
+            if flagsPart.contains("u") { flags.u = true }
+            if flagsPart.contains("x") { flags.x = true }
+            
+            astString = parts.dropFirst().joined(separator: "\n")
+        }
     }
 
     // --- Mocked AST Generation Logic ---

@@ -409,7 +409,8 @@ extension SimplyAPITests {
     func testNotBetween_rejectsMixedTypes() {
         // Our mock is strongly typed, so this test is slightly different,
         // but we can replicate the *intent* by checking our mock's validation.
-        XCTAssertThrowsError(try Simply.notBetween("a", "Z")) { error in
+        // Note: "Z" < "a", so we use Z, a to avoid "start > end" error
+        XCTAssertThrowsError(try Simply.notBetween("Z", "a")) { error in
             guard case let .validationError(msg) = error as? STRlingError else { return XCTFail() }
             XCTAssertTrue(msg.contains("same case"))
         }

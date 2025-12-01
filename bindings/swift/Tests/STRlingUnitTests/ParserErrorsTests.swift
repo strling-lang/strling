@@ -383,7 +383,7 @@ extension ParserErrorsTests {
         assertHint(
             for: #"\1abc"#,
             messageContains: "Backreference to undefined group",
-            hintContains: ["previously captured groups", "forward references"]
+            hintContains: ["previously captured groups", "Forward references"]
         )
     }
 
@@ -407,7 +407,7 @@ extension ParserErrorsTests {
         assertHint(
             for: #"[\p{Letter"#,
             messageContains: #"Unterminated \\p{...}"#,
-            hintContains: ["syntax \\p{Property}"]
+            hintContains: [#"syntax is \\p{Property_Name}"#]
         )
     }
 }

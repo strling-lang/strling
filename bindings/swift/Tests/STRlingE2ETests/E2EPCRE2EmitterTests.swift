@@ -97,14 +97,21 @@ fileprivate func strlingParse(src: String) throws -> ParseResult {
     var astDSL = src
     
     if src.starts(with: "%flags") {
-        let parts = src.split(separator: "\n", maxSplits: 1)
-        let flagLine = String(parts.first ?? "")
-        if flagLine.contains("i") { flags.i = true }
-        if flagLine.contains("m") { flags.m = true }
-        if flagLine.contains("s") { flags.s = true }
-        if flagLine.contains("u") { flags.u = true }
-        if flagLine.contains("x") { flags.x = true }
-        astDSL = String(parts.last ?? "")
+        let parts = src.components(separatedBy: "\n")
+        if parts.count >= 2 {
+            let flagLine = parts[0]
+            // Only check flags in the part after "%flags"
+            let flagsPart = flagLine.dropFirst("%flags".count)
+            
+            if flagsPart.contains("i") { flags.i = true }
+            if flagsPart.contains("m") { flags.m = true }
+            if flagsPart.contains("s") { flags.s = true }
+            if flagsPart.contains("u") { flags.u = true }
+            if flagsPart.contains("x") { flags.x = true }
+            
+            // Rejoin the rest of the parts
+            astDSL = parts.dropFirst().joined(separator: "\n")
+        }
     }
 
     return ParseResult(ast: MockASTNode(dsl: astDSL), flags: flags)
@@ -236,7 +243,7 @@ class E2EPCRE2EmitterTests: XCTestCase {
     func testCategoryACoreLanguageFeatures() throws {
         let cases: [TestCase] = [
             TestCase(
-                input: #"%flags x\n(?<area>\d{3}) - (?<exchange>\d{3}) - (?<line>\d{4})"#,
+                input: "%flags x\n" + #"(?<area>\d{3}) - (?<exchange>\d{3}) - (?<line>\d{4})"#,
                 expected: #"(?x)(?<area>\d{3})-(?<exchange>\d{3})-(?<line>\d{4})"#,
                 id: "golden_phone_number"
             ),
@@ -251,7 +258,7 @@ class E2EPCRE2EmitterTests: XCTestCase {
                 id: "golden_lookaround_anchor"
             ),
             TestCase(
-                input: #"%flags u\n\p{L}+"#,
+                input: "%flags u\n" + #"\p{L}+"#,
                 expected: #"(?u)\p{L}+"#,
                 id: "golden_unicode_property"
             ),

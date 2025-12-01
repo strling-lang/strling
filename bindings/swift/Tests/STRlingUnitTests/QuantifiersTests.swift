@@ -77,19 +77,21 @@ fileprivate func strlingParse(src: String) throws -> ParseResult {
 
     // --- Mocked Flag Parsing Logic ---
     if src.starts(with: "%flags") {
-        let parts = src.split(separator: "\n", maxSplits: 1)
-        let flagLine = String(parts.first ?? "")
-        if flagLine.contains("x") { flags.extended = true }
-        astString = String(parts.last ?? "")
+        let parts = src.components(separatedBy: "\n")
+        if parts.count >= 2 {
+            let flagLine = parts[0]
+            if flagLine.contains("x") { flags.extended = true }
+            astString = parts.dropFirst().joined(separator: "\n")
+        }
     }
     
     // --- Mocked Free-Spacing (x-mode) Logic ---
     // Remap free-spacing inputs to unique keys for the switch
     if flags.extended {
         switch astString {
-        case "\na *":
+        case "a *":
             astString = "x_a_star" // Cat I
-        case "\n\\ *":
+        case "\\ *":
             astString = "x_esc_space_star" // Cat I
         default:
             break // No remapping

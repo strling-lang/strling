@@ -25,11 +25,12 @@ import Foundation
 private let PYTHON_EXEC = ProcessInfo.processInfo.environment["PYTHON_EXEC"] ?? ProcessInfo.processInfo.environment["PYTHON"] ?? "python3"
 
 // Get the project root assuming the test is run from the root directory.
-private let PROJECT_ROOT_URL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-private let CLI_PATH = "tooling/parse_strl.py"
+// When running from bindings/swift, we need to go up two levels.
+private let PROJECT_ROOT_URL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).deletingLastPathComponent().deletingLastPathComponent()
+private let CLI_PATH = "../../tooling/parse_strl.py"
 private let SPEC_DIR = "spec/schema"
 private let BASE_SCHEMA_PATH = PROJECT_ROOT_URL.appendingPathComponent(SPEC_DIR).appendingPathComponent("base.schema.json").path
-private let TEMP_DIR_URL = PROJECT_ROOT_URL.appendingPathComponent("tmp_cli_smoke_swift")
+private let TEMP_DIR_URL = URL(fileURLWithPath: FileManager.default.currentDirectoryPath).appendingPathComponent("tmp_cli_smoke_swift")
 
 // --- Test Suite ---------------------------------------------------------------
 

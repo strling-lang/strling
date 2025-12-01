@@ -129,8 +129,6 @@ fileprivate class Compiler {
             return .backref(idx, name)
         case .look(let dir, let neg, let body):
             return .look(dir, neg, lower(body))
-        default:
-            fatalError("Unhandled ASTNode in mock lower: \(astNode)")
         }
     }
     

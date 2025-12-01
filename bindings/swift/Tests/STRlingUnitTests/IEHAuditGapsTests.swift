@@ -125,7 +125,7 @@ fileprivate func strlingParse(src: String) throws -> ParseResult {
     case "a{5":
         throw STRlingParseError.testError(message: "Unterminated brace", hint: "Missing closing '}' for quantifier.")
     case "[]":
-        throw STRlingParseError.testError(message: "Empty character class", hint: "Add characters or ranges inside the brackets.")
+        throw STRlingParseError.testError(message: "Empty character class", hint: "Add characters or ranges inside the brackets (cannot be empty).")
 
     // --- Valid patterns ---
     // All of these fall through to the default success case
@@ -229,7 +229,7 @@ class IEHAuditGapsTests: XCTestCase {
      * @brief Corresponds to "describe('Incomplete named backref hint', ...)"
      */
     func testIncompleteNamedBackrefHint() {
-        assertParseError(#"\k"#, messageContains: "Expected '<' after \\k", hintContains: [#"\\k<name>"#])
+        assertParseError(#"\k"#, messageContains: "Expected '<' after \\k", hintContains: [#"\k<name>"#])
     }
 
     /**
@@ -245,8 +245,8 @@ class IEHAuditGapsTests: XCTestCase {
      * @brief Corresponds to "describe('Context-aware escape hints', ...)"
      */
     func testContextAwareEscapeHints() {
-        assertParseError(#"\q"#, messageContains: "Unknown escape sequence", hintContains: [#"\\q"#])
-        assertParseError(#"\z"#, messageContains: "Unknown escape sequence", hintContains: [#"\\z"#, #"\\Z"#])
+        assertParseError(#"\q"#, messageContains: "Unknown escape sequence", hintContains: [#"\q"#])
+        assertParseError(#"\z"#, messageContains: "Unknown escape sequence", hintContains: [#"\z"#, #"\Z"#])
     }
 
     /**

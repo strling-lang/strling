@@ -85,7 +85,7 @@ fileprivate struct Lit: ASTNode {
  * Mirrors `nodes.Seq`.
  */
 fileprivate struct Seq: ASTNode {
-    let parts: [ASTNode]
+    let parts: [any ASTNode]
 
     // Custom Equatable conformance for nested ASTNodes
     static func == (lhs: Seq, rhs: Seq) -> Bool {
@@ -122,7 +122,7 @@ fileprivate enum ParseError: Error, LocalizedError, Equatable {
 }
 
 // --- Helper for comparing heterogeneous ASTNode arrays ---
-fileprivate func anyEquals(_ lhs: ASTNode, _ rhs: ASTNode) -> Bool {
+fileprivate func anyEquals(_ lhs: any ASTNode, _ rhs: any ASTNode) -> Bool {
     if let l = lhs as? Lit, let r = rhs as? Lit { return l == r }
     if let l = lhs as? Anchor, let r = rhs as? Anchor { return l == r }
     if let l = lhs as? Seq, let r = rhs as? Seq { return l == r }
@@ -137,7 +137,7 @@ fileprivate func anyEquals(_ lhs: ASTNode, _ rhs: ASTNode) -> Bool {
  * C equivalent of the `parse` function under test.
  * Throws an error on failure.
  */
-fileprivate func strlingParse(src: String) throws -> (Flags, ASTNode) {
+fileprivate func strlingParse(src: String) throws -> (Flags, any ASTNode) {
     // Category A: Core Anchors
     switch src {
     case "^": return (Flags(), Anchor(at: .start))
@@ -183,7 +183,7 @@ fileprivate func strlingParse(src: String) throws -> (Flags, ASTNode) {
 /**
  * Helper to get just the AST node, simplifying tests.
  */
-private func parse(_ src: String) throws -> ASTNode {
+private func parse(_ src: String) throws -> any ASTNode {
     let (_, ast) = try strlingParse(src: src)
     return ast
 }

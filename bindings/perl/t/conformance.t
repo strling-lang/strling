@@ -3,6 +3,7 @@ use warnings;
 use Test::More;
 use JSON::PP;
 use File::Glob ':glob';
+use File::Basename;
 use FindBin;
 use lib "$FindBin::Bin/../lib";
 use STRling::NodeFactory;

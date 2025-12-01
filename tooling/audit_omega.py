@@ -27,6 +27,7 @@ SKIP_EXCLUDE_PATTERNS = [
     r"\b0 skipped\b",
     r"skipped 0",
     r"Skipped:\s*0",
+    r"> Task :.*SKIPPED",  # Gradle task skips (e.g., "> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED")
 ]
 
 # Warning patterns for test/build output

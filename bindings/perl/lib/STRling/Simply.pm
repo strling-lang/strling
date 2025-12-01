@@ -590,8 +590,8 @@ sub _emit_pcre2 {
     }
     elsif ($type eq 'STRling::Core::IR::IRQuant') {
         my $child = $self->_emit_pcre2($ir->child);
-        my $min = $ir->min;
-        my $max = $ir->max;
+        my $min = $ir->min // 0;
+        my $max = $ir->max // 'Inf';
         
         if ($min == 0 && $max == 1) {
             return $child . '?';

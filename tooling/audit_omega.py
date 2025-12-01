@@ -26,6 +26,7 @@ SKIP_EXCLUDE_PATTERNS = [
     r"\b0 ignored\b",
     r"\b0 skipped\b",
     r"skipped 0",
+    r"Skipped:\s*0",
 ]
 
 # Warning patterns for test/build output
@@ -296,6 +297,9 @@ def main():
             r"OK \((\d+) tests?[,\)]",
             r"^Tests:\s*(\d+)",
             r"\[ FAIL 0 \| WARN 0 \| SKIP 0 \| PASS (\d+) \]",
+            r"\[ PASS (\d+) \|",  # R (Robust)
+            r"(\d+) successes / \d+ failures",  # Lua
+            r"(\d+) runs, \d+ assertions",  # Ruby
             r"\+(\d+): All tests passed",
             r"(\d+)/\d+ tests passed",
             r"Passed:\s+(\d+)",

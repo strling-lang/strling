@@ -2,6 +2,9 @@
 # STRling R Binding Setup Script
 # This script installs the required R dependencies for the R binding.
 
+# Force locale to C to avoid warnings
+Sys.setenv(LC_ALL = "C")
+
 cat("Setting up STRling R binding dependencies...\n")
 
 # Set CRAN mirror

@@ -2,7 +2,7 @@
 
 | Binding | Build | Tests | Zero Skips | Zero Warnings | Semantic: DupNames | Semantic: Ranges | Verdict |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| c | ✅ | Unknown | ✅ | ❌ (165 Warn) | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| c | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
 | cpp | ✅ | 548 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | csharp | ✅ | 605 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | dart | ❌ Fail (Setup) | 0 | N/A | N/A | N/A | N/A | 🔴 FAIL |
@@ -10,7 +10,7 @@
 | go | ✅ | 5 pkgs | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | java | ✅ | 3 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | kotlin | ✅ | 613 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
-| lua | ✅ | 596 | ❌ (1 Skip) | ✅ | ✅ Verified | ✅ Verified | 🔴 FAIL (Skips) |
+| lua | ✅ | 596 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | perl | ✅ | 548 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | php | ✅ | 641 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | python | ✅ | 716 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |

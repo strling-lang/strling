@@ -29,7 +29,6 @@ if TYPE_CHECKING:
     # For static type checkers only - avoids runtime import failures in
     # environments where the bindings path isn't available.
     from STRling.core.nodes import Flags, Node  # type: ignore
-    from STRling.core.errors import STRlingParseError  # type: ignore
     from typing import Callable
 
     # Tell the type checker the runtime `parse` callable signature. This

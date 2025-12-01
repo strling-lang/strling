@@ -8,22 +8,23 @@ If you add or change tooling, please update this index so maintainers and CI con
 
 ## Quick links
 
--   Audit & reporting: `audit_conformance.py`, `audit_precision.py`, `audit_hints.py`, `audit_bindings.sh`
+-   Audit & reporting: `audit_conformance.py`, `audit_precision.py`, `audit_hints.py`, `audit_omega.py`
 -   Release helpers: `sync_versions.py`, `check_version_exists.py`
--   Migration & fixture tooling: `migrate_tests.py`, `strip_migrated_tests.py`, `js_to_json_ast/`
+-   Fixture tooling: `js_to_json_ast/`
 -   LSP & editor tooling: `lsp-server/`
--   Utilities & reports: `parse_strl.py`, `generate_final_report.py`, `generate_c_asts.sh`
--   Tests & logs: `tests/`, `test_logs/`, `TEST_REPORT.md`
+-   Utilities: `parse_strl.py`, `generate_c_asts.sh`
+-   CLI: `strling`
+-   Tests & logs: `tests/`, `test_logs/`
 
 ---
 
 ## Scripts and tools (alphabetical)
 
--   `audit_bindings.sh` — Shell wrapper to run test commands across language bindings and collect logs into `audit_logs/`. Useful for cross-binding checks and CI auditing.
-
 -   `audit_conformance.py` — Run conformance coverage checks across bindings by comparing executed test fixtures against canonical JSON AST fixtures. Produces a report of missing coverage and exits non-zero on failures.
 
 -   `audit_hints.py` — Small interactive helper that runs the Python parser against a pattern and prints instructional hints from `STRlingParseError`. Useful when debugging parser errors and improving error messages.
+
+-   `audit_omega.py` — The unified Final Certification harness. Runs the global audit and generates `FINAL_AUDIT_REPORT.md`.
 
 -   `audit_precision.py` — Compares binding test counts against the spec baseline and generates a human-readable precision/coverage report to help triage gaps.
 
@@ -31,17 +32,11 @@ If you add or change tooling, please update this index so maintainers and CI con
 
 -   `generate_c_asts.sh` — Helper script that builds/produces C AST artifacts from parser outputs. Used by C/C++ integration tasks and tests which rely on JSON AST artifacts.
 
--   `generate_final_report.py` — Build a final aggregated report by reading `TEST_REPORT.md` and writing a timestamped artifact under `reports/` or repository root.
-
--   `migrate_tests.py` — Extract test patterns and cases from JavaScript/TypeScript tests and write them into fixtures that the `js_to_json_ast` pipeline can consume.
-
 -   `parse_strl.py` — Command-line parsing/validation tool for STRling DSL files. Can emit JSON ASTs or run emitters to produce a target regex. Handy for local parsing, debugging, and scripting.
 
--   `strip_migrated_tests.py` — Cleanup helper that removes migrated `test.each` / manual tests from JS/TS files after their cases have been converted to fixtures.
+-   `strling` — The root CLI utility. Handles setup, build, test, and clean lifecycles for all bindings.
 
 -   `sync_versions.py` — Single source-of-truth version synchronization utility. Reads the canonical version (Python/pyproject or other) and updates language binding manifests (Cargo.toml, package.json, pom.xml, etc.). Supports dry-run and write modes.
-
--   `sync_versions.py.bak` — Backup copy of the version sync script retained for historical/debugging reference.
 
 ---
 
@@ -111,12 +106,12 @@ If you need more detail on any item below, open its README or the script header 
 
 ## Quick highlights
 
--   Audit & reports: `audit_conformance.py`, `audit_precision.py`, `audit_bindings.sh`, `TEST_REPORT.md` ✅
+-   Audit & reports: `audit_conformance.py`, `audit_precision.py`, `audit_omega.py` ✅
 -   AST / fixture generation: `js_to_json_ast/`, `generate_c_asts.sh` 🔧
--   Migration helpers: `migrate_tests.py`, `strip_migrated_tests.py` 🔁
 -   Release helpers: `sync_versions.py`, `check_version_exists.py` 📦
 -   Editor tooling: `lsp-server/` (LSP server and examples) 🧑‍💻
--   Misc: `parse_strl.py`, `scripts/verify_ecosystem.py` 📝
+-   CLI: `strling` 🧰
+-   Misc: `parse_strl.py` 📝
 
 ---
 
@@ -134,17 +129,17 @@ If you need more detail on any item below, open its README or the script header 
     python3 tooling/audit_precision.py
     ```
 
--   `tooling/audit_bindings.sh` — Shell script to run build/test across each binding and write per-binding logs under `tooling/test_logs/`.
+-   `tooling/audit_omega.py` — Unified final certification audit runner. Generates `FINAL_AUDIT_REPORT.md`.
 
     ```bash
-    bash tooling/audit_bindings.sh
+    python3 tooling/audit_omega.py
     ```
 
 -   `tooling/TEST_REPORT.md` — Generated global test report summarising conformance across bindings. Used for human review and CI reporting.
 
 ---
 
-## Generators & migration helpers
+## Generators & fixtures
 
 -   `tooling/js_to_json_ast/` — The JS → JSON AST generator pipeline. It contains generator scripts and a large set of test fixtures used to create the canonical JSON AST files consumed by other bindings. See `tooling/js_to_json_ast/README.md` for full instructions. Example invocation:
 
@@ -158,17 +153,7 @@ If you need more detail on any item below, open its README or the script header 
     bash tooling/generate_c_asts.sh
     ```
 
--   `tooling/migrate_tests.py` — Helper to migrate tests (e.g., converting TypeScript manual tests into fixtures).
-
-    ```bash
-    python3 tooling/migrate_tests.py path/to/testfile.ts output_dir/
-    ```
-
--   `tooling/strip_migrated_tests.py` — Remove migration-specific scaffolding (e.g. `manual()` wrappers) from TypeScript tests during migration workflows.
-
-    ```bash
-    python3 tooling/strip_migrated_tests.py path/to/testfile.ts
-    ```
+Note: `tooling/js_to_json_ast/fixtures/` contains many fixture files (pattern sources). The index intentionally groups these rather than listing each file individually.
 
 Note: `tooling/js_to_json_ast/fixtures/` contains many fixture files (pattern sources). The index intentionally groups these rather than listing each file individually.
 
@@ -217,7 +202,9 @@ Note: `tooling/js_to_json_ast/fixtures/` contains many fixture files (pattern so
     echo 'pattern' | python3 tooling/parse_strl.py - --emit pcre2
     ```
 
--   `tooling/scripts/verify_ecosystem.py` — Small shim script used by CI/test harnesses.
+    STRling root CLI:
+
+-   `strling` — Orchestrates setup, build, test, and clean across all bindings.
 
 ---
 

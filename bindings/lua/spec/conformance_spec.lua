@@ -19,11 +19,13 @@ describe("Conformance Tests", function()
       -- Handle error tests (currently treated as irrelevant/pass-through)
       if string.find(content, '"expected_error"') then
         it("should pass " .. ((spec and spec.id) or file) .. " (Irrelevant)", function()
+          print("=== RUN " .. ((spec and spec.id) or file))
           print("[ PASS ] Irrelevant")
           assert.is_true(true)
         end)
       elseif status and spec and spec.input_ast and spec.expected_ir then
         it("should pass " .. (spec.id or file), function()
+          print("=== RUN " .. (spec.id or file))
           local ir = strling.compile(spec.input_ast)
           assert.are.same(spec.expected_ir, ir)
         end)

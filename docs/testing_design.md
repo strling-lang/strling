@@ -6,9 +6,9 @@ This document is the **technical, normative standard** for writing new tests in 
 
 ---
 
-## The 3-Test Standard
+## The 4-Test Standard
 
-Every feature must pass **three types of tests** before being considered complete:
+Every feature must pass **four types of tests** before being considered complete:
 
 ### 1. Unit Tests
 
@@ -88,7 +88,31 @@ test("digit parser edge case - zero count", () => {
 });
 ```
 
-### 2. End-to-End (E2E) Tests
+### 2. Semantic Verification
+
+**Purpose**: Verify that the binding correctly implements semantic rules, not just syntax parsing.
+
+**Characteristics:**
+
+-   Validates logical constraints (e.g., duplicate group names, invalid ranges).
+-   Ensures specific, descriptive error messages are thrown.
+-   Prevents "valid syntax, invalid logic" scenarios.
+
+**Required Test Cases:**
+
+-   **Duplicate Definitions**: Defining the same capture group name twice.
+-   **Invalid Ranges**: Quantifiers where min > max.
+-   **Type Mismatches**: Using a string where a number is expected (if not caught by the language type system).
+
+**Example:**
+
+```python
+def test_duplicate_group_error():
+    with pytest.raises(SemanticError, match="Duplicate group name 'foo'"):
+        compile("capture('foo') { ... } capture('foo') { ... }")
+```
+
+### 3. End-to-End (E2E) Tests
 
 **Purpose**: Validate complete workflows from user input to final output
 
@@ -146,7 +170,7 @@ test("phone number pattern end-to-end", () => {
 });
 ```
 
-### 3. Shared Spec Suite (SSOT)
+### 4. Shared Spec Suite (SSOT)
 
 **Purpose**: Ensure all bindings implement the exact same parsing and compilation logic as the reference implementation (JavaScript).
 

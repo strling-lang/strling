@@ -12,18 +12,22 @@ The STRling project uses an automated CI/CD pipeline defined in `.github/workflo
 
 These jobs run on every push and pull request to `main`, `dev`, and `feature/**` branches:
 
-1. **`test-python`**: Runs the complete Python test suite (473+ tests)
+1. **`test-matrix`**: The core validation engine.
+    - **Strategy:** Uses a GitHub Actions Matrix to dynamically spawn runners for all 17 supported languages (Python, TypeScript, Rust, Go, etc.).
+    - **Workflow:**
+        1. **Universal Setup:** Prepares the environment.
+        2. **Install Dependencies:** Runs `./strling setup <lang>`.
+        3. **Compile:** Runs `./strling build <lang>` (if applicable).
+        4. **Execute Tests:** Runs `./strling test <lang>`.
+    - **Efficiency:** Runs in parallel to ensure rapid feedback.
 
-    - Environment: Python 3.12 on Ubuntu
-    - Installs dependencies from `bindings/python/requirements.txt`
-    - Installs the package in editable mode
-    - Executes: `pytest bindings/python/tests/`
+### Certification (The Omega Audit)
 
-2. **`test-javascript`**: Runs the complete JavaScript test suite (473+ tests)
-    - Environment: Node.js 20 on Ubuntu
-    - Includes Python setup for E2E tests that use the Python CLI
-    - Installs dependencies via `npm ci`
-    - Executes: `npm test`
+Before any deployment can occur, the codebase must pass the **Omega Audit**.
+
+-   **Job:** `audit-omega`
+-   **Purpose:** Verifies structural integrity, file naming conventions, and conformance pass rates.
+-   **Requirement:** The audit must return `🟢 CERTIFIED`. If the audit fails, the pipeline halts, preventing deployment of non-compliant code.
 
 ### CD Jobs (Continuous Deployment)
 

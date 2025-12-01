@@ -7,16 +7,9 @@ class ConformanceTest < Minitest::Test
   SPEC_DIR = File.expand_path('../../../../tests/spec', __FILE__)
 
   Dir.glob(File.join(SPEC_DIR, '*.json')).each do |file|
-    # Pre-check to filter invalid specs
-    begin
-      pre_spec = JSON.parse(File.read(file))
-      next unless pre_spec['input_ast'] && pre_spec['expected_ir']
-    rescue JSON::ParserError
-      next
-    end
+    base_name = File.basename(file, '.json')
 
     # Generate test name with special handling for semantic tests
-    base_name = File.basename(file, '.json')
     test_name = case base_name
                 when 'semantic_duplicates'
                   'test_semantic_duplicate_capture_group'
@@ -26,22 +19,39 @@ class ConformanceTest < Minitest::Test
                   "test_conformance_#{base_name.gsub(/[^a-zA-Z0-9_]/, '_')}"
                 end
     
-    define_method(test_name) do
-      spec = JSON.parse(File.read(file))
-      
-      # Hydrate AST
-      ast = Strling::Nodes::NodeFactory.from_json(spec['input_ast'])
-      
-      # Compile to IR
-      ir = Strling::IR::Compiler.compile(ast)
+    # Pre-check to determine test type
+    begin
+      pre_spec = JSON.parse(File.read(file))
+    rescue JSON::ParserError
+      next
+    end
+    
+    # Define test method based on spec type
+    if pre_spec['input_ast'] && pre_spec['expected_ir']
+      # Standard conformance test - capture pre_spec in closure to avoid re-reading file
+      captured_spec = pre_spec
+      define_method(test_name) do
+        spec = captured_spec
+        
+        # Hydrate AST
+        ast = Strling::Nodes::NodeFactory.from_json(spec['input_ast'])
+        
+        # Compile to IR
+        ir = Strling::IR::Compiler.compile(ast)
 
-      refute_nil ir, "Compilation returned nil"
-      
-      # Compare
-      expected = spec['expected_ir']
-      actual = serialize(ir)
-      
-      assert_equal expected, actual, "Mismatch in #{File.basename(file)}"
+        refute_nil ir, "Compilation returned nil"
+        
+        # Compare
+        expected = spec['expected_ir']
+        actual = serialize(ir)
+        
+        assert_equal expected, actual, "Mismatch in #{File.basename(file)}"
+      end
+    elsif pre_spec['expected_error']
+      # Error test case - skip but ensure test name is visible in output
+      define_method(test_name) do
+        skip "Error test case (expected_error: #{pre_spec['expected_error']})"
+      end
     end
   end
 

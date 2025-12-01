@@ -77,3 +77,4 @@ _build/
 
 # ---- TypeScript / JavaScript ----
 # node_modules/ and dist/ are covered by SHARED ARTIFACTS
+_codeql_detected_source_root

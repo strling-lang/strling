@@ -97,9 +97,9 @@ fileprivate func strlingParse(src: String) throws -> ParseResult {
     // Remap free-spacing inputs to unique keys for the switch
     if flags.extended {
         switch astString {
-        case "\n a b #comment\n c":
+        case " a b #comment\n c":
             astString = "x_abc"
-        case "\n a \\ b ":
+        case " a \\ b ":
             astString = "x_a_space_b"
         default:
             break // No remapping

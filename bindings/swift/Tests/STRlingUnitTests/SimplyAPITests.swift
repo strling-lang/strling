@@ -249,20 +249,33 @@ fileprivate struct Simply {
     
     // MARK: - D: Static
 
-    static func alphaNum(_ min: Int = 1, _ max: Int = 1) -> MockPattern {
+    static func alphaNum() -> MockPattern {
+        return MockPattern("[a-zA-Z0-9]")
+    }
+    static func alphaNum(_ count: Int) -> MockPattern {
+        return MockPattern("[a-zA-Z0-9]\(getRepSuffix(count, count))")
+    }
+    static func alphaNum(_ min: Int, _ max: Int) -> MockPattern {
         return MockPattern("[a-zA-Z0-9]\(getRepSuffix(min, max))")
     }
     
     static func notAlphaNum() -> MockPattern { return MockPattern("[^a-zA-Z0-9]") }
     
-    static func upper(_ min: Int = 1, _ max: Int = 1) -> MockPattern {
+    static func upper(_ count: Int) -> MockPattern {
+        return MockPattern("[A-Z]\(getRepSuffix(count, count))")
+    }
+    static func upper(_ min: Int, _ max: Int) -> MockPattern {
         return MockPattern("[A-Z]\(getRepSuffix(min, max))")
     }
 
     static func notUpper() -> MockPattern { return MockPattern("[^A-Z]") }
     static func notLower() -> MockPattern { return MockPattern("[^a-z]") }
     
-    static func letter(_ min: Int = 1, _ max: Int = 1) -> MockPattern {
+    static func letter(_ count: Int) -> MockPattern {
+        return MockPattern("[a-zA-Z]\(getRepSuffix(count, count))")
+    }
+    
+    static func letter(_ min: Int, _ max: Int) -> MockPattern {
         return MockPattern("[a-zA-Z]\(getRepSuffix(min, max))")
     }
     
@@ -276,13 +289,22 @@ fileprivate struct Simply {
     static func notHexDigit() -> MockPattern { return MockPattern("[^0-9a-fA-F]") }
     
     static func digit() -> MockPattern { return MockPattern("\\d") } // For Test E.1
-    static func digit(_ min: Int = 1, _ max: Int = 1) -> MockPattern {
+    static func digit(_ count: Int) -> MockPattern {
+        return MockPattern("\\d\(getRepSuffix(count, count))")
+    }
+    static func digit(_ min: Int, _ max: Int) -> MockPattern {
         return MockPattern("\\d\(getRepSuffix(min, max))")
     }
     
     static func notDigit() -> MockPattern { return MockPattern("\\D") }
     
-    static func whitespace(_ min: Int = 1, _ max: Int = 1) -> MockPattern {
+    static func whitespace() -> MockPattern {
+        return MockPattern("\\s")
+    }
+    static func whitespace(_ count: Int) -> MockPattern {
+        return MockPattern("\\s\(getRepSuffix(count, count))")
+    }
+    static func whitespace(_ min: Int, _ max: Int) -> MockPattern {
         return MockPattern("\\s\(getRepSuffix(min, max))")
     }
     static func notWhitespace() -> MockPattern { return MockPattern("\\S") }

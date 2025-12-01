@@ -31,8 +31,15 @@ We enforce **Conventional Commits** to automate changelogs and versioning.
 
 ### PR Process
 
--   **Certification:** All Pull Requests must pass the **Omega Audit** (`audit_omega.py`). This ensures that the directory structure, file naming, and conformance pass rates meet the project's strict standards.
--   **Status:** Look for the `🟢 CERTIFIED` badge in the audit output before requesting a review.
+-   **Mandatory Certification:** All Pull Requests **must** pass the **Omega Audit** (`audit_omega.py`) returning `🟢 CERTIFIED` status. This is a **non-negotiable requirement** for merge approval.
+-   **What the Audit Validates:**
+    -   Directory structure and file naming conventions
+    -   Test conformance pass rates across all bindings
+    -   Zero test skips (no skipped or ignored tests)
+    -   Zero warnings in build/test output
+    -   Semantic verification (duplicate capture groups, invalid ranges)
+-   **Status Check:** Look for the `🟢 CERTIFIED` badge in the audit output for **all 17 bindings** before requesting a review.
+-   **Regression Policy:** If the audit shows any binding with a non-certified status, the PR must be revised until 100% certification is achieved.
 
 ## Documentation Guidelines
 

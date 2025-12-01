@@ -8,87 +8,193 @@ The STRling project uses an automated CI/CD pipeline defined in `.github/workflo
 
 ## Pipeline Architecture
 
-### CI Jobs (Continuous Integration)
+STRling employs a **Matrix-Driven CI/CD Strategy** that validates all 17 language bindings in parallel before any deployment occurs.
 
-These jobs run on every push and pull request to `main`, `dev`, and `feature/**` branches:
+### CI Strategy: The Test Matrix
 
-1. **`test-matrix`**: The core validation engine.
-    - **Strategy:** Uses a GitHub Actions Matrix to dynamically spawn runners for all 17 supported languages (Python, TypeScript, Rust, Go, etc.).
-    - **Workflow:**
-        1. **Universal Setup:** Prepares the environment.
-        2. **Install Dependencies:** Runs `./strling setup <lang>`.
-        3. **Compile:** Runs `./strling build <lang>` (if applicable).
-        4. **Execute Tests:** Runs `./strling test <lang>`.
-    - **Efficiency:** Runs in parallel to ensure rapid feedback.
+The `test-matrix` job is the core validation engine that runs on every push and pull request to `main`, `dev`, and `feature/**` branches.
 
-### Certification (The Omega Audit)
+**Matrix Configuration:**
+-   **Languages Tested:** All 17 bindings run in parallel:
+    -   C, C++, C#, Python, Ruby, Go, Rust, Java, Kotlin, Dart, Lua, Perl, PHP, R, Swift, TypeScript, F#
+-   **Parallel Execution:** Each language runs independently on its own Ubuntu runner
+-   **Fail-Fast Disabled:** All languages complete testing even if one fails, ensuring complete visibility
 
-Before any deployment can occur, the codebase must pass the **Omega Audit**.
+**Workflow Per Language:**
+1. **🔧 Universal Setup:** Makes `./strling` executable
+2. **📦 Install Dependencies:** Runs `./strling setup <lang>` to configure language-specific toolchain
+3. **🔨 Compile (Build):** Runs `./strling build <lang>` if the language requires compilation
+4. **🧪 Execute Tests:** Runs `./strling test <lang>` to validate all functionality
 
--   **Job:** `audit-omega`
--   **Purpose:** Verifies structural integrity, file naming conventions, and conformance pass rates.
--   **Requirement:** The audit must return `🟢 CERTIFIED`. If the audit fails, the pipeline halts, preventing deployment of non-compliant code.
+**Key Benefits:**
+-   **Rapid Feedback:** Parallel execution completes in ~5-10 minutes instead of sequential hours
+-   **Full Coverage:** Every binding is tested on every commit
+-   **Isolation:** Language-specific failures don't block other languages from completing
 
-### CD Jobs (Continuous Deployment)
+### Certification: The Omega Audit (Gatekeeper)
 
-These jobs run **only** when:
+The `audit-conformance` job acts as the **quality gatekeeper** for the entire ecosystem.
 
--   The trigger is a `push` to the `main` branch (e.g., a merged PR)
--   Both `test-python` AND `test-javascript` jobs have passed successfully
+-   **Triggers:** Runs after `test-matrix` completes successfully
+-   **Purpose:** Validates conformance test coverage across all bindings
+-   **Script:** `python tooling/audit_conformance.py`
+-   **Requirements:**
+    -   All bindings must achieve `🟢 CERTIFIED` status
+    -   Zero test skips (no `SKIPPED` or `ignored` tests)
+    -   Zero warnings in build/test output
+    -   Semantic verification tests must pass (duplicate groups, invalid ranges)
+    -   Test counts must be explicit integers (not "Unknown")
+-   **Blocking Behavior:** If audit fails, deployment jobs are prevented from running
 
-1. **`deploy-python`**: Publishes the Python package to PyPI
+**Note:** While the CI runs `audit_conformance.py`, the more comprehensive `audit_omega.py` should be run locally before submitting PRs to ensure full compliance.
 
-    - Builds the package using `python -m build`
-    - Publishes using `twine upload`
-    - Requires: `PYPI_API_TOKEN` secret
+### CD Strategy: All-or-Nothing Deployment
 
-2. **`deploy-javascript`**: Publishes the JavaScript package to NPM
-    - Builds if necessary (TypeScript compilation)
-    - Publishes using `npm publish`
-    - Requires: `NPM_TOKEN` secret
+Deployment jobs execute **only** when all quality gates pass:
+
+**Trigger Conditions:**
+1. A git tag matching `v*` pattern is pushed (e.g., `v3.0.0-alpha`)
+2. The `test-matrix` job completes successfully for all 17 bindings
+3. The `audit-conformance` job passes
+
+**Deployment Jobs:** Each binding has its own deployment job that:
+-   Verifies version consistency between the git tag and binding manifest
+-   Checks if the version already exists in the target registry (idempotency)
+-   Publishes to the appropriate package registry if version is new
+
+**Target Registries by Language:**
+-   **Python:** PyPI (via `pypa/gh-action-pypi-publish`)
+-   **TypeScript:** NPM (package: `@thecyberlocal/strling`)
+-   **Rust:** Crates.io (package: `strling_core`)
+-   **C#:** NuGet (package: `STRling`)
+-   **F#:** NuGet (package: `STRling.FSharp`)
+-   **Ruby:** RubyGems (package: `strling`)
+-   **Dart:** Pub.dev (package: `strling`)
+-   **Kotlin:** Maven Central
+-   **Lua:** LuaRocks (package: `strling`)
+-   **Go, Swift, C, C++, PHP, R:** Tag validation only (distributed via git)
+-   **Java, Perl:** Deployment not yet implemented
+
+**Idempotency Protection:**
+-   Before publishing, the `check_version_exists.py` script (located in `tooling/`) validates if the version already exists
+-   If the version exists, the deployment step is skipped with a success status
+-   This prevents CI failures when re-running deployments or creating tags on already-published versions
+
+**Version Management:**
+-   **SSOT:** `bindings/python/pyproject.toml` is the single source of truth for versioning
+-   **Propagation:** The `sync_versions.py` script propagates the Python version to all other bindings
+-   **Rule:** Never manually edit version numbers in `package.json`, `Cargo.toml`, or other manifests
 
 ## Required GitHub Secrets
 
-Before the deployment jobs can work, you must add these secrets to your repository:
+For deployment to package registries, configure these secrets in your repository at **Settings** > **Secrets and variables** > **Actions**:
 
-### 1. PYPI_API_TOKEN
+### Python: PYPI_API_TOKEN
 
 **How to create:**
 
-1. Log in to your PyPI account at https://pypi.org
+1. Log in to [PyPI](https://pypi.org)
 2. Go to Account Settings > API tokens
 3. Click "Add API token"
-4. Set scope to "Entire account" or limit to the "STRling" project
-5. Copy the generated token (starts with `pypi-`)
+4. Set scope to "Entire account" or limit to "STRling"
+5. Copy the token (starts with `pypi-`)
 
-**How to add to GitHub:**
+**GitHub Configuration:**
+- Name: `PYPI_API_TOKEN`
+- Value: Your PyPI token
 
-1. Go to your repository on GitHub
-2. Navigate to **Settings** > **Secrets and variables** > **Actions**
-3. Click **New repository secret**
-4. Name: `PYPI_API_TOKEN`
-5. Value: Paste your PyPI token
-6. Click **Add secret**
-
-### 2. NPM_TOKEN
+### TypeScript: NPM_TOKEN
 
 **How to create:**
 
-1. Log in to your NPM account at https://www.npmjs.com
+1. Log in to [NPM](https://www.npmjs.com)
 2. Go to Account Settings > Access Tokens
-3. Click "Generate New Token"
-4. Choose "Automation" type (for CI/CD)
-5. Set appropriate permissions (publish access needed)
-6. Copy the generated token
+3. Click "Generate New Token" > "Automation"
+4. Copy the token
 
-**How to add to GitHub:**
+**GitHub Configuration:**
+- Name: `NPM_TOKEN`
+- Value: Your NPM automation token
 
-1. Go to your repository on GitHub
-2. Navigate to **Settings** > **Secrets and variables** > **Actions**
-3. Click **New repository secret**
-4. Name: `NPM_TOKEN`
-5. Value: Paste your NPM token
-6. Click **Add secret**
+### C#/F#: NUGET_KEY
+
+**How to create:**
+
+1. Log in to [NuGet.org](https://www.nuget.org)
+2. Go to API Keys
+3. Create a new API key with push permissions
+4. Copy the key
+
+**GitHub Configuration:**
+- Name: `NUGET_KEY`
+- Value: Your NuGet API key
+
+### Ruby: RUBYGEMS_KEY
+
+**How to create:**
+
+1. Log in to [RubyGems.org](https://rubygems.org)
+2. Go to Settings > API Keys
+3. Create a new API key
+4. Copy the key
+
+**GitHub Configuration:**
+- Name: `RUBYGEMS_KEY`
+- Value: Your RubyGems API key
+
+### Rust: CARGO_TOKEN
+
+**How to create:**
+
+1. Log in to [Crates.io](https://crates.io)
+2. Go to Account Settings > API Tokens
+3. Create a new token
+4. Copy the token
+
+**GitHub Configuration:**
+- Name: `CARGO_TOKEN`
+- Value: Your Crates.io token
+
+### Kotlin: Maven Central Credentials
+
+**Required Secrets:**
+- `MAVEN_USERNAME`: Your Sonatype OSSRH username
+- `MAVEN_PASSWORD`: Your Sonatype OSSRH password
+- `GPG_KEY`: Your GPG private key for signing artifacts
+
+**How to create:** Follow the [Maven Central publishing guide](https://central.sonatype.org/publish/publish-guide/)
+
+### Lua: LUA_API_KEY
+
+**How to create:**
+
+1. Log in to [LuaRocks.org](https://luarocks.org)
+2. Go to Settings > API Keys
+3. Create a new API key
+4. Copy the key
+
+**GitHub Configuration:**
+- Name: `LUA_API_KEY`
+- Value: Your LuaRocks API key
+
+### Perl: PAUSE Credentials
+
+**Required Secrets:**
+- `PAUSE_USERNAME`: Your PAUSE (CPAN) username
+- `PAUSE_PASSWORD`: Your PAUSE password
+
+**How to obtain:** Register at [PAUSE](https://pause.perl.org/)
+
+### Dart: No Secret Required
+
+Dart publishing uses OpenID Connect (OIDC) authentication. Ensure the repository has `id-token: write` permission (already configured in the workflow).
+
+### Languages Without Registry Deployment
+
+The following bindings are distributed via git tags only and don't require secrets:
+- **C**, **C++**, **Go**, **Swift**, **PHP**, **R**
+
+These deployments perform tag validation only.
 
 ## Workflow Triggers
 
@@ -97,10 +203,12 @@ The pipeline is triggered by:
 ### Push Events
 
 -   **Branches:** `main`, `dev`, `feature/**`
+-   **Tags:** `v*` (triggers deployment)
 -   **Path filters:** Only runs when these paths change:
     -   `bindings/**`
     -   `spec/**`
     -   `tests/**`
+    -   `tooling/**`
     -   `.github/workflows/**`
 
 ### Pull Request Events
@@ -112,20 +220,18 @@ The pipeline is triggered by:
 
 This workflow enforces the following branching model:
 
-1. **`feature/**` branches\*\*: Development work happens here
-
-    - CI runs on every push
+1. **`feature/**` branches**: Development work happens here
+    - CI runs on every push (test-matrix + audit-conformance)
     - No deployment occurs
 
 2. **`dev` branch**: Integration and pre-release testing
-
-    - CI runs on every push
+    - CI runs on every push (test-matrix + audit-conformance)
     - No deployment occurs
 
 3. **`main` branch**: Production-ready code
-    - CI runs on every push
-    - **Deployment occurs automatically** after successful tests
-    - Only merge to `main` when ready to publish a new version
+    - CI runs on every push (test-matrix + audit-conformance)
+    - No automatic deployment on push
+    - **Deployment occurs only when a tag is pushed** (e.g., `git tag v3.0.0 && git push --tags`)
 
 ## Testing the Pipeline
 
@@ -135,70 +241,102 @@ To test the CI jobs without triggering deployment:
 
 1. Push to a `feature/*` or `dev` branch
 2. Or create a pull request to any branch
+3. Monitor the Actions tab to see test-matrix running all 17 bindings in parallel
 
 ### Test Full CI/CD
 
 To test the complete pipeline including deployment:
 
-1. Ensure secrets are configured
-2. Merge a PR to `main`
-3. Monitor the workflow run in the Actions tab
+1. Ensure all required secrets are configured (see Required GitHub Secrets section)
+2. Ensure version is updated in `bindings/python/pyproject.toml` (SSOT)
+3. Run `python3 tooling/sync_versions.py --write` to propagate versions
+4. Commit and merge to `main`
+5. Create and push a tag: `git tag v3.0.0-alpha && git push --tags`
+6. Monitor the workflow run in the Actions tab
 
 ## Deployment Checklist
 
-Before merging to `main` (which triggers deployment):
+Before creating a release tag (which triggers deployment):
 
--   [ ] All tests pass locally
--   [ ] Version number updated in:
-    -   [ ] `bindings/python/pyproject.toml`
-    -   [ ] `bindings/javascript/package.json`
+-   [ ] All tests pass locally: `./strling test all`
+-   [ ] Omega audit passes: `python3 tooling/audit_omega.py` shows `🟢 CERTIFIED` for all 17 bindings
+-   [ ] Version number updated in `bindings/python/pyproject.toml` (SSOT)
+-   [ ] Run version propagation: `python3 tooling/sync_versions.py --write`
 -   [ ] Changelog updated (if applicable)
 -   [ ] Documentation updated
--   [ ] `PYPI_API_TOKEN` secret is configured
--   [ ] `NPM_TOKEN` secret is configured
+-   [ ] All required secrets configured (see below)
+-   [ ] Create git tag: `git tag vX.Y.Z` (match the version in pyproject.toml)
+-   [ ] Push tag: `git push --tags`
 
 ## Troubleshooting
 
 ### Deployment Fails: "Invalid credentials"
 
 -   **Python:** Verify `PYPI_API_TOKEN` is set correctly and has upload permissions
--   **JavaScript:** Verify `NPM_TOKEN` is set correctly and has publish permissions
+-   **TypeScript:** Verify `NPM_TOKEN` is set correctly and has publish permissions
+-   **C#/F#:** Verify `NUGET_KEY` is set correctly
+-   **Dart:** Verify repository has `id-token: write` permission (OIDC authentication)
+-   **Ruby:** Verify `RUBYGEMS_KEY` is set correctly
+-   **Rust:** Verify `CARGO_TOKEN` is set correctly
+-   **Kotlin:** Verify `MAVEN_USERNAME`, `MAVEN_PASSWORD`, and `GPG_KEY` are set
+-   **Lua:** Verify `LUA_API_KEY` is set correctly
+-   **Perl:** Verify `PAUSE_USERNAME` and `PAUSE_PASSWORD` are set
 
 ### Tests Pass Locally But Fail in CI
 
--   Check Python version (CI uses 3.12)
--   Check Node.js version (CI uses 20)
--   Ensure all dependencies are listed in requirements.txt / package.json
+-   Check language versions in CI match your local environment
+-   Ensure all dependencies are listed in language-specific manifests
+-   Review the test-matrix job output for the specific language that failed
+-   Run `./strling clean <lang> && ./strling setup <lang> && ./strling test <lang>` locally
 
 ### Deployment Skipped
 
--   Verify the push was to the `main` branch (not a PR)
--   Ensure both test jobs passed
--   Check the workflow logs for the `if` condition evaluation
+-   Verify you pushed a **tag** (not just a commit): `git push --tags`
+-   Ensure the tag matches semver format: `vX.Y.Z` or `vX.Y.Z-alpha`
+-   Check that test-matrix completed successfully
+-   Review the deployment job logs for the `if` condition evaluation
+-   Verify the version doesn't already exist in the target registry (idempotent check)
 
 ### Version Already Published
 
--   PyPI and NPM don't allow re-publishing the same version
--   Update version numbers before merging to `main`
+-   Package registries don't allow re-publishing the same version
+-   Update version in `bindings/python/pyproject.toml` (SSOT)
+-   Run `python3 tooling/sync_versions.py --write` to propagate
+-   Create a new tag matching the new version
 
 ## Version Management
 
-Remember to increment versions before merging to `main`:
+STRling uses a **Single Source of Truth (SSOT)** approach for version management:
 
-**Python** (`bindings/python/pyproject.toml`):
+**SSOT Location:** `bindings/python/pyproject.toml`
 
-```toml
-[project]
-version = "3.0.0a1"  # Update this
-```
+**Workflow:**
 
-**JavaScript** (`bindings/javascript/package.json`):
+1. Update version in `bindings/python/pyproject.toml`:
+   ```toml
+   [project]
+   version = "3.0.0-alpha"  # Update this only
+   ```
 
-```json
-{
-    "version": "3.0.0-alpha" // Update this
-}
-```
+2. Run the version propagation script:
+   ```bash
+   python3 tooling/sync_versions.py --write
+   ```
+
+3. The script automatically updates all other binding manifests:
+   - TypeScript: `bindings/typescript/package.json`
+   - Rust: `bindings/rust/Cargo.toml`
+   - C#: `bindings/csharp/src/STRling/STRling.csproj`
+   - F#: `bindings/fsharp/src/STRling/STRling.fsproj`
+   - Ruby: `bindings/ruby/strling.gemspec`
+   - Dart: `bindings/dart/pubspec.yaml`
+   - Kotlin: `bindings/kotlin/build.gradle.kts`
+   - Lua: `bindings/lua/strling-scm-1.rockspec`
+   - And all other bindings...
+
+**Rule:** Never manually edit version numbers in non-Python manifests. Always use the SSOT + propagation workflow.
+
+**Note:** The TypeScript binding is the Logic SSOT (the reference implementation for all language behavior and features), but Python is the Versioning SSOT (the single source for version numbers). This separation ensures clarity of responsibility.
 
 ## Monitoring
 

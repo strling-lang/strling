@@ -3,6 +3,9 @@
 *.a
 libstrling.a
 
+# Downloaded dependencies
+deps/
+
 # Test binaries
 tests/simple_test
 tests/quantifier_alternation_test

@@ -3,7 +3,7 @@
         "c": {
             "path": "bindings/c",
             "check_bin": "make",
-            "setup": [],
+            "setup": ["./setup.sh"],
             "clean": ["make", "clean"],
             "test": ["make", "tests"]
         },
@@ -70,12 +70,12 @@
             "runtime": "Lua >= 5.1",
             "setup": ["./setup.sh"],
             "clean": ["rm", "-f", "strling.so"],
-            "test": ["busted", "-v"]
+            "test": ["./run_tests.sh"]
         },
         "perl": {
             "path": "bindings/perl",
             "check_bin": "perl",
-            "setup": ["perl", "Makefile.PL"],
+            "setup": ["./setup.sh"],
             "clean": ["make", "clean"],
             "test": ["prove", "-lv", "t"]
         },
@@ -102,7 +102,7 @@
         "r": {
             "path": "bindings/r",
             "check_bin": "Rscript",
-            "setup": [],
+            "setup": ["Rscript", "setup.R"],
             "clean": ["rm", "-f", "src/*.o", "src/*.so"],
             "test": [
                 "Rscript",

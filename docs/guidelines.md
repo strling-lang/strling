@@ -54,3 +54,19 @@ Every documentation file must start with the following navigation link to ensure
 -   **Audience:** Write for a junior developer who is smart but unfamiliar with compiler theory.
 -   **Jargon:** Define technical terms (AST, IR, Emitter, Tokenizer) upon their first use in a document.
 -   **Tone:** Professional, encouraging, and instructional. Explain _why_ a decision was made, not just _what_ it is.
+
+## Task Architecture Standards
+
+### The "Fill-in-the-Blank" Imperative
+
+To maximize accessibility for junior contributors, STRling enforces a **Cognitive Offloading** strategy for task definition. We do not ask contributors to "architect" a solution; we ask them to "implement" a logic unit within a pre-defined architecture.
+
+**The Task Architect's Responsibility:**
+When creating a task (Issue) for a contributor, you must not simply describe the feature. You must provide the **Scaffolding**:
+
+1.  **Target Vector:** The exact file path(s) where changes must occur.
+2.  **The Container:** The class or function signature (e.g., `public uuid(): Pattern`).
+3.  **The Logic Gap:** A specific comment block indicating where the contributor's logic goes.
+4.  **The Verification:** A pre-written test case they can copy-paste to verify their work.
+
+**Rule:** _A task is only ready for a junior developer if the question is "How do I write this Regex?" and not "Where does this file go?"_

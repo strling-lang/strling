@@ -44,7 +44,7 @@ SKIP_EXCLUDE_PATTERNS = [
     r"skipped 0",
     r"Skipped:\s*0",
     r"> Task :.*SKIPPED",  # Gradle task skips (e.g., "> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED")
-    r"=== RUN",  # Test run indicators should not be counted as skips (e.g., "=== RUN comments_are_ignored")
+    r"^=== RUN",  # Test run indicators should not be counted as skips (e.g., "=== RUN comments_are_ignored")
     r"\b0 pending\b",  # Busted summary line (e.g., "598 successes / 0 failures / 0 errors / 0 pending")
 ]
 

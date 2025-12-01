@@ -56,6 +56,8 @@ WARNING_EXCLUDE_PATTERNS = [
     r"-Wdeprecated",
     # General build warnings to ignore
     r"prerequisite",  # Perl prereq warnings
+    # Node.js warnings
+    r"localstorage-file",
 ]
 
 # Semantic checks (filenames/patterns that must appear in output)

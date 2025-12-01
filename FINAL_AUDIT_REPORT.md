@@ -18,4 +18,4 @@
 | ruby       |  ✅   | Unknown |      ✅      |      ✅       |    ✅ Verified     |   ✅ Verified    |    🟢 CERTIFIED     |
 | rust       |  ✅   |   23    |      ✅      |      ✅       |    ✅ Verified     |   ✅ Verified    |    🟢 CERTIFIED     |
 | swift      |  ✅   |   166   |      ✅      |      ✅       |    ✅ Verified     |   ✅ Verified    |    🟢 CERTIFIED     |
-| typescript |  ✅   |   892   |      ✅      | ❌ (17 Warn)  |    ✅ Verified     |   ✅ Verified    | 🔴 FAIL (Warnings)  |
+| typescript |  ✅   |   892   |      ✅      |      ✅       |    ✅ Verified     |   ✅ Verified    |    🟢 CERTIFIED     |

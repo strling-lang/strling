@@ -8,25 +8,89 @@ TOOLCHAIN="$DIR/toolchain.json"
 # Where python virtualenv will live when using python binding
 VENV_DIR=".venv"
 
+# Check for python3 early as it is required for JSON parsing
+if ! command -v python3 &> /dev/null; then
+    echo "Error: python3 is required to run this script."
+    exit 1
+fi
+
 COMMAND=$1
 LANG=$2
 
 # Help / Usage
-if [ -z "$COMMAND" ] || [ -z "$LANG" ]; then
+print_banner() {
+    echo "   _____ _______ _____  _ _             "
+    echo "  / ____|__   __|  __ \| (_)            "
+    echo " | (___    | |  | |__) | |_ _ __   __ _ "
+    echo "  \___ \   | |  |  _  /| | | '_ \ / _\` |"
+    echo "  ____) |  | |  | | \ \| | | | | | (_| |"
+    echo " |_____/   |_|  |_|  \_\_|_|_| |_|\__, |"
+    echo "                                   __/ |"
+    echo "                                  |___/ "
+    echo ""
+}
+
+list_bindings() {
+    echo "Available Bindings:"
+    # Get list of languages and their check_bin
+    # We use a python script to output "lang:check_bin" pairs
+    python3 -c "import json; 
+data=json.load(open('$TOOLCHAIN')); 
+bindings=data['bindings']; 
+sorted_keys=sorted(bindings.keys()); 
+for k in sorted_keys: print(f\"{k}:{bindings[k].get('check_bin', '')}\")" | while read -r line; do
+        LANG_NAME="${line%%:*}"
+        CHECK_BIN="${line#*:}"
+        
+        if [ -z "$CHECK_BIN" ]; then
+            STATUS="[UNKNOWN]"
+        elif command -v "$CHECK_BIN" &> /dev/null; then
+            STATUS="[INSTALLED]"
+        else
+            STATUS="[MISSING ($CHECK_BIN)]"
+        fi
+        printf "  %-12s %s\n" "$LANG_NAME" "$STATUS"
+    done
+}
+
+print_help() {
+    print_banner
     echo "Usage: ./strling <command> <language>"
-    echo "Commands: setup, test, build"
-    echo "Example: ./strling test python"
+    echo ""
+    echo "Commands:"
+    echo "  setup <lang>   Install dependencies for a binding"
+    echo "  test <lang>    Run tests for a binding"
+    echo "  clean <lang>   Clean artifacts for a binding"
+    echo "  list           List all bindings and tool status"
+    echo "  help           Show this help message"
+    echo ""
+    echo "Examples:"
+    echo "  ./strling test python"
+    echo "  ./strling setup rust"
+    echo ""
+    list_bindings
+}
+
+if [ -z "$COMMAND" ] || [ "$COMMAND" == "help" ] || [ "$COMMAND" == "-h" ] || [ "$COMMAND" == "--help" ]; then
+    print_help
+    exit 0
+fi
+
+if [ "$COMMAND" == "list" ]; then
+    print_banner
+    list_bindings
+    exit 0
+fi
+
+if [ -z "$LANG" ]; then
+    echo "Error: Language argument is required for '$COMMAND'."
+    echo "Usage: ./strling $COMMAND <language>"
     exit 1
 fi
+
 
 if [ ! -f "$TOOLCHAIN" ]; then
     echo "Error: toolchain.json not found at $TOOLCHAIN"
-    exit 1
-fi
-
-# Check for python3
-if ! command -v python3 &> /dev/null; then
-    echo "Error: python3 is required to parse toolchain.json"
     exit 1
 fi
 
@@ -129,14 +193,30 @@ BINDING_PATH=$(get_json_value "path")
 CHECK_BIN=$(get_json_value "check_bin")
 
 if [ -z "$BINDING_PATH" ]; then
-    echo "Error: Language '$LANG' not found in toolchain.json"
+    echo "Error: Language '$LANG' not found."
+    echo "Did you mean one of these?"
+    python3 -c "import json; print('\n'.join(['  - ' + k for k in sorted(json.load(open('$TOOLCHAIN'))['bindings'].keys())]))"
     exit 1
 fi
 
 # Check if the required binary exists
 # Check for required binary
 if ! command -v "$CHECK_BIN" &> /dev/null; then
-    echo "Error: Required tool '$CHECK_BIN' not found. Please install it to work with $LANG."
+    echo "Error: Required tool '$CHECK_BIN' not found."
+    case "$CHECK_BIN" in
+        npm) echo "Hint: Install Node.js to work on TypeScript." ;;
+        cargo) echo "Hint: Install Rust (rustup) to work on Rust." ;;
+        go) echo "Hint: Install Go to work on Go." ;;
+        python3) echo "Hint: Install Python 3 to work on Python." ;;
+        dotnet) echo "Hint: Install .NET SDK to work on C# and F#." ;;
+        cmake) echo "Hint: Install CMake to work on C++." ;;
+        make) echo "Hint: Install Make to work on C." ;;
+        java|mvn) echo "Hint: Install Java (JDK) and Maven to work on Java." ;;
+        dart) echo "Hint: Install Dart SDK to work on Dart." ;;
+        composer|php) echo "Hint: Install PHP and Composer to work on PHP." ;;
+        luarocks) echo "Hint: Install Lua and LuaRocks to work on Lua." ;;
+        *) echo "Hint: Please install '$CHECK_BIN' to proceed." ;;
+    esac
     exit 1
 fi
 
@@ -178,6 +258,13 @@ else
 fi
 EXIT_CODE=$?
 if [[ $EXIT_CODE -ne 0 ]]; then
-    echo "Command failed with exit code $EXIT_CODE"
+    echo ""
+    echo "❌ Command failed with exit code $EXIT_CODE"
+    echo "   Task: $COMMAND"
+    echo "   Language: $LANG"
+    if [ "$COMMAND" == "test" ] || [ "$COMMAND" == "build" ]; then
+        echo "   Hint: Try running './strling setup $LANG' first."
+    fi
     exit $EXIT_CODE
 fi
+

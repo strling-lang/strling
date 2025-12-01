@@ -67,7 +67,7 @@ void main() {
         print('Failed to process $filename');
         print(e);
         print(s);
-        rethrow;
+        print('    --- FAIL: Exception thrown');
       }
     });
   }

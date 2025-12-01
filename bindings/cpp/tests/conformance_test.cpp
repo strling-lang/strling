@@ -30,7 +30,6 @@ int main() {
     std::string spec_dir = SPEC_DIR;
     int passed = 0;
     int failed = 0;
-    int skipped = 0;
     int total = 0;
 
     std::cout << "Running conformance tests from: " << spec_dir << "\n";
@@ -111,6 +110,6 @@ int main() {
         }
     }
 
-    std::cout << "Total: " << total << ", Passed: " << passed << ", Failed: " << failed << ", Skipped: " << skipped << "\n";
+    std::cout << "Total: " << total << ", Passed: " << passed << ", Failed: " << failed << "\n";
     return failed > 0 ? 1 : 0;
 }

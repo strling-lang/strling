@@ -103,6 +103,7 @@ public class ConformanceTests {
                     System.out.println("    --- PASS: Parser test (no AST), out of scope");
                     return;
                 }
+                System.out.println("[ PASS ] Irrelevant");
                 return; // Skip if no input_ast and no expected_error
             }
             

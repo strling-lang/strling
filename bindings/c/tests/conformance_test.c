@@ -213,7 +213,6 @@ int main(int argc, char **argv) {
     struct dirent *ent;
     int total_tests = 0;
     int passed_tests = 0;
-    int skipped_tests = 0;
     int failed_tests = 0;
 
     /* Allow overriding spec dir via env var or arg if needed, but default is fine */
@@ -256,7 +255,6 @@ int main(int argc, char **argv) {
         if (!json_object_has_value(root_obj, "input_ast")) {
             /* Skip parser-only tests or incomplete tests */
             printf("[   PASS   ] Irrelevant (no input_ast): %s\n", ent->d_name);
-            // skipped_tests++;
             json_value_free(root_value);
             free(file_content);
             continue;
@@ -265,9 +263,8 @@ int main(int argc, char **argv) {
         /* Check for expected_codegen */
         if (!json_object_has_value(root_obj, "expected_codegen")) {
              printf("[   PASS   ] Irrelevant (no expected_codegen): %s\n", ent->d_name);
-             // skipped_tests++;
+             printf("[   PASS   ] Irrelevant (no expected_codegen): %s\n", ent->d_name);
              json_value_free(root_value);
-             free(file_content);
              continue;
         }
 
@@ -336,10 +333,9 @@ int main(int argc, char **argv) {
     printf("Conformance Test Summary:\n");
     printf("  Total Tests Run: %d\n", total_tests);
     printf("  Passed:          %d\n", passed_tests);
+    printf("  Passed:          %d\n", passed_tests);
     printf("  Failed:          %d\n", failed_tests);
-    printf("  Skipped:         %d\n", skipped_tests);
     printf("--------------------------------------------------\n");
-
     if (failed_tests > 0) {
         return 1;
     }

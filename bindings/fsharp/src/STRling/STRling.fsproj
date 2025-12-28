@@ -7,9 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Core types and utilities -->
+    <Compile Include="Core/Flags.fs" />
+    <Compile Include="Core/Errors.fs" />
+    <!-- AST and IR definitions -->
     <Compile Include="AST.fs" />
     <Compile Include="IR.fs" />
+    <!-- Core pipeline -->
+    <Compile Include="Core/Parser.fs" />
     <Compile Include="Compiler.fs" />
+    <!-- Emitters -->
+    <Compile Include="Emitters/Pcre2.fs" />
+    <!-- Fluent API -->
+    <Compile Include="Simply.fs" />
   </ItemGroup>
 
 </Project>

@@ -1,98 +1,99 @@
 # STRling AI Coding Instructions
 
-You are an expert AI assistant working on the STRling project, a next-generation regex DSL compiler.
+STRling is a polyglot regex DSL compiler with 17 language bindings. The TypeScript binding is the **Reference Implementation**.
 
-## 🏗️ Architecture & Core Concepts
+## Architecture: The Pipeline
 
-STRling follows a strict compiler pipeline architecture:
+```
+DSL String → Parse → AST → Compile → IR → Emit → Target Regex (PCRE2/JS/Python)
+```
 
-1.  **Parse**: `DSL -> AST` (Abstract Syntax Tree).
-2.  **Compile**: `AST -> IR` (Intermediate Representation). The IR is target-agnostic.
-3.  **Emit**: `IR -> Target Regex` (e.g., PCRE2, JS, Python).
+Each binding implements the same 3-stage pipeline in `bindings/<lang>/src/`:
 
-**Key Principles:**
+-   **Parser** (`core/parser.*`): DSL text → AST nodes
+-   **Compiler** (`core/compiler.*`): AST → target-agnostic IR
+-   **Emitter** (`emitters/pcre2.*`): IR → regex string
 
--   **Iron Law of Emitters**: Emitters must be deterministic, have no side effects, and implement a single `emit(model)` interface.
--   **Reference Implementation**: The TypeScript binding (`bindings/typescript`) is the source of truth.
--   **Shared Spec Suite**: `tests/spec/*.json` contains the "Golden Master" test cases generated from the TS implementation.
+**Iron Law**: Emitters are pure functions with signature `emit(ir, flags) → string`. No side effects.
 
-## 📂 Directory Structure
+## Key Files & Directories
 
--   `bindings/<lang>/`: Language-specific implementations.
-    -   `src/` or `lib/`: Source code (Parser, Compiler, Emitters).
-    -   `tests/` or `spec/`: Test suite, MUST include a conformance runner.
--   `tests/spec/`: JSON specifications for conformance testing.
--   `spec/grammar/`: EBNF grammar (`dsl.ebnf`) and semantics (`semantics.md`).
--   `tooling/`: Python scripts for auditing and maintenance.
+| Path                           | Purpose                                                |
+| ------------------------------ | ------------------------------------------------------ |
+| `bindings/typescript/`         | **Reference Implementation** — all features start here |
+| `tests/spec/*.json`            | Golden master test fixtures (generated from TS)        |
+| `spec/grammar/dsl.ebnf`        | Canonical grammar definition                           |
+| `spec/grammar/semantics.md`    | Normative semantics for all constructs                 |
+| `tooling/audit_conformance.py` | Cross-binding conformance audit                        |
+| `tooling/sync_versions.py`     | Propagates version from Python SSOT                    |
 
-## 🧪 Testing & Workflows
+## Test Fixture Format
 
-**Conformance Testing (Critical):**
-All bindings must validate against `tests/spec/*.json`.
+Each JSON file in [tests/spec/](../tests/spec/) follows this schema:
 
--   **Workflow**: Read JSON -> Parse `input_ast` -> Compile to IR -> Assert IR matches `expected_ir`.
--   **Runner**: Each binding has a specific runner (e.g., `conformance_test.go`, `conformance.rs`).
+```json
+{
+  "id": "plus_greedy",
+  "input_dsl": "a+",
+  "input_ast": { "type": "Quantifier", "target": {...}, "min": 1, "max": null },
+  "expected_ir": { "ir": "Quant", "child": {...}, "min": 1, "max": "Inf", "mode": "Greedy" },
+  "expected_codegen": { "pcre": "a+" }
+}
+```
 
-**Common Commands:**
+Conformance tests: Parse `input_ast` → Compile → Assert IR matches `expected_ir`.
 
--   **Audit Compliance**: `python3 tooling/audit_conformance.py` (Checks pass rates across all bindings).
--   **Regenerate Specs**: `cd bindings/typescript && npm run build:specs` (Updates `tests/spec/*.json`).
--   **Run Binding Tests**:
-    -   Rust: `cargo test`
-    -   Swift: `swift test`
-    -   Go: `go test ./...`
-    -   Python: `pytest`
-    -   Lua: `busted`
+## Developer Workflow Commands
 
-## 📝 Coding Conventions
+```bash
+# Regenerate all spec fixtures from TypeScript
+cd bindings/typescript && npm run build:specs
 
--   **Polyglot Consistency**: When implementing a feature in one binding, ensure the logic mirrors the Reference (TS) implementation.
--   **Error Handling**: Use "Instructional Error Handling". Errors should explain _what_ went wrong and _how_ to fix it (e.g., `STRlingParseError` with hints).
--   **No External Regex Parsers**: The core parser should be implemented manually or using a parser combinator, not by delegating to the host language's regex engine (except for the final emission).
--   **Granular Testing**: Conformance runners should report individual test results (one per JSON file) rather than a single aggregate pass/fail.
+# Audit conformance across all bindings
+python3 tooling/audit_conformance.py
 
-## 🗣️ Voice & Persona: "Junior First"
+# Run binding-specific tests
+cd bindings/python && pytest
+cd bindings/go && go test ./...
+cd bindings/rust && cargo test
+cd bindings/typescript && npm test
+```
 
-You are the **STRling Task Architect**. Your primary goal is **Cognitive Offloading** for the user.
+## Coding Conventions
 
--   **Don't just explain; Scaffolding.** Don't tell them "create a class"; give them the class skeleton.
--   **Instructional Errors.** When diagnosing issues, suggest the specific CLI command to run (e.g., `./strling test python`).
--   **Contextual Links.** Always link to relevant documentation files (e.g., ``).
+1. **Mirror the Reference**: When implementing a feature, match TypeScript's logic exactly. Check `bindings/typescript/src/STRling/core/compiler.ts` for IR generation patterns.
 
-## 🔍 Integration Points
+2. **Simply API Pattern**: The user-facing API uses chainable `Pattern` objects:
 
--   **Tooling**: Use `tooling/audit_*.py` scripts to verify your changes.
--   **Grammar**: If modifying syntax, update `spec/grammar/dsl.ebnf` and `spec/grammar/semantics.md` first.
+    ```typescript
+    // bindings/typescript/src/STRling/simply/pattern.ts
+    simply.digit().oneOrMore(); // creates Pattern wrapping Quantifier node
+    ```
 
-## 📦 Release Engineering
+3. **Error Classes**: Use `STRlingParseError` with instructional messages explaining what's wrong AND how to fix it.
 
-**The "Two SSOTs" Rule:**
+4. **No Octal Escapes**: `\0` (null byte) only. All other octal patterns are forbidden per [semantics.md](../spec/grammar/semantics.md).
 
--   **Logic SSOT**: `spec/` (Generated by TypeScript).
--   **Versioning SSOT**: `bindings/python/pyproject.toml` (Propagated by Python).
-    -   _Why_: Agents might otherwise try to bump the version in `package.json` and expect it to propagate, which won't happen.
-    -   **Rule**: Never manually edit version numbers in `package.json`, `Cargo.toml`, or other binding manifests.
+## Version Management (Critical)
 
-**Release Workflow:**
+**Single Source of Truth**: `bindings/python/pyproject.toml`
 
-1.  **Propagate Version**: `python3 tooling/sync_versions.py --write`
-2.  **Tag Release**: `git tag vX.Y.Z`
-3.  **Push**: `git push --tags`
+Never manually edit versions in `package.json`, `Cargo.toml`, etc. Use:
 
-**Idempotency:**
+```bash
+python3 tooling/sync_versions.py --write  # propagates to all bindings
+```
 
--   Deployment jobs must check for existing versions before publishing to prevent CI failures on re-runs.
+## Adding a New Feature
 
-## 📋 Task Generation Standard (The "Fill-in-the-Blank" Rule)
+1. **Grammar First**: Update `spec/grammar/dsl.ebnf` and `spec/grammar/semantics.md`
+2. **TypeScript Implementation**: Add to `bindings/typescript/src/STRling/`
+3. **Generate Specs**: `cd bindings/typescript && npm run build:specs`
+4. **Implement in Other Bindings**: Match the TypeScript logic exactly
+5. **Verify Conformance**: `python3 tooling/audit_conformance.py`
 
-When the user asks you to plan a feature or fix, do **NOT** just list steps. You MUST generate a **Scaffolded Architecture Task** that a junior developer can execute without knowing the full architecture.
+## Debugging Tips
 
-**Required Schema:**
-
-1.  **Header:** Title, Goal, and Target Vectors (File Paths).
-2.  **Scaffolding (The "Fill-in-the-Blank"):**
-    -   **Test Definition:** A pre-written test case the user can copy-paste to `tests/`.
-    -   **Logic Skeleton:** A method signature with a `TODO` block where the logic belongs.
-3.  **Acceptance Criteria:** Binary pass/fail checks.
-
-_Constraint: The task is only valid if the user can solve it by filling in the blank you provided._
+-   **IR Mismatch**: Compare `expected_ir` vs actual using the binding's `compileWithMetadata()` method
+-   **Emitter Issues**: Check `_escapeLiteral()` and `_escapeClassChar()` in the PCRE2 emitter
+-   **Conformance Failures**: Look at which fixtures fail in `tooling/test_logs/`

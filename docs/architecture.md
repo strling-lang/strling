@@ -162,6 +162,135 @@ Responsibility split:
 
 This architecture ensures that editor integrations can be built rapidly while maintaining a single, testable source of truth for diagnostics and suggestions.
 
+---
+
+## The Simply API (Fluent Builder Pattern)
+
+The **Simply API** provides a type-safe, object-oriented alternative to the raw DSL string syntax for constructing regex patterns programmatically. Rather than writing regex as text, developers compose patterns using chainable method calls that directly map to the Intermediate Representation (IR).
+
+### Why Simply?
+
+Regular expressions are notoriously difficult to read and maintain. The Simply API addresses this by:
+
+-   **Hiding Raw Regex**: Users never write cryptic character sequences like `(?<=\d{3})` directly
+-   **Providing Type Safety**: IDE autocomplete and compile-time checks catch errors before runtime
+-   **Enabling Composition**: Complex patterns are built from simple, reusable building blocks
+-   **Improving Readability**: Method names like `digit()`, `oneOrMore()`, and `capture()` are self-documenting
+
+### Semantic Intent
+
+The Simply API is designed as a **semantic abstraction layer**. Each method call represents a meaningful pattern concept, not a regex syntax trick. This makes patterns accessible to developers who may not be regex experts.
+
+### DSL vs. Simply: A Comparison
+
+The following examples demonstrate equivalent patterns using both approaches:
+
+**Example 1: Matching a Phone Number**
+
+```
+DSL String:
+\d{3}-\d{3}-\d{4}
+
+Simply API (TypeScript):
+import { simply as s } from '@thecyberlocal/strling';
+
+s.digit(3)
+ .then('-')
+ .then(s.digit(3))
+ .then('-')
+ .then(s.digit(4));
+```
+
+**Example 2: Matching an Email Local Part**
+
+```
+DSL String:
+[A-Za-z0-9._%+-]+
+
+Simply API (TypeScript):
+import { simply as s } from '@thecyberlocal/strling';
+
+s.anyOf(
+    s.letter(),
+    s.digit(),
+    '.', '_', '%', '+', '-'
+).oneOrMore();
+```
+
+**Example 3: Capturing with Named Groups**
+
+```
+DSL String:
+(?<area>\d{3})-(?<exchange>\d{3})-(?<line>\d{4})
+
+Simply API (TypeScript):
+import { simply as s } from '@thecyberlocal/strling';
+
+s.capture('area', s.digit(3))
+ .then('-')
+ .then(s.capture('exchange', s.digit(3)))
+ .then('-')
+ .then(s.capture('line', s.digit(4)));
+```
+
+### Mapping to IR Nodes
+
+Every Simply API method corresponds directly to an IR node type. This 1:1 mapping ensures predictable, auditable output:
+
+| Simply Method     | IR Node Type | Description                         |
+| ----------------- | ------------ | ----------------------------------- |
+| `s.lit('text')`   | `Lit`        | Literal character sequence          |
+| `s.digit()`       | `CharClass`  | Digit character class (`\d`)        |
+| `s.letter()`      | `CharClass`  | Letter character class (`[A-Za-z]`) |
+| `s.anyOf(...)`    | `Alt`        | Alternation (OR)                    |
+| `s.merge(...)`    | `Seq`        | Sequence concatenation              |
+| `s.capture(name)` | `Group`      | Named capturing group               |
+| `s.group(...)`    | `Group`      | Non-capturing group                 |
+| `.oneOrMore()`    | `Quant`      | Quantifier with min=1, max=∞        |
+| `.zeroOrMore()`   | `Quant`      | Quantifier with min=0, max=∞        |
+| `.optional()`     | `Quant`      | Quantifier with min=0, max=1        |
+| `.repeat(n,m)`    | `Quant`      | Quantifier with explicit bounds     |
+
+### The Pattern Class
+
+At the heart of the Simply API is the `Pattern` class. Each method returns a new `Pattern` instance, enabling fluent chaining:
+
+```typescript
+// Pattern class provides chainable modifiers
+const pattern = s
+    .digit() // Returns Pattern wrapping CharClass node
+    .oneOrMore() // Returns Pattern wrapping Quant node
+    .lazy(); // Returns Pattern with lazy quantification
+```
+
+The `Pattern` class also exposes compilation methods:
+
+-   `pattern.compile()` → Returns the compiled IR
+-   `pattern.toPCRE2()` → Emits a PCRE2-compatible regex string
+-   `pattern.toJS()` → Emits an ECMAScript-compatible regex string
+
+### Error Handling
+
+The Simply API uses `STRlingError` exceptions with instructional messages. When an invalid pattern is constructed, the error explains both what went wrong and how to fix it:
+
+```typescript
+try {
+    s.capture("name", s.digit()).capture("name", s.letter()); // Duplicate name!
+} catch (e) {
+    // STRlingError: Duplicate named capture group 'name'.
+    // Each capture group must have a unique name within a pattern.
+}
+```
+
+### Best Practices
+
+1. **Compose Small Patterns**: Build complex patterns from simple, tested components
+2. **Use Named Captures**: Prefer `capture('name', ...)` over anonymous groups for clarity
+3. **Chain Readably**: Break long chains across multiple lines for readability
+4. **Avoid Raw Regex**: If you find yourself thinking in regex syntax, step back and use Simply methods
+
+---
+
 ## Related Documentation
 
 -   **[Developer Hub](index.md)**: Return to the central documentation hub

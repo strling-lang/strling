@@ -124,6 +124,25 @@ def check_luarocks(package: str, version: str) -> bool:
     return False
 
 
+def check_maven_central(group_id: str, artifact_id: str, version: str) -> bool:
+    """Check if a version exists on Maven Central.
+
+    Query: https://search.maven.org/solrsearch/select?q=g:{group_id}+AND+a:{artifact_id}+AND+v:{version}
+    Return True if version exists.
+    """
+    query = f"g:{group_id}+AND+a:{artifact_id}+AND+v:{version}"
+    url = f"https://search.maven.org/solrsearch/select?q={query}&rows=1&wt=json"
+    try:
+        with urllib.request.urlopen(url) as response:
+            data = json.loads(response.read().decode())
+            num_found = data.get("response", {}).get("numFound", 0)
+            return num_found > 0
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return False
+        raise e
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Check if a package version exists on a registry."
@@ -131,11 +150,25 @@ def main() -> None:
     parser.add_argument(
         "--registry",
         required=True,
-        choices=["npm", "pypi", "crates", "nuget", "rubygems", "pub", "luarocks"],
+        choices=[
+            "npm",
+            "pypi",
+            "crates",
+            "nuget",
+            "rubygems",
+            "pub",
+            "luarocks",
+            "maven",
+        ],
         help="Package registry to check",
     )
-    parser.add_argument("--package", required=True, help="Package name")
+    parser.add_argument(
+        "--package", required=True, help="Package name (or artifact ID for Maven)"
+    )
     parser.add_argument("--version", required=True, help="Package version")
+    parser.add_argument(
+        "--group", required=False, help="Group ID (required for Maven Central)"
+    )
 
     args = parser.parse_args()
 
@@ -155,6 +188,11 @@ def main() -> None:
             exists = check_pub(args.package, args.version)
         elif args.registry == "luarocks":
             exists = check_luarocks(args.package, args.version)
+        elif args.registry == "maven":
+            if not args.group:
+                print("Error: --group is required for Maven Central", file=sys.stderr)
+                sys.exit(2)
+            exists = check_maven_central(args.group, args.package, args.version)
     except Exception as e:
         print(f"Error checking registry: {e}", file=sys.stderr)
         sys.exit(2)  # Error

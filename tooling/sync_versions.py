@@ -222,13 +222,67 @@ def update_c_source(content: str, version: str, path: Path) -> str:
 
 
 def update_lua_rockspec(content: str, version: str, path: Path) -> str:
-    rockspec_version = version if "-" in version else (version + "-1")
-    return re.sub(
+    """Update Lua rockspec version and handle file rename.
+
+    LuaRocks requires rockspec files to be named with the version.
+    The version format is: <version>-<revision> (e.g., 3.0.0-alpha-1).
+    """
+    # Ensure version has a revision suffix
+    rockspec_version = version if version.count("-") >= 1 else (version + "-1")
+    # For alpha versions like "3.0.0-alpha", add revision: "3.0.0-alpha-1"
+    if "-" in version and not re.match(r".*-\d+$", version):
+        rockspec_version = version + "-1"
+
+    # Update version field
+    new_content = re.sub(
         r'(^version\s*=\s*")([^\"]+)(")',
         lambda m: m.group(1) + rockspec_version + m.group(3),
         content,
         flags=re.MULTILINE,
     )
+
+    # Update tag in source block
+    new_content = re.sub(
+        r'(tag\s*=\s*")([^\"]+)(")',
+        lambda m: m.group(1) + "v" + version + m.group(3),
+        new_content,
+    )
+
+    return new_content
+
+
+def rename_lua_rockspec(version: str, dry_run: bool = False) -> bool:
+    """Rename Lua rockspec file to match version.
+
+    LuaRocks requires the filename to match the version.
+    """
+    lua_dir = ROOT_DIR / "bindings" / "lua"
+    rockspec_version = version if version.count("-") >= 1 else (version + "-1")
+    if "-" in version and not re.match(r".*-\d+$", version):
+        rockspec_version = version + "-1"
+
+    new_name = f"strling-{rockspec_version}.rockspec"
+    new_path = lua_dir / new_name
+
+    # Find existing rockspec file
+    existing_rockspecs = list(lua_dir.glob("strling-*.rockspec"))
+    if not existing_rockspecs:
+        logger.warning("No existing rockspec file found in %s", lua_dir)
+        return False
+
+    old_path = existing_rockspecs[0]
+
+    if old_path.name == new_name:
+        logger.debug("Rockspec filename already correct: %s", new_name)
+        return True
+
+    if dry_run:
+        logger.info("Would rename %s to %s", old_path.name, new_name)
+    else:
+        old_path.rename(new_path)
+        logger.info("Renamed %s to %s", old_path.name, new_name)
+
+    return True
 
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -267,13 +321,31 @@ def main(argv: Optional[List[str]] = None) -> int:
         ("bindings/perl/lib/STRling.pm", update_perl_pm),
         ("bindings/cpp/CMakeLists.txt", update_cmake),
         ("bindings/c/src/strling.c", update_c_source),
-        ("bindings/lua/strling-scm-1.rockspec", update_lua_rockspec),
     ]
 
     success = True
     for path, updater in targets:
         if not update_file(path, version, dry_run=not args.write, updater_func=updater):
             success = False
+
+    # Handle Lua rockspec separately (dynamic filename)
+    lua_dir = ROOT_DIR / "bindings" / "lua"
+    existing_rockspecs = list(lua_dir.glob("strling-*.rockspec"))
+    if existing_rockspecs:
+        rockspec_path = existing_rockspecs[0]
+        relative_path = str(rockspec_path.relative_to(ROOT_DIR))
+        if not update_file(
+            relative_path,
+            version,
+            dry_run=not args.write,
+            updater_func=update_lua_rockspec,
+        ):
+            success = False
+        # Rename the rockspec file to match the new version
+        if not rename_lua_rockspec(version, dry_run=not args.write):
+            success = False
+    else:
+        logger.warning("No Lua rockspec file found. Skipping.")
 
     if args.check and not success:
         logger.error("Version mismatch detected!")

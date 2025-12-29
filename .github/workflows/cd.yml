@@ -1,4 +1,3 @@
-# .github/workflows/cd.yml
 # Delivery & Deployment Pipeline
 # Triggered only after successful completion of STRling CI workflow
 # Only deploys when the CI run was triggered by a version tag (v*)
@@ -33,10 +32,10 @@ jobs:
                   # Get the head_branch from the triggering workflow
                   HEAD_BRANCH="${{ github.event.workflow_run.head_branch }}"
                   HEAD_SHA="${{ github.event.workflow_run.head_sha }}"
-                  
+
                   echo "Triggering branch/tag: $HEAD_BRANCH"
                   echo "Triggering SHA: $HEAD_SHA"
-                  
+
                   # Check if head_branch matches a version tag pattern
                   if [[ "$HEAD_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
                     echo "✅ Release tag detected: $HEAD_BRANCH"

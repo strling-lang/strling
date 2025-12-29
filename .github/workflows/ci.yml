@@ -1,4 +1,3 @@
-# .github/workflows/ci.yml
 # Integration & Verification Pipeline
 # Deployment logic is in cd.yml (triggered via workflow_run)
 

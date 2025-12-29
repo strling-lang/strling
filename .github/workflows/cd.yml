@@ -1,11 +1,13 @@
 # Delivery & Deployment Pipeline
-# Triggered only after successful completion of STRling CI workflow
+# Triggered only after successful completion of STRling CI workflow on main branch
+# CD is "not even reached" for dev/feature branches due to strict branch filtering
 # Only deploys when the CI run was triggered by a version tag (v*)
 
 name: STRling CD
 on:
     workflow_run:
         workflows: ["STRling CI"]
+        branches: [main] # CD only triggers for main branch CI runs
         types:
             - completed
 

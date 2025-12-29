@@ -36,6 +36,34 @@ static int is_hex(char c) {
     return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
 }
 
+/* Get semantic test name for a fixture file */
+static const char *get_test_name(const char *filename, char *buf, size_t bufsize) {
+    /* Remove .json extension to get stem */
+    size_t len = strlen(filename);
+    size_t ext_len = 5; /* ".json" */
+    if (len <= ext_len) {
+        snprintf(buf, bufsize, "test_conformance_%s", filename);
+        return buf;
+    }
+    
+    /* Create stem without extension */
+    char stem[256];
+    size_t stem_len = len - ext_len;
+    if (stem_len >= sizeof(stem)) stem_len = sizeof(stem) - 1;
+    strncpy(stem, filename, stem_len);
+    stem[stem_len] = '\0';
+    
+    /* Map semantic test names */
+    if (strcmp(stem, "semantic_duplicates") == 0) {
+        snprintf(buf, bufsize, "test_semantic_duplicate_capture_group");
+    } else if (strcmp(stem, "semantic_ranges") == 0) {
+        snprintf(buf, bufsize, "test_semantic_ranges");
+    } else {
+        snprintf(buf, bufsize, "test_conformance_%s", stem);
+    }
+    return buf;
+}
+
 /* Normalize pattern for comparison (ported from test_helpers.c) */
 static char *normalize_expected(const char *input, size_t len)
 {
@@ -251,10 +279,16 @@ int main(int argc, char **argv) {
 
         JSON_Object *root_obj = json_value_get_object(root_value);
         
+        /* Get semantic test name for output */
+        char test_name[256];
+        get_test_name(ent->d_name, test_name, sizeof(test_name));
+        
+        printf("=== RUN %s (%s)\n", test_name, ent->d_name);
+        
         /* Check for input_ast */
         if (!json_object_has_value(root_obj, "input_ast")) {
             /* Skip parser-only tests or incomplete tests */
-            printf("[   PASS   ] Irrelevant (no input_ast): %s\n", ent->d_name);
+            printf("    --- PASS: (no input_ast, out of scope)\n");
             json_value_free(root_value);
             free(file_content);
             continue;

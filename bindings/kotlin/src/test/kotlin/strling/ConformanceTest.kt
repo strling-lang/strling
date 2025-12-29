@@ -19,6 +19,18 @@ class ConformanceTest {
         isLenient = true
     }
 
+    /**
+     * Get the semantic test name for a fixture file
+     */
+    private fun getTestName(filename: String): String {
+        val stem = filename.removeSuffix(".json")
+        return when (stem) {
+            "semantic_duplicates" -> "test_semantic_duplicate_capture_group"
+            "semantic_ranges" -> "test_semantic_ranges"
+            else -> "test_conformance_$stem"
+        }
+    }
+
     @TestFactory
     fun runConformanceTests(): List<DynamicTest> {
         // Adjust path to point to tests/spec from bindings/kotlin
@@ -40,7 +52,9 @@ class ConformanceTest {
         return dir.listFiles { _, name -> name.endsWith(".json") }
             ?.sortedBy { it.name }
             ?.map { file ->
-                DynamicTest.dynamicTest(file.name) {
+                val testName = getTestName(file.name)
+                DynamicTest.dynamicTest(testName) {
+                    println("=== RUN $testName (${file.name})")
                     runTest(file)
                 }
             }

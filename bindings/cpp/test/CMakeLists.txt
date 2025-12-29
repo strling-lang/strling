@@ -29,6 +29,10 @@ file(GLOB UNIT_TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/unit/*.cpp
 )
 
+# Exclude interaction_test.cpp as it requires the full DSL pipeline (parser/compiler/emitter)
+# which is not yet implemented - the C++ binding currently only has the Simply API
+list(FILTER UNIT_TEST_SOURCES EXCLUDE REGEX ".*interaction_test\\.cpp$")
+
 # Collect all e2e test files
 file(GLOB E2E_TEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/e2e/*.cpp

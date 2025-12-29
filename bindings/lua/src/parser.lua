@@ -441,6 +441,14 @@ function Parser:parseCharClass()
             if self.cur:peek() == "-" and self.cur:peek(1) ~= "]" then
                 self.cur:take()  -- consume '-'
                 local endCh = self.cur:take()
+                -- Validate ascending order for ranges
+                local sc = string.byte(ch)
+                local ec = string.byte(endCh)
+                local bothDigits = ch:match("[0-9]") and endCh:match("[0-9]")
+                local bothLetters = ch:match("[A-Za-z]") and endCh:match("[A-Za-z]")
+                if (bothDigits or bothLetters) and sc > ec then
+                    error(STRlingParseError.new("Invalid character range", self.cur.i, self.src))
+                end
                 table.insert(members, { type = "Range", from = ch, to = endCh })
             else
                 table.insert(members, { type = "Literal", value = ch })

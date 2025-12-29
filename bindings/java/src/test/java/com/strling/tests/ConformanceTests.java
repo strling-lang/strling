@@ -42,6 +42,21 @@ public class ConformanceTests {
     ).normalize();
     
     /**
+     * Get the semantic test name for a fixture file
+     */
+    private static String getTestName(String filename) {
+        String stem = filename.replace(".json", "");
+        switch (stem) {
+            case "semantic_duplicates":
+                return "test_semantic_duplicate_capture_group";
+            case "semantic_ranges":
+                return "test_semantic_ranges";
+            default:
+                return "test_conformance_" + stem;
+        }
+    }
+    
+    /**
      * Get all JSON fixture files
      */
     private static List<Path> getFixtures() throws IOException {
@@ -66,12 +81,13 @@ public class ConformanceTests {
     public Stream<DynamicTest> testAllConformanceFixtures() throws IOException {
         List<Path> fixtures = getFixtures();
         
-        return fixtures.stream().map(fixturePath -> 
-            DynamicTest.dynamicTest(
-                fixturePath.getFileName().toString(),
+        return fixtures.stream().map(fixturePath -> {
+            String testName = getTestName(fixturePath.getFileName().toString());
+            return DynamicTest.dynamicTest(
+                testName,
                 () -> testSingleFixture(fixturePath)
-            )
-        );
+            );
+        });
     }
     
     /**
@@ -79,7 +95,8 @@ public class ConformanceTests {
      */
     private void testSingleFixture(Path fixturePath) throws IOException {
         String filename = fixturePath.getFileName().toString();
-        System.out.println("=== RUN " + filename);
+        String testName = getTestName(filename);
+        System.out.println("=== RUN " + testName + " (" + filename + ")");
 
         try {
             // Load and parse the JSON fixture

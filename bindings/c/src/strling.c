@@ -256,7 +256,8 @@ static char *escape_literal_for_pcre2_len(const char *lit, size_t len)
     return result;
 }
 
-/* Helper to escape a literal string for PCRE2 output */
+/* Helper to escape a literal string for PCRE2 output (not currently used but kept for reference) */
+__attribute__((unused))
 static char *escape_literal_for_pcre2(const char *lit)
 {
     if (!lit)

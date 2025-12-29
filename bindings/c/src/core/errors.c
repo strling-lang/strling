@@ -88,7 +88,7 @@ char* strling_parse_error_format(const STRlingParseError* err) {
 
     if (err->hint && err->hint[0]) {
         strncat(out, "\n\nHint: ", 8);
-        strncat(out, err->hint, strlen(err->hint));
+        strcat(out, err->hint);
     }
 
     return out;

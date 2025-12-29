@@ -30,6 +30,7 @@ struct Cursor {
     in_class: usize,  // nesting count for char classes
 }
 
+#[allow(dead_code)]
 impl Cursor {
     fn new(text: String, i: usize, extended_mode: bool, in_class: usize) -> Self {
         Self {
@@ -102,6 +103,7 @@ impl Cursor {
 }
 
 /// Parser for STRling DSL
+#[allow(dead_code)]
 pub struct Parser {
     original_text: String,
     flags: Flags,
@@ -494,7 +496,7 @@ impl Parser {
 
     /// Parse a group: (...)
     fn parse_group(&mut self) -> Result<Node, STRlingParseError> {
-        let start_pos = self.cur.i;
+        let _start_pos = self.cur.i;
         self.cur.take();  // consume '('
         
         // Check for group modifiers
@@ -727,7 +729,7 @@ mod tests {
     fn test_parse_simple_literal() {
         let result = parse("hello");
         assert!(result.is_ok());
-        let (flags, node) = result.unwrap();
+        let (_flags, node) = result.unwrap();
         // Should be a sequence of literals
         match node {
             Node::Sequence(seq) => {

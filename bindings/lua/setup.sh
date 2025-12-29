@@ -28,7 +28,7 @@ luarocks install $LOCAL_FLAG busted
 
 # Build/Install the rock locally to ensure paths are correct
 echo "Building and installing strling rock..."
-luarocks make $LOCAL_FLAG strling-3.0.0-alpha-1.rockspec
+luarocks make $LOCAL_FLAG strling-3.0.0alpha-1.rockspec
 
 echo "Lua binding setup complete."
 echo ""

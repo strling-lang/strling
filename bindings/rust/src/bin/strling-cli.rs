@@ -88,7 +88,7 @@ fn main() {
             };
             
             match content {
-                Ok(text) => {
+                Ok(_text) => {
                     // TODO: Call parser and generate diagnostics
                     println!("{{");
                     println!("  \"success\": false,");
@@ -110,7 +110,7 @@ fn main() {
             };
             
             match content {
-                Ok(text) => {
+                Ok(_text) => {
                     // TODO: Call parser, compiler, and emitter
                     eprintln!("Emit to {} not yet implemented", target);
                     std::process::exit(1);

@@ -532,7 +532,7 @@ mod tests {
         match control('A') {
             Node::Literal(l) => {
                 // Control-A -> codepoint 1
-                let expected = std::char::from_u32(('A' as u32 & 0x1F)).unwrap().to_string();
+                let expected = std::char::from_u32('A' as u32 & 0x1F).unwrap().to_string();
                 assert_eq!(l.value, expected);
             }
             _ => panic!("expected Literal for control A"),

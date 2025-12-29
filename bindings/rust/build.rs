@@ -39,7 +39,7 @@ fn main() {
             let func_name = file_stem.replace("-", "_").replace(".", "_");
             // Use absolute path or relative to cargo manifest dir if possible, but here we use relative to workspace root which might be tricky if running from different dir.
             // Better to use CARGO_MANIFEST_DIR
-            let manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+            let _manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
             // We need to construct a path that works at runtime.
             // The path found by glob is relative to where build.rs runs (usually package root).
             // So `../../tests/spec` is correct relative to `bindings/rust`.

@@ -18,14 +18,14 @@ Each binding implements the same 3-stage pipeline in `bindings/<lang>/src/`:
 
 ## Key Files & Directories
 
-| Path                           | Purpose                                                |
-| ------------------------------ | ------------------------------------------------------ |
-| `bindings/typescript/`         | **Reference Implementation** — all features start here |
-| `tests/spec/*.json`            | Golden master test fixtures (generated from TS)        |
-| `spec/grammar/dsl.ebnf`        | Canonical grammar definition                           |
-| `spec/grammar/semantics.md`    | Normative semantics for all constructs                 |
-| `tooling/audit_conformance.py` | Cross-binding conformance audit                        |
-| `tooling/sync_versions.py`     | Propagates version from Python SSOT                    |
+| Path                        | Purpose                                                |
+| --------------------------- | ------------------------------------------------------ |
+| `bindings/typescript/`      | **Reference Implementation** — all features start here |
+| `tests/spec/*.json`         | Golden master test fixtures (generated from TS)        |
+| `spec/grammar/dsl.ebnf`     | Canonical grammar definition                           |
+| `spec/grammar/semantics.md` | Normative semantics for all constructs                 |
+| `tooling/audit_omega.py`    | Final certification audit (validates all 17 bindings)  |
+| `tooling/sync_versions.py`  | Propagates version from Python SSOT                    |
 
 ## Test Fixture Format
 
@@ -49,8 +49,8 @@ Conformance tests: Parse `input_ast` → Compile → Assert IR matches `expected
 # Regenerate all spec fixtures from TypeScript
 cd bindings/typescript && npm run build:specs
 
-# Audit conformance across all bindings
-python3 tooling/audit_conformance.py
+# Run final certification audit across all 17 bindings
+python3 tooling/audit_omega.py
 
 # Run binding-specific tests
 cd bindings/python && pytest
@@ -90,7 +90,7 @@ python3 tooling/sync_versions.py --write  # propagates to all bindings
 2. **TypeScript Implementation**: Add to `bindings/typescript/src/STRling/`
 3. **Generate Specs**: `cd bindings/typescript && npm run build:specs`
 4. **Implement in Other Bindings**: Match the TypeScript logic exactly
-5. **Verify Conformance**: `python3 tooling/audit_conformance.py`
+5. **Verify Conformance**: `python3 tooling/audit_omega.py`
 
 ## Debugging Tips
 

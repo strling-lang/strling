@@ -610,7 +610,6 @@ Sampled three parser error scenarios to verify "Instructional Pedagogy":
 | Component                         | Purpose                               | Location                          |
 | :-------------------------------- | :------------------------------------ | :-------------------------------- |
 | `tooling/audit_omega.py`          | Full ecosystem coherency audit        | `tooling/audit_omega.py`          |
-| `tooling/audit_conformance.py`    | Python/Java fixture coverage audit    | `tooling/audit_conformance.py`    |
 | `tooling/sync_versions.py`        | Cross-binding version synchronization | `tooling/sync_versions.py`        |
 | `tooling/check_version_exists.py` | Registry idempotency checks           | `tooling/check_version_exists.py` |
 | Hint Engine                       | Context-aware error hint generation   | `core/hint_engine.*`              |

@@ -8,7 +8,7 @@ If you add or change tooling, please update this index so maintainers and CI con
 
 ## Quick links
 
--   Audit & reporting: `audit_conformance.py`, `audit_precision.py`, `audit_hints.py`, `audit_omega.py`
+-   Audit & reporting: `audit_precision.py`, `audit_hints.py`, `audit_omega.py`
 -   Release helpers: `sync_versions.py`, `check_version_exists.py`
 -   Fixture tooling: `js_to_json_ast/`
 -   LSP & editor tooling: `lsp-server/`
@@ -19,8 +19,6 @@ If you add or change tooling, please update this index so maintainers and CI con
 ---
 
 ## Scripts and tools (alphabetical)
-
--   `audit_conformance.py` — Run conformance coverage checks across bindings by comparing executed test fixtures against canonical JSON AST fixtures. Produces a report of missing coverage and exits non-zero on failures.
 
 -   `audit_hints.py` — Small interactive helper that runs the Python parser against a pattern and prints instructional hints from `STRlingParseError`. Useful when debugging parser errors and improving error messages.
 
@@ -52,7 +50,7 @@ If you add or change tooling, please update this index so maintainers and CI con
 
 -   `scripts/` — Miscellaneous helper scripts for environment verification and CI maintenance tasks. Example: `scripts/verify_ecosystem.py`.
 
--   `tests/` — Unit tests for tooling scripts (pytest). Includes tests such as `test_sync_versions.py`, `test_audit_conformance.py`.
+-   `tests/` — Unit tests for tooling scripts (pytest). Includes tests such as `test_sync_versions.py`.
 
 -   `test_logs/` — Directory containing archive logs created by tooling audit runs (e.g., `audit_bindings_rerun.log`). Inspect here when diagnosing cross-binding audit failures.
 
@@ -106,7 +104,7 @@ If you need more detail on any item below, open its README or the script header 
 
 ## Quick highlights
 
--   Audit & reports: `audit_conformance.py`, `audit_precision.py`, `audit_omega.py` ✅
+-   Audit & reports: `audit_precision.py`, `audit_omega.py` ✅
 -   AST / fixture generation: `js_to_json_ast/`, `generate_c_asts.sh` 🔧
 -   Release helpers: `sync_versions.py`, `check_version_exists.py` 📦
 -   Editor tooling: `lsp-server/` (LSP server and examples) 🧑‍💻
@@ -116,12 +114,6 @@ If you need more detail on any item below, open its README or the script header 
 ---
 
 ## Audits & reports
-
--   `tooling/audit_conformance.py` — Conformance audit runner that verifies language bindings exercise the shared JSON AST specs. Run with:
-
-    ```bash
-    python3 tooling/audit_conformance.py
-    ```
 
 -   `tooling/audit_precision.py` — Compares numeric counts of conformance tests across bindings and flags mismatches.
 

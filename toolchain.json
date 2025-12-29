@@ -90,7 +90,12 @@
                 "--no-interaction"
             ],
             "clean": ["rm", "-rf", "vendor"],
-            "test": ["vendor/bin/phpunit", "--testdox", "tests/ConformanceTest.php", "tests/Core"]
+            "test": [
+                "vendor/bin/phpunit",
+                "--testdox",
+                "tests/ConformanceTest.php",
+                "tests/Core"
+            ]
         },
         "python": {
             "path": "bindings/python",
@@ -111,7 +116,14 @@
             "check_bin": "bundle",
             "setup": ["bundle", "install"],
             "clean": ["rm", "-f", "*.gem"],
-            "test": ["bundle", "exec", "ruby", "-Ilib:test", "test/conformance_test.rb", "-v"]
+            "test": [
+                "bundle",
+                "exec",
+                "ruby",
+                "-Ilib:test",
+                "test/conformance_test.rb",
+                "-v"
+            ]
         },
         "rust": {
             "path": "bindings/rust",

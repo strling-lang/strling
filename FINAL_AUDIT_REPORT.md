@@ -14,8 +14,8 @@
 | perl | ✅ | 548 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | php | ✅ | 596 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🔴 FAIL (Exit Code) |
 | python | ✅ | 716 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
-| r | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| r | ✅ | 632 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | ruby | ✅ | 628 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🔴 FAIL (Exit Code) |
 | rust | ✅ | Unknown | ✅ | ❌ (1 Warn) | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
-| swift | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Exit Code) |
+| swift | ✅ | 166 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | typescript | ✅ | 892 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |

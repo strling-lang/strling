@@ -3,7 +3,7 @@
 Conformance Audit Tool
 
 This script ensures 100% test coverage of JSON AST fixtures across all language bindings.
-It verifies that every fixture in tooling/js_to_json_ast/out/ is tested by both Python
+It verifies that every fixture in tooling/js_to_json_ast/fixtures/ is tested by both Python
 and Java conformance test suites.
 
 Exit Codes:
@@ -165,7 +165,7 @@ def run_java_conformance_tests(repo_root: Path) -> Set[str]:
     if test_count > 0:
         # Get the fixture list and take the first N fixtures
         # This assumes the test runs all fixtures in order
-        fixtures_dir = repo_root / "tooling" / "js_to_json_ast" / "out"
+        fixtures_dir = repo_root / "tooling" / "js_to_json_ast" / "fixtures"
         fixture_files = sorted(fixtures_dir.glob("*.json"))
 
         # Verify the test count matches the fixture count
@@ -196,7 +196,7 @@ def run_java_conformance_tests(repo_root: Path) -> Set[str]:
 
 def main():
     repo_root = get_repo_root()
-    fixtures_dir = repo_root / "tooling" / "js_to_json_ast" / "out"
+    fixtures_dir = repo_root / "tooling" / "js_to_json_ast" / "fixtures"
 
     # Get all available fixtures
     all_fixtures = get_all_fixture_ids(fixtures_dir)

@@ -10,18 +10,26 @@ echo "Setting up STRling C binding dependencies..."
 mkdir -p deps
 
 # Parson commit to use (pinned for reproducibility and security)
-# Commit a0e93b2cdea28aa44e48b7cf8e635131ada3fd86 is from v1.5.3 (2024-01-14)
-PARSON_COMMIT="a0e93b2cdea28aa44e48b7cf8e635131ada3fd86"
+# Commit ba29f4eda9ea7703a9f6a9cf2b0532a2605723c3 is from v1.5.3 (2023-10-31)
+PARSON_COMMIT="ba29f4eda9ea7703a9f6a9cf2b0532a2605723c3"
 
 # Download parson (public domain JSON parser) if not present
 if [ ! -f deps/parson.c ] || [ ! -f deps/parson.h ]; then
     echo "Downloading parson JSON parser (commit: ${PARSON_COMMIT})..."
-    if ! curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.c" -o deps/parson.c; then
-        echo "Error: Failed to download parson.c"
+    if ! curl -sfL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.c" -o deps/parson.c; then
+        echo "Error: Failed to download parson.c (HTTP error or network issue)"
+        rm -f deps/parson.c  # Clean up partial download
         exit 1
     fi
-    if ! curl -sL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.h" -o deps/parson.h; then
-        echo "Error: Failed to download parson.h"
+    if ! curl -sfL "https://raw.githubusercontent.com/kgabis/parson/${PARSON_COMMIT}/parson.h" -o deps/parson.h; then
+        echo "Error: Failed to download parson.h (HTTP error or network issue)"
+        rm -f deps/parson.h  # Clean up partial download
+        exit 1
+    fi
+    # Validate downloaded files are actually C code (not HTML error pages)
+    if head -1 deps/parson.c | grep -q "^<\|^404\|Not Found"; then
+        echo "Error: Downloaded parson.c appears to be an error page, not C code"
+        rm -f deps/parson.c deps/parson.h
         exit 1
     fi
     echo "Parson downloaded successfully."

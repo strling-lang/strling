@@ -20,11 +20,25 @@ If you add or change tooling, please update this index so maintainers and CI con
 
 ## Scripts and tools (alphabetical)
 
--   `audit_hints.py` — Small interactive helper that runs the Python parser against a pattern and prints instructional hints from `STRlingParseError`. Useful when debugging parser errors and improving error messages.
+-   `audit_hints.py` — **Interactive Parser Debugger** for testing STRling parse error messages. Runs the Python parser against a pattern and prints the fully formatted `STRlingParseError` with instructional hints. This is a **developer-facing utility** for debugging parser errors and improving error message quality — not part of CI.
+
+    ```bash
+    # Test an invalid pattern to see error hints
+    python3 tooling/audit_hints.py "[a-"
+    python3 tooling/audit_hints.py "(?<name"
+    python3 tooling/audit_hints.py "a{3,1}"   # invalid quantifier range
+    ```
 
 -   `audit_omega.py` — The unified Final Certification harness. Runs the global audit and generates `FINAL_AUDIT_REPORT.md`.
 
--   `audit_precision.py` — Compares binding test counts against the spec baseline and generates a human-readable precision/coverage report to help triage gaps.
+-   `audit_precision.py` — **Ad-Hoc Analysis (Dormant)** — Compares binding test counts against the spec baseline and generates a human-readable precision/coverage report (`docs/reports/coverage_precision.md`). This tool is for **manual developer use only** and is **not part of CI/CD**. It requires all binding toolchains to be installed locally; missing toolchains will report errors or timeouts.
+
+    ```bash
+    # Run locally to check coverage across bindings
+    python3 tooling/audit_precision.py
+    ```
+
+    **Note:** This tool may report 0 or errors for bindings you don't have installed — that's expected for local development environments.
 
 -   `check_version_exists.py` — Release helper to detect whether a particular package version already exists on registries (npm, PyPI, crates.io, NuGet, RubyGems, Pub.Dev, LuaRocks). Use during release automation to avoid publishing duplicates.
 
@@ -115,17 +129,33 @@ If you need more detail on any item below, open its README or the script header 
 
 ## Audits & reports
 
--   `tooling/audit_precision.py` — Compares numeric counts of conformance tests across bindings and flags mismatches.
+### CI Pipeline Tool
+
+-   `tooling/audit_omega.py` — **CI Gate** — Unified final certification audit runner. Generates `FINAL_AUDIT_REPORT.md`. This is the authoritative audit tool used in CI/CD pipelines.
+
+    ```bash
+    python3 tooling/audit_omega.py
+    ```
+
+### Developer-Facing Utilities (Manual Use Only)
+
+The following tools are for **local development and debugging** — they are **not part of the CI/CD gate**.
+
+-   `tooling/audit_hints.py` — **Interactive Parser Debugger** — Tests invalid patterns and displays formatted `STRlingParseError` messages with instructional hints. Use this when improving error messages or debugging parser behavior.
+
+    ```bash
+    python3 tooling/audit_hints.py "[a-"      # unclosed character class
+    python3 tooling/audit_hints.py "(?<name"  # incomplete named group
+    python3 tooling/audit_hints.py "\\k<x"    # invalid backreference
+    ```
+
+-   `tooling/audit_precision.py` — **Ad-Hoc Coverage Analysis (Dormant)** — Compares numeric counts of conformance tests across all 17 bindings and flags mismatches. Requires local toolchain installations for each binding; uninstalled bindings will report errors/timeouts.
 
     ```bash
     python3 tooling/audit_precision.py
     ```
 
--   `tooling/audit_omega.py` — Unified final certification audit runner. Generates `FINAL_AUDIT_REPORT.md`.
-
-    ```bash
-    python3 tooling/audit_omega.py
-    ```
+    Output: `docs/reports/coverage_precision.md`
 
 -   `tooling/TEST_REPORT.md` — Generated global test report summarising conformance across bindings. Used for human review and CI reporting.
 

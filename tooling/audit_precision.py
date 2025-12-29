@@ -114,6 +114,11 @@ BINDINGS: List[BindingConfig] = [
         "pattern": r"All (\d+) tests passed",
     },
     {
+        "name": "fsharp",
+        "command": ["dotnet", "test"],
+        "pattern": r"Passed:\s+(\d+)",
+    },
+    {
         "name": "r",
         "command": ["Rscript", "-e", "devtools::test()"],
         "pattern": r"\[ FAIL \d+ \| WARN \d+ \| SKIP \d+ \| PASS (\d+) \]",

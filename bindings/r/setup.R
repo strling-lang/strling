@@ -11,7 +11,8 @@ cat("Setting up STRling R binding dependencies...\n")
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 
 # Install required packages if not present
-packages <- c("testthat", "devtools", "jsonlite")
+# Note: devtools is NOT required - we source R files directly in CI
+packages <- c("testthat", "jsonlite")
 
 for (pkg in packages) {
   if (!requireNamespace(pkg, quietly = TRUE)) {

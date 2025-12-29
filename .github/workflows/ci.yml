@@ -87,6 +87,12 @@ jobs:
               with:
                   r-version: "release"
 
+            - name: 🔧 Install Dart SDK
+              if: matrix.language == 'dart'
+              uses: dart-lang/setup-dart@v1
+              with:
+                  sdk: stable
+
             # --- DYNAMIC CACHING ---
             - name: 📋 Resolve Cache Configuration
               id: cache-config

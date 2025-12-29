@@ -156,11 +156,8 @@ jobs:
 
             - name: Install Python dependencies
               run: |
-                  chmod +x strling
-                  ./strling setup python
-
-            - name: Install Python binding (editable)
-              run: pip install -e bindings/python
+                  pip install -r bindings/python/requirements.txt
+                  pip install -e bindings/python
 
             - name: Run conformance audit
               run: python tooling/audit_conformance.py

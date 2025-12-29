@@ -9,7 +9,7 @@
 | fsharp | ✅ | 596 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | go | ✅ | 5 pkgs | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | java | ✅ | 715 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
-| kotlin | ✅ | Unknown | ✅ | ✅ | ❓ Missing | ❓ Missing | 🔴 FAIL (Semantic) |
+| kotlin | ✅ | 613 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | lua | ✅ | 596 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | perl | ✅ | 548 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |
 | php | ✅ | 637 | ✅ | ✅ | ✅ Verified | ✅ Verified | 🟢 CERTIFIED |

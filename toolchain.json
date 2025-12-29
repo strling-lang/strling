@@ -62,7 +62,7 @@
             "check_bin": "java",
             "setup": [],
             "clean": ["./gradlew", "clean"],
-            "test": ["./gradlew", "test"]
+            "test": ["./gradlew", "test", "--info"]
         },
         "lua": {
             "path": "bindings/lua",

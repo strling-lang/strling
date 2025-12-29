@@ -87,6 +87,7 @@ fi
 
 # cache-dir: Print the cache directory path for a given language (for CI caching)
 # Outputs only the path to stdout, no extra logging, for easy consumption by CI
+# NOTE: We cache both package manager caches AND build outputs for maximum efficiency
 if [ "$COMMAND" == "cache-dir" ]; then
     if [ -z "$LANG" ]; then
         echo "" # Empty output for missing lang
@@ -94,38 +95,46 @@ if [ "$COMMAND" == "cache-dir" ]; then
     fi
     case "$LANG" in
         php)
-            # Composer cache (Linux default)
+            # Composer cache (Linux default) + vendor directory for installed packages
             echo "${HOME}/.cache/composer"
+            echo "bindings/php/vendor"
             ;;
         typescript|javascript|node)
-            # npm cache
+            # npm cache + node_modules for installed packages
             echo "${HOME}/.npm"
+            echo "bindings/typescript/node_modules"
             ;;
         rust)
-            # Cargo registry and git caches (both needed)
+            # Cargo registry/git caches + target directory for compiled artifacts
             echo "${HOME}/.cargo/registry"
             echo "${HOME}/.cargo/git"
+            echo "bindings/rust/target"
             ;;
         python)
-            # pip cache
+            # pip cache + venv for installed packages
             echo "${HOME}/.cache/pip"
+            echo "bindings/python/.venv"
             ;;
         go)
-            # Go module cache
+            # Go module cache + build cache
             echo "${HOME}/go/pkg/mod"
+            echo "${HOME}/.cache/go-build"
             ;;
         ruby)
             # Bundler - use vendor/bundle (local to project)
             echo "bindings/ruby/vendor/bundle"
             ;;
         dart)
-            # Dart/pub cache
+            # Dart/pub cache + .dart_tool for build artifacts
             echo "${HOME}/.pub-cache"
+            echo "bindings/dart/.dart_tool"
             ;;
         java|kotlin)
-            # Maven/Gradle cache
+            # Maven/Gradle cache + target/build directories
             echo "${HOME}/.m2/repository"
             echo "${HOME}/.gradle/caches"
+            echo "bindings/java/target"
+            echo "bindings/kotlin/build"
             ;;
         lua)
             # LuaRocks local tree
@@ -135,17 +144,38 @@ if [ "$COMMAND" == "cache-dir" ]; then
             # local::lib directory
             echo "bindings/perl/local"
             ;;
-        csharp|fsharp)
-            # NuGet cache
+        csharp)
+            # NuGet cache + obj/bin directories for build artifacts
             echo "${HOME}/.nuget/packages"
+            echo "bindings/csharp/src/STRling/obj"
+            echo "bindings/csharp/src/STRling/bin"
+            echo "bindings/csharp/tests/STRling.Tests/obj"
+            echo "bindings/csharp/tests/STRling.Tests/bin"
+            ;;
+        fsharp)
+            # NuGet cache + obj/bin directories for build artifacts
+            echo "${HOME}/.nuget/packages"
+            echo "bindings/fsharp/src/STRling/obj"
+            echo "bindings/fsharp/src/STRling/bin"
+            echo "bindings/fsharp/tests/STRling.Tests/obj"
+            echo "bindings/fsharp/tests/STRling.Tests/bin"
             ;;
         swift)
-            # Swift Package Manager cache
+            # Swift Package Manager cache + .build directory
             echo "${HOME}/.swiftpm"
+            echo "bindings/swift/.build"
             ;;
-        c|cpp|r)
-            # No standard package cache for these
-            echo ""
+        c)
+            # Build artifacts for C
+            echo "bindings/c/build"
+            ;;
+        cpp)
+            # CMake build directory
+            echo "bindings/cpp/build"
+            ;;
+        r)
+            # R package library
+            echo "bindings/r/renv/library"
             ;;
         *)
             # Unknown language - return empty

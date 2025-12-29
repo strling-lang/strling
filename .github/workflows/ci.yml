@@ -25,6 +25,11 @@ on:
             - "tooling/**"
             - ".github/workflows/**"
 
+# Global environment variables to fix locale warnings (Perl, R)
+env:
+    LC_ALL: C.UTF-8
+    LANG: C.UTF-8
+
 jobs:
     # --- TEST JOBS (ALPHABETICALLY ORDERED) ---
     test-matrix:
@@ -58,6 +63,34 @@ jobs:
 
             - name: 🔧 Universal Setup
               run: chmod +x strling
+
+            # --- DYNAMIC CACHING ---
+            - name: 📋 Resolve Cache Configuration
+              id: cache-config
+              run: |
+                  # Get cache paths (may be multiple lines for some languages like Rust)
+                  CACHE_PATHS=$(./strling cache-dir ${{ matrix.language }})
+                  # Convert newlines to the GitHub Actions multiline format
+                  if [ -n "$CACHE_PATHS" ]; then
+                      # For multiline paths, join with newlines for actions/cache
+                      echo "path<<EOF" >> $GITHUB_OUTPUT
+                      echo "$CACHE_PATHS" >> $GITHUB_OUTPUT
+                      echo "EOF" >> $GITHUB_OUTPUT
+                  else
+                      echo "path=" >> $GITHUB_OUTPUT
+                  fi
+                  # Get lockfile name for cache key
+                  LOCKFILE=$(./strling lockfile ${{ matrix.language }})
+                  echo "lockfile=$LOCKFILE" >> $GITHUB_OUTPUT
+
+            - name: 💾 Restore Dependency Cache
+              if: steps.cache-config.outputs.path != ''
+              uses: actions/cache@v4
+              with:
+                  path: ${{ steps.cache-config.outputs.path }}
+                  key: ${{ runner.os }}-${{ matrix.language }}-${{ hashFiles(format('bindings/{0}/{1}', matrix.language, steps.cache-config.outputs.lockfile)) }}
+                  restore-keys: |
+                      ${{ runner.os }}-${{ matrix.language }}-
 
             - name: 📦 Install Dependencies (Setup)
               run: ./strling setup ${{ matrix.language }}

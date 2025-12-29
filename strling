@@ -58,15 +58,18 @@ print_help() {
     echo "Usage: ./strling <command> <language>"
     echo ""
     echo "Commands:"
-    echo "  setup <lang>   Install dependencies for a binding"
-    echo "  test <lang>    Run tests for a binding"
-    echo "  clean <lang>   Clean artifacts for a binding"
-    echo "  list           List all bindings and tool status"
-    echo "  help           Show this help message"
+    echo "  setup <lang>      Install dependencies for a binding"
+    echo "  test <lang>       Run tests for a binding"
+    echo "  clean <lang>      Clean artifacts for a binding"
+    echo "  cache-dir <lang>  Print cache directory path (for CI)"
+    echo "  lockfile <lang>   Print lockfile name (for CI)"
+    echo "  list              List all bindings and tool status"
+    echo "  help              Show this help message"
     echo ""
     echo "Examples:"
     echo "  ./strling test python"
     echo "  ./strling setup rust"
+    echo "  ./strling cache-dir php"
     echo ""
     list_bindings
 }
@@ -79,6 +82,153 @@ fi
 if [ "$COMMAND" == "list" ]; then
     print_banner
     list_bindings
+    exit 0
+fi
+
+# cache-dir: Print the cache directory path for a given language (for CI caching)
+# Outputs only the path to stdout, no extra logging, for easy consumption by CI
+if [ "$COMMAND" == "cache-dir" ]; then
+    if [ -z "$LANG" ]; then
+        echo "" # Empty output for missing lang
+        exit 1
+    fi
+    case "$LANG" in
+        php)
+            # Composer cache (Linux default)
+            echo "${HOME}/.cache/composer"
+            ;;
+        typescript|javascript|node)
+            # npm cache
+            echo "${HOME}/.npm"
+            ;;
+        rust)
+            # Cargo registry and git caches (both needed)
+            echo "${HOME}/.cargo/registry"
+            echo "${HOME}/.cargo/git"
+            ;;
+        python)
+            # pip cache
+            echo "${HOME}/.cache/pip"
+            ;;
+        go)
+            # Go module cache
+            echo "${HOME}/go/pkg/mod"
+            ;;
+        ruby)
+            # Bundler - use vendor/bundle (local to project)
+            echo "bindings/ruby/vendor/bundle"
+            ;;
+        dart)
+            # Dart/pub cache
+            echo "${HOME}/.pub-cache"
+            ;;
+        java|kotlin)
+            # Maven/Gradle cache
+            echo "${HOME}/.m2/repository"
+            echo "${HOME}/.gradle/caches"
+            ;;
+        lua)
+            # LuaRocks local tree
+            echo "bindings/lua/.luarocks"
+            ;;
+        perl)
+            # local::lib directory
+            echo "bindings/perl/local"
+            ;;
+        csharp|fsharp)
+            # NuGet cache
+            echo "${HOME}/.nuget/packages"
+            ;;
+        swift)
+            # Swift Package Manager cache
+            echo "${HOME}/.swiftpm"
+            ;;
+        c|cpp|r)
+            # No standard package cache for these
+            echo ""
+            ;;
+        *)
+            # Unknown language - return empty
+            echo ""
+            ;;
+    esac
+    exit 0
+fi
+
+# lockfile: Print the lockfile name for a given language (for CI cache key hashing)
+# Outputs only the filename relative to the binding root
+if [ "$COMMAND" == "lockfile" ]; then
+    if [ -z "$LANG" ]; then
+        echo ""
+        exit 1
+    fi
+    case "$LANG" in
+        php)
+            echo "composer.lock"
+            ;;
+        typescript|javascript|node)
+            echo "package-lock.json"
+            ;;
+        rust)
+            echo "Cargo.lock"
+            ;;
+        python)
+            # Python uses requirements.txt as the "lock" equivalent
+            echo "requirements.txt"
+            ;;
+        go)
+            # Go uses go.sum, but if no deps, fall back to go.mod
+            if [ -f "bindings/go/go.sum" ]; then
+                echo "go.sum"
+            else
+                echo "go.mod"
+            fi
+            ;;
+        ruby)
+            echo "Gemfile.lock"
+            ;;
+        dart)
+            echo "pubspec.lock"
+            ;;
+        java)
+            echo "pom.xml"
+            ;;
+        kotlin)
+            echo "build.gradle.kts"
+            ;;
+        lua)
+            echo "strling-3.0.0alpha-1.rockspec"
+            ;;
+        perl)
+            echo "Makefile.PL"
+            ;;
+        csharp)
+            echo "src/STRling/STRling.csproj"
+            ;;
+        fsharp)
+            echo "src/STRling/STRling.fsproj"
+            ;;
+        swift)
+            # Swift uses Package.resolved if it exists, otherwise Package.swift
+            if [ -f "bindings/swift/Package.resolved" ]; then
+                echo "Package.resolved"
+            else
+                echo "Package.swift"
+            fi
+            ;;
+        c)
+            echo "Makefile"
+            ;;
+        cpp)
+            echo "CMakeLists.txt"
+            ;;
+        r)
+            echo "DESCRIPTION"
+            ;;
+        *)
+            echo ""
+            ;;
+    esac
     exit 0
 fi
 

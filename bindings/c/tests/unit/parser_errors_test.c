@@ -115,11 +115,10 @@ static void test_hint_alt_no_rhs(void **state)
     (void)state;
     // JS: "abc|" -> Alt missing RHS
     // C: Alternation with missing last element
-    const char *input = "{\"type\": \"Alternation\", \"alternatives\": [{\"type\": \"Literal\", \"value\": \"a\"}]}";
     // Single element alt is usually optimized, but if we enforce >1, checks validation
     // Or explicitly null second branch:
-    const char *input2 = "{\"type\": \"Alternation\", \"alternatives\": [{\"type\": \"Literal\", \"value\": \"a\"}, null]}";
-    verify_error_content(input2, "Invalid Node");
+    const char *input = "{\"type\": \"Alternation\", \"alternatives\": [{\"type\": \"Literal\", \"value\": \"a\"}, null]}";
+    verify_error_content(input, "Invalid Node");
 }
 
 static void test_hint_unterminated_class(void **state)

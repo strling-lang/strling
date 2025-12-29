@@ -88,26 +88,26 @@ static void test_category_a_positive_cases(void **state)
         // A.1: Core Line Anchors
         {"A1_start",
          "{\"type\": \"Anchor\", \"at\": \"Start\"}",
-         "^"},
+         "^", 0},
         {"A2_end",
          "{\"type\": \"Anchor\", \"at\": \"End\"}",
-         "$"},
+         "$", 0},
 
         // A.2: Core Word Boundary Anchors
         {"A3_word_boundary",
          "{\"type\": \"Anchor\", \"at\": \"WordBoundary\"}",
-         "\\b"},
+         "\\b", 0},
         {"A4_not_word_boundary",
          "{\"type\": \"Anchor\", \"at\": \"NotWordBoundary\"}",
-         "\\B"},
+         "\\B", 0},
 
         // A.3: Absolute Anchors
         {"A5_absolute_start",
          "{\"type\": \"Anchor\", \"at\": \"AbsoluteStart\"}",
-         "\\A"},
+         "\\A", 0},
         {"A6_end_before_newline",
          "{\"type\": \"Anchor\", \"at\": \"EndBeforeFinalNewline\"}",
-         "\\Z"}};
+         "\\Z", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -123,12 +123,12 @@ static void test_category_c_edge_cases(void **state)
          "{\"type\": \"Anchor\", \"at\": \"AbsoluteStart\"},"
          "{\"type\": \"Anchor\", \"at\": \"WordBoundary\"},"
          "{\"type\": \"Anchor\", \"at\": \"End\"}]}",
-         "^\\A\\b$"},
+         "^\\A\\b$", 0},
 
         // Position: At Start (^a)
         {"C2_pos_start",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Literal\", \"value\": \"a\"}]}",
-         "^a"},
+         "^a", 0},
 
         // Position: In Middle (a\bb)
         {"C3_pos_middle",
@@ -136,12 +136,12 @@ static void test_category_c_edge_cases(void **state)
          "{\"type\": \"Literal\", \"value\": \"a\"},"
          "{\"type\": \"Anchor\", \"at\": \"WordBoundary\"},"
          "{\"type\": \"Literal\", \"value\": \"b\"}]}",
-         "a\\bb"},
+         "a\\bb", 0},
 
         // Position: At End (ab$)
         {"C4_pos_end",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"ab\"}, {\"type\": \"Anchor\", \"at\": \"End\"}]}",
-         "ab$"}};
+         "ab$", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -153,27 +153,27 @@ static void test_category_d_interactions(void **state)
         // Flags interaction (should verify ^ emits ^ even with m flag)
         {"D1_flag_multiline",
          "{\"flags\": \"m\", \"pattern\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Anchor\", \"at\": \"End\"}]}}",
-         "(?m)^a$"},
+         "(?m)^a$", 0},
 
         // Inside Capturing Group (^a)
         {"D2_in_group",
          "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Literal\", \"value\": \"a\"}]}}",
-         "(^a)"},
+         "(^a)", 0},
 
         // Inside Non-Capturing Group (?:a\b)
         {"D3_in_non_capturing",
          "{\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Anchor\", \"at\": \"WordBoundary\"}]}}",
-         "(?:a\\b)"},
+         "(?:a\\b)", 0},
 
         // Inside Lookahead (?=a$)
         {"D4_in_lookahead",
          "{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Anchor\", \"at\": \"End\"}]}}",
-         "(?=a$)"},
+         "(?=a$)", 0},
 
         // Inside Lookbehind (?<=^a)
         {"D5_in_lookbehind",
          "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Literal\", \"value\": \"a\"}]}}",
-         "(?<=^a)"}};
+         "(?<=^a)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -188,24 +188,24 @@ static void test_category_e_complex(void **state)
          "{\"type\": \"Quantifier\", \"min\": 0, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Literal\", \"value\": \"a\"}},"
          "{\"type\": \"Anchor\", \"at\": \"Start\"},"
          "{\"type\": \"Quantifier\", \"min\": 1, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Literal\", \"value\": \"b\"}}]}",
-         "a*^b+"},
+         "a*^b+", 0},
 
         // After quantified group ((ab)*$)
         {"E2_after_quantified_group",
          "{\"type\": \"Sequence\", \"parts\": ["
          "{\"type\": \"Quantifier\", \"min\": 0, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"ab\"}}},"
          "{\"type\": \"Anchor\", \"at\": \"End\"}]}",
-         "(ab)*$"},
+         "(ab)*$", 0},
 
         // Multiple same anchors (^^)
         {"E3_double_start",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Anchor\", \"at\": \"Start\"}]}",
-         "^^"},
+         "^^", 0},
 
         // Multiple end anchors ($$)
         {"E4_double_end",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"End\"}, {\"type\": \"Anchor\", \"at\": \"End\"}]}",
-         "$$"}};
+         "$$", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -219,21 +219,21 @@ static void test_category_f_alternation(void **state)
          "{\"type\": \"Alternation\", \"alternatives\": ["
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Literal\", \"value\": \"a\"}]},"
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"b\"}, {\"type\": \"Anchor\", \"at\": \"End\"}]}]}",
-         "^a|b$"},
+         "^a|b$", 0},
 
         // Group alternation (^|$)
         {"F2_group_alt",
          "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Alternation\", \"alternatives\": ["
          "{\"type\": \"Anchor\", \"at\": \"Start\"},"
          "{\"type\": \"Anchor\", \"at\": \"End\"}]}}",
-         "(^|$)"},
+         "(^|$)", 0},
 
         // Word boundary in alternation (\ba|\bb)
         {"F3_boundary_alt",
          "{\"type\": \"Alternation\", \"alternatives\": ["
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"WordBoundary\"}, {\"type\": \"Literal\", \"value\": \"a\"}]},"
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"WordBoundary\"}, {\"type\": \"Literal\", \"value\": \"b\"}]}]}",
-         "\\ba|\\bb"} // Normalized output. Note: Input \bb might act as backspace in CharClass, but here it's an anchor in sequence.
+         "\\ba|\\bb", 0} // Normalized output. Note: Input \bb might act as backspace in CharClass, but here it's an anchor in sequence.
     };
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
@@ -246,17 +246,17 @@ static void test_category_g_atomic(void **state)
         // (?>^a)
         {"G1_atomic_start",
          "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Literal\", \"value\": \"a\"}]}}",
-         "(?>^a)"},
+         "(?>^a)", 0},
 
         // (?>a$)
         {"G2_atomic_end",
          "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Anchor\", \"at\": \"End\"}]}}",
-         "(?>a$)"},
+         "(?>a$)", 0},
 
         // (?>\ba)
         {"G3_atomic_boundary",
          "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"WordBoundary\"}, {\"type\": \"Literal\", \"value\": \"a\"}]}}",
-         "(?>\\ba)"}};
+         "(?>\\ba)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -268,7 +268,7 @@ static void test_category_h_boundary_edges(void **state)
         // \b.\b
         {"H1_boundary_dot",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"WordBoundary\"}, {\"type\": \"Dot\"}, {\"type\": \"Anchor\", \"at\": \"WordBoundary\"}]}",
-         "\\b.\\b"},
+         "\\b.\\b", 0},
 
         // \b\d\b
         {"H2_boundary_digit",
@@ -276,12 +276,12 @@ static void test_category_h_boundary_edges(void **state)
          "{\"type\": \"Anchor\", \"at\": \"WordBoundary\"},"
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Escape\", \"kind\": \"digit\"}]},"
          "{\"type\": \"Anchor\", \"at\": \"WordBoundary\"}]}",
-         "\\b[\\d]\\b"}, // Assuming \d emits as \d or [0-9] depending on implementation. Standard is \d.
+         "\\b[\\d]\\b", 0}, // Assuming \d emits as \d or [0-9] depending on implementation. Standard is \d.
 
         // \Ba\B
         {"H3_not_boundary",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"NotWordBoundary\"}, {\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Anchor\", \"at\": \"NotWordBoundary\"}]}",
-         "\\Ba\\B"}};
+         "\\Ba\\B", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -293,7 +293,7 @@ static void test_category_i_misc(void **state)
         // ^abc$
         {"I1_start_end",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Anchor\", \"at\": \"Start\"}, {\"type\": \"Literal\", \"value\": \"abc\"}, {\"type\": \"Anchor\", \"at\": \"End\"}]}",
-         "^abc$"},
+         "^abc$", 0},
 
         // \A^abc$\z (Tests 30 & 31 equivalent - verifying \z handling)
         // Note: JS tests 30 & 31 reject \z as "Unknown escape".
@@ -306,12 +306,12 @@ static void test_category_i_misc(void **state)
          "{\"type\": \"Literal\", \"value\": \"abc\"},"
          "{\"type\": \"Anchor\", \"at\": \"End\"},"
          "{\"type\": \"Anchor\", \"at\": \"AbsoluteEnd\"}]}", // \z
-         "\\A^abc$\\z"},
+         "\\A^abc$\\z", 0},
 
         // Just \z
         {"I3_absolute_end_only",
          "{\"type\": \"Anchor\", \"at\": \"AbsoluteEnd\"}",
-         "\\z"},
+         "\\z", 0},
 
         // ^\ba\b$
         {"I4_all_mixed",
@@ -321,7 +321,7 @@ static void test_category_i_misc(void **state)
          "{\"type\": \"Literal\", \"value\": \"a\"},"
          "{\"type\": \"Anchor\", \"at\": \"WordBoundary\"},"
          "{\"type\": \"Anchor\", \"at\": \"End\"}]}",
-         "^\\ba\\b$"}};
+         "^\\ba\\b$", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 

@@ -16,8 +16,8 @@ static char *read_file(const char *path) {
     fseek(f, 0, SEEK_SET);
     char *buffer = (char *)malloc(length + 1);
     if (buffer) {
-        fread(buffer, 1, length, f);
-        buffer[length] = '\0';
+        size_t bytes_read = fread(buffer, 1, length, f);
+        buffer[bytes_read] = '\0';
     }
     fclose(f);
     return buffer;
@@ -42,7 +42,7 @@ static const char *get_test_name(const char *filename, char *buf, size_t bufsize
     size_t len = strlen(filename);
     size_t ext_len = 5; /* ".json" */
     if (len <= ext_len) {
-        snprintf(buf, bufsize, "test_conformance_%s", filename);
+        snprintf(buf, bufsize, "test_conformance_%.200s", filename);
         return buf;
     }
     
@@ -50,7 +50,7 @@ static const char *get_test_name(const char *filename, char *buf, size_t bufsize
     char stem[256];
     size_t stem_len = len - ext_len;
     if (stem_len >= sizeof(stem)) stem_len = sizeof(stem) - 1;
-    strncpy(stem, filename, stem_len);
+    memcpy(stem, filename, stem_len);
     stem[stem_len] = '\0';
     
     /* Map semantic test names */
@@ -59,7 +59,7 @@ static const char *get_test_name(const char *filename, char *buf, size_t bufsize
     } else if (strcmp(stem, "semantic_ranges") == 0) {
         snprintf(buf, bufsize, "test_semantic_ranges");
     } else {
-        snprintf(buf, bufsize, "test_conformance_%s", stem);
+        snprintf(buf, bufsize, "test_conformance_%.200s", stem);
     }
     return buf;
 }
@@ -306,7 +306,8 @@ int main(int argc, char **argv) {
         int expected_success = json_object_get_boolean(expected_codegen, "success");
         const char *expected_pcre = json_object_get_string(expected_codegen, "pcre");
         size_t expected_pcre_len = json_object_get_string_len(expected_codegen, "pcre");
-        const char *expected_error = json_object_get_string(root_obj, "expected_error");
+        /* expected_error is available but not currently used */
+        (void)json_object_get_string(root_obj, "expected_error");
 
         /* Run compilation */
         /* Note: strling_compile takes the whole JSON string and looks for 'input_ast' or 'pattern' */

@@ -84,19 +84,19 @@ static void test_category_a_capturing(void **state)
     const TestCase cases[] = {
         {"cap_basic",
          "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}",
-         "(a)"},
+         "(a)", 0},
         {"cap_nested",
          "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"b\"}}}",
-         "((b))"},
+         "((b))", 0},
         {"cap_sequence",
-         "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
-         "(ab)"},
+         "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\", 0}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
+         "(ab)", 0},
         {"cap_empty",
          "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": []}}",
-         "()"}, // Valid empty group
+         "()", 0}, // Valid empty group
         {"cap_quantified",
          "{\"type\": \"Quantifier\", \"min\": 1, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}}",
-         "(a)+"}};
+         "(a)+", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -107,19 +107,19 @@ static void test_category_b_non_capturing(void **state)
     const TestCase cases[] = {
         {"nocap_basic",
          "{\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}",
-         "(?:a)"},
+         "(?:a)", 0},
         {"nocap_nested",
          "{\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"b\"}}}",
-         "(?:(?:b))"},
+         "(?:(?:b))", 0},
         {"nocap_inside_cap",
          "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"c\"}}}",
-         "((?:c))"},
+         "((?:c))", 0},
         {"cap_inside_nocap",
          "{\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"d\"}}}",
-         "(?:(d))"},
+         "(?:(d))", 0},
         {"nocap_quantified",
          "{\"type\": \"Quantifier\", \"min\": 0, \"max\": 1, \"greedy\": true, \"target\": {\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"e\"}}}",
-         "(?:e)?"}};
+         "(?:e)?", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -130,22 +130,22 @@ static void test_category_c_named(void **state)
     const TestCase cases[] = {
         {"named_basic",
          "{\"type\": \"Group\", \"capturing\": true, \"name\": \"foo\", \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}",
-         "(?<foo>a)"},
+         "(?<foo>a)", 0},
         {"named_nested_named",
          "{\"type\": \"Group\", \"capturing\": true, \"name\": \"outer\", \"expression\": {\"type\": \"Group\", \"capturing\": true, \"name\": \"inner\", \"expression\": {\"type\": \"Literal\", \"value\": \"b\"}}}",
-         "(?<outer>(?<inner>b))"},
+         "(?<outer>(?<inner>b))", 0},
         {"named_with_underscore",
          "{\"type\": \"Group\", \"capturing\": true, \"name\": \"my_group\", \"expression\": {\"type\": \"Literal\", \"value\": \"c\"}}",
-         "(?<my_group>c)"},
+         "(?<my_group>c)", 0},
         {"named_with_digits",
          "{\"type\": \"Group\", \"capturing\": true, \"name\": \"group1\", \"expression\": {\"type\": \"Literal\", \"value\": \"d\"}}",
-         "(?<group1>d)"},
+         "(?<group1>d)", 0},
         {"named_inside_nocap",
          "{\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Group\", \"capturing\": true, \"name\": \"x\", \"expression\": {\"type\": \"Literal\", \"value\": \"e\"}}}",
-         "(?:(?<x>e))"},
+         "(?:(?<x>e))", 0},
         {"named_sequence",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Group\", \"capturing\": true, \"name\": \"a\", \"expression\": {\"type\": \"Literal\", \"value\": \"1\"}}, {\"type\": \"Group\", \"capturing\": true, \"name\": \"b\", \"expression\": {\"type\": \"Literal\", \"value\": \"2\"}}]}",
-         "(?<a>1)(?<b>2)"}};
+         "(?<a>1)(?<b>2)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -156,16 +156,16 @@ static void test_category_d_atomic(void **state)
     const TestCase cases[] = {
         {"atomic_basic",
          "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}",
-         "(?>a)"},
+         "(?>a)", 0},
         {"atomic_nested_cap",
          "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"b\"}}}",
-         "(?>(b))"},
+         "(?>(b))", 0},
         {"atomic_quantified",
          "{\"type\": \"Quantifier\", \"min\": 1, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"c\"}}}",
-         "(?>c)+"},
+         "(?>c)+", 0},
         {"atomic_complex",
-         "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Quantifier\", \"min\": 0, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Literal\", \"value\": \"b\"}}]}}",
-         "(?>ab*)"}};
+         "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\", 0}, {\"type\": \"Quantifier\", \"min\": 0, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Literal\", \"value\": \"b\"}}]}}",
+         "(?>ab*)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -176,19 +176,19 @@ static void test_category_e_numeric_backrefs(void **state)
     const TestCase cases[] = {
         {"backref_1",
          "{\"type\": \"BackReference\", \"kind\": \"numbered\", \"ref\": 1}",
-         "\\1"},
+         "\\1", 0},
         {"backref_99",
          "{\"type\": \"BackReference\", \"kind\": \"numbered\", \"ref\": 99}",
-         "\\99"},
+         "\\99", 0},
         {"backref_seq",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}, {\"type\": \"BackReference\", \"kind\": \"numbered\", \"ref\": 1}]}",
-         "(a)\\1"},
+         "(a)\\1", 0},
         {"backref_relative",
          "{\"type\": \"BackReference\", \"kind\": \"relative\", \"ref\": -1}",
-         "\\g{-1}"}, // PCRE2 relative syntax
+         "\\g{-1}", 0}, // PCRE2 relative syntax
         {"backref_nested",
-         "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"BackReference\", \"kind\": \"numbered\", \"ref\": 1}]}}",
-         "(a\\1)"}};
+         "{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\", 0}, {\"type\": \"BackReference\", \"kind\": \"numbered\", \"ref\": 1}]}}",
+         "(a\\1)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -199,19 +199,19 @@ static void test_category_f_named_backrefs(void **state)
     const TestCase cases[] = {
         {"named_ref_basic",
          "{\"type\": \"BackReference\", \"kind\": \"named\", \"name\": \"foo\"}",
-         "\\k<foo>"},
+         "\\k<foo>", 0},
         {"named_ref_defined",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Group\", \"capturing\": true, \"name\": \"foo\", \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}, {\"type\": \"BackReference\", \"kind\": \"named\", \"name\": \"foo\"}]}",
-         "(?<foo>a)\\k<foo>"},
+         "(?<foo>a)\\k<foo>", 0},
         {"named_ref_underscore",
          "{\"type\": \"BackReference\", \"kind\": \"named\", \"name\": \"my_val\"}",
-         "\\k<my_val>"},
+         "\\k<my_val>", 0},
         {"named_ref_recursion",
          "{\"type\": \"BackReference\", \"kind\": \"named\", \"name\": \"recurse\"}",
-         "\\k<recurse>"}, // Logic handled by engine, syntax verified here
+         "\\k<recurse>", 0}, // Logic handled by engine, syntax verified here
         {"named_ref_inside_group",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Group\", \"capturing\": true, \"name\": \"x\", \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}, {\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"BackReference\", \"kind\": \"named\", \"name\": \"x\"}}]}",
-         "(?<x>a)(?:\\k<x>)"}};
+         "(?<x>a)(?:\\k<x>)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -222,22 +222,22 @@ static void test_category_g_lookaheads(void **state)
     const TestCase cases[] = {
         {"lookahead_pos",
          "{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}",
-         "(?=a)"},
+         "(?=a)", 0},
         {"lookahead_neg",
          "{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"b\"}}",
-         "(?!b)"},
+         "(?!b)", 0},
         {"lookahead_seq",
-         "{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
-         "(?=ab)"},
+         "{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\", 0}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
+         "(?=ab)", 0},
         {"lookahead_nested",
          "{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"c\"}}}",
-         "(?=(?!c))"},
+         "(?=(?!c))", 0},
         {"lookahead_quantified_error",
          "{\"type\": \"Quantifier\", \"min\": 1, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}}",
-         "(?:(?=a))+"}, // Compiler usually wraps assertions in group if quantified
+         "(?:(?=a))+", 0}, // Compiler usually wraps assertions in group if quantified
         {"lookahead_empty",
          "{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": []}}",
-         "(?=)"}};
+         "(?=)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -248,22 +248,22 @@ static void test_category_h_lookbehinds(void **state)
     const TestCase cases[] = {
         {"lookbehind_pos",
          "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}",
-         "(?<=a)"},
+         "(?<=a)", 0},
         {"lookbehind_neg",
          "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"b\"}}",
-         "(?<!b)"},
+         "(?<!b)", 0},
         {"lookbehind_fixed_length",
-         "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
-         "(?<=ab)"},
+         "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Literal\", \"value\": \"a\", 0}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
+         "(?<=ab)", 0},
         {"lookbehind_nested_lookahead",
          "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"c\"}}}",
-         "(?<=(?=c))"},
+         "(?<=(?=c))", 0},
         {"lookbehind_alternation",
-         "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Alternation\", \"alternatives\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
-         "(?<=a|b)"},
+         "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Alternation\", \"alternatives\": [{\"type\": \"Literal\", \"value\": \"a\", 0}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
+         "(?<=a|b)", 0},
         {"lookbehind_empty",
          "{\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": true, \"expression\": {\"type\": \"Sequence\", \"parts\": []}}",
-         "(?<!)"}};
+         "(?<!)", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -273,20 +273,20 @@ static void test_category_i_integration(void **state)
 {
     const TestCase cases[] = {
         {"complex_nested_all",
-         "{\"type\": \"Group\", \"capturing\": true, \"name\": \"all\", \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"start\"}}, {\"type\": \"Literal\", \"value\": \"body\"}, {\"type\": \"BackReference\", \"kind\": \"named\", \"name\": \"all\"}]}}",
-         "(?<all>(?=start)body\\k<all>)"},
+         "{\"type\": \"Group\", \"capturing\": true, \"name\": \"all\", \"expression\": {\"type\": \"Sequence\", \"parts\": [{\"type\": \"Lookaround\", \"kind\": \"lookahead\", \"negated\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"start\"}}, {\"type\": \"Literal\", \"value\": \"body\", 0}, {\"type\": \"BackReference\", \"kind\": \"named\", \"name\": \"all\"}]}}",
+         "(?<all>(?=start)body\\k<all>)", 0},
         {"alternation_groups",
          "{\"type\": \"Alternation\", \"alternatives\": [{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}, {\"type\": \"Group\", \"capturing\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"b\"}}]}",
-         "(a)|(?:b)"},
+         "(a)|(?:b)", 0},
         {"quantified_named_group",
          "{\"type\": \"Quantifier\", \"min\": 0, \"max\": null, \"greedy\": true, \"target\": {\"type\": \"Group\", \"capturing\": true, \"name\": \"q\", \"expression\": {\"type\": \"Literal\", \"value\": \"x\"}}}",
-         "(?<q>x)*"},
+         "(?<q>x)*", 0},
         {"atomic_lookbehind",
          "{\"type\": \"Group\", \"atomic\": true, \"expression\": {\"type\": \"Lookaround\", \"kind\": \"lookbehind\", \"negated\": false, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}}",
-         "(?>(?<=a))"},
+         "(?>(?<=a))", 0},
         {"multiple_backrefs",
          "{\"type\": \"Sequence\", \"parts\": [{\"type\": \"Group\", \"capturing\": true, \"expression\": {\"type\": \"Literal\", \"value\": \"a\"}}, {\"type\": \"BackReference\", \"kind\": \"numbered\", \"ref\": 1}, {\"type\": \"BackReference\", \"kind\": \"numbered\", \"ref\": 1}]}",
-         "(a)\\1\\1"}};
+         "(a)\\1\\1", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 

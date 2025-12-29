@@ -87,60 +87,60 @@ static void test_category_a_positive(void **state)
         // A.1: Basic Classes
         {"simple_class",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"b\"}, {\"type\": \"Literal\", \"value\": \"c\"}]}",
-         "[abc]"},
+         "[abc]", 0},
         {"negated_simple_class",
          "{\"type\": \"CharacterClass\", \"negated\": true, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"b\"}, {\"type\": \"Literal\", \"value\": \"c\"}]}",
-         "[^abc]"},
+         "[^abc]", 0},
 
         // A.2: Ranges
         {"range_lowercase",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Range\", \"from\": \"a\", \"to\": \"z\"}]}",
-         "[a-z]"},
+         "[a-z]", 0},
         {"range_alphanum",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Range\", \"from\": \"A\", \"to\": \"Z\"}, {\"type\": \"Range\", \"from\": \"a\", \"to\": \"z\"}, {\"type\": \"Range\", \"from\": \"0\", \"to\": \"9\"}]}",
-         "[A-Za-z0-9]"},
+         "[A-Za-z0-9]", 0},
 
         // A.3: Shorthand Escapes
         {"shorthand_positive",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Escape\", \"kind\": \"digit\"}, {\"type\": \"Escape\", \"kind\": \"whitespace\"}, {\"type\": \"Escape\", \"kind\": \"word\"}]}",
-         "[\\d\\s\\w]"},
+         "[\\d\\s\\w]", 0},
         {"shorthand_negated",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Escape\", \"kind\": \"not_digit\"}, {\"type\": \"Escape\", \"kind\": \"not_whitespace\"}, {\"type\": \"Escape\", \"kind\": \"not_word\"}]}",
-         "[\\D\\S\\W]"},
+         "[\\D\\S\\W]", 0},
 
         // A.4: Unicode Property Escapes
         {"unicode_property_short",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"L\"}]}",
-         "[\\p{L}]"},
+         "[\\p{L}]", 0},
         {"unicode_property_long",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"Letter\"}]}",
-         "[\\p{Letter}]"},
+         "[\\p{Letter}]", 0},
         {"unicode_property_negated",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"Number\", \"negated\": true}]}",
-         "[\\P{Number}]"},
+         "[\\P{Number}]", 0},
         {"unicode_property_with_value",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"Script=Greek\"}]}",
-         "[\\p{Script=Greek}]"},
+         "[\\p{Script=Greek}]", 0},
 
         // A.5: Special Character Handling
         {"special_char_bracket_at_start",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"]\"}, {\"type\": \"Literal\", \"value\": \"a\"}]}",
-         "[\\]a]"},
+         "[\\]a]", 0},
         {"special_char_bracket_at_start_negated",
          "{\"type\": \"CharacterClass\", \"negated\": true, \"members\": [{\"type\": \"Literal\", \"value\": \"]\"}, {\"type\": \"Literal\", \"value\": \"a\"}]}",
-         "[^\\]a]"},
+         "[^\\]a]", 0},
         {"special_char_hyphen_at_start",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"-\"}, {\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"z\"}]}",
-         "[\\-az]"},
+         "[\\-az]", 0},
         {"special_char_hyphen_at_end",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"z\"}, {\"type\": \"Literal\", \"value\": \"-\"}]}",
-         "[az\\-]"},
+         "[az\\-]", 0},
         {"special_char_caret_in_middle",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"^\"}, {\"type\": \"Literal\", \"value\": \"b\"}]}",
-         "[a\\^b]"},
+         "[a\\^b]", 0},
         {"special_char_backspace_escape",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"\\b\"}]}",
-         "[\\x{08}]"} // PCRE2 treats \b in class as backspace
+         "[\\x{08}]", 0} // PCRE2 treats \b in class as backspace
     };
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
@@ -186,17 +186,17 @@ static void test_category_c_edges(void **state)
         // Escaped hyphen is literal
         {"escaped_hyphen_is_literal",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"-\"}, {\"type\": \"Literal\", \"value\": \"c\"}]}",
-         "[a\\-c]"}, // - treated as literal if not forming valid range in AST
+         "[a\\-c]", 0}, // - treated as literal if not forming valid range in AST
 
         // Range with hex/unicode points
         {"range_with_escaped_endpoints",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Range\", \"from\": \"A\", \"to\": \"Z\"}]}",
-         "[A-Z]"},
+         "[A-Z]", 0},
 
         // Class with only escapes
         {"class_with_only_escapes",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"\\n\"}, {\"type\": \"Literal\", \"value\": \"\\t\"}, {\"type\": \"Escape\", \"kind\": \"digit\"}]}",
-         "[\\n\\t\\d]"}};
+         "[\\n\\t\\d]", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -210,12 +210,12 @@ static void test_category_d_interactions(void **state)
         // so we verify it emits as space.
         {"whitespace_is_literal",
          "{\"flags\": \"x\", \"pattern\": {\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \" \"}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
-         "(?x)[a b]"},
+         "(?x)[a b]", 0},
 
         // Comment char # is literal in class
         {"comment_char_is_literal",
          "{\"flags\": \"x\", \"pattern\": {\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}, {\"type\": \"Literal\", \"value\": \"#\"}, {\"type\": \"Literal\", \"value\": \"b\"}]}}",
-         "(?x)[a#b]"}};
+         "(?x)[a#b]", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -226,13 +226,13 @@ static void test_category_e_minimal(void **state)
     const TestCase cases[] = {
         {"minimal_literal",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Literal\", \"value\": \"a\"}]}",
-         "[a]"},
+         "[a]", 0},
         {"minimal_negated_literal",
          "{\"type\": \"CharacterClass\", \"negated\": true, \"members\": [{\"type\": \"Literal\", \"value\": \"x\"}]}",
-         "[^x]"},
+         "[^x]", 0},
         {"minimal_range",
          "{\"type\": \"CharacterClass\", \"negated\": false, \"members\": [{\"type\": \"Range\", \"from\": \"a\", \"to\": \"z\"}]}",
-         "[a-z]"}};
+         "[a-z]", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -243,19 +243,19 @@ static void test_category_f_metachars(void **state)
     const TestCase cases[] = {
         {"escaped_dot",
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Literal\", \"value\": \".\"}]}",
-         "[.]"},
+         "[.]", 0},
         {"escaped_star",
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Literal\", \"value\": \"*\"}]}",
-         "[*]"},
+         "[*]", 0},
         {"escaped_plus",
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Literal\", \"value\": \"+\"}]}",
-         "[+]"},
+         "[+]", 0},
         {"multiple_metachars",
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Literal\", \"value\": \".\"}, {\"type\": \"Literal\", \"value\": \"*\"}, {\"type\": \"Literal\", \"value\": \"+\"}, {\"type\": \"Literal\", \"value\": \"?\"}]}",
-         "[.*+?]"},
+         "[.*+?]", 0},
         {"escaped_backslash",
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Literal\", \"value\": \"\\\\\"}]}",
-         "[\\\\]"}};
+         "[\\\\]", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -266,10 +266,10 @@ static void test_category_g_complex_ranges(void **state)
     const TestCase cases[] = {
         {"multiple_ranges",
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Range\", \"from\": \"a\", \"to\": \"z\"}, {\"type\": \"Range\", \"from\": \"A\", \"to\": \"Z\"}, {\"type\": \"Range\", \"from\": \"0\", \"to\": \"9\"}]}",
-         "[a-zA-Z0-9]"},
+         "[a-zA-Z0-9]", 0},
         {"range_mixed_literals",
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Range\", \"from\": \"a\", \"to\": \"z\"}, {\"type\": \"Literal\", \"value\": \"_\"}, {\"type\": \"Range\", \"from\": \"0\", \"to\": \"9\"}, {\"type\": \"Literal\", \"value\": \"-\"}]}",
-         "[a-z_0-9\\-]"},
+         "[a-z_0-9\\-]", 0},
 
         // Adjacent classes (Sequence of two classes)
         {"adjacent_ranges_seq",
@@ -277,7 +277,7 @@ static void test_category_g_complex_ranges(void **state)
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Range\", \"from\": \"a\", \"to\": \"z\"}]},"
          "{\"type\": \"CharacterClass\", \"members\": [{\"type\": \"Range\", \"from\": \"A\", \"to\": \"Z\"}]}"
          "]}",
-         "[a-z][A-Z]"}};
+         "[a-z][A-Z]", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -291,7 +291,7 @@ static void test_category_h_unicode(void **state)
          "{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"L\"},"
          "{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"N\"}"
          "]}",
-         "[\\p{L}\\p{N}]"},
+         "[\\p{L}\\p{N}]", 0},
         {"unicode_mixed_literals",
          "{\"type\": \"CharacterClass\", \"members\": ["
          "{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"L\"},"
@@ -299,18 +299,18 @@ static void test_category_h_unicode(void **state)
          "{\"type\": \"Literal\", \"value\": \"b\"},"
          "{\"type\": \"Literal\", \"value\": \"c\"}"
          "]}",
-         "[\\p{L}abc]"},
+         "[\\p{L}abc]", 0},
         {"unicode_mixed_range",
          "{\"type\": \"CharacterClass\", \"members\": ["
          "{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"L\"},"
          "{\"type\": \"Range\", \"from\": \"0\", \"to\": \"9\"}"
          "]}",
-         "[\\p{L}0-9]"},
+         "[\\p{L}0-9]", 0},
         {"negated_unicode_in_class",
          "{\"type\": \"CharacterClass\", \"members\": ["
          "{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"L\", \"negated\": true}"
          "]}",
-         "[\\P{L}]"}};
+         "[\\P{L}]", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 
@@ -321,13 +321,13 @@ static void test_category_i_negated_vars(void **state)
     const TestCase cases[] = {
         {"negated_with_range",
          "{\"type\": \"CharacterClass\", \"negated\": true, \"members\": [{\"type\": \"Range\", \"from\": \"a\", \"to\": \"z\"}]}",
-         "[^a-z]"},
+         "[^a-z]", 0},
         {"negated_with_shorthand",
          "{\"type\": \"CharacterClass\", \"negated\": true, \"members\": [{\"type\": \"Escape\", \"kind\": \"digit\"}, {\"type\": \"Escape\", \"kind\": \"whitespace\"}]}",
-         "[^\\d\\s]"},
+         "[^\\d\\s]", 0},
         {"negated_with_unicode",
          "{\"type\": \"CharacterClass\", \"negated\": true, \"members\": [{\"type\": \"Escape\", \"kind\": \"unicode_property\", \"property\": \"L\"}]}",
-         "[^\\p{L}]"}};
+         "[^\\p{L}]", 0}};
     run_test_batch(state, cases, sizeof(cases) / sizeof(cases[0]));
 }
 

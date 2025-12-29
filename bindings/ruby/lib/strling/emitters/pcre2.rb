@@ -239,5 +239,8 @@ module Strling
     def self.emit_pcre2(ir_root, flags)
       PCRE2.emit(ir_root, flags)
     end
+
+    # Alias for backward compatibility
+    Pcre2 = PCRE2
   end
 end

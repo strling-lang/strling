@@ -209,7 +209,8 @@ impl Parser {
     }
 
     /// Parse the entire pattern
-    pub fn parse(&mut self) -> Result<Node, STRlingParseError> {
+    /// Returns a tuple of (Flags, Node) where Flags contains parsed directives
+    pub fn parse(&mut self) -> Result<(Flags, Node), STRlingParseError> {
         let node = self.parse_alt()?;
         self.cur.skip_ws_and_comments();
         
@@ -236,7 +237,7 @@ impl Parser {
             ));
         }
         
-        Ok(node)
+        Ok((self.flags.clone(), node))
     }
 
     /// Parse alternation: seq ('|' seq)* | seq
@@ -715,8 +716,7 @@ impl Parser {
 /// Returns STRlingParseError if the pattern is invalid
 pub fn parse(text: &str) -> Result<(Flags, Node), STRlingParseError> {
     let mut parser = Parser::new(text.to_string());
-    let node = parser.parse()?;
-    Ok((parser.flags, node))
+    parser.parse()
 }
 
 #[cfg(test)]

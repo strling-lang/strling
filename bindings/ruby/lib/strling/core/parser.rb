@@ -125,7 +125,7 @@ module Strling
             raise_error('Unexpected trailing input', @cur.i)
           end
         end
-        node
+        [@flags, node]
       end
 
       private
@@ -511,9 +511,46 @@ module Strling
             max = 1
           when '{'
             # Parse {m,n} quantifier
-            # Simplified - just consume for now
-            # TODO: Implement full brace quantifier parsing
-            return [child, false]
+            brace_start = @cur.i
+            @cur.take  # consume '{'
+            
+            # Parse min
+            min_str = ''
+            while @cur.peek =~ /\d/
+              min_str += @cur.take
+            end
+            
+            if min_str.empty?
+              raise_error('Expected digit in brace quantifier', @cur.i)
+            end
+            min = min_str.to_i
+            
+            # Check for comma
+            if @cur.peek == ','
+              @cur.take  # consume ','
+              
+              # Parse optional max
+              max_str = ''
+              while @cur.peek =~ /\d/
+                max_str += @cur.take
+              end
+              
+              max = max_str.empty? ? 'Inf' : max_str.to_i
+            else
+              # Exact quantifier {n}
+              max = min
+            end
+            
+            # Expect closing brace
+            if @cur.peek != '}'
+              raise_error('Expected } in brace quantifier', @cur.i)
+            end
+            @cur.take  # consume '}'
+            
+            # Validate min <= max
+            if max != 'Inf' && min > max
+              raise_error("Invalid quantifier: min (#{min}) > max (#{max})", brace_start)
+            end
           end
 
           # Check for lazy (?) or possessive (+) modifier

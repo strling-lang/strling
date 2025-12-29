@@ -498,7 +498,7 @@ parse_class_escape <- function(p) {
   
   if (nxt == "0") {
     p$cur$take()
-    return(strling_class_literal("\0"))
+    return(strling_class_literal("\\0"))
   }
   
   strling_class_literal(p$cur$take())
@@ -599,7 +599,7 @@ parse_escape_atom <- function(p) {
   
   if (nxt == "0") {
     p$cur$take()
-    return(strling_literal("\0"))
+    return(strling_literal("\\0"))
   }
   
   strling_literal(p$cur$take())

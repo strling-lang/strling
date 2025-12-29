@@ -267,7 +267,7 @@ public class Parser {
             max = .count(1)
             _ = cur.take()
         } else if ch == "{" {
-            let savePos = cur.position
+            let _ = cur.position  // savePos - reserved for future use
             let saveI = cur.i
             _ = cur.take()
             

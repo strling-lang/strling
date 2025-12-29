@@ -58,6 +58,25 @@ val phonePattern = Simply.merge(
 // Kotlin's Regex class at runtime.
 ```
 
+### DSL String Parsing
+
+Alternatively, you can parse a DSL string directly using the Parser:
+
+```kotlin
+import strling.core.Parser
+import strling.core.Compiler
+import strling.emitters.PCRE2Emitter
+
+// Parse a DSL pattern string
+val dsl = "start capture(digit(3)) may(anyOf('-. ')) capture(digit(3)) may(anyOf('-. ')) capture(digit(4)) end"
+val ast = Parser.parse(dsl)
+
+// Compile the AST to IR and emit
+val ir = Compiler.compile(ast)
+val regex = PCRE2Emitter.emit(ir)
+println(regex)  // ^(\d{3})[-. ]?(\d{3})[-. ]?(\d{4})$
+```
+
 ### Simply API Features
 
 The Simply API provides a fluent, chainable interface for building regex patterns:

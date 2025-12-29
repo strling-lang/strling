@@ -47,6 +47,25 @@ String regex = compiler.build(phonePattern);
 System.out.println(regex);  // ^(\d{3})[-. ]?(\d{3})[-. ]?(\d{4})$
 ```
 
+### DSL String Parsing
+
+Alternatively, you can parse a DSL string directly using the Parser:
+
+```java
+import com.strling.core.Parser;
+import com.strling.core.Compiler;
+import com.strling.emitters.PCRE2Emitter;
+
+// Parse a DSL pattern string
+String dsl = "start capture(digit(3)) may(anyOf('-. ')) capture(digit(3)) may(anyOf('-. ')) capture(digit(4)) end";
+var ast = Parser.parse(dsl);
+
+// Compile the AST to IR and emit
+var ir = Compiler.compile(ast);
+String regex = PCRE2Emitter.emit(ir);
+System.out.println(regex);  // ^(\d{3})[-. ]?(\d{3})[-. ]?(\d{4})$
+```
+
 > **Note:** This compiles to the optimized regex: `^(\d{3})[\-. ]?(\d{3})[\-. ]?(\d{4})$`
 
 ### Zero Boilerplate

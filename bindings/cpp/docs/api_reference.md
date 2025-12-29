@@ -1,6 +1,6 @@
 # API Reference - C++ (C++17)
 
-[← Back to README](../README.md)
+[← Back to README](../README.md) | [Developer Hub](../../../docs/index.md)
 
 This document provides a comprehensive reference for the STRling API in **C++ (C++17)**.
 

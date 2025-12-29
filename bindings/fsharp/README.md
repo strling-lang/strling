@@ -1,4 +1,4 @@
-# STRling - {Language} Binding
+# STRling - F# Binding
 
 > Part of the [STRling Project](https://github.com/TheCyberLocal/STRling/blob/main/README.md)
 
@@ -14,13 +14,55 @@
 
 ## 💿 Installation
 
-{Installation_Command}
+Install via NuGet:
+
+```bash
+dotnet add package STRling.FSharp
+```
 
 ## 📦 Usage
 
-Here is how to match a US Phone number (e.g., `555-0199`) using STRling in **{Language}**:
+### Simply API (Recommended)
 
-{Usage_Snippet}
+Here is how to match a US Phone number (e.g., `555-0199`) using STRling's **Simply API** in **F#**:
+
+```fsharp
+open STRling.Simply
+
+// Build a US phone number pattern: ^(\d{3})[-. ]?(\d{3})[-. ]?(\d{4})$
+let phone =
+    merge [
+        start ()
+        capture (digit 3)
+        may (anyOf "-. ")
+        capture (digit 3)
+        may (anyOf "-. ")
+        capture (digit 4)
+        end' ()
+    ]
+
+// Compile to regex string
+let regex = phone |> compile
+printfn "%s" regex
+// Output: ^(\d{3})[-. ]?(\d{3})[-. ]?(\d{4})$
+```
+
+### DSL String Parsing
+
+Alternatively, you can parse a DSL string directly using the Parser:
+
+```fsharp
+open STRling.Core
+
+// Parse a DSL pattern string
+let dsl = "start capture(digit(3)) may(anyOf('-. ')) capture(digit(3)) may(anyOf('-. ')) capture(digit(4)) end"
+let ast = Parser.parse dsl
+
+// Compile the AST to IR and emit
+let ir = Compiler.compile ast
+let regex = Emitters.PCRE2.emit ir
+printfn "%s" regex
+```
 
 > **Note:** This compiles to the optimized regex: `^(\d{3})[-. ]?(\d{3})[-. ]?(\d{4})$`
 

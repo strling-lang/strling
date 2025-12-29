@@ -38,6 +38,23 @@ local regex = strling.compile(phone)
 print(regex)
 ```
 
+### DSL String Parsing
+
+Alternatively, you can parse a DSL string directly using the Parser:
+
+```lua
+local strling = require("strling")
+
+-- Parse a DSL pattern string
+local dsl = "start capture(digit(3)) may(anyOf('-. ')) capture(digit(3)) may(anyOf('-. ')) capture(digit(4)) end"
+local ast = strling.parse(dsl)
+
+-- Compile the AST to IR and emit
+local ir = strling.compile_ast(ast)
+local regex = strling.emit_pcre2(ir)
+print(regex)
+```
+
 > **Note:** This compiles to the optimized regex: `^(\d{3})[-. ]?(\d{3})[-. ]?(\d{4})$`
 
 ## 🚀 Why STRling?

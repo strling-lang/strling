@@ -22,11 +22,11 @@ For instance, the assumption that "Names contain only letters" is a falsehood th
 
 Based on this theoretical framework, we establish a three-tiered taxonomy for the STRling Standard Library. Every validator in the library MUST map to one or more of these levels, controllable via a mode parameter.
 
-| Level | Mode Name | Description | Use Case |
-| :---- | :---- | :---- | :---- |
-| **Level 1** | Strict | **RFC Compliance.** Adheres rigidly to the formal specification. Accepts all edge cases allowed by the standard (e.g., quoted emails, IP literals) and rejects any deviation. | Interoperability with legacy systems; compliance gateways; strict API contracts. |
-| **Level 2** | Lax (or Pragmatic) | **The User-Centric Standard.** Prioritizes common usage over theoretical completeness. Rejects technically valid but practically unusable formats. Accepts de facto standards that violate the RFC (e.g., separating ISO dates with spaces). | User-facing forms (signup, contact); modern web applications; sanity checking user input. |
-| **Level 3** | Structural | **The Noise Filter.** Performs minimal checking to differentiate input from random noise or empty strings. High false-positive rate, near-zero false-negative rate. | High-throughput log scanning; preliminary filtering before expensive parsing; extracting potential candidates from unstructured text. |
+| Level       | Mode Name          | Description                                                                                                                                                                                                                                  | Use Case                                                                                                                              |
+| :---------- | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| **Level 1** | Strict             | **RFC Compliance.** Adheres rigidly to the formal specification. Accepts all edge cases allowed by the standard (e.g., quoted emails, IP literals) and rejects any deviation.                                                                | Interoperability with legacy systems; compliance gateways; strict API contracts.                                                      |
+| **Level 2** | Lax (or Pragmatic) | **The User-Centric Standard.** Prioritizes common usage over theoretical completeness. Rejects technically valid but practically unusable formats. Accepts de facto standards that violate the RFC (e.g., separating ISO dates with spaces). | User-facing forms (signup, contact); modern web applications; sanity checking user input.                                             |
+| **Level 3** | Structural         | **The Noise Filter.** Performs minimal checking to differentiate input from random noise or empty strings. High false-positive rate, near-zero false-negative rate.                                                                          | High-throughput log scanning; preliminary filtering before expensive parsing; extracting potential candidates from unstructured text. |
 
 This taxonomy resolves the tension between "correctness" and "usability." By defaulting to Lax/Pragmatic mode, STRling aligns with the principle of "Pragmatic Empathy"—understanding that the developer usually wants to validate a human user, not a mainframe.
 
@@ -40,11 +40,11 @@ To design the s.email() validator, we must confront the falsehoods ingrained in 
 
 #### **Falsehood \#1: "An email address contains only letters, numbers, and standard punctuation."**
 
-**Reality:** The local part of an email address (before the @) is a chaotic landscape. RFC 5322 allows a plethora of special characters: \! \# $ % & ' \* \+ \- / \=? ^ \_ { | } \~.\[span\_6\](start\_span)\[span\_6\](end\_span)\[span\_7\](start\_span)\[span\_7\](end\_span) While john.doe@example.comis standard,user+tag@example.comis valid and common. More drastically,o'reilly@example.comis valid. A strict regex that rejects these alienates legitimate users. Furthermore, if enclosed in quotes, the local part can contain spaces, commas, and almost any ASCII character:"very.unusual.@.unusual.com"@example.com\` is syntactically valid.
+**Reality:** The local part of an email address (before the @) is a chaotic landscape. RFC 5322 allows a plethora of special characters: \! \# $ % & ' \* \+ \- / \=? ^ \_ { | } \~.\[span_6\](start_span)\[span_6\](end_span)\[span_7\](start_span)\[span_7\](end_span) While john.doe@example.comis standard,user+tag@example.comis valid and common. More drastically,o'reilly@example.comis valid. A strict regex that rejects these alienates legitimate users. Furthermore, if enclosed in quotes, the local part can contain spaces, commas, and almost any ASCII character:"very.unusual.@.unusual.com"@example.com\` is syntactically valid.
 
 #### **Falsehood \#2: "There is exactly one @ symbol."**
 
-**Reality:** While the address splits at the *last* @ symbol, the local part may contain @ symbols if they are quoted. A naive regex splitting on @ or enforcing only one instance will fail on "user@internal"@gateway.com.
+**Reality:** While the address splits at the _last_ @ symbol, the local part may contain @ symbols if they are quoted. A naive regex splitting on @ or enforcing only one instance will fail on "user@internal"@gateway.com.
 
 #### **Falsehood \#3: "The domain must contain a dot."**
 
@@ -70,10 +70,10 @@ For mode='lax', we turn to the collective wisdom of the browser vendors. The WHA
 The HTML5 pattern is essentially: /^\[a-zA-Z0-9.\!\#$%&'\*+/=?^\_{|}\~-\]+@a-zA-Z0-9?(?:.a-zA-Z0-9?)\*$/\`  
 This pattern represents a consensus on "useful" validity:
 
-1. **It allows** the weird special characters in the local part (supporting \+ addressing and apostrophes).  
-2. **It forbids** quoted strings. If a user types quotes, it's almost certainly an error.  
-3. **It forbids** comments.  
-4. **It forbids** IP literals (unless the domain syntax accidentally allows them without brackets, which is technically invalid).  
+1. **It allows** the weird special characters in the local part (supporting \+ addressing and apostrophes).
+2. **It forbids** quoted strings. If a user types quotes, it's almost certainly an error.
+3. **It forbids** comments.
+4. **It forbids** IP literals (unless the domain syntax accidentally allows them without brackets, which is technically invalid).
 5. **It requires** a dot in the domain (usually).
 
 This approach satisfies "Pragmatic Empathy." It minimizes false negatives for real humans while filtering out the syntactic noise that RFC 5322 permits but which no modern web service supports.
@@ -87,26 +87,26 @@ The s.validators module will expose email(mode='lax').
 This constructs a pattern adhering to the WHATWG standard. It is safe, performant, and matches user expectations.  
 `# Conceptual STRling Construction for 'lax'`  
 `def email_lax():`  
-    `# Allowable characters in local part: alphanumeric + special symbols`  
-    ``atext = s.any_of(s.alpha_num(), s.in_chars("!#$%&'*+/=?^_`{|}~-"))``  
-      
-    `# Local part: one or more atext characters`  
-    `local_part = s.one_or_more(atext)`  
-      
-    `# Domain label: alphanumeric, optionally containing hyphens but not starting/ending with them`  
-    `# This complexity prevents "-domain" or "domain-"`  
-    `label_char = s.any_of(s.alpha_num(), "-")`  
-    `domain_label = s.merge(`  
-        `s.alpha_num(),`  
-        `s.optional(s.merge(`  
-            `s.n_or_more(label_char, 0, 61),`  
-            `s.alpha_num()`  
-        `))`  
-    `)`  
-      
-    `# Domain: dot-separated labels`  
-    `domain = s.merge(domain_label, s.one_or_more(s.merge(".", domain_label)))`  
-      
+ `# Allowable characters in local part: alphanumeric + special symbols`  
+ `` atext = s.any_of(s.alpha_num(), s.in_chars("!#$%&'*+/=?^_`{|}~-")) ``
+
+    `# Local part: one or more atext characters`
+    `local_part = s.one_or_more(atext)`
+
+    `# Domain label: alphanumeric, optionally containing hyphens but not starting/ending with them`
+    `# This complexity prevents "-domain" or "domain-"`
+    `label_char = s.any_of(s.alpha_num(), "-")`
+    `domain_label = s.merge(`
+        `s.alpha_num(),`
+        `s.optional(s.merge(`
+            `s.n_or_more(label_char, 0, 61),`
+            `s.alpha_num()`
+        `))`
+    `)`
+
+    `# Domain: dot-separated labels`
+    `domain = s.merge(domain_label, s.one_or_more(s.merge(".", domain_label)))`
+
     `return s.merge(s.anchor("start"), local_part, "@", domain, s.anchor("end"))`
 
 #### **mode='strict'**
@@ -123,10 +123,10 @@ Universally Unique Identifiers (UUIDs) appear deceptively simple—a 128-bit num
 
 **Reality:** RFC 4122 (and the newer RFC 9562\) defines multiple versions.
 
-* **v1:** Time-based \+ MAC address.  
-* **v3/v5:** Namespace-based (MD5/SHA-1).  
-* **v4:** Random.  
-* **v7:** Unix Epoch Time-based (new). A strict validator that assumes randomness (checking for 4 in the version nibble) will reject valid v1 or v7 UUIDs generated by modern distributed databases.
+-   **v1:** Time-based \+ MAC address.
+-   **v3/v5:** Namespace-based (MD5/SHA-1).
+-   **v4:** Random.
+-   **v7:** Unix Epoch Time-based (new). A strict validator that assumes randomness (checking for 4 in the version nibble) will reject valid v1 or v7 UUIDs generated by modern distributed databases.
 
 #### **Falsehood \#2: "UUIDs are always 36 characters long."**
 
@@ -144,15 +144,15 @@ Universally Unique Identifiers (UUIDs) appear deceptively simple—a 128-bit num
 
 A strict validator enforces the specific bit layout xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx.
 
-* **M (Version):** Must be 1-8 (covering new RFC 9562 formats).  
-* **N (Variant):** Must match the IETF variant bits (usually 8, 9, a, b).
+-   **M (Version):** Must be 1-8 (covering new RFC 9562 formats).
+-   **N (Variant):** Must match the IETF variant bits (usually 8, 9, a, b).
 
 Strict validation is critical when the application relies on the UUID's properties. For example, if security depends on the ID being unpredictable (random), accepting a v1 (predictable timestamp) UUID is a vulnerability.
 
 ### **3.3 The Pragmatic Implementation (Generic Hex)**
 
-In most "Pragmatic" contexts, a developer asking for is\_uuid just wants to know: "Is this a 128-bit identifier?" They do not care about version bits. If an upstream system migrates from v4 to v7 UUIDs for database performance, a strict validator checking for version=4 will cause a catastrophic outage.  
-Therefore, the pragmatic approach validates the *shape* (hex digits, grouping) but ignores the semantic bits (version/variant).
+In most "Pragmatic" contexts, a developer asking for is_uuid just wants to know: "Is this a 128-bit identifier?" They do not care about version bits. If an upstream system migrates from v4 to v7 UUIDs for database performance, a strict validator checking for version=4 will cause a catastrophic outage.  
+Therefore, the pragmatic approach validates the _shape_ (hex digits, grouping) but ignores the semantic bits (version/variant).
 
 ### **3.4 STRling Implementation Specification**
 
@@ -160,47 +160,47 @@ The s.validators module will expose uuid(version=None, format='canonical').
 
 #### **version Parameter**
 
-* None (Default): **Pragmatic Mode.** Accepts any 128-bit hex string in the correct format. Accepts Nil and Max UUIDs. This is "future-proof."  
-* 4, 7, etc.: **Strict Mode.** Enforces the specific version nibble (e.g., the 13th hex digit must be '4').  
-* 'rfc': Enforces that the Variant bits match IETF (8, 9, a, b) and Version is 1-8.
+-   None (Default): **Pragmatic Mode.** Accepts any 128-bit hex string in the correct format. Accepts Nil and Max UUIDs. This is "future-proof."
+-   4, 7, etc.: **Strict Mode.** Enforces the specific version nibble (e.g., the 13th hex digit must be '4').
+-   'rfc': Enforces that the Variant bits match IETF (8, 9, a, b) and Version is 1-8.
 
 #### **format Parameter**
 
-* 'canonical' (Default): Requires 8-4-4-4-12 with hyphens.  
-* 'hex': Requires 32 hex digits, no hyphens.  
-* 'braced': Requires surrounding {} (Microsoft style).  
-* 'any': Accepts any of the above (using alternation).
+-   'canonical' (Default): Requires 8-4-4-4-12 with hyphens.
+-   'hex': Requires 32 hex digits, no hyphens.
+-   'braced': Requires surrounding {} (Microsoft style).
+-   'any': Accepts any of the above (using alternation).
 
 `# Conceptual STRling Construction`  
 `def uuid(version=None, format='canonical'):`  
-    `hex_char = s.class_range("0", "9", "a", "f", "A", "F")`  
-      
-    `# Groups 1, 2, 5 are just hex digits`  
-    `g1 = hex_char(8)`  
-    `g2 = hex_char(4)`  
-    `g5 = hex_char(12)`  
-      
-    `# Group 3: Version handling`  
-    `if version:`  
-        `# Strict: enforce version char`  
-        `g3 = s.merge(str(version), hex_char(3))`  
-    `else:`  
-        `# Pragmatic: any hex`  
-        `g3 = hex_char(4)`  
-          
-    `# Group 4: Variant handling`  
-    `if version == 'rfc' or (isinstance(version, int) and version > 0):`  
-        `# Strict: enforce IETF variant (8, 9, a, b)`  
-        `# Note: simplistic view, actually 2 bits`  
-        `g4 = s.merge(s.any_of("8", "9", "a", "b", "A", "B"), hex_char(3))`  
-    `else:`  
+ `hex_char = s.class_range("0", "9", "a", "f", "A", "F")`
+
+    `# Groups 1, 2, 5 are just hex digits`
+    `g1 = hex_char(8)`
+    `g2 = hex_char(4)`
+    `g5 = hex_char(12)`
+
+    `# Group 3: Version handling`
+    `if version:`
+        `# Strict: enforce version char`
+        `g3 = s.merge(str(version), hex_char(3))`
+    `else:`
+        `# Pragmatic: any hex`
+        `g3 = hex_char(4)`
+
+    `# Group 4: Variant handling`
+    `if version == 'rfc' or (isinstance(version, int) and version > 0):`
+        `# Strict: enforce IETF variant (8, 9, a, b)`
+        `# Note: simplistic view, actually 2 bits`
+        `g4 = s.merge(s.any_of("8", "9", "a", "b", "A", "B"), hex_char(3))`
+    `else:`
         `g4 = hex_char(4)`
 
-    `# Canonical construction`  
-    `core = s.merge(g1, "-", g2, "-", g3, "-", g4, "-", g5)`  
-      
-    `# Format handling (logic to wrap core in braces or remove hyphens)`  
-    `#...`  
+    `# Canonical construction`
+    `core = s.merge(g1, "-", g2, "-", g3, "-", g4, "-", g5)`
+
+    `# Format handling (logic to wrap core in braces or remove hyphens)`
+    `#...`
     `return core`
 
 ## **4\. URL Validation: The Security Minefield**
@@ -234,30 +234,30 @@ A strict RFC 3986 regex is a masterpiece of complexity. It handles userinfo (use
 For STRling, "Pragmatic" implies "Web Safe." The use case is rarely "validate any URI scheme"; it is "validate a link a user wants to post."  
 This implies:
 
-1. **Protocol Restriction:** Default to http, https, ftp.  
-2. **No Credentials:** user:pass@ in a URL is deprecated and a phishing risk. Pragmatic validation should likely reject it.  
-3. **Localhost Blocking:** This is the "Falsehood of Safety." We must acknowledge that **REGEX CANNOT PREVENT SSRF.** DNS rebinding attacks allow evil.com to resolve to 127.0.0.1 after the check. STRling must explicitly warn users that regex is for *input filtering*, not security.
+1. **Protocol Restriction:** Default to http, https, ftp.
+2. **No Credentials:** user:pass@ in a URL is deprecated and a phishing risk. Pragmatic validation should likely reject it.
+3. **Localhost Blocking:** This is the "Falsehood of Safety." We must acknowledge that **REGEX CANNOT PREVENT SSRF.** DNS rebinding attacks allow evil.com to resolve to 127.0.0.1 after the check. STRling must explicitly warn users that regex is for _input filtering_, not security.
 
 ### **4.4 STRling Implementation Specification**
 
-The s.validators module will expose url(mode='web', allow\_private=False).
+The s.validators module will expose url(mode='web', allow_private=False).
 
 #### **mode='web' (Default)**
 
 Validates typical web URLs.
 
-* Schemes: http, https, ftp, ftps.  
-* Supports Unicode domains (IDN).  
-* Supports IP literals (standard dot-decimal).  
-* Rejects user:pass@.
+-   Schemes: http, https, ftp, ftps.
+-   Supports Unicode domains (IDN).
+-   Supports IP literals (standard dot-decimal).
+-   Rejects user:pass@.
 
 #### **mode='strict' (RFC 3986\)**
 
 Accepts any scheme, userinfo, and esoteric IP formats.
 
-#### **The allow\_private Trap**
+#### **The allow_private Trap**
 
-STRling can generate a regex that attempts to exclude private IP ranges (192.168.\*, 10.\*, 127.\*). While imperfect, this catches low-effort attacks. We should offer this as an option (allow\_private=False), but with a massive warning in the docstring: *"WARNING: This regex filters string representations of private IPs but cannot prevent DNS rebinding or obfuscated IP attacks. Use network-level controls for true SSRF protection."*
+STRling can generate a regex that attempts to exclude private IP ranges (192.168.\*, 10.\*, 127.\*). While imperfect, this catches low-effort attacks. We should offer this as an option (allow_private=False), but with a massive warning in the docstring: _"WARNING: This regex filters string representations of private IPs but cannot prevent DNS rebinding or obfuscated IP attacks. Use network-level controls for true SSRF protection."_
 
 ## **5\. IP Address Validation: The Complexity of Compression**
 
@@ -267,7 +267,7 @@ Validating IP addresses demonstrates the limitation of regex when facing compres
 
 #### **Falsehood \#1: "IPv4 is just 4 numbers."**
 
-**Reality:** As mentioned in the URL section, IPv4 allows octal, hex, and integer formats. However, in most "validation" contexts (like a form configuration), the user expects canonical dotted-decimal x.x.x.x. The falsehood here is assuming the *parser* accepts what the *system* accepts.
+**Reality:** As mentioned in the URL section, IPv4 allows octal, hex, and integer formats. However, in most "validation" contexts (like a form configuration), the user expects canonical dotted-decimal x.x.x.x. The falsehood here is assuming the _parser_ accepts what the _system_ accepts.
 
 #### **Falsehood \#2: "IPv6 is 8 groups of 4 hex digits."**
 
@@ -277,25 +277,25 @@ Validating IP addresses demonstrates the limitation of regex when facing compres
 
 #### **IPv4 Validation**
 
-* **Strict:** Enforces 0-255 range for each octet. Requires complex lookaheads or specific alternation (e.g., 25\[0-5\]|2\[0-4\]\[0-9\]|...) to prevent 256.0.0.1.  
-* **Lax:** Accepts \\d{1,3}. This allows 999.999.999.999. While technically invalid, it is structurally an IP. The "Lax" mode here is structural.
+-   **Strict:** Enforces 0-255 range for each octet. Requires complex lookaheads or specific alternation (e.g., 25\[0-5\]|2\[0-4\]\[0-9\]|...) to prevent 256.0.0.1.
+-   **Lax:** Accepts \\d{1,3}. This allows 999.999.999.999. While technically invalid, it is structurally an IP. The "Lax" mode here is structural.
 
 #### **IPv6 Validation**
 
 There is no "Lax" IPv6 because the syntax is so specific that anything "lax" (e.g., "hex and colons") matches too much garbage.
 
-* **Standard:** Must implement the robust regex that handles compression (::), hex groups, and dotted-quad embedding. It is complex but solved.  
-* **Zone ID Support:** Optional parameter allow\_zone=True to support %eth0 suffixes.
+-   **Standard:** Must implement the robust regex that handles compression (::), hex groups, and dotted-quad embedding. It is complex but solved.
+-   **Zone ID Support:** Optional parameter allow_zone=True to support %eth0 suffixes.
 
 ### **5.3 STRling Implementation Specification**
 
 `# IPv4 Strict Logic (Conceptual)`  
 `octet = s.any_of(`  
-    `s.merge("25", s.class_range("0", "5")),       # 250-255`  
-    `s.merge("2", s.class_range("0", "4"), s.digit()), # 200-249`  
-    `s.merge("1", s.digit(2)),                     # 100-199`  
-    `s.merge(s.class_range("1", "9"), s.digit()),  # 10-99`  
-    `s.digit()                                     # 0-9`  
+ `s.merge("25", s.class_range("0", "5")),       # 250-255`  
+ `s.merge("2", s.class_range("0", "4"), s.digit()), # 200-249`  
+ `s.merge("1", s.digit(2)),                     # 100-199`  
+ `s.merge(s.class_range("1", "9"), s.digit()),  # 10-99`  
+ `s.digit()                                     # 0-9`  
 `)`  
 `ipv4_strict = s.merge(octet, ".", octet, ".", octet, ".", octet)`
 
@@ -321,13 +321,13 @@ Time is the most complex domain, and ISO 8601 is the attempt to tame it. The con
 
 We propose s.iso8601(separator='any', strict=False).
 
-* **separator:**  
-  * 'T': Strict ISO style.  
-  * 'space': SQL style.  
-  * 'any' (Default): Accepts T, t, or space.  
-* **strict (Timezone):**  
-  * If True, enforces RFC 3339 (requires colon in offset).  
-  * If False, accepts basic format offsets (-0500).
+-   **separator:**
+    -   'T': Strict ISO style.
+    -   'space': SQL style.
+    -   'any' (Default): Accepts T, t, or space.
+-   **strict (Timezone):**
+    -   If True, enforces RFC 3339 (requires colon in offset).
+    -   If False, accepts basic format offsets (-0500).
 
 ## **7\. The Standard Library Specification Summary**
 
@@ -335,68 +335,68 @@ Based on this audit, we define the s.validators module taxonomy. This structure 
 
 ### **7.1 General Design Principles**
 
-1. **Defaults are Pragmatic:** The zero-config call (s.email()) returns the pattern matching "real world" usage, favoring False Positives (accepting a bad email) over False Negatives (rejecting a legitimate user).  
-2. **Strict Mode is Opt-In:** Compliance-level validation is available but requires explicit intent.  
+1. **Defaults are Pragmatic:** The zero-config call (s.email()) returns the pattern matching "real world" usage, favoring False Positives (accepting a bad email) over False Negatives (rejecting a legitimate user).
+2. **Strict Mode is Opt-In:** Compliance-level validation is available but requires explicit intent.
 3. **Self-Documenting Groups:** Validators utilize STRling's named groups (e.g., (?\<local\>...)@(?\<domain\>...)) to make the resulting regex readable and debuggable.
 
 ### **7.2 The API Specification**
 
 #### **s.email(mode='lax')**
 
-* **lax (Default):** WHATWG-aligned. Alphanumeric \+ common symbols. Required @ and dot in domain. No quoted strings.  
-* **strict:** RFC 5322 "lite". Allows quoted strings, domain literals (IPs), and rare characters.
+-   **lax (Default):** WHATWG-aligned. Alphanumeric \+ common symbols. Required @ and dot in domain. No quoted strings.
+-   **strict:** RFC 5322 "lite". Allows quoted strings, domain literals (IPs), and rare characters.
 
-#### **s.url(mode='web', allow\_ip=True, require\_scheme=True)**
+#### **s.url(mode='web', allow_ip=True, require_scheme=True)**
 
-* **mode='web':** Standard HTTP/HTTPS/FTP.  
-* **allow\_ip:** If False, requires a domain name (no 1.1.1.1).  
-* **require\_scheme:** If False, allows google.com (protocol-relative or implied).
+-   **mode='web':** Standard HTTP/HTTPS/FTP.
+-   **allow_ip:** If False, requires a domain name (no 1.1.1.1).
+-   **require_scheme:** If False, allows google.com (protocol-relative or implied).
 
 #### **s.uuid(version=None, format='canonical')**
 
-* **version:** None (any), 4, 7, etc. Checks version bits.  
-* **format:** canonical (hyphens), hex (no hyphens), braced (with {}), any.
+-   **version:** None (any), 4, 7, etc. Checks version bits.
+-   **format:** canonical (hyphens), hex (no hyphens), braced (with {}), any.
 
 #### **s.ipv4(strict=True)**
 
-* **strict=True:** Enforces 0-255 range.  
-* **strict=False:** Accepts \\d{1,3} (0-999). Faster, structural check.
+-   **strict=True:** Enforces 0-255 range.
+-   **strict=False:** Accepts \\d{1,3} (0-999). Faster, structural check.
 
-#### **s.ipv6(allow\_zone=False)**
+#### **s.ipv6(allow_zone=False)**
 
-* Standard implementation supports compression (::) and dotted-quad embedding.  
-* allow\_zone: Supports %eth0 link-local suffixes.
+-   Standard implementation supports compression (::) and dotted-quad embedding.
+-   allow_zone: Supports %eth0 link-local suffixes.
 
 #### **s.iso8601(time=True, separator='any')**
 
-* **time:** If False, matches only YYYY-MM-DD.  
-* **separator:** 'T', 'space', or 'any'.
+-   **time:** If False, matches only YYYY-MM-DD.
+-   **separator:** 'T', 'space', or 'any'.
 
 ## **8\. Conclusion: The "Batteries-Included" Promise**
 
-By implementing this taxonomy, STRling moves beyond being a mere tool for writing regexes and becomes a repository of **expert knowledge**. We are not just giving developers a way to generate patterns; we are giving them the *correct* patterns, curated by research into the falsehoods and edge cases that plague software development.  
+By implementing this taxonomy, STRling moves beyond being a mere tool for writing regexes and becomes a repository of **expert knowledge**. We are not just giving developers a way to generate patterns; we are giving them the _correct_ patterns, curated by research into the falsehoods and edge cases that plague software development.  
 This "Standard Library" shields the user from the complexity of RFCs. When a developer types s.email(), they benefit from the analysis synthesized in this report. They do not need to know about RFC 5322 nested comments or WHATWG willful violations—they simply rely on STRling Copilot to handle it. This accumulation of trust is the cornerstone of STRling's evolution into a definitive industry standard.
 
 ### **Tables**
 
 #### **Table 1: Email Validation Comparison**
 
-| Feature | mode='strict' (RFC 5322\) | mode='lax' (WHATWG) | Real World Impact |
-| :---- | :---- | :---- | :---- |
-| **Quoted Strings** | Allowed ("user name"@d.com) | Forbidden | Rarely used; usually user error. |
-| **IP Literals** | Allowed (user@\[1.1.1.1\]) | Forbidden | Critical for sysadmins, irrelevant for users. |
-| **Comments** | Partial Support | Forbidden | Dangerous implementation complexity. |
-| **Special Chars** | All ASCII | Safe Subset | Maximizes compatibility. |
+| Feature            | mode='strict' (RFC 5322\)   | mode='lax' (WHATWG) | Real World Impact                             |
+| :----------------- | :-------------------------- | :------------------ | :-------------------------------------------- |
+| **Quoted Strings** | Allowed ("user name"@d.com) | Forbidden           | Rarely used; usually user error.              |
+| **IP Literals**    | Allowed (user@\[1.1.1.1\])  | Forbidden           | Critical for sysadmins, irrelevant for users. |
+| **Comments**       | Partial Support             | Forbidden           | Dangerous implementation complexity.          |
+| **Special Chars**  | All ASCII                   | Safe Subset         | Maximizes compatibility.                      |
 
 #### **Table 2: UUID Version Handling**
 
-| Version | Description | Strategy |
-| :---- | :---- | :---- |
-| **v1** | Time \+ MAC | Accept in generic mode. |
-| **v4** | Random | The only one most devs know. |
-| **v7** | Time-Ordered (New) | Must be supported for future-proofing. |
-| **Nil** | All zeros | Must be accepted as valid (special case). |
-| **Max** | All Fs | Sentinel value; accept in generic mode. |
+| Version | Description        | Strategy                                  |
+| :------ | :----------------- | :---------------------------------------- |
+| **v1**  | Time \+ MAC        | Accept in generic mode.                   |
+| **v4**  | Random             | The only one most devs know.              |
+| **v7**  | Time-Ordered (New) | Must be supported for future-proofing.    |
+| **Nil** | All zeros          | Must be accepted as valid (special case). |
+| **Max** | All Fs             | Sentinel value; accept in generic mode.   |
 
 **References embedded in narrative:**.
 

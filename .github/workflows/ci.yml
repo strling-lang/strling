@@ -1,5 +1,5 @@
 # Integration & Verification Pipeline
-# Deployment logic is in cd.yml (triggered via workflow_run)
+# Deployment logic is in cd.yml
 
 name: STRling CI
 on:

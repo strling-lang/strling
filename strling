@@ -5,8 +5,12 @@ set -o pipefail
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 TOOLCHAIN="$DIR/toolchain.json"
 
-# Where python virtualenv will live when using python binding
-VENV_DIR=".venv"
+# Where python virtualenv will live when using python binding (versioned to avoid cache clashes)
+get_python_venv_dir() {
+    local py_version
+    py_version=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>/dev/null || echo "3")
+    echo ".venv-${py_version}"
+}
 
 # Check for python3 early as it is required for JSON parsing
 if ! command -v python3 &> /dev/null; then
@@ -112,8 +116,10 @@ if [ "$COMMAND" == "cache-dir" ]; then
             ;;
         python)
             # pip cache + venv for installed packages
+            # Include Python version in venv path to avoid cache clashes across Python versions
+            PY_VERSION=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>/dev/null || echo "3")
             echo "${HOME}/.cache/pip"
-            echo "bindings/python/.venv"
+            echo "bindings/python/.venv-${PY_VERSION}"
             ;;
         go)
             # Go module cache + build cache
@@ -313,7 +319,8 @@ if [ "$COMMAND" == "clean" ]; then
         # Remove common build directories recursively
         # Exclude node_modules and .luarocks to avoid breaking dependencies
         # Path exclusions must come before -type d to be evaluated first
-        find "$DIR" ! -path "*/node_modules/*" ! -path "*/.luarocks/*" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".pytest_cache" -o -name ".mypy_cache" \) -prune -exec rm -rf {} +
+        # Note: .venv and .venv-* are both matched for Python virtualenvs (legacy + versioned)
+        find "$DIR" ! -path "*/node_modules/*" ! -path "*/.luarocks/*" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".venv-*" -o -name ".pytest_cache" -o -name ".mypy_cache" \) -prune -exec rm -rf {} +
         echo ">> Global clean complete."
         exit 0
     else
@@ -342,7 +349,8 @@ if [ "$COMMAND" == "clean" ]; then
         
         TARGET_DIR="$DIR/$BINDING_PATH"
         echo ">> Cleaning artifacts in $TARGET_DIR..."
-        find "$TARGET_DIR" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" \) -prune -exec rm -rf {} +
+        # Note: .venv and .venv-* are both matched for Python virtualenvs (legacy + versioned)
+        find "$TARGET_DIR" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".venv-*" \) -prune -exec rm -rf {} +
         echo ">> Clean complete for $LANG."
         exit 0
     fi
@@ -413,8 +421,16 @@ cd "$DIR/$BINDING_PATH" || exit 1
 
 # Python: create & use venv so pip doesn't try to write system files
 if [[ "$LANG" == "python" ]]; then
+    VENV_DIR=$(get_python_venv_dir)
+    
+    # Remove old non-versioned .venv if it exists (cache migration)
+    if [[ -d ".venv" && ! -L ".venv" ]]; then
+        echo ">> Removing old non-versioned .venv (migrating to versioned cache)..."
+        rm -rf ".venv"
+    fi
+    
     if [[ ! -d "$VENV_DIR" ]]; then
-        echo ">> Creating Python virtual environment..."
+        echo ">> Creating Python virtual environment ($VENV_DIR)..."
         python3 -m venv "$VENV_DIR"
     fi
     export PATH="$(pwd)/$VENV_DIR/bin:$PATH"

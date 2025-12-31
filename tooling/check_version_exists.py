@@ -92,7 +92,7 @@ def check_luarocks(package: str, version: str) -> bool:
     # LuaRocks doesn't have a simple JSON API for checking versions.
     # We check if the rockspec file exists in the manifest.
     # URL pattern: https://luarocks.org/manifests/<user>/<package>-<version>.rockspec
-    # We assume the user is 'strling' or 'thecyberlocal'.
+    # We assume the user is 'strling-lang'.
     # Since we don't know the user, we can try checking the module page.
     # https://luarocks.org/modules/<user>/<package>
     # But parsing HTML is brittle.
@@ -100,18 +100,18 @@ def check_luarocks(package: str, version: str) -> bool:
     # Let's assume the package is uploaded to the root manifest or a specific user.
     # The CI uses `luarocks upload`, which uses the API key.
     # Let's try to fetch the rockspec from the main server.
-    # https://luarocks.org/manifests/thecyberlocal/strling-3.0.0-alpha-1.rockspec
+    # https://luarocks.org/manifests/strling-lang/strling-3.0.0-alpha-1.rockspec
 
     # We will try a few common users or just fail open (return False) if we can't verify.
     # But the goal is to prevent failure.
-    # Let's try to hit the rockspec URL for 'thecyberlocal' (repo owner).
+    # Let's try to hit the rockspec URL for 'strling-lang' (repo owner).
 
     # Note: version in rockspec usually includes revision, e.g. "3.0.0-alpha-1"
     # The input version might be "3.0.0-alpha".
     # If the input version doesn't have a revision, we might miss it.
     # But let's assume the input version is the full version string from the rockspec.
 
-    users: List[str] = ["thecyberlocal", "strling"]
+    users: List[str] = ["strling-lang", "strling"]
     for user in users:
         url = f"https://luarocks.org/manifests/{user}/{package}-{version}.rockspec"
         try:

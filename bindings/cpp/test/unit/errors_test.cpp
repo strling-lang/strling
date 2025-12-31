@@ -31,7 +31,7 @@
  *
  * -   The exact, full wording of error messages (tests assert substrings).
  *
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

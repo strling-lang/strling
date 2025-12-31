@@ -45,7 +45,7 @@ L<STRling::Core::Nodes>, L<STRling::Core::IR>, L<STRling::Core::Errors>
 
 =head1 AUTHOR
 
-TheCyberLocal
+STRling Team
 
 =head1 LICENSE
 

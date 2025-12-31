@@ -16,7 +16,7 @@
  * sequencing, character classes, quantification, etc.) and can be serialized
  * to a dictionary representation for further processing or debugging.
  * 
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

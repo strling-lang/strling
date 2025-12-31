@@ -16,7 +16,7 @@
  * to IR and ultimately emitted as target-specific regex patterns. It includes
  * comprehensive error handling with position tracking for helpful diagnostics.
  * 
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

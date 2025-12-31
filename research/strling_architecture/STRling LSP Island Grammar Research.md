@@ -447,7 +447,7 @@ Implementing this architecture elevates STRling from a "library" to a "language.
 
 #### **Works cited**
 
-1. thecyberlocal/strling
+1. strling-lang/strling
 2. VS Code API | Visual Studio Code Extension API, accessed December 28, 2025, [https://code.visualstudio.com/api/references/vscode-api](https://code.visualstudio.com/api/references/vscode-api)
 3. Embedded Programming Languages | Visual Studio Code Extension API, accessed December 28, 2025, [https://code.visualstudio.com/api/language-extensions/embedded-languages](https://code.visualstudio.com/api/language-extensions/embedded-languages)
 4. Python's F-String for String Interpolation and Formatting, accessed December 28, 2025, [https://realpython.com/python-f-strings/](https://realpython.com/python-f-strings/)

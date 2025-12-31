@@ -1,7 +1,7 @@
 [package]
 name = "strling"
 version = "3.0.0-alpha"
-authors = ["TheCyberLocal"]
+authors = ["STRling Team"]
 edition = "2021"
 rust-version = "1.70"
 license = "MIT"

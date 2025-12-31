@@ -3,7 +3,7 @@
 Gem::Specification.new do |spec|
   spec.name        = 'strling'
   spec.version     = '3.0.0.alpha'
-  spec.authors     = ['TheCyberLocal']
+  spec.authors     = ['STRling Team']
   spec.email       = []
   spec.summary     = 'Next-gen string pattern DSL & compiler'
   spec.description = 'STRling is a next-generation string pattern DSL and compiler that provides a readable, maintainable alternative to traditional regular expressions.'

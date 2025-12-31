@@ -349,7 +349,7 @@ In summary, "Pattern Excellence" is not about inventing new matching algorithms;
 3. The Snocone Programming Language \- SNOBOL4 and SPITBOL Information, accessed December 30, 2025, [http://www.snobol4.com/report.htm](http://www.snobol4.com/report.htm)
 4. Integrating regular expressions and SNOBOL patterns into string scanning: a unifying approach \- ResearchGate, accessed December 30, 2025, [https://www.researchgate.net/publication/303773469_Integrating_regular_expressions_and_SNOBOL_patterns_into_string_scanning_a_unifying_approach](https://www.researchgate.net/publication/303773469_Integrating_regular_expressions_and_SNOBOL_patterns_into_string_scanning_a_unifying_approach)
 5. THE SNOBOL4 PROGRAMMING LANGUAGE \- Berstis, accessed December 30, 2025, [https://berstis.com/greenbook.pdf](https://berstis.com/greenbook.pdf)
-6. thecyberlocal/strling
+6. strling-lang/strling
 7. Models of String Pattern Matching\* Ralph E. Griswold TR81-6 May 1981 Department of Computer Science The University of Arizona Tu, accessed December 30, 2025, [https://www2.cs.arizona.edu/icon/ftp/doc/tr81_6.pdf](https://www2.cs.arizona.edu/icon/ftp/doc/tr81_6.pdf)
 8. String Processing Languages \- cs.Princeton, accessed December 30, 2025, [https://www.cs.princeton.edu/techreports/1991/306.pdf](https://www.cs.princeton.edu/techreports/1991/306.pdf)
 9. INTERACTIVE SNOBOL4 SYSTEM FOR THE SDS 940 System Implemented By Eric R. Anderson and Roger Sturgeon University of California, B \- Bitsavers.org, accessed December 30, 2025, [http://www.bitsavers.org/pdf/sds/9xx/940/ucbProjectGenie/mcjones/R-34_Snobol4.pdf](http://www.bitsavers.org/pdf/sds/9xx/940/ucbProjectGenie/mcjones/R-34_Snobol4.pdf)

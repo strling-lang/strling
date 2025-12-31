@@ -246,8 +246,8 @@ jobs:
               working-directory: bindings/java
               run: |
                   VERSION=$(grep '<version>' pom.xml | head -1 | sed -e 's/.*<version>\(.*\)<\/version>.*/\1/')
-                  echo "Checking Maven Central for com.thecyberlocal:strling:$VERSION"
-                  if python3 ../../tooling/check_version_exists.py --registry maven --group "com.thecyberlocal" --package "strling" --version "$VERSION"; then
+                  echo "Checking Maven Central for com.strling:strling:$VERSION"
+                  if python3 ../../tooling/check_version_exists.py --registry maven --group "com.strling" --package "strling" --version "$VERSION"; then
                      echo "exists=true" >> $GITHUB_OUTPUT
                      echo "Version $VERSION already exists on Maven Central. Skipping publish."
                   else
@@ -568,7 +568,7 @@ jobs:
               id: check_npm
               working-directory: bindings/typescript
               run: |
-                  PACKAGE_NAME="@thecyberlocal/strling"
+                  PACKAGE_NAME="@strling-lang/strling"
                   CURRENT_VERSION=$(node -pe "require('./package.json').version")
                   if python ../../tooling/check_version_exists.py --registry npm --package "$PACKAGE_NAME" --version "$CURRENT_VERSION"; then
                     echo "exists=true" >> $GITHUB_OUTPUT

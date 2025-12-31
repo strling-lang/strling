@@ -5,7 +5,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
     NAME             => 'STRling',
-    AUTHOR           => 'TheCyberLocal',
+    AUTHOR           => 'STRling Team',
     VERSION_FROM     => 'lib/STRling.pm',
     ABSTRACT_FROM    => 'lib/STRling.pm',
     LICENSE          => 'perl_5',

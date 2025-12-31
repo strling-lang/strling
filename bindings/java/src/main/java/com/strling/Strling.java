@@ -11,7 +11,7 @@ package com.strling;
  * <p>Main public entry point for the STRling library.</p>
  * 
  * @version 3.0.0-alpha
- * @author TheCyberLocal
+ * @author STRling Team
  */
 public class Strling {
     /**

@@ -9,7 +9,7 @@ description = "Next-gen string pattern DSL & compiler"
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }
-authors = [{ name = "TheCyberLocal" }]
+authors = [{ name = "STRling Team" }]
 keywords = [
     "strling",
     "regex",

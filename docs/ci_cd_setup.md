@@ -72,7 +72,7 @@ Deployment jobs execute **only** when all quality gates pass:
 **Target Registries by Language:**
 
 -   **Python:** PyPI (via `pypa/gh-action-pypi-publish`)
--   **TypeScript:** NPM (package: `@thecyberlocal/strling`)
+-   **TypeScript:** NPM (package: `@strling-lang/strling`)
 -   **Rust:** Crates.io (package: `strling_core`)
 -   **C#:** NuGet (package: `STRling`)
 -   **F#:** NuGet (package: `STRling.FSharp`)

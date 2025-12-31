@@ -172,19 +172,19 @@ The emitters adhere to the documented "Iron Law" with these constraints:
 
 ### Target Registries & Secrets
 
-| Registry      | Package Name                | Deploy Job          | Secret Required      | Idempotency Check            |
-| :------------ | :-------------------------- | :------------------ | :------------------- | :--------------------------- |
-| NPM           | `@thecyberlocal/strling`    | `deploy-typescript` | `NPM_TOKEN`          | ✅ `check_version_exists.py` |
-| PyPI          | `STRling`                   | `deploy-python`     | (OIDC)               | ✅ `check_version_exists.py` |
-| Crates.io     | `strling_core`              | `deploy-rust`       | `CARGO_TOKEN`        | ✅ `check_version_exists.py` |
-| NuGet (C#)    | `STRling`                   | `deploy-csharp`     | `NUGET_KEY`          | ✅ `check_version_exists.py` |
-| NuGet (F#)    | `STRling.FSharp`            | `deploy-fsharp`     | `NUGET_KEY`          | ✅ `check_version_exists.py` |
-| RubyGems      | `strling`                   | `deploy-ruby`       | `RUBYGEMS_KEY`       | ✅ `check_version_exists.py` |
-| Pub.dev       | `strling`                   | `deploy-dart`       | (OIDC)               | ✅ `check_version_exists.py` |
-| LuaRocks      | `strling`                   | `deploy-lua`        | `LUA_API_KEY`        | ✅ `check_version_exists.py` |
-| Maven Central | `com.thecyberlocal:strling` | `deploy-java`       | `MAVEN_*`            | 🟡 Placeholder               |
-| Maven Central | (Kotlin)                    | `deploy-kotlin`     | `MAVEN_*`, `GPG_KEY` | ✅ Gradlew publish           |
-| CPAN          | `STRling`                   | `deploy-perl`       | `PAUSE_*`            | ⚠️ No check                  |
+| Registry      | Package Name            | Deploy Job          | Secret Required      | Idempotency Check            |
+| :------------ | :---------------------- | :------------------ | :------------------- | :--------------------------- |
+| NPM           | `@strling-lang/strling` | `deploy-typescript` | `NPM_TOKEN`          | ✅ `check_version_exists.py` |
+| PyPI          | `STRling`               | `deploy-python`     | (OIDC)               | ✅ `check_version_exists.py` |
+| Crates.io     | `strling_core`          | `deploy-rust`       | `CARGO_TOKEN`        | ✅ `check_version_exists.py` |
+| NuGet (C#)    | `STRling`               | `deploy-csharp`     | `NUGET_KEY`          | ✅ `check_version_exists.py` |
+| NuGet (F#)    | `STRling.FSharp`        | `deploy-fsharp`     | `NUGET_KEY`          | ✅ `check_version_exists.py` |
+| RubyGems      | `strling`               | `deploy-ruby`       | `RUBYGEMS_KEY`       | ✅ `check_version_exists.py` |
+| Pub.dev       | `strling`               | `deploy-dart`       | (OIDC)               | ✅ `check_version_exists.py` |
+| LuaRocks      | `strling`               | `deploy-lua`        | `LUA_API_KEY`        | ✅ `check_version_exists.py` |
+| Maven Central | `com.strling:strling`   | `deploy-java`       | `MAVEN_*`            | 🟡 Placeholder               |
+| Maven Central | (Kotlin)                | `deploy-kotlin`     | `MAVEN_*`, `GPG_KEY` | ✅ Gradlew publish           |
+| CPAN          | `STRling`               | `deploy-perl`       | `PAUSE_*`            | ⚠️ No check                  |
 
 ### CI/CD Workflow Structure
 

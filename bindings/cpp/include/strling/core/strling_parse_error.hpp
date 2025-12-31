@@ -7,7 +7,7 @@
  * information about syntax errors including position, context, and beginner-friendly
  * hints for resolution.
  * 
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

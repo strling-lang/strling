@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Maven GAV (GroupId, ArtifactId, Version) -->
-    <groupId>com.thecyberlocal</groupId>
+    <groupId>com.strling</groupId>
     <artifactId>strling</artifactId>
     <version>3.0.0-alpha</version>
     <packaging>jar</packaging>
@@ -25,7 +25,7 @@
 
     <developers>
         <developer>
-            <name>TheCyberLocal</name>
+            <name>STRling Team</name>
         </developer>
     </developers>
 

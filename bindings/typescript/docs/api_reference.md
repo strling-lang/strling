@@ -29,7 +29,7 @@ Matches the beginning (`^`) or end (`$`) of a line.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.start(), s.lit("abc"), s.end());
@@ -45,7 +45,7 @@ Matches the absolute beginning (`\A`) or end (`\z`) of the string, ignoring mult
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 // For absolute anchors use emitter directives.
 const s = simply;
@@ -62,7 +62,7 @@ Matches the position between a word character and a non-word character (`\b`), o
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(
@@ -92,7 +92,7 @@ Standard shorthands for common character sets.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const p = s.merge(s.start(), s.capture(s.digit(3)), s.end());
@@ -107,7 +107,7 @@ Define a set of allowed characters (`[...]`) or a range (`a-z`).
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.start(), s.anyOf("a", "b", "c"), s.end());
@@ -122,7 +122,7 @@ Match any character _not_ in the set (`[^...]`).
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const notVowels = s.notInChars("aeiou");
@@ -138,7 +138,7 @@ Match characters based on Unicode properties (`\p{...}`), such as scripts, categ
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.start(), s.charProperty("Lu"), s.end());
@@ -160,7 +160,7 @@ Represent special characters like newlines, tabs, or unicode values.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 
@@ -182,7 +182,7 @@ console.assert(new RegExp(String(patternN2)).test("\nend"));
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 
@@ -211,7 +211,7 @@ Match as much as possible (standard behavior).
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.start(), s.letter(1, 0), s.end());
@@ -226,7 +226,7 @@ Match as little as possible. Appending `?` to a quantifier (e.g., `*?`).
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.start(), s.letter().rep(1, 5).lazy(), s.end());
@@ -243,7 +243,7 @@ Match as much as possible and **do not backtrack**. Appending `+` to a quantifie
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.start(), s.digit().rep(1, 0).possessive(), s.end());
@@ -262,7 +262,7 @@ Standard groups `(...)` that capture the matched text.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.capture(s.letter(3));
@@ -278,7 +278,7 @@ Capturing groups with a specific name `(?<name>...)` for easier extraction.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.group("area", s.digit(3));
@@ -294,7 +294,7 @@ Groups `(?:...)` that group logic without capturing text.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.start(), s.merge(s.digit(3)).nonCapture(), s.end());
@@ -311,7 +311,7 @@ Groups `(?>...)` that discard backtracking information once the group matches.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.atomic(s.merge(s.digit(1, 0), s.letter(1, 0)));
@@ -333,7 +333,7 @@ Zero-width assertions that match a group without consuming characters.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.letter(), s.ahead(s.digit()));
@@ -349,7 +349,7 @@ console.assert(new RegExp(String(pattern)).test("a1"));
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.behind(s.letter()), s.digit());
@@ -368,7 +368,7 @@ Matches one pattern OR another (`|`).
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.anyOf("cat", "dog");
@@ -387,7 +387,7 @@ Reference a previously captured group by index (`\1`) or name (`\k<name>`).
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const p = s.capture(s.letter(3));
@@ -410,7 +410,7 @@ Global flags that alter the behavior of the regex engine.
 #### Usage (TypeScript)
 
 ```typescript
-import { simply } from "@thecyberlocal/strling";
+import { simply } from "@strling-lang/strling";
 
 const s = simply;
 const pattern = s.merge(s.flag("i"), s.lit("abc"));

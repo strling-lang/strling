@@ -36,7 +36,7 @@
  * engine's matching behavior.
  * -   The parsing of other directives like `%engine` or `%lang`.
  *
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

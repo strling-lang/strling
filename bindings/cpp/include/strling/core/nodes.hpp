@@ -17,7 +17,7 @@
  * (alternation, sequencing, character classes, anchors, etc.) and can be
  * serialized to a dictionary representation for debugging or storage.
  * 
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

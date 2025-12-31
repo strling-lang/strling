@@ -434,7 +434,7 @@ define user_profile \= s.struct(
 11. Rosie Pattern Language / Rosie \- GitLab, accessed December 30, 2025, [https://gitlab.com/rosie-pattern-language/rosie](https://gitlab.com/rosie-pattern-language/rosie)
 12. The Rosie Pattern Language | Hacker News, accessed December 30, 2025, [https://news.ycombinator.com/item?id=21145755](https://news.ycombinator.com/item?id=21145755)
 13. Rosie Pattern Language (RPL) and the Rosie Pattern Engine : r/programming \- Reddit, accessed December 30, 2025, [https://www.reddit.com/r/programming/comments/58uzlg/rosie_pattern_language_rpl_and_the_rosie_pattern/](https://www.reddit.com/r/programming/comments/58uzlg/rosie_pattern_language_rpl_and_the_rosie_pattern/)
-14. thecyberlocal/strling
+14. strling-lang/strling
 15. regex \- NPM, accessed December 30, 2025, [https://www.npmjs.com/package/regex](https://www.npmjs.com/package/regex)
 16. Java binding for Rosie Pattern Language (RPL). \- GitHub, accessed December 30, 2025, [https://github.com/antoniomacri/rosie-pattern-language-java](https://github.com/antoniomacri/rosie-pattern-language-java)
 17. Importing Modules | Pattern Language, accessed December 30, 2025, [https://docs.werwolv.net/pattern-language/core-language/importing-modules](https://docs.werwolv.net/pattern-language/core-language/importing-modules)

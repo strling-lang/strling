@@ -2,7 +2,7 @@
  * @file strling_parse_error.cpp
  * @brief Implementation of STRling error classes
  * 
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

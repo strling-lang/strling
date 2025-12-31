@@ -192,7 +192,7 @@ DSL String:
 \d{3}-\d{3}-\d{4}
 
 Simply API (TypeScript):
-import { simply as s } from '@thecyberlocal/strling';
+import { simply as s } from '@strling-lang/strling';
 
 s.digit(3)
  .then('-')
@@ -208,7 +208,7 @@ DSL String:
 [A-Za-z0-9._%+-]+
 
 Simply API (TypeScript):
-import { simply as s } from '@thecyberlocal/strling';
+import { simply as s } from '@strling-lang/strling';
 
 s.anyOf(
     s.letter(),
@@ -224,7 +224,7 @@ DSL String:
 (?<area>\d{3})-(?<exchange>\d{3})-(?<line>\d{4})
 
 Simply API (TypeScript):
-import { simply as s } from '@thecyberlocal/strling';
+import { simply as s } from '@strling-lang/strling';
 
 s.capture('area', s.digit(3))
  .then('-')

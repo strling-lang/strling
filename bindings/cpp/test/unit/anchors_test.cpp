@@ -37,7 +37,7 @@
  * NOTE: This is a PARTIAL implementation demonstrating the test porting pattern.
  * Full porting would require all 31 test cases from anchors.test.ts.
  * 
- * @copyright Copyright (c) 2024 TheCyberLocal
+ * @copyright Copyright (c) 2024 STRling Team
  * @license MIT License
  */
 

@@ -1,5 +1,5 @@
 {
-    "name": "@thecyberlocal/strling",
+    "name": "@strling-lang/strling",
     "version": "3.0.0-alpha",
     "description": "Next-gen string pattern DSL & compiler",
     "keywords": [
@@ -16,7 +16,7 @@
         "readable",
         "beginner"
     ],
-    "author": "TheCyberLocal",
+    "author": "STRling Team",
     "license": "MIT",
     "homepage": "https://github.com/strling-lang/strling",
     "repository": {
@@ -66,7 +66,7 @@
         "typescript": "^5.9.2"
     },
     "dependencies": {
-        "@thecyberlocal/strling": "file:../..",
+        "@strling-lang/strling": "file:../..",
         "ajv": "^8.17.1"
     }
 }

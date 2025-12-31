@@ -648,7 +648,7 @@ L<STRling>, L<STRling::Core::Nodes>, L<STRling::Core::Compiler>
 
 =head1 AUTHOR
 
-TheCyberLocal
+STRling Team
 
 =head1 LICENSE
 

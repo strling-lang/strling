@@ -1,4 +1,5 @@
 # Integration & Verification Pipeline
+# The CI workflow runs tests for all supported language bindings
 # Deployment logic is in cd.yml
 
 name: STRling CI

@@ -4,7 +4,7 @@
 
 <table>
   <tr>
-    <td style="padding: 10px;"><img src="https://raw.githubusercontent.com/TheCyberLocal/STRling/main/strling_logo.jpg" alt="STRling Logo" width="100" /></td>
+    <td style="padding: 10px;"><img src="https://raw.githubusercontent.com/TheCyberLocal/STRling/main/strling_logo.png" alt="STRling Logo" width="100" /></td>
     <td style="padding: 10px;">
       <strong>The Universal Regular Expression Compiler.</strong><br><br>
       STRling is a next-generation production-grade syntax designed to make Regex readable, maintainable, and robust. It abstracts the cryptic nature of raw regex strings into a clean, object-oriented, and strictly typed interface that compiles to standard PCRE2 (or native) patterns.
@@ -52,14 +52,15 @@ print(ir)
 ```
 
 **Simply API Functions:**
-- `sl_start()` - Match start of line (^)
-- `sl_end()` - Match end of line ($)
-- `sl_digit(n)` - Match exactly n digits
-- `sl_any_of(chars)` - Match any character in the string
-- `sl_merge(...)` - Concatenate patterns sequentially
-- `sl_capture(inner)` - Create a capturing group
-- `sl_may(inner)` - Make a pattern optional (0 or 1)
-- `sl_compile(pattern)` - Compile AST to IR
+
+-   `sl_start()` - Match start of line (^)
+-   `sl_end()` - Match end of line ($)
+-   `sl_digit(n)` - Match exactly n digits
+-   `sl_any_of(chars)` - Match any character in the string
+-   `sl_merge(...)` - Concatenate patterns sequentially
+-   `sl_capture(inner)` - Create a capturing group
+-   `sl_may(inner)` - Make a pattern optional (0 or 1)
+-   `sl_compile(pattern)` - Compile AST to IR
 
 ### Low-Level S3 Constructors
 

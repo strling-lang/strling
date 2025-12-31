@@ -3,7 +3,7 @@ package emitters
 import (
 	"testing"
 	
-	"github.com/thecyberlocal/strling/bindings/go/core"
+	"github.com/strling-lang/strling/bindings/go/core"
 )
 
 // TestBasicEmit tests basic PCRE2 emission.

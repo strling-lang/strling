@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"testing"
 
-	s "github.com/thecyberlocal/strling/bindings/go/simply"
+	s "github.com/strling-lang/strling/bindings/go/simply"
 )
 
 // createUSPhonePattern builds a US phone number pattern using the simply fluent API.

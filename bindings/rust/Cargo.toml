@@ -6,9 +6,9 @@ edition = "2021"
 rust-version = "1.70"
 license = "MIT"
 description = "STRling core library - Next-gen string pattern DSL & compiler for Rust"
-homepage = "https://github.com/TheCyberLocal/STRling"
-repository = "https://github.com/TheCyberLocal/STRling"
-documentation = "https://github.com/TheCyberLocal/STRling/tree/main/docs"
+homepage = "https://github.com/strling-lang/strling"
+repository = "https://github.com/strling-lang/strling"
+documentation = "https://github.com/strling-lang/strling/tree/main/docs"
 keywords = ["strling", "regex", "regexp", "pattern", "parser"]
 categories = ["parsing", "text-processing", "development-tools"]
 

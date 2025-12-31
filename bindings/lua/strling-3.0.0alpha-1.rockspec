@@ -1,7 +1,7 @@
 package = "strling"
 version = "3.0.0alpha-1"
 source = {
-   url = "git+https://github.com/TheCyberLocal/STRling.git",
+   url = "git+https://github.com/strling-lang/strling.git",
    tag = "v3.0.0-alpha"
 }
 description = {
@@ -9,7 +9,7 @@ description = {
    detailed = [[
       STRling is a next-generation regex DSL compiler.
    ]],
-   homepage = "https://github.com/TheCyberLocal/STRling",
+   homepage = "https://github.com/strling-lang/strling",
    license = "MIT"
 }
 dependencies = {

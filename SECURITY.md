@@ -13,7 +13,7 @@
 
 If you have discovered a security vulnerability in STRling, please report it privately. We strongly prefer reports via **GitHub Security Advisories** to ensure a secure disclosure process.
 
-1.  Go to the [Security tab](https://github.com/TheCyberLocal/STRling/security/advisories/new).
+1.  Go to the [Security tab](https://github.com/strling-lang/strling/security/advisories/new).
 2.  Click on "New Draft Security Advisory".
 
 If you cannot access this feature, please contact the maintainers directly via the email addresses listed in their GitHub profiles before disclosing publicly.

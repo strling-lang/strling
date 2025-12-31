@@ -35,9 +35,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/TheCyberLocal/STRling"
-Documentation = "https://github.com/TheCyberLocal/STRling/tree/main/docs"
-Issues = "https://github.com/TheCyberLocal/STRling/issues"
+Homepage = "https://github.com/strling-lang/strling"
+Documentation = "https://github.com/strling-lang/strling/tree/main/docs"
+Issues = "https://github.com/strling-lang/strling/issues"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

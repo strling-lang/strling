@@ -1,10 +1,10 @@
 # STRling - Go Binding
 
-> Part of the [STRling Project](https://github.com/TheCyberLocal/STRling/blob/main/README.md)
+> Part of the [STRling Project](https://github.com/strling-lang/strling/blob/main/README.md)
 
 <table>
   <tr>
-    <td style="padding: 10px;"><img src="https://raw.githubusercontent.com/TheCyberLocal/STRling/main/strling_logo.png" alt="STRling Logo" width="100" /></td>
+    <td style="padding: 10px;"><img src="https://raw.githubusercontent.com/strling-lang/strling/main/strling_logo.png" alt="STRling Logo" width="100" /></td>
     <td style="padding: 10px;">
       <strong>The Universal Regular Expression Compiler.</strong><br><br>
       STRling is a next-generation production-grade syntax designed to make Regex readable, maintainable, and robust. It abstracts the cryptic nature of raw regex strings into a clean, object-oriented, and strictly typed interface that compiles to standard PCRE2 (or native) patterns.
@@ -15,7 +15,7 @@
 ## 💿 Installation
 
 ```bash
-go get github.com/thecyberlocal/strling/bindings/go
+go get github.com/strling-lang/strling/bindings/go
 ```
 
 ## 📦 Usage
@@ -29,7 +29,7 @@ import (
     "fmt"
     "regexp"
 
-    "github.com/thecyberlocal/strling/bindings/go/simply"
+    "github.com/strling-lang/strling/bindings/go/simply"
 )
 
 func main() {
@@ -77,8 +77,8 @@ STRling follows a strict compiler pipeline architecture to ensure consistency ac
 ## 📚 Documentation
 
 -   [**API Reference**](./docs/api_reference.md): Detailed documentation for this binding.
--   [**Project Hub**](https://github.com/TheCyberLocal/STRling/blob/main/README.md): The main STRling repository.
--   [**Specification**](https://github.com/TheCyberLocal/STRling/tree/main/spec): The core grammar and semantic specifications.
+-   [**Project Hub**](https://github.com/strling-lang/strling/blob/main/README.md): The main STRling repository.
+-   [**Specification**](https://github.com/strling-lang/strling/tree/main/spec): The core grammar and semantic specifications.
 
 ## 🌐 Connect
 

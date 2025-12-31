@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/thecyberlocal/strling/bindings/go/core"
+	"github.com/strling-lang/strling/bindings/go/core"
 )
 
 // SpecNode is the interface for all AST nodes from the JSON spec.

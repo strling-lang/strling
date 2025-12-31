@@ -13,7 +13,7 @@
     <!-- Project Metadata -->
     <name>STRling</name>
     <description>Next-gen string pattern DSL &amp; compiler</description>
-    <url>https://github.com/TheCyberLocal/STRling</url>
+    <url>https://github.com/strling-lang/strling</url>
 
     <licenses>
         <license>
@@ -30,14 +30,14 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/TheCyberLocal/STRling.git</connection>
-        <developerConnection>scm:git:ssh://github.com:TheCyberLocal/STRling.git</developerConnection>
-        <url>https://github.com/TheCyberLocal/STRling/tree/main</url>
+        <connection>scm:git:git://github.com/strling-lang/strling.git</connection>
+        <developerConnection>scm:git:ssh://github.com:strling-lang/strling.git</developerConnection>
+        <url>https://github.com/strling-lang/strling/tree/main</url>
     </scm>
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/TheCyberLocal/STRling/issues</url>
+        <url>https://github.com/strling-lang/strling/issues</url>
     </issueManagement>
 
     <properties>

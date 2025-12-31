@@ -322,5 +322,5 @@ MIT License - See the root LICENSE file for details.
 ## Support
 
 For issues or questions:
-- GitHub Issues: https://github.com/TheCyberLocal/STRling/issues
-- Documentation: https://github.com/TheCyberLocal/STRling/tree/main/docs
+- GitHub Issues: https://github.com/strling-lang/strling/issues
+- Documentation: https://github.com/strling-lang/strling/tree/main/docs

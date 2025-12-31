@@ -18,13 +18,13 @@
     ],
     "author": "TheCyberLocal",
     "license": "MIT",
-    "homepage": "https://github.com/TheCyberLocal/STRling",
+    "homepage": "https://github.com/strling-lang/strling",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/TheCyberLocal/STRling.git"
+        "url": "git+https://github.com/strling-lang/strling.git"
     },
     "bugs": {
-        "url": "https://github.com/TheCyberLocal/STRling/issues"
+        "url": "https://github.com/strling-lang/strling/issues"
     },
     "type": "module",
     "exports": {

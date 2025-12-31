@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/thecyberlocal/strling/bindings/go/core"
+	"github.com/strling-lang/strling/bindings/go/core"
 )
 
 // SpecFile represents a conformance test specification.

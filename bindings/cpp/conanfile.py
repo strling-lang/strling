@@ -16,7 +16,7 @@ class STRlingConan(ConanFile):
     version = "0.1.0"
     license = "MIT"
     author = "TheCyberLocal"
-    url = "https://github.com/TheCyberLocal/STRling"
+    url = "https://github.com/strling-lang/strling"
     description = "Next-generation production-grade syntax for regular expressions"
     topics = ("regex", "pattern-matching", "dsl", "parsing")
 

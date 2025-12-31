@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 	
-	"github.com/thecyberlocal/strling/bindings/go/core"
+	"github.com/strling-lang/strling/bindings/go/core"
 )
 
 // STRling PCRE2 Emitter - IR to PCRE2 Pattern String

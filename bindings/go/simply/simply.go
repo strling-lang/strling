@@ -1,8 +1,8 @@
 package simply
 
 import (
-	"github.com/thecyberlocal/strling/bindings/go/core"
-	"github.com/thecyberlocal/strling/bindings/go/emitters"
+	"github.com/strling-lang/strling/bindings/go/core"
+	"github.com/strling-lang/strling/bindings/go/emitters"
 )
 
 // Pattern is a wrapper around the core AST node to provide a fluent/functional API.

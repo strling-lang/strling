@@ -28,6 +28,8 @@ on:
 env:
     LC_ALL: C.UTF-8
     LANG: C.UTF-8
+    # Cache version - increment to invalidate all caches (e.g., after repo transfer)
+    CACHE_VERSION: v2
 
 jobs:
     # --- TEST JOBS (ALPHABETICALLY ORDERED) ---
@@ -117,9 +119,9 @@ jobs:
               uses: actions/cache@v4
               with:
                   path: ${{ steps.cache-config.outputs.path }}
-                  key: ${{ runner.os }}-${{ matrix.language }}-${{ hashFiles(format('bindings/{0}/{1}', matrix.language, steps.cache-config.outputs.lockfile)) }}
+                  key: ${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.language }}-${{ hashFiles(format('bindings/{0}/{1}', matrix.language, steps.cache-config.outputs.lockfile)) }}
                   restore-keys: |
-                      ${{ runner.os }}-${{ matrix.language }}-
+                      ${{ env.CACHE_VERSION }}-${{ runner.os }}-${{ matrix.language }}-
 
             - name: 📦 Install Dependencies (Setup)
               run: ./strling setup ${{ matrix.language }}

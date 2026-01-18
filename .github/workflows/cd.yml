@@ -10,17 +10,29 @@ on:
         branches: [main] # CD only triggers for main branch CI runs
         types:
             - completed
+    workflow_dispatch:
+        inputs:
+            dry_run:
+                description: 'Run deployment in dry-run mode (no actual publishing)'
+                required: true
+                default: true
+                type: boolean
+            tag_name:
+                description: 'Tag name to simulate (e.g. v3.0.0-alpha)'
+                required: false
+                default: ''
 
 jobs:
     # --- GATE JOB: Verify conditions before proceeding ---
     verify-release:
         name: Verify Release Conditions
         runs-on: ubuntu-latest
-        # Only proceed if CI succeeded
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        # Proceed if CI succeeded OR manual trigger
+        if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
         outputs:
             is_release: ${{ steps.check_tag.outputs.is_release }}
             tag_version: ${{ steps.check_tag.outputs.tag_version }}
+            is_dry_run: ${{ steps.check_tag.outputs.is_dry_run }}
         steps:
             - name: Checkout triggering commit
               uses: actions/checkout@v4
@@ -31,9 +43,25 @@ jobs:
             - name: Check if triggered by version tag
               id: check_tag
               run: |
-                  # Get the head_branch from the triggering workflow
-                  HEAD_BRANCH="${{ github.event.workflow_run.head_branch }}"
-                  HEAD_SHA="${{ github.event.workflow_run.head_sha }}"
+                  # Set Dry Run output
+                  if [[ "${{ github.event.inputs.dry_run }}" == "false" ]]; then
+                    echo "is_dry_run=false" >> $GITHUB_OUTPUT
+                  else
+                    echo "is_dry_run=true" >> $GITHUB_OUTPUT
+                  fi
+
+                  # Determine HEAD_BRANCH and HEAD_SHA based on trigger
+                  if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+                    HEAD_BRANCH="${{ github.event.inputs.tag_name }}"
+                    HEAD_SHA="${{ github.sha }}"
+                    if [[ -z "$HEAD_BRANCH" ]]; then
+                      # Fallback to latest tag or dummy
+                      HEAD_BRANCH=$(git describe --tags --abbrev=0 2>/dev/null || echo "v3.0.0-alpha")
+                    fi
+                  else
+                    HEAD_BRANCH="${{ github.event.workflow_run.head_branch }}"
+                    HEAD_SHA="${{ github.event.workflow_run.head_sha }}"
+                  fi
 
                   echo "Triggering branch/tag: $HEAD_BRANCH"
                   echo "Triggering SHA: $HEAD_SHA"
@@ -44,16 +72,22 @@ jobs:
                     echo "is_release=true" >> $GITHUB_OUTPUT
                     echo "tag_version=${HEAD_BRANCH#v}" >> $GITHUB_OUTPUT
                   else
-                    # Also check if the SHA has an associated tag
+                    # Also check if the SHA has an associated tag (unless in manual trigger with specific tag)
                     TAG=$(git describe --tags --exact-match $HEAD_SHA 2>/dev/null || echo "")
                     if [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
                       echo "✅ Release tag detected via SHA: $TAG"
                       echo "is_release=true" >> $GITHUB_OUTPUT
                       echo "tag_version=${TAG#v}" >> $GITHUB_OUTPUT
                     else
-                      echo "❌ Not a release tag. Skipping deployment."
-                      echo "is_release=false" >> $GITHUB_OUTPUT
-                      echo "tag_version=" >> $GITHUB_OUTPUT
+                      if [[ "${{ github.event.inputs.dry_run }}" == "true" ]]; then
+                         echo "⚠️ Dry run detected without tag. Using fallback version."
+                         echo "is_release=true" >> $GITHUB_OUTPUT
+                         echo "tag_version=${HEAD_BRANCH#v}" >> $GITHUB_OUTPUT
+                      else
+                         echo "❌ Not a release tag. Skipping deployment."
+                         echo "is_release=false" >> $GITHUB_OUTPUT
+                         echo "tag_version=" >> $GITHUB_OUTPUT
+                      fi
                     fi
                   fi
 
@@ -136,7 +170,12 @@ jobs:
             - name: Push to NuGet
               if: steps.check_nuget.outputs.exists == 'false'
               working-directory: bindings/csharp
-              run: dotnet nuget push src/STRling/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+              run: |
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    echo "DRY RUN: dotnet nuget push src/STRling/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json"
+                  else
+                    dotnet nuget push src/STRling/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+                  fi
 
     deploy-dart:
         name: Deploy Dart to Pub.dev
@@ -165,7 +204,12 @@ jobs:
             - name: Publish to Pub.dev
               if: steps.check_pub.outputs.exists == 'false'
               working-directory: bindings/dart
-              run: dart pub publish --force
+              run: |
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    dart pub publish --dry-run
+                  else
+                    dart pub publish --force
+                  fi
 
     deploy-fsharp:
         name: Deploy F# to NuGet
@@ -198,7 +242,12 @@ jobs:
             - name: Push to NuGet
               if: steps.check_nuget_fs.outputs.exists == 'false'
               working-directory: bindings/fsharp
-              run: dotnet nuget push src/STRling/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+              run: |
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    echo "DRY RUN: dotnet nuget push src/STRling/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json"
+                  else
+                    dotnet nuget push src/STRling/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
+                  fi
 
     deploy-go:
         name: Deploy Go (Tag Validation)
@@ -262,8 +311,12 @@ jobs:
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
                   GPG_KEY: ${{ secrets.GPG_KEY }}
               run: |
-                  # Deploy to Maven Central using Maven
-                  mvn deploy -DskipTests -Dgpg.passphrase="${GPG_KEY}"
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    mvn deploy -DskipTests -Dgpg.skip=true -Dmaven.deploy.skip=true
+                    echo "DRY RUN: mvn deploy"
+                  else
+                    mvn deploy -DskipTests -Dgpg.passphrase="${GPG_KEY}"
+                  fi
 
     deploy-kotlin:
         name: Deploy Kotlin to Maven Central
@@ -286,7 +339,13 @@ jobs:
                   MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
                   ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_KEY }}
-              run: ./gradlew publish
+              run: |
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    ./gradlew publishToMavenLocal
+                    echo "DRY RUN: ./gradlew publish"
+                  else
+                    ./gradlew publish
+                  fi
 
     deploy-lua:
         name: Deploy Lua to LuaRocks
@@ -316,7 +375,12 @@ jobs:
               working-directory: bindings/lua
               env:
                   LUAROCKS_API_KEY: ${{ secrets.LUA_API_KEY }}
-              run: luarocks upload strling-scm-1.rockspec --api-key=${LUAROCKS_API_KEY}
+              run: |
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    echo "DRY RUN: luarocks upload strling-scm-1.rockspec"
+                  else
+                    luarocks upload strling-scm-1.rockspec --api-key=${LUAROCKS_API_KEY}
+                  fi
 
     deploy-perl:
         name: Deploy Perl to CPAN
@@ -340,7 +404,11 @@ jobs:
                   # For now, we'll assume a standard make dist
                   perl Makefile.PL
                   make dist
-                  cpan-upload -u $PAUSE_USERNAME -p $PAUSE_PASSWORD *.tar.gz
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    echo "DRY RUN: cpan-upload -u $PAUSE_USERNAME *.tar.gz"
+                  else
+                    cpan-upload -u $PAUSE_USERNAME -p $PAUSE_PASSWORD *.tar.gz
+                  fi
 
     deploy-php:
         name: Deploy PHP (Tag Validation)
@@ -401,10 +469,17 @@ jobs:
                   python -m pip install --upgrade pip build
                   python -m build
             - name: Publish package to PyPI
-              if: steps.check_pypi.outputs.exists == 'false'
+              if: steps.check_pypi.outputs.exists == 'false' && needs.verify-release.outputs.is_dry_run == 'false'
               uses: pypa/gh-action-pypi-publish@release/v1
               with:
                   packages-dir: bindings/python/dist/
+            - name: Dry Run PyPI (Metadata Check)
+              if: steps.check_pypi.outputs.exists == 'false' && needs.verify-release.outputs.is_dry_run == 'true'
+              working-directory: bindings/python
+              run: |
+                pip install twine
+                twine check dist/*
+                echo "DRY RUN: PyPI publish would happen here"
 
     deploy-r:
         name: Deploy R (Tag Validation)
@@ -471,7 +546,11 @@ jobs:
                   :rubygems_api_key: ${GEM_HOST_API_KEY}
                   EOF
                   chmod 0600 ~/.gem/credentials
-                  gem push *.gem
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    echo "DRY RUN: gem push *.gem"
+                  else
+                    gem push *.gem
+                  fi
 
     deploy-rust:
         name: Deploy Rust to Crates.io
@@ -502,7 +581,12 @@ jobs:
               working-directory: bindings/rust
               env:
                   CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
-              run: cargo publish
+              run: |
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    cargo publish --dry-run
+                  else
+                    cargo publish
+                  fi
 
     deploy-swift:
         name: Deploy Swift (Tag Validation)
@@ -586,4 +670,9 @@ jobs:
               working-directory: bindings/typescript
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: npm publish
+              run: |
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    npm publish --dry-run
+                  else
+                    npm publish
+                  fi

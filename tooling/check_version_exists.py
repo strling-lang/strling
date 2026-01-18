@@ -143,6 +143,23 @@ def check_maven_central(group_id: str, artifact_id: str, version: str) -> bool:
         raise e
 
 
+def check_cpan(package: str, version: str) -> bool:
+    """Check if a version exists on MetaCPAN.
+
+    URL: https://fastapi.metacpan.org/v1/release/<package>-<version>
+    """
+    # MetaCPAN package names are case-sensitive but usually CamelCase.
+    # The URL usually uses the distribution name.
+    url = f"https://fastapi.metacpan.org/v1/release/{package}-{version}"
+    try:
+        with urllib.request.urlopen(url) as response:
+            return response.status == 200
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return False
+        raise e
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Check if a package version exists on a registry."
@@ -159,6 +176,7 @@ def main() -> None:
             "pub",
             "luarocks",
             "maven",
+            "cpan",
         ],
         help="Package registry to check",
     )
@@ -193,6 +211,8 @@ def main() -> None:
                 print("Error: --group is required for Maven Central", file=sys.stderr)
                 sys.exit(2)
             exists = check_maven_central(args.group, args.package, args.version)
+        elif args.registry == "cpan":
+            exists = check_cpan(args.package, args.version)
     except Exception as e:
         print(f"Error checking registry: {e}", file=sys.stderr)
         sys.exit(2)  # Error

@@ -40,6 +40,10 @@ jobs:
                   ref: ${{ github.event.workflow_run.head_sha }}
                   fetch-depth: 0
 
+            - name: Inject MIT License for Registry Compliance
+              run: |
+                curl -L -o LICENSE https://raw.githubusercontent.com/github/choosealicense.com/gh-pages/_licenses/mit.txt
+
             - name: Check if triggered by version tag
               id: check_tag
               run: |

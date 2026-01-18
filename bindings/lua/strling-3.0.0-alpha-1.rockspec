@@ -1,5 +1,5 @@
 package = "strling"
-version = "3.0.0alpha-1"
+version = "3.0.0-alpha-1"
 source = {
    url = "git+https://github.com/strling-lang/strling.git",
    tag = "v3.0.0-alpha"

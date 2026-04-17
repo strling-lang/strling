@@ -13,14 +13,14 @@ on:
     workflow_dispatch:
         inputs:
             dry_run:
-                description: 'Run deployment in dry-run mode (no actual publishing)'
+                description: "Run deployment in dry-run mode (no actual publishing)"
                 required: true
                 default: true
                 type: boolean
             tag_name:
-                description: 'Tag name to simulate (e.g. v3.0.0-alpha)'
+                description: "Tag name to simulate (e.g. v3.0.0-alpha)"
                 required: false
-                default: ''
+                default: ""
 
 jobs:
     # --- GATE JOB: Verify conditions before proceeding ---
@@ -35,14 +35,14 @@ jobs:
             is_dry_run: ${{ steps.check_tag.outputs.is_dry_run }}
         steps:
             - name: Checkout triggering commit
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
                   fetch-depth: 0
 
             - name: Inject Apache 2.0 License for Registry Compliance
               run: |
-                curl -L -o LICENSE https://www.apache.org/licenses/LICENSE-2.0.txt
+                  curl -L -o LICENSE https://www.apache.org/licenses/LICENSE-2.0.txt
 
             - name: Check if triggered by version tag
               id: check_tag
@@ -113,7 +113,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Verify Version Match
@@ -135,7 +135,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Verify Version Match
@@ -159,7 +159,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: actions/setup-dotnet@v4
@@ -199,7 +199,7 @@ jobs:
         permissions:
             id-token: write
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: dart-lang/setup-dart@v1
@@ -231,7 +231,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: actions/setup-dotnet@v4
@@ -269,7 +269,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Verify Version Match
@@ -292,7 +292,7 @@ jobs:
             contents: read
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Setup Python 3.10
@@ -340,7 +340,7 @@ jobs:
         permissions:
             contents: read
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: actions/setup-java@v4
@@ -382,7 +382,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: leafo/gh-actions-lua@v10
@@ -417,7 +417,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: shogo82148/actions-setup-perl@v1
@@ -458,7 +458,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Verify Version Match
@@ -484,7 +484,7 @@ jobs:
             id-token: write
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Setup Python 3.10
@@ -519,9 +519,9 @@ jobs:
               if: steps.check_pypi.outputs.exists == 'false' && needs.verify-release.outputs.is_dry_run == 'true'
               working-directory: bindings/python
               run: |
-                pip install twine
-                twine check dist/*
-                echo "DRY RUN: PyPI publish would happen here"
+                  pip install twine
+                  twine check dist/*
+                  echo "DRY RUN: PyPI publish would happen here"
 
     deploy-r:
         name: Deploy R (Tag Validation)
@@ -529,7 +529,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Verify Version Match
@@ -554,7 +554,7 @@ jobs:
             contents: read
             id-token: write
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: ruby/setup-ruby@v1
@@ -600,7 +600,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - uses: dtolnay/rust-toolchain@stable
@@ -636,7 +636,7 @@ jobs:
         needs: [verify-release]
         if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Verify Version Match
@@ -658,7 +658,7 @@ jobs:
             contents: read
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
             - name: Setup Python 3.10 (for SSOT script)

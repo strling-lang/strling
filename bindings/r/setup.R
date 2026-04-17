@@ -8,7 +8,7 @@ Sys.setenv(LC_ALL = "C")
 cat("Setting up STRling R binding dependencies...\n")
 
 # Set CRAN mirror
-options(repos = c(CRAN = "https://cloud.r-project.org"))
+options(repos = c(CRAN = Sys.getenv("CRAN", unset = "https://cloud.r-project.org")))
 
 # Install required packages if not present
 # Note: devtools is NOT required - we source R files directly in CI

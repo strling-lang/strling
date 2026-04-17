@@ -232,9 +232,10 @@ def update_perl_pm(content: str, version: str, path: Path) -> str:
 
 
 def update_cmake(content: str, version: str, path: Path) -> str:
+    cmake_version = version.split("-", 1)[0]
     return re.sub(
         r"(project\s*\([\s\S]*?VERSION\s+)([\d\.\w-]+)([\s\S]*?\))",
-        lambda m: m.group(1) + version + m.group(3),
+        lambda m: m.group(1) + cmake_version + m.group(3),
         content,
     )
 

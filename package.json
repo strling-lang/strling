@@ -1,8 +1,14 @@
 {
-  "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.3.1",
-    "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2"
-  }
+    "private": true,
+    "scripts": {
+        "bootstrap": "./strling bootstrap all",
+        "test:all": "./strling test all",
+        "audit": "python3 tooling/audit_omega.py"
+    },
+    "devDependencies": {
+        "@types/jest": "^30.0.0",
+        "@types/node": "^24.3.1",
+        "ts-jest": "^29.4.1",
+        "typescript": "^5.9.2"
+    }
 }

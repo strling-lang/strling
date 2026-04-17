@@ -1,60 +1,391 @@
 #!/bin/bash
 set -o pipefail
 
-# Resolve script directory to locate toolchain.json
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 TOOLCHAIN="$DIR/toolchain.json"
+SELF="$DIR/strling"
 
-# Where python virtualenv will live when using python binding (versioned to avoid cache clashes)
+if ! command -v python3 >/dev/null 2>&1; then
+    echo "Error: python3 is required to run this script."
+    exit 1
+fi
+
 get_python_venv_dir() {
     local py_version
     py_version=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>/dev/null || echo "3")
     echo ".venv-${py_version}"
 }
 
-# Check for python3 early as it is required for JSON parsing
-if ! command -v python3 &> /dev/null; then
-    echo "Error: python3 is required to run this script."
-    exit 1
-fi
-
-COMMAND=$1
-LANG=$2
-
-# Help / Usage
 print_banner() {
-    echo "   _____ _______ _____  _ _             "
-    echo "  / ____|__   __|  __ \| (_)            "
-    echo " | (___    | |  | |__) | |_ _ __   __ _ "
-    echo "  \___ \   | |  |  _  /| | | '_ \ / _\` |"
-    echo "  ____) |  | |  | | \ \| | | | | | (_| |"
-    echo " |_____/   |_|  |_|  \_\_|_|_| |_|\__, |"
-    echo "                                   __/ |"
-    echo "                                  |___/ "
-    echo ""
+    cat <<'EOF'
+   _____ _______ _____  _ _
+  / ____|__   __|  __ \| (_)
+ | (___    | |  | |__) | |_ _ __   __ _
+  \___ \   | |  |  _  /| | | '_ \ / _` |
+  ____) |  | |  | | \ \| | | | | | (_| |
+ |_____/   |_|  |_|  \_\_|_|_| |_|\__, |
+                                   __/ |
+                                  |___/
+
+EOF
+}
+
+get_binding_names() {
+    python3 - "$TOOLCHAIN" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1], "r", encoding="utf-8") as handle:
+    bindings = json.load(handle)["bindings"]
+for name in sorted(bindings):
+    print(name)
+PY
+}
+
+get_binding_scalar() {
+    local lang="$1"
+    local field="$2"
+    python3 - "$TOOLCHAIN" "$lang" "$field" <<'PY'
+import json
+import sys
+
+toolchain_path, lang, field = sys.argv[1:]
+with open(toolchain_path, "r", encoding="utf-8") as handle:
+    binding = json.load(handle)["bindings"].get(lang, {})
+value = binding.get(field, "")
+if isinstance(value, (list, dict)):
+    print("")
+else:
+    print(value)
+PY
+}
+
+binding_has_action() {
+    local lang="$1"
+    local action="$2"
+    python3 - "$TOOLCHAIN" "$lang" "$action" <<'PY'
+import json
+import sys
+
+toolchain_path, lang, action = sys.argv[1:]
+with open(toolchain_path, "r", encoding="utf-8") as handle:
+    binding = json.load(handle)["bindings"].get(lang, {})
+value = binding.get(action, [])
+print("1" if value else "0")
+PY
+}
+
+get_binding_required_bins() {
+    local lang="$1"
+    python3 - "$TOOLCHAIN" "$lang" <<'PY'
+import json
+import sys
+
+toolchain_path, lang = sys.argv[1:]
+with open(toolchain_path, "r", encoding="utf-8") as handle:
+    binding = json.load(handle)["bindings"].get(lang, {})
+required = binding.get("required_bins") or []
+if not required:
+    check_bin = binding.get("check_bin")
+    required = [check_bin] if check_bin else []
+for item in required:
+    if item:
+        print(item)
+PY
+}
+
+get_binding_install_packages() {
+    local lang="$1"
+    local manager="$2"
+    python3 - "$TOOLCHAIN" "$lang" "$manager" <<'PY'
+import json
+import sys
+
+toolchain_path, lang, manager = sys.argv[1:]
+with open(toolchain_path, "r", encoding="utf-8") as handle:
+    binding = json.load(handle)["bindings"].get(lang, {})
+packages = binding.get("install", {}).get(manager, [])
+for item in packages:
+    print(item)
+PY
+}
+
+get_binding_command_args() {
+    local lang="$1"
+    local action="$2"
+    python3 - "$TOOLCHAIN" "$lang" "$action" <<'PY'
+import json
+import sys
+
+toolchain_path, lang, action = sys.argv[1:]
+with open(toolchain_path, "r", encoding="utf-8") as handle:
+    binding = json.load(handle)["bindings"].get(lang, {})
+value = binding.get(action, [])
+if isinstance(value, str):
+    value = [value]
+for item in value:
+    sys.stdout.write(item)
+    sys.stdout.write("\0")
+PY
+}
+
+get_binding_command_string() {
+    local lang="$1"
+    local action="$2"
+    python3 - "$TOOLCHAIN" "$lang" "$action" <<'PY'
+import json
+import shlex
+import sys
+
+toolchain_path, lang, action = sys.argv[1:]
+with open(toolchain_path, "r", encoding="utf-8") as handle:
+    binding = json.load(handle)["bindings"].get(lang, {})
+value = binding.get(action, [])
+if isinstance(value, str):
+    value = [value]
+print(shlex.join(value))
+PY
+}
+
+detect_package_manager() {
+    if command -v apt-get >/dev/null 2>&1; then
+        echo "apt"
+    elif command -v dnf >/dev/null 2>&1; then
+        echo "dnf"
+    elif command -v pacman >/dev/null 2>&1; then
+        echo "pacman"
+    elif command -v brew >/dev/null 2>&1; then
+        echo "brew"
+    else
+        echo ""
+    fi
+}
+
+install_packages() {
+    local manager="$1"
+    shift
+    local packages=("$@")
+    local prefix=()
+
+    if [[ ${#packages[@]} -eq 0 ]]; then
+        return 1
+    fi
+
+    if [[ "$manager" != "brew" && "$EUID" -ne 0 ]]; then
+        if command -v sudo >/dev/null 2>&1 && sudo -n true >/dev/null 2>&1; then
+            prefix=(sudo -n)
+        else
+            echo ">> Cannot auto-install packages without non-interactive sudo access."
+            return 1
+        fi
+    fi
+
+    echo ">> Attempting prerequisite install via $manager: ${packages[*]}"
+    case "$manager" in
+        apt)
+            "${prefix[@]}" apt-get update && DEBIAN_FRONTEND=noninteractive "${prefix[@]}" apt-get install -y "${packages[@]}"
+            ;;
+        dnf)
+            "${prefix[@]}" dnf install -y "${packages[@]}"
+            ;;
+        pacman)
+            "${prefix[@]}" pacman -Sy --noconfirm "${packages[@]}"
+            ;;
+        brew)
+            brew install "${packages[@]}"
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+attempt_binding_install() {
+    local lang="$1"
+    local manager
+    local packages=()
+
+    manager=$(detect_package_manager)
+    if [[ -z "$manager" ]]; then
+        echo ">> No supported package manager detected for automatic prerequisite installation."
+        return 1
+    fi
+
+    readarray -t packages < <(get_binding_install_packages "$lang" "$manager")
+    if [[ ${#packages[@]} -eq 0 ]]; then
+        echo ">> No install metadata is defined for '$lang' on package manager '$manager'."
+        return 1
+    fi
+
+    install_packages "$manager" "${packages[@]}"
+}
+
+ensure_binding_prereqs() {
+    local lang="$1"
+    local required_bins=()
+    local missing=()
+
+    readarray -t required_bins < <(get_binding_required_bins "$lang")
+    if [[ ${#required_bins[@]} -eq 0 ]]; then
+        return 0
+    fi
+
+    for required_bin in "${required_bins[@]}"; do
+        if ! command -v "$required_bin" >/dev/null 2>&1; then
+            missing+=("$required_bin")
+        fi
+    done
+
+    if [[ ${#missing[@]} -eq 0 ]]; then
+        return 0
+    fi
+
+    echo ">> Missing prerequisite tools for $lang: ${missing[*]}"
+    if ! attempt_binding_install "$lang"; then
+        return 1
+    fi
+
+    missing=()
+    for required_bin in "${required_bins[@]}"; do
+        if ! command -v "$required_bin" >/dev/null 2>&1; then
+            missing+=("$required_bin")
+        fi
+    done
+
+    if [[ ${#missing[@]} -gt 0 ]]; then
+        echo ">> Prerequisites are still missing for $lang after install attempt: ${missing[*]}"
+        return 1
+    fi
+
+    return 0
 }
 
 list_bindings() {
     echo "Available Bindings:"
-    # Get list of languages and their check_bin
-    # We use a python script to output "lang:check_bin" pairs
-    python3 -c "import json; 
-data=json.load(open('$TOOLCHAIN')); 
-bindings=data['bindings']; 
-sorted_keys=sorted(bindings.keys()); 
-for k in sorted_keys: print(f\"{k}:{bindings[k].get('check_bin', '')}\")" | while read -r line; do
-        LANG_NAME="${line%%:*}"
-        CHECK_BIN="${line#*:}"
-        
-        if [ -z "$CHECK_BIN" ]; then
-            STATUS="[UNKNOWN]"
-        elif command -v "$CHECK_BIN" &> /dev/null; then
-            STATUS="[INSTALLED]"
+    while IFS= read -r binding; do
+        local required_bins=()
+        local missing=()
+
+        readarray -t required_bins < <(get_binding_required_bins "$binding")
+        for required_bin in "${required_bins[@]}"; do
+            if ! command -v "$required_bin" >/dev/null 2>&1; then
+                missing+=("$required_bin")
+            fi
+        done
+
+        if [[ ${#missing[@]} -eq 0 ]]; then
+            printf "  %-12s [READY]\n" "$binding"
         else
-            STATUS="[MISSING ($CHECK_BIN)]"
+            printf "  %-12s [MISSING: %s]\n" "$binding" "${missing[*]}"
         fi
-        printf "  %-12s %s\n" "$LANG_NAME" "$STATUS"
+    done < <(get_binding_names)
+}
+
+run_binding_action() {
+    local action="$1"
+    local lang="$2"
+    local binding_path
+    local exit_code
+    local cmd_string
+    local cmd_args=()
+
+    if [[ "$action" == "bootstrap" ]]; then
+        "$SELF" setup "$lang" || return 1
+        "$SELF" build "$lang" || return 1
+        "$SELF" test "$lang" || return 1
+        return 0
+    fi
+
+    binding_path=$(get_binding_scalar "$lang" "path")
+    if [[ -z "$binding_path" ]]; then
+        echo "Error: Language '$lang' not found."
+        echo "Did you mean one of these?"
+        while IFS= read -r binding_name; do
+            echo "  - $binding_name"
+        done < <(get_binding_names)
+        return 1
+    fi
+
+    if [[ "$action" != "clean" ]]; then
+        ensure_binding_prereqs "$lang" || return 1
+    fi
+
+    if [[ "$(binding_has_action "$lang" "$action")" != "1" ]]; then
+        echo "No '$action' command defined for $lang."
+        return 0
+    fi
+
+    mapfile -d '' cmd_args < <(get_binding_command_args "$lang" "$action")
+    cmd_string=$(get_binding_command_string "$lang" "$action")
+
+    echo ">> Running $action for $lang in $binding_path..."
+    echo ">> Executing: $cmd_string"
+
+    (
+        cd "$DIR/$binding_path" || exit 1
+
+        if [[ "$lang" == "python" && "$action" != "clean" ]]; then
+            local venv_dir
+            venv_dir=$(get_python_venv_dir)
+            if [[ -d ".venv" && ! -L ".venv" ]]; then
+                echo ">> Removing old non-versioned .venv (migrating to versioned cache)..."
+                rm -rf ".venv"
+            fi
+            if [[ ! -d "$venv_dir" ]]; then
+                echo ">> Creating Python virtual environment ($venv_dir)..."
+                python3 -m venv "$venv_dir"
+            fi
+            export PATH="$(pwd)/$venv_dir/bin:$PATH"
+            echo ">> Using python env: $(which python) (pip: $(which pip))"
+        fi
+
+        if [[ "${cmd_args[0]}" == "dotnet" ]]; then
+            bash -lc "$cmd_string"
+        else
+            "${cmd_args[@]}"
+        fi
+    )
+    exit_code=$?
+
+    if [[ $exit_code -ne 0 ]]; then
+        echo ""
+        echo "❌ Command failed with exit code $exit_code"
+        echo "   Task: $action"
+        echo "   Language: $lang"
+        if [[ "$action" == "test" || "$action" == "build" ]]; then
+            echo "   Hint: Try running './strling setup $lang' first."
+        fi
+    fi
+
+    return $exit_code
+}
+
+run_all_bindings() {
+    local action="$1"
+    local passed=0
+    local failed=0
+    local failures=()
+    local bindings=()
+
+    readarray -t bindings < <(get_binding_names)
+    for binding in "${bindings[@]}"; do
+        echo "--------------------------------------------------"
+        echo ">> ${action^} $binding"
+        if "$SELF" "$action" "$binding"; then
+            passed=$((passed + 1))
+        else
+            failed=$((failed + 1))
+            failures+=("$binding")
+        fi
     done
+
+    echo "--------------------------------------------------"
+    echo ">> Summary: $passed succeeded, $failed failed"
+    if [[ ${#failures[@]} -gt 0 ]]; then
+        echo ">> Failed bindings: ${failures[*]}"
+        return 1
+    fi
+    return 0
 }
 
 print_help() {
@@ -62,96 +393,99 @@ print_help() {
     echo "Usage: ./strling <command> <language>"
     echo ""
     echo "Commands:"
-    echo "  setup <lang>      Install dependencies for a binding"
-    echo "  test <lang>       Run tests for a binding"
-    echo "  clean <lang>      Clean artifacts for a binding"
-    echo "  cache-dir <lang>  Print cache directory path (for CI)"
-    echo "  lockfile <lang>   Print lockfile name (for CI)"
-    echo "  list              List all bindings and tool status"
-    echo "  help              Show this help message"
+    echo "  setup <lang|all>      Install prerequisites and dependencies"
+    echo "  build <lang|all>      Build a binding if it has a build step"
+    echo "  test <lang|all>       Run tests for one binding or all bindings"
+    echo "  bootstrap <lang|all>  Run setup, build, and test in sequence"
+    echo "  clean <lang|all>      Clean artifacts"
+    echo "  audit                 Run the final audit report generator"
+    echo "  cache-dir <lang>      Print cache directory path (for CI)"
+    echo "  lockfile <lang>       Print lockfile name (for CI)"
+    echo "  list                  List all bindings and tool status"
+    echo "  help                  Show this help message"
     echo ""
     echo "Examples:"
+    echo "  ./strling bootstrap all"
     echo "  ./strling test python"
     echo "  ./strling setup rust"
-    echo "  ./strling cache-dir php"
+    echo "  ./strling audit"
     echo ""
     list_bindings
 }
 
-if [ -z "$COMMAND" ] || [ "$COMMAND" == "help" ] || [ "$COMMAND" == "-h" ] || [ "$COMMAND" == "--help" ]; then
+COMMAND="$1"
+LANG="$2"
+
+if [[ ! -f "$TOOLCHAIN" ]]; then
+    echo "Error: toolchain.json not found at $TOOLCHAIN"
+    exit 1
+fi
+
+if [[ -z "$COMMAND" || "$COMMAND" == "help" || "$COMMAND" == "-h" || "$COMMAND" == "--help" ]]; then
     print_help
     exit 0
 fi
 
-if [ "$COMMAND" == "list" ]; then
+if [[ "$COMMAND" == "list" ]]; then
     print_banner
     list_bindings
     exit 0
 fi
 
-# cache-dir: Print the cache directory path for a given language (for CI caching)
-# Outputs only the path to stdout, no extra logging, for easy consumption by CI
-# NOTE: We cache both package manager caches AND build outputs for maximum efficiency
-if [ "$COMMAND" == "cache-dir" ]; then
-    if [ -z "$LANG" ]; then
-        echo "" # Empty output for missing lang
+if [[ "$COMMAND" == "audit" ]]; then
+    cd "$DIR" || exit 1
+    python3 tooling/audit_omega.py
+    exit $?
+fi
+
+if [[ "$COMMAND" == "cache-dir" ]]; then
+    if [[ -z "$LANG" ]]; then
+        echo ""
         exit 1
     fi
     case "$LANG" in
         php)
-            # Composer cache (Linux default) + vendor directory for installed packages
             echo "${HOME}/.cache/composer"
             echo "bindings/php/vendor"
             ;;
         typescript|javascript|node)
-            # npm cache + node_modules for installed packages
             echo "${HOME}/.npm"
             echo "bindings/typescript/node_modules"
             ;;
         rust)
-            # Cargo registry/git caches + target directory for compiled artifacts
             echo "${HOME}/.cargo/registry"
             echo "${HOME}/.cargo/git"
             echo "bindings/rust/target"
             ;;
         python)
-            # pip cache + venv for installed packages
-            # Include Python version in venv path to avoid cache clashes across Python versions
             PY_VERSION=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')" 2>/dev/null || echo "3")
             echo "${HOME}/.cache/pip"
             echo "bindings/python/.venv-${PY_VERSION}"
             ;;
         go)
-            # Go module cache + build cache
             echo "${HOME}/go/pkg/mod"
             echo "${HOME}/.cache/go-build"
             ;;
         ruby)
-            # Bundler - use vendor/bundle (local to project)
             echo "bindings/ruby/vendor/bundle"
             ;;
         dart)
-            # Dart/pub cache + .dart_tool for build artifacts
             echo "${HOME}/.pub-cache"
             echo "bindings/dart/.dart_tool"
             ;;
         java|kotlin)
-            # Maven/Gradle cache + target/build directories
             echo "${HOME}/.m2/repository"
             echo "${HOME}/.gradle/caches"
             echo "bindings/java/target"
             echo "bindings/kotlin/build"
             ;;
         lua)
-            # LuaRocks local tree
             echo "bindings/lua/.luarocks"
             ;;
         perl)
-            # local::lib directory
             echo "bindings/perl/local"
             ;;
         csharp)
-            # NuGet cache + obj/bin directories for build artifacts
             echo "${HOME}/.nuget/packages"
             echo "bindings/csharp/src/STRling/obj"
             echo "bindings/csharp/src/STRling/bin"
@@ -159,7 +493,6 @@ if [ "$COMMAND" == "cache-dir" ]; then
             echo "bindings/csharp/tests/STRling.Tests/bin"
             ;;
         fsharp)
-            # NuGet cache + obj/bin directories for build artifacts
             echo "${HOME}/.nuget/packages"
             echo "bindings/fsharp/src/STRling/obj"
             echo "bindings/fsharp/src/STRling/bin"
@@ -167,34 +500,27 @@ if [ "$COMMAND" == "cache-dir" ]; then
             echo "bindings/fsharp/tests/STRling.Tests/bin"
             ;;
         swift)
-            # Swift Package Manager cache + .build directory
             echo "${HOME}/.swiftpm"
             echo "bindings/swift/.build"
             ;;
         c)
-            # Build artifacts for C
             echo "bindings/c/build"
             ;;
         cpp)
-            # CMake build directory
             echo "bindings/cpp/build"
             ;;
         r)
-            # R package library
             echo "bindings/r/renv/library"
             ;;
         *)
-            # Unknown language - return empty
             echo ""
             ;;
     esac
     exit 0
 fi
 
-# lockfile: Print the lockfile name for a given language (for CI cache key hashing)
-# Outputs only the filename relative to the binding root
-if [ "$COMMAND" == "lockfile" ]; then
-    if [ -z "$LANG" ]; then
+if [[ "$COMMAND" == "lockfile" ]]; then
+    if [[ -z "$LANG" ]]; then
         echo ""
         exit 1
     fi
@@ -209,12 +535,10 @@ if [ "$COMMAND" == "lockfile" ]; then
             echo "Cargo.lock"
             ;;
         python)
-            # Python uses requirements.txt as the "lock" equivalent
             echo "requirements.txt"
             ;;
         go)
-            # Go uses go.sum, but if no deps, fall back to go.mod
-            if [ -f "bindings/go/go.sum" ]; then
+            if [[ -f "bindings/go/go.sum" ]]; then
                 echo "go.sum"
             else
                 echo "go.mod"
@@ -245,8 +569,7 @@ if [ "$COMMAND" == "lockfile" ]; then
             echo "src/STRling/STRling.fsproj"
             ;;
         swift)
-            # Swift uses Package.resolved if it exists, otherwise Package.swift
-            if [ -f "bindings/swift/Package.resolved" ]; then
+            if [[ -f "bindings/swift/Package.resolved" ]]; then
                 echo "Package.resolved"
             else
                 echo "Package.swift"
@@ -268,199 +591,30 @@ if [ "$COMMAND" == "lockfile" ]; then
     exit 0
 fi
 
-if [ -z "$LANG" ]; then
+if [[ -z "$LANG" ]]; then
     echo "Error: Language argument is required for '$COMMAND'."
     echo "Usage: ./strling $COMMAND <language>"
     exit 1
 fi
 
-
-if [ ! -f "$TOOLCHAIN" ]; then
-    echo "Error: toolchain.json not found at $TOOLCHAIN"
-    exit 1
+if [[ "$LANG" == "all" && ( "$COMMAND" == "setup" || "$COMMAND" == "build" || "$COMMAND" == "test" || "$COMMAND" == "bootstrap" || "$COMMAND" == "clean" ) ]]; then
+    run_all_bindings "$COMMAND"
+    exit $?
 fi
 
-# Handle 'setup all' command
-if [ "$COMMAND" == "setup" ] && [ "$LANG" == "all" ]; then
-    echo ">> WARNING: You're about to run setup for ALL bindings (this will install toolchains for 17+ languages and may consume significant disk space and take considerable time)."
-    echo ">> Recommended: run a binding-specific setup instead, e.g. ./strling setup python"
-
-    # Refuse to run in a non-interactive shell to avoid accidental usage in CI
-    if [ ! -t 0 ]; then
-        echo "Error: non-interactive shell detected. Aborting 'setup all'."
-        echo "Run './strling setup <lang>' for a single binding instead."
+if [[ "$COMMAND" == "clean" ]]; then
+    binding_path=$(get_binding_scalar "$LANG" "path")
+    if [[ -z "$binding_path" ]]; then
+        echo "Error: Language '$LANG' not found in toolchain.json"
         exit 1
     fi
 
-    # Ask user to confirm explicitly
-    read -p "Are you sure you want to continue? Type 'yes' to proceed: " CONFIRM
-    if [[ "$CONFIRM" != "yes" ]]; then
-        echo "Aborting 'setup all'. No changes made. Use './strling setup <lang>' for a single binding."
-        exit 1
-    fi
-
-    echo ">> Running setup for ALL bindings..."
-
-    # Get list of languages
-    LANGS=$(python3 -c "import json; print(' '.join(json.load(open('$TOOLCHAIN'))['bindings'].keys()))")
-
-    for L in $LANGS; do
-        echo "--------------------------------------------------"
-        echo ">> Setting up $L..."
-        "$0" setup "$L"
-    done
+    echo ">> Cleaning artifacts in $DIR/$binding_path..."
+    find "$DIR/$binding_path" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".venv-*" \) -prune -exec rm -rf {} +
+    echo ">> Clean complete for $LANG."
     exit 0
 fi
 
-# Handle 'clean' command
-if [ "$COMMAND" == "clean" ]; then
-    if [ "$LANG" == "all" ]; then
-        echo ">> Cleaning global artifacts..."
-        # Remove common build directories recursively
-        # Exclude node_modules and .luarocks to avoid breaking dependencies
-        # Path exclusions must come before -type d to be evaluated first
-        # Note: .venv and .venv-* are both matched for Python virtualenvs (legacy + versioned)
-        find "$DIR" ! -path "*/node_modules/*" ! -path "*/.luarocks/*" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".venv-*" -o -name ".pytest_cache" -o -name ".mypy_cache" \) -prune -exec rm -rf {} +
-        echo ">> Global clean complete."
-        exit 0
-    else
-        echo ">> Cleaning $LANG..."
-        # For specific language, we might want to look up a clean command or just clean its directory
-        # But for now, the requirement is mostly about the global clean.
-        # Let's just warn that specific clean is not fully implemented or just do a targeted clean if we knew the path.
-        # We can use the path from toolchain.
-        
-        # We need to fetch the path first, which happens below.
-        # So we let it fall through to the normal logic? 
-        # But toolchain.json doesn't have a 'clean' command.
-        # So we should handle it here.
-        
-        # Let's fetch the path using the helper (we need to define it first or move this block down)
-        # The helper is defined below. Let's move the helper up or duplicate logic?
-        # Better to move the helper up.
-        # But I can't easily move code with replace_string.
-        # I'll just use the python one-liner again.
-        
-        BINDING_PATH=$(python3 -c "import json; try: print(json.load(open('$TOOLCHAIN'))['bindings']['$LANG']['path']); except: pass")
-        if [ -z "$BINDING_PATH" ]; then
-             echo "Error: Language '$LANG' not found in toolchain.json"
-             exit 1
-        fi
-        
-        TARGET_DIR="$DIR/$BINDING_PATH"
-        echo ">> Cleaning artifacts in $TARGET_DIR..."
-        # Note: .venv and .venv-* are both matched for Python virtualenvs (legacy + versioned)
-        find "$TARGET_DIR" -type d \( -name "build" -o -name "target" -o -name "dist" -o -name "vendor" -o -name "__pycache__" -o -name ".venv" -o -name ".venv-*" \) -prune -exec rm -rf {} +
-        echo ">> Clean complete for $LANG."
-        exit 0
-    fi
-fi
-
-# Helper to get value from JSON
-get_json_value() {
-    local key="$1"
-    python3 - <<PY
-import json
-try:
-    data=json.load(open('$TOOLCHAIN'))
-    b=data['bindings'].get('$LANG', {})
-    val=b.get('$key','')
-    if isinstance(val, list):
-        print(' '.join(val))
-    else:
-        print(val)
-except Exception:
-    pass
-PY
-}
-
-# Helper to get command string from JSON (properly quoted)
-get_cmd_string() { get_json_value "$1"; }
-
-BINDING_PATH=$(get_json_value "path")
-CHECK_BIN=$(get_json_value "check_bin")
-
-if [ -z "$BINDING_PATH" ]; then
-    echo "Error: Language '$LANG' not found."
-    echo "Did you mean one of these?"
-    python3 -c "import json; print('\n'.join(['  - ' + k for k in sorted(json.load(open('$TOOLCHAIN'))['bindings'].keys())]))"
-    exit 1
-fi
-
-# Check if the required binary exists
-# Check for required binary
-if ! command -v "$CHECK_BIN" &> /dev/null; then
-    echo "Error: Required tool '$CHECK_BIN' not found."
-    case "$CHECK_BIN" in
-        npm) echo "Hint: Install Node.js to work on TypeScript." ;;
-        cargo) echo "Hint: Install Rust (rustup) to work on Rust." ;;
-        go) echo "Hint: Install Go to work on Go." ;;
-        python3) echo "Hint: Install Python 3 to work on Python." ;;
-        dotnet) echo "Hint: Install .NET SDK to work on C# and F#." ;;
-        cmake) echo "Hint: Install CMake to work on C++." ;;
-        make) echo "Hint: Install Make to work on C." ;;
-        java|mvn) echo "Hint: Install Java (JDK) and Maven to work on Java." ;;
-        dart) echo "Hint: Install Dart SDK to work on Dart." ;;
-        composer|php) echo "Hint: Install PHP and Composer to work on PHP." ;;
-        luarocks) echo "Hint: Install Lua and LuaRocks to work on Lua." ;;
-        *) echo "Hint: Please install '$CHECK_BIN' to proceed." ;;
-    esac
-    exit 1
-fi
-
-CMD_STRING=$(get_cmd_string "$COMMAND")
-
-if [ -z "$CMD_STRING" ]; then
-    echo "No '$COMMAND' command defined for $LANG."
-    exit 0
-fi
-
-echo ">> Running $COMMAND for $LANG in $BINDING_PATH..."
-
-cd "$DIR/$BINDING_PATH" || exit 1
-
-# Python: create & use venv so pip doesn't try to write system files
-if [[ "$LANG" == "python" ]]; then
-    VENV_DIR=$(get_python_venv_dir)
-    
-    # Remove old non-versioned .venv if it exists (cache migration)
-    if [[ -d ".venv" && ! -L ".venv" ]]; then
-        echo ">> Removing old non-versioned .venv (migrating to versioned cache)..."
-        rm -rf ".venv"
-    fi
-    
-    if [[ ! -d "$VENV_DIR" ]]; then
-        echo ">> Creating Python virtual environment ($VENV_DIR)..."
-        python3 -m venv "$VENV_DIR"
-    fi
-    export PATH="$(pwd)/$VENV_DIR/bin:$PATH"
-    echo ">> Using python env: $(which python) (pip: $(which pip))"
-fi
-
-echo ">> Executing: $CMD_STRING"
-
-# Safely split and run the command
-read -r -a CMD_ARGS <<< "$CMD_STRING"
-
-# Historically we exec'd dotnet directly to avoid a wrapper process.
-# In some environments (including CI and certain WSL setups) replacing the shell
-# process with dotnet could cause unexpected segfaults. Run dotnet normally so
-# the wrapper stays alive and we can capture exit codes and logs reliably.
-if [[ "${CMD_ARGS[0]}" == "dotnet" ]]; then
-    echo ">> Running dotnet command in a clean shell to avoid direct-invocation issues"
-    bash -lc "$CMD_STRING"
-else
-    "${CMD_ARGS[@]}"
-fi
-EXIT_CODE=$?
-if [[ $EXIT_CODE -ne 0 ]]; then
-    echo ""
-    echo "❌ Command failed with exit code $EXIT_CODE"
-    echo "   Task: $COMMAND"
-    echo "   Language: $LANG"
-    if [ "$COMMAND" == "test" ] || [ "$COMMAND" == "build" ]; then
-        echo "   Hint: Try running './strling setup $LANG' first."
-    fi
-    exit $EXIT_CODE
-fi
+run_binding_action "$COMMAND" "$LANG"
+exit $?
 

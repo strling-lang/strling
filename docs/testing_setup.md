@@ -30,16 +30,16 @@ Run the root CLI to see available commands and supported bindings:
 
 ### 2. Setup
 
-Initialize the environment for your target language. This handles virtual environments, dependency installation, and build steps automatically.
+Initialize the environment for the whole project or for a single binding. This handles virtual environments, dependency installation, and build steps automatically.
 
 ```bash
-# Setup Python environment
-./strling setup python
+# Bootstrap every binding end-to-end
+./strling bootstrap all
 
-# Setup TypeScript environment
-./strling setup typescript
+# Or bootstrap a single binding
+./strling bootstrap python
 
-# Setup Rust environment (if applicable)
+# Install dependencies only, without running tests
 ./strling setup rust
 ```
 
@@ -48,9 +48,12 @@ Initialize the environment for your target language. This handles virtual enviro
 Verify your setup by running the test suite:
 
 ```bash
+./strling test all
 ./strling test python
-./strling test typescript
+./strling audit
 ```
+
+`./strling bootstrap all` is the recommended first-run command on a fresh machine. It will iterate every binding in `toolchain.json`, attempt best-effort prerequisite installation where package-manager metadata is available, and stop only after every binding has reached a pass or fail state.
 
 ---
 
@@ -59,6 +62,10 @@ Verify your setup by running the test suite:
 If you encounter issues, you can clean the environment and start over:
 
 ```bash
+./strling clean all
+./strling bootstrap all
+
+# Or target a single binding
 ./strling clean python
 ./strling setup python
 ```

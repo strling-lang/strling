@@ -3,6 +3,13 @@
         "c": {
             "path": "bindings/c",
             "check_bin": "make",
+            "required_bins": ["make", "gcc", "pkg-config", "curl"],
+            "install": {
+                "apt": ["build-essential", "pkg-config", "curl"],
+                "dnf": ["make", "gcc", "gcc-c++", "pkgconf-pkg-config", "curl"],
+                "pacman": ["base-devel", "pkgconf", "curl"],
+                "brew": ["make", "pkg-config", "curl"]
+            },
             "setup": ["./setup.sh"],
             "clean": ["make", "clean"],
             "test": ["make", "tests"]
@@ -10,6 +17,13 @@
         "cpp": {
             "path": "bindings/cpp",
             "check_bin": "cmake",
+            "required_bins": ["cmake", "c++"],
+            "install": {
+                "apt": ["cmake", "g++"],
+                "dnf": ["cmake", "gcc-c++"],
+                "pacman": ["cmake", "gcc"],
+                "brew": ["cmake"]
+            },
             "setup": [
                 "cmake",
                 "-S",
@@ -25,6 +39,12 @@
         "csharp": {
             "path": "bindings/csharp",
             "check_bin": "dotnet",
+            "required_bins": ["dotnet"],
+            "install": {
+                "winget": ["Microsoft.DotNet.SDK.8"],
+                "choco": ["dotnet-sdk"],
+                "brew": ["dotnet-sdk"]
+            },
             "setup": ["dotnet", "restore"],
             "clean": ["dotnet", "clean"],
             "test": ["dotnet", "test", "--verbosity", "normal"]
@@ -32,6 +52,12 @@
         "dart": {
             "path": "bindings/dart",
             "check_bin": "dart",
+            "required_bins": ["dart"],
+            "install": {
+                "winget": ["Dart SDK"],
+                "choco": ["dart-sdk"],
+                "brew": ["dart"]
+            },
             "setup": ["dart", "pub", "get"],
             "clean": ["rm", "-rf", ".dart_tool", "pubspec.lock"],
             "test": ["dart", "test", "-r", "expanded"]
@@ -39,6 +65,12 @@
         "fsharp": {
             "path": "bindings/fsharp",
             "check_bin": "dotnet",
+            "required_bins": ["dotnet"],
+            "install": {
+                "winget": ["Microsoft.DotNet.SDK.8"],
+                "choco": ["dotnet-sdk"],
+                "brew": ["dotnet-sdk"]
+            },
             "setup": ["dotnet", "restore"],
             "clean": ["dotnet", "clean"],
             "test": ["dotnet", "test", "--verbosity", "normal"]
@@ -46,6 +78,15 @@
         "go": {
             "path": "bindings/go",
             "check_bin": "go",
+            "required_bins": ["go"],
+            "install": {
+                "apt": ["golang-go"],
+                "dnf": ["golang"],
+                "pacman": ["go"],
+                "brew": ["go"],
+                "winget": ["GoLang.Go"],
+                "choco": ["golang"]
+            },
             "setup": ["go", "mod", "download"],
             "clean": ["go", "clean"],
             "test": ["go", "test", "-v", "./..."]
@@ -53,6 +94,15 @@
         "java": {
             "path": "bindings/java",
             "check_bin": "mvn",
+            "required_bins": ["java", "mvn"],
+            "install": {
+                "apt": ["default-jdk", "maven"],
+                "dnf": ["java-17-openjdk-devel", "maven"],
+                "pacman": ["jdk-openjdk", "maven"],
+                "brew": ["openjdk", "maven"],
+                "winget": ["EclipseAdoptium.Temurin.17.JDK", "Apache.Maven"],
+                "choco": ["openjdk17", "maven"]
+            },
             "setup": [],
             "clean": ["mvn", "clean"],
             "test": ["mvn", "test"]
@@ -60,6 +110,15 @@
         "kotlin": {
             "path": "bindings/kotlin",
             "check_bin": "java",
+            "required_bins": ["java"],
+            "install": {
+                "apt": ["default-jdk"],
+                "dnf": ["java-17-openjdk-devel"],
+                "pacman": ["jdk-openjdk"],
+                "brew": ["openjdk"],
+                "winget": ["EclipseAdoptium.Temurin.17.JDK"],
+                "choco": ["openjdk17"]
+            },
             "setup": [],
             "clean": ["./gradlew", "clean"],
             "test": ["./gradlew", "test", "--info"]
@@ -68,6 +127,13 @@
             "path": "bindings/lua",
             "check_bin": "luarocks",
             "runtime": "Lua >= 5.1",
+            "required_bins": ["lua", "luarocks", "make", "gcc"],
+            "install": {
+                "apt": ["lua5.4", "luarocks", "build-essential"],
+                "dnf": ["lua", "luarocks", "gcc", "make"],
+                "pacman": ["lua", "luarocks", "base-devel"],
+                "brew": ["lua", "luarocks"]
+            },
             "setup": ["./setup.sh"],
             "clean": ["rm", "-f", "strling.so"],
             "test": ["./run_tests.sh", "-o", "plainTerminal"]
@@ -75,6 +141,14 @@
         "perl": {
             "path": "bindings/perl",
             "check_bin": "perl",
+            "required_bins": ["perl"],
+            "install": {
+                "apt": ["perl", "cpanminus"],
+                "dnf": ["perl", "perl-App-cpanminus"],
+                "pacman": ["perl", "perl-app-cpanminus"],
+                "brew": ["perl", "cpanminus"],
+                "choco": ["strawberryperl"]
+            },
             "setup": ["./setup.sh"],
             "clean": ["make", "clean"],
             "test": [
@@ -86,6 +160,15 @@
         "php": {
             "path": "bindings/php",
             "check_bin": "composer",
+            "required_bins": ["php", "composer"],
+            "install": {
+                "apt": ["php-cli", "composer"],
+                "dnf": ["php-cli", "composer"],
+                "pacman": ["php", "composer"],
+                "brew": ["php", "composer"],
+                "winget": ["PHP.PHP.8.3", "Composer.Composer"],
+                "choco": ["php", "composer"]
+            },
             "setup": [
                 "env",
                 "COMPOSER_ALLOW_SUPERUSER=1",
@@ -104,6 +187,15 @@
         "python": {
             "path": "bindings/python",
             "check_bin": "python3",
+            "required_bins": ["python3"],
+            "install": {
+                "apt": ["python3", "python3-venv", "python3-pip"],
+                "dnf": ["python3", "python3-pip"],
+                "pacman": ["python", "python-pip"],
+                "brew": ["python"],
+                "winget": ["Python.Python.3.12"],
+                "choco": ["python"]
+            },
             "setup": ["pip", "install", "-r", "requirements.txt"],
             "clean": ["rm", "-rf", "build", "dist", "src/STRling.egg-info"],
             "test": ["pytest", "-v", "-W", "error"]
@@ -111,6 +203,15 @@
         "r": {
             "path": "bindings/r",
             "check_bin": "Rscript",
+            "required_bins": ["Rscript"],
+            "install": {
+                "apt": ["r-base"],
+                "dnf": ["R"],
+                "pacman": ["r"],
+                "brew": ["r"],
+                "winget": ["RProject.R"],
+                "choco": ["r.project"]
+            },
             "setup": ["Rscript", "setup.R"],
             "clean": ["rm", "-f", "src/*.o", "src/*.so"],
             "test": ["Rscript", "run_tests.R"]
@@ -118,6 +219,15 @@
         "ruby": {
             "path": "bindings/ruby",
             "check_bin": "bundle",
+            "required_bins": ["ruby", "bundle"],
+            "install": {
+                "apt": ["ruby-full"],
+                "dnf": ["ruby", "rubygems"],
+                "pacman": ["ruby"],
+                "brew": ["ruby"],
+                "winget": ["RubyInstallerTeam.Ruby.3.2"],
+                "choco": ["ruby"]
+            },
             "setup": ["bundle", "install"],
             "clean": ["rm", "-f", "*.gem"],
             "test": [
@@ -132,6 +242,15 @@
         "rust": {
             "path": "bindings/rust",
             "check_bin": "cargo",
+            "required_bins": ["cargo", "rustc"],
+            "install": {
+                "apt": ["cargo", "rustc"],
+                "dnf": ["cargo", "rust"],
+                "pacman": ["rust"],
+                "brew": ["rust"],
+                "winget": ["Rustlang.Rustup"],
+                "choco": ["rustup.install"]
+            },
             "setup": [],
             "clean": ["cargo", "clean"],
             "test": [
@@ -147,6 +266,7 @@
         "swift": {
             "path": "bindings/swift",
             "check_bin": "swift",
+            "required_bins": ["swift"],
             "setup": [],
             "clean": ["swift", "package", "clean"],
             "test": [
@@ -161,7 +281,16 @@
         "typescript": {
             "path": "bindings/typescript",
             "check_bin": "npm",
-            "setup": ["npm", "install"],
+            "required_bins": ["node", "npm"],
+            "install": {
+                "apt": ["nodejs", "npm"],
+                "dnf": ["nodejs", "npm"],
+                "pacman": ["nodejs", "npm"],
+                "brew": ["node"],
+                "winget": ["OpenJS.NodeJS.LTS"],
+                "choco": ["nodejs-lts"]
+            },
+            "setup": ["npm", "ci"],
             "clean": ["rm", "-rf", "dist", "coverage"],
             "test": ["npm", "test", "--", "--verbose"]
         }

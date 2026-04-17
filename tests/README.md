@@ -24,10 +24,10 @@ tests/
 
 Each language binding maintains its own test directory:
 
--   **Python**: `bindings/python/tests/` (unit/ and e2e/ subdirectories)
--   **TypeScript**: `bindings/typescript/__tests__/`
--   **Java**: `bindings/java/src/test/`
--   **C**: `bindings/c/tests/`
+- **Python**: `bindings/python/tests/` (unit/ and e2e/ subdirectories)
+- **TypeScript**: `bindings/typescript/__tests__/`
+- **Java**: `bindings/java/src/test/`
+- **C**: `bindings/c/tests/`
 
 ## Test Execution Philosophy
 
@@ -59,10 +59,10 @@ Every feature must pass three types of tests:
 
 Before writing any test code, create a **Test Charter** in `tests/_design/`. This document:
 
--   Defines the scope and purpose of the test suite
--   Enumerates all test cases
--   Specifies the "definition of done" for the feature
--   Serves as living documentation
+- Defines the scope and purpose of the test suite
+- Enumerates all test cases
+- Specifies the "definition of done" for the feature
+- Serves as living documentation
 
 ### Creating a Test Charter
 
@@ -72,6 +72,14 @@ Before writing any test code, create a **Test Charter** in `tests/_design/`. Thi
 4. Use the charter as a guide when writing actual test code
 
 ## Running Tests
+
+For day-to-day verification, prefer the root CLI over running individual language test tools directly:
+
+```bash
+./strling bootstrap all   # Setup, build, and test every binding
+./strling test all        # Re-run all binding test suites
+./strling audit           # Run the strict final omega audit
+```
 
 ### Shared Spec Generation (TypeScript)
 
@@ -125,9 +133,9 @@ The complete test-driven development workflow:
 
 ## Additional Resources
 
--   **[Test Setup Guide](../docs/testing_setup.md)**: How to run tests locally
--   **[Test Design Standard](../docs/testing_design.md)**: How to write effective tests
--   **[Testing Philosophy & Workflow](../docs/testing_workflow.md)**: Testing philosophy and contribution process
--   **[Developer Hub](../docs/index.md)**: Central documentation landing page
--   **[Specification Hub](../spec/README.md)**: Formal grammar and semantics
--   **[Contribution Guidelines](../docs/guidelines.md)**: Development workflow and documentation standards
+- **[Test Setup Guide](../docs/testing_setup.md)**: How to run tests locally
+- **[Test Design Standard](../docs/testing_design.md)**: How to write effective tests
+- **[Testing Philosophy & Workflow](../docs/testing_workflow.md)**: Testing philosophy and contribution process
+- **[Developer Hub](../docs/index.md)**: Central documentation landing page
+- **[Specification Hub](../spec/README.md)**: Formal grammar and semantics
+- **[Contribution Guidelines](../docs/guidelines.md)**: Development workflow and documentation standards

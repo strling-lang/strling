@@ -385,8 +385,8 @@ jobs:
             - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event.workflow_run.head_sha }}
-            - uses: leafo/gh-actions-lua@v10
-            - uses: leafo/gh-actions-luarocks@v4
+            - uses: leafo/gh-actions-lua@v12
+            - uses: leafo/gh-actions-luarocks@v6
             - name: Check LuaRocks registry
               id: check_luarocks
               working-directory: bindings/lua

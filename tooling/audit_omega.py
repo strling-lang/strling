@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import re
 import sys
@@ -6,7 +7,7 @@ from typing import Optional, Tuple, List, Dict, Any
 
 # Configuration
 TOOLCHAIN_PATH = "toolchain.json"
-REPORT_PATH = "FINAL_AUDIT_REPORT.md"
+REPORT_PATH = os.path.join("docs", "generated", "FINAL_AUDIT_REPORT.md")
 STRLING_CLI = "./strling"
 
 
@@ -377,6 +378,8 @@ def main():
 
     # 3. Report Generation
     print(">> Step 3: Generating Report")
+
+    os.makedirs(os.path.dirname(REPORT_PATH), exist_ok=True)
 
     with open(REPORT_PATH, "w") as f:
         f.write("# Final Audit Report\n\n")

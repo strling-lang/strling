@@ -10,10 +10,16 @@
 
 ## Final Certification Summary
 
--   [x] **Logic SSOT:** All bindings mirror TypeScript 3.x.x implementation.
--   [x] **Test Parity:** 17/17 bindings pass Cross-Referential Validation.
--   [x] **Instructional Integrity:** 100% of error paths provide pedagogical hints.
--   [x] **Deployment Ready:** All 17 bindings certified.
+- [x] **Logic SSOT:** All bindings mirror TypeScript 3.x.x implementation.
+- [x] **Test Parity:** 17/17 bindings pass Cross-Referential Validation.
+- [x] **Instructional Integrity:** 100% of error paths provide pedagogical hints.
+- [x] **Deployment Ready:** All 17 bindings certified.
+
+### Distribution Audit Addendum (2026-04-16)
+
+- Public registry reachability does **not** match the internal deployment-ready status.
+- Live audit result: no primary STRling package is currently published on PyPI, npm, Crates.io, Maven Central, Packagist, RubyGems, or pub.dev.
+- The repository has only one historical release tag (`v2.5.6-monorepo`); the current `v3.0.0-alpha` tag does not exist, which blocks Go proxy discovery and SwiftPM consumption at the audited version.
 
 ---
 
@@ -61,25 +67,25 @@ All previously identified issues have been resolved. The ecosystem is fully vali
 
 The project maintains **17 language bindings** with unified versioning. All bindings have achieved **Deployment Ready** status following completion of Functional Remediation, Pipeline Parity, Test Hardening, and Documentation Standardization.
 
-| Language   | Version         | Dependency File                  | Test Directory      | Conformance Tests | Build Status |
-| :--------- | :-------------- | :------------------------------- | :------------------ | :---------------- | :----------- |
-| C          | `3.0.0-alpha`   | `Makefile`                       | `tests/`            | 548               | 🟢 CERTIFIED |
-| C++        | `3.0.0-alpha`   | `CMakeLists.txt`                 | `tests/`            | 548               | 🟢 CERTIFIED |
-| C#         | `3.0.0-alpha`   | `STRling.csproj`                 | `tests/`            | 605               | 🟢 CERTIFIED |
-| Dart       | `3.0.0-alpha`   | `pubspec.yaml`                   | `test/`             | 596               | 🟢 CERTIFIED |
-| F#         | `3.0.0-alpha`   | `STRling.fsproj`                 | `tests/`            | 596               | 🟢 CERTIFIED |
-| Go         | N/A (go.mod)    | `go.mod`                         | `tests/`            | 5 pkgs            | 🟢 CERTIFIED |
-| Java       | `3.0.0-alpha`   | `pom.xml`                        | `src/test/`         | 715               | 🟢 CERTIFIED |
-| Kotlin     | `3.0.0-alpha`   | `build.gradle.kts`               | `src/test/`         | 613               | 🟢 CERTIFIED |
-| Lua        | `3.0.0-alpha`   | `strling-3.0.0-alpha-1.rockspec` | `spec/`             | 596               | 🟢 CERTIFIED |
-| Perl       | `3.0.0-alpha`   | `Makefile.PL`                    | `t/`                | 548               | 🟢 CERTIFIED |
-| PHP        | `3.0.0-alpha`   | `composer.json`                  | `tests/`            | 641               | 🟢 CERTIFIED |
-| Python     | `3.0.0-alpha`   | `pyproject.toml`                 | `tests/`            | 716               | 🟢 CERTIFIED |
-| R          | `3.0.0-alpha`   | `DESCRIPTION`                    | (via `run_tests.R`) | 632               | 🟢 CERTIFIED |
-| Ruby       | `3.0.0.alpha`   | `strling.gemspec`                | (via rake)          | 628               | 🟢 CERTIFIED |
-| Rust       | `3.0.0-alpha`   | `Cargo.toml`                     | `src/` (inline)     | 596               | 🟢 CERTIFIED |
-| Swift      | N/A (tag-based) | `Package.swift`                  | `Tests/`            | 596               | 🟢 CERTIFIED |
-| TypeScript | `3.0.0-alpha`   | `package.json`                   | (via jest)          | 892               | 🟢 CERTIFIED |
+| Language   | Version         | Dependency File                 | Test Directory      | Conformance Tests | Build Status | Registry Status |
+| :--------- | :-------------- | :------------------------------ | :------------------ | :---------------- | :----------- | :-------------- |
+| C          | `3.0.0-alpha`   | `Makefile`                      | `tests/`            | 548               | 🟢 CERTIFIED | Blocked         |
+| C++        | `3.0.0-alpha`   | `CMakeLists.txt`                | `tests/`            | 548               | 🟢 CERTIFIED | Blocked         |
+| C#         | `3.0.0-alpha`   | `STRling.csproj`                | `tests/`            | 605               | 🟢 CERTIFIED | Pending         |
+| Dart       | `3.0.0-alpha`   | `pubspec.yaml`                  | `test/`             | 596               | 🟢 CERTIFIED | Pending         |
+| F#         | `3.0.0-alpha`   | `STRling.fsproj`                | `tests/`            | 596               | 🟢 CERTIFIED | Pending         |
+| Go         | N/A (go.mod)    | `go.mod`                        | `tests/`            | 5 pkgs            | 🟢 CERTIFIED | Pending         |
+| Java       | `3.0.0-alpha`   | `pom.xml`                       | `src/test/`         | 715               | 🟢 CERTIFIED | Blocked         |
+| Kotlin     | `3.0.0-alpha`   | `build.gradle.kts`              | `src/test/`         | 613               | 🟢 CERTIFIED | Blocked         |
+| Lua        | `3.0.0-alpha`   | `strling-3.0.0alpha-1.rockspec` | `spec/`             | 596               | 🟢 CERTIFIED | Pending         |
+| Perl       | `3.0.0-alpha`   | `Makefile.PL`                   | `t/`                | 548               | 🟢 CERTIFIED | Pending         |
+| PHP        | `3.0.0-alpha`   | `composer.json`                 | `tests/`            | 641               | 🟢 CERTIFIED | Blocked         |
+| Python     | `3.0.0-alpha`   | `pyproject.toml`                | `tests/`            | 716               | 🟢 CERTIFIED | Pending         |
+| R          | `3.0.0-alpha`   | `DESCRIPTION`                   | (via `run_tests.R`) | 632               | 🟢 CERTIFIED | Blocked         |
+| Ruby       | `3.0.0.alpha`   | `strling.gemspec`               | (via rake)          | 628               | 🟢 CERTIFIED | Pending         |
+| Rust       | `3.0.0-alpha`   | `Cargo.toml`                    | `src/` (inline)     | 596               | 🟢 CERTIFIED | Pending         |
+| Swift      | N/A (tag-based) | `Package.swift`                 | `Tests/`            | 596               | 🟢 CERTIFIED | Pending         |
+| TypeScript | `3.0.0-alpha`   | `package.json`                  | (via jest)          | 892               | 🟢 CERTIFIED | Pending         |
 
 ### Binding Maturity Assessment
 
@@ -172,19 +178,80 @@ The emitters adhere to the documented "Iron Law" with these constraints:
 
 ### Target Registries & Secrets
 
-| Registry      | Package Name            | Deploy Job          | Secret Required      | Idempotency Check            |
-| :------------ | :---------------------- | :------------------ | :------------------- | :--------------------------- |
-| NPM           | `@strling-lang/strling` | `deploy-typescript` | `NPM_TOKEN`          | ✅ `check_version_exists.py` |
-| PyPI          | `STRling`               | `deploy-python`     | (OIDC)               | ✅ `check_version_exists.py` |
-| Crates.io     | `strling_core`          | `deploy-rust`       | `CARGO_TOKEN`        | ✅ `check_version_exists.py` |
-| NuGet (C#)    | `STRling`               | `deploy-csharp`     | `NUGET_KEY`          | ✅ `check_version_exists.py` |
-| NuGet (F#)    | `STRling.FSharp`        | `deploy-fsharp`     | `NUGET_KEY`          | ✅ `check_version_exists.py` |
-| RubyGems      | `strling`               | `deploy-ruby`       | `RUBYGEMS_KEY`       | ✅ `check_version_exists.py` |
-| Pub.dev       | `strling`               | `deploy-dart`       | (OIDC)               | ✅ `check_version_exists.py` |
-| LuaRocks      | `strling`               | `deploy-lua`        | `LUA_API_KEY`        | ✅ `check_version_exists.py` |
-| Maven Central | `com.strling:strling`   | `deploy-java`       | `MAVEN_*`            | 🟡 Placeholder               |
-| Maven Central | (Kotlin)                | `deploy-kotlin`     | `MAVEN_*`, `GPG_KEY` | ✅ Gradlew publish           |
-| CPAN          | `STRling`               | `deploy-perl`       | `PAUSE_*`            | ⚠️ No check                  |
+| Registry      | Package Name                 | Deploy Job          | Secret Required    | Idempotency Check                  |
+| :------------ | :--------------------------- | :------------------ | :----------------- | :--------------------------------- |
+| NPM           | `@strling-lang/strling`      | `deploy-typescript` | `NPM_TOKEN`        | ✅ `check_version_exists.py`       |
+| PyPI          | `STRling`                    | `deploy-python`     | (OIDC)             | ✅ `check_version_exists.py`       |
+| Crates.io     | `strling`                    | `deploy-rust`       | `CARGO_TOKEN`      | ✅ `check_version_exists.py`       |
+| NuGet (C#)    | `STRling`                    | `deploy-csharp`     | `NUGET_KEY`        | ✅ `check_version_exists.py`       |
+| NuGet (F#)    | `STRling.FSharp`             | `deploy-fsharp`     | `NUGET_KEY`        | ✅ `check_version_exists.py`       |
+| RubyGems      | `strling`                    | `deploy-ruby`       | `RUBYGEMS_KEY`     | ✅ `check_version_exists.py`       |
+| Pub.dev       | `strling`                    | `deploy-dart`       | (OIDC)             | ✅ `check_version_exists.py`       |
+| LuaRocks      | `strling`                    | `deploy-lua`        | `LUA_API_KEY`      | ✅ `check_version_exists.py`       |
+| Maven Central | `com.strling:strling`        | `deploy-java`       | `MAVEN_*`          | 🟡 Placeholder                     |
+| Maven Central | `com.strling:strling-kotlin` | `deploy-kotlin`     | `MAVEN_*`, `GPG_*` | 🟡 Missing Gradle publish metadata |
+| CPAN          | `STRling`                    | `deploy-perl`       | `PAUSE_*`          | ⚠️ No check                        |
+
+### Live Registry Audit (2026-04-16)
+
+| Registry               | Developer Path                                       | Public Status      | Latest Visible Version | Current Blocker                                                                                         |
+| :--------------------- | :--------------------------------------------------- | :----------------- | :--------------------- | :------------------------------------------------------------------------------------------------------ |
+| PyPI                   | `pip install strling`                                | Not found          | None                   | Package has not been published; trusted publisher setup must be completed in PyPI.                      |
+| npm                    | `npm install @strling-lang/strling`                  | Not found          | None                   | Package has not been published; `NPM_TOKEN` is still required for a real release.                       |
+| Crates.io              | `cargo add strling`                                  | Not found          | None                   | Package has not been published; `CARGO_TOKEN` is still required for a real release.                     |
+| Go Proxy               | `go get github.com/strling-lang/strling/bindings/go` | No versions listed | None                   | No `v3.0.0-alpha` tag exists, so the module is not indexed at the target version.                       |
+| Maven Central (Java)   | `com.strling:strling`                                | Not found          | None                   | `pom.xml` does not yet include Maven Central release metadata, signing, or repository wiring.           |
+| Maven Central (Kotlin) | `com.strling:strling-kotlin`                         | Not found          | None                   | `build.gradle.kts` lacks `maven-publish` and signing configuration.                                     |
+| Packagist              | `composer require strling/strling`                   | Not found          | None                   | The package is not registered on Packagist and the CD workflow has no Packagist submission/update step. |
+| RubyGems               | `gem install strling`                                | Not found          | None                   | Gem has not been published yet; RubyGems API key still required in GitHub.                              |
+| pub.dev                | `dart pub add strling`                               | Not found          | None                   | Package has not been published; pub.dev trusted publisher setup must be completed.                      |
+
+### Secret Checklist
+
+| Secret / External Setup                | Needed For                   | Status                                 |
+| :------------------------------------- | :--------------------------- | :------------------------------------- |
+| `NPM_TOKEN`                            | npm publish                  | Required                               |
+| `CARGO_TOKEN`                          | Crates.io publish            | Required                               |
+| `NUGET_KEY`                            | NuGet publish for C# and F#  | Required                               |
+| `RUBYGEMS_KEY`                         | RubyGems publish             | Required                               |
+| `LUA_API_KEY`                          | LuaRocks upload              | Required                               |
+| `PAUSE_USERNAME`                       | CPAN upload                  | Required                               |
+| `PAUSE_PASSWORD`                       | CPAN upload                  | Required                               |
+| `MAVEN_USERNAME`                       | Maven Central / OSSRH deploy | Required                               |
+| `MAVEN_PASSWORD`                       | Maven Central / OSSRH deploy | Required                               |
+| `GPG_PRIVATE_KEY`                      | Maven Central signing        | Missing from current workflow contract |
+| `GPG_PASSPHRASE`                       | Maven Central signing        | Missing from current workflow contract |
+| PyPI Trusted Publisher registration    | PyPI publish via OIDC        | Required external setup                |
+| pub.dev Trusted Publisher registration | pub.dev publish via OIDC     | Required external setup                |
+
+### Final-Mile Blockers By Binding
+
+| Binding    | Target                               | Blocker                                                                                                      |
+| :--------- | :----------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| C          | Source archive / package manager TBD | No official distribution channel has been selected.                                                          |
+| C++        | Conan / vcpkg                        | `CMakeLists.txt` still has install/export rules commented out, so there is no consumable package output yet. |
+| C#         | NuGet                                | Package not yet published; requires `NUGET_KEY`.                                                             |
+| Dart       | pub.dev                              | Package not yet published; requires trusted publisher setup.                                                 |
+| F#         | NuGet                                | Package not yet published; requires `NUGET_KEY`.                                                             |
+| Go         | Go proxy                             | Release tag for `v3.0.0-alpha` does not exist.                                                               |
+| Java       | Maven Central                        | `pom.xml` lacks release-specific signing and distribution metadata.                                          |
+| Kotlin     | Maven Central                        | `build.gradle.kts` lacks publishing and signing plugins/configuration.                                       |
+| Lua        | LuaRocks                             | Package is unpublished; requires `LUA_API_KEY` and a configured LuaRocks owner namespace.                    |
+| Perl       | CPAN                                 | Package not yet published; requires PAUSE credentials.                                                       |
+| PHP        | Packagist                            | No Packagist registration or webhook/update automation exists.                                               |
+| Python     | PyPI                                 | Package not yet published; trusted publisher setup still required in PyPI.                                   |
+| R          | CRAN                                 | No CRAN packaging or submission automation exists.                                                           |
+| Ruby       | RubyGems                             | Gem not yet published; requires `RUBYGEMS_KEY`.                                                              |
+| Rust       | Crates.io                            | Crate not yet published; requires `CARGO_TOKEN`.                                                             |
+| Swift      | Swift Package Manager                | Current target version is not tagged in git, so consumers cannot resolve it.                                 |
+| TypeScript | npm                                  | Package not yet published; requires `NPM_TOKEN`.                                                             |
+
+### Sandbox Canary Proposal
+
+1. Publish Python to TestPyPI or PyPI from `bindings/python` on a version tag.
+2. Emit a `repository_dispatch` event to `strling-sandbox` with the published version and commit SHA.
+3. In `strling-sandbox/demos/python`, install the exact published version, compile a fixed demo corpus, and compare emitted IR/regex snapshots against expected fixtures.
+4. Mark the STRling release green only if the sandbox run succeeds; otherwise fail the release and open an incident issue with the published version attached.
 
 ### CI/CD Workflow Structure
 
@@ -231,9 +298,9 @@ All 17 bindings now satisfy the **4-Test Standard** following completion of Test
 
 ### Conformance Test Specifications
 
--   **Total Spec Files:** 800+ JSON fixtures in `tests/spec/`
--   **Format:** JSON with `input_ast`, `expected_ir` (or `input_dsl`, `expected_error` for error cases)
--   **Semantic Checks Required:** `DupNames` (duplicate capture groups), `Ranges` (character class ranges)
+- **Total Spec Files:** 800+ JSON fixtures in `tests/spec/`
+- **Format:** JSON with `input_ast`, `expected_ir` (or `input_dsl`, `expected_error` for error cases)
+- **Semantic Checks Required:** `DupNames` (duplicate capture groups), `Ranges` (character class ranges)
 
 ### Conformance Audit Results (Final)
 
@@ -291,9 +358,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: TypeScript
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 **Reference Implementation** — All features originate here.
 
@@ -309,9 +376,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Python
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 **Version SSOT Binding** — Canonical version defined in `pyproject.toml`.
 
@@ -327,9 +394,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: C#
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                                 |
 | ------------- | ----------- | ---------------------------------------- |
@@ -342,9 +409,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Perl
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                                 |
 | ------------- | ----------- | ---------------------------------------- |
@@ -357,9 +424,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Go
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                        |
 | ------------- | ----------- | ------------------------------- |
@@ -372,9 +439,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Rust
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                            |
 | ------------- | ----------- | ----------------------------------- |
@@ -387,9 +454,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Java
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                                                           |
 | ------------- | ----------- | ------------------------------------------------------------------ |
@@ -402,9 +469,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Kotlin
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 **Remediation Completed:** Native DSL Parser and PCRE2 Emitter implemented, full test coverage added.
 
@@ -419,9 +486,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Swift
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                                      |
 | ------------- | ----------- | --------------------------------------------- |
@@ -434,9 +501,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Ruby
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                                    |
 | ------------- | ----------- | ------------------------------------------- |
@@ -449,9 +516,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: C
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                           |
 | ------------- | ----------- | ---------------------------------- |
@@ -464,9 +531,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: C++
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 **Remediation Completed:** Parser completed, standalone PCRE2 Emitter implemented, full test coverage added.
 
@@ -481,9 +548,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: PHP
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                        |
 | ------------- | ----------- | ------------------------------- |
@@ -496,9 +563,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Dart
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                                |
 | ------------- | ----------- | --------------------------------------- |
@@ -511,9 +578,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: Lua
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 **Remediation Completed:** Parser implemented, PCRE2 Emitter added, Simply API anchors completed.
 
@@ -528,9 +595,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: R
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 | Component     | Status      | Location                     |
 | ------------- | ----------- | ---------------------------- |
@@ -543,9 +610,9 @@ All bindings have achieved deployment readiness following the completion of four
 
 ## Binding Readiness Status: F#
 
--   [x] Pipeline: Parse/Compile/Emit logic complete.
--   [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
--   [x] Docs: README and API Reference verified for "Junior First" voice.
+- [x] Pipeline: Parse/Compile/Emit logic complete.
+- [x] Tests: 4-Test Standard achieved (Pass Rate: 100%).
+- [x] Docs: README and API Reference verified for "Junior First" voice.
 
 **Remediation Completed:** Native F# Parser implemented, PCRE2 Emitter added, Simply API using F# computation expressions.
 
@@ -744,11 +811,11 @@ Each binding was tested through three layers:
 
 ### Verification Summary
 
--   **Total Bindings Verified**: 17/17
--   **Triple-Pass Success**: 17/17 (100%)
--   **Zero Skips/Warnings**: All bindings report zero skipped tests and zero test warnings
--   **Semantic Marker Coverage**: All bindings print `test_semantic_duplicate_capture_group` and `test_semantic_ranges` in their output
--   **Exit Code Integrity**: All bindings correctly propagate exit codes through the CLI wrapper
+- **Total Bindings Verified**: 17/17
+- **Triple-Pass Success**: 17/17 (100%)
+- **Zero Skips/Warnings**: All bindings report zero skipped tests and zero test warnings
+- **Semantic Marker Coverage**: All bindings print `test_semantic_duplicate_capture_group` and `test_semantic_ranges` in their output
+- **Exit Code Integrity**: All bindings correctly propagate exit codes through the CLI wrapper
 
 ### Previously Resolved Issues
 

@@ -8,19 +8,19 @@ If you add or change tooling, please update this index so maintainers and CI con
 
 ## Quick links
 
--   Audit & reporting: `audit_precision.py`, `audit_hints.py`, `audit_omega.py`
--   Release helpers: `sync_versions.py`, `check_version_exists.py`
--   Fixture tooling: `js_to_json_ast/`
--   LSP & editor tooling: `lsp-server/`
--   Utilities: `parse_strl.py`, `generate_c_asts.sh`
--   CLI: `strling`
--   Tests & logs: `tests/`, `test_logs/`
+- Audit & reporting: `audit_precision.py`, `audit_hints.py`, `audit_omega.py`
+- Release helpers: `sync_versions.py`, `check_version_exists.py`
+- Fixture tooling: `js_to_json_ast/`
+- LSP & editor tooling: `lsp-server/`
+- Utilities: `parse_strl.py`, `generate_c_asts.sh`
+- CLI: `strling`
+- Tests & logs: `tests/`, `test_logs/`
 
 ---
 
 ## Scripts and tools (alphabetical)
 
--   `audit_hints.py` — **Interactive Parser Debugger** for testing STRling parse error messages. Runs the Python parser against a pattern and prints the fully formatted `STRlingParseError` with instructional hints. This is a **developer-facing utility** for debugging parser errors and improving error message quality — not part of CI.
+- `audit_hints.py` — **Interactive Parser Debugger** for testing STRling parse error messages. Runs the Python parser against a pattern and prints the fully formatted `STRlingParseError` with instructional hints. This is a **developer-facing utility** for debugging parser errors and improving error message quality — not part of CI.
 
     ```bash
     # Test an invalid pattern to see error hints
@@ -29,9 +29,9 @@ If you add or change tooling, please update this index so maintainers and CI con
     python3 tooling/audit_hints.py "a{3,1}"   # invalid quantifier range
     ```
 
--   `audit_omega.py` — The unified Final Certification harness. Runs the global audit and generates `FINAL_AUDIT_REPORT.md`.
+- `audit_omega.py` — The unified Final Certification harness. Runs the global audit and generates `docs/generated/FINAL_AUDIT_REPORT.md`.
 
--   `audit_precision.py` — **Ad-Hoc Analysis (Dormant)** — Compares binding test counts against the spec baseline and generates a human-readable precision/coverage report (`docs/reports/coverage_precision.md`). This tool is for **manual developer use only** and is **not part of CI/CD**. It requires all binding toolchains to be installed locally; missing toolchains will report errors or timeouts.
+- `audit_precision.py` — **Ad-Hoc Analysis (Dormant)** — Compares binding test counts against the spec baseline and generates a human-readable precision/coverage report (`docs/reports/coverage_precision.md`). This tool is for **manual developer use only** and is **not part of CI/CD**. It requires all binding toolchains to be installed locally; missing toolchains will report errors or timeouts.
 
     ```bash
     # Run locally to check coverage across bindings
@@ -40,47 +40,45 @@ If you add or change tooling, please update this index so maintainers and CI con
 
     **Note:** This tool may report 0 or errors for bindings you don't have installed — that's expected for local development environments.
 
--   `check_version_exists.py` — Release helper to detect whether a particular package version already exists on registries (npm, PyPI, crates.io, NuGet, RubyGems, Pub.Dev, LuaRocks). Use during release automation to avoid publishing duplicates.
+- `check_version_exists.py` — Release helper to detect whether a particular package version already exists on registries (npm, PyPI, crates.io, NuGet, RubyGems, Pub.Dev, LuaRocks). Use during release automation to avoid publishing duplicates.
 
--   `generate_c_asts.sh` — Helper script that builds/produces C AST artifacts from parser outputs. Used by C/C++ integration tasks and tests which rely on JSON AST artifacts.
+- `generate_c_asts.sh` — Helper script that builds/produces C AST artifacts from parser outputs. Used by C/C++ integration tasks and tests which rely on JSON AST artifacts.
 
--   `parse_strl.py` — Command-line parsing/validation tool for STRling DSL files. Can emit JSON ASTs or run emitters to produce a target regex. Handy for local parsing, debugging, and scripting.
+- `parse_strl.py` — Command-line parsing/validation tool for STRling DSL files. Can emit JSON ASTs or run emitters to produce a target regex. Handy for local parsing, debugging, and scripting.
 
--   `strling` — The root CLI utility. Handles setup, build, test, and clean lifecycles for all bindings.
+- `strling` — The root CLI utility. Handles setup, build, test, and clean lifecycles for all bindings.
 
--   `sync_versions.py` — Single source-of-truth version synchronization utility. Reads the canonical version (Python/pyproject or other) and updates language binding manifests (Cargo.toml, package.json, pom.xml, etc.). Supports dry-run and write modes.
+- `sync_versions.py` — Single source-of-truth version synchronization utility. Reads the canonical version (Python/pyproject or other) and updates language binding manifests (Cargo.toml, package.json, pom.xml, etc.). Supports dry-run and write modes.
 
 ---
 
 ## Subdirectories and larger tooling areas
 
--   `js_to_json_ast/` — JS→JSON AST generator and fixtures pipeline. Use this to extract patterns from JS tests (`extract_patterns_from_js_tests.js`), generate JSON AST artifacts (`generate_json_ast.js`), verify parity with the C emitter (`verify_js_c_parity.js`), and to manage the large fixtures corpus in `js_to_json_ast/fixtures/`.
+- `js_to_json_ast/` — JS→JSON AST generator and fixtures pipeline. Use this to extract patterns from JS tests (`extract_patterns_from_js_tests.js`), generate JSON AST artifacts (`generate_json_ast.js`), verify parity with the C emitter (`verify_js_c_parity.js`), and to manage the large fixtures corpus in `js_to_json_ast/fixtures/`.
+    - See `tooling/js_to_json_ast/README.md` for full generator workflows and environment setup (requires building the TypeScript binding).
 
-    -   See `tooling/js_to_json_ast/README.md` for full generator workflows and environment setup (requires building the TypeScript binding).
+- `lsp-server/` — Language Server Protocol implementation and docs. Provides an LSP server that wraps the CLI diagnostics (`server.py`), examples demonstrating valid/invalid `.strl` files, vendored support libs, and README/setup docs.
+    - Key files: `server.py`, `LSP_SETUP.md`, `IMPLEMENTATION_SUMMARY.md`, `README.md`.
 
--   `lsp-server/` — Language Server Protocol implementation and docs. Provides an LSP server that wraps the CLI diagnostics (`server.py`), examples demonstrating valid/invalid `.strl` files, vendored support libs, and README/setup docs.
+- `scripts/` — Miscellaneous helper scripts for environment verification and CI maintenance tasks. Example: `scripts/verify_ecosystem.py`.
 
-    -   Key files: `server.py`, `LSP_SETUP.md`, `IMPLEMENTATION_SUMMARY.md`, `README.md`.
+- `tests/` — Unit tests for tooling scripts (pytest). Includes tests such as `test_sync_versions.py`.
 
--   `scripts/` — Miscellaneous helper scripts for environment verification and CI maintenance tasks. Example: `scripts/verify_ecosystem.py`.
+- `test_logs/` — Directory containing archive logs created by tooling audit runs (e.g., `audit_bindings_rerun.log`). Inspect here when diagnosing cross-binding audit failures.
 
--   `tests/` — Unit tests for tooling scripts (pytest). Includes tests such as `test_sync_versions.py`.
-
--   `test_logs/` — Directory containing archive logs created by tooling audit runs (e.g., `audit_bindings_rerun.log`). Inspect here when diagnosing cross-binding audit failures.
-
--   `__pycache__/` — Auto-generated Python bytecode cache. Not a source artifact; safe to ignore.
+- `__pycache__/` — Auto-generated Python bytecode cache. Not a source artifact; safe to ignore.
 
 ---
 
 ## How to use these tools (quick examples)
 
--   Run a cross-binding audit (bash):
+- Run a cross-binding audit (bash):
 
 ```bash
 ./tooling/audit_bindings.sh
 ```
 
--   Generate JSON AST artifacts from fixtures (JS/TS binding required):
+- Generate JSON AST artifacts from fixtures (JS/TS binding required):
 
 ```bash
 cd tooling/js_to_json_ast
@@ -88,7 +86,7 @@ cd tooling/js_to_json_ast
 node ./generate_json_ast.js fixtures/ out/
 ```
 
--   Start the LSP server (recommended to create a Python venv and install `tooling/lsp-server/requirements.txt`):
+- Start the LSP server (recommended to create a Python venv and install `tooling/lsp-server/requirements.txt`):
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
@@ -100,9 +98,9 @@ python tooling/lsp-server/server.py --stdio
 
 ## Maintenance notes
 
--   Keep this file updated whenever you add or remove tooling files. Prefer short, actionable descriptions (one line + 1–2 sentence summary).
--   Do not include auto-generated caches like `__pycache__/` or temporary build artifacts.
--   If you add major new tooling, add a short example showing how to run it and a link to a README if available.
+- Keep this file updated whenever you add or remove tooling files. Prefer short, actionable descriptions (one line + 1–2 sentence summary).
+- Do not include auto-generated caches like `__pycache__/` or temporary build artifacts.
+- If you add major new tooling, add a short example showing how to run it and a link to a README if available.
 
 ---
 
@@ -118,12 +116,12 @@ If you need more detail on any item below, open its README or the script header 
 
 ## Quick highlights
 
--   Audit & reports: `audit_precision.py`, `audit_omega.py` ✅
--   AST / fixture generation: `js_to_json_ast/`, `generate_c_asts.sh` 🔧
--   Release helpers: `sync_versions.py`, `check_version_exists.py` 📦
--   Editor tooling: `lsp-server/` (LSP server and examples) 🧑‍💻
--   CLI: `strling` 🧰
--   Misc: `parse_strl.py` 📝
+- Audit & reports: `audit_precision.py`, `audit_omega.py` ✅
+- AST / fixture generation: `js_to_json_ast/`, `generate_c_asts.sh` 🔧
+- Release helpers: `sync_versions.py`, `check_version_exists.py` 📦
+- Editor tooling: `lsp-server/` (LSP server and examples) 🧑‍💻
+- CLI: `strling` 🧰
+- Misc: `parse_strl.py` 📝
 
 ---
 
@@ -131,7 +129,7 @@ If you need more detail on any item below, open its README or the script header 
 
 ### CI Pipeline Tool
 
--   `tooling/audit_omega.py` — **CI Gate** — Unified final certification audit runner. Generates `FINAL_AUDIT_REPORT.md`. This is the authoritative audit tool used in CI/CD pipelines.
+- `tooling/audit_omega.py` — **CI Gate** — Unified final certification audit runner. Generates `docs/generated/FINAL_AUDIT_REPORT.md`. This is the authoritative audit tool used in CI/CD pipelines.
 
     ```bash
     python3 tooling/audit_omega.py
@@ -141,7 +139,7 @@ If you need more detail on any item below, open its README or the script header 
 
 The following tools are for **local development and debugging** — they are **not part of the CI/CD gate**.
 
--   `tooling/audit_hints.py` — **Interactive Parser Debugger** — Tests invalid patterns and displays formatted `STRlingParseError` messages with instructional hints. Use this when improving error messages or debugging parser behavior.
+- `tooling/audit_hints.py` — **Interactive Parser Debugger** — Tests invalid patterns and displays formatted `STRlingParseError` messages with instructional hints. Use this when improving error messages or debugging parser behavior.
 
     ```bash
     python3 tooling/audit_hints.py "[a-"      # unclosed character class
@@ -149,7 +147,7 @@ The following tools are for **local development and debugging** — they are **n
     python3 tooling/audit_hints.py "\\k<x"    # invalid backreference
     ```
 
--   `tooling/audit_precision.py` — **Ad-Hoc Coverage Analysis (Dormant)** — Compares numeric counts of conformance tests across all 17 bindings and flags mismatches. Requires local toolchain installations for each binding; uninstalled bindings will report errors/timeouts.
+- `tooling/audit_precision.py` — **Ad-Hoc Coverage Analysis (Dormant)** — Compares numeric counts of conformance tests across all 17 bindings and flags mismatches. Requires local toolchain installations for each binding; uninstalled bindings will report errors/timeouts.
 
     ```bash
     python3 tooling/audit_precision.py
@@ -157,19 +155,19 @@ The following tools are for **local development and debugging** — they are **n
 
     Output: `docs/reports/coverage_precision.md`
 
--   `tooling/TEST_REPORT.md` — Generated global test report summarising conformance across bindings. Used for human review and CI reporting.
+- `tooling/TEST_REPORT.md` — Generated global test report summarising conformance across bindings. Used for human review and CI reporting.
 
 ---
 
 ## Generators & fixtures
 
--   `tooling/js_to_json_ast/` — The JS → JSON AST generator pipeline. It contains generator scripts and a large set of test fixtures used to create the canonical JSON AST files consumed by other bindings. See `tooling/js_to_json_ast/README.md` for full instructions. Example invocation:
+- `tooling/js_to_json_ast/` — The JS → JSON AST generator pipeline. It contains generator scripts and a large set of test fixtures used to create the canonical JSON AST files consumed by other bindings. See `tooling/js_to_json_ast/README.md` for full instructions. Example invocation:
 
     ```bash
     node tooling/js_to_json_ast/generate_json_ast.js
     ```
 
--   `tooling/generate_c_asts.sh` — Convenience script which builds the JS binding and runs the AST generator to produce C-compatible JSON fixtures.
+- `tooling/generate_c_asts.sh` — Convenience script which builds the JS binding and runs the AST generator to produce C-compatible JSON fixtures.
 
     ```bash
     bash tooling/generate_c_asts.sh
@@ -183,10 +181,9 @@ Note: `tooling/js_to_json_ast/fixtures/` contains many fixture files (pattern so
 
 ## LSP (editor) tooling
 
--   `tooling/lsp-server/` — The Python LSP implementation used for editor integration (live diagnostics, hints). Key files:
-
-    -   `tooling/lsp-server/README.md` — setup and integration notes
-    -   `tooling/lsp-server/server.py` — main entrypoint for running the LSP server
+- `tooling/lsp-server/` — The Python LSP implementation used for editor integration (live diagnostics, hints). Key files:
+    - `tooling/lsp-server/README.md` — setup and integration notes
+    - `tooling/lsp-server/server.py` — main entrypoint for running the LSP server
 
     Typical usage:
 
@@ -201,13 +198,13 @@ Note: `tooling/js_to_json_ast/fixtures/` contains many fixture files (pattern so
 
 ## Release & automation helpers
 
--   `tooling/sync_versions.py` — Maintainer tool to synchronize versions across language bindings (Python `pyproject.toml` is the canonical source-of-truth). Useful for release automation and CI.
+- `tooling/sync_versions.py` — Maintainer tool to synchronize versions across language bindings (Python `pyproject.toml` is the canonical source-of-truth). Useful for release automation and CI.
 
     ```bash
     python3 tooling/sync_versions.py --help
     ```
 
--   `tooling/check_version_exists.py` — Verifies whether a package version exists on various registries (PyPI, npm, crates.io, etc.). Example:
+- `tooling/check_version_exists.py` — Verifies whether a package version exists on various registries (PyPI, npm, crates.io, etc.). Example:
 
     ```bash
     python3 tooling/check_version_exists.py --registry pypi --package strling --version 1.2.3
@@ -217,7 +214,7 @@ Note: `tooling/js_to_json_ast/fixtures/` contains many fixture files (pattern so
 
 ## CLI helpers & miscellaneous
 
--   `tooling/parse_strl.py` — CLI wrapper around the STRling parser / emitter. Can parse `.strl` files or read from stdin and emit target regexes.
+- `tooling/parse_strl.py` — CLI wrapper around the STRling parser / emitter. Can parse `.strl` files or read from stdin and emit target regexes.
 
     ```bash
     python3 tooling/parse_strl.py my_pattern.strl
@@ -226,19 +223,19 @@ Note: `tooling/js_to_json_ast/fixtures/` contains many fixture files (pattern so
 
     STRling root CLI:
 
--   `strling` — Orchestrates setup, build, test, and clean across all bindings.
+- `strling` — Orchestrates setup, build, test, and clean across all bindings.
 
 ---
 
 ## Tests & logs
 
--   `tooling/tests/` — Unit tests covering tooling scripts (run with pytest):
+- `tooling/tests/` — Unit tests covering tooling scripts (run with pytest):
 
     ```bash
     pytest tooling/tests
     ```
 
--   `tooling/test_logs/` — Persisted test-run status files and logs created by audit scripts (helpful when debugging binding CI failures).
+- `tooling/test_logs/` — Persisted test-run status files and logs created by audit scripts (helpful when debugging binding CI failures).
 
 ---
 

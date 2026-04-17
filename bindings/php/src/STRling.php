@@ -17,7 +17,7 @@ class STRling
     /**
      * @var string The version of the STRling PHP binding
      */
-    public const VERSION = '0.1.0';
+    public const VERSION = '3.0.0-alpha';
     
     /**
      * Placeholder for future public API methods.

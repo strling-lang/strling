@@ -21,6 +21,24 @@ from typing import Callable, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
+
+def normalize_ruby_gem_version(version: str) -> str:
+    """Convert semver prereleases to a RubyGems-friendly version string."""
+    return version.replace("-", ".")
+
+
+def normalize_lua_rockspec_version(version: str) -> str:
+    """Convert semver prereleases to a LuaRocks-friendly rockspec version."""
+    if "-" not in version:
+        return version + "-1"
+
+    base, prerelease = version.split("-", 1)
+    if prerelease.endswith("-1"):
+        return base + prerelease
+
+    return base + prerelease + "-1"
+
+
 # Configuration
 ROOT_DIR: Path = Path(__file__).resolve().parent.parent
 SOURCE_FILE: Path = ROOT_DIR / "bindings/python/pyproject.toml"
@@ -143,9 +161,18 @@ def update_yaml_pubspec(content: str, version: str, path: Path) -> str:
 
 
 def update_ruby_gemspec(content: str, version: str, path: Path) -> str:
+    gem_version = normalize_ruby_gem_version(version)
     # Use callable replacement to avoid ambiguous group concatenation
     return re.sub(
         r'(spec\.version\s*=\s*")([^\"]+)(")',
+        lambda m: m.group(1) + gem_version + m.group(3),
+        content,
+    )
+
+
+def update_ruby_version_file(content: str, version: str, path: Path) -> str:
+    return re.sub(
+        r"(VERSION\s*=\s*')([^']+)(')",
         lambda m: m.group(1) + version + m.group(3),
         content,
     )
@@ -221,17 +248,45 @@ def update_c_source(content: str, version: str, path: Path) -> str:
     return pattern.sub(lambda m: m.group(1) + version + m.group(3), content)
 
 
+def update_php_source_version(content: str, version: str, path: Path) -> str:
+    return re.sub(
+        r"(public\s+const\s+VERSION\s*=\s*')([^']+)(')",
+        lambda m: m.group(1) + version + m.group(3),
+        content,
+    )
+
+
+def update_java_source_version(content: str, version: str, path: Path) -> str:
+    content = re.sub(
+        r"(@version\s+)([^\s]+)",
+        lambda m: m.group(1) + version,
+        content,
+        count=1,
+    )
+    return re.sub(
+        r'((?:public\s+)?static\s+final\s+String\s+VERSION\s*=\s*")([^\"]+)(";)',
+        lambda m: m.group(1) + version + m.group(3),
+        content,
+        count=1,
+    )
+
+
+def update_conanfile(content: str, version: str, path: Path) -> str:
+    return re.sub(
+        r'(^\s*version\s*=\s*")([^\"]+)(")',
+        lambda m: m.group(1) + version + m.group(3),
+        content,
+        flags=re.MULTILINE,
+    )
+
+
 def update_lua_rockspec(content: str, version: str, path: Path) -> str:
     """Update Lua rockspec version and handle file rename.
 
     LuaRocks requires rockspec files to be named with the version.
-    The version format is: <version>-<revision> (e.g., 3.0.0-alpha-1).
+    This repo uses prerelease filenames like 3.0.0alpha-1.
     """
-    # Ensure version has a revision suffix
-    rockspec_version = version if version.count("-") >= 1 else (version + "-1")
-    # For alpha versions like "3.0.0-alpha", add revision: "3.0.0-alpha-1"
-    if "-" in version and not re.match(r".*-\d+$", version):
-        rockspec_version = version + "-1"
+    rockspec_version = normalize_lua_rockspec_version(version)
 
     # Update version field
     new_content = re.sub(
@@ -257,9 +312,7 @@ def rename_lua_rockspec(version: str, dry_run: bool = False) -> bool:
     LuaRocks requires the filename to match the version.
     """
     lua_dir = ROOT_DIR / "bindings" / "lua"
-    rockspec_version = version if version.count("-") >= 1 else (version + "-1")
-    if "-" in version and not re.match(r".*-\d+$", version):
-        rockspec_version = version + "-1"
+    rockspec_version = normalize_lua_rockspec_version(version)
 
     new_name = f"strling-{rockspec_version}.rockspec"
     new_path = lua_dir / new_name
@@ -311,15 +364,22 @@ def main(argv: Optional[List[str]] = None) -> int:
         ("bindings/rust/Cargo.toml", update_toml_cargo),
         ("bindings/typescript/package.json", update_json),
         ("bindings/php/composer.json", update_composer_json),
+        ("bindings/php/src/STRling.php", update_php_source_version),
         ("bindings/ruby/strling.gemspec", update_ruby_gemspec),
+        ("bindings/ruby/lib/strling.rb", update_ruby_version_file),
         ("bindings/dart/pubspec.yaml", update_yaml_pubspec),
         ("bindings/csharp/src/STRling/STRling.csproj", update_xml_csproj),
         ("bindings/fsharp/src/STRling/STRling.fsproj", update_xml_csproj),
         ("bindings/java/pom.xml", update_xml_pom),
+        (
+            "bindings/java/src/main/java/com/strling/Strling.java",
+            update_java_source_version,
+        ),
         ("bindings/kotlin/build.gradle.kts", update_kotlin_gradle),
         ("bindings/r/DESCRIPTION", update_r_description),
         ("bindings/perl/lib/STRling.pm", update_perl_pm),
         ("bindings/cpp/CMakeLists.txt", update_cmake),
+        ("bindings/cpp/conanfile.py", update_conanfile),
         ("bindings/c/src/strling.c", update_c_source),
     ]
 

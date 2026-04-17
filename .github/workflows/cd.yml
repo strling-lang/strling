@@ -33,11 +33,12 @@ jobs:
             is_release: ${{ steps.check_tag.outputs.is_release }}
             tag_version: ${{ steps.check_tag.outputs.tag_version }}
             is_dry_run: ${{ steps.check_tag.outputs.is_dry_run }}
+            release_ref: ${{ steps.check_tag.outputs.release_ref }}
         steps:
             - name: Checkout triggering commit
               uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
                   fetch-depth: 0
 
             - name: Inject Apache 2.0 License for Registry Compliance
@@ -80,6 +81,12 @@ jobs:
                   echo "Triggering branch/tag: $HEAD_BRANCH"
                   echo "Triggering SHA: $HEAD_SHA"
 
+                  RELEASE_REF="$HEAD_SHA"
+                  if [[ "$HEAD_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
+                    RELEASE_REF="$HEAD_BRANCH"
+                  fi
+                  echo "release_ref=$RELEASE_REF" >> $GITHUB_OUTPUT
+
                   # Check if head_branch matches a version tag pattern
                   if [[ "$HEAD_BRANCH" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9]+)?$ ]]; then
                     echo "✅ Release tag detected: $HEAD_BRANCH"
@@ -115,7 +122,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Verify Version Match
               working-directory: bindings/c
               run: |
@@ -137,7 +144,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Verify Version Match
               working-directory: bindings/cpp
               run: |
@@ -161,7 +168,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: "9.0"
@@ -201,7 +208,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: dart-lang/setup-dart@v1
             - name: Check Pub.dev registry
               id: check_pub
@@ -233,7 +240,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: actions/setup-dotnet@v4
               with:
                   dotnet-version: "9.0"
@@ -271,7 +278,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Verify Version Match
               run: |
                   TAG_VERSION="${{ needs.verify-release.outputs.tag_version }}"
@@ -294,7 +301,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Setup Python 3.10
               uses: actions/setup-python@v5
               with:
@@ -342,7 +349,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: actions/setup-java@v4
               with:
                   distribution: "temurin"
@@ -384,14 +391,24 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: leafo/gh-actions-lua@v12
             - uses: leafo/gh-actions-luarocks@v6
+            - name: Resolve rockspec filename
+              id: rockspec
+              working-directory: bindings/lua
+              run: |
+                  ROCKSPEC=$(ls strling-*.rockspec | head -n 1)
+                  if [[ -z "$ROCKSPEC" ]]; then
+                    echo "No rockspec file found."
+                    exit 1
+                  fi
+                  echo "file=$ROCKSPEC" >> $GITHUB_OUTPUT
             - name: Check LuaRocks registry
               id: check_luarocks
               working-directory: bindings/lua
               run: |
-                  VERSION=$(grep "^version =" strling-scm-1.rockspec | cut -d '"' -f 2)
+                  VERSION=$(grep "^version =" "${{ steps.rockspec.outputs.file }}" | cut -d '"' -f 2)
                   if python3 ../../tooling/check_version_exists.py --registry luarocks --package "strling" --version "$VERSION"; then
                      echo "exists=true" >> $GITHUB_OUTPUT
                      echo "Version $VERSION already exists on LuaRocks. Skipping publish."
@@ -406,9 +423,9 @@ jobs:
                   LUAROCKS_API_KEY: ${{ secrets.LUA_API_KEY }}
               run: |
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    echo "DRY RUN: luarocks upload strling-scm-1.rockspec"
+                    echo "DRY RUN: luarocks upload ${{ steps.rockspec.outputs.file }}"
                   else
-                    luarocks upload strling-scm-1.rockspec --api-key=${LUAROCKS_API_KEY}
+                    luarocks upload "${{ steps.rockspec.outputs.file }}" --api-key=${LUAROCKS_API_KEY}
                   fi
 
     deploy-perl:
@@ -419,7 +436,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: shogo82148/actions-setup-perl@v1
             - name: Install Upload Tool
               run: cpanm App::cpanupload
@@ -460,7 +477,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Verify Version Match
               working-directory: bindings/php
               run: |
@@ -486,7 +503,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Setup Python 3.10
               uses: actions/setup-python@v5
               with:
@@ -531,7 +548,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Verify Version Match
               working-directory: bindings/r
               run: |
@@ -556,7 +573,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: ruby/setup-ruby@v1
               with:
                   ruby-version: "3.2"
@@ -602,7 +619,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - uses: dtolnay/rust-toolchain@stable
               with:
                   toolchain: "1.65"
@@ -611,7 +628,7 @@ jobs:
               working-directory: bindings/rust
               run: |
                   VERSION=$(grep "^version" Cargo.toml | head -n 1 | cut -d '"' -f 2)
-                  if python3 ../../tooling/check_version_exists.py --registry crates --package "strling_core" --version "$VERSION"; then
+                  if python3 ../../tooling/check_version_exists.py --registry crates --package "strling" --version "$VERSION"; then
                     echo "exists=true" >> $GITHUB_OUTPUT
                     echo "Version $VERSION already exists on Crates.io. Skipping publish."
                   else
@@ -638,7 +655,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Verify Version Match
               run: |
                   TAG_VERSION="${{ needs.verify-release.outputs.tag_version }}"
@@ -660,7 +677,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v5
               with:
-                  ref: ${{ github.event.workflow_run.head_sha }}
+                  ref: ${{ needs.verify-release.outputs.release_ref }}
             - name: Setup Python 3.10 (for SSOT script)
               uses: actions/setup-python@v5
               with:
@@ -708,14 +725,24 @@ jobs:
               if: steps.check_npm.outputs.exists == 'false'
               working-directory: bindings/typescript
               run: npm ci
+            - name: Build package
+              if: steps.check_npm.outputs.exists == 'false'
+              working-directory: bindings/typescript
+              run: npm run build
             - name: Publish to NPM
               if: steps.check_npm.outputs.exists == 'false'
               working-directory: bindings/typescript
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
+                  CURRENT_VERSION=$(node -pe "require('./package.json').version")
+                  PUBLISH_TAG="latest"
+                  if [[ "$CURRENT_VERSION" == *-* ]]; then
+                    PUBLISH_TAG="${CURRENT_VERSION#*-}"
+                  fi
+
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    npm publish --dry-run
+                    npm publish --dry-run --access public --tag "$PUBLISH_TAG"
                   else
-                    npm publish
+                    npm publish --access public --tag "$PUBLISH_TAG"
                   fi

@@ -575,17 +575,26 @@ jobs:
             - uses: actions/setup-python@v5
               with: { python-version: "3.10" }
             - working-directory: bindings/python
-              id: check
+              id: prepare
               run: |
-                  pip install tomli
+                  pip install build twine tomli
                   VER=$(python -c "import tomli; print(tomli.load(open('pyproject.toml', 'rb'))['project']['version'])")
                   if python ../../tooling/check_version_exists.py --registry pypi --package "STRling" --version "$VER"; then
-                    echo "exists=true" >> $GITHUB_OUTPUT
-                  else
-                    pip install build twine && python -m build
-                    echo "exists=false" >> $GITHUB_OUTPUT
+                    echo "publish=false" >> $GITHUB_OUTPUT
+                    echo "Version already exists in PyPI; skipping upload."
+                    exit 0
                   fi
-            - if: steps.check.outputs.exists == 'false' && needs.verify-release.outputs.is_dry_run == 'false'
+
+                  python -m build
+
+                  if [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]]; then
+                    echo "publish=false" >> $GITHUB_OUTPUT
+                    echo "Dry run enabled; PyPI upload skipped."
+                    exit 0
+                  fi
+
+                  echo "publish=true" >> $GITHUB_OUTPUT
+            - if: steps.prepare.outputs.publish == 'true'
               uses: pypa/gh-action-pypi-publish@release/v1
               with: { packages-dir: bindings/python/dist/ }
 

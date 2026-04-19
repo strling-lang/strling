@@ -1,10 +1,13 @@
+import org.gradle.api.publish.maven.MavenPublication
+
 plugins {
     kotlin("jvm") version "2.0.20"
     kotlin("plugin.serialization") version "2.0.20"
+    id("maven-publish")
 }
 
 group = "com.strling"
-version = "3.0.0"
+version = providers.gradleProperty("version").orElse("3.0.0").get()
 
 repositories {
     mavenCentral()
@@ -35,4 +38,12 @@ tasks.test {
 }
 
 kotlin {
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
 }

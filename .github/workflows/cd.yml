@@ -32,6 +32,7 @@ jobs:
         outputs:
             is_release: ${{ steps.release_state.outputs.is_release }}
             tag_version: ${{ steps.release_state.outputs.tag_version }}
+            version: ${{ steps.release_state.outputs.version }}
             is_dry_run: ${{ steps.release_state.outputs.is_dry_run }}
             release_ref: ${{ steps.release_state.outputs.release_ref }}
         steps:
@@ -97,7 +98,7 @@ jobs:
                       'Dart': require_match('Dart', r'^version:\s*(.+)$', read_text('bindings/dart/pubspec.yaml')),
                       'F#': require_match('F#', r'<Version>([^<]+)</Version>', read_text('bindings/fsharp/src/STRling/STRling.fsproj')),
                       'Java': java_tree.findtext('{http://maven.apache.org/POM/4.0.0}version') or 'unknown',
-                      'Kotlin': require_match('Kotlin', r'^version\s*=\s*"([^"]+)"', read_text('bindings/kotlin/build.gradle.kts')),
+                      'Kotlin': require_match('Kotlin', r'^version\s*=\s*providers\.gradleProperty\("version"\)\.orElse\("([^"]+)"\)\.get\(\)', read_text('bindings/kotlin/build.gradle.kts')),
                       'Lua': require_match('Lua', r'^version\s*=\s*"([^"]+)"', lua_text).split('-')[0],
                       'Perl': require_match('Perl', r"\$VERSION\s*=\s*'([^']+)'", read_text('bindings/perl/lib/STRling.pm')),
                       'PHP': json.loads(read_text('bindings/php/composer.json'))['version'],
@@ -115,6 +116,7 @@ jobs:
                       mismatches.append("Lua tag mismatch")
 
                   with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                      f.write(f"version={python_raw}\n")
                       f.write(f"tag_version={python_raw}\n")
                       f.write("is_release=false\n" if mismatches else "is_release=true\n")
 
@@ -429,11 +431,14 @@ jobs:
                   CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
                   CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
               run: |
-                  # Conan version checking/upload logic
+                  VERSION="${{ needs.verify-release.outputs.version }}"
+
+                  conan export . --name strling --version "$VERSION"
+
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    conan upload "*" --dry-run --remote conancenter
+                    echo "DRY RUN: Recipe strling/$VERSION exported."
                   else
-                    conan upload "*" --remote conancenter --force
+                    conan upload "strling/$VERSION" -r conancenter --confirm
                   fi
 
     publish-csharp:
@@ -464,7 +469,12 @@ jobs:
             - uses: dart-lang/setup-dart@v1
             - working-directory: bindings/dart
               run: |
-                  VER=$(grep "^version:" pubspec.yaml | cut -d ' ' -f 2)
+                  VER="${{ needs.verify-release.outputs.version }}"
+                  FILE_VER=$(grep "^version:" pubspec.yaml | cut -d ' ' -f 2)
+                  if [ "$FILE_VER" != "$VER" ]; then
+                    echo "Version mismatch: $FILE_VER != $VER"
+                    exit 1
+                  fi
                   if python3 ../../tooling/check_version_exists.py --registry pub --package "strling" --version "$VER"; then exit 0; fi
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
                     dart pub publish --dry-run
@@ -527,10 +537,18 @@ jobs:
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
                   ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_KEY }}
               run: |
-                  VER=$(grep "version =" build.gradle.kts | head -1 | cut -d '"' -f 2)
+                  VER="${{ needs.verify-release.outputs.version }}"
+                  FILE_VER=$(grep -E '^version = providers\.gradleProperty\("version"\)\.orElse\("[^"]+"\)\.get\(\)$' build.gradle.kts | sed -E 's/.*orElse\("([^"]+)"\).*/\1/')
+                  if [ "$FILE_VER" != "$VER" ]; then
+                    echo "Version mismatch: $FILE_VER != $VER"
+                    exit 1
+                  fi
                   if python3 ../../tooling/check_version_exists.py --registry maven --group "com.strling" --package "strling-kotlin" --version "$VER"; then exit 0; fi
-                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && ./gradlew publishToMavenLocal && exit 0
-                  ./gradlew publish
+                  TARGET_TASK="publishToMavenLocal"
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "false" ]; then
+                    TARGET_TASK="publish"
+                  fi
+                  ./gradlew "$TARGET_TASK" -Pversion="$VER"
 
     publish-lua:
         needs: [verify-release, compile-lua]
@@ -559,17 +577,18 @@ jobs:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: shogo82148/actions-setup-perl@v1
-            - run: cpanm App::cpanupload
+            - run: cpanm --notest CPAN::Uploader
             - working-directory: bindings/perl
               env:
                   PAUSE_USERNAME: ${{ secrets.PAUSE_USERNAME }}
                   PAUSE_PASSWORD: ${{ secrets.PAUSE_PASSWORD }}
               run: |
-                  VER=$(grep "\$VERSION =" lib/STRling.pm | cut -d "'" -f 2)
+                  VER="${{ needs.verify-release.outputs.version }}"
+                  PKG_FILE="STRling-${VER}.tar.gz"
                   if python3 ../../tooling/check_version_exists.py --registry cpan --package "STRling" --version "$VER"; then exit 0; fi
                   perl Makefile.PL && make dist
-                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
-                  cpan-upload -u $PAUSE_USERNAME -p $PAUSE_PASSWORD *.tar.gz
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && echo "DRY RUN: Simulated upload of $PKG_FILE" && exit 0
+                  cpan-upload -u $PAUSE_USERNAME -p $PAUSE_PASSWORD "$PKG_FILE"
 
     publish-python:
         needs: [verify-release, compile-python]

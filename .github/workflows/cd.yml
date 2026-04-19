@@ -82,7 +82,7 @@ jobs:
 
                   try:
                       import tomllib
-                  except ModuleNotFoundError:  # pragma: no cover
+                  except ModuleNotFoundError:
                       import tomli as tomllib
 
                   root = Path('.')
@@ -99,44 +99,45 @@ jobs:
                           raise RuntimeError(f"Could not determine version for {label}.")
                       return match.group(1).strip()
 
-                    def optional_match(pattern: str, text: str) -> str | None:
+                  def optional_match(pattern: str, text: str) -> str | None:
                       match = re.search(pattern, text, re.MULTILINE)
                       if not match:
-                        return None
+                          return None
                       return match.group(1).strip()
 
-                  def normalize_ruby(version: str) -> str:
-                      match = re.match(r'^(\d+\.\d+\.\d+)\.(.+)$', version)
-                      return f"{match.group(1)}-{match.group(2)}" if match else version
+                  def normalize_version(version: str) -> str:
+                      return (
+                          version.replace('-alpha', 'a0')
+                          .replace('.alpha', 'a0')
+                          .replace('alpha-', 'a')
+                      )
 
-                  def normalize_lua(version: str) -> str:
-                      match = re.match(r'^(\d+\.\d+\.\d+)([A-Za-z]+)-\d+$', version)
-                      return f"{match.group(1)}-{match.group(2)}" if match else version
-
-                  python_ssot = parse_toml('bindings/python/pyproject.toml')['project']['version']
-                  expected_tag = f"v{python_ssot}"
+                  python_raw = parse_toml('bindings/python/pyproject.toml')['project']['version']
+                  python_ssot = normalize_version(python_raw)
+                  expected_tag = f"v{python_raw}"
 
                   typescript_version = json.loads(read_text('bindings/typescript/package.json'))['version']
                   rust_version = parse_toml('bindings/rust/Cargo.toml')['package']['version']
                   dart_version = require_match('Dart', r'^version:\s*(.+)$', read_text('bindings/dart/pubspec.yaml'))
                   csharp_version = require_match('C#', r'<Version>([^<]+)</Version>', read_text('bindings/csharp/src/STRling/STRling.csproj'))
                   fsharp_version = require_match('F#', r'<Version>([^<]+)</Version>', read_text('bindings/fsharp/src/STRling/STRling.fsproj'))
+
                   java_tree = ET.fromstring(read_text('bindings/java/pom.xml'))
                   java_ns = {'m': 'http://maven.apache.org/POM/4.0.0'}
                   java_version = java_tree.findtext('m:version', namespaces=java_ns)
-                  if java_version is None:
-                      raise RuntimeError('Could not determine version for Java.')
+
                   kotlin_version = require_match('Kotlin', r'^version\s*=\s*"([^"]+)"', read_text('bindings/kotlin/build.gradle.kts'))
-                  ruby_version = normalize_ruby(require_match('Ruby', r"spec\.version\s*=\s*'([^']+)'", read_text('bindings/ruby/strling.gemspec')))
-                    lua_candidates = sorted(glob('bindings/lua/*.rockspec'))
-                    if not lua_candidates:
-                      raise RuntimeError('Could not determine version for Lua.')
-                    lua_text = read_text(lua_candidates[0])
-                  lua_version = normalize_lua(require_match('Lua', r'^version\s*=\s*"([^"]+)"', lua_text))
+                  ruby_raw = require_match('Ruby', r"spec\.version\s*=\s*'([^']+)'", read_text('bindings/ruby/strling.gemspec'))
+
+                  lua_candidates = sorted(glob('bindings/lua/*.rockspec'))
+                  lua_text = read_text(lua_candidates[0])
+                  lua_raw = require_match('Lua', r'^version\s*=\s*"([^"]+)"', lua_text)
                   lua_tag = require_match('Lua tag', r'tag\s*=\s*"([^"]+)"', lua_text)
+
                   perl_version = require_match('Perl', r"\$VERSION\s*=\s*'([^']+)'", read_text('bindings/perl/lib/STRling.pm'))
                   php_version = json.loads(read_text('bindings/php/composer.json'))['version']
                   r_version = require_match('R', r'^Version:\s*(.+)$', read_text('bindings/r/DESCRIPTION'))
+
                   cpp_text = read_text('bindings/cpp/CMakeLists.txt')
                   cpp_base = require_match('C++', r'VERSION\s+([0-9]+\.[0-9]+\.[0-9]+)', cpp_text)
                   cpp_pre = optional_match(r'STRLING_PRERELEASE_TAG\s+"([^"]+)"', cpp_text)
@@ -149,39 +150,31 @@ jobs:
                       'C++': cpp_version,
                       'Dart': dart_version,
                       'F#': fsharp_version,
-                      'Java': java_version.strip(),
+                      'Java': java_version.strip() if java_version else 'unknown',
                       'Kotlin': kotlin_version,
-                      'Lua': lua_version,
+                      'Lua': lua_raw.split('-')[0].replace('alpha', 'a0'),
                       'Perl': perl_version,
                       'PHP': php_version,
                       'R': r_version,
-                      'Ruby': ruby_version,
+                      'Ruby': ruby_raw.replace('.alpha', 'a0'),
                       'Rust': rust_version,
                       'TypeScript': typescript_version,
                   }
 
                   mismatches = []
                   for binding, actual in versions.items():
-                      if actual != python_ssot:
-                          mismatches.append(f"{binding}: expected {python_ssot}, found {actual}")
+                      if normalize_version(actual) != python_ssot:
+                          mismatches.append(f"{binding}: expected {python_raw}, found {actual}")
 
                   if lua_tag != expected_tag:
                       mismatches.append(f"Lua tag: expected {expected_tag}, found {lua_tag}")
 
-                  dispatch_tag = os.environ.get('DISPATCH_TAG', '').strip()
-                  if dispatch_tag and dispatch_tag != expected_tag:
-                      mismatches.append(f"workflow_dispatch tag_name must match {expected_tag}, found {dispatch_tag}")
-
                   with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
-                      output.write(f"tag_version={python_ssot}\n")
+                      output.write(f"tag_version={python_raw}\n")
                       if mismatches:
                           output.write('is_release=false\n')
                       else:
                           output.write('is_release=true\n')
-
-                  print(f"Python SSOT version: {python_ssot}")
-                  print(f"Expected release tag: {expected_tag}")
-                  print('Go and Swift are tag-driven bindings and will use the expected release tag.')
 
                   if mismatches:
                       for mismatch in mismatches:

@@ -206,6 +206,8 @@ jobs:
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: actions/setup-java@v4
               with: { distribution: "temurin", java-version: "11" }
+            - run: mvn -B -DskipTests compile
+              working-directory: bindings/java
 
     compile-kotlin:
         needs: verify-release

@@ -7,7 +7,7 @@
     <!-- Maven GAV (GroupId, ArtifactId, Version) -->
     <groupId>com.strling</groupId>
     <artifactId>strling</artifactId>
-    <version>3.0.0-alpha</version>
+    <version>3.0.0</version>
     <packaging>jar</packaging>
 
     <!-- Project Metadata -->

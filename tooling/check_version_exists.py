@@ -100,14 +100,14 @@ def check_luarocks(package: str, version: str) -> bool:
     # Let's assume the package is uploaded to the root manifest or a specific user.
     # The CI uses `luarocks upload`, which uses the API key.
     # Let's try to fetch the rockspec from the main server.
-    # https://luarocks.org/manifests/strling-lang/strling-3.0.0-alpha-1.rockspec
+    # https://luarocks.org/manifests/strling-lang/strling-3.0.0-1.rockspec
 
     # We will try a few common users or just fail open (return False) if we can't verify.
     # But the goal is to prevent failure.
     # Let's try to hit the rockspec URL for 'strling-lang' (repo owner).
 
-    # Note: version in rockspec usually includes revision, e.g. "3.0.0-alpha-1"
-    # The input version might be "3.0.0-alpha".
+    # Note: version in rockspec usually includes revision, e.g. "3.0.0-1"
+    # The input version might be "3.0.0".
     # If the input version doesn't have a revision, we might miss it.
     # But let's assume the input version is the full version string from the rockspec.
 

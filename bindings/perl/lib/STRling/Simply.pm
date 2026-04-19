@@ -40,7 +40,7 @@ use warnings;
 use STRling::Core::Nodes;
 use STRling::Core::Compiler;
 
-our $VERSION = '3.0.0-alpha';
+our $VERSION = '3.0.0';
 
 use Exporter 'import';
 our @EXPORT_OK = qw(

@@ -35,7 +35,7 @@ to a dictionary representation for further processing or debugging.
 use strict;
 use warnings;
 
-our $VERSION = '3.0.0-alpha';
+our $VERSION = '3.0.0';
 
 # ---- Base IR Operation ----
 

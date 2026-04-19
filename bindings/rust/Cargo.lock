@@ -523,7 +523,7 @@ dependencies = [
 
 [[package]]
 name = "strling"
-version = "3.0.0-alpha"
+version = "3.0.0"
 dependencies = [
  "clap",
  "criterion",

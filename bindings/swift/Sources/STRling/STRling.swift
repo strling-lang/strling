@@ -10,7 +10,7 @@
 /// details are kept internal to maintain a clean public interface.
 public struct STRling {
     /// The version of the STRling library
-    public static let version = "3.0.0-alpha"
+    public static let version = "3.0.0"
     
     /// Private initializer to prevent instantiation
     private init() {}

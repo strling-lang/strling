@@ -6,8 +6,6 @@ project(STRling
     LANGUAGES CXX
 )
 
-set(STRLING_PRERELEASE_TAG "alpha")
-
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

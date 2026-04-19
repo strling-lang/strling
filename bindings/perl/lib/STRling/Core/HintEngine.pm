@@ -17,7 +17,7 @@ that help users understand and fix their mistakes.
 use strict;
 use warnings;
 
-our $VERSION = '3.0.0-alpha';
+our $VERSION = '3.0.0';
 
 use Exporter 'import';
 our @EXPORT_OK = qw(get_hint);

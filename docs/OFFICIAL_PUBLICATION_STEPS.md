@@ -57,7 +57,7 @@ The package must contain a valid `package.json` with the required `name` and `ve
 For STRling, the npm package metadata already signals the public package identity in `bindings/typescript/package.json`:
 
 - Package name: `@strling-lang/strling`
-- Version: `3.0.0-alpha`
+- Version: `3.0.0`
 - Published files: `dist`
 
 ### 4.2 Pre-publish validation
@@ -81,7 +81,7 @@ For STRling, the npm package metadata already signals the public package identit
 
 1. Publish the current package with `npm publish`.
 2. Publish a scoped public package with `npm publish --access public` when the scope is public.
-3. Publish prereleases with an explicit dist-tag, for example `npm publish --tag alpha`.
+3. Publish prereleases with an explicit dist-tag only when needed; stable releases use the default `latest` tag.
 4. If supported by the workflow, enable provenance so npm links the published package to the build source.
 
 ### 4.5 Required npm verification after publish

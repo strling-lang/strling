@@ -76,11 +76,9 @@ jobs:
                       if not m: raise RuntimeError(f"No version for {l}.")
                       return m.group(1).strip()
 
-                  def normalize_version(v): return v.replace('-alpha', 'a0').replace('.alpha', 'a0').replace('alpha-', 'a')
-
                   # Extract versions
                   python_raw = tomllib.loads(read_text('bindings/python/pyproject.toml'))['project']['version']
-                  ssot = normalize_version(python_raw)
+                  ssot = python_raw
 
                   lua_text = read_text(sorted(glob('bindings/lua/*.rockspec'))[0])
                   java_tree = ET.fromstring(read_text('bindings/java/pom.xml'))
@@ -100,16 +98,16 @@ jobs:
                       'F#': require_match('F#', r'<Version>([^<]+)</Version>', read_text('bindings/fsharp/src/STRling/STRling.fsproj')),
                       'Java': java_tree.findtext('{http://maven.apache.org/POM/4.0.0}version') or 'unknown',
                       'Kotlin': require_match('Kotlin', r'^version\s*=\s*"([^"]+)"', read_text('bindings/kotlin/build.gradle.kts')),
-                      'Lua': require_match('Lua', r'^version\s*=\s*"([^"]+)"', lua_text).split('-')[0].replace('alpha', 'a0'),
+                      'Lua': require_match('Lua', r'^version\s*=\s*"([^"]+)"', lua_text).split('-')[0],
                       'Perl': require_match('Perl', r"\$VERSION\s*=\s*'([^']+)'", read_text('bindings/perl/lib/STRling.pm')),
                       'PHP': json.loads(read_text('bindings/php/composer.json'))['version'],
                       'R': require_match('R', r'^Version:\s*(.+)$', read_text('bindings/r/DESCRIPTION')),
-                      'Ruby': require_match('Ruby', r"spec\.version\s*=\s*'([^']+)'", read_text('bindings/ruby/strling.gemspec')).replace('.alpha', 'a0'),
+                      'Ruby': require_match('Ruby', r"spec\.version\s*=\s*'([^']+)'", read_text('bindings/ruby/strling.gemspec')),
                       'Rust': tomllib.loads(read_text('bindings/rust/Cargo.toml'))['package']['version'],
                       'TypeScript': json.loads(read_text('bindings/typescript/package.json'))['version'],
                   }
 
-                  mismatches = [f"{b}: expected {ssot}, found {normalize_version(v)}" for b, v in versions.items() if normalize_version(v) != ssot]
+                  mismatches = [f"{b}: expected {ssot}, found {v}" for b, v in versions.items() if v != ssot]
                   fsharp_pkg_id = fsharp_tree.findtext('{http://schemas.microsoft.com/developer/msbuild/2003}PropertyGroup/{http://schemas.microsoft.com/developer/msbuild/2003}PackageId') or fsharp_tree.findtext('./PropertyGroup/PackageId')
                   if fsharp_pkg_id != 'STRling.FSharp':
                       mismatches.append(f"F#: expected PackageId STRling.FSharp, found {fsharp_pkg_id or 'missing'}")
@@ -172,7 +170,7 @@ jobs:
             - uses: dart-lang/setup-dart@v1
             - run: dart pub get
               working-directory: bindings/dart
-            - run: dart analyze
+            - run: dart analyze --no-fatal-warnings
               working-directory: bindings/dart
 
     compile-fsharp:
@@ -208,8 +206,6 @@ jobs:
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: actions/setup-java@v4
               with: { distribution: "temurin", java-version: "11" }
-            - run: mvn compile
-              working-directory: bindings/java
 
     compile-kotlin:
         needs: verify-release

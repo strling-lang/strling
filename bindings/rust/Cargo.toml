@@ -1,6 +1,6 @@
 [package]
 name = "strling"
-version = "3.0.0-alpha"
+version = "3.0.0"
 authors = ["STRling Team"]
 edition = "2021"
 rust-version = "1.70"

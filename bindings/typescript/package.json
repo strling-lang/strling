@@ -1,6 +1,6 @@
 {
     "name": "@strling-lang/strling",
-    "version": "3.0.0-alpha",
+    "version": "3.0.0",
     "description": "Next-gen string pattern DSL & compiler",
     "keywords": [
         "strling",

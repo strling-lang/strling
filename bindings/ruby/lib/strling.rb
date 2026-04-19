@@ -16,7 +16,7 @@ require_relative 'strling/simply'
 
 module Strling
   # Version constant
-  VERSION = '3.0.0-alpha'
+  VERSION = '3.0.0'
 
   # Convenience method for parsing
   def self.parse(text)

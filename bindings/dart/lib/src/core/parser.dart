@@ -323,7 +323,7 @@ class Parser {
     
     return Quantifier(
       target: child,
-      min: min!,
+      min: min,
       max: max,
       greedy: greedy,
       lazy: lazy,

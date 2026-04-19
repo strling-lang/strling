@@ -13,7 +13,7 @@ class STRlingConan(ConanFile):
     """
 
     name = "strling"
-    version = "3.0.0-alpha"
+    version = "3.0.0"
     license = "MIT"
     author = "STRling Team"
     url = "https://github.com/strling-lang/strling"

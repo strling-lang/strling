@@ -36,7 +36,7 @@ serialized to a dictionary representation for debugging or storage.
 use strict;
 use warnings;
 
-our $VERSION = '3.0.0-alpha';
+our $VERSION = '3.0.0';
 
 # ---- Flags container ----
 

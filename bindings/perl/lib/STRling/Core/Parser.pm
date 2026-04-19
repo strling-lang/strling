@@ -39,7 +39,7 @@ use strict;
 use warnings;
 use Exporter 'import';
 
-our $VERSION = '3.0.0-alpha';
+our $VERSION = '3.0.0';
 our @EXPORT_OK = qw(parse);
 
 use STRling::Core::Nodes;

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.strling"
-version = "3.0.0-alpha"
+version = "3.0.0"
 
 repositories {
     mavenCentral()

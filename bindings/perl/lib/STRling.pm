@@ -5,7 +5,7 @@ package STRling;
 use strict;
 use warnings;
 
-our $VERSION = '3.0.0-alpha';
+our $VERSION = '3.0.0';
 
 =head1 NAME
 

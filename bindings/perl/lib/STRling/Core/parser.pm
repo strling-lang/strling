@@ -27,7 +27,7 @@ comprehensive error handling with position tracking for helpful diagnostics.
 use strict;
 use warnings;
 
-our $VERSION = '3.0.0-alpha';
+our $VERSION = '3.0.0';
 
 use Exporter 'import';
 our @EXPORT_OK = qw(parse parse_to_artifact);

@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name        = 'strling'
-  spec.version     = '3.0.0.alpha'
+  spec.version     = '3.0.0'
   spec.authors     = ['STRling Team']
   spec.email       = []
   spec.summary     = 'Next-gen string pattern DSL & compiler'

@@ -1,7 +1,7 @@
 param (
-    [Parameter(Mandatory=$true, Position=0)]
+    [Parameter(Mandatory = $true, Position = 0)]
     [string]$Command,
-    [Parameter(Mandatory=$false, Position=1)]
+    [Parameter(Mandatory = $false, Position = 1)]
     [string]$Language
 )
 
@@ -74,7 +74,7 @@ function Get-InstallPackages {
     return @($packages)
 }
 
-function Detect-PackageManager {
+function Get-PackageManager {
     if (Get-Command winget -ErrorAction SilentlyContinue) {
         return "winget"
     }
@@ -90,7 +90,7 @@ function Install-Packages {
         return $false
     }
 
-    Write-Host ">> Attempting prerequisite install via $Manager: $($Packages -join ', ')"
+    Write-Host ">> Attempting prerequisite install via ${Manager}: $($Packages -join ', ')"
     switch ($Manager) {
         "winget" {
             foreach ($package in $Packages) {
@@ -111,7 +111,7 @@ function Install-Packages {
     }
 }
 
-function Ensure-BindingPrereqs {
+function Set-BindingPrereqs {
     param([string]$BindingName)
     $missing = @()
     $requiredBins = Get-BindingRequiredBins $BindingName
@@ -126,8 +126,8 @@ function Ensure-BindingPrereqs {
         return $true
     }
 
-    Write-Host ">> Missing prerequisite tools for $BindingName: $($missing -join ', ')"
-    $manager = Detect-PackageManager
+    Write-Host ">> Missing prerequisite tools for ${BindingName}: $($missing -join ', ')"
+    $manager = Get-PackageManager
     if (-not $manager) {
         return $false
     }
@@ -151,7 +151,7 @@ function Ensure-BindingPrereqs {
     return $true
 }
 
-function Ensure-PythonEnv {
+function Set-PythonEnv {
     param([string]$TargetDir)
     $pythonCommand = Resolve-CommandName "python3"
     if (-not $pythonCommand) {
@@ -198,7 +198,7 @@ function Invoke-BindingAction {
         exit 1
     }
 
-    if ($Action -ne "clean" -and -not (Ensure-BindingPrereqs $BindingName)) {
+    if ($Action -ne "clean" -and -not (Set-BindingPrereqs $BindingName)) {
         Write-Error "Missing prerequisites for $BindingName"
         exit 1
     }
@@ -216,19 +216,21 @@ function Invoke-BindingAction {
     Push-Location $targetDir
     try {
         if ($BindingName -eq "python" -and $Action -ne "clean") {
-            Ensure-PythonEnv $targetDir
+            Set-PythonEnv $targetDir
         }
 
         $exe = $commandArray[0]
-        $args = if ($commandArray.Count -gt 1) { $commandArray[1..($commandArray.Count - 1)] } else { @() }
-        & $exe @args
+        $arguments = if ($commandArray.Count -gt 1) { $commandArray[1..($commandArray.Count - 1)] } else { @() }
+        & $exe @arguments
         if ($LASTEXITCODE -ne 0) {
             throw "Command failed with exit code $LASTEXITCODE"
         }
-    } catch {
+    }
+    catch {
         Write-Error $_
         exit 1
-    } finally {
+    }
+    finally {
         Pop-Location
     }
     exit 0
@@ -245,7 +247,8 @@ function Invoke-AllBindings {
         & $PSCommandPath $Action $binding
         if ($LASTEXITCODE -eq 0) {
             $passed += 1
-        } else {
+        }
+        else {
             $failed += $binding
         }
     }
@@ -270,7 +273,8 @@ function Show-Bindings {
         }
         if ($missing.Count -eq 0) {
             Write-Host ("  {0,-12} [READY]" -f $binding)
-        } else {
+        }
+        else {
             Write-Host ("  {0,-12} [MISSING: {1}]" -f $binding, ($missing -join ', '))
         }
     }
@@ -339,7 +343,7 @@ switch ($Command) {
             "dart" { Write-Output "pubspec.lock" }
             "java" { Write-Output "pom.xml" }
             "kotlin" { Write-Output "build.gradle.kts" }
-            "lua" { Write-Output "strling-3.0.0alpha-1.rockspec" }
+            "lua" { Write-Output "strling-3.0.0-1.rockspec" }
             "perl" { Write-Output "Makefile.PL" }
             "csharp" { Write-Output "src/STRling/STRling.csproj" }
             "fsharp" { Write-Output "src/STRling/STRling.fsproj" }
@@ -361,7 +365,8 @@ switch ($Command) {
         try {
             & $pythonCommand "tooling/audit_omega.py"
             exit $LASTEXITCODE
-        } finally {
+        }
+        finally {
             Pop-Location
         }
     }

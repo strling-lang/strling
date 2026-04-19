@@ -87,7 +87,7 @@ jobs:
 
                   # Fix for f-string backslash limitation in Python < 3.12
                   cpp_text = read_text('bindings/cpp/CMakeLists.txt')
-                  cpp_base = require_match('C++', r'project\(.*VERSION\s+([0-9\.]+)', cpp_text)
+                  cpp_base = require_match('C++', r'project\([\s\S]*?VERSION\s+([0-9\.]+)', cpp_text)
                   cpp_pre_match = re.search(r'STRLING_PRERELEASE_TAG\s+"([^"]+)"', cpp_text)
                   cpp_v = f"{cpp_base}-{cpp_pre_match.group(1)}" if cpp_pre_match else cpp_base
 

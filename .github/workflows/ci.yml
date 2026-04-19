@@ -90,6 +90,7 @@ jobs:
                   set -e
                   sudo apt-get update
                   sudo apt-get install -y --no-install-recommends \
+                    libuv1-dev \
                     r-base \
                     r-base-dev \
                     libcurl4-openssl-dev \

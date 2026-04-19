@@ -73,13 +73,11 @@ jobs:
               uses: ruby/setup-ruby@v1
               with:
                   ruby-version: "3.2"
-                  bundler-cache: false
 
             - name: 🔧 Install Lua & LuaRocks
               if: matrix.language == 'lua'
               uses: leafo/gh-actions-lua@v12
               with:
-                  buildCache: "false"
                   luaVersion: "5.4"
 
             - name: 🔧 Install LuaRocks

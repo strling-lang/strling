@@ -40,7 +40,7 @@ public class PatternEncapsulationTest
         if (issues.Count > 0)
         {
             var msg = string.Join("\n", issues);
-            Assert.False(true, "Public API surface leaks internal core types:\n" + msg);
+            Assert.Fail("Public API surface leaks internal core types:\n" + msg);
         }
     }
 

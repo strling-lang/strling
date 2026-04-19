@@ -444,7 +444,7 @@ jobs:
                   if python3 ../../tooling/check_version_exists.py --registry nuget --package "STRling" --version "$VER"; then exit 0; fi
                   dotnet pack -c Release
                   [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
-                  dotnet nuget push src/STRling/bin/Release/*.nupkg -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+                  dotnet nuget push src/STRling/bin/Release/*.nupkg -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
     publish-dart:
         needs: [verify-release, compile-dart]
@@ -480,7 +480,7 @@ jobs:
                   if python3 ../../tooling/check_version_exists.py --registry nuget --package "STRling.FSharp" --version "$VER"; then exit 0; fi
                   dotnet pack src/STRling/STRling.fsproj -c Release
                   [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
-                  dotnet nuget push src/STRling/bin/Release/*.nupkg -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+                  dotnet nuget push src/STRling/bin/Release/*.nupkg -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
     publish-java:
         needs: [verify-release, compile-java]

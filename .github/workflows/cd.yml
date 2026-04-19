@@ -7,23 +7,24 @@ name: STRling CD
 on:
     workflow_run:
         workflows: ["STRling CI"]
-        branches: [main] # CD only triggers for main branch CI runs
-        types:
-            - completed
+        branches: [main]
+        types: [completed]
     workflow_dispatch:
         inputs:
             dry_run:
-                description: "Run deployment in dry-run mode (no actual publishing)"
+                description: "Run deployment in dry-run mode"
                 required: true
                 default: true
                 type: boolean
             tag_name:
-                description: "Tag name to simulate (e.g. v3.0.0-alpha)"
+                description: "Tag name to simulate"
                 required: false
                 default: ""
 
 jobs:
-    # --- GATE JOB: Verify conditions before proceeding ---
+    # ==========================================
+    # TIER 1: GLOBAL PREFLIGHT GATE
+    # ==========================================
     verify-release:
         name: Verify Release Conditions
         runs-on: ubuntu-latest
@@ -34,1460 +35,816 @@ jobs:
             is_dry_run: ${{ steps.release_state.outputs.is_dry_run }}
             release_ref: ${{ steps.release_state.outputs.release_ref }}
         steps:
-            - name: Checkout triggering commit
-              uses: actions/checkout@v5
+            - uses: actions/checkout@v5
               with:
                   ref: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
                   fetch-depth: 0
-
-            - name: Setup Python 3.11
-              uses: actions/setup-python@v5
+            - uses: actions/setup-python@v5
               with:
                   python-version: "3.11"
-
-            - name: Inject Apache 2.0 License for Registry Compliance
-              run: |
-                  curl -L -o LICENSE https://www.apache.org/licenses/LICENSE-2.0.txt
-
+            - name: Inject Apache 2.0 License
+              run: curl -L -o LICENSE https://www.apache.org/licenses/LICENSE-2.0.txt
             - name: Verify SSOT release state
               id: release_state
-              env:
-                  DISPATCH_TAG: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag_name || '' }}
               run: |
-                  if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-                    if [[ "${{ github.event.inputs.dry_run }}" == "false" ]]; then
-                      echo "is_dry_run=false" >> $GITHUB_OUTPUT
-                    else
-                      echo "is_dry_run=true" >> $GITHUB_OUTPUT
-                    fi
-                  else
+                  if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.dry_run }}" == "false" ]]; then
                     echo "is_dry_run=false" >> $GITHUB_OUTPUT
-                  fi
-
-                  if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-                    RELEASE_REF="${{ github.sha }}"
                   else
-                    RELEASE_REF="${{ github.event.workflow_run.head_sha }}"
+                    echo "is_dry_run=true" >> $GITHUB_OUTPUT
                   fi
 
-                  echo "release_ref=$RELEASE_REF" >> $GITHUB_OUTPUT
+                  REF="${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}"
+                  echo "release_ref=$REF" >> $GITHUB_OUTPUT
+
                   python <<'PY'
-                  import json
-                  import os
-                  import re
-                  import sys
+                  import json, os, re, sys
                   import xml.etree.ElementTree as ET
                   from glob import glob
                   from pathlib import Path
 
-                  try:
-                      import tomllib
-                  except ModuleNotFoundError:
-                      import tomli as tomllib
+                  try: import tomllib
+                  except ModuleNotFoundError: import tomli as tomllib
 
-                  root = Path('.')
+                  def read_text(p): return Path(p).read_text(encoding='utf-8')
+                  def require_match(l, p, t):
+                      m = re.search(p, t, re.M)
+                      if not m: raise RuntimeError(f"No version for {l}.")
+                      return m.group(1).strip()
 
-                  def read_text(relative_path: str) -> str:
-                      return (root / relative_path).read_text(encoding='utf-8')
+                  def normalize_version(v): return v.replace('-alpha', 'a0').replace('.alpha', 'a0').replace('alpha-', 'a')
 
-                  def parse_toml(relative_path: str):
-                      return tomllib.loads(read_text(relative_path))
+                  python_raw = tomllib.loads(read_text('bindings/python/pyproject.toml'))['project']['version']
+                  ssot = normalize_version(python_raw)
 
-                  def require_match(label: str, pattern: str, text: str) -> str:
-                      match = re.search(pattern, text, re.MULTILINE)
-                      if not match:
-                          raise RuntimeError(f"Could not determine version for {label}.")
-                      return match.group(1).strip()
-
-                  def optional_match(pattern: str, text: str) -> str | None:
-                      match = re.search(pattern, text, re.MULTILINE)
-                      if not match:
-                          return None
-                      return match.group(1).strip()
-
-                  def normalize_version(version: str) -> str:
-                      return (
-                          version.replace('-alpha', 'a0')
-                          .replace('.alpha', 'a0')
-                          .replace('alpha-', 'a')
-                      )
-
-                  python_raw = parse_toml('bindings/python/pyproject.toml')['project']['version']
-                  python_ssot = normalize_version(python_raw)
-                  expected_tag = f"v{python_raw}"
-
-                  typescript_version = json.loads(read_text('bindings/typescript/package.json'))['version']
-                  rust_version = parse_toml('bindings/rust/Cargo.toml')['package']['version']
-                  dart_version = require_match('Dart', r'^version:\s*(.+)$', read_text('bindings/dart/pubspec.yaml'))
-                  csharp_version = require_match('C#', r'<Version>([^<]+)</Version>', read_text('bindings/csharp/src/STRling/STRling.csproj'))
-                  fsharp_version = require_match('F#', r'<Version>([^<]+)</Version>', read_text('bindings/fsharp/src/STRling/STRling.fsproj'))
-
+                  lua_text = read_text(sorted(glob('bindings/lua/*.rockspec'))[0])
                   java_tree = ET.fromstring(read_text('bindings/java/pom.xml'))
-                  java_ns = {'m': 'http://maven.apache.org/POM/4.0.0'}
-                  java_version = java_tree.findtext('m:version', namespaces=java_ns)
-
-                  kotlin_version = require_match('Kotlin', r'^version\s*=\s*"([^"]+)"', read_text('bindings/kotlin/build.gradle.kts'))
-                  ruby_raw = require_match('Ruby', r"spec\.version\s*=\s*'([^']+)'", read_text('bindings/ruby/strling.gemspec'))
-
-                  lua_candidates = sorted(glob('bindings/lua/*.rockspec'))
-                  lua_text = read_text(lua_candidates[0])
-                  lua_raw = require_match('Lua', r'^version\s*=\s*"([^"]+)"', lua_text)
-                  lua_tag = require_match('Lua tag', r'tag\s*=\s*"([^"]+)"', lua_text)
-
-                  perl_version = require_match('Perl', r"\$VERSION\s*=\s*'([^']+)'", read_text('bindings/perl/lib/STRling.pm'))
-                  php_version = json.loads(read_text('bindings/php/composer.json'))['version']
-                  r_version = require_match('R', r'^Version:\s*(.+)$', read_text('bindings/r/DESCRIPTION'))
-
                   cpp_text = read_text('bindings/cpp/CMakeLists.txt')
-                  cpp_base = require_match('C++', r'VERSION\s+([0-9]+\.[0-9]+\.[0-9]+)', cpp_text)
-                  cpp_pre = optional_match(r'STRLING_PRERELEASE_TAG\s+"([^"]+)"', cpp_text)
-                  cpp_version = f"{cpp_base}-{cpp_pre}" if cpp_pre else cpp_base
-                  c_version = require_match('C', r'return\s+"([^"]+)";', read_text('bindings/c/src/strling.c'))
+                  cpp_pre = re.search(r'STRLING_PRERELEASE_TAG\s+"([^"]+)"', cpp_text)
+                  cpp_v = f"{require_match('C++', r'VERSION\s+([0-9\.]+)', cpp_text)}-{cpp_pre.group(1)}" if cpp_pre else require_match('C++', r'VERSION\s+([0-9\.]+)', cpp_text)
 
                   versions = {
-                      'C': c_version,
-                      'C#': csharp_version,
-                      'C++': cpp_version,
-                      'Dart': dart_version,
-                      'F#': fsharp_version,
-                      'Java': java_version.strip() if java_version else 'unknown',
-                      'Kotlin': kotlin_version,
-                      'Lua': lua_raw.split('-')[0].replace('alpha', 'a0'),
-                      'Perl': perl_version,
-                      'PHP': php_version,
-                      'R': r_version,
-                      'Ruby': ruby_raw.replace('.alpha', 'a0'),
-                      'Rust': rust_version,
-                      'TypeScript': typescript_version,
+                      'C': require_match('C', r'return\s+"([^"]+)";', read_text('bindings/c/src/strling.c')),
+                      'C#': require_match('C#', r'<Version>([^<]+)</Version>', read_text('bindings/csharp/src/STRling/STRling.csproj')),
+                      'C++': cpp_v,
+                      'Dart': require_match('Dart', r'^version:\s*(.+)$', read_text('bindings/dart/pubspec.yaml')),
+                      'F#': require_match('F#', r'<Version>([^<]+)</Version>', read_text('bindings/fsharp/src/STRling/STRling.fsproj')),
+                      'Java': java_tree.findtext('{http://maven.apache.org/POM/4.0.0}version') or 'unknown',
+                      'Kotlin': require_match('Kotlin', r'^version\s*=\s*"([^"]+)"', read_text('bindings/kotlin/build.gradle.kts')),
+                      'Lua': require_match('Lua', r'^version\s*=\s*"([^"]+)"', lua_text).split('-')[0].replace('alpha', 'a0'),
+                      'Perl': require_match('Perl', r"\$VERSION\s*=\s*'([^']+)'", read_text('bindings/perl/lib/STRling.pm')),
+                      'PHP': json.loads(read_text('bindings/php/composer.json'))['version'],
+                      'R': require_match('R', r'^Version:\s*(.+)$', read_text('bindings/r/DESCRIPTION')),
+                      'Ruby': require_match('Ruby', r"spec\.version\s*=\s*'([^']+)'", read_text('bindings/ruby/strling.gemspec')).replace('.alpha', 'a0'),
+                      'Rust': tomllib.loads(read_text('bindings/rust/Cargo.toml'))['package']['version'],
+                      'TypeScript': json.loads(read_text('bindings/typescript/package.json'))['version'],
                   }
 
-                  mismatches = []
-                  for binding, actual in versions.items():
-                      if normalize_version(actual) != python_ssot:
-                          mismatches.append(f"{binding}: expected {python_raw}, found {actual}")
+                  mismatches = [f"{b}: expected {ssot}, found {normalize_version(v)}" for b, v in versions.items() if normalize_version(v) != ssot]
+                  if require_match('Lua tag', r'tag\s*=\s*"([^"]+)"', lua_text) != f"v{python_raw}":
+                      mismatches.append("Lua tag mismatch")
 
-                  if lua_tag != expected_tag:
-                      mismatches.append(f"Lua tag: expected {expected_tag}, found {lua_tag}")
-
-                  with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
-                      output.write(f"tag_version={python_raw}\n")
-                      if mismatches:
-                          output.write('is_release=false\n')
-                      else:
-                          output.write('is_release=true\n')
+                  with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+                      f.write(f"tag_version={python_raw}\n")
+                      f.write("is_release=false\n" if mismatches else "is_release=true\n")
 
                   if mismatches:
-                      for mismatch in mismatches:
-                          print(f"::error::{mismatch}")
+                      for m in mismatches: print(f"::error::{m}")
                       sys.exit(1)
-
-                  print('All release versions are synchronized to the Python SSOT.')
                   PY
 
-    # --- AUTHENTICATION SMOKE TESTS (MATRIX) ---
-    verify-connections:
-        name: Verify Registry Auth (${{ matrix.binding }})
+    # ==========================================
+    # TIER 2: INDEPENDENT COMPILE TRACKS
+    # ==========================================
+    compile-c:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        strategy:
-            fail-fast: false
-            matrix:
-                include:
-                    - binding: typescript
-                      environment: npmjs
-                      working_directory: bindings/typescript
-                    - binding: python
-                      environment: pypi
-                      working_directory: bindings/python
-                    - binding: rust
-                      environment: crates-io
-                      working_directory: bindings/rust
-                    - binding: dart
-                      environment: pubdev
-                      working_directory: bindings/dart
-                    - binding: ruby
-                      environment: rubygems
-                      working_directory: bindings/ruby
-                    - binding: csharp
-                      environment: nuget
-                      working_directory: bindings/csharp
-                    - binding: fsharp
-                      environment: nuget
-                      working_directory: bindings/fsharp
-                    - binding: java
-                      environment: maven-central
-                      working_directory: bindings/java
-                    - binding: kotlin
-                      environment: maven-central
-                      working_directory: bindings/kotlin
-                    - binding: lua
-                      environment: luarocks
-                      working_directory: bindings/lua
-                    - binding: php
-                      environment: packagist
-                      working_directory: bindings/php
-                    - binding: go
-                      environment: github-tags
-                      working_directory: bindings/go
-                    - binding: swift
-                      environment: github-tags
-                      working_directory: bindings/swift
-                    - binding: cpp
-                      environment: conan
-                      working_directory: bindings/cpp
-                    - binding: perl
-                      environment: cpan
-                      working_directory: bindings/perl
-                    - binding: c
-                      environment: source-distribution
-                      working_directory: bindings/c
-        permissions:
-            contents: write
-            id-token: write
-        environment:
-            name: ${{ matrix.environment }}
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-                  fetch-depth: 0
-
-            - name: Setup Node.js 22
-              if: ${{ matrix.binding == 'typescript' }}
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "22"
-                  registry-url: "https://registry.npmjs.org"
-
-            - name: Setup Python 3.10
-              if: ${{ matrix.binding == 'python' }}
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.10"
-
-            - name: Setup Rust
-              if: ${{ matrix.binding == 'rust' }}
-              uses: dtolnay/rust-toolchain@stable
-              with:
-                  toolchain: "1.65"
-
-            - name: Setup Dart
-              if: ${{ matrix.binding == 'dart' }}
-              uses: dart-lang/setup-dart@v1
-
-            - name: Setup Ruby
-              if: ${{ matrix.binding == 'ruby' }}
-              uses: ruby/setup-ruby@v1
-              with:
-                  ruby-version: "3.2"
-
-            - name: Setup .NET
-              if: ${{ matrix.binding == 'csharp' || matrix.binding == 'fsharp' }}
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: "9.0"
-
-            - name: Setup Java
-              if: ${{ matrix.binding == 'java' || matrix.binding == 'kotlin' }}
-              uses: actions/setup-java@v4
-              with:
-                  distribution: "temurin"
-                  java-version: "11"
-
-            - name: Setup Lua
-              if: ${{ matrix.binding == 'lua' }}
-              uses: leafo/gh-actions-lua@v12
-
-            - name: Setup LuaRocks
-              if: ${{ matrix.binding == 'lua' }}
-              uses: leafo/gh-actions-luarocks@v6
-
-            - name: Setup Perl
-              if: ${{ matrix.binding == 'perl' }}
-              uses: shogo82148/actions-setup-perl@v1
-
-            - name: Prepare Conan
-              if: ${{ matrix.binding == 'cpp' }}
-              run: python3 -m pip install --upgrade pip conan
-
-            - name: Build Python package
-              if: ${{ matrix.binding == 'python' }}
-              working-directory: bindings/python
-              run: |
-                  python -m pip install --upgrade pip build
-                  python -m build
-
-            - name: Publish Python package to PyPI
-              if: ${{ matrix.binding == 'python' }}
-              uses: pypa/gh-action-pypi-publish@release/v1
-              with:
-                  packages-dir: bindings/python/dist/
-                  repository-url: https://test.pypi.org/legacy/
-
-            - name: Run Authentication Smoke Test
-              if: ${{ matrix.binding != 'python' }}
-              working-directory: ${{ matrix.working_directory }}
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-                  CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
-                  GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_KEY }}
-                  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-                  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
-                  GPG_KEY: ${{ secrets.GPG_KEY }}
-                  LUAROCKS_API_KEY: ${{ secrets.LUA_API_KEY }}
-                  PAUSE_USERNAME: ${{ secrets.PAUSE_USERNAME }}
-                  PAUSE_PASSWORD: ${{ secrets.PAUSE_PASSWORD }}
-                  CONAN_REMOTE_USERNAME: ${{ secrets.CONAN_USERNAME }}
-                  CONAN_REMOTE_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
-              run: |
-                  case "${{ matrix.binding }}" in
-                    typescript)
-                      npm ci
-                      npm run build
-                      CURRENT_VERSION=$(node -pe "require('./package.json').version")
-                      PUBLISH_TAG="latest"
-                      if [[ "$CURRENT_VERSION" == *-* ]]; then
-                        PUBLISH_TAG="${CURRENT_VERSION#*-}"
-                      fi
-                      npm publish --dry-run --access public --tag "$PUBLISH_TAG"
-                      ;;
-                    rust)
-                      cargo publish --dry-run
-                      ;;
-                    dart)
-                      dart pub publish --dry-run
-                      ;;
-                    ruby)
-                      gem build strling.gemspec
-                      echo "DRY RUN: gem push *.gem"
-                      ;;
-                    csharp)
-                      dotnet pack --configuration Release
-                      echo "DRY RUN: dotnet nuget push src/STRling/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json"
-                      ;;
-                    fsharp)
-                      dotnet pack src/STRling/STRling.fsproj --configuration Release
-                      echo "DRY RUN: dotnet nuget push src/STRling/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json"
-                      ;;
-                    java)
-                      mvn deploy -DskipTests -Dgpg.skip=true -Dmaven.deploy.skip=true
-                      ;;
-                    kotlin)
-                      ./gradlew publishToMavenLocal
-                      ;;
-                    lua)
-                      ROCKSPEC=$(ls strling-*.rockspec | head -n 1)
-                      luarocks build --rockspec "$ROCKSPEC"
-                      ;;
-                    php|go|swift)
-                      TAG_VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                      AUDIT_TAG="v${TAG_VERSION}-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.binding }}-auth-check"
-                      git push --dry-run origin "HEAD:refs/tags/$AUDIT_TAG"
-                      ;;
-                    cpp)
-                      conan upload "*" --dry-run --remote conancenter
-                      ;;
-                    perl)
-                      perl Makefile.PL
-                      make dist
-                      echo "DRY RUN: cpan-upload -u $PAUSE_USERNAME *.tar.gz"
-                      ;;
-                    c)
-                      make
-                      ;;
-                    *)
-                      echo "Unknown binding: ${{ matrix.binding }}"
-                      exit 1
-                      ;;
-                  esac
-
-    # --- DEPLOYMENT JOBS (ALPHABETICALLY ORDERED) ---
-
-    deploy-c:
-        name: Deploy C (Tag Validation)
-        runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        steps:
-            - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-            - name: Verify Version Match
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - run: make
               working-directory: bindings/c
-              run: |
-                  TAG_VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  # Extract version from src/strling.c: return "3.0.0-alpha";
-                  FILE_VERSION=$(grep 'return "' src/strling.c | cut -d '"' -f 2)
-                  echo "Tag: $TAG_VERSION"
-                  echo "File: $FILE_VERSION"
-                  if [ "$TAG_VERSION" != "$FILE_VERSION" ]; then
-                    echo "Version mismatch!"
-                    exit 1
-                  fi
 
-    deploy-cpp:
-        name: Deploy C++ (Tag Validation)
+    compile-cpp:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-            - name: Verify Version Match
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - run: cmake . && make
               working-directory: bindings/cpp
-              run: |
-                  TAG_VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  # Extract version from CMakeLists.txt: VERSION 3.0.0
-                  FILE_VERSION=$(grep "VERSION [0-9]" CMakeLists.txt | awk '{print $2}')
-                  echo "Tag: $TAG_VERSION"
-                  echo "File: $FILE_VERSION"
-                  # Note: CMake often uses just X.Y.Z, while tag might be X.Y.Z-alpha.
-                  # We'll do a simple prefix check or exact match if possible.
-                  if [[ "$TAG_VERSION" != "$FILE_VERSION"* ]]; then
-                     echo "Version mismatch! (Expected $FILE_VERSION to be part of $TAG_VERSION)"
-                     exit 1
-                  fi
 
-    deploy-csharp:
-        name: Deploy C# to NuGet
+    compile-csharp:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: "9.0"
-            - name: Check NuGet registry
-              id: check_nuget
+              with: { dotnet-version: "9.0" }
+            - run: dotnet build -c Release
               working-directory: bindings/csharp
-              run: |
-                  VERSION=$(grep "<Version>" src/STRling/STRling.csproj | sed -e 's/.*<Version>\(.*\)<\/Version>.*/\1/')
-                  if python3 ../../tooling/check_version_exists.py --registry nuget --package "STRling" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on NuGet. Skipping publish."
-                  else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on NuGet. Proceeding to publish."
-                  fi
-            - name: Pack
-              if: steps.check_nuget.outputs.exists == 'false'
-              working-directory: bindings/csharp
-              run: dotnet pack --configuration Release
-            - name: Push to NuGet
-              if: steps.check_nuget.outputs.exists == 'false'
-              working-directory: bindings/csharp
-              run: |
-                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    echo "DRY RUN: dotnet nuget push src/STRling/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json"
-                  else
-                    dotnet nuget push src/STRling/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
-                  fi
 
-    deploy-dart:
-        name: Deploy Dart to Pub.dev
+    compile-dart:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            id-token: write
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: dart-lang/setup-dart@v1
+            - run: dart analyze
+              working-directory: bindings/dart
+
+    compile-fsharp:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-dotnet@v4
+              with: { dotnet-version: "9.0" }
+            - run: dotnet build src/STRling/STRling.fsproj -c Release
+              working-directory: bindings/fsharp
+
+    compile-go:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-go@v5
+              with: { go-version: "1.21" }
+            - run: go build ./...
+              working-directory: bindings/go
+
+    compile-java:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-java@v4
+              with: { distribution: "temurin", java-version: "11" }
+            - run: mvn compile
+              working-directory: bindings/java
+
+    compile-kotlin:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-java@v4
+              with: { distribution: "temurin", java-version: "11" }
+            - run: ./gradlew classes
+              working-directory: bindings/kotlin
+
+    compile-lua:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: leafo/gh-actions-lua@v12
+            - uses: leafo/gh-actions-luarocks@v6
+            - run: luarocks lint $(ls *.rockspec | head -n 1)
+              working-directory: bindings/lua
+
+    compile-perl:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: shogo82148/actions-setup-perl@v1
+            - run: perl Makefile.PL && make
+              working-directory: bindings/perl
+
+    compile-php:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - run: composer validate
+              working-directory: bindings/php
+
+    compile-python:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-python@v5
+              with: { python-version: "3.10" }
+            - run: pip install build && python -m build
+              working-directory: bindings/python
+
+    compile-r:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - run: R CMD build .
+              working-directory: bindings/r
+
+    compile-ruby:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: ruby/setup-ruby@v1
+              with: { ruby-version: "3.2" }
+            - run: gem build strling.gemspec
+              working-directory: bindings/ruby
+
+    compile-rust:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: dtolnay/rust-toolchain@stable
+            - run: cargo check
+              working-directory: bindings/rust
+
+    compile-swift:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - run: swift build
+              working-directory: bindings/swift
+
+    compile-typescript:
+        needs: verify-release
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-node@v4
+              with: { node-version: "22" }
+            - run: npm ci && npm run build
+              working-directory: bindings/typescript
+
+    # ==========================================
+    # TIER 3: INDEPENDENT PUBLISH TRACKS
+    # ==========================================
+
+    # --- Tag-Based Pushes ---
+    publish-c:
+        needs: [verify-release, compile-c]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - run: |
+                  TAG="${{ needs.verify-release.outputs.tag_version }}"
+                  FILE=$(grep 'return "' bindings/c/src/strling.c | cut -d '"' -f 2)
+                  [[ "$TAG" == "$FILE" ]] || exit 1
+
+    publish-go:
+        needs: [verify-release, compile-go]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        permissions: { contents: write }
         steps:
             - uses: actions/checkout@v5
               with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-            - uses: dart-lang/setup-dart@v1
-            - name: Check Pub.dev registry
-              id: check_pub
-              working-directory: bindings/dart
+                  {
+                      ref: "${{ needs.verify-release.outputs.release_ref }}",
+                      fetch-depth: 0,
+                  }
+            - run: |
+                  TAG="v${{ needs.verify-release.outputs.tag_version }}"
+                  if git ls-remote --tags origin "refs/tags/$TAG" | grep -q "$TAG$"; then exit 0; fi
+                  git config user.name "github-actions[bot]" && git config user.email "bot@users.noreply.github.com"
+                  git tag "$TAG"
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] || git push origin "refs/tags/$TAG"
+
+    publish-php:
+        needs: [verify-release, compile-php]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        permissions: { contents: write }
+        steps:
+            - uses: actions/checkout@v5
+              with:
+                  {
+                      ref: "${{ needs.verify-release.outputs.release_ref }}",
+                      fetch-depth: 0,
+                  }
+            - run: |
+                  TAG="v${{ needs.verify-release.outputs.tag_version }}"
+                  if git ls-remote --tags origin "refs/tags/$TAG" | grep -q "$TAG$"; then exit 0; fi
+                  git config user.name "github-actions[bot]" && git config user.email "bot@users.noreply.github.com"
+                  git tag "$TAG"
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] || git push origin "refs/tags/$TAG"
+
+    publish-r:
+        needs: [verify-release, compile-r]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        permissions: { contents: write }
+        steps:
+            - uses: actions/checkout@v5
+              with:
+                  {
+                      ref: "${{ needs.verify-release.outputs.release_ref }}",
+                      fetch-depth: 0,
+                  }
+            - run: |
+                  TAG="v${{ needs.verify-release.outputs.tag_version }}"
+                  if git ls-remote --tags origin "refs/tags/$TAG" | grep -q "$TAG$"; then exit 0; fi
+                  git config user.name "github-actions[bot]" && git config user.email "bot@users.noreply.github.com"
+                  git tag "$TAG"
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] || git push origin "refs/tags/$TAG"
+
+    publish-swift:
+        needs: [verify-release, compile-swift]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        permissions: { contents: write }
+        steps:
+            - uses: actions/checkout@v5
+              with:
+                  {
+                      ref: "${{ needs.verify-release.outputs.release_ref }}",
+                      fetch-depth: 0,
+                  }
+            - run: |
+                  TAG="v${{ needs.verify-release.outputs.tag_version }}"
+                  if git ls-remote --tags origin "refs/tags/$TAG" | grep -q "$TAG$"; then exit 0; fi
+                  git config user.name "github-actions[bot]" && git config user.email "bot@users.noreply.github.com"
+                  git tag "$TAG"
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] || git push origin "refs/tags/$TAG"
+
+    # --- Distributor Pushes ---
+    publish-cpp:
+        needs: [verify-release, compile-cpp]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - run: pip install conan
+            - working-directory: bindings/cpp
+              env:
+                  CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+                  CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
               run: |
-                  VERSION=$(grep "^version:" pubspec.yaml | cut -d ' ' -f 2)
-                  if python3 ../../tooling/check_version_exists.py --registry pub --package "strling" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on Pub.dev. Skipping publish."
+                  # Conan version checking/upload logic
+                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
+                    conan upload "*" --dry-run --remote conancenter
                   else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on Pub.dev. Proceeding to publish."
+                    conan upload "*" --remote conancenter --force
                   fi
-            - name: Publish to Pub.dev
-              if: steps.check_pub.outputs.exists == 'false'
-              working-directory: bindings/dart
+
+    publish-csharp:
+        needs: [verify-release, compile-csharp]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-dotnet@v4
+              with: { dotnet-version: "9.0" }
+            - working-directory: bindings/csharp
               run: |
+                  VER=$(grep "<Version>" src/STRling/STRling.csproj | sed -e 's/.*<Version>\(.*\)<\/Version>.*/\1/')
+                  if python3 ../../tooling/check_version_exists.py --registry nuget --package "STRling" --version "$VER"; then exit 0; fi
+                  dotnet pack -c Release
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
+                  dotnet nuget push src/STRling/bin/Release/*.nupkg -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+
+    publish-dart:
+        needs: [verify-release, compile-dart]
+        if: needs.verify-release.outputs.is_release == 'true'
+        runs-on: ubuntu-latest
+        permissions: { id-token: write }
+        steps:
+            - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: dart-lang/setup-dart@v1
+            - working-directory: bindings/dart
+              run: |
+                  VER=$(grep "^version:" pubspec.yaml | cut -d ' ' -f 2)
+                  if python3 ../../tooling/check_version_exists.py --registry pub --package "strling" --version "$VER"; then exit 0; fi
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
                     dart pub publish --dry-run
                   else
                     dart pub publish --force
                   fi
 
-    deploy-fsharp:
-        name: Deploy F# to NuGet
+    publish-fsharp:
+        needs: [verify-release, compile-fsharp]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: "9.0"
-            - name: Check NuGet registry
-              id: check_nuget_fs
-              working-directory: bindings/fsharp
+              with: { dotnet-version: "9.0" }
+            - working-directory: bindings/fsharp
               run: |
-                  VERSION=$(grep "<Version>" src/STRling/STRling.fsproj | sed -e 's/.*<Version>\(.*\)<\/Version>.*/\1/')
-                  if python3 ../../tooling/check_version_exists.py --registry nuget --package "STRling.FSharp" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on NuGet. Skipping publish."
-                  else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on NuGet. Proceeding to publish."
-                  fi
-            - name: Pack
-              if: steps.check_nuget_fs.outputs.exists == 'false'
-              working-directory: bindings/fsharp
-              run: dotnet pack src/STRling/STRling.fsproj --configuration Release
-            - name: Push to NuGet
-              if: steps.check_nuget_fs.outputs.exists == 'false'
-              working-directory: bindings/fsharp
-              run: |
-                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    echo "DRY RUN: dotnet nuget push src/STRling/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json"
-                  else
-                    dotnet nuget push src/STRling/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
-                  fi
+                  VER=$(grep "<Version>" src/STRling/STRling.fsproj | sed -e 's/.*<Version>\(.*\)<\/Version>.*/\1/')
+                  if python3 ../../tooling/check_version_exists.py --registry nuget --package "STRling.FSharp" --version "$VER"; then exit 0; fi
+                  dotnet pack src/STRling/STRling.fsproj -c Release
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
+                  dotnet nuget push src/STRling/bin/Release/*.nupkg -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
 
-    deploy-go:
-        name: Deploy Go Release Tag
+    publish-java:
+        needs: [verify-release, compile-java]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: write
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-                  fetch-depth: 0
-            - name: Check remote release tag
-              id: check_tag
-              run: |
-                  VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  RELEASE_TAG="v$VERSION"
-                  if git ls-remote --tags origin "refs/tags/$RELEASE_TAG" | grep -q "refs/tags/$RELEASE_TAG$"; then
-                    echo "exists=true" >> $GITHUB_OUTPUT
-                    echo "Release already tagged: $RELEASE_TAG"
-                  else
-                    echo "exists=false" >> $GITHUB_OUTPUT
-                    echo "Release tag missing on origin: $RELEASE_TAG"
-                  fi
-            - name: Push release tag
-              if: steps.check_tag.outputs.exists == 'false'
-              run: |
-                  VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  RELEASE_TAG="v$VERSION"
-                  git config user.name "github-actions[bot]"
-                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git tag "$RELEASE_TAG"
-
-                  if [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]]; then
-                    echo "DRY RUN: git push origin refs/tags/$RELEASE_TAG"
-                    exit 0
-                  fi
-
-                  if git push origin "refs/tags/$RELEASE_TAG"; then
-                    echo "Published release tag $RELEASE_TAG"
-                  elif git ls-remote --tags origin "refs/tags/$RELEASE_TAG" | grep -q "refs/tags/$RELEASE_TAG$"; then
-                    echo "Release already tagged by a parallel job: $RELEASE_TAG"
-                  else
-                    echo "Failed to publish release tag $RELEASE_TAG"
-                    exit 1
-                  fi
-
-    deploy-java:
-        name: Deploy Java to Maven Central
-        runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: read
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-            - name: Setup Python 3.10
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.10"
-            - name: Setup Java 11
-              uses: actions/setup-java@v4
-              with:
-                  distribution: "temurin"
-                  java-version: "11"
-            - name: Check Maven Central registry
-              id: check_maven
-              working-directory: bindings/java
-              run: |
-                  VERSION=$(grep '<version>' pom.xml | head -1 | sed -e 's/.*<version>\(.*\)<\/version>.*/\1/')
-                  echo "Checking Maven Central for com.strling:strling:$VERSION"
-                  if python3 ../../tooling/check_version_exists.py --registry maven --group "com.strling" --package "strling" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on Maven Central. Skipping publish."
-                  else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on Maven Central. Proceeding to publish."
-                  fi
-            - name: Build and deploy to Maven Central
-              if: steps.check_maven.outputs.exists == 'false'
-              working-directory: bindings/java
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-java@v4
+              with: { distribution: "temurin", java-version: "11" }
+            - working-directory: bindings/java
               env:
                   MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
                   GPG_KEY: ${{ secrets.GPG_KEY }}
               run: |
+                  VER=$(grep '<version>' pom.xml | head -1 | sed -e 's/.*<version>\(.*\)<\/version>.*/\1/')
+                  if python3 ../../tooling/check_version_exists.py --registry maven --group "com.strling" --package "strling" --version "$VER"; then exit 0; fi
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
                     mvn deploy -DskipTests -Dgpg.skip=true -Dmaven.deploy.skip=true
-                    echo "DRY RUN: mvn deploy"
                   else
                     mvn deploy -DskipTests -Dgpg.passphrase="${GPG_KEY}"
                   fi
 
-    deploy-kotlin:
-        name: Deploy Kotlin to Maven Central
+    publish-kotlin:
+        needs: [verify-release, compile-kotlin]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: read
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: actions/setup-java@v4
-              with:
-                  distribution: "temurin"
-                  java-version: "11"
-            - name: Check Maven Central registry
-              id: check_maven_kt
-              working-directory: bindings/kotlin
-              run: |
-                  # Extract version from build.gradle.kts: version = "3.0.0-alpha"
-                  VERSION=$(grep "version =" build.gradle.kts | head -1 | cut -d '"' -f 2)
-                  echo "Checking Maven Central for com.strling:strling-kotlin:$VERSION"
-                  if python3 ../../tooling/check_version_exists.py --registry maven --group "com.strling" --package "strling-kotlin" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on Maven Central. Skipping publish."
-                  else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on Maven Central. Proceeding to publish."
-                  fi
-            - name: Publish to Maven Central
-              if: steps.check_maven_kt.outputs.exists == 'false'
-              working-directory: bindings/kotlin
+              with: { distribution: "temurin", java-version: "11" }
+            - working-directory: bindings/kotlin
               env:
                   MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
                   ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_KEY }}
               run: |
-                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    ./gradlew publishToMavenLocal
-                    echo "DRY RUN: ./gradlew publish"
-                  else
-                    ./gradlew publish
-                  fi
+                  VER=$(grep "version =" build.gradle.kts | head -1 | cut -d '"' -f 2)
+                  if python3 ../../tooling/check_version_exists.py --registry maven --group "com.strling" --package "strling-kotlin" --version "$VER"; then exit 0; fi
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && ./gradlew publishToMavenLocal && exit 0
+                  ./gradlew publish
 
-    deploy-lua:
-        name: Deploy Lua to LuaRocks
+    publish-lua:
+        needs: [verify-release, compile-lua]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: leafo/gh-actions-lua@v12
             - uses: leafo/gh-actions-luarocks@v6
-            - name: Resolve rockspec filename
-              id: rockspec
-              working-directory: bindings/lua
-              run: |
-                  ROCKSPEC=$(ls strling-*.rockspec | head -n 1)
-                  if [[ -z "$ROCKSPEC" ]]; then
-                    echo "No rockspec file found."
-                    exit 1
-                  fi
-                  echo "file=$ROCKSPEC" >> $GITHUB_OUTPUT
-            - name: Check LuaRocks registry
-              id: check_luarocks
-              working-directory: bindings/lua
-              run: |
-                  VERSION=$(grep "^version =" "${{ steps.rockspec.outputs.file }}" | cut -d '"' -f 2)
-                  if python3 ../../tooling/check_version_exists.py --registry luarocks --package "strling" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on LuaRocks. Skipping publish."
-                  else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on LuaRocks. Proceeding to publish."
-                  fi
-            - name: Upload to LuaRocks
-              if: steps.check_luarocks.outputs.exists == 'false'
-              working-directory: bindings/lua
+            - working-directory: bindings/lua
               env:
                   LUAROCKS_API_KEY: ${{ secrets.LUA_API_KEY }}
               run: |
-                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    echo "DRY RUN: luarocks upload ${{ steps.rockspec.outputs.file }}"
-                  else
-                    luarocks upload "${{ steps.rockspec.outputs.file }}" --api-key=${LUAROCKS_API_KEY}
-                  fi
+                  SPEC=$(ls strling-*.rockspec | head -n 1)
+                  VER=$(grep "^version =" "$SPEC" | cut -d '"' -f 2)
+                  if python3 ../../tooling/check_version_exists.py --registry luarocks --package "strling" --version "$VER"; then exit 0; fi
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
+                  luarocks upload "$SPEC" --api-key=${LUAROCKS_API_KEY}
 
-    deploy-perl:
-        name: Deploy Perl to CPAN
+    publish-perl:
+        needs: [verify-release, compile-perl]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: shogo82148/actions-setup-perl@v1
-            - name: Install Upload Tool
-              run: cpanm App::cpanupload
-            - name: Check CPAN registry
-              id: check_cpan
-              working-directory: bindings/perl
-              run: |
-                  VERSION=$(grep "\$VERSION =" lib/STRling.pm | cut -d "'" -f 2)
-                  if python3 ../../tooling/check_version_exists.py --registry cpan --package "STRling" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on CPAN. Skipping publish."
-                  else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on CPAN. Proceeding to publish."
-                  fi
-            - name: Upload to CPAN
-              if: steps.check_cpan.outputs.exists == 'false'
-              working-directory: bindings/perl
+            - run: cpanm App::cpanupload
+            - working-directory: bindings/perl
               env:
                   PAUSE_USERNAME: ${{ secrets.PAUSE_USERNAME }}
                   PAUSE_PASSWORD: ${{ secrets.PAUSE_PASSWORD }}
               run: |
-                  # Assuming Makefile.PL or dist.ini exists and we can build a tarball
-                  # For now, we'll assume a standard make dist
-                  perl Makefile.PL
-                  make dist
-                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    echo "DRY RUN: cpan-upload -u $PAUSE_USERNAME *.tar.gz"
-                  else
-                    cpan-upload -u $PAUSE_USERNAME -p $PAUSE_PASSWORD *.tar.gz
-                  fi
+                  VER=$(grep "\$VERSION =" lib/STRling.pm | cut -d "'" -f 2)
+                  if python3 ../../tooling/check_version_exists.py --registry cpan --package "STRling" --version "$VER"; then exit 0; fi
+                  perl Makefile.PL && make dist
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
+                  cpan-upload -u $PAUSE_USERNAME -p $PAUSE_PASSWORD *.tar.gz
 
-    deploy-php:
-        name: Deploy PHP Release Tag
+    publish-python:
+        needs: [verify-release, compile-python]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: write
+        permissions: { id-token: write, contents: read }
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-                  fetch-depth: 0
-            - name: Check remote release tag
-              id: check_tag
-              working-directory: bindings/php
-              run: |
-                  VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  FILE_VERSION=$(grep '"version":' composer.json | cut -d '"' -f 4)
-                  RELEASE_TAG="v$VERSION"
-                  echo "SSOT: $VERSION"
-                  echo "PHP: $FILE_VERSION"
-                  if [ "$VERSION" != "$FILE_VERSION" ]; then
-                    echo "Version mismatch!"
-                    exit 1
-                  fi
-                  if git ls-remote --tags origin "refs/tags/$RELEASE_TAG" | grep -q "refs/tags/$RELEASE_TAG$"; then
-                    echo "exists=true" >> $GITHUB_OUTPUT
-                    echo "Release already tagged: $RELEASE_TAG"
-                  else
-                    echo "exists=false" >> $GITHUB_OUTPUT
-                    echo "Release tag missing on origin: $RELEASE_TAG"
-                  fi
-            - name: Push release tag
-              if: steps.check_tag.outputs.exists == 'false'
-              run: |
-                  VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  RELEASE_TAG="v$VERSION"
-                  git config user.name "github-actions[bot]"
-                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git tag "$RELEASE_TAG"
-
-                  if [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]]; then
-                    echo "DRY RUN: git push origin refs/tags/$RELEASE_TAG"
-                    exit 0
-                  fi
-
-                  if git push origin "refs/tags/$RELEASE_TAG"; then
-                    echo "Published release tag $RELEASE_TAG"
-                  elif git ls-remote --tags origin "refs/tags/$RELEASE_TAG" | grep -q "refs/tags/$RELEASE_TAG$"; then
-                    echo "Release already tagged by a parallel job: $RELEASE_TAG"
-                  else
-                    echo "Failed to publish release tag $RELEASE_TAG"
-                    exit 1
-                  fi
-
-    deploy-python:
-        name: Deploy Python to PyPI
-        runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: read
-            id-token: write
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-            - name: Setup Python 3.10
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.10"
-            - name: Check PyPI registry
-              id: check_pypi
-              working-directory: bindings/python
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-python@v5
+              with: { python-version: "3.10" }
+            - working-directory: bindings/python
+              id: check
               run: |
                   pip install tomli
-                  VERSION=$(python -c "import tomli; print(tomli.load(open('pyproject.toml', 'rb'))['project']['version'])")
-                  if python ../../tooling/check_version_exists.py --registry pypi --package "STRling" --version "$VERSION"; then
+                  VER=$(python -c "import tomli; print(tomli.load(open('pyproject.toml', 'rb'))['project']['version'])")
+                  if python ../../tooling/check_version_exists.py --registry pypi --package "STRling" --version "$VER"; then
                     echo "exists=true" >> $GITHUB_OUTPUT
-                    echo "Version $VERSION already exists on PyPI. Skipping publish."
                   else
+                    pip install build twine && python -m build
                     echo "exists=false" >> $GITHUB_OUTPUT
-                    echo "Version $VERSION not found on PyPI. Proceeding to publish."
                   fi
-            - name: Install build tools and build package
-              if: steps.check_pypi.outputs.exists == 'false'
-              working-directory: bindings/python
-              run: |
-                  python -m pip install --upgrade pip build
-                  python -m build
-            - name: Publish package to PyPI
-              if: steps.check_pypi.outputs.exists == 'false' && needs.verify-release.outputs.is_dry_run == 'false'
+            - if: steps.check.outputs.exists == 'false' && needs.verify-release.outputs.is_dry_run == 'false'
               uses: pypa/gh-action-pypi-publish@release/v1
-              with:
-                  packages-dir: bindings/python/dist/
-            - name: Dry Run PyPI (Metadata Check)
-              if: steps.check_pypi.outputs.exists == 'false' && needs.verify-release.outputs.is_dry_run == 'true'
-              working-directory: bindings/python
-              run: |
-                  pip install twine
-                  twine check dist/*
-                  echo "DRY RUN: PyPI publish would happen here"
+              with: { packages-dir: bindings/python/dist/ }
 
-    deploy-r:
-        name: Deploy R (Tag Validation)
+    publish-ruby:
+        needs: [verify-release, compile-ruby]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
+        permissions: { id-token: write }
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-            - name: Verify Version Match
-              working-directory: bindings/r
-              run: |
-                  TAG_VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  # Extract version from DESCRIPTION: Version: 3.0.0-alpha
-                  FILE_VERSION=$(grep 'Version:' DESCRIPTION | awk '{print $2}')
-                  echo "Tag: $TAG_VERSION"
-                  echo "File: $FILE_VERSION"
-                  if [ "$TAG_VERSION" != "$FILE_VERSION" ]; then
-                    echo "Version mismatch!"
-                    exit 1
-                  fi
-
-    deploy-ruby:
-        name: Deploy Ruby to RubyGems
-        runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: read
-            id-token: write
-        steps:
-            - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: ruby/setup-ruby@v1
-              with:
-                  ruby-version: "3.2"
-            - name: Check RubyGems registry
-              id: check_rubygems
-              working-directory: bindings/ruby
-              run: |
-                  VERSION=$(grep "spec.version =" strling.gemspec | cut -d "'" -f 2)
-                  if python3 ../../tooling/check_version_exists.py --registry rubygems --package "strling" --version "$VERSION"; then
-                     echo "exists=true" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION already exists on RubyGems. Skipping publish."
-                  else
-                     echo "exists=false" >> $GITHUB_OUTPUT
-                     echo "Version $VERSION not found on RubyGems. Proceeding to publish."
-                  fi
-            - name: Build Gem
-              if: steps.check_rubygems.outputs.exists == 'false'
-              working-directory: bindings/ruby
-              run: gem build strling.gemspec
-            - name: Publish to RubyGems
-              if: steps.check_rubygems.outputs.exists == 'false'
-              working-directory: bindings/ruby
+              with: { ruby-version: "3.2" }
+            - working-directory: bindings/ruby
               env:
                   GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_KEY }}
               run: |
-                  mkdir -p ~/.gem
-                  cat << EOF > ~/.gem/credentials
-                  ---
-                  :rubygems_api_key: ${GEM_HOST_API_KEY}
-                  EOF
-                  chmod 0600 ~/.gem/credentials
-                  if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    echo "DRY RUN: gem push *.gem"
-                  else
-                    gem push *.gem
-                  fi
+                  VER=$(grep "spec.version =" strling.gemspec | cut -d "'" -f 2)
+                  if python3 ../../tooling/check_version_exists.py --registry rubygems --package "strling" --version "$VER"; then exit 0; fi
+                  gem build strling.gemspec
+                  [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]] && exit 0
+                  mkdir -p ~/.gem && echo -e "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}" > ~/.gem/credentials && chmod 0600 ~/.gem/credentials
+                  gem push *.gem
 
-    deploy-rust:
-        name: Deploy Rust to Crates.io
+    publish-rust:
+        needs: [verify-release, compile-rust]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
         steps:
             - uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
             - uses: dtolnay/rust-toolchain@stable
-              with:
-                  toolchain: "1.65"
-            - name: Check Crates.io registry
-              id: check_crates
-              working-directory: bindings/rust
-              run: |
-                  VERSION=$(grep "^version" Cargo.toml | head -n 1 | cut -d '"' -f 2)
-                  if python3 ../../tooling/check_version_exists.py --registry crates --package "strling" --version "$VERSION"; then
-                    echo "exists=true" >> $GITHUB_OUTPUT
-                    echo "Version $VERSION already exists on Crates.io. Skipping publish."
-                  else
-                    echo "exists=false" >> $GITHUB_OUTPUT
-                    echo "Version $VERSION not found on Crates.io. Proceeding to publish."
-                  fi
-            - name: Publish to Crates.io
-              if: steps.check_crates.outputs.exists == 'false'
-              working-directory: bindings/rust
+            - working-directory: bindings/rust
               env:
                   CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_TOKEN }}
               run: |
+                  VER=$(grep "^version" Cargo.toml | head -n 1 | cut -d '"' -f 2)
+                  if python3 ../../tooling/check_version_exists.py --registry crates --package "strling" --version "$VER"; then exit 0; fi
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
                     cargo publish --dry-run
                   else
                     cargo publish
                   fi
 
-    deploy-swift:
-        name: Deploy Swift Release Tag
+    publish-typescript:
+        needs: [verify-release, compile-typescript]
+        if: needs.verify-release.outputs.is_release == 'true'
         runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: write
+        permissions: { id-token: write, contents: read }
         steps:
             - uses: actions/checkout@v5
+              with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
+            - uses: actions/setup-node@v4
               with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-                  fetch-depth: 0
-            - name: Check remote release tag
-              id: check_tag
-              run: |
-                  VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  RELEASE_TAG="v$VERSION"
-                  if git ls-remote --tags origin "refs/tags/$RELEASE_TAG" | grep -q "refs/tags/$RELEASE_TAG$"; then
-                    echo "exists=true" >> $GITHUB_OUTPUT
-                    echo "Release already tagged: $RELEASE_TAG"
-                  else
-                    echo "exists=false" >> $GITHUB_OUTPUT
-                    echo "Release tag missing on origin: $RELEASE_TAG"
-                  fi
-            - name: Push release tag
-              if: steps.check_tag.outputs.exists == 'false'
-              run: |
-                  VERSION="${{ needs.verify-release.outputs.tag_version }}"
-                  RELEASE_TAG="v$VERSION"
-                  git config user.name "github-actions[bot]"
-                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git tag "$RELEASE_TAG"
-
-                  if [[ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]]; then
-                    echo "DRY RUN: git push origin refs/tags/$RELEASE_TAG"
-                    exit 0
-                  fi
-
-                  if git push origin "refs/tags/$RELEASE_TAG"; then
-                    echo "Published release tag $RELEASE_TAG"
-                  elif git ls-remote --tags origin "refs/tags/$RELEASE_TAG" | grep -q "refs/tags/$RELEASE_TAG$"; then
-                    echo "Release already tagged by a parallel job: $RELEASE_TAG"
-                  else
-                    echo "Failed to publish release tag $RELEASE_TAG"
-                    exit 1
-                  fi
-
-    deploy-typescript:
-        name: Deploy TypeScript to NPM
-        runs-on: ubuntu-latest
-        needs: [verify-release]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' }}
-        permissions:
-            contents: read
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v5
-              with:
-                  ref: ${{ needs.verify-release.outputs.release_ref }}
-            - name: Setup Python 3.11
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.11"
-            - name: Setup Node.js 22
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "22"
-                  registry-url: "https://registry.npmjs.org"
-            - name: Check NPM registry
-              id: check_npm
-              working-directory: bindings/typescript
-              run: |
-                  PACKAGE_NAME="@strling-lang/strling"
-                  CURRENT_VERSION=$(node -pe "require('./package.json').version")
-                  if python ../../tooling/check_version_exists.py --registry npm --package "$PACKAGE_NAME" --version "$CURRENT_VERSION"; then
-                    echo "exists=true" >> $GITHUB_OUTPUT
-                    echo "Version $CURRENT_VERSION already exists on NPM. Skipping publish."
-                  else
-                    echo "exists=false" >> $GITHUB_OUTPUT
-                    echo "Version $CURRENT_VERSION not found on NPM. Proceeding to publish."
-                  fi
-            - name: Install JS dependencies
-              if: steps.check_npm.outputs.exists == 'false'
-              working-directory: bindings/typescript
-              run: npm ci
-            - name: Build package
-              if: steps.check_npm.outputs.exists == 'false'
-              working-directory: bindings/typescript
-              run: npm run build
-            - name: Publish to NPM
-              if: steps.check_npm.outputs.exists == 'false'
-              working-directory: bindings/typescript
+                  {
+                      node-version: "22",
+                      registry-url: "https://registry.npmjs.org",
+                  }
+            - working-directory: bindings/typescript
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: |
-                  CURRENT_VERSION=$(node -pe "require('./package.json').version")
-                  PUBLISH_TAG="latest"
-                  if [[ "$CURRENT_VERSION" == *-* ]]; then
-                    PUBLISH_TAG="${CURRENT_VERSION#*-}"
-                  fi
-
+                  VER=$(node -pe "require('./package.json').version")
+                  if python ../../tooling/check_version_exists.py --registry npm --package "@strling-lang/strling" --version "$VER"; then exit 0; fi
+                  npm ci && npm run build
+                  TAG="latest"
+                  [[ "$VER" == *-* ]] && TAG="${VER#*-}"
                   if [ "${{ needs.verify-release.outputs.is_dry_run }}" == "true" ]; then
-                    npm publish --dry-run --access public --tag "$PUBLISH_TAG"
+                    npm publish --dry-run --access public --tag "$TAG"
                   else
-                    npm publish --access public --tag "$PUBLISH_TAG"
+                    npm publish --access public --tag "$TAG"
                   fi
 
-    # --- POST-DEPLOY DISTRIBUTOR VERIFICATION JOBS (ALPHABETICALLY ORDERED) ---
+    # ==========================================
+    # TIER 4: VALIDATION ANCHOR (BLIND INSTALLS)
+    # ==========================================
 
     verify-conan-distributor:
-        name: Verify Conan Publication Status
+        needs: [verify-release, publish-cpp, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-cpp.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-cpp]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-cpp.result == 'success' }}
         steps:
-            - name: Setup Python 3.11
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.11"
-            - name: Default Resolution and Validate Version vs SSOT
-              shell: bash
+            - uses: actions/setup-python@v5
+              with: { python-version: "3.11" }
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-                  python -m pip install --upgrade pip conan >/dev/null
-
+                  python -m pip install conan >/dev/null
                   for attempt in 1 2 3; do
-                    SEARCH_OUTPUT=$(conan search "strling/*" -r conancenter 2>/tmp/verify-conan.log) || {
-                      cat /tmp/verify-conan.log
-                      exit 1
-                    }
-                    INSTALLED=$(printf '%s\n' "$SEARCH_OUTPUT" | sed -n 's/.*strling\/\([^ #]*\).*/\1/p' | sort -V | tail -n 1)
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "Conan propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    SEARCH=$(conan search "strling/*" -r conancenter 2>/tmp/conan.log) || true
+                    INSTALLED=$(printf '%s\n' "$SEARCH" | sed -n 's/.*strling\/\([^ #]*\).*/\1/p' | sort -V | tail -n 1)
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "Conan is serving an outdated or incorrect strling version"
                   exit 1
 
     verify-cpan-distributor:
-        name: Verify CPAN Publication Status
+        needs: [verify-release, publish-perl, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-perl.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-perl]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-perl.result == 'success' }}
         steps:
             - uses: shogo82148/actions-setup-perl@v1
-            - name: Default Installation
-              shell: bash
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    cpanm --notest STRling >/tmp/verify-cpan.log 2>&1 || {
-                      cat /tmp/verify-cpan.log
-                      exit 1
-                    }
-                    INSTALLED=$(perl -MSTRling -e 'print $STRling::VERSION')
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "CPAN propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    cpanm --notest STRling >/dev/null 2>&1 || true
+                    INSTALLED=$(perl -MSTRling -e 'print $STRling::VERSION' 2>/dev/null || echo "")
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "CPAN is serving an outdated or incorrect version"
                   exit 1
 
     verify-crates-distributor:
-        name: Verify Crates.io Publication Status
+        needs: [verify-release, publish-rust, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-rust.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-rust]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-rust.result == 'success' }}
         steps:
             - uses: dtolnay/rust-toolchain@stable
-              with:
-                  toolchain: "1.65"
-            - name: Default Installation
-              shell: bash
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    cargo install strling --dry-run >/tmp/verify-crates.log 2>&1 || {
-                      cat /tmp/verify-crates.log
-                      exit 1
-                    }
-                    INSTALLED=$(sed -n 's/.*Installing strling v\([^ ]*\).*/\1/p' /tmp/verify-crates.log | head -n 1)
-                    if [[ -z "$INSTALLED" ]]; then
-                      INSTALLED=$(cargo search strling --limit 1 | sed -n 's/^strling = "\([^"]*\)".*/\1/p')
-                    fi
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "Crates.io propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    cargo install strling --dry-run >/tmp/crates.log 2>&1 || true
+                    INSTALLED=$(cargo search strling --limit 1 | sed -n 's/^strling = "\([^"]*\)".*/\1/p')
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "Crates.io is serving an outdated or incorrect version"
                   exit 1
 
     verify-gems-distributor:
-        name: Verify RubyGems Publication Status
+        needs: [verify-release, publish-ruby, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-ruby.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-ruby]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-ruby.result == 'success' }}
         steps:
             - uses: ruby/setup-ruby@v1
-              with:
-                  ruby-version: "3.2"
-            - name: Default Installation
-              shell: bash
+              with: { ruby-version: "3.2" }
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    gem install strling --no-document >/tmp/verify-gems.log 2>&1 || {
-                      cat /tmp/verify-gems.log
-                      exit 1
-                    }
-                    INSTALLED=$(ruby -e "spec = Gem::Specification.find_by_name('strling'); puts spec.version")
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "RubyGems propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    gem install strling --no-document >/dev/null 2>&1 || true
+                    INSTALLED=$(ruby -e "begin; puts Gem::Specification.find_by_name('strling').version; rescue; end")
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "RubyGems is serving an outdated or incorrect version"
                   exit 1
 
     verify-luarocks-distributor:
-        name: Verify LuaRocks Publication Status
+        needs: [verify-release, publish-lua, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-lua.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-lua]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-lua.result == 'success' }}
         steps:
             - uses: leafo/gh-actions-lua@v12
             - uses: leafo/gh-actions-luarocks@v6
-            - name: Default Installation
-              shell: bash
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    luarocks install strling >/tmp/verify-luarocks.log 2>&1 || {
-                      cat /tmp/verify-luarocks.log
-                      exit 1
-                    }
-                    ROCK_VERSION=$(luarocks show strling | awk 'NR==1 {print $2}')
+                    luarocks install strling >/dev/null 2>&1 || true
+                    ROCK_VERSION=$(luarocks show strling 2>/dev/null | awk 'NR==1 {print $2}')
                     INSTALLED=$(printf '%s\n' "$ROCK_VERSION" | sed -E 's/-[0-9]+$//')
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED | Rock: $ROCK_VERSION"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "LuaRocks propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "LuaRocks is serving an outdated or incorrect version"
                   exit 1
 
     verify-maven-distributor:
-        name: Verify Maven Publication Status
+        needs:
+            [verify-release, publish-java, publish-kotlin, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-java.result == 'success' && needs.publish-kotlin.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-java, deploy-kotlin]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-java.result == 'success' && needs.deploy-kotlin.result == 'success' }}
         steps:
-            - uses: actions/setup-java@v4
-              with:
-                  distribution: "temurin"
-                  java-version: "11"
-            - name: Default Resolution and Validate Version vs SSOT
-              shell: bash
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    JAVA_VERSION=$(curl -fsSL "https://repo1.maven.org/maven2/com/strling/strling/maven-metadata.xml" | tr -d '\n' | sed -n 's:.*<release>\([^<]*\)</release>.*:\1:p')
-                    KOTLIN_VERSION=$(curl -fsSL "https://repo1.maven.org/maven2/com/strling/strling-kotlin/maven-metadata.xml" | tr -d '\n' | sed -n 's:.*<release>\([^<]*\)</release>.*:\1:p')
-
-                    echo "SSOT: $EXPECTED | Java Registry: $JAVA_VERSION | Kotlin Registry: $KOTLIN_VERSION"
-                    if [[ "$JAVA_VERSION" == "$EXPECTED" && "$KOTLIN_VERSION" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "Maven Central propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    JAVA_VER=$(curl -fsSL "https://repo1.maven.org/maven2/com/strling/strling/maven-metadata.xml" | sed -n 's:.*<release>\([^<]*\)</release>.*:\1:p')
+                    KOTLIN_VER=$(curl -fsSL "https://repo1.maven.org/maven2/com/strling/strling-kotlin/maven-metadata.xml" | sed -n 's:.*<release>\([^<]*\)</release>.*:\1:p')
+                    if [[ "$JAVA_VER" == "$EXPECTED" && "$KOTLIN_VER" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "Maven Central is serving an outdated or incorrect version"
                   exit 1
 
     verify-nuget-distributor:
-        name: Verify NuGet Publication Status
+        needs:
+            [verify-release, publish-csharp, publish-fsharp, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-csharp.result == 'success' && needs.publish-fsharp.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-csharp, deploy-fsharp]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-csharp.result == 'success' && needs.deploy-fsharp.result == 'success' }}
         steps:
             - uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: "9.0"
-            - name: Default Installation
-              shell: bash
+              with: { dotnet-version: "9.0" }
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    CSHARP_DIR=$(mktemp -d)
-                    pushd "$CSHARP_DIR" >/dev/null
-                    dotnet new console --framework net9.0 --force >/dev/null
-                    dotnet add package STRling >/tmp/verify-nuget-csharp.log 2>&1 || {
-                      cat /tmp/verify-nuget-csharp.log
-                      exit 1
-                    }
-                    CSHARP_VERSION=$(dotnet list package | awk '$2=="STRling" {print $NF; exit}')
+                    CSHARP_DIR=$(mktemp -d) && pushd "$CSHARP_DIR" >/dev/null
+                    dotnet new console --force >/dev/null && dotnet add package STRling >/dev/null 2>&1 || true
+                    CS=$(dotnet list package | awk '$2=="STRling" {print $NF; exit}')
                     popd >/dev/null
 
-                    FSHARP_DIR=$(mktemp -d)
-                    pushd "$FSHARP_DIR" >/dev/null
-                    dotnet new console --language F# --framework net9.0 --force >/dev/null
-                    dotnet add package STRling.FSharp >/tmp/verify-nuget-fsharp.log 2>&1 || {
-                      cat /tmp/verify-nuget-fsharp.log
-                      exit 1
-                    }
-                    FSHARP_VERSION=$(dotnet list package | awk '$2=="STRling.FSharp" {print $NF; exit}')
+                    FSHARP_DIR=$(mktemp -d) && pushd "$FSHARP_DIR" >/dev/null
+                    dotnet new console -lang F# --force >/dev/null && dotnet add package STRling.FSharp >/dev/null 2>&1 || true
+                    FS=$(dotnet list package | awk '$2=="STRling.FSharp" {print $NF; exit}')
                     popd >/dev/null
 
-                    echo "SSOT: $EXPECTED | C# Registry: $CSHARP_VERSION | F# Registry: $FSHARP_VERSION"
-                    if [[ "$CSHARP_VERSION" == "$EXPECTED" && "$FSHARP_VERSION" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "NuGet propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    if [[ "$CS" == "$EXPECTED" && "$FS" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "NuGet is serving an outdated or incorrect version"
                   exit 1
 
     verify-pub-distributor:
-        name: Verify Pub.dev Publication Status
+        needs: [verify-release, publish-dart, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-dart.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-dart]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-dart.result == 'success' }}
         steps:
             - uses: dart-lang/setup-dart@v1
-            - name: Default Installation
-              shell: bash
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
                     WORKDIR=$(mktemp -d)
                     dart create --force --template=console-simple "$WORKDIR/app" >/dev/null
                     pushd "$WORKDIR/app" >/dev/null
-                    dart pub add strling >/tmp/verify-pub.log 2>&1 || {
-                      cat /tmp/verify-pub.log
-                      exit 1
-                    }
+                    dart pub add strling >/dev/null 2>&1 || true
                     INSTALLED=$(awk '/^  strling:$/ {in_pkg=1; next} in_pkg && /version:/ {gsub(/"/, "", $2); print $2; exit}' pubspec.lock)
                     popd >/dev/null
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "Pub.dev propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "Pub.dev is serving an outdated or incorrect version"
                   exit 1
 
     verify-pypi-distributor:
-        name: Verify PyPI Publication Status
+        needs: [verify-release, publish-python, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-python.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-python]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-python.result == 'success' }}
         steps:
             - uses: actions/setup-python@v5
-              with:
-                  python-version: "3.10"
-            - name: Default Installation
-              shell: bash
+              with: { python-version: "3.10" }
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    WORKDIR=$(mktemp -d)
-                    python -m venv "$WORKDIR/.venv"
-                    source "$WORKDIR/.venv/bin/activate"
-                    python -m pip install --upgrade pip >/dev/null
-                    python -m pip install strling >/tmp/verify-pypi.log 2>&1 || {
-                      cat /tmp/verify-pypi.log
-                      exit 1
-                    }
-                    INSTALLED=$(python -m pip show strling | awk -F': ' '/^Version:/{print $2; exit}')
+                    WORKDIR=$(mktemp -d) && python -m venv "$WORKDIR/.venv" && source "$WORKDIR/.venv/bin/activate"
+                    pip install strling >/dev/null 2>&1 || true
+                    INSTALLED=$(pip show strling 2>/dev/null | awk -F': ' '/^Version:/{print $2; exit}')
                     deactivate
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "PyPI propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "PyPI is serving an outdated or incorrect version"
                   exit 1
 
     verify-typescript-distributor:
-        name: Verify NPM Publication Status
+        needs: [verify-release, publish-typescript]
+        if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
-        needs: [verify-release, deploy-typescript]
-        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-typescript.result == 'success' }}
         steps:
             - uses: actions/setup-node@v4
-              with:
-                  node-version: "22"
-            - name: Default Installation
-              shell: bash
+              with: { node-version: "22" }
+            - shell: bash
               run: |
-                  set -euo pipefail
                   EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
-
                   for attempt in 1 2 3; do
-                    WORKDIR=$(mktemp -d)
-                    pushd "$WORKDIR" >/dev/null
-                    npm init -y >/dev/null 2>&1
-                    npm install @strling-lang/strling >/tmp/verify-typescript.log 2>&1 || {
-                      cat /tmp/verify-typescript.log
-                      exit 1
-                    }
-                    INSTALLED=$(node -p "require('./node_modules/@strling-lang/strling/package.json').version")
+                    WORKDIR=$(mktemp -d) && pushd "$WORKDIR" >/dev/null
+                    npm init -y >/dev/null 2>&1 && npm install @strling-lang/strling >/dev/null 2>&1 || true
+                    INSTALLED=$(node -p "require('./node_modules/@strling-lang/strling/package.json').version" 2>/dev/null || echo "")
                     popd >/dev/null
-
-                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
-                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
-                      exit 0
-                    fi
-
-                    if [[ "$attempt" -lt 3 ]]; then
-                      echo "NPM propagation delay suspected. Retrying in 100 seconds..."
-                      sleep 100
-                    fi
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then exit 0; fi
+                    [[ "$attempt" -lt 3 ]] && sleep 100
                   done
-
-                  echo "NPM is serving an outdated or incorrect version"
                   exit 1

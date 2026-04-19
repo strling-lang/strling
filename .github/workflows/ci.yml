@@ -25,13 +25,6 @@ on:
             - "tooling/**"
             - ".github/workflows/**"
 
-# Global environment variables to fix locale warnings (Perl, R)
-env:
-    LC_ALL: C.UTF-8
-    LANG: C.UTF-8
-    # Cache version - increment to invalidate all caches (e.g., after repo transfer)
-    CACHE_VERSION: v2
-
 jobs:
     # --- TEST JOBS (ALPHABETICALLY ORDERED) ---
     test-matrix:

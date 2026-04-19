@@ -35,15 +35,20 @@ jobs:
             is_dry_run: ${{ steps.release_state.outputs.is_dry_run }}
             release_ref: ${{ steps.release_state.outputs.release_ref }}
         steps:
-            - uses: actions/checkout@v5
+            - name: Checkout triggering commit
+              uses: actions/checkout@v5
               with:
                   ref: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
                   fetch-depth: 0
-            - uses: actions/setup-python@v5
+
+            - name: Setup Python 3.11
+              uses: actions/setup-python@v5
               with:
                   python-version: "3.11"
+
             - name: Inject Apache 2.0 License
               run: curl -L -o LICENSE https://www.apache.org/licenses/LICENSE-2.0.txt
+
             - name: Verify SSOT release state
               id: release_state
               run: |
@@ -73,14 +78,18 @@ jobs:
 
                   def normalize_version(v): return v.replace('-alpha', 'a0').replace('.alpha', 'a0').replace('alpha-', 'a')
 
+                  # Extract versions
                   python_raw = tomllib.loads(read_text('bindings/python/pyproject.toml'))['project']['version']
                   ssot = normalize_version(python_raw)
 
                   lua_text = read_text(sorted(glob('bindings/lua/*.rockspec'))[0])
                   java_tree = ET.fromstring(read_text('bindings/java/pom.xml'))
+
+                  # Fix for f-string backslash limitation in Python < 3.12
                   cpp_text = read_text('bindings/cpp/CMakeLists.txt')
-                  cpp_pre = re.search(r'STRLING_PRERELEASE_TAG\s+"([^"]+)"', cpp_text)
-                  cpp_v = f"{require_match('C++', r'VERSION\s+([0-9\.]+)', cpp_text)}-{cpp_pre.group(1)}" if cpp_pre else require_match('C++', r'VERSION\s+([0-9\.]+)', cpp_text)
+                  cpp_base = require_match('C++', r'VERSION\s+([0-9\.]+)', cpp_text)
+                  cpp_pre_match = re.search(r'STRLING_PRERELEASE_TAG\s+"([^"]+)"', cpp_text)
+                  cpp_v = f"{cpp_base}-{cpp_pre_match.group(1)}" if cpp_pre_match else cpp_base
 
                   versions = {
                       'C': require_match('C', r'return\s+"([^"]+)";', read_text('bindings/c/src/strling.c')),

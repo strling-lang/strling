@@ -21,14 +21,6 @@ on:
                 required: false
                 default: ""
 
-# Global environment variables to fix locale warnings (Perl, R)
-env:
-    LC_ALL: C.UTF-8
-    LANG: C.UTF-8
-    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    # Cache version - increment to invalidate all caches (e.g., after repo transfer)
-    CACHE_VERSION: v2
-
 jobs:
     # ==========================================
     # TIER 1: GLOBAL PREFLIGHT GATE

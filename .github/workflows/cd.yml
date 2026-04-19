@@ -51,7 +51,7 @@ jobs:
                   fetch-depth: 0
 
             - name: Setup Python 3.11
-              uses: actions/setup-python@v5
+              uses: actions/setup-python@v6
               with:
                   python-version: "3.11"
 
@@ -165,7 +165,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-dotnet@v4
+            - uses: actions/setup-dotnet@v5
               with: { dotnet-version: "9.0" }
             - run: dotnet build -c Release
               working-directory: bindings/csharp
@@ -190,7 +190,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-dotnet@v4
+            - uses: actions/setup-dotnet@v5
               with: { dotnet-version: "9.0" }
             - run: dotnet build src/STRling/STRling.fsproj -c Release
               working-directory: bindings/fsharp
@@ -202,8 +202,10 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-go@v5
-              with: { go-version: "1.21" }
+            - uses: actions/setup-go@v6
+              with:
+                  cache: false
+                  go-version: "1.21"
             - run: go build ./...
               working-directory: bindings/go
 
@@ -214,7 +216,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-java@v4
+            - uses: actions/setup-java@v5
               with: { distribution: "temurin", java-version: "11" }
             - run: mvn -B -DskipTests compile
               working-directory: bindings/java
@@ -226,7 +228,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-java@v4
+            - uses: actions/setup-java@v5
               with: { distribution: "temurin", java-version: "11" }
             - run: ./gradlew classes
               working-directory: bindings/kotlin
@@ -271,7 +273,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-python@v5
+            - uses: actions/setup-python@v6
               with: { python-version: "3.10" }
             - run: pip install build && python -m build
               working-directory: bindings/python
@@ -327,7 +329,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v6
               with: { node-version: "22" }
             - run: npm ci && npm run build
               working-directory: bindings/typescript
@@ -456,7 +458,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-dotnet@v4
+            - uses: actions/setup-dotnet@v5
               with: { dotnet-version: "9.0" }
             - working-directory: bindings/csharp
               run: |
@@ -497,7 +499,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-dotnet@v4
+            - uses: actions/setup-dotnet@v5
               with: { dotnet-version: "9.0" }
             - working-directory: bindings/fsharp
               run: |
@@ -514,7 +516,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-java@v4
+            - uses: actions/setup-java@v5
               with: { distribution: "temurin", java-version: "11" }
             - working-directory: bindings/java
               env:
@@ -537,7 +539,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-java@v4
+            - uses: actions/setup-java@v5
               with: { distribution: "temurin", java-version: "11" }
             - working-directory: bindings/kotlin
               env:
@@ -610,7 +612,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-python@v5
+            - uses: actions/setup-python@v6
               with: { python-version: "3.10" }
             - working-directory: bindings/python
               id: prepare
@@ -685,7 +687,7 @@ jobs:
         steps:
             - uses: actions/checkout@v5
               with: { ref: "${{ needs.verify-release.outputs.release_ref }}" }
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v6
               with:
                   {
                       node-version: "22",
@@ -715,7 +717,7 @@ jobs:
         if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-cpp.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/setup-python@v5
+            - uses: actions/setup-python@v6
               with: { python-version: "3.11" }
             - shell: bash
               run: |
@@ -823,7 +825,7 @@ jobs:
         if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-csharp.result == 'success' && needs.publish-fsharp.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/setup-dotnet@v4
+            - uses: actions/setup-dotnet@v5
               with: { dotnet-version: "9.0" }
             - shell: bash
               run: |
@@ -870,7 +872,7 @@ jobs:
         if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-python.result == 'success' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/setup-python@v5
+            - uses: actions/setup-python@v6
               with: { python-version: "3.10" }
             - shell: bash
               run: |
@@ -890,7 +892,7 @@ jobs:
         if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v6
               with: { node-version: "22" }
             - shell: bash
               run: |

@@ -29,7 +29,6 @@ on:
 env:
     LC_ALL: C.UTF-8
     LANG: C.UTF-8
-    FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     # Cache version - increment to invalidate all caches (e.g., after repo transfer)
     CACHE_VERSION: v2
 

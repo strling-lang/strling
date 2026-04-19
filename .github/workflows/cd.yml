@@ -84,6 +84,7 @@ jobs:
 
                   lua_text = read_text(sorted(glob('bindings/lua/*.rockspec'))[0])
                   java_tree = ET.fromstring(read_text('bindings/java/pom.xml'))
+                  fsharp_tree = ET.fromstring(read_text('bindings/fsharp/src/STRling/STRling.fsproj'))
 
                   # Fix for f-string backslash limitation in Python < 3.12
                   cpp_text = read_text('bindings/cpp/CMakeLists.txt')
@@ -109,6 +110,9 @@ jobs:
                   }
 
                   mismatches = [f"{b}: expected {ssot}, found {normalize_version(v)}" for b, v in versions.items() if normalize_version(v) != ssot]
+                  fsharp_pkg_id = fsharp_tree.findtext('{http://schemas.microsoft.com/developer/msbuild/2003}PropertyGroup/{http://schemas.microsoft.com/developer/msbuild/2003}PackageId') or fsharp_tree.findtext('./PropertyGroup/PackageId')
+                  if fsharp_pkg_id != 'STRling.FSharp':
+                      mismatches.append(f"F#: expected PackageId STRling.FSharp, found {fsharp_pkg_id or 'missing'}")
                   if require_match('Lua tag', r'tag\s*=\s*"([^"]+)"', lua_text) != f"v{python_raw}":
                       mismatches.append("Lua tag mismatch")
 

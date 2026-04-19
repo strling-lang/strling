@@ -12,7 +12,7 @@ This document defines the release and CD checklist for every STRling binding in 
 | Dart       | pub.dev                                 | Dart package                   | `bindings/dart/pubspec.yaml` and `bindings/dart/README.md`                           |
 | PHP        | Packagist / Composer                    | Composer package from git tags | `bindings/php/composer.json` and `bindings/php/README.md`                            |
 | Ruby       | RubyGems                                | gem                            | `bindings/ruby/strling.gemspec` and `bindings/ruby/README.md`                        |
-| Lua        | LuaRocks                                | rockspec                       | `bindings/lua/strling-3.0.0alpha-1.rockspec` and `bindings/lua/README.md`            |
+| Lua        | LuaRocks                                | rockspec                       | `bindings/lua/strling-3.0.0-1.rockspec` and `bindings/lua/README.md`                 |
 | Perl       | CPAN                                    | CPAN distribution              | `bindings/perl/README.md`, `bindings/perl/Makefile.PL`, and `bindings/perl/setup.sh` |
 | Java       | Maven repository                        | jar + pom                      | `bindings/java/pom.xml` and `bindings/java/README.md`                                |
 | Kotlin     | Maven repository                        | jar + pom                      | `bindings/kotlin/build.gradle.kts` and `bindings/kotlin/README.md`                   |
@@ -136,7 +136,7 @@ For STRling, the npm package metadata already signals the public package identit
 ### Lua / LuaRocks
 
 1. Validate the rockspec file name and version format.
-2. Confirm the rockspec version follows the repo convention `3.0.0alpha-1`.
+2. Confirm the rockspec version follows the repo convention `3.0.0-1`.
 3. Run the Lua tests and any rockspec validation step available in the binding.
 4. Upload the rock to LuaRocks or publish through the configured rockspec flow.
 5. Confirm `luarocks install strling` resolves the new build.

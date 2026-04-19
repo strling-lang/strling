@@ -285,7 +285,7 @@ def update_lua_rockspec(content: str, version: str, path: Path) -> str:
     """Update Lua rockspec version and handle file rename.
 
     LuaRocks requires rockspec files to be named with the version.
-    This repo uses prerelease filenames like 3.0.0alpha-1.
+    This repo uses prerelease filenames like 3.0.0-1.
     """
     rockspec_version = normalize_lua_rockspec_version(version)
 

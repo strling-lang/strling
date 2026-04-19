@@ -557,7 +557,7 @@ if [[ "$COMMAND" == "lockfile" ]]; then
             echo "build.gradle.kts"
             ;;
         lua)
-            echo "strling-3.0.0alpha-1.rockspec"
+            echo "strling-3.0.0-1.rockspec"
             ;;
         perl)
             echo "Makefile.PL"

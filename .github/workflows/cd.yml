@@ -470,7 +470,7 @@ jobs:
             - name: Compliance and Publish
               working-directory: bindings/dart
               run: |
-                  cp ../../LICENSE .
+                  cp ../../LICENSE .  # Resolve required license file for pub.dev from repo root
                   if [ ! -f "CHANGELOG.md" ]; then
                     echo "## ${{ needs.verify-release.outputs.version }}" > CHANGELOG.md
                     echo "- Release version ${{ needs.verify-release.outputs.version }}" >> CHANGELOG.md

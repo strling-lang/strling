@@ -1103,3 +1103,417 @@ jobs:
                   else
                     npm publish --access public --tag "$PUBLISH_TAG"
                   fi
+
+    # --- POST-DEPLOY DISTRIBUTOR VERIFICATION JOBS (ALPHABETICALLY ORDERED) ---
+
+    verify-csharp-distributor:
+        name: Verify NuGet Default Install (C#)
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-csharp]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-csharp.result == 'success' }}
+        steps:
+            - uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: "9.0"
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    WORKDIR=$(mktemp -d)
+                    pushd "$WORKDIR" >/dev/null
+                    dotnet new console --framework net9.0 --force >/dev/null
+                    dotnet add package STRling >/tmp/verify-csharp.log 2>&1 || {
+                      cat /tmp/verify-csharp.log
+                      exit 1
+                    }
+                    INSTALLED=$(dotnet list package | awk '$2=="STRling" {print $NF; exit}')
+                    popd >/dev/null
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "NuGet propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for STRling on NuGet"
+                  exit 1
+
+    verify-dart-distributor:
+        name: Verify Pub.dev Default Install
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-dart]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-dart.result == 'success' }}
+        steps:
+            - uses: dart-lang/setup-dart@v1
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    WORKDIR=$(mktemp -d)
+                    dart create --force --template=console-simple "$WORKDIR/app" >/dev/null
+                    pushd "$WORKDIR/app" >/dev/null
+                    dart pub add strling >/tmp/verify-dart.log 2>&1 || {
+                      cat /tmp/verify-dart.log
+                      exit 1
+                    }
+                    INSTALLED=$(awk '/^  strling:$/ {in_pkg=1; next} in_pkg && /version:/ {gsub(/"/, "", $2); print $2; exit}' pubspec.lock)
+                    popd >/dev/null
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "Pub.dev propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for strling on Pub.dev"
+                  exit 1
+
+    verify-fsharp-distributor:
+        name: Verify NuGet Default Install (F#)
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-fsharp]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-fsharp.result == 'success' }}
+        steps:
+            - uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: "9.0"
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    WORKDIR=$(mktemp -d)
+                    pushd "$WORKDIR" >/dev/null
+                    dotnet new console --language F# --framework net9.0 --force >/dev/null
+                    dotnet add package STRling.FSharp >/tmp/verify-fsharp.log 2>&1 || {
+                      cat /tmp/verify-fsharp.log
+                      exit 1
+                    }
+                    INSTALLED=$(dotnet list package | awk '$2=="STRling.FSharp" {print $NF; exit}')
+                    popd >/dev/null
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "NuGet propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for STRling.FSharp on NuGet"
+                  exit 1
+
+    verify-java-distributor:
+        name: Verify Maven Central Default Release (Java)
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-java]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-java.result == 'success' }}
+        steps:
+            - uses: actions/setup-java@v4
+              with:
+                  distribution: "temurin"
+                  java-version: "11"
+            - name: Resolve Default Release and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+                  METADATA_URL="https://repo1.maven.org/maven2/com/strling/strling/maven-metadata.xml"
+
+                  for attempt in 1 2 3; do
+                    INSTALLED=$(curl -fsSL "$METADATA_URL" | tr -d '\n' | sed -n 's:.*<release>\([^<]*\)</release>.*:\1:p')
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "Maven Central propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for com.strling:strling on Maven Central"
+                  exit 1
+
+    verify-kotlin-distributor:
+        name: Verify Maven Central Default Release (Kotlin)
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-kotlin]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-kotlin.result == 'success' }}
+        steps:
+            - uses: actions/setup-java@v4
+              with:
+                  distribution: "temurin"
+                  java-version: "11"
+            - name: Resolve Default Release and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+                  METADATA_URL="https://repo1.maven.org/maven2/com/strling/strling-kotlin/maven-metadata.xml"
+
+                  for attempt in 1 2 3; do
+                    INSTALLED=$(curl -fsSL "$METADATA_URL" | tr -d '\n' | sed -n 's:.*<release>\([^<]*\)</release>.*:\1:p')
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "Maven Central propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for com.strling:strling-kotlin on Maven Central"
+                  exit 1
+
+    verify-lua-distributor:
+        name: Verify LuaRocks Default Install
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-lua]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-lua.result == 'success' }}
+        steps:
+            - uses: leafo/gh-actions-lua@v12
+            - uses: leafo/gh-actions-luarocks@v6
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    luarocks install strling >/tmp/verify-lua.log 2>&1 || {
+                      cat /tmp/verify-lua.log
+                      exit 1
+                    }
+                    ROCK_VERSION=$(luarocks show strling | awk 'NR==1 {print $2}')
+                    INSTALLED=$(printf '%s\n' "$ROCK_VERSION" | sed -E 's/-[0-9]+$//')
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED | Rock: $ROCK_VERSION"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "LuaRocks propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for strling on LuaRocks"
+                  exit 1
+
+    verify-perl-distributor:
+        name: Verify CPAN Default Install
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-perl]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-perl.result == 'success' }}
+        steps:
+            - uses: shogo82148/actions-setup-perl@v1
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    cpanm --notest STRling >/tmp/verify-perl.log 2>&1 || {
+                      cat /tmp/verify-perl.log
+                      exit 1
+                    }
+                    INSTALLED=$(perl -MSTRling -e 'print $STRling::VERSION')
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "CPAN propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for STRling on CPAN"
+                  exit 1
+
+    verify-python-distributor:
+        name: Verify PyPI Default Install
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-python]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-python.result == 'success' }}
+        steps:
+            - uses: actions/setup-python@v5
+              with:
+                  python-version: "3.10"
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    WORKDIR=$(mktemp -d)
+                    python -m venv "$WORKDIR/.venv"
+                    source "$WORKDIR/.venv/bin/activate"
+                    python -m pip install --upgrade pip >/dev/null
+                    python -m pip install strling >/tmp/verify-python.log 2>&1 || {
+                      cat /tmp/verify-python.log
+                      exit 1
+                    }
+                    INSTALLED=$(python -m pip show strling | awk -F': ' '/^Version:/{print $2; exit}')
+                    deactivate
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "PyPI propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for strling on PyPI"
+                  exit 1
+
+    verify-ruby-distributor:
+        name: Verify RubyGems Default Install
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-ruby]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-ruby.result == 'success' }}
+        steps:
+            - uses: ruby/setup-ruby@v1
+              with:
+                  ruby-version: "3.2"
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    gem install strling --no-document >/tmp/verify-ruby.log 2>&1 || {
+                      cat /tmp/verify-ruby.log
+                      exit 1
+                    }
+                    INSTALLED=$(ruby -e "spec = Gem::Specification.find_by_name('strling'); puts spec.version")
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "RubyGems propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for strling on RubyGems"
+                  exit 1
+
+    verify-rust-distributor:
+        name: Verify Crates.io Default Install
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-rust]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-rust.result == 'success' }}
+        steps:
+            - uses: dtolnay/rust-toolchain@stable
+              with:
+                  toolchain: "1.65"
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    cargo install strling --dry-run >/tmp/verify-rust.log 2>&1 || {
+                      cat /tmp/verify-rust.log
+                      exit 1
+                    }
+                    INSTALLED=$(sed -n 's/.*Installing strling v\([^ ]*\).*/\1/p' /tmp/verify-rust.log | head -n 1)
+                    if [[ -z "$INSTALLED" ]]; then
+                      INSTALLED=$(cargo search strling --limit 1 | sed -n 's/^strling = "\([^"]*\)".*/\1/p')
+                    fi
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "Crates.io propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for strling on Crates.io"
+                  exit 1
+
+    verify-typescript-distributor:
+        name: Verify NPM Default Install
+        runs-on: ubuntu-latest
+        needs: [verify-release, deploy-typescript]
+        if: ${{ needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.deploy-typescript.result == 'success' }}
+        steps:
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+            - name: Blind Install and Assert SSOT Match
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  EXPECTED="${{ needs.verify-release.outputs.tag_version }}"
+
+                  for attempt in 1 2 3; do
+                    WORKDIR=$(mktemp -d)
+                    pushd "$WORKDIR" >/dev/null
+                    npm init -y >/dev/null 2>&1
+                    npm install @strling-lang/strling >/tmp/verify-typescript.log 2>&1 || {
+                      cat /tmp/verify-typescript.log
+                      exit 1
+                    }
+                    INSTALLED=$(node -p "require('./node_modules/@strling-lang/strling/package.json').version")
+                    popd >/dev/null
+
+                    echo "SSOT: $EXPECTED | Registry: $INSTALLED"
+                    if [[ "$INSTALLED" == "$EXPECTED" ]]; then
+                      exit 0
+                    fi
+
+                    if [[ "$attempt" -lt 3 ]]; then
+                      echo "NPM propagation delay suspected. Retrying in 100 seconds..."
+                      sleep 100
+                    fi
+                  done
+
+                  echo "Version mismatch for @strling-lang/strling on NPM"
+                  exit 1

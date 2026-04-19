@@ -854,7 +854,7 @@ jobs:
                   done
                   exit 1
 
-    verify-typescript-distributor:
+    verify-npm-distributor:
         needs: [verify-release, publish-typescript]
         if: needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run == 'false' && needs.publish-typescript.result == 'success'
         runs-on: ubuntu-latest

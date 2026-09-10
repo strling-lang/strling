@@ -253,6 +253,6 @@ commits:
     - sha: 7e58c04ad412fedef46f71b7d999dea56107f4e1
       subject: "fix(certification): repair final profile prerequisites"
 readiness:
-    status: IN_PROGRESS
+    status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
     rationale: The authorized Windows environment rollover is qualified and calibrated. P20-T02 remains paused until exact-source deterministic preflight, Full, Release, signed local attestation, and cheap cloud verification complete.

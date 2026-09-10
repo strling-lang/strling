@@ -352,7 +352,7 @@ fn semantic_editor_actions_match_certified_authored_expectations() {
         );
         assert_eq!(
             action.strategy_fingerprint,
-            "999caab104647f02de759c5dde48d5d6d020a464f9de793617088ebbb0f96d17"
+            "6aca0899f54a7d2154bff4dd96fa14bf8147d250ffe1d63cef0a572dced0b71e"
         );
         assert_eq!(
             action.replacement_text,

@@ -5,7 +5,7 @@ use strling_kernel::semantic::SemanticProgram;
 use strling_kernel::semantic_analysis::analyze;
 use strling_kernel::structural_analysis::analyze_structure;
 use strling_kernel::target::{ArtifactPortabilityStatus, TargetProfile};
-use strling_kernel::target_lowering::{lower_pcre2, Pcre2Operation};
+use strling_kernel::target_lowering::{lower_pcre2, Pcre2LoweringErrorCode, Pcre2Operation};
 use strling_kernel::target_serialization::{
     serialize_pcre2, Pcre2SerializationErrorCode, MAX_PCRE2_PATTERN_BYTES, MAX_PCRE2_PATTERN_COUNT,
 };
@@ -248,7 +248,11 @@ fn every_target_operation_serializes_to_one_valid_deterministic_artifact() {
         .pattern
         .text
         .contains("(?:g)*(?:l){1,3}?(?:p){2,4}+"));
-    assert!(artifact.pattern.text.contains(r"\A\z^$\b\B\Z"));
+    assert!(artifact.pattern.text.contains(r"\A\z^$\b\B"));
+    assert!(artifact
+        .pattern
+        .text
+        .contains(r"(?:\z|(?=(?:\r\n|[\x{b}\x{c}\r\x{85}\x{2028}\x{2029}])\z)|(?<!\r)(?=\n\z))"));
     assert!(artifact.pattern.text.contains(r"(?<word>n)(u)\g{1}\g{2}"));
     assert!(artifact
         .pattern
@@ -262,8 +266,12 @@ fn every_target_operation_serializes_to_one_valid_deterministic_artifact() {
             .requirements
             .first()
             .map(|item| item.requirement_id.as_str()),
-        Some("requirement:semantic.0000000000")
+        Some("requirement:lowering.0000000000")
     );
+    assert!(artifact
+        .requirements
+        .iter()
+        .any(|item| item.requirement_id.as_str() == "requirement:semantic.0000000000"));
     assert!(artifact
         .source_map
         .windows(2)
@@ -421,12 +429,10 @@ fn malformed_capture_property_bounds_and_plan_fail_closed() {
         "max": MAX_PCRE2_PATTERN_COUNT + 1,
         "mode": "greedy"
     }));
-    let failure =
-        serialize_pcre2(&lower(&repetition_program, &target)).expect_err("PCRE2 count limit");
-    assert_eq!(
-        failure.code,
-        Pcre2SerializationErrorCode::SyntaxLimitExceeded
-    );
+    let repetition_portability = plan_for(&repetition_program, &target);
+    let failure = lower_pcre2(&repetition_program, &target, &repetition_portability)
+        .expect_err("profile quantifier constraint must fail before serialization");
+    assert_eq!(failure.code, Pcre2LoweringErrorCode::IntroducedRequirement);
 
     let simple = program(literal("node:bad-plan", "a"));
     let mut bad_plan = lower(&simple, &target);

@@ -56,7 +56,6 @@ scope:
         - toolchain.json
         - tooling/architecture_fitness.py
         - tooling/dependency_license_evidence.py
-        - tooling/deep_quality_certification.py
         - tooling/local_certification_attestation.py
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py

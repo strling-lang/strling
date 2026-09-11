@@ -1,605 +1,597 @@
 {
-  "schema_version": "1.0.0",
-  "authority": "empirical/adversarial-conformance-evidence",
-  "source_sha": "fafd1879e22db62b576203a2e8c7d06179164ed2",
-  "source_files": {
-    "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
-    "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
-    "core/internal/Cargo.toml": "a46069445b9feda2978ca3e25f77910c64f9f01c8d4846ffe0597e0f59dc7a9e",
-    "core/src/capability_evaluation.rs": "c7fa0ce5fa8c7105646b499ea699406dd7f617ad91c7dae1b6a3a18f1e0d83cb",
-    "core/src/capability_pipeline.rs": "bbc365161a8e0a6b46266245119eed6417e2b238b3105e78a884df68b7673a24",
-    "core/src/compiler_pipeline.rs": "6d3df85ea1fbb1faacb9e595db7d7e9fb4adb71975e0185bcedead633211c0cf",
-    "core/src/conformance/mod.rs": "a5e763f229fe70554c4eeed8bb952d50847a34895ff6ebd26e327f6b8e4d8da0",
-    "core/src/diagnostic/mod.rs": "140f427483e1ab41b3b6980ddc74c7babbf7a719c655910d28ec823d820afffd",
-    "core/src/diagnostic_generation/quality.rs": "76f44d937ad6222a688506ccc4dd26b4b8e18c6d665d94246951709308b63e4f",
-    "core/src/diagnostic_generation.rs": "1d1dff475a64d042d93a5ee6d7d4cf18cff8c71e9169266c56832165416ba982",
-    "core/src/ecmascript_lowering.rs": "558b1a618a9364327c2f03690d1a232290f2b8018bef59d4a85439695ece62f1",
-    "core/src/ecmascript_serialization.rs": "f24b5c452b304cf8c6e0505688263a403dd42c1465187b6f074de018cfbc65e9",
-    "core/src/editor_intelligence.rs": "ae4abc17ad8c7027d2115b8ea2c8adddb66ad35cedb2ce790a6c598b038c1409",
-    "core/src/explanation.rs": "450bcd509aea37777c0d7933ea22b8e6b01fa8358be23c38a1e48f1d05db11e4",
-    "core/src/kernel.rs": "ea582bdf12bf04c8e085cc55038797d8e7e1695a14a7bb0111660b97d03020cc",
-    "core/src/lib.rs": "a875a07b9a3ff266d4e7285282ba37530418c81dad290d151963f59d33e05d5b",
-    "core/src/lib_public.rs": "a3da3dea66f6d4e09bc6e44008b7ba132f4791dd923b71ab7c0559a4a8e16949",
-    "core/src/no_match_explanation.rs": "65ec99fc9f71058add6604ec8887afc1a21695110a72d8b3d9072f321f4482c7",
-    "core/src/normalization.rs": "3d87a151d21ed5b9d43ebc11fbebfaaca0f5e7fec066c7cec23ea1bdcb886f13",
-    "core/src/portability_diagnostics.rs": "4ef85127c799df29d5b81c17b06fc3638faa31a95d2e44513f87905db33d583e",
-    "core/src/portability_planning/equivalence.rs": "bcb27a4caf126244f55139de1cf8b604b969562cc85615a79fa2bcad5a8c6c81",
-    "core/src/portability_planning/validation.rs": "250a509b2a31a5627130c7448ace2537b71e86ea0eaed0c40961314dd0ed8ec9",
-    "core/src/portability_planning.rs": "43cc5c822ae06286e71a530b2c452107b7489cbb786a8da43e6148158315c83d",
-    "core/src/post_lowering_requirements.rs": "b2a48e8943014e35b0531482aa44ee4fe9939d2ef99f670a7d8587e888169a76",
-    "core/src/protocol/analysis.rs": "b9992d8b66f21abbac11127af5159d9343517dde12e3d1a57f2dfee8ee5a6ebc",
-    "core/src/protocol/exchange.rs": "05fe1cfbe8368db7606c32ff23d30f0e85cc69f772d4471b1f0ff1d03ba0f98d",
-    "core/src/protocol/mod.rs": "957baf0097e1747e78b76929326c045b0e036a219faf0f9580918846da771e00",
-    "core/src/protocol/request.rs": "f593f0571f09e2c957c8ff70ac47ad612e10c1503a10794c0fa52443f05fe4e6",
-    "core/src/protocol/result.rs": "d1f4782b8f4e949caf00ed874f2e74f2db9111a1cee1aa65ac62842bc87cdb3c",
-    "core/src/python_re_lowering.rs": "2a064425b12b522a77598242fa5149036355471a6748223bd988407bda4fca74",
-    "core/src/python_re_serialization.rs": "c379877843f98acc12ddd8b41a7bbd691bd41856cea2358020f2aca4c7055ae5",
-    "core/src/regex_frontend.rs": "951ca607eec9b757e1afc84ccb5c62ecc192e13ff4d2dd7526aa240923dd0390",
-    "core/src/safety_analysis/repetition.rs": "4eb975a7733d57afa30f5d541d19764197345401d6844bcf72aa1fb850107c03",
-    "core/src/safety_analysis.rs": "15f0cef28ada40469635b9d1d2241c5e8021fb4cecb3757a56883462616a191c",
-    "core/src/semantic/mod.rs": "5ee874a56d217f7dbef35fa127132291d535bb369dc4ad223d948cb56f7758c1",
-    "core/src/semantic_analysis/capture.rs": "763bb655f8760d48d651da5eed8e2670d6987e5bd2ca9d16b4c08b20c3551078",
-    "core/src/semantic_analysis/consumption.rs": "12f33ae8f6d8f5686f300d6f11a70457e2c4d7d8acd03e24c97d66c15bac05cb",
-    "core/src/semantic_analysis.rs": "309dc0e5d02bc48b40d193536f7da98a3ade7643fd3f33bb39baf71d87f03f9b",
-    "core/src/semantic_compatibility.rs": "f3e70421f5b9a6d63fef1f4e3b742fac8bb43e4cd4730223fe6fc50e63ea7e13",
-    "core/src/semantic_conversion.rs": "5775e4ea0aa2e2a5b6fca506284aa687a482b163c565dabca8538cc61b8f29c7",
-    "core/src/semantic_frontend.rs": "29a66453e8851d381dc04ef145f95e59e8f86e06229f6d6d90073e2e0ab37da0",
-    "core/src/semantic_rewrite.rs": "2a744ed211229b4d7d1edf50ab46d5c60e505e29810bafaa506d7e700eca456d",
-    "core/src/simply.rs": "273208de2a39a91dc405e20c75d214f9f8cf8f702b88ad8d4d2215218dc71c6b",
-    "core/src/source/mod.rs": "4838152afcd97014981e80b1428600440df671b7386378e656effe49cfff4127",
-    "core/src/stdlib.rs": "3cf85b3e1a54910381a7972e594c08f447c3cc32ff06c929cd07a68393a03896",
-    "core/src/structural_analysis.rs": "a0ffd65f954545127fe07cb9ea1e0e876aed6d73f7123b8d53c2fc2af39146fc",
-    "core/src/target/mod.rs": "0e3c27cb916ea8e0c5263eb5d561a89995944968e8f98f62431aaf83c8edcb2f",
-    "core/src/target/profile.rs": "e913e7e6ef3985272e5255fd89df1c1655d51d19f7c46015c3d123f265b59f65",
-    "core/src/target_lowering.rs": "c55a7560e235ad12e867128a820e21731416e43e36e8341f08de409ca6eb102d",
-    "core/src/target_serialization.rs": "d5c40a8586c650645b6456613c04272c6ab969147bcaea42b20c610ce549612c",
-    "core/src/validation/mod.rs": "797cf0cb3eda7fca9797ec0b39259d7e2277b7be7778f5dbc22bb07db10f1078",
-    "tooling/adversarial_semantic_audit.py": "18b3db1e229da79cb06a2f091ab65ed30311c4e66869f366d2b055585369231c",
-    "tooling/node_regexp_harness.mjs": "96a85b99480b2a898590a847b06f8bb49255fef34a1c5b435226be785b03bcd9",
-    "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
-    "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
-  },
-  "executed_at": "2026-09-11T04:48:24.531761+00:00",
-  "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
-  "repeat_runs": 2,
-  "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
-  "runtimes": {
-    "node": {
-      "node": "v22.23.2",
-      "v8": "12.4.254.21-node.56",
-      "platform": "linux",
-      "architecture": "x64",
-      "sha256": "3517c2df0b2f8cd7f422b4b8450ef81c6889f08eb03e281d6de9079b15e6a327"
+    "schema_version": "1.0.0",
+    "authority": "empirical/adversarial-conformance-evidence",
+    "source_sha": "01de5af6992ed750fad407cb435a807354e2638d",
+    "source_files": {
+        "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
+        "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
+        "core/internal/Cargo.toml": "a46069445b9feda2978ca3e25f77910c64f9f01c8d4846ffe0597e0f59dc7a9e",
+        "core/src/capability_evaluation.rs": "c7fa0ce5fa8c7105646b499ea699406dd7f617ad91c7dae1b6a3a18f1e0d83cb",
+        "core/src/capability_pipeline.rs": "bbc365161a8e0a6b46266245119eed6417e2b238b3105e78a884df68b7673a24",
+        "core/src/compiler_pipeline.rs": "6d3df85ea1fbb1faacb9e595db7d7e9fb4adb71975e0185bcedead633211c0cf",
+        "core/src/conformance/mod.rs": "a5e763f229fe70554c4eeed8bb952d50847a34895ff6ebd26e327f6b8e4d8da0",
+        "core/src/diagnostic/mod.rs": "140f427483e1ab41b3b6980ddc74c7babbf7a719c655910d28ec823d820afffd",
+        "core/src/diagnostic_generation/quality.rs": "76f44d937ad6222a688506ccc4dd26b4b8e18c6d665d94246951709308b63e4f",
+        "core/src/diagnostic_generation.rs": "1d1dff475a64d042d93a5ee6d7d4cf18cff8c71e9169266c56832165416ba982",
+        "core/src/ecmascript_lowering.rs": "558b1a618a9364327c2f03690d1a232290f2b8018bef59d4a85439695ece62f1",
+        "core/src/ecmascript_serialization.rs": "f24b5c452b304cf8c6e0505688263a403dd42c1465187b6f074de018cfbc65e9",
+        "core/src/editor_intelligence.rs": "ae4abc17ad8c7027d2115b8ea2c8adddb66ad35cedb2ce790a6c598b038c1409",
+        "core/src/explanation.rs": "450bcd509aea37777c0d7933ea22b8e6b01fa8358be23c38a1e48f1d05db11e4",
+        "core/src/kernel.rs": "ea582bdf12bf04c8e085cc55038797d8e7e1695a14a7bb0111660b97d03020cc",
+        "core/src/lib.rs": "a875a07b9a3ff266d4e7285282ba37530418c81dad290d151963f59d33e05d5b",
+        "core/src/lib_public.rs": "a3da3dea66f6d4e09bc6e44008b7ba132f4791dd923b71ab7c0559a4a8e16949",
+        "core/src/no_match_explanation.rs": "65ec99fc9f71058add6604ec8887afc1a21695110a72d8b3d9072f321f4482c7",
+        "core/src/normalization.rs": "3d87a151d21ed5b9d43ebc11fbebfaaca0f5e7fec066c7cec23ea1bdcb886f13",
+        "core/src/portability_diagnostics.rs": "4ef85127c799df29d5b81c17b06fc3638faa31a95d2e44513f87905db33d583e",
+        "core/src/portability_planning/equivalence.rs": "bcb27a4caf126244f55139de1cf8b604b969562cc85615a79fa2bcad5a8c6c81",
+        "core/src/portability_planning/validation.rs": "250a509b2a31a5627130c7448ace2537b71e86ea0eaed0c40961314dd0ed8ec9",
+        "core/src/portability_planning.rs": "43cc5c822ae06286e71a530b2c452107b7489cbb786a8da43e6148158315c83d",
+        "core/src/post_lowering_requirements.rs": "b2a48e8943014e35b0531482aa44ee4fe9939d2ef99f670a7d8587e888169a76",
+        "core/src/protocol/analysis.rs": "b9992d8b66f21abbac11127af5159d9343517dde12e3d1a57f2dfee8ee5a6ebc",
+        "core/src/protocol/exchange.rs": "05fe1cfbe8368db7606c32ff23d30f0e85cc69f772d4471b1f0ff1d03ba0f98d",
+        "core/src/protocol/mod.rs": "957baf0097e1747e78b76929326c045b0e036a219faf0f9580918846da771e00",
+        "core/src/protocol/request.rs": "f593f0571f09e2c957c8ff70ac47ad612e10c1503a10794c0fa52443f05fe4e6",
+        "core/src/protocol/result.rs": "d1f4782b8f4e949caf00ed874f2e74f2db9111a1cee1aa65ac62842bc87cdb3c",
+        "core/src/python_re_lowering.rs": "2a064425b12b522a77598242fa5149036355471a6748223bd988407bda4fca74",
+        "core/src/python_re_serialization.rs": "c379877843f98acc12ddd8b41a7bbd691bd41856cea2358020f2aca4c7055ae5",
+        "core/src/regex_frontend.rs": "951ca607eec9b757e1afc84ccb5c62ecc192e13ff4d2dd7526aa240923dd0390",
+        "core/src/safety_analysis/repetition.rs": "4eb975a7733d57afa30f5d541d19764197345401d6844bcf72aa1fb850107c03",
+        "core/src/safety_analysis.rs": "15f0cef28ada40469635b9d1d2241c5e8021fb4cecb3757a56883462616a191c",
+        "core/src/semantic/mod.rs": "5ee874a56d217f7dbef35fa127132291d535bb369dc4ad223d948cb56f7758c1",
+        "core/src/semantic_analysis/capture.rs": "763bb655f8760d48d651da5eed8e2670d6987e5bd2ca9d16b4c08b20c3551078",
+        "core/src/semantic_analysis/consumption.rs": "12f33ae8f6d8f5686f300d6f11a70457e2c4d7d8acd03e24c97d66c15bac05cb",
+        "core/src/semantic_analysis.rs": "309dc0e5d02bc48b40d193536f7da98a3ade7643fd3f33bb39baf71d87f03f9b",
+        "core/src/semantic_compatibility.rs": "f3e70421f5b9a6d63fef1f4e3b742fac8bb43e4cd4730223fe6fc50e63ea7e13",
+        "core/src/semantic_conversion.rs": "5775e4ea0aa2e2a5b6fca506284aa687a482b163c565dabca8538cc61b8f29c7",
+        "core/src/semantic_frontend.rs": "29a66453e8851d381dc04ef145f95e59e8f86e06229f6d6d90073e2e0ab37da0",
+        "core/src/semantic_rewrite.rs": "2a744ed211229b4d7d1edf50ab46d5c60e505e29810bafaa506d7e700eca456d",
+        "core/src/simply.rs": "273208de2a39a91dc405e20c75d214f9f8cf8f702b88ad8d4d2215218dc71c6b",
+        "core/src/source/mod.rs": "4838152afcd97014981e80b1428600440df671b7386378e656effe49cfff4127",
+        "core/src/stdlib.rs": "3cf85b3e1a54910381a7972e594c08f447c3cc32ff06c929cd07a68393a03896",
+        "core/src/structural_analysis.rs": "a0ffd65f954545127fe07cb9ea1e0e876aed6d73f7123b8d53c2fc2af39146fc",
+        "core/src/target/mod.rs": "0e3c27cb916ea8e0c5263eb5d561a89995944968e8f98f62431aaf83c8edcb2f",
+        "core/src/target/profile.rs": "e913e7e6ef3985272e5255fd89df1c1655d51d19f7c46015c3d123f265b59f65",
+        "core/src/target_lowering.rs": "c55a7560e235ad12e867128a820e21731416e43e36e8341f08de409ca6eb102d",
+        "core/src/target_serialization.rs": "d5c40a8586c650645b6456613c04272c6ab969147bcaea42b20c610ce549612c",
+        "core/src/validation/mod.rs": "797cf0cb3eda7fca9797ec0b39259d7e2277b7be7778f5dbc22bb07db10f1078",
+        "tooling/adversarial_semantic_audit.py": "18b3db1e229da79cb06a2f091ab65ed30311c4e66869f366d2b055585369231c",
+        "tooling/node_regexp_harness.mjs": "96a85b99480b2a898590a847b06f8bb49255fef34a1c5b435226be785b03bcd9",
+        "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
+        "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
     },
-    "python": {
-      "cache_tag": "cpython-311",
-      "implementation": "cpython",
-      "machine": "x86_64",
-      "platform": "linux",
-      "soabi": "cpython-311-x86_64-linux-gnu",
-      "sysconfig_platform": "linux-x86_64",
-      "version": "3.11.15",
-      "sha256": "89656b63d58055a8f200f46d52986610f944b5bcff076a7b60521fc6068422cc"
+    "executed_at": "2026-09-11T11:21:51.269590+00:00",
+    "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
+    "repeat_runs": 2,
+    "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
+    "runtimes": {
+        "node": {
+            "node": "v22.23.2",
+            "v8": "12.4.254.21-node.56",
+            "platform": "linux",
+            "architecture": "x64",
+            "sha256": "3517c2df0b2f8cd7f422b4b8450ef81c6889f08eb03e281d6de9079b15e6a327"
+        },
+        "python": {
+            "cache_tag": "cpython-311",
+            "implementation": "cpython",
+            "machine": "x86_64",
+            "platform": "linux",
+            "soabi": "cpython-311-x86_64-linux-gnu",
+            "sysconfig_platform": "linux-x86_64",
+            "version": "3.11.15",
+            "sha256": "89656b63d58055a8f200f46d52986610f944b5bcff076a7b60521fc6068422cc"
+        },
+        "10.42": {
+            "version": "10.42 2022-12-11",
+            "sha256": "fdb00bcb3dd68707ed155927738b454a4281bb664e830d60dd205b10d1a2edd1"
+        },
+        "10.43": {
+            "version": "10.43 2024-02-16",
+            "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
+        }
     },
-    "10.42": {
-      "version": "10.42 2022-12-11",
-      "sha256": "fdb00bcb3dd68707ed155927738b454a4281bb664e830d60dd205b10d1a2edd1"
-    },
-    "10.43": {
-      "version": "10.43 2024-02-16",
-      "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
-    }
-  },
-  "quantifier_boundaries": [
-    {
-      "profile_id": "profile:pcre2/10.42",
-      "largest_accepted": 4096,
-      "smallest_rejected": 4097,
-      "probes": [
+    "quantifier_boundaries": [
         {
-          "case_id": "quantifier-boundary-4096",
-          "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4096 using greedy { text \"a\"; }",
-          "count": 4096,
-          "artifact": {
-            "contract_version": "1.0.0",
-            "specification_version": "1.0-draft.1",
-            "target_profile": {
-              "profile_id": "profile:pcre2/10.42",
-              "profile_version": "1.3.0",
-              "sha256": "57941ab3f2a5709d030c6f890b1911564513e0dd785710956d7b8af19711e9e2"
-            },
-            "portability_status": "native",
-            "pattern": {
-              "syntax": "regex",
-              "encoding": "utf-8",
-              "text": "(?:a){1,4096}"
-            },
-            "engine_options": [
-              {
-                "option_id": "pcre2.matcher_api",
-                "stage": "runtime",
-                "value": "pcre2_match"
-              },
-              {
-                "option_id": "pcre2.multiline",
-                "stage": "compile",
-                "value": true
-              },
-              {
-                "option_id": "pcre2.newline",
-                "stage": "compile",
-                "value": "any"
-              },
-              {
-                "option_id": "pcre2.ucp",
-                "stage": "compile",
-                "value": true
-              },
-              {
-                "option_id": "pcre2.utf",
-                "stage": "compile",
-                "value": true
-              }
-            ],
-            "requirements": [
-              {
-                "requirement_id": "requirement:lowering.0000000000",
-                "capability_id": "repetition.bounded",
-                "status": "native",
-                "resolution_code": "lowering_introduced_profile_capability_resolved"
-              }
-            ],
-            "source_map": [
-              {
-                "generated_span": {
-                  "coordinate_system": "utf8-bytes",
-                  "start": 0,
-                  "end": 13
+            "profile_id": "profile:pcre2/10.42",
+            "largest_accepted": 4096,
+            "smallest_rejected": 4097,
+            "probes": [
+                {
+                    "case_id": "quantifier-boundary-4096",
+                    "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4096 using greedy { text \"a\"; }",
+                    "count": 4096,
+                    "artifact": {
+                        "contract_version": "1.0.0",
+                        "specification_version": "1.0-draft.1",
+                        "target_profile": {
+                            "profile_id": "profile:pcre2/10.42",
+                            "profile_version": "1.3.0",
+                            "sha256": "57941ab3f2a5709d030c6f890b1911564513e0dd785710956d7b8af19711e9e2"
+                        },
+                        "portability_status": "native",
+                        "pattern": {
+                            "syntax": "regex",
+                            "encoding": "utf-8",
+                            "text": "(?:a){1,4096}"
+                        },
+                        "engine_options": [
+                            {
+                                "option_id": "pcre2.matcher_api",
+                                "stage": "runtime",
+                                "value": "pcre2_match"
+                            },
+                            {
+                                "option_id": "pcre2.multiline",
+                                "stage": "compile",
+                                "value": true
+                            },
+                            {
+                                "option_id": "pcre2.newline",
+                                "stage": "compile",
+                                "value": "any"
+                            },
+                            {
+                                "option_id": "pcre2.ucp",
+                                "stage": "compile",
+                                "value": true
+                            },
+                            {
+                                "option_id": "pcre2.utf",
+                                "stage": "compile",
+                                "value": true
+                            }
+                        ],
+                        "requirements": [
+                            {
+                                "requirement_id": "requirement:lowering.0000000000",
+                                "capability_id": "repetition.bounded",
+                                "status": "native",
+                                "resolution_code": "lowering_introduced_profile_capability_resolved"
+                            }
+                        ],
+                        "source_map": [
+                            {
+                                "generated_span": {
+                                    "coordinate_system": "utf8-bytes",
+                                    "start": 0,
+                                    "end": 13
+                                },
+                                "node_ids": ["node:semantic/n1"],
+                                "source_spans": [
+                                    {
+                                        "source_id": "src:adversarial.quantifier-boundary-4096",
+                                        "coordinate_system": "utf8-bytes",
+                                        "start": 46,
+                                        "end": 94
+                                    }
+                                ]
+                            },
+                            {
+                                "generated_span": {
+                                    "coordinate_system": "utf8-bytes",
+                                    "start": 3,
+                                    "end": 4
+                                },
+                                "node_ids": ["node:semantic/n2"],
+                                "source_spans": [
+                                    {
+                                        "source_id": "src:adversarial.quantifier-boundary-4096",
+                                        "coordinate_system": "utf8-bytes",
+                                        "start": 83,
+                                        "end": 92
+                                    }
+                                ]
+                            }
+                        ],
+                        "emission_diagnostics": []
+                    },
+                    "portability_status": "native",
+                    "artifact_sha256": "ebdc94f557bd6d8981d08cbf02ec3adca60fb032bad91f43636683a682eaf825",
+                    "target_compile": "ok",
+                    "raw": {
+                        "compile": "ok",
+                        "captures": [
+                            {
+                                "index": 0
+                            }
+                        ],
+                        "matches": []
+                    }
                 },
-                "node_ids": [
-                  "node:semantic/n1"
-                ],
-                "source_spans": [
-                  {
-                    "source_id": "src:adversarial.quantifier-boundary-4096",
-                    "coordinate_system": "utf8-bytes",
-                    "start": 46,
-                    "end": 94
-                  }
-                ]
-              },
-              {
-                "generated_span": {
-                  "coordinate_system": "utf8-bytes",
-                  "start": 3,
-                  "end": 4
-                },
-                "node_ids": [
-                  "node:semantic/n2"
-                ],
-                "source_spans": [
-                  {
-                    "source_id": "src:adversarial.quantifier-boundary-4096",
-                    "coordinate_system": "utf8-bytes",
-                    "start": 83,
-                    "end": 92
-                  }
-                ]
-              }
-            ],
-            "emission_diagnostics": []
-          },
-          "portability_status": "native",
-          "artifact_sha256": "ebdc94f557bd6d8981d08cbf02ec3adca60fb032bad91f43636683a682eaf825",
-          "target_compile": "ok",
-          "raw": {
-            "compile": "ok",
-            "captures": [
-              {
-                "index": 0
-              }
-            ],
-            "matches": []
-          }
+                {
+                    "case_id": "quantifier-boundary-4097",
+                    "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4097 using greedy { text \"a\"; }",
+                    "count": 4097,
+                    "artifact": null,
+                    "portability_status": "native",
+                    "target_compile": "not_emitted",
+                    "raw": {
+                        "compile": "not_emitted",
+                        "diagnostics": [
+                            {
+                                "contract_version": "1.0.0",
+                                "occurrence": 0,
+                                "code": "STRL-PCRE2_LOWERING-0014",
+                                "severity": "error",
+                                "severity_basis": "target_profile",
+                                "phase": "target_lowering",
+                                "category": "target_capability",
+                                "message": "semantic node node:semantic/n1 lowers through PCRE2 bounded quantifier, which requires repetition.bounded; exact target profile:pcre2/10.42 revision 1.3.0 evaluates that capability as Unsupported, so the artifact cannot be emitted",
+                                "primary_location": {
+                                    "source_id": "src:adversarial.quantifier-boundary-4097",
+                                    "coordinate_system": "utf8-bytes",
+                                    "start": 46,
+                                    "end": 94
+                                },
+                                "advice": [
+                                    {
+                                        "kind": "note",
+                                        "message": "Affected Semantic IR node: node:semantic/n1."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
-          "case_id": "quantifier-boundary-4097",
-          "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4097 using greedy { text \"a\"; }",
-          "count": 4097,
-          "artifact": null,
-          "portability_status": "native",
-          "target_compile": "not_emitted",
-          "raw": {
-            "compile": "not_emitted",
-            "diagnostics": [
-              {
-                "contract_version": "1.0.0",
-                "occurrence": 0,
-                "code": "STRL-PCRE2_LOWERING-0014",
-                "severity": "error",
-                "severity_basis": "target_profile",
-                "phase": "target_lowering",
-                "category": "target_capability",
-                "message": "semantic node node:semantic/n1 lowers through PCRE2 bounded quantifier, which requires repetition.bounded; exact target profile:pcre2/10.42 revision 1.3.0 evaluates that capability as Unsupported, so the artifact cannot be emitted",
-                "primary_location": {
-                  "source_id": "src:adversarial.quantifier-boundary-4097",
-                  "coordinate_system": "utf8-bytes",
-                  "start": 46,
-                  "end": 94
+            "profile_id": "profile:pcre2/10.43",
+            "largest_accepted": 4096,
+            "smallest_rejected": 4097,
+            "probes": [
+                {
+                    "case_id": "quantifier-boundary-4096",
+                    "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4096 using greedy { text \"a\"; }",
+                    "count": 4096,
+                    "artifact": {
+                        "contract_version": "1.0.0",
+                        "specification_version": "1.0-draft.1",
+                        "target_profile": {
+                            "profile_id": "profile:pcre2/10.43",
+                            "profile_version": "1.3.0",
+                            "sha256": "56762a1d289d41d0811b007695464916fda0ca5c48c2f5569b4ec26983a24bff"
+                        },
+                        "portability_status": "native",
+                        "pattern": {
+                            "syntax": "regex",
+                            "encoding": "utf-8",
+                            "text": "(?:a){1,4096}"
+                        },
+                        "engine_options": [
+                            {
+                                "option_id": "pcre2.matcher_api",
+                                "stage": "runtime",
+                                "value": "pcre2_match"
+                            },
+                            {
+                                "option_id": "pcre2.max_variable_lookbehind",
+                                "stage": "compile",
+                                "value": 255
+                            },
+                            {
+                                "option_id": "pcre2.multiline",
+                                "stage": "compile",
+                                "value": true
+                            },
+                            {
+                                "option_id": "pcre2.newline",
+                                "stage": "compile",
+                                "value": "any"
+                            },
+                            {
+                                "option_id": "pcre2.ucp",
+                                "stage": "compile",
+                                "value": true
+                            },
+                            {
+                                "option_id": "pcre2.utf",
+                                "stage": "compile",
+                                "value": true
+                            }
+                        ],
+                        "requirements": [
+                            {
+                                "requirement_id": "requirement:lowering.0000000000",
+                                "capability_id": "repetition.bounded",
+                                "status": "native",
+                                "resolution_code": "lowering_introduced_profile_capability_resolved"
+                            }
+                        ],
+                        "source_map": [
+                            {
+                                "generated_span": {
+                                    "coordinate_system": "utf8-bytes",
+                                    "start": 0,
+                                    "end": 13
+                                },
+                                "node_ids": ["node:semantic/n1"],
+                                "source_spans": [
+                                    {
+                                        "source_id": "src:adversarial.quantifier-boundary-4096",
+                                        "coordinate_system": "utf8-bytes",
+                                        "start": 46,
+                                        "end": 94
+                                    }
+                                ]
+                            },
+                            {
+                                "generated_span": {
+                                    "coordinate_system": "utf8-bytes",
+                                    "start": 3,
+                                    "end": 4
+                                },
+                                "node_ids": ["node:semantic/n2"],
+                                "source_spans": [
+                                    {
+                                        "source_id": "src:adversarial.quantifier-boundary-4096",
+                                        "coordinate_system": "utf8-bytes",
+                                        "start": 83,
+                                        "end": 92
+                                    }
+                                ]
+                            }
+                        ],
+                        "emission_diagnostics": []
+                    },
+                    "portability_status": "native",
+                    "artifact_sha256": "4ca97898831e9a8907990706282f180b3cad080aebb776092e5c97834c570c8c",
+                    "target_compile": "ok",
+                    "raw": {
+                        "compile": "ok",
+                        "captures": [
+                            {
+                                "index": 0
+                            }
+                        ],
+                        "matches": []
+                    }
                 },
-                "advice": [
-                  {
-                    "kind": "note",
-                    "message": "Affected Semantic IR node: node:semantic/n1."
-                  }
-                ]
-              }
+                {
+                    "case_id": "quantifier-boundary-4097",
+                    "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4097 using greedy { text \"a\"; }",
+                    "count": 4097,
+                    "artifact": null,
+                    "portability_status": "native",
+                    "target_compile": "not_emitted",
+                    "raw": {
+                        "compile": "not_emitted",
+                        "diagnostics": [
+                            {
+                                "contract_version": "1.0.0",
+                                "occurrence": 0,
+                                "code": "STRL-PCRE2_LOWERING-0014",
+                                "severity": "error",
+                                "severity_basis": "target_profile",
+                                "phase": "target_lowering",
+                                "category": "target_capability",
+                                "message": "semantic node node:semantic/n1 lowers through PCRE2 bounded quantifier, which requires repetition.bounded; exact target profile:pcre2/10.43 revision 1.3.0 evaluates that capability as Unsupported, so the artifact cannot be emitted",
+                                "primary_location": {
+                                    "source_id": "src:adversarial.quantifier-boundary-4097",
+                                    "coordinate_system": "utf8-bytes",
+                                    "start": 46,
+                                    "end": 94
+                                },
+                                "advice": [
+                                    {
+                                        "kind": "note",
+                                        "message": "Affected Semantic IR node: node:semantic/n1."
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
             ]
-          }
         }
-      ]
-    },
-    {
-      "profile_id": "profile:pcre2/10.43",
-      "largest_accepted": 4096,
-      "smallest_rejected": 4097,
-      "probes": [
+    ],
+    "findings": [],
+    "result_sha256": "cc035578f3944368074216eed728c9f4846a1fe4f450ccbe18a5f88575ca6d4f",
+    "case_observations": [
         {
-          "case_id": "quantifier-boundary-4096",
-          "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4096 using greedy { text \"a\"; }",
-          "count": 4096,
-          "artifact": {
-            "contract_version": "1.0.0",
-            "specification_version": "1.0-draft.1",
-            "target_profile": {
-              "profile_id": "profile:pcre2/10.43",
-              "profile_version": "1.3.0",
-              "sha256": "56762a1d289d41d0811b007695464916fda0ca5c48c2f5569b4ec26983a24bff"
-            },
-            "portability_status": "native",
-            "pattern": {
-              "syntax": "regex",
-              "encoding": "utf-8",
-              "text": "(?:a){1,4096}"
-            },
-            "engine_options": [
-              {
-                "option_id": "pcre2.matcher_api",
-                "stage": "runtime",
-                "value": "pcre2_match"
-              },
-              {
-                "option_id": "pcre2.max_variable_lookbehind",
-                "stage": "compile",
-                "value": 255
-              },
-              {
-                "option_id": "pcre2.multiline",
-                "stage": "compile",
-                "value": true
-              },
-              {
-                "option_id": "pcre2.newline",
-                "stage": "compile",
-                "value": "any"
-              },
-              {
-                "option_id": "pcre2.ucp",
-                "stage": "compile",
-                "value": true
-              },
-              {
-                "option_id": "pcre2.utf",
-                "stage": "compile",
-                "value": true
-              }
-            ],
-            "requirements": [
-              {
-                "requirement_id": "requirement:lowering.0000000000",
-                "capability_id": "repetition.bounded",
-                "status": "native",
-                "resolution_code": "lowering_introduced_profile_capability_resolved"
-              }
-            ],
-            "source_map": [
-              {
-                "generated_span": {
-                  "coordinate_system": "utf8-bytes",
-                  "start": 0,
-                  "end": 13
-                },
-                "node_ids": [
-                  "node:semantic/n1"
-                ],
-                "source_spans": [
-                  {
-                    "source_id": "src:adversarial.quantifier-boundary-4096",
-                    "coordinate_system": "utf8-bytes",
-                    "start": 46,
-                    "end": 94
-                  }
-                ]
-              },
-              {
-                "generated_span": {
-                  "coordinate_system": "utf8-bytes",
-                  "start": 3,
-                  "end": 4
-                },
-                "node_ids": [
-                  "node:semantic/n2"
-                ],
-                "source_spans": [
-                  {
-                    "source_id": "src:adversarial.quantifier-boundary-4096",
-                    "coordinate_system": "utf8-bytes",
-                    "start": 83,
-                    "end": 92
-                  }
-                ]
-              }
-            ],
-            "emission_diagnostics": []
-          },
-          "portability_status": "native",
-          "artifact_sha256": "4ca97898831e9a8907990706282f180b3cad080aebb776092e5c97834c570c8c",
-          "target_compile": "ok",
-          "raw": {
-            "compile": "ok",
-            "captures": [
-              {
-                "index": 0
-              }
-            ],
-            "matches": []
-          }
+            "case_id": "wildcard-excluding-lines",
+            "path": "observations/wildcard-excluding-lines-e8f959befa9c.json",
+            "sha256": "0bd74819a4e44c99cd383dcdfcbfa3d89462a0f2c450df40dfc37c6787724b68"
         },
         {
-          "case_id": "quantifier-boundary-4097",
-          "source": "semantic strling 1.0; case sensitive; pattern repeat from 1 to 4097 using greedy { text \"a\"; }",
-          "count": 4097,
-          "artifact": null,
-          "portability_status": "native",
-          "target_compile": "not_emitted",
-          "raw": {
-            "compile": "not_emitted",
-            "diagnostics": [
-              {
-                "contract_version": "1.0.0",
-                "occurrence": 0,
-                "code": "STRL-PCRE2_LOWERING-0014",
-                "severity": "error",
-                "severity_basis": "target_profile",
-                "phase": "target_lowering",
-                "category": "target_capability",
-                "message": "semantic node node:semantic/n1 lowers through PCRE2 bounded quantifier, which requires repetition.bounded; exact target profile:pcre2/10.43 revision 1.3.0 evaluates that capability as Unsupported, so the artifact cannot be emitted",
-                "primary_location": {
-                  "source_id": "src:adversarial.quantifier-boundary-4097",
-                  "coordinate_system": "utf8-bytes",
-                  "start": 46,
-                  "end": 94
-                },
-                "advice": [
-                  {
-                    "kind": "note",
-                    "message": "Affected Semantic IR node: node:semantic/n1."
-                  }
-                ]
-              }
-            ]
-          }
+            "case_id": "wildcard-including-lines",
+            "path": "observations/wildcard-including-lines-e5f85e7e2fd6.json",
+            "sha256": "3a12f94bf2bcf71a25c7cd1cf809ccd04d6eefd7eece6b7f272a323dbcffecb5"
+        },
+        {
+            "case_id": "line-start",
+            "path": "observations/line-start-3b76b0718202.json",
+            "sha256": "59f24f379935f86bd38b039af93bb24940c611d81993311e8d63e8c2f31f3a39"
+        },
+        {
+            "case_id": "line-end",
+            "path": "observations/line-end-c569b5269ceb.json",
+            "sha256": "02fd565f66f214df9ed5d5486b67039afea1521cd5427970f46e312f69167546"
+        },
+        {
+            "case_id": "before-final-line-terminator",
+            "path": "observations/before-final-line-terminator-9980a1a54d7d.json",
+            "sha256": "c88261b5cc8367f23d51c1a66ab39f9044e4b42057cb667582ee5eb6877bfa0a"
+        },
+        {
+            "case_id": "final-crlf-interior",
+            "path": "observations/final-crlf-interior-5ef4f45ed974.json",
+            "sha256": "d5ea8097605dc6de9053aa1af1b9674b51d6800df4fe2a6d299a363ae6606199"
+        },
+        {
+            "case_id": "line-crlf-interior",
+            "path": "observations/line-crlf-interior-e09de516484e.json",
+            "sha256": "c066dde1408b42874ad99fafe859e8c0fa83e9ee1325e58b0c7e3a4801b8270f"
+        },
+        {
+            "case_id": "unicode-word-class",
+            "path": "observations/unicode-word-class-1a08f5c472dd.json",
+            "sha256": "c39a2bbe752a5b8c604fb349cc3f2246138aa4858362d159bbf029ddf52360ed"
+        },
+        {
+            "case_id": "word-boundary",
+            "path": "observations/word-boundary-924426e16b2f.json",
+            "sha256": "f99d37be1653e113240f3f425edd960b2225b8f848fd5d5ef4a2946272ca1709"
+        },
+        {
+            "case_id": "word-boundary-before-ascii",
+            "path": "observations/word-boundary-before-ascii-e09919c6fce6.json",
+            "sha256": "ffd773f454305c3eff2259b1562e54504990ff3aa6f7463d95ec6a83bf799d65"
+        },
+        {
+            "case_id": "case-fold-i",
+            "path": "observations/case-fold-i-5dfb30cb2509.json",
+            "sha256": "87292294e462e652a66209712cc5efed8272fece74a17898e8a1045420a368b1"
+        },
+        {
+            "case_id": "case-fold-I",
+            "path": "observations/case-fold-i-83dd610411ed.json",
+            "sha256": "be19fe22a87c55fbc5cc15d01fc51f9a1963066fa6ab5769b9ebc7ab6d8e49be"
+        },
+        {
+            "case_id": "case-fold-dotted-I",
+            "path": "observations/case-fold-dotted-i-934dbc43fcaf.json",
+            "sha256": "4618ae53516a0e58e3a39df8d1ebfee5efc35f791b19c28ceded270e2c8740cc"
+        },
+        {
+            "case_id": "case-fold-dotless-i",
+            "path": "observations/case-fold-dotless-i-5a2911ba2eda.json",
+            "sha256": "269a155d55bec25ab61aca2a8f3c4014a3491ecf257230886c58549a64dede43"
+        },
+        {
+            "case_id": "case-fold-s",
+            "path": "observations/case-fold-s-f98eff56df09.json",
+            "sha256": "2a837718d11e6106ef2b238ce933d0d792860d544c9519eafc47e60ee82e449d"
+        },
+        {
+            "case_id": "case-fold-S",
+            "path": "observations/case-fold-s-c73caa5f2137.json",
+            "sha256": "4b2786eec7d5975d584cb21796c62428f3753aa26fcf43bddd5cb178a333e99c"
+        },
+        {
+            "case_id": "case-fold-long-s",
+            "path": "observations/case-fold-long-s-51f67ecbbb04.json",
+            "sha256": "de61ee511d1e082b89b5b94888c33557b2f6951778ffc7d5cf5811409d327bf0"
+        },
+        {
+            "case_id": "case-fold-k",
+            "path": "observations/case-fold-k-0a9f573d80c2.json",
+            "sha256": "a9c61c2c66406c8a7e9ae8b71bd5b407007b399728de9df843ca8ed904b2cb3d"
+        },
+        {
+            "case_id": "case-fold-K",
+            "path": "observations/case-fold-k-3fc4137a3873.json",
+            "sha256": "3f9bfdbaa8b779eddbec85bdb7143859143f28eeee1c2f4ecf8623be3e3156ac"
+        },
+        {
+            "case_id": "case-fold-kelvin",
+            "path": "observations/case-fold-kelvin-78e2daaeb7b0.json",
+            "sha256": "5ecb6e1313040513b6685b2f9061ddc6c0156adc2acda3fb96ceb6267d08c9a9"
+        },
+        {
+            "case_id": "case-fold-sigma",
+            "path": "observations/case-fold-sigma-ecf1c5f45d15.json",
+            "sha256": "8810e4e79faa21c03eb2b1a5afda1a36e19440b9272df4d8e8e9f21f173c4d5a"
+        },
+        {
+            "case_id": "case-fold-capital-sigma",
+            "path": "observations/case-fold-capital-sigma-895aceb49564.json",
+            "sha256": "710ef0269e4b5c994f241aad237086da2ba83712a45cdc247905ae6f454debd0"
+        },
+        {
+            "case_id": "case-fold-final-sigma",
+            "path": "observations/case-fold-final-sigma-4608a2c005d8.json",
+            "sha256": "e6fe615476d819c2d958c22f7f3753a3bc966ecc26dd6ce3f28f2d514e7f7e8e"
+        },
+        {
+            "case_id": "unset-backreference",
+            "path": "observations/unset-backreference-806d0f301554.json",
+            "sha256": "cc0e14f090c06e6564ad5b0ba3b54c1153d206025ff14bb961b9ea7f3023aa57"
+        },
+        {
+            "case_id": "alternation-backreference",
+            "path": "observations/alternation-backreference-f2eb0145ee28.json",
+            "sha256": "e65bc50672ad8e5fd47a8c78d3486c42b0d97e6e8a2301cb5033e223005768ff"
+        },
+        {
+            "case_id": "negative-lookahead-backreference",
+            "path": "observations/negative-lookahead-backreference-e857fde91290.json",
+            "sha256": "ae427afbd91089f57527104ecac43fd486a2b5b5875448c34a913b4f843dfee1"
+        },
+        {
+            "case_id": "repetition-capture-reset",
+            "path": "observations/repetition-capture-reset-f8a3a000943a.json",
+            "sha256": "c31feed9669f67519b605b51d3112e63dc8bc86a2f98c4dfe072c3f605c235f2"
+        },
+        {
+            "case_id": "repetition-capture-observation",
+            "path": "observations/repetition-capture-observation-1bc35e818590.json",
+            "sha256": "44b484ca54a6566a9f48d3bbbb7004e1b7ed1443c6d3da7f63801b062fc79af6"
+        },
+        {
+            "case_id": "negated-character-set",
+            "path": "observations/negated-character-set-a451dc1187ed.json",
+            "sha256": "a5e60c26818d1742f902cfbfa42742f2d2895f1da4a8aa4d9a95a59ab8849eb0"
+        },
+        {
+            "case_id": "ascii-character-set",
+            "path": "observations/ascii-character-set-95ffdc946683.json",
+            "sha256": "914875a4a3db48a00493f2f20f79c2a72b7d47decf7ab4844da1f6c9174e1007"
+        },
+        {
+            "case_id": "unicode-scalar-character-set",
+            "path": "observations/unicode-scalar-character-set-93646ab77a67.json",
+            "sha256": "1d58a1c2a229733ac2ed01d2d72052d5f426f3ec0435b6c1556d3b10b2c87897"
+        },
+        {
+            "case_id": "bytes-nonascii-literal",
+            "path": "observations/bytes-nonascii-literal-36f96a156c72.json",
+            "sha256": "7bcac5d19102cf3ef9d5281be53415455bc0901837aef1fcd6404419b92749cd"
+        },
+        {
+            "case_id": "pcre2-large-quantifier",
+            "path": "observations/pcre2-large-quantifier-f2905344a306.json",
+            "sha256": "bf87eba3d3da04dbd2ed75b9b2f0a729903736601c10ba673b40b90f53a5d541"
+        },
+        {
+            "case_id": "pcre2-serialization-limit",
+            "path": "observations/pcre2-serialization-limit-2ea79ecc86e6.json",
+            "sha256": "baa7f45a854f31f3c640cdf979e8831107427d871b1701ef9c4875a3449bc62e"
+        },
+        {
+            "case_id": "wildcard-excluding-lines-anchored",
+            "path": "observations/wildcard-excluding-lines-anchored-1ddeeb6ebd05.json",
+            "sha256": "fe56e0b184862725c6420609867e72eebe49a0cbda8dc411a908ce872e5cb18a"
+        },
+        {
+            "case_id": "wildcard-including-lines-anchored",
+            "path": "observations/wildcard-including-lines-anchored-142c97dbaa06.json",
+            "sha256": "b30c3bf3c0daf8989b79f926c86d96cfabd6cfc13bf47c8a7e4970e5a806e6bb"
+        },
+        {
+            "case_id": "negated-character-set-anchored",
+            "path": "observations/negated-character-set-anchored-b4a724057103.json",
+            "sha256": "ec0f9012a2d7e139e09b68487a64145fa6b45d3f35a21c8b3da0076c30a0e692"
+        },
+        {
+            "case_id": "negated-builtin-union",
+            "path": "observations/negated-builtin-union-4ab730d41a96.json",
+            "sha256": "2afa5ad851b8747fdb75f869b920e3d4c98332d9562b09fe6fedfc45eb9a6b1f"
+        },
+        {
+            "case_id": "two-capture-alternation-reference",
+            "path": "observations/two-capture-alternation-reference-08b2badd4c07.json",
+            "sha256": "874888794a6ab822d8f14ee7b36eb7ea27642c70bacdbb7a069951aa4b2684aa"
+        },
+        {
+            "case_id": "unbounded-capture-reset",
+            "path": "observations/unbounded-capture-reset-8f27f62f6d5d.json",
+            "sha256": "f3203dad8e3cf7eb6115ca68d38836f92126b653fcb6ce5b0b920ec7c2741d22"
+        },
+        {
+            "case_id": "pcre2-large-quantifier-range",
+            "path": "observations/pcre2-large-quantifier-range-babcd559145c.json",
+            "sha256": "ae33a3c54559e8efa6d9a11f6d5ad2c699b35db6747bbb7d9df26ed23875f374"
         }
-      ]
-    }
-  ],
-  "findings": [],
-  "result_sha256": "269ef62de68afecf7602c33dc6b66fe48b6007a8da7898dc394bffe2cbe4a7ef",
-  "case_observations": [
-    {
-      "case_id": "wildcard-excluding-lines",
-      "path": "observations/wildcard-excluding-lines-e8f959befa9c.json",
-      "sha256": "0bd74819a4e44c99cd383dcdfcbfa3d89462a0f2c450df40dfc37c6787724b68"
-    },
-    {
-      "case_id": "wildcard-including-lines",
-      "path": "observations/wildcard-including-lines-e5f85e7e2fd6.json",
-      "sha256": "3a12f94bf2bcf71a25c7cd1cf809ccd04d6eefd7eece6b7f272a323dbcffecb5"
-    },
-    {
-      "case_id": "line-start",
-      "path": "observations/line-start-3b76b0718202.json",
-      "sha256": "59f24f379935f86bd38b039af93bb24940c611d81993311e8d63e8c2f31f3a39"
-    },
-    {
-      "case_id": "line-end",
-      "path": "observations/line-end-c569b5269ceb.json",
-      "sha256": "02fd565f66f214df9ed5d5486b67039afea1521cd5427970f46e312f69167546"
-    },
-    {
-      "case_id": "before-final-line-terminator",
-      "path": "observations/before-final-line-terminator-9980a1a54d7d.json",
-      "sha256": "c88261b5cc8367f23d51c1a66ab39f9044e4b42057cb667582ee5eb6877bfa0a"
-    },
-    {
-      "case_id": "final-crlf-interior",
-      "path": "observations/final-crlf-interior-5ef4f45ed974.json",
-      "sha256": "d5ea8097605dc6de9053aa1af1b9674b51d6800df4fe2a6d299a363ae6606199"
-    },
-    {
-      "case_id": "line-crlf-interior",
-      "path": "observations/line-crlf-interior-e09de516484e.json",
-      "sha256": "c066dde1408b42874ad99fafe859e8c0fa83e9ee1325e58b0c7e3a4801b8270f"
-    },
-    {
-      "case_id": "unicode-word-class",
-      "path": "observations/unicode-word-class-1a08f5c472dd.json",
-      "sha256": "c39a2bbe752a5b8c604fb349cc3f2246138aa4858362d159bbf029ddf52360ed"
-    },
-    {
-      "case_id": "word-boundary",
-      "path": "observations/word-boundary-924426e16b2f.json",
-      "sha256": "f99d37be1653e113240f3f425edd960b2225b8f848fd5d5ef4a2946272ca1709"
-    },
-    {
-      "case_id": "word-boundary-before-ascii",
-      "path": "observations/word-boundary-before-ascii-e09919c6fce6.json",
-      "sha256": "ffd773f454305c3eff2259b1562e54504990ff3aa6f7463d95ec6a83bf799d65"
-    },
-    {
-      "case_id": "case-fold-i",
-      "path": "observations/case-fold-i-5dfb30cb2509.json",
-      "sha256": "87292294e462e652a66209712cc5efed8272fece74a17898e8a1045420a368b1"
-    },
-    {
-      "case_id": "case-fold-I",
-      "path": "observations/case-fold-i-83dd610411ed.json",
-      "sha256": "be19fe22a87c55fbc5cc15d01fc51f9a1963066fa6ab5769b9ebc7ab6d8e49be"
-    },
-    {
-      "case_id": "case-fold-dotted-I",
-      "path": "observations/case-fold-dotted-i-934dbc43fcaf.json",
-      "sha256": "4618ae53516a0e58e3a39df8d1ebfee5efc35f791b19c28ceded270e2c8740cc"
-    },
-    {
-      "case_id": "case-fold-dotless-i",
-      "path": "observations/case-fold-dotless-i-5a2911ba2eda.json",
-      "sha256": "269a155d55bec25ab61aca2a8f3c4014a3491ecf257230886c58549a64dede43"
-    },
-    {
-      "case_id": "case-fold-s",
-      "path": "observations/case-fold-s-f98eff56df09.json",
-      "sha256": "2a837718d11e6106ef2b238ce933d0d792860d544c9519eafc47e60ee82e449d"
-    },
-    {
-      "case_id": "case-fold-S",
-      "path": "observations/case-fold-s-c73caa5f2137.json",
-      "sha256": "4b2786eec7d5975d584cb21796c62428f3753aa26fcf43bddd5cb178a333e99c"
-    },
-    {
-      "case_id": "case-fold-long-s",
-      "path": "observations/case-fold-long-s-51f67ecbbb04.json",
-      "sha256": "de61ee511d1e082b89b5b94888c33557b2f6951778ffc7d5cf5811409d327bf0"
-    },
-    {
-      "case_id": "case-fold-k",
-      "path": "observations/case-fold-k-0a9f573d80c2.json",
-      "sha256": "a9c61c2c66406c8a7e9ae8b71bd5b407007b399728de9df843ca8ed904b2cb3d"
-    },
-    {
-      "case_id": "case-fold-K",
-      "path": "observations/case-fold-k-3fc4137a3873.json",
-      "sha256": "3f9bfdbaa8b779eddbec85bdb7143859143f28eeee1c2f4ecf8623be3e3156ac"
-    },
-    {
-      "case_id": "case-fold-kelvin",
-      "path": "observations/case-fold-kelvin-78e2daaeb7b0.json",
-      "sha256": "5ecb6e1313040513b6685b2f9061ddc6c0156adc2acda3fb96ceb6267d08c9a9"
-    },
-    {
-      "case_id": "case-fold-sigma",
-      "path": "observations/case-fold-sigma-ecf1c5f45d15.json",
-      "sha256": "8810e4e79faa21c03eb2b1a5afda1a36e19440b9272df4d8e8e9f21f173c4d5a"
-    },
-    {
-      "case_id": "case-fold-capital-sigma",
-      "path": "observations/case-fold-capital-sigma-895aceb49564.json",
-      "sha256": "710ef0269e4b5c994f241aad237086da2ba83712a45cdc247905ae6f454debd0"
-    },
-    {
-      "case_id": "case-fold-final-sigma",
-      "path": "observations/case-fold-final-sigma-4608a2c005d8.json",
-      "sha256": "e6fe615476d819c2d958c22f7f3753a3bc966ecc26dd6ce3f28f2d514e7f7e8e"
-    },
-    {
-      "case_id": "unset-backreference",
-      "path": "observations/unset-backreference-806d0f301554.json",
-      "sha256": "cc0e14f090c06e6564ad5b0ba3b54c1153d206025ff14bb961b9ea7f3023aa57"
-    },
-    {
-      "case_id": "alternation-backreference",
-      "path": "observations/alternation-backreference-f2eb0145ee28.json",
-      "sha256": "e65bc50672ad8e5fd47a8c78d3486c42b0d97e6e8a2301cb5033e223005768ff"
-    },
-    {
-      "case_id": "negative-lookahead-backreference",
-      "path": "observations/negative-lookahead-backreference-e857fde91290.json",
-      "sha256": "ae427afbd91089f57527104ecac43fd486a2b5b5875448c34a913b4f843dfee1"
-    },
-    {
-      "case_id": "repetition-capture-reset",
-      "path": "observations/repetition-capture-reset-f8a3a000943a.json",
-      "sha256": "c31feed9669f67519b605b51d3112e63dc8bc86a2f98c4dfe072c3f605c235f2"
-    },
-    {
-      "case_id": "repetition-capture-observation",
-      "path": "observations/repetition-capture-observation-1bc35e818590.json",
-      "sha256": "44b484ca54a6566a9f48d3bbbb7004e1b7ed1443c6d3da7f63801b062fc79af6"
-    },
-    {
-      "case_id": "negated-character-set",
-      "path": "observations/negated-character-set-a451dc1187ed.json",
-      "sha256": "a5e60c26818d1742f902cfbfa42742f2d2895f1da4a8aa4d9a95a59ab8849eb0"
-    },
-    {
-      "case_id": "ascii-character-set",
-      "path": "observations/ascii-character-set-95ffdc946683.json",
-      "sha256": "914875a4a3db48a00493f2f20f79c2a72b7d47decf7ab4844da1f6c9174e1007"
-    },
-    {
-      "case_id": "unicode-scalar-character-set",
-      "path": "observations/unicode-scalar-character-set-93646ab77a67.json",
-      "sha256": "1d58a1c2a229733ac2ed01d2d72052d5f426f3ec0435b6c1556d3b10b2c87897"
-    },
-    {
-      "case_id": "bytes-nonascii-literal",
-      "path": "observations/bytes-nonascii-literal-36f96a156c72.json",
-      "sha256": "7bcac5d19102cf3ef9d5281be53415455bc0901837aef1fcd6404419b92749cd"
-    },
-    {
-      "case_id": "pcre2-large-quantifier",
-      "path": "observations/pcre2-large-quantifier-f2905344a306.json",
-      "sha256": "bf87eba3d3da04dbd2ed75b9b2f0a729903736601c10ba673b40b90f53a5d541"
-    },
-    {
-      "case_id": "pcre2-serialization-limit",
-      "path": "observations/pcre2-serialization-limit-2ea79ecc86e6.json",
-      "sha256": "baa7f45a854f31f3c640cdf979e8831107427d871b1701ef9c4875a3449bc62e"
-    },
-    {
-      "case_id": "wildcard-excluding-lines-anchored",
-      "path": "observations/wildcard-excluding-lines-anchored-1ddeeb6ebd05.json",
-      "sha256": "fe56e0b184862725c6420609867e72eebe49a0cbda8dc411a908ce872e5cb18a"
-    },
-    {
-      "case_id": "wildcard-including-lines-anchored",
-      "path": "observations/wildcard-including-lines-anchored-142c97dbaa06.json",
-      "sha256": "b30c3bf3c0daf8989b79f926c86d96cfabd6cfc13bf47c8a7e4970e5a806e6bb"
-    },
-    {
-      "case_id": "negated-character-set-anchored",
-      "path": "observations/negated-character-set-anchored-b4a724057103.json",
-      "sha256": "ec0f9012a2d7e139e09b68487a64145fa6b45d3f35a21c8b3da0076c30a0e692"
-    },
-    {
-      "case_id": "negated-builtin-union",
-      "path": "observations/negated-builtin-union-4ab730d41a96.json",
-      "sha256": "2afa5ad851b8747fdb75f869b920e3d4c98332d9562b09fe6fedfc45eb9a6b1f"
-    },
-    {
-      "case_id": "two-capture-alternation-reference",
-      "path": "observations/two-capture-alternation-reference-08b2badd4c07.json",
-      "sha256": "874888794a6ab822d8f14ee7b36eb7ea27642c70bacdbb7a069951aa4b2684aa"
-    },
-    {
-      "case_id": "unbounded-capture-reset",
-      "path": "observations/unbounded-capture-reset-8f27f62f6d5d.json",
-      "sha256": "f3203dad8e3cf7eb6115ca68d38836f92126b653fcb6ce5b0b920ec7c2741d22"
-    },
-    {
-      "case_id": "pcre2-large-quantifier-range",
-      "path": "observations/pcre2-large-quantifier-range-babcd559145c.json",
-      "sha256": "ae33a3c54559e8efa6d9a11f6d5ad2c699b35db6747bbb7d9df26ed23875f374"
-    }
-  ]
+    ]
 }

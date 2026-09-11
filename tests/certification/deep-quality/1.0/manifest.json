@@ -859,7 +859,7 @@
             "test_sources": [
                 {
                     "path": "core/tests/portability_planning.rs",
-                    "sha256": "f8e4f348fd9e1d53278fa206ecd5c4841d2dfb8ae752ecc6a7c296c8b4ebddfa"
+                    "sha256": "084ca259cedad9ba5f467a24a14b9cb45bf2e991e3a071bad93e5e601dc9116b"
                 },
                 {
                     "path": "core/tests/portability_planning_properties.rs",
@@ -893,7 +893,7 @@
             "test_sources": [
                 {
                     "path": "core/tests/portability_planning.rs",
-                    "sha256": "f8e4f348fd9e1d53278fa206ecd5c4841d2dfb8ae752ecc6a7c296c8b4ebddfa"
+                    "sha256": "084ca259cedad9ba5f467a24a14b9cb45bf2e991e3a071bad93e5e601dc9116b"
                 },
                 {
                     "path": "core/tests/portability_planning_properties.rs",
@@ -1188,5 +1188,5 @@
         "pull_request_mutants": 7,
         "full_mutants": 14
     },
-    "manifest_fingerprint": "9f073e2d60b251f031027f8000afb9519fe51769e55d21b2e688c7a651f810f4"
+    "manifest_fingerprint": "aad3e5b3bf75a045685466469d03d84cab25d286b2834647785f13c3e7c25dc4"
 }

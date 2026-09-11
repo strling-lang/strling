@@ -1,7 +1,7 @@
 {
     "schema_version": "1.0.0",
     "authority": "empirical/adversarial-conformance-evidence",
-    "source_sha": "01de5af6992ed750fad407cb435a807354e2638d",
+    "source_sha": "fa699989f7bc34ac5fedfc406a616227410dcdb9",
     "source_files": {
         "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
         "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
@@ -59,7 +59,7 @@
         "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
         "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
     },
-    "executed_at": "2026-09-11T11:21:51.269590+00:00",
+    "executed_at": "2026-09-11T13:53:53.957795+00:00",
     "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
     "repeat_runs": 2,
     "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
@@ -386,7 +386,7 @@
         }
     ],
     "findings": [],
-    "result_sha256": "cc035578f3944368074216eed728c9f4846a1fe4f450ccbe18a5f88575ca6d4f",
+    "result_sha256": "d1fa0f0b2c2aa966dca84040cd6b2e6f224f7db898e5aa602f7dd004701e208d",
     "case_observations": [
         {
             "case_id": "wildcard-excluding-lines",

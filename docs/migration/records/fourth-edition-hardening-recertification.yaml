@@ -11,6 +11,7 @@ scope:
         - .github/workflows/ci.yml
         - .github/workflows/cd.yml
         - .github/workflows/dependency-review.yml
+        - bindings/kotlin/gradle/verification-metadata.xml
         - bindings/typescript/package-lock.json
         - core/src/capability_evaluation.rs
         - core/src/ecmascript_lowering.rs
@@ -32,7 +33,9 @@ scope:
         - governance/dependency-license-evidence.json
         - governance/generated-artifacts.json
         - governance/local-certification-trust.json
+        - governance/security.md
         - governance/security-policy.json
+        - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
         - governance/schemas/local-certification-attestation.schema.json
         - governance/schemas/local-certification-trust.schema.json
         - strling
@@ -53,6 +56,7 @@ scope:
         - toolchain.json
         - tooling/architecture_fitness.py
         - tooling/dependency_license_evidence.py
+        - tooling/deep_quality_certification.py
         - tooling/local_certification_attestation.py
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py
@@ -84,6 +88,7 @@ scope:
         - .github/workflows/certification-integrity.yml
         - .github/workflows/dependency-review.yml
     permitted_generated_changes:
+        - adversarial-semantic-observations
         - dependency-license-evidence
         - package-manager-lockfiles
         - profile-source-definitions

@@ -222,7 +222,7 @@ def _write_json(path: Path, value: Mapping[str, object], *, root: Path = ROOT) -
         suffix=".tmp",
         delete=False,
     ) as output:
-        json.dump(value, output, indent=4, ensure_ascii=False)
+        json.dump(value, output, indent=2, ensure_ascii=False)
         output.write("\n")
         temporary = Path(output.name)
     os.replace(temporary, resolved)

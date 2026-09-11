@@ -179,13 +179,16 @@ over-broad, or mismatched waivers fail. A match is a Cartesian set of exact
 finding fields; every declared combination must exist, every matched check input
 must equal the declared path scope, and overlapping matches fail.
 
-One security waiver remains active and expires on 2026-09-10:
+One security waiver remains active and expires on 2026-10-11:
 
 -   `WVR-SEC-VSCE-LICENSE-001` covers only ten enumerated VSCE signing
     package/version bindings whose metadata remains `SEE LICENSE IN LICENSE.txt`.
 
 The record retains exact scope, owner, review context, rationale, expiry, and
 replacement work. It does not classify the unknown license as permitted. The
+STRling Program Owner renewed the unchanged exact scope on 2026-09-11 after
+confirming that the package, version, path, and unknown-license bindings had not
+drifted. The renewal adds no finding, package, path, rule, or permission. The
 former `WVR-SEC-NPM-TOOLING-001` waiver was retired on 2026-08-24 after every
 enumerated npm advisory binding resolved and authoritative npm audit returned no
 matching finding; retaining it would have failed closed as stale scope.

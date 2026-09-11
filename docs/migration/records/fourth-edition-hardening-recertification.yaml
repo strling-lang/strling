@@ -42,11 +42,13 @@ scope:
         - tests/certification/deep-quality/1.0/manifest.json
         - tests/certification/product/1.0/producer-manifest.json
         - tests/certification/performance-resource/1.0/baseline.json
+        - tests/certification/performance-resource/1.0/fixtures/resource-limits.json
         - tests/certification/performance-resource/1.0/manifest.json
         - tests/certification/performance-resource/1.0/valid-evidence.json
         - tests/certification/performance-resource/1.0/history/**
         - tests/certification/performance-resource/1.0/runner/src/main.rs
         - tests/certification/profile-source/1.0/definitions.json
+        - tests/conformance/adversarial/1.0/evidence.json
         - tests/architecture/semantic-authority/1.0/evidence.json
         - toolchain.json
         - tooling/architecture_fitness.py

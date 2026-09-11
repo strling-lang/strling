@@ -33,6 +33,7 @@ use crate::source::{ContractVersion, NodeId, Sha256Digest, SpecificationVersion}
 use crate::structural_analysis::StructuralFacts;
 use crate::target::{
     CapabilityAvailability, CapabilityId, PortabilityStatus, TargetProfile, TargetProfileReference,
+    TargetProfileSet,
 };
 use crate::validation::{canonical_sha256, Validate};
 
@@ -308,8 +309,60 @@ pub fn plan_portability(
     target: &TargetProfile,
     evaluation: &CapabilityEvaluation,
 ) -> Result<PortabilityPlan, PortabilityPlanningErrors> {
-    let semantic_program =
-        validate_correspondence(input, foundational, structural, target, evaluation)?;
+    let target_reference = validated_target_reference(target)?;
+    plan_portability_for_validated_reference(
+        input,
+        foundational,
+        structural,
+        target,
+        &target_reference,
+        evaluation,
+    )
+}
+
+/// Plan against a profile resolved from an immutable validated profile set.
+///
+/// The set owns the validation and canonical profile-reference proof, so
+/// repeated evaluation/planning does not reserialize and rehash unchanged
+/// governed profile data. Resolution still fails closed for stale or mismatched
+/// references.
+pub fn plan_portability_for_reference(
+    input: &SemanticProgram,
+    foundational: &SemanticFacts,
+    structural: &StructuralFacts,
+    reference: &TargetProfileReference,
+    profiles: &TargetProfileSet,
+    evaluation: &CapabilityEvaluation,
+) -> Result<PortabilityPlan, PortabilityPlanningErrors> {
+    let target = profiles
+        .resolve(reference)
+        .map_err(map_target_profile_errors)?;
+    plan_portability_for_validated_reference(
+        input,
+        foundational,
+        structural,
+        target,
+        reference,
+        evaluation,
+    )
+}
+
+fn plan_portability_for_validated_reference(
+    input: &SemanticProgram,
+    foundational: &SemanticFacts,
+    structural: &StructuralFacts,
+    target: &TargetProfile,
+    target_reference: &TargetProfileReference,
+    evaluation: &CapabilityEvaluation,
+) -> Result<PortabilityPlan, PortabilityPlanningErrors> {
+    let semantic_program = validate_correspondence(
+        input,
+        foundational,
+        structural,
+        target,
+        target_reference,
+        evaluation,
+    )?;
 
     enforce_planning_limit(
         evaluation.results.len(),
@@ -760,29 +813,40 @@ fn find_node<'a>(root: &'a Node, node_id: &NodeId) -> Option<&'a Node> {
     None
 }
 
+fn map_target_profile_errors(
+    errors: crate::validation::ValidationErrors,
+) -> PortabilityPlanningErrors {
+    PortabilityPlanningErrors {
+        errors: errors
+            .errors
+            .into_iter()
+            .map(|error| {
+                PortabilityPlanningError::new(
+                    PortabilityPlanningErrorCode::InvalidTargetProfile,
+                    error.path,
+                    error.message,
+                )
+            })
+            .collect(),
+    }
+}
+
+fn validated_target_reference(
+    target: &TargetProfile,
+) -> Result<TargetProfileReference, PortabilityPlanningErrors> {
+    target.validate().map_err(map_target_profile_errors)?;
+    target.reference().map_err(map_target_profile_errors)
+}
+
 fn validate_correspondence(
     input: &SemanticProgram,
     foundational: &SemanticFacts,
     structural: &StructuralFacts,
     target: &TargetProfile,
+    target_reference: &TargetProfileReference,
     evaluation: &CapabilityEvaluation,
 ) -> Result<Sha256Digest, PortabilityPlanningErrors> {
     validate_prerequisites(input, foundational, structural).map_err(map_prerequisite_errors)?;
-    target
-        .validate()
-        .map_err(|errors| PortabilityPlanningErrors {
-            errors: errors
-                .errors
-                .into_iter()
-                .map(|error| {
-                    PortabilityPlanningError::new(
-                        PortabilityPlanningErrorCode::InvalidTargetProfile,
-                        error.path,
-                        error.message,
-                    )
-                })
-                .collect(),
-        })?;
 
     let semantic_program = canonical_sha256(input)
         .map(Sha256Digest::from_bytes)
@@ -816,22 +880,7 @@ fn validate_correspondence(
         ));
     }
 
-    let target_reference = target
-        .reference()
-        .map_err(|errors| PortabilityPlanningErrors {
-            errors: errors
-                .errors
-                .into_iter()
-                .map(|error| {
-                    PortabilityPlanningError::new(
-                        PortabilityPlanningErrorCode::InvalidTargetProfile,
-                        error.path,
-                        error.message,
-                    )
-                })
-                .collect(),
-        })?;
-    if evaluation.target_profile != target_reference
+    if evaluation.target_profile != *target_reference
         || evaluation.target_engine != target.engine
         || evaluation.target_runtime != target.runtime
     {
@@ -886,7 +935,7 @@ fn validate_correspondence(
                 ),
             ));
         }
-        if result.target_profile != target_reference
+        if result.target_profile != *target_reference
             || result.target_engine != target.engine
             || result.target_runtime != target.runtime
         {

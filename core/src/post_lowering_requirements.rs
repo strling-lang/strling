@@ -9,12 +9,12 @@ use std::error::Error;
 use std::fmt;
 
 use crate::capability_evaluation::{
-    evaluate_additional_requirements, CapabilityDisposition, SemanticRequirement,
-    MAX_CAPABILITY_REQUIREMENTS,
+    evaluate_additional_requirements_for_validated_reference, CapabilityDisposition,
+    SemanticRequirement, MAX_CAPABILITY_REQUIREMENTS,
 };
 use crate::portability_planning::RequirementIdentity;
 use crate::source::{ContractVersion, NodeId, SpecificationVersion};
-use crate::target::{CapabilityId, TargetProfile};
+use crate::target::{CapabilityId, TargetProfile, TargetProfileReference};
 
 /// One capability occurrence found in structured target output.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -90,6 +90,7 @@ pub(crate) fn reconcile_emitted_requirements(
     contract_version: ContractVersion,
     specification_version: &SpecificationVersion,
     target: &TargetProfile,
+    target_reference: &TargetProfileReference,
     source_requirement_count: usize,
     native_source_requirements: &[RequirementIdentity],
     emitted_requirements: Vec<EmittedRequirement>,
@@ -105,11 +106,12 @@ pub(crate) fn reconcile_emitted_requirements(
         .iter()
         .map(|item| item.requirement.clone())
         .collect();
-    let results = evaluate_additional_requirements(
+    let results = evaluate_additional_requirements_for_validated_reference(
         contract_version,
         specification_version,
         &requirements,
         target,
+        target_reference,
     )
     .map_err(|errors| {
         Box::new(PostLoweringRequirementFailure {

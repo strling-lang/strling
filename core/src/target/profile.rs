@@ -1568,12 +1568,21 @@ impl Validate for TargetProfile {
 #[derive(Clone, Debug, Default)]
 pub struct TargetProfileSet {
     profiles: Vec<TargetProfile>,
+    references: Vec<TargetProfileReference>,
 }
 
 impl TargetProfileSet {
     pub fn new(profiles: Vec<TargetProfile>) -> Result<Self, ValidationErrors> {
-        let set = Self { profiles };
+        let mut set = Self {
+            profiles,
+            references: Vec::new(),
+        };
         set.validate()?;
+        set.references = set
+            .profiles
+            .iter()
+            .map(TargetProfile::reference)
+            .collect::<Result<_, _>>()?;
         Ok(set)
     }
 
@@ -1581,13 +1590,16 @@ impl TargetProfileSet {
         &self,
         reference: &TargetProfileReference,
     ) -> Result<&TargetProfile, ValidationErrors> {
-        let profile = self
+        let index = self
             .profiles
             .iter()
+            .enumerate()
             .find(|profile| {
+                let profile = profile.1;
                 profile.profile_id == reference.profile_id
                     && profile.profile_version == reference.profile_version
             })
+            .map(|(index, _)| index)
             .ok_or_else(|| {
                 ValidationErrors::single(ValidationError::new(
                     ValidationCode::UnresolvedReference,
@@ -1595,14 +1607,21 @@ impl TargetProfileSet {
                     "target profile identity and revision are not present",
                 ))
             })?;
-        if profile.reference()? != *reference {
+        let Some(canonical_reference) = self.references.get(index) else {
+            return Err(ValidationErrors::single(ValidationError::new(
+                ValidationCode::InvalidDigest,
+                "$.target_profile.sha256",
+                "target profile set is missing its validated canonical reference",
+            )));
+        };
+        if canonical_reference != reference {
             return Err(ValidationErrors::single(ValidationError::new(
                 ValidationCode::InvalidDigest,
                 "$.target_profile.sha256",
                 "target profile fingerprint does not match canonical JSON",
             )));
         }
-        Ok(profile)
+        Ok(&self.profiles[index])
     }
 }
 

@@ -522,6 +522,7 @@ pub fn lower_ecmascript(
         input.contract_version,
         &input.specification_version,
         target,
+        &target_profile,
         semantic_requirements.len(),
         &native_source_identities,
         emitted,

@@ -401,16 +401,33 @@ pub fn evaluate_capabilities(
     structural: &StructuralFacts,
     target: &TargetProfile,
 ) -> Result<CapabilityEvaluation, CapabilityEvaluationErrors> {
-    let semantic_program = semantic_program_fingerprint(input)?;
-    let requirements = extract_requirements(input, foundational, structural)?;
     validate_target_profile(input, target)?;
     let target_reference = target.reference().map_err(|errors| {
         map_profile_errors(CapabilityEvaluationErrorCode::InvalidTargetProfile, errors)
     })?;
+    evaluate_capabilities_for_validated_reference(
+        input,
+        foundational,
+        structural,
+        target,
+        &target_reference,
+    )
+}
+
+fn evaluate_capabilities_for_validated_reference(
+    input: &SemanticProgram,
+    foundational: &SemanticFacts,
+    structural: &StructuralFacts,
+    target: &TargetProfile,
+    target_reference: &TargetProfileReference,
+) -> Result<CapabilityEvaluation, CapabilityEvaluationErrors> {
+    validate_target_profile_compatibility(input, target)?;
+    let semantic_program = semantic_program_fingerprint(input)?;
+    let requirements = extract_requirements(input, foundational, structural)?;
 
     let mut results: Vec<_> = requirements
         .iter()
-        .map(|requirement| evaluate_requirement(requirement, target, &target_reference))
+        .map(|requirement| evaluate_requirement(requirement, target, target_reference))
         .collect();
     enforce_semantic_compatibility(input, target, &mut results);
 
@@ -418,7 +435,7 @@ pub fn evaluate_capabilities(
         contract_version: input.contract_version,
         semantic_program,
         specification_version: input.specification_version.clone(),
-        target_profile: target_reference,
+        target_profile: target_reference.clone(),
         target_engine: target.engine.clone(),
         target_runtime: target.runtime.clone(),
         requirements,
@@ -432,16 +449,14 @@ pub fn evaluate_capabilities(
 /// Post-lowering extractors use this entry point for requirements discovered in
 /// structured target output. It deliberately performs no planning or rewrite
 /// selection: an introduced construct must already be supported by the target.
-pub(crate) fn evaluate_additional_requirements(
+pub(crate) fn evaluate_additional_requirements_for_validated_reference(
     contract_version: ContractVersion,
     specification_version: &SpecificationVersion,
     requirements: &[SemanticRequirement],
     target: &TargetProfile,
+    target_reference: &TargetProfileReference,
 ) -> Result<Vec<CapabilityResult>, CapabilityEvaluationErrors> {
     enforce_requirement_limit(requirements.len())?;
-    target.validate().map_err(|errors| {
-        map_profile_errors(CapabilityEvaluationErrorCode::InvalidTargetProfile, errors)
-    })?;
     if target.contract_version != contract_version {
         return Err(CapabilityEvaluationErrors::single(
             CapabilityEvaluationError::new(
@@ -464,12 +479,9 @@ pub(crate) fn evaluate_additional_requirements(
             ),
         ));
     }
-    let target_reference = target.reference().map_err(|errors| {
-        map_profile_errors(CapabilityEvaluationErrorCode::InvalidTargetProfile, errors)
-    })?;
     let mut results: Vec<_> = requirements
         .iter()
-        .map(|requirement| evaluate_requirement(requirement, target, &target_reference))
+        .map(|requirement| evaluate_requirement(requirement, target, target_reference))
         .collect();
     enforce_emitted_target_compatibility(target, &mut results);
     Ok(results)
@@ -490,7 +502,13 @@ pub fn evaluate_capabilities_for_reference(
             errors,
         )
     })?;
-    evaluate_capabilities(input, foundational, structural, target)
+    evaluate_capabilities_for_validated_reference(
+        input,
+        foundational,
+        structural,
+        target,
+        reference,
+    )
 }
 
 /// Resolve the governed semantic facts attached to one capability.
@@ -1085,6 +1103,13 @@ fn validate_target_profile(
     target.validate().map_err(|errors| {
         map_profile_errors(CapabilityEvaluationErrorCode::InvalidTargetProfile, errors)
     })?;
+    validate_target_profile_compatibility(input, target)
+}
+
+fn validate_target_profile_compatibility(
+    input: &SemanticProgram,
+    target: &TargetProfile,
+) -> Result<(), CapabilityEvaluationErrors> {
     if target.contract_version != input.contract_version {
         return Err(CapabilityEvaluationErrors::single(
             CapabilityEvaluationError::new(

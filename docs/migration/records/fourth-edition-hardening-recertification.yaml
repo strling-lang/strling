@@ -12,6 +12,14 @@ scope:
         - .github/workflows/cd.yml
         - .github/workflows/dependency-review.yml
         - bindings/typescript/package-lock.json
+        - core/src/capability_evaluation.rs
+        - core/src/ecmascript_lowering.rs
+        - core/src/portability_planning.rs
+        - core/src/post_lowering_requirements.rs
+        - core/src/python_re_lowering.rs
+        - core/src/target/profile.rs
+        - core/src/target_lowering.rs
+        - core/tests/portability_planning.rs
         - docs/migration/fourth-edition-hardening-recertification.md
         - docs/migration/ledger.md
         - docs/migration/records/fourth-edition-hardening-recertification.yaml
@@ -37,6 +45,7 @@ scope:
         - tests/certification/performance-resource/1.0/manifest.json
         - tests/certification/performance-resource/1.0/valid-evidence.json
         - tests/certification/performance-resource/1.0/history/**
+        - tests/certification/performance-resource/1.0/runner/src/main.rs
         - tests/certification/profile-source/1.0/definitions.json
         - tests/architecture/semantic-authority/1.0/evidence.json
         - toolchain.json
@@ -106,15 +115,21 @@ change_classification:
         evidence: []
         affected_surfaces: []
     target_behavior_change:
-        level: none
-        evidence: []
-        affected_surfaces: []
+        level: compatible
+        evidence:
+            - Capability and portability results are unchanged; the immutable profile-set path reuses the same validated canonical profile reference instead of deriving it again during each stage, with direct-versus-reference equality covered by focused tests.
+            - Post-lowering requirement evaluation consumes the exact profile reference already checked by the lowering entry point; supported, constrained, unknown, and refusal dispositions remain unchanged.
+        affected_surfaces:
+            - capability-evaluation
+            - portability-planning
+            - target-lowering
     architecture_change:
         level: compatible
         evidence:
             - The enforced generated-family check is restored to the Local/Pull Request offline contract while network-authenticated regeneration remains unchanged.
             - Full and Release remain the unchanged expensive result authorities but execute locally; cloud workflows verify a trusted exact-source attestation instead of recomputing them.
             - The attestation CLI is registered as a reviewed engineering-only tooling parser path; it cannot parse or define STRling language semantics.
+            - After a measured Full regression exposed repeated validation and canonical hashing of the same immutable profile in capability evaluation and planning, the existing TargetProfileSet boundary now caches its validated reference and provides equivalent fail-closed reference-based planning; post-lowering evaluation reuses the exact reference already validated by each lowering entry point.
     generated_output_change:
         level: compatible
         evidence:
@@ -224,6 +239,12 @@ checkpoints:
           - check: Authorized immutable environment rollover
             result: passed
             details: The Program Owner explicitly authorized the same-host Windows 26200.9278 to 26200.9445 rollover under the existing qualification, calibration, threshold, sampling, statistics, conditioning, and no-retry rules. Reset source 5f4a81643f33440be96760855fd0cedbe3add08f qualified with the historical runner, kernel, and interop hashes reproduced exactly. One measured calibration completed all 54 coordinates across five repetitions with zero failed comparisons, promoted baseline dedf9e0945619bba6bac081d26bc7f5909f6b3c0ca7e734f210dca5ecfed903b, and archived the former 357438fee06fcaaf4b8c78011c30b2bc8ce53d7269ecb6ddd43845e0eaa1b30b authority byte-for-byte.
+          - check: Sampled Full regression at 5f38bf1a
+            result: failed
+            details: The first measured Full on the qualified 26200.9445 environment authenticated 192 samples across the three Full coordinates and is permanently consumed for source 5f38bf1aedcfe0bf9825077c476dbc07e28516cc. Semantic analysis and end-to-end passed; capability-portability simply-common failed at a 727850 ns median against the unchanged 544225 ns relative and 593700 ns absolute ceilings. Full also reported one transient LSP test failure that independently passed 572 of 572 tests immediately afterward. Release correctly did not start. The failed artifact is preserved at target/codex-tools/v4-h08-full-5f38bf21-terminal.json with evidence fingerprint 07df06ec98cc29ad40931359bbe9f8e6adfdd2619da67c3ce48aabe09e33f5f8 and performance evidence fingerprint 86573db81f3c47c9d9645fcdc1ca4c4736b80f40ab5b8c75bd5c58cb4378b288.
+          - check: Capability-portability regression correction
+            result: passed
+            details: Diagnosis found that the semantic-fact-expanded profile was being fully revalidated, canonically serialized, and SHA-256 hashed repeatedly inside a single immutable evaluation/planning cycle. The correction reuses the already validated TargetProfileSet reference for both stages and the already validated lowering reference for introduced requirements; raw-profile entry points remain fail closed. Focused capability, planning, post-lowering, and all three target-lowering suites pass, and direct versus reference-based results are structurally identical.
           - check: Full performance environment identity
             result: failed
             details: The immutable performance baseline authenticates Windows build 26200.9278 while the qualified local host now reports build 26200.9445. The Full producer therefore failed closed before any coordinate started or any benchmark sample authenticated. The existing governed recovery requires an explicit environment-version rollover and replacement baseline; V4-H08 prohibits changing performance baselines without a separate owner decision.

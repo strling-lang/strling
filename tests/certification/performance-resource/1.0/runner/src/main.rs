@@ -8,14 +8,16 @@ use std::time::Instant;
 
 use serde_json::{json, Value};
 use strling_interop::execute_bytes;
-use strling_kernel::capability_evaluation::evaluate_capabilities;
+use strling_kernel::capability_evaluation::{
+    evaluate_capabilities, evaluate_capabilities_for_reference,
+};
 use strling_kernel::ecmascript_lowering::lower_ecmascript;
 use strling_kernel::ecmascript_serialization::serialize_ecmascript;
 use strling_kernel::editor_intelligence::{
     project as project_editor, EditorFrontend, EditorRequest, EDITOR_EVIDENCE_CONTRACT_VERSION,
 };
 use strling_kernel::normalization::normalize;
-use strling_kernel::portability_planning::plan_portability;
+use strling_kernel::portability_planning::{plan_portability, plan_portability_for_reference};
 use strling_kernel::protocol::CompileRequest;
 use strling_kernel::python_re_lowering::lower_python_re;
 use strling_kernel::python_re_serialization::serialize_python_re;
@@ -26,7 +28,7 @@ use strling_kernel::semantic_analysis::analyze;
 use strling_kernel::semantic_frontend;
 use strling_kernel::source::SourceDocument;
 use strling_kernel::structural_analysis::analyze_structure;
-use strling_kernel::target::TargetProfile;
+use strling_kernel::target::{TargetProfile, TargetProfileSet};
 use strling_kernel::target_lowering::lower_pcre2;
 use strling_kernel::target_serialization::serialize_pcre2;
 use strling_kernel::validation::Validate;
@@ -1335,13 +1337,27 @@ fn prepare_operation(
             let structural =
                 analyze_structure(&semantic, &foundational).map_err(|errors| errors.to_string())?;
             let profile = target_profile("pcre2-10.43.json")?;
+            let profile_reference = profile.reference().map_err(|errors| errors.to_string())?;
+            let profiles =
+                TargetProfileSet::new(vec![profile]).map_err(|errors| errors.to_string())?;
             Ok(Box::new(move || {
-                let evaluation =
-                    evaluate_capabilities(&semantic, &foundational, &structural, &profile)
-                        .map_err(|errors| errors.to_string())?;
-                let plan =
-                    plan_portability(&semantic, &foundational, &structural, &profile, &evaluation)
-                        .map_err(|errors| errors.to_string())?;
+                let evaluation = evaluate_capabilities_for_reference(
+                    &semantic,
+                    &foundational,
+                    &structural,
+                    &profile_reference,
+                    &profiles,
+                )
+                .map_err(|errors| errors.to_string())?;
+                let plan = plan_portability_for_reference(
+                    &semantic,
+                    &foundational,
+                    &structural,
+                    &profile_reference,
+                    &profiles,
+                    &evaluation,
+                )
+                .map_err(|errors| errors.to_string())?;
                 Ok(plan.decisions.len())
             }))
         }

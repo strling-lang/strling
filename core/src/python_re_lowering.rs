@@ -555,6 +555,7 @@ pub fn lower_python_re(
         input.contract_version,
         &input.specification_version,
         target,
+        &target_profile,
         semantic_requirements.len(),
         &native_source_identities,
         emitted,

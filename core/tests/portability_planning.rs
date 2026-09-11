@@ -1,17 +1,18 @@
 use serde_json::{json, Value};
 use strling_kernel::capability_evaluation::{
-    evaluate_capabilities, CapabilityDisposition, CapabilityEvaluation,
+    evaluate_capabilities, evaluate_capabilities_for_reference, CapabilityDisposition,
+    CapabilityEvaluation,
 };
 use strling_kernel::portability_planning::{
-    plan_portability, PortabilityPlanningErrorCode, RequirementPlanningDisposition,
-    RewriteAttemptDisposition, RewriteDependency, RewriteProofDisposition, RewriteStrategyId,
-    UnresolvedPlanningReason,
+    plan_portability, plan_portability_for_reference, PortabilityPlanningErrorCode,
+    RequirementPlanningDisposition, RewriteAttemptDisposition, RewriteDependency,
+    RewriteProofDisposition, RewriteStrategyId, UnresolvedPlanningReason,
 };
 use strling_kernel::semantic::SemanticProgram;
 use strling_kernel::semantic_analysis::{analyze, SemanticFacts};
 use strling_kernel::source::Sha256Digest;
 use strling_kernel::structural_analysis::{analyze_structure, StructuralFacts};
-use strling_kernel::target::{PortabilityStatus, TargetProfile};
+use strling_kernel::target::{PortabilityStatus, TargetProfile, TargetProfileSet};
 
 const PCRE2_1042: &str = include_str!("../../spec/targets/profiles/pcre2-10.42.json");
 const PCRE2_1043: &str = include_str!("../../spec/targets/profiles/pcre2-10.43.json");
@@ -69,6 +70,52 @@ fn lookahead(node_id: &str, body_id: &str) -> Value {
         "polarity": "positive",
         "body": literal(body_id, "x")
     })
+}
+
+#[test]
+fn immutable_profile_reference_path_matches_direct_evaluation_and_planning() {
+    let semantic = program(lookahead("node:lookahead", "node:lookahead.body"));
+    let (foundational, structural) = prerequisites(&semantic);
+    let target = profile(PCRE2_1043);
+    let reference = target.reference().expect("canonical profile reference");
+
+    let direct_evaluation = evaluate_capabilities(
+        &semantic,
+        &foundational,
+        &structural,
+        &target,
+    )
+    .expect("direct evaluation");
+    let direct_plan = plan_portability(
+        &semantic,
+        &foundational,
+        &structural,
+        &target,
+        &direct_evaluation,
+    )
+    .expect("direct plan");
+
+    let profiles = TargetProfileSet::new(vec![target]).expect("validated profile set");
+    let referenced_evaluation = evaluate_capabilities_for_reference(
+        &semantic,
+        &foundational,
+        &structural,
+        &reference,
+        &profiles,
+    )
+    .expect("reference evaluation");
+    let referenced_plan = plan_portability_for_reference(
+        &semantic,
+        &foundational,
+        &structural,
+        &reference,
+        &profiles,
+        &referenced_evaluation,
+    )
+    .expect("reference plan");
+
+    assert_eq!(referenced_evaluation, direct_evaluation);
+    assert_eq!(referenced_plan, direct_plan);
 }
 
 fn variable_lookbehind(maximum: usize) -> Value {

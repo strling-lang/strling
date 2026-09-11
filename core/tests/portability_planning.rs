@@ -79,13 +79,8 @@ fn immutable_profile_reference_path_matches_direct_evaluation_and_planning() {
     let target = profile(PCRE2_1043);
     let reference = target.reference().expect("canonical profile reference");
 
-    let direct_evaluation = evaluate_capabilities(
-        &semantic,
-        &foundational,
-        &structural,
-        &target,
-    )
-    .expect("direct evaluation");
+    let direct_evaluation = evaluate_capabilities(&semantic, &foundational, &structural, &target)
+        .expect("direct evaluation");
     let direct_plan = plan_portability(
         &semantic,
         &foundational,

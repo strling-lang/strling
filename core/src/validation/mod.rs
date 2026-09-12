@@ -214,6 +214,7 @@ mod canonical_digest_tests {
     use serde::{Serialize, Serializer};
     use serde_json::Value;
     use sha2::{Digest, Sha256};
+    use std::fmt::Write;
 
     #[test]
     fn nested_objects_use_sorted_keys_without_reordering_arrays() {
@@ -271,11 +272,10 @@ mod canonical_digest_tests {
                 canonical_sha256(&profile).expect("typed profile digest"),
                 canonical_sha256(&value).expect("document digest")
             );
-            let observed: String = canonical_sha256(&profile)
-                .expect("typed profile digest")
-                .iter()
-                .map(|byte| format!("{byte:02x}"))
-                .collect();
+            let mut observed = String::with_capacity(64);
+            for byte in canonical_sha256(&profile).expect("typed profile digest") {
+                write!(&mut observed, "{byte:02x}").expect("write digest to string");
+            }
             assert_eq!(observed, expected);
         }
     }

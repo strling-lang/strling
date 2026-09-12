@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "authority": "empirical/adversarial-conformance-evidence",
-  "source_sha": "7215cfa118fda5a562b888a635f5ee5011d39bd9",
+  "source_sha": "9b305f3ddad5b74857d960d8d102c1d025b23085",
   "source_files": {
     "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
     "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
@@ -53,13 +53,13 @@
     "core/src/target/profile.rs": "e913e7e6ef3985272e5255fd89df1c1655d51d19f7c46015c3d123f265b59f65",
     "core/src/target_lowering.rs": "cb6e9451a86d676ab3515f9118bde76e275b1be682fe10dfd68bafa785ba5439",
     "core/src/target_serialization.rs": "d5c40a8586c650645b6456613c04272c6ab969147bcaea42b20c610ce549612c",
-    "core/src/validation/mod.rs": "d332bec288727cec2c544ef032dc5825d4af3d83982ded8c62b48173cb16216b",
+    "core/src/validation/mod.rs": "87a53f94a3c32f3bd679d5c3e0f5f41d8ca20dac7ade207236f6137734ddfbfb",
     "tooling/adversarial_semantic_audit.py": "95ef25d58aabc484373d0c3275f28cbe6921f4a4ce3c0dfbf29524dcbdc6b489",
     "tooling/node_regexp_harness.mjs": "96a85b99480b2a898590a847b06f8bb49255fef34a1c5b435226be785b03bcd9",
     "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
     "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
   },
-  "executed_at": "2026-09-12T20:14:36.845997+00:00",
+  "executed_at": "2026-09-12T21:50:42.967402+00:00",
   "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
   "repeat_runs": 2,
   "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
@@ -394,7 +394,7 @@
     }
   ],
   "findings": [],
-  "result_sha256": "24c872d1df0dbe837e9f4129160f4a57afcf68ca16beaefedb7678c28d0a2fb7",
+  "result_sha256": "638244926f7ca0b6eb76019b468534a93d951e29801248b615179a2826343a53",
   "case_observations": [
     {
       "case_id": "wildcard-excluding-lines",

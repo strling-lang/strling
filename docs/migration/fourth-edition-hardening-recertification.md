@@ -251,4 +251,34 @@ integrity workflow. Therefore it cannot supply a PR-base integrity run yet.
 The authorized `dev` push can use a separately pinned reviewed verifier commit;
 success there will not establish `main` bootstrap or authorize integration.
 
+## Exact-source Local failure and test correction
+
+The clean candidate `9b305f3ddad5b74857d960d8d102c1d025b23085` completed Local
+profile definition 1.15.0 on 2026-09-12 at 21:22:18 UTC with 36 passed operations
+and one failed operation out of 37, with no waivers or incomplete operations.
+The retained evidence fingerprint is
+`14b8af8d02de929740e8d3eda759f93c4eed171ae36dda96a9a352561e8c576c`.
+The sole failure is `lint@core`: Clippy 0.1.75 rejects `format_collect` in the
+new canonical-digest test. Core formatting, typechecking, and tests passed.
+The complete artifact, log, and terminal execution receipt remain under
+`target/codex-tools/h08-candidate-9b305f3ddad5b74857d960d8d102c1d025b23085/`;
+this result cannot qualify the candidate for Pull Request or Full.
+
+The correction writes each digest byte into one preallocated string in the
+test. It changes no production hashing behavior, expected digest, benchmark,
+or threshold. Core formatting, Clippy, and all three canonical-digest tests
+pass on Rust 1.75.0. All three affected registered observation generators and
+verifiers pass. Shared-engine evidence, standard-library evidence, and all 41
+adversarial raw observation shards remain byte-identical. The adversarial
+envelope changes only its execution timestamp, source commit, changed test-file
+hash, and dependent checksum; two repeated executions again report zero
+findings. The retained comparison is
+`target/codex-tools/certification-forensics/h08-observations-lint-correction/comparison.json`.
+A new clean committed candidate must restart deterministic qualification.
+No Full sample or Release was started at the failed Local candidate.
+
+The owner's publication-account amendment applies after H08 closes, beginning
+with P20-T02. It preserves the prerequisite sequence and does not authorize
+public publication, production tags, or integration into `main`.
+
 **BLOCKED — NO-GO FOR P20-T02.**

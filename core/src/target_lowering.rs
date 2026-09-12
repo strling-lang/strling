@@ -37,7 +37,7 @@ use crate::source::{
 };
 use crate::target::{
     ArtifactPortabilityStatus, EngineOptionValue, OptionId, OptionSelection, OptionStage,
-    PortabilityStatus, TargetProfile, TargetProfileReference,
+    PortabilityStatus, TargetProfile, TargetProfileReference, TargetProfileSet,
 };
 use crate::validation::{
     canonical_sha256, Validate, ValidationCode, ValidationError, ValidationErrors,
@@ -350,6 +350,50 @@ pub fn lower_pcre2(
     target: &TargetProfile,
     portability: &PortabilityPlan,
 ) -> Result<Pcre2LoweringPlan, Pcre2LoweringFailure> {
+    validate_semantic_input(input)?;
+    if let Err(errors) = target.validate() {
+        return Err(failure(
+            input,
+            Pcre2LoweringErrorCode::InvalidTargetProfile,
+            Some(input.root.node_id()),
+            format!("PCRE2 target profile is invalid: {errors}"),
+        ));
+    }
+    let target_profile = target.reference().map_err(|errors| {
+        failure(
+            input,
+            Pcre2LoweringErrorCode::InvalidTargetProfile,
+            Some(input.root.node_id()),
+            format!("PCRE2 target profile reference could not be derived: {errors}"),
+        )
+    })?;
+    lower_pcre2_for_validated_reference(input, target, &target_profile, portability)
+}
+
+/// Lower through an exact reference resolved from an immutable validated set.
+///
+/// The profile set owns canonical profile validation and fingerprinting. This
+/// entry point therefore avoids repeating that expensive proof while still
+/// failing closed if the reference is absent, stale, or mismatched.
+pub fn lower_pcre2_for_reference(
+    input: &SemanticProgram,
+    target_profile: &TargetProfileReference,
+    profiles: &TargetProfileSet,
+    portability: &PortabilityPlan,
+) -> Result<Pcre2LoweringPlan, Pcre2LoweringFailure> {
+    validate_semantic_input(input)?;
+    let target = profiles.resolve(target_profile).map_err(|errors| {
+        failure(
+            input,
+            Pcre2LoweringErrorCode::InvalidTargetProfile,
+            Some(input.root.node_id()),
+            format!("PCRE2 target profile reference could not be resolved: {errors}"),
+        )
+    })?;
+    lower_pcre2_for_validated_reference(input, target, target_profile, portability)
+}
+
+fn validate_semantic_input(input: &SemanticProgram) -> Result<(), Pcre2LoweringFailure> {
     enforce_resource_limits(input)?;
     if let Err(errors) = input.validate() {
         return Err(failure(
@@ -367,14 +411,15 @@ pub fn lower_pcre2(
             "PCRE2 lowering requires canonical-v1 Semantic IR",
         ));
     }
-    if let Err(errors) = target.validate() {
-        return Err(failure(
-            input,
-            Pcre2LoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("PCRE2 target profile is invalid: {errors}"),
-        ));
-    }
+    Ok(())
+}
+
+fn lower_pcre2_for_validated_reference(
+    input: &SemanticProgram,
+    target: &TargetProfile,
+    target_profile: &TargetProfileReference,
+    portability: &PortabilityPlan,
+) -> Result<Pcre2LoweringPlan, Pcre2LoweringFailure> {
     if target.engine.id.as_str() != "pcre2" {
         return Err(failure(
             input,
@@ -426,15 +471,7 @@ pub fn lower_pcre2(
             "portability plan was not produced for the supplied Semantic IR bytes",
         ));
     }
-    let target_profile = target.reference().map_err(|errors| {
-        failure(
-            input,
-            Pcre2LoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("PCRE2 target profile reference could not be derived: {errors}"),
-        )
-    })?;
-    if portability.target_profile != target_profile {
+    if portability.target_profile != *target_profile {
         return Err(failure(
             input,
             Pcre2LoweringErrorCode::TargetProfileMismatch,
@@ -526,7 +563,7 @@ pub fn lower_pcre2(
         input.contract_version,
         &input.specification_version,
         target,
-        &target_profile,
+        target_profile,
         semantic_requirements.len(),
         &native_source_identities,
         emitted,
@@ -559,7 +596,7 @@ pub fn lower_pcre2(
         contract_version: input.contract_version,
         specification_version: input.specification_version.clone(),
         semantic_program,
-        target_profile,
+        target_profile: target_profile.clone(),
         portability_status,
         case_matching: match input.case_matching {
             CaseMatching::Sensitive => Pcre2CaseMatching::Sensitive,

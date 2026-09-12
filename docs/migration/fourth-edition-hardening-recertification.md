@@ -125,26 +125,45 @@ deterministic result fingerprint is
 All 148 historical audit findings remain resolved. The sole accepted waiver is
 still `WVR-SEC-VSCE-LICENSE-001`.
 
-H08 cannot reach terminal certification on the current authorized host. The
-active immutable performance baseline authenticates Windows build `26200.9278`,
-while the host now reports `26200.9445`. The Full producer correctly reports
-the environment unavailable before starting a governed coordinate or
-authenticating a sample. The preserved attempts therefore consumed zero
-samples and are diagnostic evidence, not passing certification evidence.
+The Program Owner subsequently authorized the existing immutable same-host
+environment rollover. Windows `26200.9278` remains archived with its original
+identity and evidence; Windows `26200.9445` was independently qualified and
+measured once under the unchanged sampling, statistical, conditioning,
+isolation, and acceptance rules. The active baseline is
+`5a472de9302c8b5fd48a6a1c9c7970f747800f268185976c3de1f93db9e7e07b`, bound
+to environment
+`404f22e91201485db7563d518d19304077bb73b94f480dba3d4bc964dea6e4bd` and
+historical calibration source `5f4a81643f33440be96760855fd0cedbe3add08f`.
 
-The repository's governed recovery is an explicit environment-version rollover
-that replaces the baseline after qualification. The H08 boundary prohibits
-changing performance baselines, so that rollover requires a distinct owner
-authorization; using an exact local environment still on build `26200.9278`
-would also satisfy the existing contract. Hosted recomputation is neither
-required nor accepted by the amended trust model.
+The first measured Full at candidate
+`f3bb5ffb84564eb558ad58be9875575d147fa7b1` passed 123 operations, retained
+only `WVR-SEC-VSCE-LICENSE-001`, and failed one of 125 operations after seven
+coordinates and 385 authenticated samples. The sole regression was
+`latency:pcre2-lower-serialize/fixture:semantic-common`: median `451844 ns`
+against unchanged relative and absolute ceilings of `273845 ns` and
+`298740 ns`. Full evidence fingerprint
+`4df11302eae81923fa6d7f568d4d1d5c53af11cabd3c65fb18897f1b1e18f1f4`,
+performance evidence fingerprint
+`970afce604501ac18f008ea32f255e16a6667e97481e3cf1c055bc406686f808`,
+invocation `744be042ede544aa83906e1529d3f9c7`, and source artifact SHA-256
+`8ed2021c6757c64cb4a7fb968acdba55091fa86ceffde4cd6b10fe0af0f4b2c4` preserve
+the consumed failure. Release correctly did not start.
 
-Release did not start because Full is not terminally green. Consequently no
-authoritative certification attestation was issued and no cloud verification
-was claimed. This is the intended fail-closed behavior: the implemented signing
-and verification architecture will not turn incomplete Full/Release evidence
-into a trusted result. P20-T02 remains paused and no hardened source baseline is
-declared.
+Diagnosis traced the regression to repeated validation, canonical
+serialization, and hashing of the same already-validated semantic-fact-expanded
+profile during target lowering. The correction extends the existing immutable
+`TargetProfileSet` reference path to PCRE2, ECMAScript, and Python lowering.
+Exact profile resolution remains mandatory on every invocation, stale or
+mismatched references fail closed, and direct versus reference-based plans are
+tested for structural equality. The timed operation remains lowering plus
+serialization; profile loading, validation, and immutable-reference creation
+are certified preconditions established during operation preparation.
+
+The `f3bb5ffb` sampled attempt is permanently consumed and will not be retried.
+Any subsequent Full must bind a substantive corrected source SHA, pass the same
+unchanged performance policy, and precede same-SHA Release. Until that sequence,
+attestation, and cloud verification finish, P20-T02 remains paused and no
+hardened source baseline is declared.
 
 No package is published, no release tag or GitHub Release is created, `main`
 is unchanged, and P20-T02 does not begin in this task.

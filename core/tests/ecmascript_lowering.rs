@@ -1,18 +1,20 @@
 use serde_json::{json, Value};
 use strling_kernel::capability_evaluation::evaluate_capabilities;
 use strling_kernel::ecmascript_lowering::{
-    lower_ecmascript, EcmascriptCaseMatching, EcmascriptCharacterDomain,
-    EcmascriptCharacterSetMember, EcmascriptLookaround, EcmascriptLoweringErrorCode,
-    EcmascriptOperation, EcmascriptPosition, EcmascriptRepetitionMaximum, EcmascriptRepetitionMode,
-    EcmascriptWildcard, MAX_ECMASCRIPT_LOWERING_DEPTH,
+    lower_ecmascript, lower_ecmascript_for_reference, EcmascriptCaseMatching,
+    EcmascriptCharacterDomain, EcmascriptCharacterSetMember, EcmascriptLookaround,
+    EcmascriptLoweringErrorCode, EcmascriptOperation, EcmascriptPosition,
+    EcmascriptRepetitionMaximum, EcmascriptRepetitionMode, EcmascriptWildcard,
+    MAX_ECMASCRIPT_LOWERING_DEPTH,
 };
 use strling_kernel::portability_planning::{plan_portability, PortabilityPlan};
 use strling_kernel::semantic::{Node, SemanticProgram};
 use strling_kernel::semantic_analysis::analyze;
-use strling_kernel::source::{NodeId, SpecificationVersion};
+use strling_kernel::source::{NodeId, Sha256Digest, SpecificationVersion};
 use strling_kernel::structural_analysis::analyze_structure;
 use strling_kernel::target::{
     ArtifactPortabilityStatus, EngineOptionValue, OptionSelection, OptionStage, TargetProfile,
+    TargetProfileSet,
 };
 use strling_kernel::validation::Validate;
 
@@ -638,6 +640,30 @@ fn stale_mismatched_and_non_ecmascript_inputs_are_rejected_before_lowering() {
             .expect_err("plan version mismatch must fail")
             .code,
         EcmascriptLoweringErrorCode::VersionMismatch
+    );
+}
+
+#[test]
+fn validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stale() {
+    let semantic = program(literal("node:reference.literal", "plain"));
+    let target = governed_ecmascript_profile();
+    let portability = plan_for(&semantic, &target);
+    let reference = target.reference().expect("profile reference");
+    let profiles = TargetProfileSet::new(vec![target.clone()]).expect("validated profile set");
+
+    let direct = lower_ecmascript(&semantic, &target, &portability).expect("direct lowering");
+    let resolved =
+        lower_ecmascript_for_reference(&semantic, &reference, &profiles, &portability)
+            .expect("reference lowering");
+    assert_eq!(resolved, direct);
+
+    let mut stale = reference;
+    stale.sha256 = Sha256Digest::from_bytes([0; 32]);
+    assert_eq!(
+        lower_ecmascript_for_reference(&semantic, &stale, &profiles, &portability)
+            .expect_err("stale profile references must fail closed")
+            .code,
+        EcmascriptLoweringErrorCode::InvalidTargetProfile
     );
 }
 

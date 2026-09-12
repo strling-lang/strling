@@ -8,18 +8,16 @@ use std::time::Instant;
 
 use serde_json::{json, Value};
 use strling_interop::execute_bytes;
-use strling_kernel::capability_evaluation::{
-    evaluate_capabilities, evaluate_capabilities_for_reference,
-};
-use strling_kernel::ecmascript_lowering::lower_ecmascript;
+use strling_kernel::capability_evaluation::evaluate_capabilities_for_reference;
+use strling_kernel::ecmascript_lowering::lower_ecmascript_for_reference;
 use strling_kernel::ecmascript_serialization::serialize_ecmascript;
 use strling_kernel::editor_intelligence::{
     project as project_editor, EditorFrontend, EditorRequest, EDITOR_EVIDENCE_CONTRACT_VERSION,
 };
 use strling_kernel::normalization::normalize;
-use strling_kernel::portability_planning::{plan_portability, plan_portability_for_reference};
+use strling_kernel::portability_planning::plan_portability_for_reference;
 use strling_kernel::protocol::CompileRequest;
-use strling_kernel::python_re_lowering::lower_python_re;
+use strling_kernel::python_re_lowering::lower_python_re_for_reference;
 use strling_kernel::python_re_serialization::serialize_python_re;
 use strling_kernel::regex_frontend;
 use strling_kernel::safety_analysis::analyze_safety;
@@ -29,7 +27,7 @@ use strling_kernel::semantic_frontend;
 use strling_kernel::source::SourceDocument;
 use strling_kernel::structural_analysis::analyze_structure;
 use strling_kernel::target::{TargetProfile, TargetProfileSet};
-use strling_kernel::target_lowering::lower_pcre2;
+use strling_kernel::target_lowering::lower_pcre2_for_reference;
 use strling_kernel::target_serialization::serialize_pcre2;
 use strling_kernel::validation::Validate;
 
@@ -1167,26 +1165,57 @@ fn prepared_target_operation(
     let structural =
         analyze_structure(&semantic, &foundational).map_err(|error| error.to_string())?;
     let profile = target_profile(profile_file)?;
-    let evaluation = evaluate_capabilities(&semantic, &foundational, &structural, &profile)
-        .map_err(|error| error.to_string())?;
-    let plan = plan_portability(&semantic, &foundational, &structural, &profile, &evaluation)
-        .map_err(|error| error.to_string())?;
+    let profile_reference = profile.reference().map_err(|error| error.to_string())?;
+    let profiles =
+        TargetProfileSet::new(vec![profile]).map_err(|error| error.to_string())?;
+    let evaluation = evaluate_capabilities_for_reference(
+        &semantic,
+        &foundational,
+        &structural,
+        &profile_reference,
+        &profiles,
+    )
+    .map_err(|error| error.to_string())?;
+    let plan = plan_portability_for_reference(
+        &semantic,
+        &foundational,
+        &structural,
+        &profile_reference,
+        &profiles,
+        &evaluation,
+    )
+    .map_err(|error| error.to_string())?;
     match target {
         "pcre2" => Ok(Box::new(move || {
-            let lowered =
-                lower_pcre2(&semantic, &profile, &plan).map_err(|error| error.to_string())?;
+            let lowered = lower_pcre2_for_reference(
+                &semantic,
+                &profile_reference,
+                &profiles,
+                &plan,
+            )
+            .map_err(|error| error.to_string())?;
             let artifact = serialize_pcre2(&lowered).map_err(|error| error.to_string())?;
             Ok(artifact.pattern.text.len())
         })),
         "ecmascript" => Ok(Box::new(move || {
-            let lowered =
-                lower_ecmascript(&semantic, &profile, &plan).map_err(|error| error.to_string())?;
+            let lowered = lower_ecmascript_for_reference(
+                &semantic,
+                &profile_reference,
+                &profiles,
+                &plan,
+            )
+            .map_err(|error| error.to_string())?;
             let artifact = serialize_ecmascript(&lowered).map_err(|error| error.to_string())?;
             Ok(artifact.pattern.text.len())
         })),
         "python-re" => Ok(Box::new(move || {
-            let lowered =
-                lower_python_re(&semantic, &profile, &plan).map_err(|error| error.to_string())?;
+            let lowered = lower_python_re_for_reference(
+                &semantic,
+                &profile_reference,
+                &profiles,
+                &plan,
+            )
+            .map_err(|error| error.to_string())?;
             let artifact = serialize_python_re(&lowered).map_err(|error| error.to_string())?;
             Ok(artifact.pattern.text.len())
         })),

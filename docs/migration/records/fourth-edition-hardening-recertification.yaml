@@ -20,7 +20,10 @@ scope:
         - core/src/python_re_lowering.rs
         - core/src/target/profile.rs
         - core/src/target_lowering.rs
+        - core/tests/ecmascript_lowering.rs
+        - core/tests/pcre2_lowering.rs
         - core/tests/portability_planning.rs
+        - core/tests/python_re_lowering.rs
         - docs/migration/fourth-edition-hardening-recertification.md
         - docs/migration/ledger.md
         - docs/migration/records/fourth-edition-hardening-recertification.yaml
@@ -55,6 +58,7 @@ scope:
         - tests/architecture/semantic-authority/1.0/evidence.json
         - toolchain.json
         - tooling/architecture_fitness.py
+        - tooling/core_stage_boundaries.py
         - tooling/dependency_license_evidence.py
         - tooling/local_certification_attestation.py
         - tooling/lsp-server/package-lock.json
@@ -63,9 +67,12 @@ scope:
         - tooling/tests/test_governance.py
         - tooling/tests/test_launch_readiness.py
         - tooling/tests/test_local_certification_attestation.py
+        - tooling/tests/test_ecmascript_lowering_architecture.py
+        - tooling/tests/test_pcre2_lowering_architecture.py
         - tooling/tests/test_profile_source_identity.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_quality.py
+        - tooling/tests/test_python_re_lowering_architecture.py
         - tooling/tests/test_release_supply_chain_architecture.py
         - tooling/tests/test_security.py
     forbidden_paths:
@@ -170,7 +177,7 @@ invariant_inventory:
       positive_allowed_form: Local and Pull Request pass first; Full then Release pass at the same clean SHA with exact runtimes, governed samples, complete evidence, and only accepted waivers.
       forbidden_form: Sampling before a known deterministic failure is fixed, ambient runtime substitution, evidence transfer between candidates, retry after a sampled failure on an unchanged SHA, missing/incomplete operation, new waiver, publication action, or mixed source identity.
       mechanical_detection_method: Canonical profile artifacts, structured product-certification projections, exact-runtime evidence, performance sample-consumption state, waiver registry validation, and clean Git identity checks.
-      current_observed_state: The Program Owner authorized the immutable same-host rollover from Windows 26200.9278 to 26200.9445. Clean reset source 5f4a81643f33440be96760855fd0cedbe3add08f qualified the serviced host, and the single authorized calibration passed all 54 coordinates across five repetitions with zero failed comparisons. The current candidate preserves the archived 26200.9278 authority and activates baseline dedf9e0945619bba6bac081d26bc7f5909f6b3c0ca7e734f210dca5ecfed903b for environment 404f22e91201485db7563d518d19304077bb73b94f480dba3d4bc964dea6e4bd. Exact-source deterministic preflight, Full, Release, signing, and cloud verification remain to be completed.
+      current_observed_state: The Program Owner authorized the immutable same-host rollover from Windows 26200.9278 to 26200.9445. Clean calibration source 5f4a81643f33440be96760855fd0cedbe3add08f qualified the serviced host, and the single authorized calibration passed all 54 coordinates across five repetitions with zero failed comparisons. The repository preserves the archived 26200.9278 authority and uses active baseline 5a472de9302c8b5fd48a6a1c9c7970f747800f268185976c3de1f93db9e7e07b for environment 404f22e91201485db7563d518d19304077bb73b94f480dba3d4bc964dea6e4bd. The sole Full at f3bb5ffb84564eb558ad58be9875575d147fa7b1 is permanently consumed after 385 authenticated samples and one target-lowering latency regression. A substantive exact-profile reuse correction is under focused verification; a new SHA must pass deterministic preflight, Full, Release, signing, and cloud verification.
       expected_ratchet: The exact hardened source baseline is immutable evidence for P20-T02; any later semantic-core change requires a new certification event.
 checkpoints:
     - name: Candidate freeze and contract reconstruction
@@ -251,12 +258,18 @@ checkpoints:
           - check: Capability-portability regression correction
             result: passed
             details: Diagnosis found that the semantic-fact-expanded profile was being fully revalidated, canonically serialized, and SHA-256 hashed repeatedly inside a single immutable evaluation/planning cycle. The correction reuses the already validated TargetProfileSet reference for both stages and the already validated lowering reference for introduced requirements; raw-profile entry points remain fail closed. Focused capability, planning, post-lowering, and all three target-lowering suites pass, and direct versus reference-based results are structurally identical.
-          - check: Full performance environment identity
+          - check: Qualified Windows environment rollover
+            result: passed
+            details: Owner authorization activated the repository's provenance-preserving same-host rollover. Windows 26200.9278 remains immutable history. Windows 26200.9445 qualified as environment 404f22e91201485db7563d518d19304077bb73b94f480dba3d4bc964dea6e4bd and was measured exactly once under unchanged budgets, ceilings, sample counts, statistics, conditioning, isolation, and no-retry policy. Active baseline 5a472de9302c8b5fd48a6a1c9c7970f747800f268185976c3de1f93db9e7e07b remains bound to calibration source 5f4a81643f33440be96760855fd0cedbe3add08f and manifest e7adc8b38c796d53f32102249a7f3e9eb96792a006987ba5f82e995127a8f860.
+          - check: Target-lowering regression at f3bb5ffb
             result: failed
-            details: The immutable performance baseline authenticates Windows build 26200.9278 while the qualified local host now reports build 26200.9445. The Full producer therefore failed closed before any coordinate started or any benchmark sample authenticated. The existing governed recovery requires an explicit environment-version rollover and replacement baseline; V4-H08 prohibits changing performance baselines without a separate owner decision.
+            details: The sole canonical Full at f3bb5ffb84564eb558ad58be9875575d147fa7b1 is permanently consumed after seven completed coordinates and 385 authenticated samples. It passed 123 operations, retained only WVR-SEC-VSCE-LICENSE-001, and failed only latency:pcre2-lower-serialize/fixture:semantic-common at median 451844 ns against unchanged relative and absolute ceilings of 273845 ns and 298740 ns. Full evidence fingerprint 4df11302eae81923fa6d7f568d4d1d5c53af11cabd3c65fb18897f1b1e18f1f4, performance evidence fingerprint 970afce604501ac18f008ea32f255e16a6667e97481e3cf1c055bc406686f808, structured operation artifact cb2cccf76983bff144bba0c6475275bd735e8c5dc5bd1f5c094f8de6c0210913, invocation 744be042ede544aa83906e1529d3f9c7, and source artifact SHA-256 8ed2021c6757c64cb4a7fb968acdba55091fa86ceffde4cd6b10fe0af0f4b2c4 preserve the failed evidence. Release did not start.
+          - check: Target-lowering profile-identity correction
+            result: passed
+            details: Diagnosis isolated repeated validation, canonical serialization, and SHA-256 hashing of the same semantic-fact-expanded profile inside target lowering. The correction extends the existing immutable TargetProfileSet reference path across PCRE2, ECMAScript, and Python; every invocation resolves the exact cached reference, stale references fail closed, and direct versus reference-based plans are structurally equal. Pinned Rust 1.75 focused suites passed 29 of 29 tests, and 27 architecture/mutation tests mechanically require both the validated-reference entry point and exact resolution. No performance budget, ceiling, sample count, statistical rule, conditioning rule, isolation rule, or baseline changed.
           - check: Full terminal certification
             result: not_run
-            details: No terminal Full evidence exists for the final candidate because its required sampled operation cannot execute against the mismatched environment identity. The preserved earlier pre-sample artifacts are diagnostic evidence only and are not certification evidence.
+            details: No terminal Full evidence exists for the corrected candidate yet. The consumed f3bb5ffb failure is historical evidence and cannot be retried at that SHA.
           - check: Release certification
             result: not_run
             details: Release correctly did not start because the registered contract requires terminally green Full first at the same source SHA.
@@ -265,7 +278,7 @@ checkpoints:
             details: No attestation was issued and no cloud acceptance was claimed because the authoritative Full and Release inputs are absent. The implemented verifier remains fail closed for missing terminal evidence.
           - check: Required resolution
             result: not_run
-            details: Certification can resume only on an authorized local environment exactly matching baseline build 26200.9278, or after explicit owner authorization for the existing immutable environment-version rollover procedure under unchanged thresholds, sample counts, statistics, conditioning, and isolation.
+            details: Complete focused and deterministic verification, commit a substantive corrected source SHA, run one canonical Full under the unchanged 26200.9445 authority, then run same-SHA Release only after terminal green Full.
 commits:
     - sha: 9f85a00cd9ed936a4f46ad20d6ff38a681c29b73
       subject: "fix(governance): keep license evidence checks offline"

@@ -37,7 +37,7 @@ use crate::source::{
 };
 use crate::target::{
     ArtifactPortabilityStatus, EngineOptionValue, OptionId, OptionSelection, OptionStage,
-    PortabilityStatus, TargetProfile, TargetProfileReference,
+    PortabilityStatus, TargetProfile, TargetProfileReference, TargetProfileSet,
 };
 use crate::validation::{
     canonical_sha256, Validate, ValidationCode, ValidationError, ValidationErrors,
@@ -348,6 +348,50 @@ pub fn lower_ecmascript(
     target: &TargetProfile,
     portability: &PortabilityPlan,
 ) -> Result<EcmascriptLoweringPlan, EcmascriptLoweringFailure> {
+    validate_semantic_input(input)?;
+    if let Err(errors) = target.validate() {
+        return Err(failure(
+            input,
+            EcmascriptLoweringErrorCode::InvalidTargetProfile,
+            Some(input.root.node_id()),
+            format!("ECMAScript target profile is invalid: {errors}"),
+        ));
+    }
+    let target_profile = target.reference().map_err(|errors| {
+        failure(
+            input,
+            EcmascriptLoweringErrorCode::InvalidTargetProfile,
+            Some(input.root.node_id()),
+            format!("ECMAScript target profile reference could not be derived: {errors}"),
+        )
+    })?;
+    lower_ecmascript_for_validated_reference(input, target, &target_profile, portability)
+}
+
+/// Lower through an exact reference resolved from an immutable validated set.
+///
+/// The profile set owns canonical profile validation and fingerprinting. This
+/// entry point therefore avoids repeating that expensive proof while still
+/// failing closed if the reference is absent, stale, or mismatched.
+pub fn lower_ecmascript_for_reference(
+    input: &SemanticProgram,
+    target_profile: &TargetProfileReference,
+    profiles: &TargetProfileSet,
+    portability: &PortabilityPlan,
+) -> Result<EcmascriptLoweringPlan, EcmascriptLoweringFailure> {
+    validate_semantic_input(input)?;
+    let target = profiles.resolve(target_profile).map_err(|errors| {
+        failure(
+            input,
+            EcmascriptLoweringErrorCode::InvalidTargetProfile,
+            Some(input.root.node_id()),
+            format!("ECMAScript target profile reference could not be resolved: {errors}"),
+        )
+    })?;
+    lower_ecmascript_for_validated_reference(input, target, target_profile, portability)
+}
+
+fn validate_semantic_input(input: &SemanticProgram) -> Result<(), EcmascriptLoweringFailure> {
     enforce_resource_limits(input)?;
     if let Err(errors) = input.validate() {
         return Err(failure(
@@ -365,14 +409,15 @@ pub fn lower_ecmascript(
             "ECMAScript lowering requires canonical-v1 Semantic IR",
         ));
     }
-    if let Err(errors) = target.validate() {
-        return Err(failure(
-            input,
-            EcmascriptLoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("ECMAScript target profile is invalid: {errors}"),
-        ));
-    }
+    Ok(())
+}
+
+fn lower_ecmascript_for_validated_reference(
+    input: &SemanticProgram,
+    target: &TargetProfile,
+    target_profile: &TargetProfileReference,
+    portability: &PortabilityPlan,
+) -> Result<EcmascriptLoweringPlan, EcmascriptLoweringFailure> {
     if target.engine.id.as_str() != "ecmascript" {
         return Err(failure(
             input,
@@ -424,15 +469,7 @@ pub fn lower_ecmascript(
             "portability plan was not produced for the supplied Semantic IR bytes",
         ));
     }
-    let target_profile = target.reference().map_err(|errors| {
-        failure(
-            input,
-            EcmascriptLoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("ECMAScript target profile reference could not be derived: {errors}"),
-        )
-    })?;
-    if portability.target_profile != target_profile {
+    if portability.target_profile != *target_profile {
         return Err(failure(
             input,
             EcmascriptLoweringErrorCode::TargetProfileMismatch,
@@ -522,7 +559,7 @@ pub fn lower_ecmascript(
         input.contract_version,
         &input.specification_version,
         target,
-        &target_profile,
+        target_profile,
         semantic_requirements.len(),
         &native_source_identities,
         emitted,
@@ -553,7 +590,7 @@ pub fn lower_ecmascript(
         contract_version: input.contract_version,
         specification_version: input.specification_version.clone(),
         semantic_program,
-        target_profile,
+        target_profile: target_profile.clone(),
         portability_status,
         case_matching,
         options,

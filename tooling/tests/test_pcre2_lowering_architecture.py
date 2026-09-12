@@ -58,6 +58,11 @@ class Pcre2LoweringBoundaryTests(unittest.TestCase):
     ) -> None:
         for existing, replacement in (
             ("pub fn lower_pcre2(", "fn lower_pcre2("),
+            (
+                "pub fn lower_pcre2_for_reference(",
+                "fn lower_pcre2_for_reference(",
+            ),
+            ("profiles.resolve(target_profile)", "profiles.skip_resolution(target_profile)"),
             ("portability.validate()", "portability.skip_validation()"),
             ("canonical_sha256(input)", "stale_semantic_fingerprint"),
             ("target.reference()", "stale_target_reference"),

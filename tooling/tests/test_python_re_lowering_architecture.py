@@ -125,6 +125,11 @@ class PythonReLoweringBoundaryTests(unittest.TestCase):
     def test_entrypoint_and_exact_correspondence_are_required(self) -> None:
         for existing, replacement in (
             ("pub fn lower_python_re(", "fn lower_python_re("),
+            (
+                "pub fn lower_python_re_for_reference(",
+                "fn lower_python_re_for_reference(",
+            ),
+            ("profiles.resolve(target_profile)", "profiles.skip_resolution(target_profile)"),
             ("portability.validate()", "portability.skip_validation()"),
             ("canonical_sha256(input)", "stale_semantic_fingerprint"),
             ("target.reference()", "stale_target_reference"),

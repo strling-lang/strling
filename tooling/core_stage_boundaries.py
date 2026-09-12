@@ -939,6 +939,8 @@ def pcre2_target_lowering_boundary_violation(
             return f"PCRE2 target lowering must consume {description}"
 
     correspondence = (
+        "pub fn lower_pcre2_for_reference(",
+        "profiles.resolve(target_profile)",
         "portability.validate()",
         "canonical_sha256(input)",
         "target.reference()",
@@ -1060,6 +1062,8 @@ def ecmascript_target_lowering_boundary_violation(
             return f"ECMAScript target lowering must consume {description}"
 
     correspondence = (
+        "pub fn lower_ecmascript_for_reference(",
+        "profiles.resolve(target_profile)",
         "portability.validate()",
         "canonical_sha256(input)",
         "target.reference()",
@@ -1188,6 +1192,8 @@ def python_re_target_lowering_boundary_violation(
             return f"Python re target lowering must consume {description}"
 
     correspondence = (
+        "pub fn lower_python_re_for_reference(",
+        "profiles.resolve(target_profile)",
         "portability.validate()",
         "canonical_sha256(input)",
         "target.reference()",

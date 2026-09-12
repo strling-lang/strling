@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+import json
 from collections.abc import Iterator
 from contextlib import contextmanager
 from hashlib import sha256
@@ -15,6 +16,7 @@ from tooling.production_certification import (
     fingerprint,
     load_capacity_contract,
     materialize_governed_production_inputs,
+    preserve_execution_evidence,
     parse_args,
     profile_summary,
     product_summary,
@@ -222,6 +224,107 @@ class ProductionCertificationTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, "hash changed"):
                 materialize_governed_production_inputs(
                     authority_root=authority, worktree=worktree
+                )
+
+    def _execution_fixture(self, root: Path) -> tuple[Path, Path, Path]:
+        worktree = root / "source"
+        output = root / "retained"
+        output.mkdir()
+        invocation = "a" * 32
+        atomic = worktree / "target/certification-operation-results" / invocation
+        engine = worktree / "artifacts/adversarial-semantic-runtime"
+        atomic.mkdir(parents=True)
+        engine.mkdir(parents=True)
+        (atomic / "result.json").write_bytes(b'{"original":"result"}\n')
+        (atomic / "stderr.txt").write_bytes(b"")
+        (engine / "evidence.json").write_bytes(b'{"original":"engine"}\n')
+        profile = root / "profile.json"
+        profile.write_text(
+            json.dumps(
+                {
+                    "deterministic_evidence": {
+                        "operations": [
+                            {
+                                "operation_id": "performance_resource_full_certification",
+                                "execution_integrity": {
+                                    "artifact_directory": str(atomic),
+                                    "invocation_id": invocation,
+                                },
+                            },
+                            {
+                                "operation_id": "adversarial_real_engine_equivalence",
+                                "structured_evidence": {
+                                    "checks": [
+                                        {
+                                            "evidence": {
+                                                "evidence_path": "artifacts/adversarial-semantic-runtime/evidence.json",
+                                            }
+                                        }
+                                    ]
+                                },
+                            },
+                        ]
+                    }
+                }
+            )
+        )
+        return worktree, output, profile
+
+    def test_execution_objects_are_preserved_byte_for_byte_including_empty_streams(
+        self,
+    ) -> None:
+        with self.temporary_directory() as root:
+            worktree, output, profile = self._execution_fixture(root)
+            manifest = preserve_execution_evidence(
+                worktree=worktree, output_dir=output, profile_artifact=profile
+            )
+            self.assertEqual(3, len(manifest))
+            self.assertEqual(
+                b'{"original":"engine"}\n',
+                (output / "adversarial-semantic-runtime/evidence.json").read_bytes(),
+            )
+            empty = next(
+                item for item in manifest if item["path"].endswith("stderr.txt")
+            )
+            self.assertEqual(0, empty["size_bytes"])
+            self.assertEqual(sha256(b"").hexdigest(), empty["sha256"])
+            self.assertTrue(
+                (
+                    worktree / "artifacts/adversarial-semantic-runtime/evidence.json"
+                ).is_file()
+            )
+
+    def test_execution_preservation_rejects_reused_destination(self) -> None:
+        with self.temporary_directory() as root:
+            worktree, output, profile = self._execution_fixture(root)
+            preserve_execution_evidence(
+                worktree=worktree, output_dir=output, profile_artifact=profile
+            )
+            with self.assertRaisesRegex(RuntimeError, "unsafe or reused"):
+                preserve_execution_evidence(
+                    worktree=worktree, output_dir=output, profile_artifact=profile
+                )
+
+    def test_execution_preservation_rejects_unregistered_source_directory(self) -> None:
+        with self.temporary_directory() as root:
+            worktree, output, profile = self._execution_fixture(root)
+            artifact = json.loads(profile.read_text())
+            artifact["deterministic_evidence"]["operations"][0]["execution_integrity"][
+                "artifact_directory"
+            ] = str(root)
+            profile.write_text(json.dumps(artifact))
+            with self.assertRaisesRegex(RuntimeError, "invalid invocation directory"):
+                preserve_execution_evidence(
+                    worktree=worktree, output_dir=output, profile_artifact=profile
+                )
+
+    def test_execution_preservation_rejects_missing_engine_objects(self) -> None:
+        with self.temporary_directory() as root:
+            worktree, output, profile = self._execution_fixture(root)
+            (worktree / "artifacts/adversarial-semantic-runtime/evidence.json").unlink()
+            with self.assertRaisesRegex(RuntimeError, "empty or contains"):
+                preserve_execution_evidence(
+                    worktree=worktree, output_dir=output, profile_artifact=profile
                 )
 
     @patch.dict("os.environ", {}, clear=True)

@@ -446,6 +446,93 @@ def materialize_governed_production_inputs(
     ]
 
 
+def preserve_execution_evidence(
+    *, worktree: Path, output_dir: Path, profile_artifact: Path
+) -> list[dict[str, Any]]:
+    """Retain original producer objects before removing the no-reuse worktree."""
+    profile = load_json(profile_artifact)
+    operations = profile["deterministic_evidence"]["operations"]
+    sources: list[tuple[Path, Path]] = []
+    for operation in operations:
+        integrity = operation.get("execution_integrity")
+        if isinstance(integrity, dict):
+            source = Path(integrity["artifact_directory"])
+            invocation = integrity["invocation_id"]
+            if (
+                not isinstance(invocation, str)
+                or len(invocation) != 32
+                or any(character not in "0123456789abcdef" for character in invocation)
+                or source.resolve()
+                != (
+                    worktree / "target/certification-operation-results" / invocation
+                ).resolve()
+            ):
+                raise ProductionCertificationError(
+                    "producer evidence has an invalid invocation directory"
+                )
+            sources.append(
+                (source, Path("operation-results") / integrity["invocation_id"])
+            )
+        if operation["operation_id"] == "adversarial_real_engine_equivalence":
+            evidence_path = operation["structured_evidence"]["checks"][0]["evidence"][
+                "evidence_path"
+            ]
+            if not isinstance(evidence_path, str):
+                raise ProductionCertificationError(
+                    "real-engine execution has no durable evidence path"
+                )
+            source = Path(evidence_path)
+            source = source if source.is_absolute() else worktree / source
+            if (
+                source.resolve()
+                != (
+                    worktree / "artifacts/adversarial-semantic-runtime/evidence.json"
+                ).resolve()
+            ):
+                raise ProductionCertificationError(
+                    "real-engine evidence has an unregistered path"
+                )
+            sources.append((source.parent, Path("adversarial-semantic-runtime")))
+    preserved = []
+    boundary = worktree.resolve()
+    output_boundary = output_dir.resolve()
+    for source, relative in sources:
+        source = source.resolve()
+        destination = output_dir / relative
+        if not source.is_relative_to(boundary) or not source.is_dir():
+            raise ProductionCertificationError(
+                f"producer evidence escapes or is missing from worktree: {source}"
+            )
+        if (
+            not destination.resolve().is_relative_to(output_boundary)
+            or destination.exists()
+        ):
+            raise ProductionCertificationError(
+                f"producer evidence destination is unsafe or reused: {destination}"
+            )
+        files = sorted(path for path in source.rglob("*") if path.is_file())
+        if not files or any(
+            path.is_symlink() or not path.resolve().is_relative_to(source)
+            for path in files
+        ):
+            raise ProductionCertificationError(
+                f"producer evidence is empty or contains an escaping link: {source}"
+            )
+        for path in files:
+            target = destination / path.relative_to(source)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path, target)
+            identity = artifact_identity(path)
+            if artifact_identity(target) != identity:
+                raise ProductionCertificationError(
+                    f"preserved producer evidence hash mismatch: {path}"
+                )
+            preserved.append(
+                {"path": target.relative_to(output_dir).as_posix(), **identity}
+            )
+    return sorted(preserved, key=lambda item: item["path"])
+
+
 def load_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, dict):
@@ -788,6 +875,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             cwd=worktree,
             contract=capacity_contract,
             env=certification_environment,
+        )
+        environment["preserved_execution_evidence"] = preserve_execution_evidence(
+            worktree=worktree, output_dir=output_dir, profile_artifact=profile_artifact
         )
         final_source = repository_identity(worktree)
         final_source_status = final_source["status_porcelain"]

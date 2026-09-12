@@ -241,8 +241,15 @@ unchanged; it grants no publication authority. P20 owns package derivation,
 publication authorization, registry actions, and public verification.
 
 For untrusted pull requests, `pull_request_target` executes only the verifier and
-trust policy from the trusted base revision. The candidate checkout is treated
-as data. Full, Release, performance sampling, real-engine execution, and the
+trust policy from the exact trusted base revision, which must contain the
+reviewed verifier. Push, dispatch, and delivery verification use the same
+immutable reviewed verifier commit. Each path uses a separate candidate
+checkout as data and isolated Python imports from the trusted checkout.
+A base without the verifier requires separately authorized integration: the
+existing workflow's guard rejects it, or no integrity run is available when
+the workflow itself is absent. Candidate trust policy is never a bootstrap
+fallback.
+Full, Release, performance sampling, real-engine execution, and the
 multi-language certification matrix are not recomputed in cloud CI. A later
 evidence-only closure commit is accepted only when every changed path matches
 the trust policy; any semantic, compiler, profile, tooling, or workflow change

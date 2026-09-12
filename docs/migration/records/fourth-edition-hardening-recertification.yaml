@@ -335,10 +335,18 @@ checkpoints:
           - check: Complete signed-bundle validation
             result: passed
             details: All 69 integrated attestation and production tests pass. The verifier reconstructs the complete ordered operation and governed 54-coordinate performance denominator, 3,204 sample ledger, raw atomic streams and engine observations, product projection, independent no-reuse Release receipt, and every security aggregate. It rejects missing or contradictory evidence, reused performance invocation IDs, altered batch normalization or conditioning, broadened/expired waiver authority, and candidate import traps. Trusted schemas and validator code consume authenticated candidate fixture/profile data; the sole certifier, trust policy, closure allowlist, waiver record, calibrated workload, and acceptance thresholds remain unchanged. Isolated direct-script contract verification passes.
+          - check: Reviewed immutable verifier and event isolation
+            result: passed
+            details: Verifier V is f47bd09254c9a08e5578b549e45f41ad7278e1c9. Cloud push/dispatch and delivery pin V; PR verification uses the exact base SHA with an ancestry guard requiring V. All candidates are separate data checkouts, and python -I imports only trusted helpers. Explicit Bash preserves verifier failures through tee. All 46 governance unit tests pass, including event-reference, repository, credential, matching-pin, bootstrap, candidate-code, and pipeline-failure mutations. The 69-test summary is retained at .cert/h08/trust-verifier-tests/final-69-tests.json with SHA-256 d88f0bc64c284271a027cb3176ba3f955d6f6cdee7f51948cf1e6ff283612246. Main 664d08de lacks the workflow/verifier/trust registry, so no PR-base integrity run exists there yet; pinned dev-push verification does not authorize main integration.
+          - check: Final identity-generation stability
+            result: passed
+            details: Registered deep-quality/performance identity refresh and check commands, profile-source definition generation/check, and policy-selected repository formatting pass with identical before/after hashes on the second pass. The unchanged active measured baseline remains d1569ecb34bd4e454cd3e83e7b5db222c29cf995088b25b5004f58cbf819c467. The adversarial generator's excluded exact serialization is retained, with unchanged deterministic zero-finding result 336bd1a5f568bc132e04bb38d9d8043d16fceba7c70c29d89a095c32c8f0f3fb. None of these checks executes Full or consumes performance samples.
           - check: Corrected candidate certification
             result: not_run
             details: Current-source focused checks, stable generation, clean-source Local/Pull Request, the single authorized Full, independent same-SHA Release, signing, and hosted integrity verification remain required. P20-T02 stays paused.
 commits:
+    - sha: f47bd09254c9a08e5578b549e45f41ad7278e1c9
+      subject: "fix(certification): reject incomplete signed evidence"
     - sha: 7215cfa118fda5a562b888a635f5ee5011d39bd9
       subject: "fix(certification): retain independent producer evidence"
     - sha: fe17793b3864ac7bbade048d299c57f95b002244

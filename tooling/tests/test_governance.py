@@ -242,8 +242,8 @@ class ArchitectureValidationTests(unittest.TestCase):
         self,
         *,
         ci_invocation: str = './strling profile "$PROFILE" --artifact "$ARTIFACT_PATH"',
-        cd_invocation: str = "./strling certification verify --bundle tests/certification/hardened-core/1.0/current --json",
-        integrity_invocation: str = "python trusted/tooling/local_certification_attestation.py --repository-root candidate --trust-root trusted verify --bundle candidate/tests/certification/hardened-core/1.0/current --json",
+        cd_invocation: str = "python -I trusted/tooling/local_certification_attestation.py --repository-root candidate --trust-root trusted verify --bundle candidate/tests/certification/hardened-core/1.0/current --json",
+        integrity_invocation: str = "python -I trusted/tooling/local_certification_attestation.py --repository-root candidate --trust-root trusted verify --bundle candidate/tests/certification/hardened-core/1.0/current --json",
         upload_action: str = "actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
         upload_non_authoritative: bool = True,
     ) -> None:
@@ -252,6 +252,25 @@ class ArchitectureValidationTests(unittest.TestCase):
         continue_line = (
             "        continue-on-error: true\n" if upload_non_authoritative else ""
         )
+        verifier_pin = "a" * 40
+
+        def checkout(path: str, reference: str, repository: str | None = None) -> str:
+            name = (
+                "trusted verifier"
+                if path == "trusted"
+                else "candidate evidence as data"
+            )
+            return (
+                f"      - name: Checkout {name}\n"
+                "        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09\n"
+                "        with:\n"
+                "          persist-credentials: false\n"
+                "          fetch-depth: 0\n"
+                f"          path: {path}\n"
+                f"          ref: {reference}\n"
+                + (f"          repository: {repository}\n" if repository else "")
+            )
+
         (workflows / "ci.yml").write_text(
             "name: CI\n"
             "on:\n  workflow_dispatch:\n"
@@ -274,8 +293,14 @@ class ArchitectureValidationTests(unittest.TestCase):
             "jobs:\n"
             "  release-certification:\n"
             "    steps:\n"
-            "      - run: |\n"
+            + checkout("trusted", verifier_pin)
+            + checkout(
+                "candidate",
+                "${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}",
+            )
+            + "      - run: |\n"
             f"          {cd_invocation}\n"
+            "        shell: bash\n"
             "      - if: ${{ always() }}\n"
             f"{continue_line}"
             f"        uses: {upload_action}\n"
@@ -289,14 +314,23 @@ class ArchitectureValidationTests(unittest.TestCase):
             "name: Integrity\n"
             "on:\n  pull_request_target:\n"
             "jobs:\n"
-            "  verify:\n"
+            "  verify-local-certification:\n"
             "    steps:\n"
-            "      - name: Checkout trusted verifier\n"
-            "        run: echo trusted\n"
-            "      - name: Checkout candidate evidence as data\n"
-            "        run: echo candidate\n"
-            "      - run: |\n"
+            + checkout(
+                "trusted",
+                "${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || '"
+                + verifier_pin
+                + "' }}",
+            )
+            + checkout(
+                "candidate",
+                "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}",
+                "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}",
+            )
+            + "      - run: |\n"
+            f"          git -C trusted merge-base --is-ancestor {verifier_pin} HEAD || exit 1\n"
             f"          {integrity_invocation}\n"
+            "        shell: bash\n"
             "      - if: ${{ always() }}\n"
             f"{continue_line}"
             f"        uses: {upload_action}\n"
@@ -323,6 +357,72 @@ class ArchitectureValidationTests(unittest.TestCase):
     def test_canonical_ci_profile_routing_passes(self) -> None:
         self.write_profile_workflows()
         self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
+
+    def test_ci_profile_routing_rejects_event_trust_drift(self) -> None:
+        cases = (
+            ("certification-integrity.yml", "base.sha", "head.sha", "base SHA"),
+            (
+                "certification-integrity.yml",
+                "|| '" + "a" * 40 + "'",
+                "|| github.sha",
+                "pin the verifier",
+            ),
+            ("cd.yml", "a" * 40, "dev", "immutable trusted verifier"),
+            ("cd.yml", "a" * 40, "b" * 40, "same reviewed verifier revision"),
+            (
+                "cd.yml",
+                "github.event.workflow_run.head_sha",
+                "github.event.workflow_run.head_branch",
+                "exact event source SHA",
+            ),
+            (
+                "certification-integrity.yml",
+                "github.event.pull_request.head.repo.full_name",
+                "github.event.pull_request.base.repo.full_name",
+                "event source",
+            ),
+            (
+                "cd.yml",
+                "persist-credentials: false",
+                "persist-credentials: true",
+                "without credentials",
+            ),
+            (
+                "cd.yml",
+                "python -I trusted/",
+                "python trusted/",
+                "isolated trusted invocation",
+            ),
+            (
+                "certification-integrity.yml",
+                "merge-base --is-ancestor",
+                "rev-parse",
+                "must contain the approved verifier",
+            ),
+            ("cd.yml", "shell: bash", "shell: sh", "propagate pipeline failure"),
+            (
+                "certification-integrity.yml",
+                "shell: bash",
+                "shell: sh",
+                "propagate pipeline failure",
+            ),
+        )
+        self.write_profile_workflows()
+        for filename, old, new, diagnostic in cases:
+            with self.subTest(filename=filename, old=old, new=new):
+                path = self.root / ".github/workflows" / filename
+                original = path.read_text(encoding="utf-8")
+                self.assertIn(old, original)
+                path.write_text(original.replace(old, new), encoding="utf-8")
+                try:
+                    result = self.evaluate(self.ci_profile_rule())
+                    self.assertEqual("failed", result.status)
+                    self.assertTrue(
+                        any(diagnostic in finding for finding in result.findings),
+                        result.findings,
+                    )
+                finally:
+                    path.write_text(original, encoding="utf-8")
 
     def test_ci_profile_routing_rejects_direct_quality_implementation(self) -> None:
         self.write_profile_workflows(

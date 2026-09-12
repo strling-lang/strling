@@ -43,7 +43,8 @@ source candidate
 Full and no-reuse Release certification are required for a stable candidate.
 They execute once in the authorized qualified local environment and are bound
 to an immutable SHA-256 evidence root signed by the governed local certifier.
-Normal cloud CI runs `./strling certification verify`: it checks the trusted
+Normal cloud CI invokes the certification verifier from a separate trusted
+checkout with isolated Python imports. It checks the trusted
 signature, exact source and profile identities, every evidence hash, producer
 aggregates, runtime declarations, samples, and waivers without repeating Full,
 Release, real-engine execution, or performance sampling. Certification does not
@@ -83,6 +84,16 @@ checked-in bundle; large build trees and disposable execution scratch remain
 outside Git. A failed verification is repaired by deliberately producing and
 signing fresh same-source evidence, never by cloud fallback or accepting a bare
 hash.
+
+Cloud push and dispatch events, and delivery verification, pin the same
+reviewed verifier commit. `pull_request_target` uses the exact base SHA and
+requires that base to contain the reviewed verifier. Candidate source and
+evidence are checked out separately and read only as data. A base that predates
+the verifier requires separately authorized integration. If the integrity
+workflow exists there, its guard rejects that base; if the workflow itself is
+absent, no integrity run is available. Neither case permits candidate tooling
+as a fallback. A valid signature does not authorize that integration or package
+publication.
 
 P20-T02 may build, inspect, and dry-run packages. P20-T04 may prepare and
 certify a candidate. Neither task may use production publication credentials

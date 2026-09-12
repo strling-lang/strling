@@ -10,6 +10,8 @@ import subprocess
 from pathlib import Path
 from typing import Callable, Mapping, Sequence
 
+import yaml
+
 
 Match = Callable[[str, Sequence[str]], bool]
 Finding = tuple[str, str | None]
@@ -1371,6 +1373,125 @@ def artifact_authority_findings(
     return findings
 
 
+def certification_checkout_findings(
+    text: str, relative: str, *, pull_request_base: bool
+) -> tuple[list[Finding], str | None]:
+    """Inspect checkout data rather than accepting trust labels in comments."""
+    findings: list[Finding] = []
+    try:
+        workflow = yaml.safe_load(text)
+        jobs = workflow["jobs"]
+        job_id = (
+            "verify-local-certification"
+            if pull_request_base
+            else "release-certification"
+        )
+        steps = jobs[job_id]["steps"]
+        if not isinstance(steps, list):
+            raise ValueError("verification steps must be a list")
+        checkouts = {}
+        for path in ("trusted", "candidate"):
+            matches = [
+                step
+                for step in steps
+                if isinstance(step, dict)
+                and isinstance(step.get("with"), dict)
+                and step["with"].get("path") == path
+            ]
+            if len(matches) != 1:
+                raise ValueError(f"verification requires exactly one {path} checkout")
+            step = matches[0]
+            if step.get("uses") != (
+                "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09"
+            ):
+                raise ValueError(
+                    f"{path} checkout must use the governed immutable action"
+                )
+            settings = step["with"]
+            if (
+                settings.get("persist-credentials") is not False
+                or settings.get("fetch-depth") != 0
+            ):
+                raise ValueError(
+                    f"{path} checkout must preserve history without credentials"
+                )
+            checkouts[path] = settings
+        trusted = checkouts["trusted"]
+        if "repository" in trusted:
+            raise ValueError("trusted checkout must use the workflow repository")
+        reference = trusted.get("ref")
+        if not isinstance(reference, str):
+            raise ValueError("trusted checkout requires an immutable verifier revision")
+        if pull_request_base:
+            match = re.fullmatch(
+                r"\$\{\{\s*github\.event_name == 'pull_request_target' && "
+                r"github\.event\.pull_request\.base\.sha \|\| '([0-9a-f]{40})'\s*\}\}",
+                reference,
+            )
+            if match is None:
+                raise ValueError(
+                    "PR verification must use base SHA; other events must pin the verifier"
+                )
+            pin = match.group(1)
+            expected_candidate = (
+                "${{ github.event_name == 'pull_request_target' && "
+                "github.event.pull_request.head.sha || github.sha }}"
+            )
+            expected_repository = (
+                "${{ github.event_name == 'pull_request_target' && "
+                "github.event.pull_request.head.repo.full_name || github.repository }}"
+            )
+            if checkouts["candidate"].get("repository") != expected_repository:
+                raise ValueError("candidate repository must follow the event source")
+        else:
+            if re.fullmatch(r"[0-9a-f]{40}", reference) is None:
+                raise ValueError("delivery must pin an immutable trusted verifier")
+            pin = reference
+            expected_candidate = (
+                "${{ github.event_name == 'workflow_dispatch' && "
+                "github.sha || github.event.workflow_run.head_sha }}"
+            )
+            if "repository" in checkouts["candidate"]:
+                raise ValueError("delivery candidate must use the workflow repository")
+        if checkouts["candidate"].get("ref") != expected_candidate:
+            raise ValueError("candidate checkout must use the exact event source SHA")
+        verification_steps = [
+            step
+            for step in steps
+            if isinstance(step, dict)
+            and "trusted/tooling/local_certification_attestation.py"
+            in str(step.get("run", ""))
+        ]
+        if len(verification_steps) != 1 or verification_steps[0].get("shell") != "bash":
+            raise ValueError(
+                "one verifier step must use explicit bash to propagate pipeline failure"
+            )
+        runs = "\n".join(
+            str(step.get("run", "")) for step in steps if isinstance(step, dict)
+        )
+        if pull_request_base and (
+            f"git -C trusted merge-base --is-ancestor {pin} HEAD" not in runs
+            or "exit 1" not in runs
+        ):
+            raise ValueError(
+                "trusted base must contain the approved verifier before execution"
+            )
+        if re.search(r"candidate/(?:strling|tooling/[^ ]+\.py)\s", runs):
+            raise ValueError("verification must not execute candidate code")
+        for required in (
+            "python -I trusted/tooling/local_certification_attestation.py",
+            "--repository-root candidate",
+            "--trust-root trusted",
+            "--bundle candidate/tests/certification/hardened-core/1.0/current",
+        ):
+            if required not in runs:
+                raise ValueError(f"missing isolated trusted invocation: {required}")
+        return findings, pin
+    except (KeyError, TypeError, ValueError, yaml.YAMLError) as error:
+        findings.append((f"{relative}: {error}", relative))
+        return findings, None
+
+
 def ci_profile_routing_findings(
     root: Path, configuration: Mapping[str, object]
 ) -> list[Finding]:
@@ -1452,7 +1573,7 @@ def ci_profile_routing_findings(
         )
 
     cd_text = texts.get(".github/workflows/cd.yml", "")
-    if "./strling certification verify" not in cd_text:
+    if "trusted/tooling/local_certification_attestation.py" not in cd_text:
         findings.append(
             (
                 ".github/workflows/cd.yml: delivery must verify authoritative local certification",
@@ -1468,6 +1589,21 @@ def ci_profile_routing_findings(
         )
 
     integrity_text = texts.get(".github/workflows/certification-integrity.yml", "")
+    pins = []
+    for relative, text, pull_request_base in (
+        (".github/workflows/cd.yml", cd_text, False),
+        (".github/workflows/certification-integrity.yml", integrity_text, True),
+    ):
+        checkout_findings, pin = certification_checkout_findings(
+            text, relative, pull_request_base=pull_request_base
+        )
+        findings.extend(checkout_findings)
+        if pin is not None:
+            pins.append(pin)
+    if len(pins) == 2 and pins[0] != pins[1]:
+        findings.append(
+            ("cloud and delivery must pin the same reviewed verifier revision", None)
+        )
     for fragment in (
         "pull_request_target:",
         "Checkout trusted verifier",

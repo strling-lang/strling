@@ -1,6 +1,7 @@
 # Cheap verification of trusted, authoritative local certification evidence.
 # pull_request_target deliberately executes only the verifier and trust policy
-# from the trusted base revision; candidate code is treated strictly as data.
+# from the trusted base revision. Other events use an immutable reviewed verifier;
+# candidate code is treated strictly as data in every event.
 name: STRling certification integrity
 
 on:
@@ -25,8 +26,15 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || github.sha }}
+                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || 'f47bd09254c9a08e5578b549e45f41ad7278e1c9' }}
                   path: trusted
+
+            - name: Require approved verifier in the trusted base
+              run: |
+                  if ! git -C trusted merge-base --is-ancestor f47bd09254c9a08e5578b549e45f41ad7278e1c9 HEAD; then
+                    echo "Trusted base lacks the reviewed verifier. Owner-authorized base integration is required."
+                    exit 1
+                  fi
 
             - name: Checkout candidate evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -43,13 +51,14 @@ jobs:
                   python-version: "3.12"
 
             - name: Install schema validator
-              run: python -m pip install jsonschema==4.10.3
+              run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
 
             - name: Verify source, trust, signature, and evidence root
+              shell: bash
               run: |
                   mkdir -p artifacts
                   start_seconds="$(date +%s)"
-                  python trusted/tooling/local_certification_attestation.py \
+                  python -I trusted/tooling/local_certification_attestation.py \
                     --repository-root candidate \
                     --trust-root trusted \
                     verify \

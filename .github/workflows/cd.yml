@@ -30,12 +30,21 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
         steps:
+            - name: Checkout trusted verifier
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  ref: f47bd09254c9a08e5578b549e45f41ad7278e1c9
+                  path: trusted
+
             - name: Checkout release candidate
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
               with:
                   persist-credentials: false
                   ref: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
                   fetch-depth: 0
+                  path: candidate
 
             - name: Install Python
               uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
@@ -43,13 +52,17 @@ jobs:
                   python-version: "3.12"
 
             - name: Install verification dependency
-              run: python -m pip install jsonschema==4.10.3
+              run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
 
             - name: Verify signed local Release evidence
+              shell: bash
               run: |
                   mkdir -p artifacts
-                  ./strling certification verify \
-                    --bundle tests/certification/hardened-core/1.0/current \
+                  python -I trusted/tooling/local_certification_attestation.py \
+                    --repository-root candidate \
+                    --trust-root trusted \
+                    verify \
+                    --bundle candidate/tests/certification/hardened-core/1.0/current \
                     --json | tee artifacts/cloud-certification-verification.json
 
             - name: Retain release certification evidence

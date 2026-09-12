@@ -168,4 +168,62 @@ hardened source baseline is declared.
 No package is published, no release tag or GitHub Release is created, `main`
 is unchanged, and P20-T02 does not begin in this task.
 
+## Resumed correction and verification design
+
+Execution resumed at `47f68db6fd21b4fa7928a85e2b6fc3a5ff2a5227` on `dev`,
+preserving the eleven reported local changes. The saved Local result has 34
+passes, two formatter failures, and one incomplete performance-resource
+source-identity result. The source changes are formatting-only; structural
+comparison of the six JSON changes finds only source hashes and their dependent
+fingerprints. Baseline measurements, limits, sampling rules, statistics, and
+the accepted waiver are unchanged. The original `dedf9e09` rollover fingerprint
+and later identity-only projections are distinct recorded identities of the
+same measurements, not new calibrations. Commit `232c48d6` records this
+mechanical correction. All 84 focused architecture and evidence-contract tests
+pass. The complete identity-generation and policy-formatting sequence is
+byte-stable on a second pass; deep-quality check and performance-resource Local
+pass. The resulting active projection is
+`d1569ecb34bd4e454cd3e83e7b5db222c29cf995088b25b5004f58cbf819c467`.
+
+Both sampled failures remain consumed: `5f38bf1a` authenticated 192 samples,
+and `f3bb5ffb` authenticated 385. Recovered original output identifies the
+earlier LSP failure as six quantifier-matrix subprocess timeouts at the existing
+five-second debug-compiler limit, with 566 tests passing. The unchanged registered
+suite subsequently passed all 572 tests in 174.99 seconds; the later `f3bb5ffb`
+Full also passed `test@lsp`. This disposition is independent of the PCRE2
+lowering correction.
+
+A new bounded adversarial probe exposes an incomplete-bundle acceptance gap in
+the existing attestation verifier. A trusted signed fixture can omit required
+profile operations, authenticate only one performance sample, reuse performance
+invocation identities between profiles, and omit production-launcher evidence while still
+receiving `CLOUD_VERIFIED`. Existing passing tests do not establish rejection
+of these cases. The next implementation checkpoint must close these gaps using
+the existing operation, performance, structured-evidence, and no-reuse launcher
+contracts before freezing or sampling another candidate. Trust-root identity,
+the narrow closure allowlist, waiver scope, and acceptance thresholds remain
+unchanged. Event-specific trusted-verifier selection is also under review;
+historical general descriptions do not establish equivalent isolation for every
+workflow event.
+
+Calibration-source comparison also supersedes the earlier claim that profile
+validation was an established untimed precondition. `fafd1879` moved initial
+capability/planning validation and hashing out of the timed section, and
+`335fffe6` substituted prepared-reference lowering for the calibrated raw-profile
+entrypoints. The runner must return to the original measurement boundary.
+The useful product APIs remain available, but their prepared-input measurements
+cannot replace the calibrated workload or establish normal compiler speedups.
+
+The bounded product correction targets redundant canonical-JSON map rebuilding:
+use the JSON library's recursive sorting operation, retaining exact digest bytes
+and correctness under both sorted-map and insertion-order representations.
+Independent digest cases and governed target-profile fingerprints must pass
+before source evidence is refreshed. No performance result is inferred from
+that optimization; the unchanged benchmark still requires authorized sampling.
+
+No new sampled attempt, Release, attestation, cloud acceptance, or publication
+is claimed by this reconstruction. `main` remains
+`664d08de53565929c8f62379b006cd29f93b239f`. H08 is in progress and P20-T02
+remains paused.
+
 **BLOCKED — NO-GO FOR P20-T02.**

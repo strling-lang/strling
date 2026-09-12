@@ -20,6 +20,7 @@ scope:
         - core/src/python_re_lowering.rs
         - core/src/target/profile.rs
         - core/src/target_lowering.rs
+        - core/src/validation/mod.rs
         - core/tests/ecmascript_lowering.rs
         - core/tests/pcre2_lowering.rs
         - core/tests/portability_planning.rs
@@ -70,6 +71,7 @@ scope:
         - tooling/tests/test_ecmascript_lowering_architecture.py
         - tooling/tests/test_pcre2_lowering_architecture.py
         - tooling/tests/test_profile_source_identity.py
+        - tooling/tests/test_performance_resource_certification.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_quality.py
         - tooling/tests/test_python_re_lowering_architecture.py
@@ -279,7 +281,39 @@ checkpoints:
           - check: Required resolution
             result: not_run
             details: Complete focused and deterministic verification, commit a substantive corrected source SHA, run one canonical Full under the unchanged 26200.9445 authority, then run same-SHA Release only after terminal green Full.
+    - name: Reconciled correction and adversarial verification design
+      status: in_progress
+      evidence:
+          - check: Recovered execution boundary
+            result: passed
+            details: Execution resumed on dev at 47f68db6fd21b4fa7928a85e2b6fc3a5ff2a5227 with an empty index and the eleven reported formatting/source-identity changes preserved. Local main remains 664d08de53565929c8f62379b006cd29f93b239f and origin/dev initially remains aabfbc20c8c03a94197ce9d25f1763d7a05a6afa. No branch reset, merge, publication, or sampled retry occurred.
+          - check: Mechanical correction scope
+            result: passed
+            details: The saved Local artifact records 34 passed, format_check@repository and format_check@core failed, and performance_resource_local_certification@repository incomplete. The source diff is canonical formatting. Structural comparison of the six changed JSON documents finds only test-source hashes and dependent manifest, inventory, baseline, and fixture fingerprints; measured baseline data, limits, operation definitions, sampling/statistical rules, and waiver records are identical.
+          - check: Earlier LSP failure disposition
+            result: passed
+            details: Recovered original Full output for 5f38bf1a identifies six quantifier-matrix cases exceeding the existing 5-second canonical debug-compiler subprocess timeout, with 566 tests passing. The same registered suite subsequently passed 572 tests in 174.99 seconds, and test@lsp passed in the later f3bb5ffb Full. These are separate from the PCRE2 latency correction; neither failed Full is retried or promoted.
+          - check: Mechanical correction proof
+            result: passed
+            details: Commit 232c48d6 contains only the eleven reviewed source-formatting and dependent identity corrections. All 84 focused lowering-architecture, deep-quality, and performance-resource contract tests pass. Registered source-identity producers followed by policy-selected formatting are byte-stable on a second pass; deep-quality check and performance-resource Local pass. Active baseline projection d1569ecb34bd4e454cd3e83e7b5db222c29cf995088b25b5004f58cbf819c467 differs from the original rollover only in manifest_fingerprint and baseline_fingerprint. It is not a new calibration or a Full candidate qualification.
+          - check: Signed incomplete-bundle regression
+            result: failed
+            details: A bounded signed-fixture probe demonstrates CLOUD_VERIFIED despite omitting one of three declared profile operations, authenticating only one performance sample, reusing performance invocation identities between Full and Release, and omitting independent production-launcher evidence. The existing thirty attestation/launcher tests pass and therefore do not establish these missing guarantees. Deterministic real-engine result identities may legitimately match across independent runs and are not invocation identities.
+          - check: Controlled verification design
+            result: passed
+            details: Before the next candidate freeze, strengthen the existing attestation producer and verifier against the canonical profile operation denominator, governed performance coordinates and sample accounting, required durable producer objects, independent Full/Release invocation identities, and no-reuse production-launcher evidence. Add focused rejection tests and retain trusted certifier, trust-root identity, closure allowlist, waiver scope, performance policy, and semantic contracts unchanged. Recheck event-specific verifier selection and record any genuinely missing owner authority separately.
+          - check: Calibrated workload reconstruction
+            result: failed
+            details: Comparison against calibration source 5f4a8164 shows that fafd1879 moved initial capability/planning profile validation and hashing out of timing, while 335fffe6 changed timed lowering from raw-profile to prepared-reference entrypoints. The recorded precondition claim did not establish prior authority to change that workload. Restore the original raw-profile benchmark calls and preparation/timing boundaries, preserve the useful product APIs, and add a focused boundary regression check. Both earlier sampled failures remain consumed.
+          - check: Product implementation correction design
+            result: passed
+            details: The existing canonical_sha256 helper reconstructs and sorts every serde_json object even though its default map representation is already sorted. Replace that redundant traversal with the installed library's recursive canonical sorting operation, which is a no-op for sorted maps and still sorts nested objects when preserve_order is unified by a consumer. Prove identical independently specified digest bytes, nested ordering, Unicode/escaping, and all governed target-profile fingerprints. Keep serialization, validation, public contracts, dependencies, measurement boundaries, and baseline data unchanged; do not infer a performance pass from this implementation proof.
+          - check: Corrected candidate certification
+            result: not_run
+            details: Current-source focused checks, stable generation, clean-source Local/Pull Request, the single authorized Full, independent same-SHA Release, signing, and hosted integrity verification remain required. P20-T02 stays paused.
 commits:
+    - sha: 232c48d67dc6c604c721c8fa3cdd96c98674c1d1
+      subject: "chore(certification): stabilize formatted source evidence"
     - sha: 9f85a00cd9ed936a4f46ad20d6ff38a681c29b73
       subject: "fix(governance): keep license evidence checks offline"
     - sha: e403531afb3067e420cab31c4353b82524e351b5

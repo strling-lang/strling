@@ -7,6 +7,7 @@ import argparse
 import base64
 import fnmatch
 import hashlib
+import importlib
 import json
 import platform
 import re
@@ -30,7 +31,10 @@ try:
         validate_certification_artifact,
     )
 except ImportError:  # pragma: no cover - direct script execution
-    from certification import (
+    # Isolated Python omits both the script directory and PYTHONPATH. Bootstrap
+    # only this verifier's package; candidate files remain data, never imports.
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from tooling.certification import (
         operation_registry_fingerprint,
         profile_definition_fingerprint,
         profile_registry_fingerprint,
@@ -48,6 +52,16 @@ SUCCESS_STATUSES = {"passed", "waived"}
 SHA1 = re.compile(r"^[0-9a-f]{40}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 ROLE = re.compile(r"^[a-z][a-z0-9-]{1,63}$")
+PERFORMANCE_DIRECTORY = "tests/certification/performance-resource/1.0"
+
+
+def _helper_module(name: str) -> Any:
+    """Import verifier-owned helpers, including when invoked as a script."""
+    if not __package__:
+        trusted_parent = str(Path(__file__).resolve().parents[1])
+        if sys.path[0] != trusted_parent:
+            sys.path.insert(0, trusted_parent)
+    return importlib.import_module(f"tooling.{name}")
 
 
 class AttestationError(ValueError):
@@ -269,17 +283,486 @@ def _nested_status_consistency(artifact: Mapping[str, Any]) -> None:
             )
 
 
+def _validate_atomic_evidence(
+    repository_root: Path,
+    trust_root: Path,
+    source_sha: str,
+    profile: str,
+    operation: Mapping[str, Any],
+    definition: Mapping[str, Any],
+) -> None:
+    transport = _helper_module("structured_operation_execution")
+    integrity = operation.get("execution_integrity")
+    structured = operation.get("structured_evidence")
+    if not isinstance(integrity, dict) or not isinstance(structured, dict):
+        raise AttestationError("atomic producer is missing invocation-bound evidence")
+    reconstructed = {
+        key: value
+        for key, value in integrity.items()
+        if key not in ("artifact_directory", "streams")
+    }
+    reconstructed.update(structured_result=structured, integrity_error=None)
+    _validate_schema(
+        reconstructed,
+        trust_root / "governance/schemas/structured-operation-execution.schema.json",
+    )
+    if reconstructed["artifact_fingerprint"] != transport.document_fingerprint(
+        reconstructed
+    ):
+        raise AttestationError("atomic producer artifact fingerprint mismatch")
+    command = definition["command"]
+    producer_profile = command[command.index("--profile") + 1]
+    expected = {
+        "source_sha": source_sha,
+        "certification_profile": profile,
+        "producer_profile": producer_profile,
+        "producer_id": operation["result_id"],
+        "operation_id": definition["result_operation_id"],
+        "result_contract": definition["result_contract"],
+        "terminal_status": operation["status"],
+        "process_exit_code": 0,
+        "performance_evidence_identity": structured.get("evidence_fingerprint"),
+        "environment_identity": transport.extract_environment_identity(structured),
+    }
+    if any(reconstructed.get(key) != value for key, value in expected.items()):
+        raise AttestationError(
+            "atomic producer source/profile/invocation binding mismatch"
+        )
+    if (
+        structured.get("commit") != source_sha
+        or structured.get("profile") != producer_profile
+        or structured.get("schema_version") != definition["result_contract"]
+    ):
+        raise AttestationError("atomic structured evidence source or profile mismatch")
+    if operation["operation_id"] == "performance_resource_full_certification":
+        _validate_performance_measurements(
+            repository_root, source_sha, structured, integrity
+        )
+
+
+def _validate_security_evidence(
+    structured: Mapping[str, Any], trust_root: Path
+) -> None:
+    security = _helper_module("security")
+    _validate_schema(
+        structured, trust_root / "governance/schemas/security-result.schema.json"
+    )
+    checks = [
+        security.SecurityCheck(
+            **{
+                key: value
+                for key, value in check.items()
+                if key not in ("findings", "finding_codes")
+            },
+            findings=[security.Finding(**finding) for finding in check["findings"]],
+        )
+        for check in structured["checks"]
+    ]
+    rebuilt = security.SecurityOperation(
+        structured["operation_id"], structured["network_mode"], checks
+    ).as_dict()
+    if any(structured[key] != rebuilt[key] for key in ("status", "summary", "checks")):
+        raise AttestationError("security producer aggregate contradicts check evidence")
+
+
+def _validate_performance_measurements(
+    repository_root: Path,
+    source_sha: str,
+    structured: Mapping[str, Any],
+    integrity: Mapping[str, Any],
+) -> None:
+    performance = _helper_module("performance_resource_certification")
+    manifest = _git_json(
+        repository_root, source_sha, f"{PERFORMANCE_DIRECTORY}/manifest.json"
+    )
+    baseline = _git_json(
+        repository_root, source_sha, f"{PERFORMANCE_DIRECTORY}/baseline.json"
+    )
+    fixtures = _git_json(
+        repository_root, source_sha, manifest["fixture_manifest"]["path"]
+    )
+    inventory = _git_json(
+        repository_root, source_sha, manifest["resource_inventory"]["path"]
+    )
+    try:
+        performance.validate_manifest(
+            manifest, root=repository_root, fixtures=fixtures, inventory=inventory
+        )
+        performance.validate_evidence(structured, manifest=manifest)
+        performance.validate_fixture_manifest(fixtures)
+        performance.validate_baseline(baseline, manifest=manifest, fixtures=fixtures)
+    except ValueError as exc:
+        raise AttestationError(f"invalid governed performance evidence: {exc}") from exc
+    if structured.get("evidence_kind") != "live-certification":
+        raise AttestationError("performance evidence is not live certification")
+    checks = structured["checks"]
+    ids = [item["id"] for item in checks]
+    if len(ids) != len(set(ids)) or any(item["status"] != "passed" for item in checks):
+        raise AttestationError("performance checks are duplicated or nonpassing")
+    rows = {item["id"]: item for item in checks}
+    environment = rows.get("environment:fingerprinted-native-x86_64", {}).get(
+        "details", {}
+    )
+    conditioning = rows.get("environment:identical-conditioning", {}).get("details", {})
+    expected_environment = performance.environment_identity_fingerprint(
+        baseline["environment"]
+    )
+    expected_conditioning = performance.conditioning_identity_fingerprint(
+        baseline["conditioning_repetitions"][0]
+    )
+    if (
+        environment.get("baseline_fingerprint") != baseline["environment_fingerprint"]
+        or environment.get("baseline_identity_fingerprint") != expected_environment
+        or environment.get("observed_identity_fingerprint") != expected_environment
+        or environment.get("governed_mismatches") != []
+        or environment.get("exact_match") is not True
+        or conditioning.get("baseline_conditioning_identity_fingerprint")
+        != expected_conditioning
+        or conditioning.get("conditioning_identity_fingerprint")
+        != expected_conditioning
+        or conditioning.get("identical_conditioning_identity") is not True
+    ):
+        raise AttestationError(
+            "performance environment or conditioning differs from baseline"
+        )
+    keys = performance.performance_measurement_keys(manifest)
+    expected_ids = {
+        f"{operation}/{fixture or 'fixture-free'}" for operation, fixture in keys
+    }
+    measured = {
+        key.removeprefix("measurement:")
+        for key in ids
+        if key.startswith("measurement:")
+    }
+    if measured != expected_ids:
+        raise AttestationError(
+            "performance measurement coordinate denominator mismatch"
+        )
+    ordered = list(keys)
+    performance.random.Random(manifest["measurement_policy"]["order_seed"]).shuffle(
+        ordered
+    )
+    expected_checks = [
+        "environment:single-fixed-logical-cpu",
+        "build:release-performance-artifacts",
+        "build:baseline-artifact-identity",
+        "environment:fingerprinted-native-x86_64",
+        "environment:identical-conditioning",
+    ]
+    for operation_id, fixture_id in ordered:
+        coordinate = f"{operation_id}/{fixture_id or 'fixture-free'}"
+        expected_checks.extend(
+            [
+                f"environment:external-workload-isolation/pre-measurement/{coordinate}",
+                f"environment:measurement-conditioning/{coordinate}",
+                f"measurement:{coordinate}",
+                f"environment:external-workload-isolation/post-measurement/{coordinate}",
+            ]
+        )
+    expected_checks.extend(performance.RESOURCE_OPERATION_IDS)
+    expected_checks.append("controlled:one-unit-relative-regression")
+    if ids != expected_checks:
+        raise AttestationError(
+            "performance successful check denominator or order mismatch"
+        )
+    selected_cpu = manifest["measurement_policy"]["selected_logical_cpu"]
+    if rows["environment:single-fixed-logical-cpu"]["details"] != {
+        "selected_logical_cpu": selected_cpu,
+        "effective_cpu_affinity": [selected_cpu],
+        "effective_cpuset": performance._format_cpu_set([selected_cpu]),
+    }:
+        raise AttestationError("performance CPU placement differs from governed policy")
+
+    def validate_steps(steps: Any, commands: Sequence[Sequence[str]]) -> None:
+        if not isinstance(steps, list) or len(steps) != len(commands):
+            raise AttestationError("performance command step denominator mismatch")
+        for step, command in zip(steps, commands):
+            observed = step.get("command") if isinstance(step, dict) else None
+            if (
+                not isinstance(observed, list)
+                or not all(isinstance(value, str) for value in observed)
+                or not observed
+            ):
+                raise AttestationError("performance command evidence is malformed")
+            observed = [value.replace("\\", "/") for value in observed]
+            executable = PurePosixPath(observed[0]).name
+            if executable not in ("cargo", "cargo.exe"):
+                raise AttestationError(
+                    "performance command does not use governed Cargo"
+                )
+            observed[0] = "cargo"
+            if len(observed) > 1 and observed[1] != "+1.75.0":
+                observed.insert(1, "+1.75.0")
+            expected = list(command)
+            if expected[-1] == performance.RESOURCE_TARGET_DIRECTORY:
+                if not observed[-1].endswith(
+                    "/" + performance.RESOURCE_TARGET_DIRECTORY
+                ):
+                    raise AttestationError(
+                        "performance resource target directory mismatch"
+                    )
+                observed[-1] = performance.RESOURCE_TARGET_DIRECTORY
+            if (
+                observed != expected
+                or step.get("status") != "passed"
+                or type(step.get("return_code")) is not int
+                or step["return_code"] != 0
+                or not isinstance(step.get("output_sha256"), str)
+                or not SHA256.fullmatch(step["output_sha256"])
+            ):
+                raise AttestationError(
+                    "performance command or terminal evidence mismatch"
+                )
+
+    build = rows["build:release-performance-artifacts"]["details"]
+    build_commands = [
+        [
+            "cargo",
+            "+1.75.0",
+            "build",
+            "--release",
+            "--manifest-path",
+            path,
+            "--locked",
+            "--offline",
+            *extra,
+        ]
+        for path, extra in (
+            ("tests/certification/performance-resource/1.0/runner/Cargo.toml", []),
+            ("core/internal/Cargo.toml", ["--bin", "strling-kernel"]),
+            ("bindings/interop/Cargo.toml", ["--lib"]),
+        )
+    ]
+    validate_steps(build.get("steps"), build_commands)
+    observed_artifacts = build.get("artifacts", {})
+    try:
+        performance.validate_definition(
+            observed_artifacts,
+            definition="artifactFingerprints",
+            label="built artifacts",
+        )
+    except ValueError as exc:
+        raise AttestationError(
+            f"invalid performance build artifact identities: {exc}"
+        ) from exc
+    if any(
+        observed_artifacts[name]["path"]
+        != baseline["artifact_fingerprints"][name]["path"]
+        for name in ("runner", "kernel", "interop")
+    ) or build.get("canonical_build_root") != (
+        f"{performance.WINDOWS_CANONICAL_BUILD_DRIVE}/"
+        if baseline["environment"]["os"] == "windows"
+        else None
+    ):
+        raise AttestationError(
+            "performance build artifact path or canonical root mismatch"
+        )
+    exact_artifacts = performance._artifact_fingerprints_match(
+        baseline["artifact_fingerprints"], observed_artifacts
+    )
+    source_changes = None
+    if not exact_artifacts:
+        try:
+            source_changes = performance._artifact_source_changes(
+                baseline_source_commit=baseline["source_commit"],
+                candidate_source_commit=source_sha,
+                root=repository_root,
+            )
+        except ValueError as exc:
+            raise AttestationError(
+                f"invalid performance artifact source binding: {exc}"
+            ) from exc
+    accepted, artifact_identity = performance._artifact_identity_check(
+        baseline["artifact_fingerprints"],
+        observed_artifacts,
+        baseline_source_commit=baseline["source_commit"],
+        candidate_source_commit=source_sha,
+        source_changes=source_changes,
+    )
+    if not accepted or rows["build:baseline-artifact-identity"]["details"] != {
+        "baseline_artifacts": baseline["artifact_fingerprints"],
+        "observed_artifacts": observed_artifacts,
+        "exact_match": exact_artifacts,
+        "candidate_rebind": False,
+        "candidate_identity": artifact_identity,
+    }:
+        raise AttestationError("performance baseline artifact identity mismatch")
+    for operation_id in performance.RESOURCE_OPERATION_IDS:
+        validate_steps(
+            rows[operation_id]["details"].get("steps"),
+            [
+                [*command, "--target-dir", performance.RESOURCE_TARGET_DIRECTORY]
+                for command in performance.RESOURCE_COMMANDS[operation_id]
+            ],
+        )
+    if rows[
+        "controlled:one-unit-relative-regression"
+    ] != performance._controlled_regression_check(baseline):
+        raise AttestationError("performance controlled regression evidence mismatch")
+    operations = {item["id"]: item for item in manifest["operations"]}
+    baselines = {
+        (item["operation_id"], item["fixture_id"]): item
+        for item in baseline["measurements"]
+    }
+    sample_total = 0
+    for key in keys:
+        coordinate = f"{key[0]}/{key[1] or 'fixture-free'}"
+        details = rows[f"measurement:{coordinate}"]["details"]
+        samples = details.get("samples")
+        definition = operations[key[0]]
+        expected_count = performance._expected_repetition_sample_count(
+            definition, manifest
+        )
+        if (
+            not isinstance(samples, list)
+            or len(samples) != expected_count
+            or any(type(value) is not int or value < 0 for value in samples)
+        ):
+            raise AttestationError(
+                f"performance sample denominator mismatch: {coordinate}"
+            )
+        statistics = performance.sample_statistics(samples)
+        source = baselines[key]
+        batch = details.get("batch_iterations")
+        elapsed = details.get("batch_duration_samples")
+        if (
+            type(batch) is not int
+            or batch != source["batch_iterations"]
+            or details.get("unit") != source["unit"]
+        ):
+            raise AttestationError(
+                f"performance governed batch or unit mismatch: {coordinate}"
+            )
+        if definition["measurement_kind"] == "latency":
+            if (
+                not isinstance(elapsed, list)
+                or len(elapsed) != expected_count
+                or any(type(value) is not int or value < 0 for value in elapsed)
+                or samples
+                != [max(1, (value + batch // 2) // batch) for value in elapsed]
+            ):
+                raise AttestationError(
+                    f"performance batch normalization mismatch: {coordinate}"
+                )
+        elif elapsed is not None or batch != 1:
+            raise AttestationError(
+                f"performance non-latency batch mismatch: {coordinate}"
+            )
+        for phase in ("pre-measurement", "post-measurement"):
+            isolation = rows[
+                f"environment:external-workload-isolation/{phase}/{coordinate}"
+            ]["details"]
+            if isolation != {
+                "phase": phase,
+                "observed_workloads": [],
+                "unrelated_heavyweight_workloads_absent": True,
+            }:
+                raise AttestationError(
+                    f"performance workload isolation mismatch: {coordinate}"
+                )
+        conditioned = rows[f"environment:measurement-conditioning/{coordinate}"][
+            "details"
+        ]
+        attempt = conditioned.get("attempt")
+        rejected = conditioned.get("rejected_attempts")
+        if (
+            type(attempt) is not int
+            or not 1 <= attempt <= performance.MEASUREMENT_CONDITIONING_MAX_ATTEMPTS
+            or conditioned.get("maximum_attempts")
+            != performance.MEASUREMENT_CONDITIONING_MAX_ATTEMPTS
+            or conditioned.get("retry_delay_seconds")
+            != performance.MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS
+            or not isinstance(rejected, list)
+            or len(rejected) != attempt - 1
+            or conditioned.get("conditioning_identity_fingerprint")
+            != expected_conditioning
+        ):
+            raise AttestationError(
+                f"performance measurement conditioning mismatch: {coordinate}"
+            )
+        if baseline["environment"]["os"] == "windows":
+            observation = conditioned.get("quiescence_observation", {})
+            try:
+                performance.validate_definition(
+                    observation,
+                    definition="quiescenceObservation",
+                    label="measurement quiescence",
+                )
+            except ValueError as exc:
+                raise AttestationError(
+                    f"invalid performance quiescence evidence: {exc}"
+                ) from exc
+            snapshot = dict(baseline["conditioning_repetitions"][0])
+            snapshot["quiescence_observation"] = observation
+            if performance.performance_windows.evaluate_quiescence(
+                observation
+            ) or conditioned.get(
+                "snapshot_fingerprint"
+            ) != performance.document_fingerprint(snapshot, "snapshot_fingerprint"):
+                raise AttestationError(
+                    f"performance quiescence or snapshot mismatch: {coordinate}"
+                )
+        comparison = performance.compare_hard_metric(
+            baseline_median=source["statistics"]["median"],
+            observed_median=statistics["median"],
+            relative_regression_basis_points=source["budget"][
+                "relative_regression_basis_points"
+            ],
+            absolute_ceiling=source["budget"]["absolute_ceiling"],
+        )
+        if (
+            details.get("statistics") != statistics
+            or details.get("comparison") != comparison
+            or details.get("enforcement") != definition["enforcement"]
+            or details.get("disposition")
+            != (
+                "release-blocking"
+                if definition["enforcement"] == "hard"
+                else "informational-trend"
+            )
+            or details.get("would_exceed_budget")
+            is not (comparison["status"] == "failed")
+            or performance.certification_measurement_status(
+                enforcement=definition["enforcement"],
+                comparison_status=comparison["status"],
+            )
+            != "passed"
+        ):
+            raise AttestationError(
+                f"performance statistics or acceptance mismatch: {coordinate}"
+            )
+        sample_total += expected_count
+    consumption = integrity["sample_consumption"]
+    if (
+        consumption.get("state") != "consumed"
+        or consumption.get("authenticated_sample_count") != sample_total
+        or consumption.get("completed_sample_count") != sample_total
+        or consumption.get("coordinates_started") != len(keys)
+        or consumption.get("coordinates_completed") != len(keys)
+        or set(consumption.get("completed_coordinate_ids", [])) != expected_ids
+        or consumption.get("completed_coordinate_ids")
+        != [
+            f"{operation}/{fixture or 'fixture-free'}" for operation, fixture in ordered
+        ]
+        or consumption.get("current_coordinate_id") is not None
+    ):
+        raise AttestationError(
+            "authenticated performance sample ledger denominator mismatch"
+        )
+
+
 def _profile_claim(
     repository_root: Path,
     artifact_path: Path,
     expected_profile: str,
     source_sha: str,
-    source_profiles: Mapping[str, object],
+    source_toolchain: Mapping[str, Any],
     evidence_path: str,
+    trust_root: Path,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     artifact = _load_json(artifact_path)
     try:
-        validate_certification_artifact(repository_root, artifact)
+        validate_certification_artifact(trust_root, artifact)
     except Exception as exc:
         raise AttestationError(
             f"invalid {expected_profile} profile artifact: {exc}"
@@ -299,7 +782,7 @@ def _profile_claim(
         raise AttestationError(
             f"{expected_profile} profile is not terminally successful"
         )
-    definition = source_profiles.get(expected_profile)
+    definition = source_toolchain["policy"]["profiles"].get(expected_profile)
     if not isinstance(definition, dict):
         raise AttestationError(
             f"source profile definition is missing: {expected_profile}"
@@ -308,6 +791,41 @@ def _profile_claim(
         raise AttestationError(f"{expected_profile} profile version mismatch")
     if profile["definition_fingerprint"] != profile_definition_fingerprint(definition):
         raise AttestationError(f"{expected_profile} profile fingerprint mismatch")
+    expected_ids = _helper_module("product_certification").expected_profile_result_ids(
+        source_toolchain, expected_profile
+    )
+    if (
+        deterministic["component_scope"] != {"mode": "profile-default"}
+        or [item["result_id"] for item in deterministic["operations"]] != expected_ids
+    ):
+        raise AttestationError(
+            f"{expected_profile} evidence does not contain the complete ordered profile"
+        )
+    for operation in deterministic["operations"]:
+        definition = source_toolchain["policy"]["operation_registry"][
+            operation["operation_id"]
+        ]
+        structured = operation.get("structured_evidence")
+        if definition.get("result_contract") is not None and (
+            not isinstance(structured, dict)
+            or structured.get("operation_id") != definition.get("result_operation_id")
+        ):
+            raise AttestationError(
+                f"{operation['result_id']} producer evidence is missing"
+            )
+        if isinstance(structured, dict) and str(
+            structured.get("operation_id", "")
+        ).startswith("security."):
+            _validate_security_evidence(structured, trust_root)
+        if definition.get("result_transport") == "atomic-artifact-v1":
+            _validate_atomic_evidence(
+                repository_root,
+                trust_root,
+                source_sha,
+                expected_profile,
+                operation,
+                definition,
+            )
     claim = {
         "profile": expected_profile,
         "definition_version": profile["definition_version"],
@@ -343,6 +861,97 @@ def _waivers(artifacts: Iterable[Mapping[str, Any]]) -> list[str]:
     return sorted(values)
 
 
+def _validate_waiver_scope(
+    repository_root: Path,
+    trust_root: Path,
+    source_sha: str,
+    artifacts: Sequence[Mapping[str, Any]],
+) -> None:
+    if not _waivers(artifacts):
+        return
+    security = _helper_module("security")
+    policy = _git_json(repository_root, source_sha, "governance/security-policy.json")
+    _validate_schema(
+        policy, trust_root / "governance/schemas/security-policy.schema.json"
+    )
+    trusted_policy = _load_json(trust_root / "governance/security-policy.json")
+    if policy["security_waivers"] != trusted_policy["security_waivers"]:
+        raise AttestationError("security waiver authority differs from trusted policy")
+    for waiver_id in policy["security_waivers"]:
+        relative = f"governance/waivers/{waiver_id}.yaml"
+        record = security.yaml.safe_load(
+            _git_bytes(repository_root, source_sha, relative)
+        )
+        _validate_schema(record, trust_root / "governance/schemas/waiver.schema.json")
+        if record != security.yaml.safe_load(
+            (trust_root / relative).read_text(encoding="utf-8")
+        ):
+            raise AttestationError(
+                "security waiver scope differs from trusted authority"
+            )
+    engine = security.SecurityEngine(trust_root, trusted_policy, tracked_files=[])
+    matched = set()
+    for artifact in artifacts:
+        for operation in artifact["deterministic_evidence"]["operations"]:
+            structured = operation.get("structured_evidence")
+            if (
+                not isinstance(structured, dict)
+                or structured.get("operation_id") != "security.dependency-risk"
+            ):
+                continue
+            checks = []
+            original_assignments = {}
+            for check in structured["checks"]:
+                if check["check_id"] == "security.waivers":
+                    continue
+                findings = []
+                for index, finding in enumerate(check["findings"]):
+                    value = dict(finding)
+                    original_assignments[(check["check_id"], index)] = value.pop(
+                        "waiver_id", None
+                    )
+                    findings.append(security.Finding(**value))
+                checks.append(
+                    security.SecurityCheck(
+                        check["check_id"],
+                        check["category"],
+                        "failed" if check["status"] == "waived" else check["status"],
+                        check["inputs"],
+                        findings=findings,
+                    )
+                )
+            rebuilt = engine._apply_security_waivers(
+                security.SecurityOperation(structured["operation_id"], "local", checks)
+            )
+            if rebuilt.status not in SUCCESS_STATUSES:
+                errors = [
+                    finding.code
+                    for check in rebuilt.checks
+                    for finding in check.findings
+                    if finding.code.startswith("SEC-WAIVER-")
+                ]
+                raise AttestationError(
+                    "governed waiver is expired or out of scope: " + ", ".join(errors)
+                )
+            for check in rebuilt.checks:
+                if check.check_id == "security.waivers":
+                    continue
+                for index, finding in enumerate(check.findings):
+                    if (
+                        finding.waiver_id
+                        != original_assignments[(check.check_id, index)]
+                    ):
+                        raise AttestationError(
+                            "waiver assignment differs from governed scope"
+                        )
+                    if finding.waiver_id:
+                        matched.add(finding.waiver_id)
+    if matched != set(_waivers(artifacts)):
+        raise AttestationError(
+            "waiver inventory has no corresponding scoped security finding"
+        )
+
+
 def _producer_invocations(artifacts: Iterable[Mapping[str, Any]]) -> list[str]:
     values: set[str] = set()
     for artifact in artifacts:
@@ -352,6 +961,10 @@ def _producer_invocations(artifacts: Iterable[Mapping[str, Any]]) -> list[str]:
             if isinstance(integrity, dict):
                 identity = integrity.get("invocation_id")
                 if isinstance(identity, str):
+                    if identity in values:
+                        raise AttestationError(
+                            "Full and Release reuse a producer invocation"
+                        )
                     values.add(identity)
     return sorted(values)
 
@@ -385,6 +998,8 @@ def _require_authenticated_samples(counts: Mapping[str, int]) -> None:
 
 def _real_engine_claim(
     artifacts: Iterable[Mapping[str, Any]],
+    repository_root: Path,
+    source_sha: str,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     counts: dict[str, int] | None = None
     runtime_identities: dict[str, Any] | None = None
@@ -435,6 +1050,18 @@ def _real_engine_claim(
         runtime_identities = identities
         run_ids.add(run_id)
     assert counts is not None and runtime_identities is not None
+    audit = _helper_module("adversarial_semantic_audit")
+    committed = audit.load_evidence(
+        repository_root / "tests/conformance/adversarial/1.0/evidence.json"
+    )
+    corpus = _git_json(
+        repository_root, source_sha, "tests/conformance/adversarial/1.0/corpus.json"
+    )
+    expected_counts = audit.empirical_counts(committed, corpus)
+    if counts != expected_counts or runtime_identities != committed["runtimes"]:
+        raise AttestationError(
+            "real-engine counts or runtimes differ from governed source evidence"
+        )
     required = {
         "semantic_cases",
         "subjects",
@@ -449,6 +1076,357 @@ def _real_engine_claim(
     claim["findings"] = 0
     claim["run_ids"] = sorted(run_ids)
     return claim, runtime_identities
+
+
+def _production_evidence_inputs(release_artifact: Path) -> list[tuple[str, Path]]:
+    production = _helper_module("production_certification")
+    return [
+        (
+            "production-release",
+            release_artifact.parent / production.PRODUCTION_ARTIFACT_NAME,
+        ),
+        ("product-release", release_artifact.parent / production.PRODUCT_ARTIFACT_NAME),
+        (
+            "product-release-report",
+            release_artifact.parent / production.PRODUCT_REPORT_NAME,
+        ),
+    ]
+
+
+def _execution_evidence_inputs(
+    repository_root: Path, full_path: Path, release_path: Path
+) -> list[tuple[str, Path]]:
+    sources = []
+    for profile, path in (("full", full_path), ("release", release_path)):
+        artifact = _load_json(path)
+        for operation in artifact["deterministic_evidence"]["operations"]:
+            integrity = operation.get("execution_integrity")
+            if isinstance(integrity, dict):
+                invocation = integrity["invocation_id"]
+                if not re.fullmatch(r"[0-9a-f]{32}", invocation):
+                    raise AttestationError("producer invocation identity is malformed")
+                source = (
+                    Path(integrity["artifact_directory"])
+                    if profile == "full"
+                    else release_path.parent / "operation-results" / invocation
+                )
+                if (
+                    profile == "full"
+                    and source.resolve()
+                    != (
+                        repository_root
+                        / "target/certification-operation-results"
+                        / invocation
+                    ).resolve()
+                ):
+                    raise AttestationError(
+                        "Full producer evidence is outside its registered invocation directory"
+                    )
+                sources.append((f"execution-{profile}", source))
+            if operation["operation_id"] == "adversarial_real_engine_equivalence":
+                source = (
+                    repository_root / "artifacts/adversarial-semantic-runtime"
+                    if profile == "full"
+                    else release_path.parent / "adversarial-semantic-runtime"
+                )
+                sources.append((f"real-engine-{profile}", source))
+    return sources
+
+
+def _verify_execution_objects(
+    repository_root: Path,
+    source_sha: str,
+    bundle_dir: Path,
+    entries: Sequence[Mapping[str, Any]],
+    artifacts: Sequence[Mapping[str, Any]],
+) -> None:
+    transport = _helper_module("structured_operation_execution")
+    audit = _helper_module("adversarial_semantic_audit")
+    corpus = _git_json(
+        repository_root, source_sha, "tests/conformance/adversarial/1.0/corpus.json"
+    )
+    roles = {item["role"] for item in entries}
+    for artifact in artifacts:
+        profile = artifact["deterministic_evidence"]["profile"]["id"]
+        for role in (f"execution-{profile}", f"real-engine-{profile}"):
+            if role not in roles:
+                raise AttestationError(
+                    f"required execution evidence objects are missing: {role}"
+                )
+        for operation in artifact["deterministic_evidence"]["operations"]:
+            integrity = operation.get("execution_integrity")
+            if isinstance(integrity, dict):
+                directory = bundle_dir / "evidence" / f"execution-{profile}"
+                expected_context = {
+                    key: integrity[key]
+                    for key in (
+                        "schema_version",
+                        "producer_id",
+                        "operation_id",
+                        "source_sha",
+                        "invocation_id",
+                        "certification_profile",
+                        "producer_profile",
+                    )
+                }
+                try:
+                    raw = transport.validate_result_directory(
+                        directory,
+                        expected_context=expected_context,
+                        result_contract=integrity["result_contract"],
+                        actual_exit_code=0,
+                    )
+                except ValueError as exc:
+                    raise AttestationError(
+                        f"invalid preserved execution result: {exc}"
+                    ) from exc
+                reconstructed = {
+                    key: value
+                    for key, value in integrity.items()
+                    if key not in ("artifact_directory", "streams")
+                }
+                reconstructed.update(
+                    structured_result=operation["structured_evidence"],
+                    integrity_error=None,
+                )
+                if raw != reconstructed:
+                    raise AttestationError(
+                        "preserved atomic result differs from profile evidence"
+                    )
+                for stream in ("stdout", "stderr"):
+                    identity = integrity.get("streams", {}).get(stream)
+                    path = directory / f"{stream}.txt"
+                    if (
+                        not isinstance(identity, dict)
+                        or not path.is_file()
+                        or identity
+                        != {
+                            "path": path.name,
+                            "sha256": file_sha256(path),
+                            "bytes": path.stat().st_size,
+                        }
+                    ):
+                        raise AttestationError(
+                            f"preserved execution stream identity mismatch: {stream}"
+                        )
+            if operation["operation_id"] == "adversarial_real_engine_equivalence":
+                path = (
+                    bundle_dir / "evidence" / f"real-engine-{profile}" / "evidence.json"
+                )
+                try:
+                    raw = audit.load_evidence(path)
+                except (OSError, ValueError, ValidationError) as exc:
+                    raise AttestationError(
+                        f"invalid preserved real-engine objects: {exc}"
+                    ) from exc
+                evidence = operation["structured_evidence"]["checks"][0]["evidence"]
+                if (
+                    raw["result_sha256"]
+                    != audit.DIGEST(
+                        {
+                            key: value
+                            for key, value in raw.items()
+                            if key != "result_sha256"
+                        }
+                    )
+                    or raw["source_sha"] != source_sha
+                    or evidence.get("source_sha") != source_sha
+                    or evidence.get("run_id") != raw["run_id"]
+                    or raw["corpus_sha256"] != audit.DIGEST(corpus)
+                    or raw["run_id"]
+                    != audit.DIGEST(
+                        {"corpus": audit.DIGEST(corpus), "rows": raw["rows"]}
+                    )
+                    or audit.empirical_counts(raw, corpus) != evidence["counts"]
+                    or raw["runtimes"] != evidence["runtime_identities"]
+                    or raw["source_files"] != evidence.get("source_files")
+                    or raw["findings"] != []
+                ):
+                    raise AttestationError(
+                        "preserved real-engine evidence differs from certified source/profile"
+                    )
+                governed = _git_json(
+                    repository_root,
+                    source_sha,
+                    "tests/conformance/adversarial/1.0/evidence.json",
+                )
+                if set(raw["source_files"]) != set(governed["source_files"]):
+                    raise AttestationError(
+                        "real-engine source input denominator mismatch"
+                    )
+                for relative, expected in raw["source_files"].items():
+                    if (
+                        hashlib.sha256(
+                            _git_bytes(repository_root, source_sha, relative)
+                        ).hexdigest()
+                        != expected
+                    ):
+                        raise AttestationError(
+                            f"real-engine source input hash mismatch: {relative}"
+                        )
+                target_profiles = {
+                    profile_id: _git_json(
+                        repository_root,
+                        source_sha,
+                        audit.shared._profile_path(profile_id)
+                        .relative_to(audit.ROOT)
+                        .as_posix(),
+                    )
+                    for profile_id in audit.PROFILES
+                }
+                try:
+                    audit.validate_evidence(
+                        raw,
+                        corpus,
+                        expected_source_identity=raw["source_files"],
+                        target_profiles=target_profiles,
+                    )
+                except (KeyError, ValueError, ValidationError) as exc:
+                    raise AttestationError(
+                        f"invalid preserved real-engine observations: {exc}"
+                    ) from exc
+
+
+def _verify_production_evidence(
+    repository_root: Path,
+    trust_root: Path,
+    source_sha: str,
+    bundle_dir: Path,
+    entries: Sequence[Mapping[str, Any]],
+    release: Mapping[str, Any],
+) -> None:
+    production = _helper_module("production_certification")
+    paths = {}
+    for role in (
+        "production-release",
+        "product-release",
+        "product-release-report",
+        "profile-release",
+    ):
+        matches = [entry for entry in entries if entry["role"] == role]
+        if len(matches) != 1:
+            raise AttestationError(
+                f"required production evidence role is missing or duplicated: {role}"
+            )
+        paths[role] = bundle_dir / matches[0]["path"]
+    receipt = _load_json(paths["production-release"])
+    deterministic = receipt.get("deterministic_evidence", {})
+    if (
+        receipt.get("schema_version") != "1.0.0"
+        or receipt.get("artifact_kind") != "strling-production-candidate-certification"
+        or receipt.get("evidence_fingerprint") != production.fingerprint(deterministic)
+        or deterministic.get("status") != "passed"
+        or deterministic.get("profile") != "release"
+        or deterministic.get("failure") is not None
+        or deterministic.get("publication_authorized") is not False
+        or deterministic.get("source", {}).get("sha") != source_sha
+        or deterministic.get("source", {}).get("status_porcelain") != ""
+    ):
+        raise AttestationError(
+            "production launcher receipt is not a passing same-source result"
+        )
+    no_reuse = deterministic.get("no_reuse", {})
+    worktree = str(no_reuse.get("clean_detached_worktree", "")).replace("\\", "/")
+    if (
+        no_reuse.get("honored") is not True
+        or no_reuse.get("generated_artifacts_recreated") is not True
+        or no_reuse.get("initial_source_status") != "clean"
+        or no_reuse.get("final_source_status") != ""
+        or no_reuse.get("final_root_status") != ""
+        or "/.cert/production-certification/" not in worktree
+        or not worktree.endswith("/source")
+    ):
+        raise AttestationError(
+            "production launcher does not prove clean independent no-reuse Release"
+        )
+    if deterministic.get("aggregate") != production.profile_summary(release):
+        raise AttestationError(
+            "production launcher aggregate differs from Release evidence"
+        )
+    invocation = next(
+        item["execution_integrity"]["invocation_id"]
+        for item in release["deterministic_evidence"]["operations"]
+        if item["operation_id"] == "performance_resource_full_certification"
+    )
+    preserved = []
+    for entry in entries:
+        role = entry["role"]
+        if role not in ("execution-release", "real-engine-release"):
+            continue
+        suffix = str(PurePosixPath(entry["path"]).relative_to(f"evidence/{role}"))
+        prefix = (
+            f"operation-results/{invocation}"
+            if role == "execution-release"
+            else "adversarial-semantic-runtime"
+        )
+        preserved.append(
+            {
+                "path": f"{prefix}/{suffix}",
+                "sha256": entry["sha256"],
+                "size_bytes": entry["bytes"],
+            }
+        )
+    if deterministic.get("environment", {}).get(
+        "preserved_execution_evidence"
+    ) != sorted(preserved, key=lambda item: item["path"]):
+        raise AttestationError(
+            "production preserved object inventory differs from bundled Release evidence"
+        )
+    for subject, role in (
+        ("profile", "profile-release"),
+        ("product", "product-release"),
+        ("product_report", "product-release-report"),
+    ):
+        if deterministic.get("artifact_identities", {}).get(
+            subject
+        ) != production.artifact_identity(paths[role]):
+            raise AttestationError(
+                f"production launcher subject identity mismatch: {subject}"
+            )
+    product = _load_json(paths["product-release"])
+    product_verifier = _helper_module("product_certification")
+    _validate_schema(product, trust_root / product_verifier.ARTIFACT_SCHEMA_PATH)
+    source_manifest = _git_json(
+        repository_root, source_sha, product_verifier.MANIFEST_PATH.as_posix()
+    )
+    _validate_schema(
+        source_manifest, trust_root / product_verifier.MANIFEST_SCHEMA_PATH
+    )
+    _validate_schema(
+        _git_json(
+            repository_root,
+            source_sha,
+            "tests/certification/profile-source/1.0/definitions.json",
+        ),
+        trust_root / "governance/schemas/profile-source-evidence.schema.json",
+    )
+    product_evidence = product.get("deterministic_evidence", {})
+    if (
+        product_evidence.get("source_profile_evidence")
+        != release["deterministic_evidence"]
+    ):
+        raise AttestationError(
+            "production product evidence differs from independently verified Release"
+        )
+    try:
+        product_verifier.validate_product_artifact(
+            repository_root,
+            product,
+            manifest=source_manifest,
+            toolchain=_git_json(repository_root, source_sha, "toolchain.json"),
+            resolved_repository_state={"commit": source_sha, "dirty": False},
+        )
+    except ValueError as exc:
+        raise AttestationError(f"invalid production product evidence: {exc}") from exc
+    if deterministic.get("certification") != production.product_summary(product):
+        raise AttestationError("production launcher product summary mismatch")
+    expected_report = _helper_module("product_certification").render_product_report(
+        product
+    )
+    if paths["product-release-report"].read_text(encoding="utf-8") != expected_report:
+        raise AttestationError(
+            "production product report differs from verified product evidence"
+        )
 
 
 def _target_profile_claims(
@@ -514,6 +1492,8 @@ def _copy_evidence(
             raise AttestationError(f"invalid evidence role: {role}")
         if not source.exists():
             raise AttestationError(f"evidence source does not exist: {source}")
+        if source.is_symlink():
+            raise AttestationError(f"evidence source is a symbolic link: {source}")
         files = (
             [source]
             if source.is_file()
@@ -522,6 +1502,12 @@ def _copy_evidence(
         if not files:
             raise AttestationError(f"evidence source is empty: {source}")
         for path in files:
+            if path.is_symlink() or (
+                source.is_dir() and not path.resolve().is_relative_to(source.resolve())
+            ):
+                raise AttestationError(
+                    f"evidence source contains an escaping link: {path}"
+                )
             suffix = Path(path.name) if source.is_file() else path.relative_to(source)
             relative = (
                 PurePosixPath("evidence") / role / PurePosixPath(suffix.as_posix())
@@ -533,7 +1519,10 @@ def _copy_evidence(
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(path, destination)
             size = destination.stat().st_size
-            if size == 0:
+            if size == 0 and not (
+                role in ("execution-full", "execution-release")
+                and suffix.as_posix() in ("stdout.txt", "stderr.txt")
+            ):
                 raise AttestationError(f"evidence file is empty: {relative}")
             entries.append(
                 {
@@ -554,6 +1543,8 @@ def _certifier(trust: Mapping[str, Any], certifier_id: str) -> dict[str, Any]:
     ]
     if len(matches) != 1:
         raise AttestationError(f"certifier is not uniquely authorized: {certifier_id}")
+    if sorted(matches[0]["authorized_profiles"]) != sorted(trust["required_profiles"]):
+        raise AttestationError("certifier profile authorization is incomplete")
     return matches[0]
 
 
@@ -688,11 +1679,26 @@ def create_attestation(
         )
     output_dir.mkdir(parents=True)
     try:
+        supplied_roles = {role for role, _ in extra_evidence}
+        production_inputs = [
+            item
+            for item in _production_evidence_inputs(release_artifact.resolve())
+            if item[0] not in supplied_roles
+        ]
+        execution_inputs = [
+            item
+            for item in _execution_evidence_inputs(
+                repository_root, full_artifact.resolve(), release_artifact.resolve()
+            )
+            if item[0] not in supplied_roles
+        ]
         copied = _copy_evidence(
             output_dir,
             [
                 ("profile-full", full_artifact.resolve()),
                 ("profile-release", release_artifact.resolve()),
+                *production_inputs,
+                *execution_inputs,
                 *extra_evidence,
             ],
         )
@@ -707,18 +1713,29 @@ def create_attestation(
             output_dir / str(full_path),
             "full",
             source_sha,
-            profiles,
+            toolchain,
             str(full_path),
+            trust_root,
         )
         release_claim, release = _profile_claim(
             repository_root,
             output_dir / str(release_path),
             "release",
             source_sha,
-            profiles,
+            toolchain,
             str(release_path),
+            trust_root,
         )
-        real_engine, runtimes = _real_engine_claim((full, release))
+        _verify_production_evidence(
+            repository_root, trust_root, source_sha, output_dir, copied, release
+        )
+        _producer_invocations((full, release))
+        _verify_execution_objects(
+            repository_root, source_sha, output_dir, copied, (full, release)
+        )
+        real_engine, runtimes = _real_engine_claim(
+            (full, release), repository_root, source_sha
+        )
         sample_counts = _sample_counts((full, release))
         _require_authenticated_samples(sample_counts)
         payload: dict[str, Any] = {
@@ -797,6 +1814,16 @@ def _closure_paths(
     repository_root: Path, source_sha: str, trust: Mapping[str, Any]
 ) -> list[str]:
     head = _git(repository_root, "rev-parse", "HEAD")
+    dirty = _git(repository_root, "diff", "--name-only", "HEAD").splitlines()
+    if any(
+        not any(
+            fnmatch.fnmatchcase(path, pattern) for pattern in trust["closure_paths"]
+        )
+        for path in dirty
+    ):
+        raise AttestationError(
+            "working tree differs from certified source outside closure paths"
+        )
     if head == source_sha:
         return []
     completed = subprocess.run(
@@ -850,6 +1877,21 @@ def _verify_evidence_files(
         )
     for entry in entries:
         path = bundle_dir / str(entry["path"])
+        relative = PurePosixPath(str(entry["path"]))
+        if (
+            relative.parts[:2] != ("evidence", entry["role"])
+            or ".." in relative.parts
+            or path.is_symlink()
+            or not path.resolve().is_relative_to((bundle_dir / "evidence").resolve())
+        ):
+            raise AttestationError("evidence path escapes its declared role or bundle")
+        if entry["bytes"] == 0 and not (
+            entry["role"] in ("execution-full", "execution-release")
+            and path.name in ("stdout.txt", "stderr.txt")
+        ):
+            raise AttestationError(
+                "only declared execution streams may be empty evidence"
+            )
         if path.stat().st_size != entry["bytes"]:
             raise AttestationError(f"evidence size mismatch: {entry['path']}")
         if file_sha256(path) != entry["sha256"]:
@@ -955,13 +1997,26 @@ def verify_attestation(
             bundle_dir / claim["evidence_path"],
             profile,
             source_sha,
-            profiles,
+            toolchain,
             claim["evidence_path"],
+            trust_root,
         )
         reconstructed.append(rebuilt)
         artifacts.append(artifact)
     if payload["profile_results"] != reconstructed:
         raise AttestationError("profile result aggregate contradicts producer evidence")
+    _producer_invocations(artifacts)
+    _verify_execution_objects(
+        repository_root, source_sha, bundle_dir, payload["evidence_files"], artifacts
+    )
+    _verify_production_evidence(
+        repository_root,
+        trust_root,
+        source_sha,
+        bundle_dir,
+        payload["evidence_files"],
+        artifacts[1],
+    )
     waivers = _waivers(artifacts)
     if waivers != payload["waiver_inventory"]:
         raise AttestationError("waiver inventory contradicts producer evidence")
@@ -970,13 +2025,14 @@ def verify_attestation(
         raise AttestationError(
             "unapproved waiver in certification evidence: " + ", ".join(unapproved)
         )
+    _validate_waiver_scope(repository_root, trust_root, source_sha, artifacts)
     if payload["producer_invocation_ids"] != _producer_invocations(artifacts):
         raise AttestationError("producer invocation identity mismatch")
     reconstructed_samples = _sample_counts(artifacts)
     _require_authenticated_samples(reconstructed_samples)
     if payload["authenticated_sample_counts"] != reconstructed_samples:
         raise AttestationError("authenticated performance sample count mismatch")
-    real_engine, runtimes = _real_engine_claim(artifacts)
+    real_engine, runtimes = _real_engine_claim(artifacts, repository_root, source_sha)
     if payload["real_engine_evidence"] != real_engine:
         raise AttestationError("real-engine evidence aggregate mismatch")
     if payload["runtime_identities"] != runtimes:

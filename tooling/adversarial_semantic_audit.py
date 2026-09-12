@@ -639,7 +639,13 @@ def execute(corpus: dict, binary: Path, paths: dict) -> list[dict]:
     return rows
 
 
-def validate_evidence(evidence: dict, corpus: dict) -> None:
+def validate_evidence(
+    evidence: dict,
+    corpus: dict,
+    *,
+    expected_source_identity: dict | None = None,
+    target_profiles: dict[str, dict] | None = None,
+) -> None:
     Draft202012Validator(load_json(DIRECTORY / "evidence.schema.json")).validate(
         evidence
     )
@@ -648,7 +654,11 @@ def validate_evidence(evidence: dict, corpus: dict) -> None:
         raise ValueError("evidence fingerprint differs")
     if evidence["corpus_sha256"] != DIGEST(corpus):
         raise ValueError("evidence corpus differs")
-    if evidence["source_files"] != source_identity():
+    if evidence["source_files"] != (
+        source_identity()
+        if expected_source_identity is None
+        else expected_source_identity
+    ):
         raise ValueError("evidence source identity differs from current audit inputs")
     expected_hashes = {
         "node": shared.EXPECTED_NODE_EXECUTABLE_SHA256,
@@ -670,7 +680,11 @@ def validate_evidence(evidence: dict, corpus: dict) -> None:
         case = cases[row["case_id"]]
         if row["source_sha256"] != DIGEST(case["source"]):
             raise ValueError("evidence source differs")
-        profile = load_json(shared._profile_path(row["profile"]["profile_id"]))
+        profile = (
+            load_json(shared._profile_path(row["profile"]["profile_id"]))
+            if target_profiles is None
+            else target_profiles[row["profile"]["profile_id"]]
+        )
         if row["profile"]["sha256"] != DIGEST(profile):
             raise ValueError("evidence profile differs")
         result = row["compile"]["stdout"]

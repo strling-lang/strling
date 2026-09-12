@@ -56,12 +56,17 @@ scope:
         - tests/certification/performance-resource/1.0/runner/src/main.rs
         - tests/certification/profile-source/1.0/definitions.json
         - tests/conformance/adversarial/1.0/evidence.json
+        - tests/conformance/evidence/shared-cross-engine-observations.json
+        - tests/conformance/evidence/stdlib-runtime-observations.json
         - tests/architecture/semantic-authority/1.0/evidence.json
         - toolchain.json
+        - tooling/adversarial_semantic_audit.py
         - tooling/architecture_fitness.py
         - tooling/core_stage_boundaries.py
         - tooling/dependency_license_evidence.py
         - tooling/local_certification_attestation.py
+        - tooling/performance_resource_certification.py
+        - tooling/production_certification.py
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py
         - tooling/tests/test_dependency_license_evidence.py
@@ -73,6 +78,7 @@ scope:
         - tooling/tests/test_profile_source_identity.py
         - tooling/tests/test_performance_resource_certification.py
         - tooling/tests/test_product_certification.py
+        - tooling/tests/test_production_certification.py
         - tooling/tests/test_quality.py
         - tooling/tests/test_python_re_lowering_architecture.py
         - tooling/tests/test_release_supply_chain_architecture.py
@@ -102,6 +108,8 @@ scope:
         - profile-source-definitions
         - public-contract-snapshots
         - semantic-authority-retirement-evidence
+        - shared-cross-engine-observations
+        - stdlib-runtime-observations
     expected_generated_outputs: []
     required_verification_levels:
         - contract
@@ -125,6 +133,7 @@ change_classification:
         level: compatible
         evidence:
             - Governance-only schemas define the trusted local certification policy and signed evidence bundle; no language or product protocol schema changes.
+            - Empty captured stdout/stderr files are valid only for execution evidence stream roles; all structured evidence remains nonempty and hash-bound.
     diagnostic_change:
         level: none
         evidence: []
@@ -179,7 +188,7 @@ invariant_inventory:
       positive_allowed_form: Local and Pull Request pass first; Full then Release pass at the same clean SHA with exact runtimes, governed samples, complete evidence, and only accepted waivers.
       forbidden_form: Sampling before a known deterministic failure is fixed, ambient runtime substitution, evidence transfer between candidates, retry after a sampled failure on an unchanged SHA, missing/incomplete operation, new waiver, publication action, or mixed source identity.
       mechanical_detection_method: Canonical profile artifacts, structured product-certification projections, exact-runtime evidence, performance sample-consumption state, waiver registry validation, and clean Git identity checks.
-      current_observed_state: The Program Owner authorized the immutable same-host rollover from Windows 26200.9278 to 26200.9445. Clean calibration source 5f4a81643f33440be96760855fd0cedbe3add08f qualified the serviced host, and the single authorized calibration passed all 54 coordinates across five repetitions with zero failed comparisons. The repository preserves the archived 26200.9278 authority and uses active baseline 5a472de9302c8b5fd48a6a1c9c7970f747800f268185976c3de1f93db9e7e07b for environment 404f22e91201485db7563d518d19304077bb73b94f480dba3d4bc964dea6e4bd. The sole Full at f3bb5ffb84564eb558ad58be9875575d147fa7b1 is permanently consumed after 385 authenticated samples and one target-lowering latency regression. A substantive exact-profile reuse correction is under focused verification; a new SHA must pass deterministic preflight, Full, Release, signing, and cloud verification.
+      current_observed_state: The authorized immutable Windows 26200.9278 to 26200.9445 rollover remains bound to clean calibration source 5f4a81643f33440be96760855fd0cedbe3add08f, its single successful 54-coordinate calibration, and environment 404f22e91201485db7563d518d19304077bb73b94f480dba3d4bc964dea6e4bd. Active source-identity projection d1569ecb34bd4e454cd3e83e7b5db222c29cf995088b25b5004f58cbf819c467 preserves the calibrated measurements. Both Full attempts at 5f38bf1a and f3bb5ffb are permanently consumed after 192 and 385 samples respectively. Commit 4836dd94 restores the calibrated workload, fe17793b optimizes the product canonical-JSON implementation, and 7215cfa1 retains independent Release raw evidence. Attestation rejection guarantees and event-specific verifier isolation are being corrected before a new candidate may pass exact-source Local, Pull Request, Full, Release, signing, and cloud verification.
       expected_ratchet: The exact hardened source baseline is immutable evidence for P20-T02; any later semantic-core change requires a new certification event.
 checkpoints:
     - name: Candidate freeze and contract reconstruction
@@ -256,7 +265,7 @@ checkpoints:
             details: The Program Owner explicitly authorized the same-host Windows 26200.9278 to 26200.9445 rollover under the existing qualification, calibration, threshold, sampling, statistics, conditioning, and no-retry rules. Reset source 5f4a81643f33440be96760855fd0cedbe3add08f qualified with the historical runner, kernel, and interop hashes reproduced exactly. One measured calibration completed all 54 coordinates across five repetitions with zero failed comparisons, promoted baseline dedf9e0945619bba6bac081d26bc7f5909f6b3c0ca7e734f210dca5ecfed903b, and archived the former 357438fee06fcaaf4b8c78011c30b2bc8ce53d7269ecb6ddd43845e0eaa1b30b authority byte-for-byte.
           - check: Sampled Full regression at 5f38bf1a
             result: failed
-            details: The first measured Full on the qualified 26200.9445 environment authenticated 192 samples across the three Full coordinates and is permanently consumed for source 5f38bf1aedcfe0bf9825077c476dbc07e28516cc. Semantic analysis and end-to-end passed; capability-portability simply-common failed at a 727850 ns median against the unchanged 544225 ns relative and 593700 ns absolute ceilings. Full also reported one transient LSP test failure that independently passed 572 of 572 tests immediately afterward. Release correctly did not start. The failed artifact is preserved at target/codex-tools/v4-h08-full-5f38bf21-terminal.json with evidence fingerprint 07df06ec98cc29ad40931359bbe9f8e6adfdd2619da67c3ce48aabe09e33f5f8 and performance evidence fingerprint 86573db81f3c47c9d9645fcdc1ca4c4736b80f40ab5b8c75bd5c58cb4378b288.
+            details: The first measured Full on the qualified 26200.9445 environment authenticated 192 samples across the three Full coordinates and is permanently consumed for source 5f38bf1aedcfe0bf9825077c476dbc07e28516cc. Semantic analysis and end-to-end passed; capability-portability simply-common failed at a 727850 ns median against the unchanged 544225 ns relative and 593700 ns absolute ceilings. Full also reported one failed LSP operation containing six subprocess timeouts; the same suite independently passed 572 of 572 tests immediately afterward, without proving a host-load root cause. Release correctly did not start. The failed artifact is preserved at target/codex-tools/v4-h08-full-5f38bf21-terminal.json with evidence fingerprint 07df06ec98cc29ad40931359bbe9f8e6adfdd2619da67c3ce48aabe09e33f5f8 and performance evidence fingerprint 86573db81f3c47c9d9645fcdc1ca4c4736b80f40ab5b8c75bd5c58cb4378b288.
           - check: Capability-portability regression correction
             result: passed
             details: Diagnosis found that the semantic-fact-expanded profile was being fully revalidated, canonically serialized, and SHA-256 hashed repeatedly inside a single immutable evaluation/planning cycle. The correction reuses the already validated TargetProfileSet reference for both stages and the already validated lowering reference for introduced requirements; raw-profile entry points remain fail closed. Focused capability, planning, post-lowering, and all three target-lowering suites pass, and direct versus reference-based results are structurally identical.
@@ -293,6 +302,9 @@ checkpoints:
           - check: Earlier LSP failure disposition
             result: passed
             details: Recovered original Full output for 5f38bf1a identifies six quantifier-matrix cases exceeding the existing 5-second canonical debug-compiler subprocess timeout, with 566 tests passing. The same registered suite subsequently passed 572 tests in 174.99 seconds, and test@lsp passed in the later f3bb5ffb Full. These are separate from the PCRE2 latency correction; neither failed Full is retried or promoted.
+          - check: Resumed focused LSP disposition
+            result: passed
+            details: The unchanged registered LSP suite also passed 572 tests in 314.10 seconds during this resumed correction, before the canonical-JSON optimization. Log target/codex-tools/certification-forensics/h08-lsp-current.log has SHA-256 e0aa9392ce16d8fd539e54132a7d96044374d584cb501902b8456372e5cda521. This resolves the earlier isolated operation failure for diagnosis; the frozen candidate still requires its own full Pull Request result.
           - check: Mechanical correction proof
             result: passed
             details: Commit 232c48d6 contains only the eleven reviewed source-formatting and dependent identity corrections. All 84 focused lowering-architecture, deep-quality, and performance-resource contract tests pass. Registered source-identity producers followed by policy-selected formatting are byte-stable on a second pass; deep-quality check and performance-resource Local pass. Active baseline projection d1569ecb34bd4e454cd3e83e7b5db222c29cf995088b25b5004f58cbf819c467 differs from the original rollover only in manifest_fingerprint and baseline_fingerprint. It is not a new calibration or a Full candidate qualification.
@@ -305,13 +317,36 @@ checkpoints:
           - check: Calibrated workload reconstruction
             result: failed
             details: Comparison against calibration source 5f4a8164 shows that fafd1879 moved initial capability/planning profile validation and hashing out of timing, while 335fffe6 changed timed lowering from raw-profile to prepared-reference entrypoints. The recorded precondition claim did not establish prior authority to change that workload. Restore the original raw-profile benchmark calls and preparation/timing boundaries, preserve the useful product APIs, and add a focused boundary regression check. Both earlier sampled failures remain consumed.
+          - check: Calibrated workload restoration
+            result: passed
+            details: Commit 4836dd94 restores the entire runner byte-for-byte to calibration source 5f4a81643f33440be96760855fd0cedbe3add08f. A focused source-boundary regression test protects the raw-profile preparation/timing contract. No budget, baseline measurement, sample, statistical, conditioning, or isolation policy changes.
           - check: Product implementation correction design
             result: passed
-            details: The existing canonical_sha256 helper reconstructs and sorts every serde_json object even though its default map representation is already sorted. Replace that redundant traversal with the installed library's recursive canonical sorting operation, which is a no-op for sorted maps and still sorts nested objects when preserve_order is unified by a consumer. Prove identical independently specified digest bytes, nested ordering, Unicode/escaping, and all governed target-profile fingerprints. Keep serialization, validation, public contracts, dependencies, measurement boundaries, and baseline data unchanged; do not infer a performance pass from this implementation proof.
+            details: The existing canonical_sha256 helper reconstructs and sorts every serde_json object even though its default map representation is already sorted. Preserve already-sorted map allocations, recurse through their children, and retain the original unsorted-map fallback when preserve_order is unified by a consumer. This avoids requiring a newer serde_json API or changing dependency floors. Prove identical independently specified digest bytes, nested ordering, Unicode/escaping, and all governed target-profile fingerprints. Keep serialization, validation, public contracts, dependencies, measurement boundaries, and baseline data unchanged; do not infer a performance pass from this implementation proof.
+          - check: Required durable evidence preservation
+            result: failed
+            details: The production launcher currently removes the successful detached worktree containing raw engine observations and atomic result/stream objects. Extend the existing launcher to preserve those exact objects in its durable output before removal and require their integrity in the signed bundle. The correction copies results without rebuilding or resampling them; independent Release execution, capacity checks, historical ignored prerequisites, and no-reuse rules remain enforced.
+          - check: Product correction and source evidence
+            result: passed
+            details: Commit fe17793b preserves already-ordered canonical JSON map allocations and retains the original fallback. Three digest/profile cases pass on Rust 1.75.0 and in an isolated insertion-order feature harness on Rust 1.85.1; the latter does not certify its newer transitive dependencies on Rust 1.75. All 50 focused lowering/planning tests pass. Registered shared-engine and standard-library producer/check pairs reproduce byte-identical outputs. The adversarial pair runs twice with zero findings and unchanged 41 observation shards; its source-bound envelope is refreshed. All 148 exact historical finding IDs remain resolved against the unchanged corpus.
+          - check: Durable evidence correction
+            result: passed
+            details: Commit 7215cfa1 preserves the exact original atomic result, stdout/stderr, and real-engine objects plus SHA-256 inventory before successful worktree removal. All 20 production-launcher tests pass, including missing evidence, unregistered source, reused destination, and legitimate empty execution-stream cases. Preservation failure retains the source worktree and records failure; no evidence is rebuilt or sampled by retention.
+          - check: Complete signed-bundle validation
+            result: passed
+            details: All 69 integrated attestation and production tests pass. The verifier reconstructs the complete ordered operation and governed 54-coordinate performance denominator, 3,204 sample ledger, raw atomic streams and engine observations, product projection, independent no-reuse Release receipt, and every security aggregate. It rejects missing or contradictory evidence, reused performance invocation IDs, altered batch normalization or conditioning, broadened/expired waiver authority, and candidate import traps. Trusted schemas and validator code consume authenticated candidate fixture/profile data; the sole certifier, trust policy, closure allowlist, waiver record, calibrated workload, and acceptance thresholds remain unchanged. Isolated direct-script contract verification passes.
           - check: Corrected candidate certification
             result: not_run
             details: Current-source focused checks, stable generation, clean-source Local/Pull Request, the single authorized Full, independent same-SHA Release, signing, and hosted integrity verification remain required. P20-T02 stays paused.
 commits:
+    - sha: 7215cfa118fda5a562b888a635f5ee5011d39bd9
+      subject: "fix(certification): retain independent producer evidence"
+    - sha: fe17793b3864ac7bbade048d299c57f95b002244
+      subject: "perf(core): avoid rebuilding ordered canonical maps"
+    - sha: 4836dd94b4b6d72dfcea32e7ffd5c1ebdccef23b
+      subject: "fix(certification): preserve calibrated benchmark workload"
+    - sha: 7d65ff310c1cd6cfbfb156814623909bf8c29d7a
+      subject: "docs(certification): record recovered failures and correction gates"
     - sha: 232c48d67dc6c604c721c8fa3cdd96c98674c1d1
       subject: "chore(certification): stabilize formatted source evidence"
     - sha: 9f85a00cd9ed936a4f46ad20d6ff38a681c29b73

@@ -947,13 +947,18 @@ def validate_baseline(
     *,
     manifest: Mapping[str, object],
     synthetic: bool = False,
+    fixtures: Mapping[str, object] | None = None,
 ) -> None:
     validate_schema(baseline, label="baseline")
     if baseline["manifest_fingerprint"] != manifest["manifest_fingerprint"]:
         raise PerformanceResourceError(
             "stale-manifest", "baseline manifest fingerprint changed"
         )
-    fixtures = load_json(ROOT / manifest["fixture_manifest"]["path"])
+    fixtures = (
+        load_json(ROOT / manifest["fixture_manifest"]["path"])
+        if fixtures is None
+        else fixtures
+    )
     if (
         baseline["fixture_manifest_fingerprint"]
         != fixtures["fixture_manifest_fingerprint"]

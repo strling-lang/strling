@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "authority": "empirical/adversarial-conformance-evidence",
-  "source_sha": "4836dd94b4b6d72dfcea32e7ffd5c1ebdccef23b",
+  "source_sha": "7215cfa118fda5a562b888a635f5ee5011d39bd9",
   "source_files": {
     "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
     "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
@@ -54,12 +54,12 @@
     "core/src/target_lowering.rs": "cb6e9451a86d676ab3515f9118bde76e275b1be682fe10dfd68bafa785ba5439",
     "core/src/target_serialization.rs": "d5c40a8586c650645b6456613c04272c6ab969147bcaea42b20c610ce549612c",
     "core/src/validation/mod.rs": "d332bec288727cec2c544ef032dc5825d4af3d83982ded8c62b48173cb16216b",
-    "tooling/adversarial_semantic_audit.py": "18b3db1e229da79cb06a2f091ab65ed30311c4e66869f366d2b055585369231c",
+    "tooling/adversarial_semantic_audit.py": "95ef25d58aabc484373d0c3275f28cbe6921f4a4ce3c0dfbf29524dcbdc6b489",
     "tooling/node_regexp_harness.mjs": "96a85b99480b2a898590a847b06f8bb49255fef34a1c5b435226be785b03bcd9",
     "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
     "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
   },
-  "executed_at": "2026-09-12T19:56:29.530423+00:00",
+  "executed_at": "2026-09-12T20:14:36.845997+00:00",
   "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
   "repeat_runs": 2,
   "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
@@ -394,7 +394,7 @@
     }
   ],
   "findings": [],
-  "result_sha256": "3e0d4ced42976f1ffa38e1ad3c4c6829e18d1413ff9b902fac7d35148e5f2f12",
+  "result_sha256": "24c872d1df0dbe837e9f4129160f4a57afcf68ca16beaefedb7678c28d0a2fb7",
   "case_observations": [
     {
       "case_id": "wildcard-excluding-lines",

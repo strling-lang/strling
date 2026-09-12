@@ -108,7 +108,7 @@ be papered over or treated as a performance pass.
 
 ## Certification result
 
-The final deterministic candidate is
+The historical deterministic candidate was
 `7e58c04ad412fedef46f71b7d999dea56107f4e1`. Local 1.15.0 passes 37 of 37
 operations with evidence fingerprint
 `6ee2782e33fed8de376c832c1bb5db98d81fe67a6eee7d8732669cdf8df2531d`.
@@ -135,7 +135,7 @@ to environment
 `404f22e91201485db7563d518d19304077bb73b94f480dba3d4bc964dea6e4bd` and
 historical calibration source `5f4a81643f33440be96760855fd0cedbe3add08f`.
 
-The first measured Full at candidate
+The subsequent measured Full at candidate
 `f3bb5ffb84564eb558ad58be9875575d147fa7b1` passed 123 operations, retained
 only `WVR-SEC-VSCE-LICENSE-001`, and failed one of 125 operations after seven
 coordinates and 385 authenticated samples. The sole regression was
@@ -155,9 +155,10 @@ profile during target lowering. The correction extends the existing immutable
 `TargetProfileSet` reference path to PCRE2, ECMAScript, and Python lowering.
 Exact profile resolution remains mandatory on every invocation, stale or
 mismatched references fail closed, and direct versus reference-based plans are
-tested for structural equality. The timed operation remains lowering plus
-serialization; profile loading, validation, and immutable-reference creation
-are certified preconditions established during operation preparation.
+tested for structural equality. The initial correction claimed that profile
+loading, validation, and immutable-reference creation were certified untimed
+preconditions. The resumed calibration-source audit below rejects that claim
+and restores the original workload before accepting any new measurement.
 
 The `f3bb5ffb` sampled attempt is permanently consumed and will not be retried.
 Any subsequent Full must bind a substantive corrected source SHA, pass the same
@@ -206,24 +207,48 @@ unchanged. Event-specific trusted-verifier selection is also under review;
 historical general descriptions do not establish equivalent isolation for every
 workflow event.
 
+The corrected validator passes all 69 integrated attestation/production tests.
+It reconstructs complete profile and performance denominators, statistical and
+conditioning checks, original atomic streams and exact-engine observations,
+product results, independent Release receipt, and security aggregates. Waiver
+validity and scope come from the trusted authority. Authenticated candidate
+fixture/profile data is passed to trusted validation code explicitly; isolated
+Python imports reject candidate tooling as an import source. Empty captured
+stdout/stderr is accepted only for execution-stream roles. No trust key, waiver
+record, acceptance threshold, or closure allowlist changed.
+
 Calibration-source comparison also supersedes the earlier claim that profile
 validation was an established untimed precondition. `fafd1879` moved initial
 capability/planning validation and hashing out of the timed section, and
 `335fffe6` substituted prepared-reference lowering for the calibrated raw-profile
-entrypoints. The runner must return to the original measurement boundary.
+entrypoints. Commit `4836dd94` restores the runner byte-for-byte to calibration
+source `5f4a81643f33440be96760855fd0cedbe3add08f` and adds a workload-boundary guard.
 The useful product APIs remain available, but their prepared-input measurements
 cannot replace the calibrated workload or establish normal compiler speedups.
 
 The bounded product correction targets redundant canonical-JSON map rebuilding:
-use the JSON library's recursive sorting operation, retaining exact digest bytes
-and correctness under both sorted-map and insertion-order representations.
-Independent digest cases and governed target-profile fingerprints must pass
-before source evidence is refreshed. No performance result is inferred from
-that optimization; the unchanged benchmark still requires authorized sampling.
+preserve already-sorted map allocations while recursing through children, and
+retain the original sorting fallback for insertion-order representations. This
+retains the existing dependency API floor and exact digest bytes.
+Commit `fe17793b` records this correction. Three independent digest and governed
+target-profile tests pass on Rust 1.75.0, and the same three pass in an isolated
+insertion-order feature harness on Rust 1.85.1. The latter does not establish
+Rust 1.75 compatibility for that downstream feature's newer transitive lock.
+All 50 focused lowering/planning tests pass. Registered shared-engine and
+standard-library generators/verifiers reproduce byte-identical evidence. The
+adversarial producer completes two identical executions with zero findings;
+all 41 raw observation shards are unchanged. Its source-bound envelope is
+refreshed. No performance result is inferred from these checks; the unchanged
+benchmark still requires authorized sampling.
 
 No new sampled attempt, Release, attestation, cloud acceptance, or publication
 is claimed by this reconstruction. `main` remains
 `664d08de53565929c8f62379b006cd29f93b239f`. H08 is in progress and P20-T02
 remains paused.
+
+That `main` revision contains neither the verifier, trust registry, nor the
+integrity workflow. Therefore it cannot supply a PR-base integrity run yet.
+The authorized `dev` push can use a separately pinned reviewed verifier commit;
+success there will not establish `main` bootstrap or authorize integration.
 
 **BLOCKED — NO-GO FOR P20-T02.**

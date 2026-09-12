@@ -80,6 +80,63 @@ EVIDENCE_PATH = (
 BASELINE_PATH = ROOT / "tests/certification/performance-resource/1.0/baseline.json"
 
 
+class PerformanceRunnerBoundaryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.runner = (
+            ROOT / "tests/certification/performance-resource/1.0/runner/src/main.rs"
+        ).read_text(encoding="utf-8")
+
+    def test_capability_profile_proof_remains_inside_the_timed_operation(self) -> None:
+        operation = self.runner.split('"latency:capability-portability" => {', 1)[
+            1
+        ].split('"latency:pcre2-lower-serialize" => {', 1)[0]
+        preparation, timed = operation.split("Ok(Box::new(move || {", 1)
+        self.assertIn('target_profile("pcre2-10.43.json")?', preparation)
+        for outside_proof in (
+            ".reference(",
+            ".validate(",
+            "TargetProfileSet",
+            "evaluate_capabilities(",
+            "plan_portability(",
+        ):
+            self.assertNotIn(outside_proof, preparation)
+        self.assertRegex(
+            timed,
+            r"evaluate_capabilities\(\s*&semantic,\s*&foundational,\s*&structural,"
+            r"\s*&profile\s*\)",
+        )
+        self.assertRegex(
+            timed,
+            r"plan_portability\(\s*&semantic,\s*&foundational,\s*&structural,"
+            r"\s*&profile,\s*&evaluation\s*\)",
+        )
+        self.assertNotIn("_for_reference", operation)
+
+    def test_target_profile_proof_and_serialization_remain_in_each_timed_operation(
+        self,
+    ) -> None:
+        operation = self.runner.split("fn prepared_target_operation(", 1)[1].split(
+            "fn prepare_cli_operation(", 1
+        )[0]
+        for target, lower, serialize in (
+            ("pcre2", "lower_pcre2", "serialize_pcre2"),
+            ("ecmascript", "lower_ecmascript", "serialize_ecmascript"),
+            ("python-re", "lower_python_re", "serialize_python_re"),
+        ):
+            with self.subTest(target=target):
+                timed = operation.split(f'"{target}" => Ok(Box::new(move || {{', 1)[
+                    1
+                ].split("})),", 1)[0]
+                self.assertRegex(
+                    timed, rf"{lower}\(\s*&semantic,\s*&profile,\s*&plan\s*\)"
+                )
+                self.assertIn(f"{serialize}(&lowered)", timed)
+                self.assertLess(timed.index(lower), timed.index(serialize))
+        self.assertNotIn("_for_reference", operation)
+        self.assertNotIn("TargetProfileSet", operation)
+
+
 class PerformanceResourceCertificationContractTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:

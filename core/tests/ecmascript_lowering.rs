@@ -652,9 +652,8 @@ fn validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stal
     let profiles = TargetProfileSet::new(vec![target.clone()]).expect("validated profile set");
 
     let direct = lower_ecmascript(&semantic, &target, &portability).expect("direct lowering");
-    let resolved =
-        lower_ecmascript_for_reference(&semantic, &reference, &profiles, &portability)
-            .expect("reference lowering");
+    let resolved = lower_ecmascript_for_reference(&semantic, &reference, &profiles, &portability)
+        .expect("reference lowering");
     assert_eq!(resolved, direct);
 
     let mut stale = reference;

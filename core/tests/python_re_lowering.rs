@@ -2,11 +2,10 @@ use serde_json::{json, Value};
 use strling_kernel::capability_evaluation::evaluate_capabilities;
 use strling_kernel::portability_planning::{plan_portability, PortabilityPlan};
 use strling_kernel::python_re_lowering::{
-    lower_python_re, lower_python_re_for_reference, PythonReCaseMatching,
-    PythonReCharacterDomain, PythonReCharacterSetMember, PythonReLookaround,
-    PythonReLoweringErrorCode, PythonReOperation, PythonRePatternKind, PythonRePosition,
-    PythonReRepetitionMaximum, PythonReRepetitionMode, PythonReWildcard,
-    MAX_PYTHON_RE_LOWERING_DEPTH,
+    lower_python_re, lower_python_re_for_reference, PythonReCaseMatching, PythonReCharacterDomain,
+    PythonReCharacterSetMember, PythonReLookaround, PythonReLoweringErrorCode, PythonReOperation,
+    PythonRePatternKind, PythonRePosition, PythonReRepetitionMaximum, PythonReRepetitionMode,
+    PythonReWildcard, MAX_PYTHON_RE_LOWERING_DEPTH,
 };
 use strling_kernel::semantic::{Node, SemanticProgram};
 use strling_kernel::semantic_analysis::analyze;

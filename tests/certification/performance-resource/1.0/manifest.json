@@ -14,7 +14,7 @@
     },
     "resource_inventory": {
         "path": "tests/certification/performance-resource/1.0/fixtures/resource-limits.json",
-        "sha256": "6b80a4885952ed91335dc9b498a5f5a1ad60f7875df08b74f57c10410b0501e7"
+        "sha256": "5a643d0fabf0976c2f901cc47a3e88c978f5fb9c947eceeaad3bc886a4962fbb"
     },
     "measurement_policy": {
         "warmup_iterations": 16,
@@ -32,7 +32,11 @@
         "cpu_quota_policy": "unlimited",
         "conditioning_policy": "authenticated-identical-before-each-repetition",
         "randomize_operation_order": true,
-        "statistics": ["median", "p95", "mad"],
+        "statistics": [
+            "median",
+            "p95",
+            "mad"
+        ],
         "p95_method": "nearest-rank",
         "relative_budget_formula": "max(floor, ceil(6 * mad / median * 10000))",
         "minimum_relative_budget_basis_points": 1000,
@@ -104,7 +108,9 @@
                 "fixture:semantic-large",
                 "fixture:semantic-pathological"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -126,7 +132,9 @@
                 "fixture:legacy-common",
                 "fixture:legacy-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -148,7 +156,9 @@
                 "fixture:simply-common",
                 "fixture:simply-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -172,7 +182,9 @@
                 "fixture:simply-common",
                 "fixture:simply-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -196,7 +208,9 @@
                 "fixture:simply-common",
                 "fixture:simply-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -218,7 +232,9 @@
                 "fixture:semantic-large",
                 "fixture:semantic-pathological"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -235,8 +251,13 @@
             "unit": "nanoseconds",
             "enforcement": "hard",
             "state": "active",
-            "fixture_ids": ["fixture:simply-common", "fixture:simply-large"],
-            "profiles": ["full"],
+            "fixture_ids": [
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -259,7 +280,9 @@
                 "fixture:simply-common",
                 "fixture:simply-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -282,7 +305,9 @@
                 "fixture:simply-common",
                 "fixture:simply-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -305,7 +330,9 @@
                 "fixture:simply-common",
                 "fixture:simply-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -330,7 +357,9 @@
                 "fixture:simply-common",
                 "fixture:simply-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -347,8 +376,13 @@
             "unit": "nanoseconds",
             "enforcement": "hard",
             "state": "active",
-            "fixture_ids": ["fixture:semantic-tiny", "fixture:simply-tiny"],
-            "profiles": ["full"],
+            "fixture_ids": [
+                "fixture:semantic-tiny",
+                "fixture:simply-tiny"
+            ],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -369,7 +403,9 @@
                 "fixture:semantic-common",
                 "fixture:semantic-large"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -386,8 +422,12 @@
             "unit": "nanoseconds",
             "enforcement": "hard",
             "state": "active",
-            "fixture_ids": ["fixture:protocol-common"],
-            "profiles": ["full"],
+            "fixture_ids": [
+                "fixture:protocol-common"
+            ],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -404,8 +444,13 @@
             "unit": "nanoseconds",
             "enforcement": "informational",
             "state": "active",
-            "fixture_ids": ["fixture:simply-common", "fixture:protocol-common"],
-            "profiles": ["full"],
+            "fixture_ids": [
+                "fixture:simply-common",
+                "fixture:protocol-common"
+            ],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "supported-host",
             "budget": {
                 "state": "active",
@@ -427,7 +472,9 @@
                 "fixture:simply-large",
                 "fixture:protocol-common"
             ],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -445,7 +492,9 @@
             "enforcement": "hard",
             "state": "active",
             "fixture_ids": [],
-            "profiles": ["full"],
+            "profiles": [
+                "full"
+            ],
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
@@ -466,7 +515,10 @@
                 "fixture:semantic-pathological",
                 "fixture:legacy-large"
             ],
-            "profiles": ["pull-request", "full"],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
             "required_environment": "any",
             "budget": {
                 "state": "not-applicable",
@@ -483,8 +535,13 @@
             "unit": "status",
             "enforcement": "hard",
             "state": "active",
-            "fixture_ids": ["fixture:simply-large"],
-            "profiles": ["pull-request", "full"],
+            "fixture_ids": [
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
             "required_environment": "any",
             "budget": {
                 "state": "not-applicable",
@@ -501,8 +558,14 @@
             "unit": "status",
             "enforcement": "hard",
             "state": "active",
-            "fixture_ids": ["fixture:semantic-large", "fixture:simply-large"],
-            "profiles": ["pull-request", "full"],
+            "fixture_ids": [
+                "fixture:semantic-large",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
             "required_environment": "any",
             "budget": {
                 "state": "not-applicable",
@@ -523,7 +586,10 @@
                 "fixture:semantic-large",
                 "fixture:protocol-pathological"
             ],
-            "profiles": ["pull-request", "full"],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
             "required_environment": "any",
             "budget": {
                 "state": "not-applicable",
@@ -540,8 +606,13 @@
             "unit": "status",
             "enforcement": "hard",
             "state": "active",
-            "fixture_ids": ["fixture:semantic-pathological"],
-            "profiles": ["pull-request", "full"],
+            "fixture_ids": [
+                "fixture:semantic-pathological"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
             "required_environment": "any",
             "budget": {
                 "state": "not-applicable",
@@ -559,5 +630,5 @@
         "fixtures": 12,
         "resource_declarations": 56
     },
-    "manifest_fingerprint": "e7adc8b38c796d53f32102249a7f3e9eb96792a006987ba5f82e995127a8f860"
+    "manifest_fingerprint": "0ee119f234643359e3abad79a1bacc51c95ffc0d4e704c1383a42143fcede21e"
 }

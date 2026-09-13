@@ -29,6 +29,7 @@ scope:
         - docs/migration/ledger.md
         - docs/migration/records/fourth-edition-hardening-recertification.yaml
         - docs/releasing.md
+        - docs/toolchains.md
         - governance/architecture-rules.json
         - governance/certification-evidence-dependency-graph.json
         - governance/certification-profiles.md
@@ -67,6 +68,7 @@ scope:
         - tooling/local_certification_attestation.py
         - tooling/performance_resource_certification.py
         - tooling/production_certification.py
+        - tooling/quality.py
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py
         - tooling/tests/test_dependency_license_evidence.py
@@ -150,6 +152,7 @@ change_classification:
     architecture_change:
         level: compatible
         evidence:
+            - Environment version probes close stdin, use the governed 30-second probe-only timeout, and preserve captured stdout and stderr diagnostics; build, test, and certification operation timeouts remain unchanged, and the correction addresses a deterministic qualification hang rather than product semantics.
             - The enforced generated-family check is restored to the Local/Pull Request offline contract while network-authenticated regeneration remains unchanged.
             - Full and Release remain the unchanged expensive result authorities but execute locally; cloud workflows verify a trusted exact-source attestation instead of recomputing them.
             - The attestation CLI is registered as a reviewed engineering-only tooling parser path; it cannot parse or define STRling language semantics.

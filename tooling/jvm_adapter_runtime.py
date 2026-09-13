@@ -74,6 +74,16 @@ def _gradle_tool() -> str:
     return _tool("STRLING_GRADLE", ("gradle", "gradle.bat"))
 
 
+def _maven_repository() -> tuple[str, str]:
+    configured = os.environ.get("STRLING_MAVEN_REPOSITORY")
+    if not configured:
+        raise FileNotFoundError("STRLING_MAVEN_REPOSITORY")
+    repository = Path(configured).resolve()
+    if not repository.is_dir():
+        raise FileNotFoundError(f"STRLING_MAVEN_REPOSITORY={repository}")
+    return str(repository), f"-Dmaven.repo.local={repository}"
+
+
 def _run(arguments: Sequence[str], *, cwd: Path, environment: Mapping[str, str]) -> str:
     completed = subprocess.run(
         list(arguments),
@@ -166,9 +176,7 @@ def execute(native_library: Path, repeat_runs: int) -> RuntimeReport:
     maven = _tool("STRLING_MAVEN", ("mvn", "mvn.cmd"))
     gradle = _gradle_tool()
     java = _tool("STRLING_JAVA", ("java", "java.exe"))
-    repository = os.environ.get("STRLING_MAVEN_REPOSITORY")
-    if not repository or not Path(repository).is_dir():
-        raise FileNotFoundError("STRLING_MAVEN_REPOSITORY")
+    _, maven_repository_argument = _maven_repository()
 
     environment = os.environ.copy()
     environment["STRLING_NATIVE_LIBRARY"] = str(native)
@@ -178,7 +186,7 @@ def execute(native_library: Path, repeat_runs: int) -> RuntimeReport:
     evidence_root.mkdir(parents=True)
 
     _run(
-        [maven, "-o", "-B", "-q", "install"],
+        [maven, "-o", "-B", "-q", maven_repository_argument, "install"],
         cwd=ROOT / "bindings/jvm",
         environment=environment,
     )
@@ -188,12 +196,12 @@ def execute(native_library: Path, repeat_runs: int) -> RuntimeReport:
         run_root = evidence_root / f"run-{index + 1}"
         environment["STRLING_JVM_EVIDENCE_DIR"] = str(run_root)
         _run(
-            [maven, "-o", "-B", "-q", "test"],
+            [maven, "-o", "-B", "-q", maven_repository_argument, "test"],
             cwd=ROOT / "bindings/jvm",
             environment=environment,
         )
         _run(
-            [maven, "-o", "-B", "-q", "test"],
+            [maven, "-o", "-B", "-q", maven_repository_argument, "test"],
             cwd=ROOT / "bindings/java",
             environment=environment,
         )

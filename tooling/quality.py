@@ -1750,6 +1750,32 @@ def _print_help() -> None:
     )
 
 
+def _preflight_profile_environment(profile: str) -> None:
+    if profile != "pull-request":
+        return
+    try:
+        try:
+            from tooling.exact_runtime_provision import (
+                ExactRuntimeProvisionError,
+                verify_pull_request_environment,
+            )
+        except ModuleNotFoundError:  # direct tooling/quality.py execution
+            from exact_runtime_provision import (  # type: ignore[no-redef]
+                ExactRuntimeProvisionError,
+                verify_pull_request_environment,
+            )
+
+        verify_pull_request_environment()
+    except (ExactRuntimeProvisionError, OSError, ValueError) as error:
+        raise ConfigurationError(
+            "pull-request exact-environment preflight failed: "
+            f"{error}. Prepare the environment with "
+            'eval "$(python3 -m tooling.exact_runtime_provision '
+            '--print-pull-request-env)" and rerun '
+            "python3 -m tooling.exact_runtime_provision --check-pull-request"
+        ) from error
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     try:
@@ -1773,6 +1799,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         elif operation == PROFILE_OPERATION:
             assert requested_profile is not None
             selected_profile = requested_profile
+            _preflight_profile_environment(selected_profile)
             results = runner.run_profile(selected_profile, requested)
         elif operation == ENVIRONMENT_OPERATION:
             results = runner.run_environment(requested)

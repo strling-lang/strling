@@ -29,6 +29,7 @@ from quality import (  # noqa: E402
     _profile_exit,
     _profile_status,
     _parse_cli,
+    _preflight_profile_environment,
     _render_profile_failure_details,
     host_command,
     version_satisfies,
@@ -1838,6 +1839,26 @@ class ProfileFailureRenderingTests(unittest.TestCase):
 
         self.assertIn("::error title=test@repository::", stdout.getvalue())
         self.assertIn("first line%0Asecond %25 line%0A", stdout.getvalue())
+
+
+class ProfileEnvironmentPreflightTests(unittest.TestCase):
+    def test_pull_request_preflight_fails_before_profile_execution(self) -> None:
+        with patch(
+            "tooling.exact_runtime_provision.verify_pull_request_environment",
+            side_effect=ValueError("STRLING_MAVEN_REPOSITORY is not configured"),
+        ):
+            with self.assertRaisesRegex(
+                ConfigurationError,
+                "pull-request exact-environment preflight failed",
+            ):
+                _preflight_profile_environment("pull-request")
+
+    def test_local_profile_does_not_receive_exact_runtime_preflight(self) -> None:
+        with patch(
+            "tooling.exact_runtime_provision.verify_pull_request_environment"
+        ) as preflight:
+            _preflight_profile_environment("local")
+        preflight.assert_not_called()
 
 
 class EnvironmentValidationTests(unittest.TestCase):

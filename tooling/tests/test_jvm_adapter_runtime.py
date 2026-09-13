@@ -40,6 +40,23 @@ class JvmAdapterRuntimeTests(unittest.TestCase):
                 self.assertEqual("host-gradle", runtime._gradle_tool())
                 tool.assert_called_once_with("STRLING_GRADLE", ("gradle", "gradle.bat"))
 
+    def test_declared_maven_repository_is_forced_on_maven_commands(self) -> None:
+        with TemporaryDirectory() as directory:
+            repository = Path(directory).resolve()
+            with patch.dict(
+                runtime.os.environ,
+                {"STRLING_MAVEN_REPOSITORY": str(repository)},
+                clear=True,
+            ):
+                resolved, argument = runtime._maven_repository()
+            self.assertEqual(str(repository), resolved)
+            self.assertEqual(f"-Dmaven.repo.local={repository}", argument)
+
+    def test_missing_declared_maven_repository_fails_closed(self) -> None:
+        with patch.dict(runtime.os.environ, {}, clear=True):
+            with self.assertRaisesRegex(FileNotFoundError, "STRLING_MAVEN_REPOSITORY"):
+                runtime._maven_repository()
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -65,6 +65,8 @@ scope:
         - tooling/architecture_fitness.py
         - tooling/core_stage_boundaries.py
         - tooling/dependency_license_evidence.py
+        - tooling/exact_runtime_provision.py
+        - tooling/jvm_adapter_runtime.py
         - tooling/local_certification_attestation.py
         - tooling/performance_resource_certification.py
         - tooling/production_certification.py
@@ -72,9 +74,11 @@ scope:
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py
         - tooling/tests/test_dependency_license_evidence.py
+        - tooling/tests/test_exact_runtime_provision.py
         - tooling/tests/test_governance.py
         - tooling/tests/test_launch_readiness.py
         - tooling/tests/test_local_certification_attestation.py
+        - tooling/tests/test_jvm_adapter_runtime.py
         - tooling/tests/test_ecmascript_lowering_architecture.py
         - tooling/tests/test_pcre2_lowering_architecture.py
         - tooling/tests/test_profile_source_identity.py
@@ -153,6 +157,7 @@ change_classification:
         level: compatible
         evidence:
             - Environment version probes close stdin, use the governed 30-second probe-only timeout, and preserve captured stdout and stderr diagnostics; build, test, and certification operation timeouts remain unchanged, and the correction addresses a deterministic qualification hang rather than product semantics.
+            - Pull Request qualification now validates the exact-runtime handoff and governed JVM dependency repository before its first registered operation; Maven remains offline and is explicitly bound to the declared repository, while profile membership, operation timeouts, thresholds, sampling, and product semantics remain unchanged.
             - The enforced generated-family check is restored to the Local/Pull Request offline contract while network-authenticated regeneration remains unchanged.
             - Full and Release remain the unchanged expensive result authorities but execute locally; cloud workflows verify a trusted exact-source attestation instead of recomputing them.
             - The attestation CLI is registered as a reviewed engineering-only tooling parser path; it cannot parse or define STRling language semantics.

@@ -133,6 +133,28 @@ five-profile comparison with no network. CI creates the cache roots explicitly,
 keys the cache by the manifest and provisioner, and uses `--github-env` for the
 documented environment handoff.
 
+Pull Request qualification additionally consumes the prepared JVM dependency
+repository created by the normal dependency/bootstrap step. CI uses its clean
+job-local `$HOME/.m2/repository`; the governed H08 WSL environment uses
+`/root/.m2/repository`. This is repository-managed dependency state, not an
+arbitrary system library or an exact-runtime substitute: the JVM release graph
+fixes the accepted coordinates, Gradle verification metadata fixes the shared
+runtime dependency hashes, and the certifier forces Maven offline against the
+declared repository.
+
+Before starting a Pull Request profile, export and validate the complete
+handoff. The preflight verifies both PCRE2 libraries, Node, CPython, the Maven
+repository's governed JVM artifacts, and an offline Maven compile. The profile
+entrypoint repeats this preflight before executing its first registered
+operation, so missing or mismatched inputs cannot surface only at the end of a
+long run.
+
+```bash
+eval "$(python3 -m tooling.exact_runtime_provision --print-pull-request-env)"
+python3 -m tooling.exact_runtime_provision --check-pull-request
+./strling profile pull-request --artifact <fresh-artifact-path>
+```
+
 Renewing a derived runtime identity also uses this producer to update the
 Python runtime corpus and its dependent rewrite-registry digests before the
 registered shared-corpus, standard-library, and portability-matrix generators

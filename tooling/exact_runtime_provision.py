@@ -8,13 +8,16 @@ offline and consume only paths that this command has hash- and identity-checked.
 from __future__ import annotations
 
 import argparse
+import json
 import os
+import shlex
 import shutil
 import subprocess
 import sys
 import tarfile
 import tempfile
 import urllib.request
+import xml.etree.ElementTree as ET
 from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any
@@ -28,6 +31,9 @@ from tooling.exact_runtime_toolchains import (
 )
 
 OWNED_ROOT = Path("/opt/strling-toolchains")
+ROOT = Path(__file__).resolve().parents[1]
+JVM_RELEASE_GRAPH = ROOT / "tests/adapters/3.0/release-graph.json"
+GRADLE_VERIFICATION_METADATA = ROOT / "bindings/kotlin/gradle/verification-metadata.xml"
 
 
 class ExactRuntimeProvisionError(ValueError):
@@ -61,6 +67,171 @@ def runtime_environment(manifest: Mapping[str, Any]) -> dict[str, str]:
             manifest["toolchains"][key]["layout"]["absolute_path"]
         )
         for key in EXPECTED_KEYS
+    }
+
+
+def pull_request_environment(manifest: Mapping[str, Any]) -> dict[str, str]:
+    """Return the supported deterministic Pull Request environment handoff."""
+
+    environment = runtime_environment(manifest)
+    environment.update(
+        {
+            "JAVA_HOME": os.environ.get("JAVA_HOME", "/opt/temurin-11.0.32+9"),
+            "STRLING_MAVEN_REPOSITORY": os.environ.get(
+                "STRLING_MAVEN_REPOSITORY",
+                str(Path.home() / ".m2" / "repository"),
+            ),
+        }
+    )
+    return environment
+
+
+def _verification_hashes(path: Path = GRADLE_VERIFICATION_METADATA) -> dict[str, str]:
+    hashes: dict[str, str] = {}
+    try:
+        root = ET.parse(path).getroot()
+    except (OSError, ET.ParseError) as error:
+        raise ExactRuntimeProvisionError(
+            f"cannot read JVM verification metadata: {path}: {error}"
+        ) from error
+    for component in root.findall(".//{*}component"):
+        group = component.get("group")
+        name = component.get("name")
+        version = component.get("version")
+        if not all((group, name, version)):
+            continue
+        for artifact in component.findall("{*}artifact"):
+            artifact_name = artifact.get("name")
+            sha = artifact.find("{*}sha256")
+            if artifact_name and sha is not None and sha.get("value"):
+                hashes[f"{group}:{name}:{version}:{artifact_name}"] = str(
+                    sha.get("value")
+                )
+    return hashes
+
+
+def _maven_jar(repository: Path, coordinate: str) -> Path:
+    group, name, version = coordinate.split(":")
+    return (
+        repository / Path(*group.split(".")) / name / version / f"{name}-{version}.jar"
+    )
+
+
+def verify_maven_repository(
+    repository: Path,
+    *,
+    release_graph_path: Path = JVM_RELEASE_GRAPH,
+    verification_metadata_path: Path = GRADLE_VERIFICATION_METADATA,
+    run: Any = subprocess.run,
+) -> dict[str, Any]:
+    """Verify the declared offline Maven cache against existing JVM authority."""
+
+    repository = repository.resolve()
+    if not repository.is_dir():
+        raise ExactRuntimeProvisionError(
+            f"STRLING_MAVEN_REPOSITORY is not a directory: {repository}"
+        )
+    try:
+        graph = json.loads(release_graph_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ExactRuntimeProvisionError(
+            f"cannot read JVM release graph: {release_graph_path}: {error}"
+        ) from error
+    roots = graph.get("roots", {}).get("jvm")
+    packages = graph.get("packages")
+    if not isinstance(roots, list) or not isinstance(packages, list):
+        raise ExactRuntimeProvisionError("JVM release graph is malformed")
+    external = {
+        package.get("coordinate")
+        for package in packages
+        if isinstance(package, dict) and package.get("internal") is False
+    }
+    coordinates = sorted(
+        coordinate
+        for coordinate in roots
+        if isinstance(coordinate, str) and coordinate in external
+    )
+    expected_hashes = _verification_hashes(verification_metadata_path)
+    verified: dict[str, str] = {}
+    for coordinate in coordinates:
+        jar = _maven_jar(repository, coordinate)
+        key = f"{coordinate}:{jar.name}"
+        expected = expected_hashes.get(key)
+        if expected is None:
+            raise ExactRuntimeProvisionError(
+                f"JVM dependency has no governed SHA-256: {coordinate}"
+            )
+        if not jar.is_file():
+            raise ExactRuntimeProvisionError(
+                f"Maven repository is missing {coordinate}: {jar}"
+            )
+        observed = file_sha256(jar)
+        if observed != expected:
+            raise ExactRuntimeProvisionError(
+                f"Maven repository artifact SHA-256 differs: {coordinate}"
+            )
+        verified[coordinate] = observed
+    bridge = _maven_jar(repository, "com.strling:strling-jvm:3.0.0")
+    if not bridge.is_file():
+        raise ExactRuntimeProvisionError(
+            "Maven repository is missing prepared com.strling:strling-jvm:3.0.0"
+        )
+    maven = shutil.which("mvn")
+    if maven is None:
+        raise ExactRuntimeProvisionError("mvn is unavailable")
+    command = [
+        maven,
+        "-o",
+        "-B",
+        "-q",
+        f"-Dmaven.repo.local={repository}",
+        "-DskipTests",
+        "test-compile",
+    ]
+    try:
+        completed = run(
+            command,
+            cwd=ROOT / "bindings/jvm",
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=120,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        raise ExactRuntimeProvisionError(
+            f"offline Maven repository probe failed to execute: {error}"
+        ) from error
+    if completed.returncode != 0:
+        diagnostics = (completed.stderr.strip() or completed.stdout.strip())[-4000:]
+        raise ExactRuntimeProvisionError(
+            "offline Maven repository probe failed: " + diagnostics
+        )
+    return {
+        "path": str(repository),
+        "release_graph_fingerprint": graph.get("fingerprint"),
+        "verified_artifacts": verified,
+        "prepared_bridge": "com.strling:strling-jvm:3.0.0",
+        "offline_probe": command,
+    }
+
+
+def verify_pull_request_environment(
+    manifest: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Fail before a Pull Request profile if its exact inputs are unavailable."""
+
+    exact = verify_configured_runtimes(manifest or load_manifest())
+    repository = os.environ.get("STRLING_MAVEN_REPOSITORY")
+    if not repository:
+        raise ExactRuntimeProvisionError("STRLING_MAVEN_REPOSITORY is not configured")
+    return {
+        "status": "passed",
+        "exact_runtimes": exact,
+        "maven_repository": verify_maven_repository(Path(repository)),
     }
 
 
@@ -219,6 +390,9 @@ def main() -> int:
     parser.add_argument("--provision", action="store_true")
     parser.add_argument("--github-env", type=Path)
     parser.add_argument("--print-env", action="store_true")
+    parser.add_argument("--print-pull-request-env", action="store_true")
+    parser.add_argument("--check-pull-request", action="store_true")
+    parser.add_argument("--json", action="store_true")
     parser.add_argument(
         "--execute-adversarial",
         action="store_true",
@@ -232,6 +406,21 @@ def main() -> int:
     args = parser.parse_args()
     manifest = load_manifest()
     environment = runtime_environment(manifest)
+    if args.print_pull_request_env:
+        for name, value in sorted(pull_request_environment(manifest).items()):
+            print(f"export {name}={shlex.quote(value)}")
+        return 0
+    if args.check_pull_request:
+        try:
+            result = verify_pull_request_environment(manifest)
+        except (ExactRuntimeProvisionError, ExactRuntimeToolchainError) as error:
+            print(f"Pull Request exact environment: FAILED: {error}", file=sys.stderr)
+            return 2
+        if args.json:
+            print(json.dumps(result, sort_keys=True))
+        else:
+            print("Pull Request exact environment: PASSED")
+        return 0
     if args.provision:
         result = provision(manifest)
     else:

@@ -320,4 +320,62 @@ no workflow, product code, trust authority, benchmark, or measured baseline.
 No Full sample or Release was started at this candidate. The next clean commit
 must obtain its own complete deterministic qualification before Full.
 
+## Release preparation defect and deterministic requalification
+
+Candidate `58abe48baa916d2b5735d135f654b3ff945d133f` passed all 37 Local
+operations under definition 1.15.0, with evidence fingerprint
+`d71cf62c47777f766387d0e11d799d798f26a049997adf7a17e0e1e921a26afd`.
+An independent audit confirmed the exact clean source, ordered operation
+denominator, aggregate, execution receipt, and fingerprint.
+
+Static preflight then found a deterministic Release preparation defect.
+`materialize_governed_production_inputs` still required the historical
+`artifacts/production-certification` prefix introduced in `1362339f`.
+Commit `f67681b5` had moved that same historical receipt into tracked inputs at
+`tests/architecture/legacy-removal/1.0/source-production-candidate-certification.json`.
+Commit `d1e24c92` updated its formatted-byte hash. The current tracked file
+matches the governed SHA-256
+`d4b90eeca9c3d2d5c82a311ea99b7bd3ed1edf9a0310bcb62f3cb5b780544ab3`,
+but the old prefix check rejects it before Release execution. A bounded
+reproduction confirms that rejection without creating a Git worktree or
+launching any profile.
+
+The running Pull Request profile at `58abe48b` was deliberately stopped at
+2026-09-13 03:15:04 UTC. Its wrapper retained exit 143 and unchanged clean
+source; the separate cancellation record identifies the signaled process
+tree and reason. This is an interrupted, unqualified profile, with no terminal
+aggregate or passing claim. Its log, execution receipt, cancellation record,
+and observations remain under
+`target/codex-tools/h08-candidate-58abe48baa916d2b5735d135f654b3ff945d133f/`.
+No Full or Release was started at that candidate.
+
+The correction verifies Git-tracked historical input directly in the clean
+Release checkout without copying from the external authority tree. Literal
+Git path matching, contained regular-file checks, and the governed hash reject
+untracked, missing, altered, linked, or escaped input. Git errors fail closed.
+The existing ignored historical-input route retains its bounded prefix and
+hash checks, with an explicit destination containment check before copying.
+The inventory, historical bytes, trust registry, pinned verifier, benchmarks,
+baselines, and sampling rules are unchanged.
+
+All 26 focused production-launcher tests pass, including the actual tracked
+inventory path, rejection of missing or altered tracked evidence despite a
+valid external copy, untracked-file rejection, Git failure, and destination
+escape. The retained suite log is
+`target/codex-tools/h08-tracked-input-focused.log`; the failing reproduction is
+`target/codex-tools/h08-tracked-production-input-reproduction/reproduction.json`.
+The generated-artifact registry maps no family to this launcher, its test, or
+this record. Independent review confirms the correction fits existing H08
+scope and requires no new trust authority.
+
+The owner now runs the governed Full command after the agent completes all
+remediation, runtime preparation, and fresh terminal-green Local and Pull
+Request qualification at one clean committed source. The agent must not start
+Full. On the owner's completion message, inspect the authoritative Full
+artifact, atomic evidence, sample ledger, and failed operations before deciding
+whether the same-source independent Release may begin. A sampled failure
+requires proven remediation and a new substantive qualified candidate; an
+unchanged retry is permitted only with preserved proof of zero authenticated
+samples.
+
 **BLOCKED — NO-GO FOR P20-T02.**

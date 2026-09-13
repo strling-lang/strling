@@ -381,7 +381,7 @@ def create_worktree(*, source_sha: str, path: Path) -> None:
 def materialize_governed_production_inputs(
     *, authority_root: Path, worktree: Path
 ) -> list[dict[str, Any]]:
-    """Copy exact ignored historical evidence required by tracked generators."""
+    """Verify tracked historical evidence or copy its exact ignored predecessor."""
 
     inventory_path = worktree / "governance/legacy-removal-inventory.json"
     inventory = load_json(inventory_path)
@@ -397,14 +397,64 @@ def materialize_governed_production_inputs(
             "legacy-removal inventory lacks production-certification identity"
         )
     relative_path = Path(raw_path)
-    required_prefix = ("artifacts", "production-certification")
-    if (
-        relative_path.is_absolute()
-        or ".." in relative_path.parts
-        or relative_path.parts[:2] != required_prefix
-    ):
+    if relative_path.is_absolute() or ".." in relative_path.parts:
         raise ProductionCertificationError(
             f"governed production input has an unsafe path: {raw_path}"
+        )
+    target = worktree / relative_path
+    tracked = capture(
+        [
+            "git",
+            "--no-optional-locks",
+            "--literal-pathspecs",
+            "ls-files",
+            "--error-unmatch",
+            "--",
+            relative_path.as_posix(),
+        ],
+        cwd=worktree,
+    )
+    if tracked.returncode == 0:
+        try:
+            resolved = target.resolve(strict=True)
+        except OSError as error:
+            raise ProductionCertificationError(
+                f"tracked governed production input is unavailable: {raw_path}"
+            ) from error
+        if (
+            target.is_symlink()
+            or not resolved.is_relative_to(worktree.resolve())
+            or not resolved.is_file()
+        ):
+            raise ProductionCertificationError(
+                f"tracked governed production input is not a contained regular file: {raw_path}"
+            )
+        actual_sha256 = _file_sha256(resolved)
+        if actual_sha256 != expected_sha256:
+            raise ProductionCertificationError(
+                "tracked governed production input hash changed: "
+                f"expected {expected_sha256}, found {actual_sha256}"
+            )
+        return [
+            {
+                "path": relative_path.as_posix(),
+                "sha256": actual_sha256,
+                "size_bytes": resolved.stat().st_size,
+                "authority": "hash-bound tracked historical certification evidence",
+            }
+        ]
+    if tracked.returncode != 1:
+        raise ProductionCertificationError(
+            f"could not establish governed production input tracking: {raw_path}"
+        )
+    required_prefix = ("artifacts", "production-certification")
+    if relative_path.parts[:2] != required_prefix:
+        raise ProductionCertificationError(
+            f"governed production input has an unsafe path: {raw_path}"
+        )
+    if target.is_symlink() or not target.resolve().is_relative_to(worktree.resolve()):
+        raise ProductionCertificationError(
+            f"governed production input escapes the worktree: {raw_path}"
         )
     try:
         authority = (authority_root / relative_path).resolve(strict=True)
@@ -423,7 +473,6 @@ def materialize_governed_production_inputs(
             "governed production input hash changed: "
             f"expected {expected_sha256}, found {actual_sha256}"
         )
-    target = worktree / relative_path
     try:
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(authority, target)

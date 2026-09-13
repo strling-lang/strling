@@ -7,6 +7,7 @@ from contextlib import contextmanager
 from hashlib import sha256
 from pathlib import Path
 from shutil import rmtree
+from subprocess import CompletedProcess
 from unittest.mock import patch
 from uuid import uuid4
 
@@ -166,6 +167,191 @@ class ProductionCertificationTests(unittest.TestCase):
             )
             self.assertEqual(payload, (worktree / relative).read_bytes())
             self.assertEqual(sha256(payload).hexdigest(), evidence[0]["sha256"])
+
+    def test_current_tracked_governed_input_is_verified_without_copying(self) -> None:
+        worktree = Path(__file__).resolve().parents[2]
+        inventory = json.loads(
+            (worktree / "governance/legacy-removal-inventory.json").read_text()
+        )
+        source = inventory["source"]
+        relative = source["production_certification_path"]
+        payload = (worktree / relative).read_bytes()
+        with patch(
+            "tooling.production_certification.shutil.copy2",
+            side_effect=AssertionError("tracked evidence must not be copied"),
+        ):
+            evidence = materialize_governed_production_inputs(
+                authority_root=worktree / "missing-external-authority",
+                worktree=worktree,
+            )
+        self.assertEqual(
+            source["production_certification_sha256"], evidence[0]["sha256"]
+        )
+        self.assertEqual(relative, evidence[0]["path"])
+        self.assertEqual(len(payload), evidence[0]["size_bytes"])
+        self.assertEqual(payload, (worktree / relative).read_bytes())
+
+    def test_tracked_governed_input_rejects_missing_corrupt_and_nonregular_files(
+        self,
+    ) -> None:
+        cases = (
+            ("missing", "is unavailable"),
+            ("corrupt", "hash changed"),
+            ("directory", "contained regular file"),
+        )
+        for case, message in cases:
+            with self.subTest(case=case), self.temporary_directory() as directory:
+                worktree = directory / "worktree"
+                authority = directory / "authority"
+                relative = Path("tests/historical/evidence.json")
+                expected = b'{"status":"passed"}\n'
+                inventory = worktree / "governance/legacy-removal-inventory.json"
+                inventory.parent.mkdir(parents=True)
+                inventory.write_text(
+                    json.dumps(
+                        {
+                            "source": {
+                                "production_certification_path": relative.as_posix(),
+                                "production_certification_sha256": sha256(
+                                    expected
+                                ).hexdigest(),
+                            }
+                        }
+                    )
+                )
+                target = worktree / relative
+                target.parent.mkdir(parents=True)
+                if case == "corrupt":
+                    target.write_bytes(b"changed")
+                elif case == "directory":
+                    target.mkdir()
+                (authority / relative).parent.mkdir(parents=True)
+                (authority / relative).write_bytes(expected)
+                with (
+                    patch(
+                        "tooling.production_certification.capture",
+                        return_value=CompletedProcess([], 0, stdout="", stderr=""),
+                    ),
+                    patch(
+                        "tooling.production_certification.shutil.copy2",
+                        side_effect=AssertionError("must not repair tracked evidence"),
+                    ),
+                    self.assertRaisesRegex(RuntimeError, message),
+                ):
+                    materialize_governed_production_inputs(
+                        authority_root=authority, worktree=worktree
+                    )
+
+    def test_tracked_governed_input_rejects_symlink_and_root_escape(self) -> None:
+        worktree = Path(__file__).resolve().parents[2]
+        inventory = json.loads(
+            (worktree / "governance/legacy-removal-inventory.json").read_text()
+        )
+        relative = inventory["source"]["production_certification_path"]
+        target = worktree / relative
+        original_resolve = Path.resolve
+
+        def outside_resolution(path: Path, *args, **kwargs) -> Path:
+            if path == target:
+                return worktree.parent / "outside-evidence.json"
+            return original_resolve(path, *args, **kwargs)
+
+        for case in ("symlink", "escape"):
+            with self.subTest(case=case):
+                mutation = (
+                    patch.object(Path, "is_symlink", return_value=True)
+                    if case == "symlink"
+                    else patch.object(Path, "resolve", outside_resolution)
+                )
+                with (
+                    mutation,
+                    self.assertRaisesRegex(RuntimeError, "contained regular file"),
+                ):
+                    materialize_governed_production_inputs(
+                        authority_root=worktree, worktree=worktree
+                    )
+
+    def test_untracked_existing_input_outside_historical_prefix_is_rejected(
+        self,
+    ) -> None:
+        with self.temporary_directory() as directory:
+            relative = Path("tests/historical/evidence.json")
+            payload = b'{"status":"passed"}\n'
+            (directory / relative).parent.mkdir(parents=True)
+            (directory / relative).write_bytes(payload)
+            inventory = directory / "governance/legacy-removal-inventory.json"
+            inventory.parent.mkdir(parents=True)
+            inventory.write_text(
+                json.dumps(
+                    {
+                        "source": {
+                            "production_certification_path": relative.as_posix(),
+                            "production_certification_sha256": sha256(
+                                payload
+                            ).hexdigest(),
+                        }
+                    }
+                )
+            )
+            with self.assertRaisesRegex(RuntimeError, "unsafe path"):
+                materialize_governed_production_inputs(
+                    authority_root=directory, worktree=directory
+                )
+
+    def test_governed_input_rejects_git_tracking_failure(self) -> None:
+        worktree = Path(__file__).resolve().parents[2]
+        with (
+            patch(
+                "tooling.production_certification.capture",
+                return_value=CompletedProcess([], 128, stdout="", stderr="Git failed"),
+            ),
+            self.assertRaisesRegex(RuntimeError, "could not establish.*tracking"),
+        ):
+            materialize_governed_production_inputs(
+                authority_root=worktree, worktree=worktree
+            )
+
+    def test_ignored_governed_input_rejects_destination_escape(self) -> None:
+        with self.temporary_directory() as directory:
+            worktree = directory / "worktree"
+            relative = Path("artifacts/production-certification/baseline/evidence.json")
+            target = worktree / relative
+            authority = directory / "authority"
+            payload = b'{"status":"passed"}\n'
+            (authority / relative).parent.mkdir(parents=True)
+            (authority / relative).write_bytes(payload)
+            inventory = worktree / "governance/legacy-removal-inventory.json"
+            inventory.parent.mkdir(parents=True)
+            inventory.write_text(
+                json.dumps(
+                    {
+                        "source": {
+                            "production_certification_path": relative.as_posix(),
+                            "production_certification_sha256": sha256(
+                                payload
+                            ).hexdigest(),
+                        }
+                    }
+                )
+            )
+            original_resolve = Path.resolve
+
+            def outside_resolution(path: Path, *args, **kwargs) -> Path:
+                if path == target:
+                    return directory / "outside-evidence.json"
+                return original_resolve(path, *args, **kwargs)
+
+            with (
+                patch.object(Path, "resolve", outside_resolution),
+                patch(
+                    "tooling.production_certification.shutil.copy2",
+                    side_effect=AssertionError("must not write outside worktree"),
+                ),
+                self.assertRaisesRegex(RuntimeError, "escapes the worktree"),
+            ):
+                materialize_governed_production_inputs(
+                    authority_root=authority, worktree=worktree
+                )
 
     def test_governed_input_materialization_rejects_path_escape(self) -> None:
         with self.temporary_directory() as directory:

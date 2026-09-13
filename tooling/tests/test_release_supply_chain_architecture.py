@@ -4,6 +4,8 @@ import json
 import unittest
 from pathlib import Path
 
+from tooling.architecture_fitness import certification_checkout_findings
+
 
 ROOT = Path(__file__).resolve().parents[2]
 MODULE = ROOT / "tooling/release_supply_chain.py"
@@ -143,7 +145,10 @@ class ReleaseSupplyChainArchitectureTests(unittest.TestCase):
         self.assertNotIn(
             "tests/certification/performance-resource/1.0/runner/Cargo.toml", cd
         )
-        self.assertIn("./strling certification verify", cd)
+        findings, _ = certification_checkout_findings(
+            cd, ".github/workflows/cd.yml", pull_request_base=False
+        )
+        self.assertEqual([], findings)
 
     def test_fixture_explicitly_denies_live_and_publication_authority(self) -> None:
         fixture = json.loads(FIXTURE.read_text(encoding="utf-8"))

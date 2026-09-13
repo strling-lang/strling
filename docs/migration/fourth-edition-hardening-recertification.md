@@ -281,4 +281,43 @@ The owner's publication-account amendment applies after H08 closes, beginning
 with P20-T02. It preserves the prerequisite sequence and does not authorize
 public publication, production tags, or integration into `main`.
 
+## Exact-source Pull Request failure and workflow-test correction
+
+Candidate `a76fafb3446c2708224c891ac71b048c61ed10c1` passed all 37 Local
+operations under definition 1.15.0, with evidence fingerprint
+`398da34b279fc9bbacc13c8f31d266bc4bbd89fc55dc25e04dac9b95ab29445e`.
+Its Pull Request profile definition 1.21.0 completed on 2026-09-13 at
+01:21:21 UTC with 78 passed operations and one failure out of 79; no operation
+was waived, unavailable, or incomplete. Its evidence fingerprint is
+`59985e7503903fdda7eb688b09bc5a6aac6f571980914bec6d756acda065fc41`.
+The source and tree remained clean and unchanged throughout both runs.
+
+The only failed operation is `test@repository`: 1,173 unit tests ran with one
+failure and one skip. The captured failure output was truncated by the profile
+reporter. A focused reproduction identifies the obsolete assertion in
+`test_profile_job_prepares_every_governed_component` that still requires
+`./strling certification verify` in CD. The reviewed workflow instead runs the
+isolated verifier from pinned source `f47bd092`, with the candidate supplied
+only as data. All other Pull Request operations passed, including LSP, core,
+interop, binding tests, source identities, architecture fitness, and the strict
+real-engine audit.
+
+The correction replaces the obsolete command-text assertion with the existing
+structured checkout validator. It requires the governed immutable verifier
+checkout, exact candidate event identity, credential isolation, trusted Python
+invocation, and Bash failure propagation. The existing CI prerequisite and CD
+no-recomputation assertions remain. All 53 focused release-supply-chain
+architecture and governance tests pass, including the established negative
+trust-boundary cases. No registered generated family depends on the changed
+test or this record.
+
+The complete profile artifacts and execution receipts remain under
+`target/codex-tools/h08-candidate-a76fafb3446c2708224c891ac71b048c61ed10c1/`.
+The focused failing reproduction and corrected test result are retained in
+`target/codex-tools/h08-workflow-assertion-before.log` and
+`target/codex-tools/h08-workflow-assertion-focused.log`. This correction changes
+no workflow, product code, trust authority, benchmark, or measured baseline.
+No Full sample or Release was started at this candidate. The next clean commit
+must obtain its own complete deterministic qualification before Full.
+
 **BLOCKED — NO-GO FOR P20-T02.**

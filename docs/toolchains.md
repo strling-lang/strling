@@ -49,12 +49,16 @@ from the top-level `tools` inventory. Version policy is therefore declared
 once and reused by every component.
 
 Before a configured quality command executes, the coordinator probes the
-declared root and component tools. A missing executable, failed or unrecognized
-version probe, or hard version mismatch returns `unavailable` and prevents the
-language command from running. A deferred tool is allowed but reported with its
-rationale. A version outside the supported range is allowed only when it also
-matches a separately bounded `transitional_version`; that result is reported
-as `transitional`, never `compatible`.
+declared root and component tools. Probes cannot read interactive input and are
+bounded by `orchestration.version_probe_timeout_seconds`; the limit applies only
+to tool-version inspection, not to quality or certification operations. A
+missing executable, failed, timed-out, or unrecognized version probe, or hard
+version mismatch returns `unavailable` and prevents the language command from
+running. Captured probe diagnostics remain visible in the environment result. A
+deferred tool is allowed but reported with its rationale. A version outside the
+supported range is allowed only when it also matches a separately bounded
+`transitional_version`; that result is reported as `transitional`, never
+`compatible`.
 
 Use the same root interface to inspect an environment:
 

@@ -3,11 +3,13 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import time
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from importlib import import_module
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from typing import cast
 from unittest.mock import patch
 
@@ -159,7 +161,11 @@ def policy(
                 "hygiene": ["alpha"],
             },
         },
-        "orchestration": {"shell": "python3", "runtime": "python3"},
+        "orchestration": {
+            "shell": "python3",
+            "runtime": "python3",
+            "version_probe_timeout_seconds": 15,
+        },
         "tools": {
             "python3": {
                 "resolution": {"model": "constrained", "version": ">=3.8,<4.0"},
@@ -1865,13 +1871,89 @@ class EnvironmentValidationTests(unittest.TestCase):
             stderr="",
         )
 
-        execution = EnvironmentInspector._probe(["python3", "--version"])
+        toolchain = Toolchain(policy(), Path.cwd())
+        execution = EnvironmentInspector(toolchain)._probe(["python3", "--version"])
 
         self.assertEqual(execution.returncode, 0)
         self.assertEqual(
             run.call_args.args[0],
             [str(resolved.absolute()), "--version"],
         )
+        self.assertEqual(subprocess.DEVNULL, run.call_args.kwargs["stdin"])
+        self.assertEqual(15, run.call_args.kwargs["timeout"])
+
+    def test_fast_probe_cannot_read_interactive_input_and_is_accepted(self) -> None:
+        with TemporaryDirectory() as directory:
+            probe = Path(directory) / "fast_probe.py"
+            probe.write_text(
+                "import sys\n"
+                "if sys.stdin.read(1):\n"
+                "    raise SystemExit(9)\n"
+                "print('Python 3.12.4')\n",
+                encoding="utf-8",
+            )
+            data = policy()
+            tools = cast(dict[str, dict[str, object]], data["tools"])
+            tools["python3"]["version_command"] = [
+                sys.executable,
+                str(probe),
+            ]
+            inspector = EnvironmentInspector(
+                Toolchain(data, Path.cwd()),
+                which=lambda _command: sys.executable,
+            )
+
+            result = inspector.check_tool("python3")
+
+        self.assertEqual("compatible", result.status)
+        self.assertEqual("3.12.4", result.actual)
+
+    def test_hung_probe_is_bounded_and_preserves_diagnostics(self) -> None:
+        with TemporaryDirectory() as directory:
+            probe = Path(directory) / "hung_probe.py"
+            probe.write_text(
+                "import sys\n"
+                "import time\n"
+                "print('probe stdout', flush=True)\n"
+                "print('probe stderr', file=sys.stderr, flush=True)\n"
+                "time.sleep(60)\n",
+                encoding="utf-8",
+            )
+            data = policy()
+            orchestration = cast(dict[str, object], data["orchestration"])
+            orchestration["version_probe_timeout_seconds"] = 1
+            tools = cast(dict[str, dict[str, object]], data["tools"])
+            tools["python3"]["version_command"] = [
+                sys.executable,
+                str(probe),
+            ]
+            inspector = EnvironmentInspector(
+                Toolchain(data, Path.cwd()),
+                which=lambda _command: sys.executable,
+            )
+
+            started = time.monotonic()
+            result = inspector.check_tool("python3")
+            elapsed = time.monotonic() - started
+
+        self.assertLess(elapsed, 5)
+        self.assertEqual("unknown", result.status)
+        self.assertEqual(124, result.exit_code)
+        self.assertIn("probe stdout", result.reason or "")
+        self.assertIn("probe stderr", result.reason or "")
+        self.assertIn("timed out after 1 seconds", result.reason or "")
+
+    def test_version_probe_timeout_must_be_a_positive_integer(self) -> None:
+        for invalid in (None, True, 0, -1, 1.5, "15"):
+            with self.subTest(invalid=invalid):
+                data = policy()
+                orchestration = cast(dict[str, object], data["orchestration"])
+                orchestration["version_probe_timeout_seconds"] = invalid
+                with self.assertRaisesRegex(
+                    ConfigurationError,
+                    "version_probe_timeout_seconds must be a positive integer",
+                ):
+                    Toolchain(data, Path.cwd())
 
     def test_supported_constraint_boundaries(self) -> None:
         self.assertTrue(version_satisfies("3.8.0", ">=3.8,<4.0"))

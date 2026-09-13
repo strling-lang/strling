@@ -75,6 +75,7 @@ STRUCTURED_RESULT_CONTRACT_PREFIXES = {
     "certification-result-v1": "certification.",
 }
 PROFILE_FAILURE_OUTPUT_LIMIT = 8_000
+VERSION_PROBE_TIMEOUT_EXIT_CODE = 124
 
 
 class ConfigurationError(ValueError):
@@ -178,6 +179,14 @@ class Toolchain:
     @property
     def tools(self) -> Mapping[str, object]:
         return self.data["tools"]  # type: ignore[return-value]
+
+    @property
+    def version_probe_timeout_seconds(self) -> int:
+        orchestration = self.data["orchestration"]
+        assert isinstance(orchestration, dict)
+        timeout = orchestration["version_probe_timeout_seconds"]
+        assert isinstance(timeout, int) and not isinstance(timeout, bool)
+        return timeout
 
     @property
     def targets(self) -> dict[str, Target]:
@@ -507,6 +516,15 @@ class Toolchain:
                 raise ConfigurationError(
                     f"orchestration.{field_name} references unknown tool '{tool_name}'"
                 )
+        version_probe_timeout = orchestration.get("version_probe_timeout_seconds")
+        if (
+            not isinstance(version_probe_timeout, int)
+            or isinstance(version_probe_timeout, bool)
+            or version_probe_timeout < 1
+        ):
+            raise ConfigurationError(
+                "orchestration.version_probe_timeout_seconds must be a positive integer"
+            )
         target_names: set[str] = set()
         enforced_capabilities: list[tuple[str, str]] = []
         for section_name in ("components", "bindings"):
@@ -866,6 +884,15 @@ class EnvironmentInspector:
             return result
         execution = self.probe(command)
         if execution.returncode != 0:
+            diagnostics = []
+            if execution.stdout.strip():
+                diagnostics.append(f"stdout: {execution.stdout.strip()}")
+            if execution.stderr.strip():
+                diagnostics.append(f"stderr: {execution.stderr.strip()}")
+            reason = "version probe failed"
+            if diagnostics:
+                detail = "; ".join(diagnostics)
+                reason = f"{reason}: {detail[:PROFILE_FAILURE_OUTPUT_LIMIT]}"
             result = ToolResult(
                 name,
                 "unknown",
@@ -873,7 +900,7 @@ class EnvironmentInspector:
                 None,
                 list(command),
                 execution.returncode,
-                "version probe failed",
+                reason,
             )
             self._cache[name] = result
             return result
@@ -982,8 +1009,7 @@ class EnvironmentInspector:
             )
         return match.group(1)
 
-    @staticmethod
-    def _probe(command: Sequence[str]) -> Execution:
+    def _probe(self, command: Sequence[str]) -> Execution:
         arguments = list(command)
         if arguments:
             resolved = shutil.which(arguments[0])
@@ -997,13 +1023,32 @@ class EnvironmentInspector:
                 text=True,
                 encoding="utf-8",
                 errors="replace",
+                stdin=subprocess.DEVNULL,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
+                timeout=self.toolchain.version_probe_timeout_seconds,
                 check=False,
             )
+        except subprocess.TimeoutExpired as exc:
+            stdout = _probe_output(exc.stdout)
+            stderr = _probe_output(exc.stderr)
+            timeout = self.toolchain.version_probe_timeout_seconds
+            separator = "" if not stderr or stderr.endswith("\n") else "\n"
+            stderr = (
+                f"{stderr}{separator}version probe timed out after {timeout} seconds"
+            )
+            return Execution(VERSION_PROBE_TIMEOUT_EXIT_CODE, stdout, stderr)
         except OSError as exc:
             return Execution(127, stderr=str(exc))
         return Execution(completed.returncode, completed.stdout, completed.stderr)
+
+
+def _probe_output(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value
 
 
 Executor = Callable[[Target, str, list[str]], Execution]

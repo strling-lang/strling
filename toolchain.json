@@ -1426,7 +1426,8 @@
     },
     "orchestration": {
         "shell": "bash",
-        "runtime": "python3"
+        "runtime": "python3",
+        "version_probe_timeout_seconds": 30
     },
     "tools": {
         "bash": {

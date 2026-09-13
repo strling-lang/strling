@@ -1844,7 +1844,7 @@ class ProfileFailureRenderingTests(unittest.TestCase):
 class ProfileEnvironmentPreflightTests(unittest.TestCase):
     def test_pull_request_preflight_fails_before_profile_execution(self) -> None:
         with patch(
-            "tooling.exact_runtime_provision.verify_pull_request_environment",
+            "exact_runtime_provision.verify_pull_request_environment",
             side_effect=ValueError("STRLING_MAVEN_REPOSITORY is not configured"),
         ):
             with self.assertRaisesRegex(
@@ -1855,7 +1855,7 @@ class ProfileEnvironmentPreflightTests(unittest.TestCase):
 
     def test_local_profile_does_not_receive_exact_runtime_preflight(self) -> None:
         with patch(
-            "tooling.exact_runtime_provision.verify_pull_request_environment"
+            "exact_runtime_provision.verify_pull_request_environment"
         ) as preflight:
             _preflight_profile_environment("local")
         preflight.assert_not_called()

@@ -12,6 +12,7 @@ import subprocess
 import sys
 import uuid
 from dataclasses import dataclass, field
+from importlib import import_module
 from pathlib import Path
 from certification import (
     CertificationError,
@@ -1754,19 +1755,14 @@ def _preflight_profile_environment(profile: str) -> None:
     if profile != "pull-request":
         return
     try:
-        try:
-            from tooling.exact_runtime_provision import (
-                ExactRuntimeProvisionError,
-                verify_pull_request_environment,
-            )
-        except ModuleNotFoundError:  # direct tooling/quality.py execution
-            from exact_runtime_provision import (  # type: ignore[no-redef]
-                ExactRuntimeProvisionError,
-                verify_pull_request_environment,
-            )
-
-        verify_pull_request_environment()
-    except (ExactRuntimeProvisionError, OSError, ValueError) as error:
+        module_name = (
+            "tooling.exact_runtime_provision"
+            if __package__
+            else "exact_runtime_provision"
+        )
+        exact_runtime_provision = import_module(module_name)
+        exact_runtime_provision.verify_pull_request_environment()
+    except (ImportError, OSError, ValueError) as error:
         raise ConfigurationError(
             "pull-request exact-environment preflight failed: "
             f"{error}. Prepare the environment with "

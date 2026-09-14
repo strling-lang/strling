@@ -3,9 +3,11 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
+import threading
 import time
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
+from datetime import datetime
 from io import StringIO
 from importlib import import_module
 from pathlib import Path
@@ -22,6 +24,7 @@ from quality import (  # noqa: E402
     EnvironmentInspector,
     Execution,
     OperationResult,
+    ProfileProgress,
     QualityRunner,
     Target,
     Toolchain,
@@ -32,6 +35,7 @@ from quality import (  # noqa: E402
     _preflight_profile_environment,
     _render_profile_failure_details,
     host_command,
+    main as quality_main,
     version_satisfies,
 )
 
@@ -50,6 +54,16 @@ OPERATIONS = (
     "build",
     "test",
 )
+
+
+class FlushTrackingStream(StringIO):
+    def __init__(self) -> None:
+        super().__init__()
+        self.flush_count = 0
+
+    def flush(self) -> None:
+        self.flush_count += 1
+        super().flush()
 
 
 def target_config(
@@ -1699,6 +1713,274 @@ class QualityRoutingTests(unittest.TestCase):
                     [result.as_dict() for result in first],
                     [result.as_dict() for result in second],
                 )
+
+    def test_profile_progress_is_live_ordered_and_preserves_results(self) -> None:
+        alpha = target_config(
+            {"lint": "configured", "typecheck": "configured", "build": "configured"},
+            {
+                "lint": ["fixture-fast"],
+                "typecheck": ["fixture-delayed"],
+                "build": ["fixture-failure"],
+            },
+        )
+        data = policy(alpha=alpha)
+        members = [
+            {"operation": "lint", "targets": ["alpha"]},
+            {"operation": "typecheck", "targets": ["alpha"]},
+            {"operation": "build", "targets": ["alpha"]},
+        ]
+        policy_data = cast(dict[str, object], data["policy"])
+        profiles = cast(dict[str, object], policy_data["profiles"])
+        for raw_profile in profiles.values():
+            cast(dict[str, object], raw_profile)["operations"] = members
+
+        delayed_started = threading.Event()
+        release_delayed = threading.Event()
+
+        def execute(_target: Target, operation: str, _command: list[str]) -> Execution:
+            if operation == "lint":
+                return Execution(0, stdout="fast stdout\n")
+            if operation == "typecheck":
+                delayed_started.set()
+                if not release_delayed.wait(2):
+                    return Execution(9, stderr="fixture wait timed out\n")
+                return Execution(0, stdout="delayed stdout\n")
+            return Execution(7, stdout="failure stdout\n", stderr="failure stderr\n")
+
+        with TemporaryDirectory() as directory:
+            ledger = Path(directory) / "profile-local.progress.jsonl"
+            stream = FlushTrackingStream()
+            progress = ProfileProgress(
+                profile="local",
+                source={"commit": "a" * 40, "dirty": False},
+                ledger_path=ledger,
+                display_path="target/profile-local.progress.jsonl",
+                stream=stream,
+                heartbeat_enabled=True,
+                heartbeat_seconds=0.02,
+            )
+            runner = QualityRunner(Toolchain(data, Path.cwd()), execute)
+            completed: list[OperationResult] = []
+
+            def run_profile() -> None:
+                completed.extend(runner.run_profile("local", None, progress=progress))
+                progress.profile_terminal(_profile_status(completed))
+
+            worker = threading.Thread(target=run_profile)
+            worker.start()
+            self.assertTrue(delayed_started.wait(1))
+            self.assertTrue(worker.is_alive())
+            live_output = stream.getvalue()
+            self.assertIn("Certification Local Started", live_output)
+            self.assertIn("Stage 1/3 Started: lint@alpha", live_output)
+            self.assertIn("Stage 1/3 Completed: lint@alpha [PASSED", live_output)
+            self.assertIn("Stage 2/3 Started: typecheck@alpha", live_output)
+            self.assertNotIn("Stage 2/3 Completed", live_output)
+
+            live_records = [
+                json.loads(line)
+                for line in ledger.read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual("certification_started", live_records[0]["event"])
+            self.assertEqual(
+                "stage_started",
+                [
+                    record
+                    for record in live_records
+                    if record.get("result_id") == "typecheck@alpha"
+                ][0]["event"],
+            )
+            self.assertFalse(
+                any(
+                    record["event"] == "stage_terminal"
+                    and record.get("result_id") == "typecheck@alpha"
+                    for record in live_records
+                )
+            )
+
+            deadline = time.monotonic() + 1
+            while "Stage 2/3 Still Running" not in stream.getvalue():
+                self.assertLess(time.monotonic(), deadline)
+                time.sleep(0.01)
+            release_delayed.set()
+            worker.join(2)
+            self.assertFalse(worker.is_alive())
+
+            self.assertEqual(
+                ["passed", "passed", "failed"], [r.status for r in completed]
+            )
+            self.assertEqual("fast stdout\n", completed[0].stdout)
+            self.assertEqual("delayed stdout\n", completed[1].stdout)
+            self.assertEqual("failure stdout\n", completed[2].stdout)
+            self.assertEqual("failure stderr\n", completed[2].stderr)
+            self.assertEqual(1, _profile_exit(completed))
+
+            terminal_output = stream.getvalue()
+            self.assertIn(
+                "Stage 2/3 Completed: typecheck@alpha [PASSED", terminal_output
+            )
+            self.assertIn("Stage 3/3 Failed: build@alpha [FAILED", terminal_output)
+            self.assertIn("Certification Local Failed [FAILED", terminal_output)
+            self.assertGreater(stream.flush_count, 0)
+
+            records = [
+                json.loads(line)
+                for line in ledger.read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual("certification_terminal", records[-1]["event"])
+            self.assertEqual("failed", records[-1]["status"])
+            for record in records:
+                self.assertEqual("local", record["profile"])
+                self.assertEqual("a" * 40, record["source_sha"])
+                self.assertFalse(record["source_dirty"])
+                for key, value in record.items():
+                    if key.endswith("timestamp") and value is not None:
+                        parsed = datetime.fromisoformat(value)
+                        self.assertIsNotNone(parsed.utcoffset())
+            stage_records = [
+                record for record in records if record["event"].startswith("stage_")
+            ]
+            self.assertEqual({1, 2, 3}, {r["operation_ordinal"] for r in stage_records})
+            self.assertTrue(
+                all(record["operation_count"] == 3 for record in stage_records)
+            )
+
+    def test_interrupted_progress_ledger_retains_parseable_completed_lines(
+        self,
+    ) -> None:
+        with TemporaryDirectory() as directory:
+            ledger = Path(directory) / "profile-local.progress.jsonl"
+            progress = ProfileProgress(
+                profile="local",
+                source={"commit": "b" * 40, "dirty": True},
+                ledger_path=ledger,
+                display_path="profile-local.progress.jsonl",
+                stream=FlushTrackingStream(),
+                heartbeat_enabled=False,
+            )
+            progress.profile_started(1)
+            progress.stage_started(
+                ordinal=1,
+                count=1,
+                operation_id="test",
+                result_id="test@alpha",
+            )
+            progress.close()
+
+            records = [
+                json.loads(line)
+                for line in ledger.read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual(
+                ["certification_started", "stage_started"],
+                [record["event"] for record in records],
+            )
+            self.assertTrue(all(record["source_dirty"] for record in records))
+
+    def test_unavailable_progress_ledger_preserves_console_telemetry(self) -> None:
+        with TemporaryDirectory() as directory:
+            ledger = Path(directory) / "profile-local.progress.jsonl"
+            ledger.write_text("existing evidence\n", encoding="utf-8")
+            stream = FlushTrackingStream()
+            progress = ProfileProgress(
+                profile="local",
+                source={"commit": "d" * 40, "dirty": False},
+                ledger_path=ledger,
+                display_path="profile-local.progress.jsonl",
+                stream=stream,
+                heartbeat_enabled=False,
+            )
+
+            progress.profile_started(1)
+            timing = progress.stage_started(
+                ordinal=1,
+                count=1,
+                operation_id="lint",
+                result_id="lint@alpha",
+            )
+            progress.stage_terminal(timing, "passed")
+            progress.profile_terminal("passed")
+
+            output = stream.getvalue()
+            self.assertIn("Progress ledger unavailable", output)
+            self.assertIn("Certification Local Started", output)
+            self.assertIn("Stage 1/1 Completed: lint@alpha [PASSED", output)
+            self.assertIn("Certification Local Completed [PASSED", output)
+            self.assertEqual("existing evidence\n", ledger.read_text(encoding="utf-8"))
+
+    def test_json_profile_keeps_telemetry_off_stdout(self) -> None:
+        alpha = target_config(
+            {"lint": "configured"},
+            {"lint": ["fixture-failure"]},
+        )
+        data = policy(alpha=alpha)
+        members = [{"operation": "lint", "targets": ["alpha"]}]
+        policy_data = cast(dict[str, object], data["policy"])
+        profiles = cast(dict[str, object], policy_data["profiles"])
+        for raw_profile in profiles.values():
+            cast(dict[str, object], raw_profile)["operations"] = members
+        toolchain = Toolchain(data, Path.cwd())
+
+        def run_profile(
+            _runner: QualityRunner,
+            _name: str,
+            _requested: str | None,
+            *,
+            progress: ProfileProgress | None = None,
+        ) -> list[OperationResult]:
+            assert progress is not None
+            progress.profile_started(1)
+            timing = progress.stage_started(
+                ordinal=1,
+                count=1,
+                operation_id="lint",
+                result_id="lint@alpha",
+            )
+            result = OperationResult(
+                "lint",
+                "alpha",
+                "failed",
+                ["fixture-failure"],
+                7,
+                "command exited with status 7",
+                stdout="captured stdout\n",
+                stderr="captured stderr\n",
+            )
+            progress.stage_terminal(timing, result.status)
+            return [result]
+
+        with TemporaryDirectory() as directory:
+            artifact = Path(directory) / "profile-local.json"
+            stdout = StringIO()
+            stderr = StringIO()
+            with (
+                patch("quality.Toolchain.load", return_value=toolchain),
+                patch("quality.QualityRunner.run_profile", new=run_profile),
+                patch(
+                    "quality.repository_state",
+                    return_value={"commit": "c" * 40, "dirty": False},
+                ),
+                redirect_stdout(stdout),
+                redirect_stderr(stderr),
+            ):
+                exit_code = quality_main(
+                    ["profile", "local", "--json", "--artifact", str(artifact)]
+                )
+
+            self.assertEqual(1, exit_code)
+            payload = json.loads(stdout.getvalue())
+            self.assertEqual(
+                "failed", payload["deterministic_evidence"]["aggregate"]["status"]
+            )
+            self.assertNotIn("Certification Local", stdout.getvalue())
+            self.assertIn("Certification Local Started", stderr.getvalue())
+            self.assertIn("Certification Local Failed [FAILED", stderr.getvalue())
+            ledger = artifact.with_suffix(".progress.jsonl")
+            records = [
+                json.loads(line)
+                for line in ledger.read_text(encoding="utf-8").splitlines()
+            ]
+            self.assertEqual("certification_terminal", records[-1]["event"])
 
     def test_profile_aggregate_status_precedence(self) -> None:
         def result(status: str) -> OperationResult:

@@ -10,8 +10,11 @@ import shlex
 import shutil
 import subprocess
 import sys
+import threading
+import time
 import uuid
 from dataclasses import dataclass, field
+from datetime import datetime
 from importlib import import_module
 from pathlib import Path
 from certification import (
@@ -31,7 +34,7 @@ from structured_operation_execution import (
     validate_result_directory,
 )
 
-from typing import Callable, Iterable, Mapping, Sequence, cast
+from typing import Callable, Iterable, Mapping, Sequence, TextIO, cast
 
 
 QUALITY_OPERATIONS = (
@@ -77,6 +80,276 @@ STRUCTURED_RESULT_CONTRACT_PREFIXES = {
 }
 PROFILE_FAILURE_OUTPUT_LIMIT = 8_000
 VERSION_PROBE_TIMEOUT_EXIT_CODE = 124
+PROFILE_HEARTBEAT_SECONDS = 5 * 60
+
+
+def _local_timestamp() -> str:
+    """Return a timezone-aware wall-clock timestamp for operator telemetry."""
+
+    return datetime.now().astimezone().isoformat(timespec="seconds")
+
+
+def _format_elapsed(seconds: float) -> str:
+    bounded = max(0.0, seconds)
+    if bounded < 60:
+        return f"{bounded:.1f}s"
+    total_seconds = int(bounded)
+    minutes, remaining = divmod(total_seconds, 60)
+    if minutes < 60:
+        return f"{minutes}m{remaining:02d}s"
+    hours, minutes = divmod(minutes, 60)
+    return f"{hours}h{minutes:02d}m{remaining:02d}s"
+
+
+def _terminal_event(status: str) -> str:
+    return {
+        "passed": "Completed",
+        "failed": "Failed",
+        "unavailable": "Unavailable",
+        "incomplete": "Incomplete",
+        "waived": "Waived",
+        "not_applicable": "Completed",
+        "not_yet_configured": "Incomplete",
+        "not_yet_enforceable": "Incomplete",
+    }.get(status, "Failed")
+
+
+@dataclass
+class StageProgress:
+    profile: str
+    ordinal: int
+    count: int
+    operation_id: str
+    result_id: str
+    start_timestamp: str
+    started_monotonic: float
+    stop_heartbeat: threading.Event = field(default_factory=threading.Event)
+    heartbeat: threading.Thread | None = None
+
+
+class ProfileProgress:
+    """Emit flushed operator progress and an append-safe JSON Lines ledger."""
+
+    def __init__(
+        self,
+        *,
+        profile: str,
+        source: Mapping[str, object],
+        ledger_path: Path,
+        display_path: str,
+        stream: TextIO,
+        heartbeat_enabled: bool,
+        heartbeat_seconds: float = PROFILE_HEARTBEAT_SECONDS,
+        wall_clock: Callable[[], str] = _local_timestamp,
+        monotonic_clock: Callable[[], float] = time.monotonic,
+    ) -> None:
+        source_sha = source.get("commit")
+        source_dirty = source.get("dirty")
+        if not isinstance(source_sha, str) or not isinstance(source_dirty, bool):
+            raise ConfigurationError("profile progress requires repository identity")
+        self.profile = profile
+        self.source_sha = source_sha
+        self.source_dirty = source_dirty
+        self.ledger_path: Path | None = ledger_path
+        self.display_path = display_path
+        self.stream = stream
+        self.heartbeat_enabled = heartbeat_enabled
+        self.heartbeat_seconds = heartbeat_seconds
+        self.wall_clock = wall_clock
+        self.monotonic_clock = monotonic_clock
+        self._write_lock = threading.Lock()
+        self._output_lock = threading.Lock()
+        self._active: list[StageProgress] = []
+        self._profile_start_timestamp: str | None = None
+        self._profile_started_monotonic: float | None = None
+        self._profile_terminal = False
+        try:
+            ledger_path.parent.mkdir(parents=True, exist_ok=True)
+            descriptor = os.open(
+                ledger_path,
+                os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+                0o600,
+            )
+            os.close(descriptor)
+        except OSError as exc:
+            self.ledger_path = None
+            self._emit(f"Progress ledger unavailable: {display_path} ({exc})")
+
+    def _emit(self, message: str, *, timestamp: str | None = None) -> None:
+        observed = timestamp or self.wall_clock()
+        with self._output_lock:
+            print(f"[{observed}] {message}", file=self.stream, flush=True)
+
+    def _record(self, record: Mapping[str, object]) -> None:
+        path = self.ledger_path
+        if path is None:
+            return
+        payload = (
+            json.dumps(record, sort_keys=True, separators=(",", ":")) + "\n"
+        ).encode("utf-8")
+        try:
+            with self._write_lock:
+                descriptor = os.open(path, os.O_WRONLY | os.O_APPEND)
+                try:
+                    written = os.write(descriptor, payload)
+                    if written != len(payload):
+                        raise OSError("partial progress-ledger append")
+                    os.fsync(descriptor)
+                finally:
+                    os.close(descriptor)
+        except OSError as exc:
+            self.ledger_path = None
+            self._emit(f"Progress ledger unavailable: {self.display_path} ({exc})")
+
+    def _identity(self) -> dict[str, object]:
+        return {
+            "profile": self.profile,
+            "source_sha": self.source_sha,
+            "source_dirty": self.source_dirty,
+        }
+
+    def profile_started(self, operation_count: int) -> None:
+        timestamp = self.wall_clock()
+        self._profile_start_timestamp = timestamp
+        self._profile_started_monotonic = self.monotonic_clock()
+        title = self.profile.replace("-", " ").title()
+        self._emit(f"Certification {title} Started", timestamp=timestamp)
+        if self.ledger_path is not None:
+            self._emit(f"Progress ledger: {self.display_path}")
+        self._record(
+            {
+                **self._identity(),
+                "event": "certification_started",
+                "operation_count": operation_count,
+                "start_timestamp": timestamp,
+            }
+        )
+
+    def stage_started(
+        self,
+        *,
+        ordinal: int,
+        count: int,
+        operation_id: str,
+        result_id: str,
+    ) -> StageProgress:
+        timestamp = self.wall_clock()
+        progress = StageProgress(
+            profile=self.profile,
+            ordinal=ordinal,
+            count=count,
+            operation_id=operation_id,
+            result_id=result_id,
+            start_timestamp=timestamp,
+            started_monotonic=self.monotonic_clock(),
+        )
+        self._active.append(progress)
+        self._emit(f"Stage {ordinal}/{count} Started: {result_id}", timestamp=timestamp)
+        self._record(
+            {
+                **self._identity(),
+                "event": "stage_started",
+                "operation_ordinal": ordinal,
+                "operation_count": count,
+                "operation_id": operation_id,
+                "result_id": result_id,
+                "start_timestamp": timestamp,
+            }
+        )
+        if self.heartbeat_enabled and self.heartbeat_seconds > 0:
+            progress.heartbeat = threading.Thread(
+                target=self._heartbeat,
+                args=(progress,),
+                name=f"strling-progress-{ordinal}",
+                daemon=True,
+            )
+            progress.heartbeat.start()
+        return progress
+
+    def _heartbeat(self, progress: StageProgress) -> None:
+        while not progress.stop_heartbeat.wait(self.heartbeat_seconds):
+            timestamp = self.wall_clock()
+            elapsed = max(0.0, self.monotonic_clock() - progress.started_monotonic)
+            self._emit(
+                f"Stage {progress.ordinal}/{progress.count} Still Running: "
+                f"{progress.result_id} [elapsed {_format_elapsed(elapsed)}]",
+                timestamp=timestamp,
+            )
+            self._record(
+                {
+                    **self._identity(),
+                    "event": "stage_heartbeat",
+                    "operation_ordinal": progress.ordinal,
+                    "operation_count": progress.count,
+                    "operation_id": progress.operation_id,
+                    "result_id": progress.result_id,
+                    "start_timestamp": progress.start_timestamp,
+                    "timestamp": timestamp,
+                    "elapsed_seconds": round(elapsed, 3),
+                }
+            )
+
+    def stage_terminal(self, progress: StageProgress, status: str) -> None:
+        progress.stop_heartbeat.set()
+        if progress.heartbeat is not None:
+            progress.heartbeat.join()
+        if progress in self._active:
+            self._active.remove(progress)
+        timestamp = self.wall_clock()
+        elapsed = max(0.0, self.monotonic_clock() - progress.started_monotonic)
+        event = _terminal_event(status)
+        self._emit(
+            f"Stage {progress.ordinal}/{progress.count} {event}: "
+            f"{progress.result_id} [{status.upper()}, {_format_elapsed(elapsed)}]",
+            timestamp=timestamp,
+        )
+        self._record(
+            {
+                **self._identity(),
+                "event": "stage_terminal",
+                "operation_ordinal": progress.ordinal,
+                "operation_count": progress.count,
+                "operation_id": progress.operation_id,
+                "result_id": progress.result_id,
+                "start_timestamp": progress.start_timestamp,
+                "terminal_timestamp": timestamp,
+                "status": status,
+                "elapsed_seconds": round(elapsed, 3),
+            }
+        )
+
+    def profile_terminal(self, status: str) -> None:
+        if self._profile_terminal:
+            return
+        self._profile_terminal = True
+        self.close()
+        timestamp = self.wall_clock()
+        started = self._profile_started_monotonic
+        elapsed = 0.0 if started is None else max(0.0, self.monotonic_clock() - started)
+        title = self.profile.replace("-", " ").title()
+        event = _terminal_event(status)
+        self._emit(
+            f"Certification {title} {event} "
+            f"[{status.upper()}, {_format_elapsed(elapsed)}]",
+            timestamp=timestamp,
+        )
+        self._record(
+            {
+                **self._identity(),
+                "event": "certification_terminal",
+                "start_timestamp": self._profile_start_timestamp,
+                "terminal_timestamp": timestamp,
+                "status": status,
+                "elapsed_seconds": round(elapsed, 3),
+            }
+        )
+
+    def close(self) -> None:
+        for progress in list(self._active):
+            progress.stop_heartbeat.set()
+            if progress.heartbeat is not None:
+                progress.heartbeat.join()
+        self._active.clear()
 
 
 class ConfigurationError(ValueError):
@@ -88,6 +361,14 @@ class Target:
     name: str
     kind: str
     config: Mapping[str, object]
+
+
+@dataclass(frozen=True)
+class ProfileStage:
+    operation: str
+    component: str
+    definition: Mapping[str, object] | None = None
+    target: Target | None = None
 
 
 @dataclass(frozen=True)
@@ -1191,20 +1472,24 @@ class QualityRunner:
     def run_aggregate(self, name: str, requested: str | None) -> list[OperationResult]:
         return self.run_profile(self.toolchain.aggregate_profile(name), requested)
 
-    def run_profile(self, name: str, requested: str | None) -> list[OperationResult]:
+    def _profile_stages(self, name: str, requested: str | None) -> list[ProfileStage]:
         profile = self.toolchain.profile(name)
         members = profile["operations"]
         assert isinstance(members, list)
-        results: list[OperationResult] = []
+        stages: list[ProfileStage] = []
         for member in members:
             assert isinstance(member, dict)
             operation = member["operation"]
             assert isinstance(operation, str)
             canonical = self.toolchain.operation(operation)
             if canonical["kind"] == "repository":
-                results.append(
-                    self.run_repository_operation(
-                        operation, canonical, certification_profile=name
+                component = canonical["component"]
+                assert isinstance(component, str)
+                stages.append(
+                    ProfileStage(
+                        operation=operation,
+                        component=component,
+                        definition=canonical,
                     )
                 )
                 continue
@@ -1213,7 +1498,55 @@ class QualityRunner:
             targets = self.toolchain.select(
                 requested, configured_targets if requested is None else None
             )
-            results.extend(self.run_leaf(operation, target) for target in targets)
+            stages.extend(
+                ProfileStage(
+                    operation=operation,
+                    component=target.name,
+                    target=target,
+                )
+                for target in targets
+            )
+        return stages
+
+    def run_profile(
+        self,
+        name: str,
+        requested: str | None,
+        *,
+        progress: ProfileProgress | None = None,
+    ) -> list[OperationResult]:
+        stages = self._profile_stages(name, requested)
+        results: list[OperationResult] = []
+        if progress is not None:
+            progress.profile_started(len(stages))
+        for ordinal, stage in enumerate(stages, start=1):
+            timing = (
+                progress.stage_started(
+                    ordinal=ordinal,
+                    count=len(stages),
+                    operation_id=stage.operation,
+                    result_id=f"{stage.operation}@{stage.component}",
+                )
+                if progress is not None
+                else None
+            )
+            try:
+                if stage.definition is not None:
+                    result = self.run_repository_operation(
+                        stage.operation,
+                        stage.definition,
+                        certification_profile=name,
+                    )
+                else:
+                    assert stage.target is not None
+                    result = self.run_leaf(stage.operation, stage.target)
+            except BaseException:
+                if progress is not None and timing is not None:
+                    progress.stage_terminal(timing, "failed")
+                raise
+            results.append(result)
+            if progress is not None and timing is not None:
+                progress.stage_terminal(timing, result.status)
         return results
 
     def run_repository_operation(
@@ -1772,8 +2105,28 @@ def _preflight_profile_environment(profile: str) -> None:
         ) from error
 
 
+def _profile_progress_path(
+    *,
+    root: Path,
+    profile: str,
+    source_sha: str,
+    artifact_output: str | None,
+) -> tuple[Path, str]:
+    if artifact_output is not None:
+        requested = Path(artifact_output)
+        relative = requested.with_suffix(".progress.jsonl")
+    else:
+        relative = (
+            Path("target/certification/progress")
+            / f"profile-{profile}-{source_sha}-{uuid.uuid4().hex}.progress.jsonl"
+        )
+    resolved = relative if relative.is_absolute() else root / relative
+    return resolved, relative.as_posix()
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
+    progress: ProfileProgress | None = None
     try:
         (
             operation,
@@ -1791,12 +2144,33 @@ def main(argv: Sequence[str] | None = None) -> int:
         selected_profile: str | None = None
         if operation in AGGREGATE_OPERATIONS:
             selected_profile = toolchain.aggregate_profile(operation)
-            results = runner.run_profile(selected_profile, requested)
         elif operation == PROFILE_OPERATION:
             assert requested_profile is not None
             selected_profile = requested_profile
             _preflight_profile_environment(selected_profile)
-            results = runner.run_profile(selected_profile, requested)
+        if selected_profile is not None:
+            source = repository_state(root)
+            source_sha = source["commit"]
+            assert isinstance(source_sha, str)
+            ledger_path, display_path = _profile_progress_path(
+                root=root,
+                profile=selected_profile,
+                source_sha=source_sha,
+                artifact_output=artifact_output,
+            )
+            progress = ProfileProgress(
+                profile=selected_profile,
+                source=source,
+                ledger_path=ledger_path,
+                display_path=display_path,
+                stream=sys.stderr if json_output else sys.stdout,
+                heartbeat_enabled=selected_profile in ("local", "pull-request"),
+            )
+            results = runner.run_profile(
+                selected_profile,
+                requested,
+                progress=progress,
+            )
         elif operation == ENVIRONMENT_OPERATION:
             results = runner.run_environment(requested)
         else:
@@ -1816,6 +2190,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             )
             if artifact_output is not None:
                 write_certification_artifact(Path(artifact_output), artifact)
+            assert progress is not None
+            progress.profile_terminal(status)
             if json_output:
                 print(json.dumps(artifact, sort_keys=True))
             else:
@@ -1839,8 +2215,14 @@ def main(argv: Sequence[str] | None = None) -> int:
             _render_human(operation, results, [])
         return exit_code
     except (CertificationError, ConfigurationError) as exc:
+        if progress is not None:
+            progress.profile_terminal("failed")
         print(f"Error: {exc}", file=sys.stderr)
         return 2
+    except BaseException:
+        if progress is not None:
+            progress.profile_terminal("failed")
+        raise
 
 
 if __name__ == "__main__":

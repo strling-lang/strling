@@ -227,6 +227,19 @@ capability or one repository-wide command, declares whether it may use the
 network, and, where applicable, names its structured result contract. Profile
 membership never reimplements an operation.
 
+Every profile emits flushed, timezone-aware progress before and after each
+registered result ID. When `--artifact` is supplied, the runner writes the same
+events incrementally to the adjacent `<artifact-stem>.progress.jsonl` ledger;
+without an artifact path it selects a unique path under
+`target/certification/progress/`. Each JSON Lines record binds the starting
+source SHA and dirty state, profile, operation ordinal and denominator, result
+ID, timestamps, terminal status, and monotonic elapsed duration. JSON output
+keeps its single-document stdout contract by sending live progress to stderr.
+Local and Pull Request operations also emit a conservative five-minute
+still-running heartbeat. Full and Release retain operation-start visibility but
+disable periodic heartbeats so the profile runner adds no timed wake-up during
+authenticated performance sampling.
+
 `documentation_integrity` is an offline repository operation in every profile.
 It validates tracked Markdown local references, executes the governed LSP
 parser examples with their expected exit semantics, and checks that their

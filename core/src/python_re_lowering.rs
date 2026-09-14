@@ -361,15 +361,7 @@ pub fn lower_python_re(
     target: &TargetProfile,
     portability: &PortabilityPlan,
 ) -> Result<PythonReLoweringPlan, PythonReLoweringFailure> {
-    validate_semantic_input(input)?;
-    if let Err(errors) = target.validate() {
-        return Err(failure(
-            input,
-            PythonReLoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("Python re target profile is invalid: {errors}"),
-        ));
-    }
+    validate_semantic_input(input, portability)?;
     let target_profile = target.reference().map_err(|errors| {
         failure(
             input,
@@ -392,7 +384,7 @@ pub fn lower_python_re_for_reference(
     profiles: &TargetProfileSet,
     portability: &PortabilityPlan,
 ) -> Result<PythonReLoweringPlan, PythonReLoweringFailure> {
-    validate_semantic_input(input)?;
+    validate_semantic_input(input, portability)?;
     let target = profiles.resolve(target_profile).map_err(|errors| {
         failure(
             input,
@@ -404,8 +396,14 @@ pub fn lower_python_re_for_reference(
     lower_python_re_for_validated_reference(input, target, target_profile, portability)
 }
 
-fn validate_semantic_input(input: &SemanticProgram) -> Result<(), PythonReLoweringFailure> {
+fn validate_semantic_input(
+    input: &SemanticProgram,
+    portability: &PortabilityPlan,
+) -> Result<(), PythonReLoweringFailure> {
     enforce_resource_limits(input)?;
+    if portability.validated_semantic_program == *input {
+        return Ok(());
+    }
     if let Err(errors) = input.validate() {
         return Err(failure(
             input,
@@ -422,7 +420,30 @@ fn validate_semantic_input(input: &SemanticProgram) -> Result<(), PythonReLoweri
             "Python re lowering requires canonical-v1 Semantic IR",
         ));
     }
-    Ok(())
+    let semantic_program = canonical_sha256(input)
+        .map(Sha256Digest::from_bytes)
+        .map_err(|error| {
+            failure(
+                input,
+                PythonReLoweringErrorCode::ProgramFingerprintMismatch,
+                Some(input.root.node_id()),
+                format!("semantic program fingerprint could not be derived: {error}"),
+            )
+        })?;
+    if portability.semantic_program != semantic_program {
+        return Err(failure(
+            input,
+            PythonReLoweringErrorCode::ProgramFingerprintMismatch,
+            Some(input.root.node_id()),
+            "portability plan was not produced for the supplied Semantic IR bytes",
+        ));
+    }
+    Err(failure(
+        input,
+        PythonReLoweringErrorCode::ProgramFingerprintMismatch,
+        Some(input.root.node_id()),
+        "supplied Semantic IR does not match the planner's validated source snapshot",
+    ))
 }
 
 fn lower_python_re_for_validated_reference(
@@ -474,34 +495,27 @@ fn lower_python_re_for_validated_reference(
             "Python re target profile does not certify the semantic contract/specification versions",
         ));
     }
-    if let Err(errors) = portability.validate() {
-        return Err(failure(
-            input,
-            PythonReLoweringErrorCode::InvalidPortabilityPlan,
-            Some(input.root.node_id()),
-            format!("portability plan is malformed: {errors}"),
-        ));
+    if !portability.matches_validated_snapshot() {
+        if let Err(errors) = portability.validate() {
+            return Err(failure(
+                input,
+                PythonReLoweringErrorCode::InvalidPortabilityPlan,
+                Some(input.root.node_id()),
+                format!("portability plan is malformed: {errors}"),
+            ));
+        }
     }
 
-    let semantic_program = canonical_sha256(input)
-        .map(Sha256Digest::from_bytes)
-        .map_err(|error| {
-            failure(
-                input,
-                PythonReLoweringErrorCode::ProgramFingerprintMismatch,
-                Some(input.root.node_id()),
-                format!("semantic program fingerprint could not be derived: {error}"),
-            )
-        })?;
-    if portability.semantic_program != semantic_program {
-        return Err(failure(
-            input,
-            PythonReLoweringErrorCode::ProgramFingerprintMismatch,
-            Some(input.root.node_id()),
-            "portability plan was not produced for the supplied Semantic IR bytes",
-        ));
-    }
+    let semantic_program = portability.validated_semantic_program_identity.clone();
     if portability.target_profile != *target_profile {
+        if let Err(errors) = target.validate() {
+            return Err(failure(
+                input,
+                PythonReLoweringErrorCode::InvalidTargetProfile,
+                Some(input.root.node_id()),
+                format!("Python re target profile is invalid: {errors}"),
+            ));
+        }
         return Err(failure(
             input,
             PythonReLoweringErrorCode::TargetProfileMismatch,

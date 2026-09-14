@@ -350,15 +350,7 @@ pub fn lower_pcre2(
     target: &TargetProfile,
     portability: &PortabilityPlan,
 ) -> Result<Pcre2LoweringPlan, Pcre2LoweringFailure> {
-    validate_semantic_input(input)?;
-    if let Err(errors) = target.validate() {
-        return Err(failure(
-            input,
-            Pcre2LoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("PCRE2 target profile is invalid: {errors}"),
-        ));
-    }
+    validate_semantic_input(input, portability)?;
     let target_profile = target.reference().map_err(|errors| {
         failure(
             input,
@@ -381,7 +373,7 @@ pub fn lower_pcre2_for_reference(
     profiles: &TargetProfileSet,
     portability: &PortabilityPlan,
 ) -> Result<Pcre2LoweringPlan, Pcre2LoweringFailure> {
-    validate_semantic_input(input)?;
+    validate_semantic_input(input, portability)?;
     let target = profiles.resolve(target_profile).map_err(|errors| {
         failure(
             input,
@@ -393,8 +385,14 @@ pub fn lower_pcre2_for_reference(
     lower_pcre2_for_validated_reference(input, target, target_profile, portability)
 }
 
-fn validate_semantic_input(input: &SemanticProgram) -> Result<(), Pcre2LoweringFailure> {
+fn validate_semantic_input(
+    input: &SemanticProgram,
+    portability: &PortabilityPlan,
+) -> Result<(), Pcre2LoweringFailure> {
     enforce_resource_limits(input)?;
+    if portability.validated_semantic_program == *input {
+        return Ok(());
+    }
     if let Err(errors) = input.validate() {
         return Err(failure(
             input,
@@ -411,7 +409,30 @@ fn validate_semantic_input(input: &SemanticProgram) -> Result<(), Pcre2LoweringF
             "PCRE2 lowering requires canonical-v1 Semantic IR",
         ));
     }
-    Ok(())
+    let semantic_program = canonical_sha256(input)
+        .map(Sha256Digest::from_bytes)
+        .map_err(|error| {
+            failure(
+                input,
+                Pcre2LoweringErrorCode::ProgramFingerprintMismatch,
+                Some(input.root.node_id()),
+                format!("semantic program fingerprint could not be derived: {error}"),
+            )
+        })?;
+    if portability.semantic_program != semantic_program {
+        return Err(failure(
+            input,
+            Pcre2LoweringErrorCode::ProgramFingerprintMismatch,
+            Some(input.root.node_id()),
+            "portability plan was not produced for the supplied Semantic IR bytes",
+        ));
+    }
+    Err(failure(
+        input,
+        Pcre2LoweringErrorCode::ProgramFingerprintMismatch,
+        Some(input.root.node_id()),
+        "supplied Semantic IR does not match the planner's validated source snapshot",
+    ))
 }
 
 fn lower_pcre2_for_validated_reference(
@@ -444,34 +465,27 @@ fn lower_pcre2_for_validated_reference(
             "PCRE2 target profile does not certify the semantic contract/specification versions",
         ));
     }
-    if let Err(errors) = portability.validate() {
-        return Err(failure(
-            input,
-            Pcre2LoweringErrorCode::InvalidPortabilityPlan,
-            Some(input.root.node_id()),
-            format!("portability plan is malformed: {errors}"),
-        ));
+    if !portability.matches_validated_snapshot() {
+        if let Err(errors) = portability.validate() {
+            return Err(failure(
+                input,
+                Pcre2LoweringErrorCode::InvalidPortabilityPlan,
+                Some(input.root.node_id()),
+                format!("portability plan is malformed: {errors}"),
+            ));
+        }
     }
 
-    let semantic_program = canonical_sha256(input)
-        .map(Sha256Digest::from_bytes)
-        .map_err(|error| {
-            failure(
-                input,
-                Pcre2LoweringErrorCode::ProgramFingerprintMismatch,
-                Some(input.root.node_id()),
-                format!("semantic program fingerprint could not be derived: {error}"),
-            )
-        })?;
-    if portability.semantic_program != semantic_program {
-        return Err(failure(
-            input,
-            Pcre2LoweringErrorCode::ProgramFingerprintMismatch,
-            Some(input.root.node_id()),
-            "portability plan was not produced for the supplied Semantic IR bytes",
-        ));
-    }
+    let semantic_program = portability.validated_semantic_program_identity.clone();
     if portability.target_profile != *target_profile {
+        if let Err(errors) = target.validate() {
+            return Err(failure(
+                input,
+                Pcre2LoweringErrorCode::InvalidTargetProfile,
+                Some(input.root.node_id()),
+                format!("PCRE2 target profile is invalid: {errors}"),
+            ));
+        }
         return Err(failure(
             input,
             Pcre2LoweringErrorCode::TargetProfileMismatch,
@@ -603,7 +617,7 @@ fn lower_pcre2_for_validated_reference(
             CaseMatching::Insensitive => Pcre2CaseMatching::Insensitive,
         },
         options,
-        captures: captures.ordered.clone(),
+        captures: captures.ordered,
         semantic_requirements,
         requirements,
         applied_rewrites,
@@ -1854,14 +1868,14 @@ fn validate_target_tree(
         .iter()
         .map(|capture| (capture.capture_id.clone(), capture.slot))
         .collect();
-    let mut pending = vec![(root, "$.root".to_owned(), 1_usize)];
+    let mut pending = vec![(root, 1_usize)];
     let mut nodes = 0_usize;
-    while let Some((node, path, depth)) = pending.pop() {
+    while let Some((node, depth)) = pending.pop() {
         nodes += 1;
         if nodes > MAX_PCRE2_LOWERING_NODES || depth > MAX_PCRE2_LOWERING_DEPTH {
             errors.push(ValidationError::new(
                 ValidationCode::InvalidBounds,
-                path,
+                pcre2_node_path(root, node),
                 "PCRE2 target tree exceeds lowering resource limits",
             ));
             return;
@@ -1880,7 +1894,7 @@ fn validate_target_tree(
         {
             errors.push(ValidationError::new(
                 ValidationCode::NonCanonicalOrder,
-                format!("{path}.provenance"),
+                format!("{}.provenance", pcre2_node_path(root, node)),
                 "target node provenance must be nonempty, unique, and sorted",
             ));
         }
@@ -1894,11 +1908,11 @@ fn validate_target_tree(
                 if capture_slots.get(capture_id) != Some(slot) {
                     errors.push(ValidationError::new(
                         ValidationCode::UnresolvedReference,
-                        format!("{path}.capture_id"),
+                        format!("{}.capture_id", pcre2_node_path(root, node)),
                         "target capture does not match the canonical slot table",
                     ));
                 }
-                pending.push((body, format!("{path}.body"), depth + 1));
+                pending.push((body, depth + 1));
             }
             Pcre2Operation::Backreference {
                 slot, capture_id, ..
@@ -1906,25 +1920,25 @@ fn validate_target_tree(
                 if capture_slots.get(capture_id) != Some(slot) {
                     errors.push(ValidationError::new(
                         ValidationCode::UnresolvedReference,
-                        format!("{path}.capture_id"),
+                        format!("{}.capture_id", pcre2_node_path(root, node)),
                         "target backreference does not match the canonical slot table",
                     ));
                 }
             }
             Pcre2Operation::Sequence(children) => {
-                for (index, child) in children.iter().enumerate().rev() {
-                    pending.push((child, format!("{path}.items[{index}]"), depth + 1));
+                for child in children.iter().rev() {
+                    pending.push((child, depth + 1));
                 }
             }
             Pcre2Operation::Alternation(children) => {
-                for (index, child) in children.iter().enumerate().rev() {
-                    pending.push((child, format!("{path}.branches[{index}]"), depth + 1));
+                for child in children.iter().rev() {
+                    pending.push((child, depth + 1));
                 }
             }
             Pcre2Operation::Repeat { body, .. }
             | Pcre2Operation::Lookaround { body, .. }
             | Pcre2Operation::Atomic(body) => {
-                pending.push((body, format!("{path}.body"), depth + 1));
+                pending.push((body, depth + 1));
             }
             Pcre2Operation::Empty
             | Pcre2Operation::Literal(_)
@@ -1933,4 +1947,38 @@ fn validate_target_tree(
             | Pcre2Operation::Position(_) => {}
         }
     }
+}
+
+fn pcre2_node_path(root: &Pcre2Node, sought: &Pcre2Node) -> String {
+    let mut pending = vec![(root, "$.root".to_owned())];
+    while let Some((node, path)) = pending.pop() {
+        if std::ptr::eq(node, sought) {
+            return path;
+        }
+        match &node.operation {
+            Pcre2Operation::Capture { body, .. }
+            | Pcre2Operation::Repeat { body, .. }
+            | Pcre2Operation::Lookaround { body, .. }
+            | Pcre2Operation::Atomic(body) => {
+                pending.push((body, format!("{path}.body")));
+            }
+            Pcre2Operation::Sequence(children) => {
+                for (index, child) in children.iter().enumerate().rev() {
+                    pending.push((child, format!("{path}.items[{index}]")));
+                }
+            }
+            Pcre2Operation::Alternation(children) => {
+                for (index, child) in children.iter().enumerate().rev() {
+                    pending.push((child, format!("{path}.branches[{index}]")));
+                }
+            }
+            Pcre2Operation::Empty
+            | Pcre2Operation::Literal(_)
+            | Pcre2Operation::Wildcard(_)
+            | Pcre2Operation::CharacterSet { .. }
+            | Pcre2Operation::Backreference { .. }
+            | Pcre2Operation::Position(_) => {}
+        }
+    }
+    "$.root".to_owned()
 }

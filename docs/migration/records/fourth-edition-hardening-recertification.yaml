@@ -16,6 +16,7 @@ scope:
         - core/src/capability_evaluation.rs
         - core/src/ecmascript_lowering.rs
         - core/src/portability_planning.rs
+        - core/src/portability_planning/validation.rs
         - core/src/post_lowering_requirements.rs
         - core/src/python_re_lowering.rs
         - core/src/target/profile.rs
@@ -162,6 +163,7 @@ change_classification:
             - Full and Release remain the unchanged expensive result authorities but execute locally; cloud workflows verify a trusted exact-source attestation instead of recomputing them.
             - The attestation CLI is registered as a reviewed engineering-only tooling parser path; it cannot parse or define STRling language semantics.
             - After a measured Full regression exposed repeated validation and canonical hashing of the same immutable profile in capability evaluation and planning, the existing TargetProfileSet boundary now caches its validated reference and provides equivalent fail-closed reference-based planning; post-lowering evaluation reuses the exact reference already validated by each lowering entry point.
+            - Direct target lowering reuses private, exact planner and Semantic IR snapshots on the unchanged success path, falls back to full validation and canonical hashing for any caller-mutated input, and defers target-tree diagnostic path construction to failures; public contracts, calibrated benchmark workloads, validation outcomes, target semantics, and governed performance budgets remain unchanged.
     generated_output_change:
         level: compatible
         evidence:

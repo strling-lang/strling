@@ -299,6 +299,15 @@ pub struct PortabilityPlan {
     pub rewrite_dependencies: Vec<RewriteDependency>,
     pub unresolved_requirements: Vec<RequirementIdentity>,
     pub status: Option<PortabilityStatus>,
+    pub(crate) validated_semantic_program: SemanticProgram,
+    pub(crate) validated_semantic_program_identity: Sha256Digest,
+    validated_contract_version: ContractVersion,
+    validated_specification_version: SpecificationVersion,
+    validated_target_profile: TargetProfileReference,
+    validated_decisions: Vec<PlannedRequirement>,
+    validated_rewrite_dependencies: Vec<RewriteDependency>,
+    validated_unresolved_requirements: Vec<RequirementIdentity>,
+    validated_status: Option<PortabilityStatus>,
 }
 
 /// Plan representation decisions from one exact certified evaluation.
@@ -438,15 +447,27 @@ fn plan_portability_for_validated_reference(
         "rewrite dependency",
     )?;
     let status = aggregate_status(&decisions);
+    let validated_decisions = decisions.clone();
+    let validated_rewrite_dependencies = rewrite_dependencies.clone();
+    let validated_unresolved_requirements = unresolved_requirements.clone();
     let plan = PortabilityPlan {
         contract_version: input.contract_version,
         specification_version: input.specification_version.clone(),
-        semantic_program,
+        semantic_program: semantic_program.clone(),
         target_profile: evaluation.target_profile.clone(),
         decisions,
         rewrite_dependencies,
         unresolved_requirements,
         status,
+        validated_semantic_program: input.clone(),
+        validated_semantic_program_identity: semantic_program,
+        validated_contract_version: input.contract_version,
+        validated_specification_version: input.specification_version.clone(),
+        validated_target_profile: evaluation.target_profile.clone(),
+        validated_decisions,
+        validated_rewrite_dependencies,
+        validated_unresolved_requirements,
+        validated_status: status,
     };
     plan.validate()?;
     Ok(plan)

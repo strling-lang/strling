@@ -3,9 +3,27 @@ use std::collections::{BTreeMap, BTreeSet};
 use super::*;
 
 impl PortabilityPlan {
+    pub(crate) fn matches_validated_snapshot(&self) -> bool {
+        self.contract_version == self.validated_contract_version
+            && self.specification_version == self.validated_specification_version
+            && self.semantic_program == self.validated_semantic_program_identity
+            && self.target_profile == self.validated_target_profile
+            && self.decisions == self.validated_decisions
+            && self.rewrite_dependencies == self.validated_rewrite_dependencies
+            && self.unresolved_requirements == self.validated_unresolved_requirements
+            && self.status == self.validated_status
+    }
+
     /// Validate decision completeness, evidence soundness, aggregation, and
     /// rewrite dependency integrity without consulting any external state.
     pub fn validate(&self) -> Result<(), PortabilityPlanningErrors> {
+        if self.semantic_program != self.validated_semantic_program_identity {
+            return Err(error(
+                PortabilityPlanningErrorCode::ProgramFingerprintMismatch,
+                "$.semantic_program",
+                "portability plan program identity does not match its validated source proof",
+            ));
+        }
         if self.decisions.windows(2).any(|pair| {
             pair[0].identity >= pair[1].identity || pair[0].requirement >= pair[1].requirement
         }) {

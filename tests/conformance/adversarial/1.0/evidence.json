@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0.0",
   "authority": "empirical/adversarial-conformance-evidence",
-  "source_sha": "9b305f3ddad5b74857d960d8d102c1d025b23085",
+  "source_sha": "063046c86a816f7a7aecce50f012a9de0782da7c",
   "source_files": {
     "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
     "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
     "core/internal/Cargo.toml": "a46069445b9feda2978ca3e25f77910c64f9f01c8d4846ffe0597e0f59dc7a9e",
-    "core/src/capability_evaluation.rs": "c7fa0ce5fa8c7105646b499ea699406dd7f617ad91c7dae1b6a3a18f1e0d83cb",
+    "core/src/capability_evaluation.rs": "538ee1360ac3a3414030c55012a905a73af6edb413057a672e8d0a086586214f",
     "core/src/capability_pipeline.rs": "bbc365161a8e0a6b46266245119eed6417e2b238b3105e78a884df68b7673a24",
     "core/src/compiler_pipeline.rs": "6d3df85ea1fbb1faacb9e595db7d7e9fb4adb71975e0185bcedead633211c0cf",
     "core/src/conformance/mod.rs": "a5e763f229fe70554c4eeed8bb952d50847a34895ff6ebd26e327f6b8e4d8da0",
@@ -25,7 +25,7 @@
     "core/src/portability_diagnostics.rs": "4ef85127c799df29d5b81c17b06fc3638faa31a95d2e44513f87905db33d583e",
     "core/src/portability_planning/equivalence.rs": "bcb27a4caf126244f55139de1cf8b604b969562cc85615a79fa2bcad5a8c6c81",
     "core/src/portability_planning/validation.rs": "250a509b2a31a5627130c7448ace2537b71e86ea0eaed0c40961314dd0ed8ec9",
-    "core/src/portability_planning.rs": "43cc5c822ae06286e71a530b2c452107b7489cbb786a8da43e6148158315c83d",
+    "core/src/portability_planning.rs": "1c289c9c40fc35f6d24db5ff22fdaa841181095011d03c66055f67a1c3e1c2d9",
     "core/src/post_lowering_requirements.rs": "b2a48e8943014e35b0531482aa44ee4fe9939d2ef99f670a7d8587e888169a76",
     "core/src/protocol/analysis.rs": "b9992d8b66f21abbac11127af5159d9343517dde12e3d1a57f2dfee8ee5a6ebc",
     "core/src/protocol/exchange.rs": "05fe1cfbe8368db7606c32ff23d30f0e85cc69f772d4471b1f0ff1d03ba0f98d",
@@ -59,7 +59,7 @@
     "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
     "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
   },
-  "executed_at": "2026-09-12T21:50:42.967402+00:00",
+  "executed_at": "2026-09-14T04:47:47.309849+00:00",
   "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
   "repeat_runs": 2,
   "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
@@ -394,7 +394,7 @@
     }
   ],
   "findings": [],
-  "result_sha256": "638244926f7ca0b6eb76019b468534a93d951e29801248b615179a2826343a53",
+  "result_sha256": "44e26dead49fc622a19ef5e725bfe3ccf002f184edfc70b56e04be295cf7ec75",
   "case_observations": [
     {
       "case_id": "wildcard-excluding-lines",

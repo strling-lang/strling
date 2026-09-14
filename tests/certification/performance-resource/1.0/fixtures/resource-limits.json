@@ -231,7 +231,7 @@
                 },
                 {
                     "path": "core/tests/portability_planning.rs",
-                    "sha256": "084ca259cedad9ba5f467a24a14b9cb45bf2e991e3a071bad93e5e601dc9116b"
+                    "sha256": "7ad7610cca8bc2a9a9fd0564f0427889fdad50587d50feb5e79b25f070b1ee2d"
                 }
             ],
             "disposition": "read-only-existing-limit"
@@ -476,5 +476,5 @@
         }
     ],
     "declaration_count": 56,
-    "inventory_fingerprint": "706226c0e3ab178dff05ba451db0e7a0fcb63948c422e42730de4696b545ccbd"
+    "inventory_fingerprint": "c389d60f98eccecf8ab482f6429c41e90e7d457959b79188ae365f926f8806d1"
 }

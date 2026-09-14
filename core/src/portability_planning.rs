@@ -35,7 +35,7 @@ use crate::target::{
     CapabilityAvailability, CapabilityId, PortabilityStatus, TargetProfile, TargetProfileReference,
     TargetProfileSet,
 };
-use crate::validation::{canonical_sha256, Validate};
+use crate::validation::canonical_sha256;
 
 /// Maximum final or unresolved requirement decisions in one plan.
 pub const MAX_PORTABILITY_DECISIONS: usize = MAX_CAPABILITY_REQUIREMENTS;
@@ -309,13 +309,12 @@ pub fn plan_portability(
     target: &TargetProfile,
     evaluation: &CapabilityEvaluation,
 ) -> Result<PortabilityPlan, PortabilityPlanningErrors> {
-    let target_reference = validated_target_reference(target)?;
     plan_portability_for_validated_reference(
         input,
         foundational,
         structural,
         target,
-        &target_reference,
+        &evaluation.target_profile,
         evaluation,
     )
 }
@@ -831,13 +830,6 @@ fn map_target_profile_errors(
     }
 }
 
-fn validated_target_reference(
-    target: &TargetProfile,
-) -> Result<TargetProfileReference, PortabilityPlanningErrors> {
-    target.validate().map_err(map_target_profile_errors)?;
-    target.reference().map_err(map_target_profile_errors)
-}
-
 fn validate_correspondence(
     input: &SemanticProgram,
     foundational: &SemanticFacts,
@@ -880,7 +872,8 @@ fn validate_correspondence(
         ));
     }
 
-    if evaluation.target_profile != *target_reference
+    if evaluation.validated_target_profile != *target
+        || evaluation.target_profile != *target_reference
         || evaluation.target_engine != target.engine
         || evaluation.target_runtime != target.runtime
     {

@@ -12,7 +12,9 @@ use strling_kernel::semantic::SemanticProgram;
 use strling_kernel::semantic_analysis::{analyze, SemanticFacts};
 use strling_kernel::source::Sha256Digest;
 use strling_kernel::structural_analysis::{analyze_structure, StructuralFacts};
-use strling_kernel::target::{PortabilityStatus, TargetProfile, TargetProfileSet};
+use strling_kernel::target::{
+    CapabilityAvailability, PortabilityStatus, TargetProfile, TargetProfileSet,
+};
 
 const PCRE2_1042: &str = include_str!("../../spec/targets/profiles/pcre2-10.42.json");
 const PCRE2_1043: &str = include_str!("../../spec/targets/profiles/pcre2-10.43.json");
@@ -344,6 +346,23 @@ fn mismatched_profile_is_rejected_without_engine_assumptions() {
         &evaluation,
     )
     .expect_err("mismatched exact profile must fail");
+
+    assert_eq!(
+        errors.errors[0].code,
+        PortabilityPlanningErrorCode::TargetProfileMismatch
+    );
+}
+
+#[test]
+fn mutated_profile_is_rejected_against_the_validated_evaluation_snapshot() {
+    let semantic = program(atomic("node:atomic", "node:atomic.body", "a"));
+    let mut target = profile(PCRE2_1042);
+    let (foundational, structural) = prerequisites(&semantic);
+    let evaluation = evaluate(&semantic, &foundational, &structural, &target);
+    target.capabilities[0].availability = CapabilityAvailability::Unavailable;
+
+    let errors = plan_portability(&semantic, &foundational, &structural, &target, &evaluation)
+        .expect_err("post-evaluation target mutation must fail");
 
     assert_eq!(
         errors.errors[0].code,

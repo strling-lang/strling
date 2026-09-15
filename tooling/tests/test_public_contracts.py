@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
+import subprocess
+import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from subprocess import CompletedProcess
@@ -9,10 +13,12 @@ from unittest import mock
 
 from tooling.public_contracts import (
     ContractError,
+    KOTLIN_CONTRACT_BUILD_TIMEOUT_SECONDS,
     _dotnet_projects,
     _javap_declarations,
     _kotlin_brace_delta,
     _kotlin_signature_head,
+    _pid_is_running,
     _rust_facade_symbols,
     _swift_sdk_arguments,
     _swift_symbolgraph_extractor,
@@ -24,6 +30,7 @@ from tooling.public_contracts import (
     extract_cpp_headers,
     extract_dart_analyzer_api,
     extract_lua,
+    extract_kotlin_binary_api,
     extract_perl,
     extract_php,
     extract_ruby,
@@ -35,6 +42,7 @@ from tooling.public_contracts import (
     normalize_swift_symbol_graph,
     parse_go_doc,
     process_surface,
+    run_command,
 )
 
 
@@ -118,6 +126,100 @@ class PublicContractTests(unittest.TestCase):
         (self.root / "strling.ps1").write_text(
             'function Show-Help {\n    Write-Host "  ' + powershell_row + '"\n}\n',
             encoding="utf-8",
+        )
+
+    def test_run_command_closes_stdin(self) -> None:
+        output = run_command(
+            [
+                sys.executable,
+                "-c",
+                "import sys; print(len(sys.stdin.read()))",
+            ],
+            cwd=self.root,
+        )
+
+        self.assertEqual("0", output.strip())
+
+    def test_bounded_command_preserves_output_and_terminates_descendants(
+        self,
+    ) -> None:
+        pid_path = self.root / "descendant.pid"
+        script = self.root / "hung_contract_tool.py"
+        script.write_text(
+            """import os
+import pathlib
+import subprocess
+import sys
+import time
+
+options = (
+    {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+    if os.name == "nt"
+    else {"start_new_session": True}
+)
+child = subprocess.Popen(
+    [sys.executable, "-c", "import time; time.sleep(60)"],
+    **options,
+)
+pathlib.Path(sys.argv[1]).write_text(str(child.pid), encoding="utf-8")
+print("captured standard output", flush=True)
+print("captured standard error", file=sys.stderr, flush=True)
+time.sleep(60)
+""",
+            encoding="utf-8",
+        )
+
+        with self.assertRaisesRegex(ContractError, "timed out after") as raised:
+            run_command(
+                [sys.executable, str(script), str(pid_path)],
+                cwd=self.root,
+                timeout_seconds=0.5,
+            )
+
+        self.assertIn("captured standard output", str(raised.exception))
+        self.assertIn("captured standard error", str(raised.exception))
+        descendant_pid = int(pid_path.read_text(encoding="utf-8"))
+        deadline = time.monotonic() + 3
+        while _pid_is_running(descendant_pid) and time.monotonic() < deadline:
+            time.sleep(0.05)
+        self.assertFalse(_pid_is_running(descendant_pid))
+
+    def test_kotlin_contract_build_is_offline_noninteractive_and_bounded(
+        self,
+    ) -> None:
+        binding = self.root / "bindings/kotlin"
+        binding.mkdir(parents=True)
+        wrapper = binding / ("gradlew.bat" if os.name == "nt" else "gradlew")
+        wrapper.write_text("wrapper", encoding="utf-8")
+        (self.root / "bindings/jvm").mkdir()
+        calls: list[tuple[list[str], dict[str, object]]] = []
+
+        def runner(
+            arguments: list[str], **options: object
+        ) -> subprocess.CompletedProcess[str]:
+            calls.append((arguments, options))
+            return subprocess.CompletedProcess(arguments, 0, "", "")
+
+        with (
+            mock.patch("tooling.public_contracts._required_tool", return_value="mvn"),
+            mock.patch("tooling.public_contracts._jdk_tool", return_value="javap"),
+            mock.patch(
+                "tooling.public_contracts._kotlin_source_symbols",
+                return_value={"source:test": "test"},
+            ),
+            mock.patch(
+                "tooling.public_contracts._binary_api_symbols",
+                return_value={"binary:test": "test"},
+            ),
+        ):
+            extract_kotlin_binary_api({"id": "kotlin"}, self.root, runner=runner)
+
+        gradle_arguments, gradle_options = calls[1]
+        self.assertEqual(["--offline", "--no-daemon", "classes"], gradle_arguments[1:])
+        self.assertIs(gradle_options["stdin"], subprocess.DEVNULL)
+        self.assertEqual(
+            KOTLIN_CONTRACT_BUILD_TIMEOUT_SECONDS,
+            gradle_options["timeout"],
         )
 
     def test_perl_declared_api_extracts_packages_exports_and_arities(self) -> None:

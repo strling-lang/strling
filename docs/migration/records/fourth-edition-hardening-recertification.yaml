@@ -71,6 +71,7 @@ scope:
         - tooling/local_certification_attestation.py
         - tooling/performance_resource_certification.py
         - tooling/production_certification.py
+        - tooling/public_contracts.py
         - tooling/quality.py
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py
@@ -86,6 +87,7 @@ scope:
         - tooling/tests/test_performance_resource_certification.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_production_certification.py
+        - tooling/tests/test_public_contracts.py
         - tooling/tests/test_quality.py
         - tooling/tests/test_python_re_lowering_architecture.py
         - tooling/tests/test_release_supply_chain_architecture.py
@@ -157,6 +159,7 @@ change_classification:
     architecture_change:
         level: compatible
         evidence:
+            - Public-contract extraction closes stdin for every noninteractive tool and gives only the Kotlin Gradle classes step a five-minute bound; a timeout preserves both output streams and terminates the exact client/daemon descendant tree, while contract membership, snapshots, build inputs, and profile-level timeouts remain unchanged.
             - Environment version probes close stdin, use the governed 30-second probe-only timeout, and preserve captured stdout and stderr diagnostics; build, test, and certification operation timeouts remain unchanged, and the correction addresses a deterministic qualification hang rather than product semantics.
             - Pull Request qualification now validates the exact-runtime handoff and governed JVM dependency repository before its first registered operation; Maven remains offline and is explicitly bound to the declared repository, while profile membership, operation timeouts, thresholds, sampling, and product semantics remain unchanged.
             - The enforced generated-family check is restored to the Local/Pull Request offline contract while network-authenticated regeneration remains unchanged.

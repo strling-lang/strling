@@ -8,10 +8,12 @@ import ast
 import json
 import os
 import re
+import signal
 import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -49,6 +51,10 @@ CLASSIFICATION_ORDER = {
 METADATA_KEYS = {"$comment", "description", "examples", "title"}
 TIGHTENING_MINIMUMS = {"minItems", "minLength", "minProperties", "minimum"}
 TIGHTENING_MAXIMUMS = {"maxItems", "maxLength", "maxProperties", "maximum"}
+# The governed H08 build completes in under 30 seconds from a cold Kotlin compile.
+# Five minutes preserves ample filesystem/cache margin while bounding daemon failure.
+KOTLIN_CONTRACT_BUILD_TIMEOUT_SECONDS = 5 * 60
+SUBPROCESS_TERMINATION_GRACE_SECONDS = 5.0
 
 
 class ContractError(ValueError):
@@ -84,6 +90,175 @@ class SurfaceResult:
 
 
 Runner = Callable[..., subprocess.CompletedProcess[str]]
+
+
+def _output_text(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value
+
+
+def _posix_descendant_pids(root_pid: int) -> list[int]:
+    relationships: dict[int, list[int]] = {}
+    proc_root = Path("/proc")
+    if proc_root.is_dir():
+        for status_path in proc_root.glob("[0-9]*/status"):
+            try:
+                fields = {
+                    key: value.strip()
+                    for key, value in (
+                        line.split(":", 1)
+                        for line in status_path.read_text(
+                            encoding="utf-8", errors="replace"
+                        ).splitlines()
+                        if ":" in line
+                    )
+                }
+                pid = int(fields["Pid"])
+                parent_pid = int(fields["PPid"])
+            except (KeyError, OSError, ValueError):
+                continue
+            relationships.setdefault(parent_pid, []).append(pid)
+    else:
+        try:
+            completed = subprocess.run(
+                ["ps", "-A", "-o", "pid=,ppid="],
+                check=False,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
+                text=True,
+                timeout=2,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            completed = subprocess.CompletedProcess([], 1, "", "")
+        for line in completed.stdout.splitlines():
+            try:
+                pid_text, parent_text = line.split()
+                pid = int(pid_text)
+                parent_pid = int(parent_text)
+            except ValueError:
+                continue
+            relationships.setdefault(parent_pid, []).append(pid)
+
+    descendants: list[int] = []
+    pending = list(relationships.get(root_pid, []))
+    while pending:
+        pid = pending.pop()
+        if pid in descendants:
+            continue
+        descendants.append(pid)
+        pending.extend(relationships.get(pid, []))
+    return descendants
+
+
+def _pid_is_running(pid: int) -> bool:
+    status_path = Path("/proc") / str(pid) / "status"
+    try:
+        state = next(
+            line
+            for line in status_path.read_text(encoding="utf-8").splitlines()
+            if line.startswith("State:")
+        )
+        if "Z (zombie)" in state:
+            return False
+    except (OSError, StopIteration):
+        pass
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def _signal_process(pid: int, value: signal.Signals) -> None:
+    try:
+        os.kill(pid, value)
+    except (PermissionError, ProcessLookupError):
+        pass
+
+
+def _terminate_process_tree(process: subprocess.Popen[str]) -> None:
+    if os.name == "nt":
+        try:
+            subprocess.run(
+                ["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                check=False,
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=SUBPROCESS_TERMINATION_GRACE_SECONDS,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            process.kill()
+        return
+
+    descendants = _posix_descendant_pids(process.pid)
+    for pid in reversed(descendants):
+        _signal_process(pid, signal.SIGTERM)
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except (PermissionError, ProcessLookupError):
+        _signal_process(process.pid, signal.SIGTERM)
+
+    deadline = time.monotonic() + SUBPROCESS_TERMINATION_GRACE_SECONDS
+    tracked = [process.pid, *descendants]
+    while time.monotonic() < deadline and any(_pid_is_running(pid) for pid in tracked):
+        time.sleep(0.05)
+    for pid in reversed(tracked):
+        if _pid_is_running(pid):
+            _signal_process(pid, signal.SIGKILL)
+
+
+def _run_bounded_command(
+    arguments: Sequence[str], *, cwd: Path, timeout_seconds: float
+) -> subprocess.CompletedProcess[str]:
+    command = list(arguments)
+    options: dict[str, object] = {"start_new_session": True}
+    if os.name == "nt":
+        options = {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
+    process = subprocess.Popen(
+        command,
+        cwd=cwd,
+        text=True,
+        stdin=subprocess.DEVNULL,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        **options,
+    )
+    try:
+        stdout, stderr = process.communicate(timeout=timeout_seconds)
+    except subprocess.TimeoutExpired as exc:
+        _terminate_process_tree(process)
+        try:
+            stdout, stderr = process.communicate(
+                timeout=SUBPROCESS_TERMINATION_GRACE_SECONDS
+            )
+        except subprocess.TimeoutExpired as cleanup_exc:
+            try:
+                process.kill()
+            except OSError:
+                pass
+            for stream in (process.stdout, process.stderr):
+                if stream is not None:
+                    stream.close()
+            try:
+                process.wait(timeout=SUBPROCESS_TERMINATION_GRACE_SECONDS)
+            except subprocess.TimeoutExpired:
+                pass
+            stdout = _output_text(cleanup_exc.stdout or exc.output)
+            stderr = _output_text(cleanup_exc.stderr or exc.stderr)
+        raise subprocess.TimeoutExpired(
+            command,
+            timeout_seconds,
+            output=stdout or exc.output,
+            stderr=stderr or exc.stderr,
+        ) from exc
+    return subprocess.CompletedProcess(command, process.returncode, stdout, stderr)
 
 
 def load_json(path: Path) -> object:
@@ -945,23 +1120,49 @@ def extract_python(surface: Mapping[str, object], root: Path) -> dict[str, objec
 
 
 def run_command(
-    arguments: Sequence[str], *, cwd: Path, runner: Runner = subprocess.run
+    arguments: Sequence[str],
+    *,
+    cwd: Path,
+    runner: Runner = subprocess.run,
+    timeout_seconds: float | None = None,
 ) -> str:
+    command = list(arguments)
     try:
-        completed = runner(
-            list(arguments),
-            cwd=cwd,
-            text=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            check=False,
-        )
+        if timeout_seconds is not None and runner is subprocess.run:
+            completed = _run_bounded_command(
+                command, cwd=cwd, timeout_seconds=timeout_seconds
+            )
+        else:
+            options: dict[str, object] = {
+                "cwd": cwd,
+                "text": True,
+                "stdin": subprocess.DEVNULL,
+                "stdout": subprocess.PIPE,
+                "stderr": subprocess.PIPE,
+                "check": False,
+            }
+            if timeout_seconds is not None:
+                options["timeout"] = timeout_seconds
+            completed = runner(command, **options)
+    except subprocess.TimeoutExpired as exc:
+        stdout = _output_text(exc.stdout).strip()
+        stderr = _output_text(exc.stderr).strip()
+        timeout = timeout_seconds if timeout_seconds is not None else float(exc.timeout)
+        details = []
+        if stdout:
+            details.append(f"stdout:\n{stdout}")
+        if stderr:
+            details.append(f"stderr:\n{stderr}")
+        detail = f"\n{'\n'.join(details)}" if details else ""
+        raise ContractError(
+            f"{' '.join(command)} timed out after {timeout:g} seconds{detail}"
+        ) from exc
     except OSError as exc:
-        raise ContractError(f"cannot execute {' '.join(arguments)}: {exc}") from exc
+        raise ContractError(f"cannot execute {' '.join(command)}: {exc}") from exc
     if completed.returncode != 0:
         detail = (completed.stderr or completed.stdout or "no output").strip()
         raise ContractError(
-            f"{' '.join(arguments)} failed with {completed.returncode}: {detail}"
+            f"{' '.join(command)} failed with {completed.returncode}: {detail}"
         )
     return completed.stdout
 
@@ -1971,6 +2172,7 @@ def extract_kotlin_binary_api(
         [gradle, "--offline", "--no-daemon", "classes"],
         cwd=binding,
         runner=runner,
+        timeout_seconds=KOTLIN_CONTRACT_BUILD_TIMEOUT_SECONDS,
     )
     symbols = _kotlin_source_symbols(binding)
     symbols.update(

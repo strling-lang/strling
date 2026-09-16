@@ -40,6 +40,8 @@ pub struct ValidationError {
 
 impl ValidationError {
     #[must_use]
+    #[cold]
+    #[inline(never)]
     pub fn new(code: ValidationCode, path: impl Into<String>, message: impl Into<String>) -> Self {
         Self {
             code,
@@ -64,10 +66,14 @@ impl ValidationErrors {
         }
     }
 
+    #[cold]
+    #[inline(never)]
     pub(crate) fn push(&mut self, error: ValidationError) {
         self.errors.push(error);
     }
 
+    #[cold]
+    #[inline(never)]
     pub(crate) fn extend(&mut self, other: Self) {
         self.errors.extend(other.errors);
     }

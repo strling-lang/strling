@@ -3453,6 +3453,7 @@ def calibrate_baseline(
         ordered = list(keys)
         random.Random(policy["order_seed"] + repetition_index).shuffle(ordered)
         for key in ordered:
+            _acquire_quiet_conditioning_snapshot(environment, root=root)
             observation = _measure_key(
                 key,
                 manifest=manifest,

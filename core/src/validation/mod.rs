@@ -72,8 +72,6 @@ impl ValidationErrors {
         self.errors.push(error);
     }
 
-    #[cold]
-    #[inline(never)]
     pub(crate) fn extend(&mut self, other: Self) {
         self.errors.extend(other.errors);
     }

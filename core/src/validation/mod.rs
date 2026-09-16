@@ -40,7 +40,6 @@ pub struct ValidationError {
 
 impl ValidationError {
     #[must_use]
-    #[cold]
     #[inline(never)]
     pub fn new(code: ValidationCode, path: impl Into<String>, message: impl Into<String>) -> Self {
         Self {
@@ -66,7 +65,6 @@ impl ValidationErrors {
         }
     }
 
-    #[cold]
     #[inline(never)]
     pub(crate) fn push(&mut self, error: ValidationError) {
         self.errors.push(error);

@@ -362,14 +362,17 @@ pub fn lower_python_re(
     portability: &PortabilityPlan,
 ) -> Result<PythonReLoweringPlan, PythonReLoweringFailure> {
     validate_semantic_input(input, portability)?;
-    let target_profile = target.reference().map_err(|errors| {
-        failure(
-            input,
-            PythonReLoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("Python re target profile reference could not be derived: {errors}"),
-        )
-    })?;
+    let target_profile = match portability.validated_target_reference(target) {
+        Some(reference) => reference.clone(),
+        None => target.reference().map_err(|errors| {
+            failure(
+                input,
+                PythonReLoweringErrorCode::InvalidTargetProfile,
+                Some(input.root.node_id()),
+                format!("Python re target profile reference could not be derived: {errors}"),
+            )
+        })?,
+    };
     lower_python_re_for_validated_reference(input, target, &target_profile, portability)
 }
 

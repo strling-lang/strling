@@ -3,6 +3,15 @@ use std::collections::{BTreeMap, BTreeSet};
 use super::*;
 
 impl PortabilityPlan {
+    pub(crate) fn validated_target_reference(
+        &self,
+        target: &TargetProfile,
+    ) -> Option<&TargetProfileReference> {
+        (self.target_profile == self.validated_target_profile
+            && *target == self.validated_target_profile_snapshot)
+            .then_some(&self.validated_target_profile)
+    }
+
     pub(crate) fn matches_validated_snapshot(&self) -> bool {
         self.contract_version == self.validated_contract_version
             && self.specification_version == self.validated_specification_version

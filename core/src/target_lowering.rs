@@ -351,14 +351,17 @@ pub fn lower_pcre2(
     portability: &PortabilityPlan,
 ) -> Result<Pcre2LoweringPlan, Pcre2LoweringFailure> {
     validate_semantic_input(input, portability)?;
-    let target_profile = target.reference().map_err(|errors| {
-        failure(
-            input,
-            Pcre2LoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("PCRE2 target profile reference could not be derived: {errors}"),
-        )
-    })?;
+    let target_profile = match portability.validated_target_reference(target) {
+        Some(reference) => reference.clone(),
+        None => target.reference().map_err(|errors| {
+            failure(
+                input,
+                Pcre2LoweringErrorCode::InvalidTargetProfile,
+                Some(input.root.node_id()),
+                format!("PCRE2 target profile reference could not be derived: {errors}"),
+            )
+        })?,
+    };
     lower_pcre2_for_validated_reference(input, target, &target_profile, portability)
 }
 

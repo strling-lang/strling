@@ -349,14 +349,17 @@ pub fn lower_ecmascript(
     portability: &PortabilityPlan,
 ) -> Result<EcmascriptLoweringPlan, EcmascriptLoweringFailure> {
     validate_semantic_input(input, portability)?;
-    let target_profile = target.reference().map_err(|errors| {
-        failure(
-            input,
-            EcmascriptLoweringErrorCode::InvalidTargetProfile,
-            Some(input.root.node_id()),
-            format!("ECMAScript target profile reference could not be derived: {errors}"),
-        )
-    })?;
+    let target_profile = match portability.validated_target_reference(target) {
+        Some(reference) => reference.clone(),
+        None => target.reference().map_err(|errors| {
+            failure(
+                input,
+                EcmascriptLoweringErrorCode::InvalidTargetProfile,
+                Some(input.root.node_id()),
+                format!("ECMAScript target profile reference could not be derived: {errors}"),
+            )
+        })?,
+    };
     lower_ecmascript_for_validated_reference(input, target, &target_profile, portability)
 }
 

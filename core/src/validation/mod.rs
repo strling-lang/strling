@@ -59,6 +59,7 @@ pub struct ValidationErrors {
 
 impl ValidationErrors {
     #[must_use]
+    #[inline(never)]
     pub fn single(error: ValidationError) -> Self {
         Self {
             errors: vec![error],

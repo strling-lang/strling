@@ -2200,6 +2200,23 @@ def _conditioning_snapshot(
     return snapshot
 
 
+def _acquire_quiet_conditioning_snapshot(
+    environment: Mapping[str, object], *, root: Path = ROOT
+) -> dict[str, Any]:
+    """Acquire one passing snapshot under the governed bounded retry policy."""
+
+    last_error: PerformanceResourceError | None = None
+    for attempt in range(1, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS + 1):
+        try:
+            return _conditioning_snapshot(environment, root=root)
+        except PerformanceResourceError as error:
+            last_error = error
+            if attempt < MEASUREMENT_CONDITIONING_MAX_ATTEMPTS:
+                time.sleep(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
+    assert last_error is not None
+    raise last_error
+
+
 def _format_cpu_set(cpus: Sequence[int]) -> str:
     ordered = sorted(set(cpus))
     if not ordered:
@@ -3425,7 +3442,9 @@ def calibrate_baseline(
     conditioning_repetitions: list[dict[str, Any]] = []
     policy = manifest["measurement_policy"]
     for repetition_index in range(policy["baseline_repetitions"]):
-        conditioning_repetitions.append(_conditioning_snapshot(environment, root=root))
+        conditioning_repetitions.append(
+            _acquire_quiet_conditioning_snapshot(environment, root=root)
+        )
         if not conditioning_identities_match(conditioning_repetitions):
             raise PerformanceResourceError(
                 "conditioning-drift",

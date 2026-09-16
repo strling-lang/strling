@@ -20,6 +20,7 @@ from tooling.performance_resource_certification import (
     RESOURCE_OPERATION_IDS,
     PerformanceExecutionLedger,
     PerformanceResourceError,
+    _acquire_quiet_conditioning_snapshot,
     _artifact_fingerprints_match,
     _artifact_identity_check,
     _artifact_source_changes,
@@ -556,6 +557,35 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             len(cast(list[object], details["rejected_attempts"])),
             MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
         )
+        self.assertEqual(conditioning.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS)
+        self.assertEqual(sleep.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS - 1)
+
+    @patch(
+        "tooling.performance_resource_certification._conditioning_snapshot",
+        side_effect=[
+            PerformanceResourceError("conditioning", "post-build host activity"),
+            {"status": "passed"},
+        ],
+    )
+    @patch("tooling.performance_resource_certification.time.sleep")
+    def test_calibration_conditioning_uses_governed_quiet_acquisition(
+        self, sleep: Mock, conditioning: Mock
+    ) -> None:
+        self.assertEqual(_acquire_quiet_conditioning_snapshot({}), {"status": "passed"})
+        self.assertEqual(conditioning.call_count, 2)
+        sleep.assert_called_once_with(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
+
+    @patch(
+        "tooling.performance_resource_certification._conditioning_snapshot",
+        side_effect=PerformanceResourceError("conditioning", "host remains busy"),
+    )
+    @patch("tooling.performance_resource_certification.time.sleep")
+    def test_calibration_conditioning_exhausts_governed_attempts(
+        self, sleep: Mock, conditioning: Mock
+    ) -> None:
+        with self.assertRaises(PerformanceResourceError) as raised:
+            _acquire_quiet_conditioning_snapshot({})
+        self.assertEqual(raised.exception.code, "conditioning")
         self.assertEqual(conditioning.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS)
         self.assertEqual(sleep.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS - 1)
 

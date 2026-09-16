@@ -787,7 +787,7 @@
             "category": "capability-evaluation",
             "criticality": "critical",
             "source_path": "core/src/capability_evaluation.rs",
-            "source_sha256": "538ee1360ac3a3414030c55012a905a73af6edb413057a672e8d0a086586214f",
+            "source_sha256": "9887d74f271ee7b5b2cab5f322a0c86fdad7c0026f51b9344e77d0b953bad509",
             "test_sources": [
                 {
                     "path": "core/tests/capability_evaluation.rs",
@@ -821,7 +821,7 @@
             "category": "capability-evaluation",
             "criticality": "high",
             "source_path": "core/src/capability_evaluation.rs",
-            "source_sha256": "538ee1360ac3a3414030c55012a905a73af6edb413057a672e8d0a086586214f",
+            "source_sha256": "9887d74f271ee7b5b2cab5f322a0c86fdad7c0026f51b9344e77d0b953bad509",
             "test_sources": [
                 {
                     "path": "core/tests/capability_evaluation.rs",
@@ -855,7 +855,7 @@
             "category": "portability-aggregation",
             "criticality": "critical",
             "source_path": "core/src/portability_planning.rs",
-            "source_sha256": "40011094021d767163a8b8fc535ccad8a7e9fc34d0d05f9c7ecc2e79548ed707",
+            "source_sha256": "7b61ee0c8518d3a21e5550431dface31eeeed975e50f6000e459e0ba46d54dc8",
             "test_sources": [
                 {
                     "path": "core/tests/portability_planning.rs",
@@ -889,7 +889,7 @@
             "category": "portability-aggregation",
             "criticality": "high",
             "source_path": "core/src/portability_planning.rs",
-            "source_sha256": "40011094021d767163a8b8fc535ccad8a7e9fc34d0d05f9c7ecc2e79548ed707",
+            "source_sha256": "7b61ee0c8518d3a21e5550431dface31eeeed975e50f6000e459e0ba46d54dc8",
             "test_sources": [
                 {
                     "path": "core/tests/portability_planning.rs",
@@ -992,7 +992,7 @@
             "category": "target-lowering",
             "criticality": "critical",
             "source_path": "core/src/target_lowering.rs",
-            "source_sha256": "4125ae619dc5cd4d049d6f78510a3ab3dc3cc19ac2add993495a0952ef96aa36",
+            "source_sha256": "21c5f321daef4758c152decd8ed71860b4a9038719cba2ad4d19ef93666bd168",
             "test_sources": [
                 {
                     "path": "core/tests/pcre2_lowering.rs",
@@ -1026,7 +1026,7 @@
             "category": "target-lowering",
             "criticality": "high",
             "source_path": "core/src/ecmascript_lowering.rs",
-            "source_sha256": "262a7c866348044c7caea02e341f2ea737b91e1ee23030b632bbf45141fcea9c",
+            "source_sha256": "7aa75c6a0c101b6429651f4d414975fac603c55d881b3670072797c3368d2167",
             "test_sources": [
                 {
                     "path": "core/tests/ecmascript_lowering.rs",
@@ -1060,7 +1060,7 @@
             "category": "target-lowering",
             "criticality": "critical",
             "source_path": "core/src/python_re_lowering.rs",
-            "source_sha256": "c6b14002076c3a381e43137a8a0209c8a8c57f185d527dfcd9ffa0bb72b3120d",
+            "source_sha256": "ea883d178d021983afafa1aed3fd24c554aaafb8a1e988104db678301c7eb23b",
             "test_sources": [
                 {
                     "path": "core/tests/python_re_lowering.rs",
@@ -1188,5 +1188,5 @@
         "pull_request_mutants": 7,
         "full_mutants": 14
     },
-    "manifest_fingerprint": "acc55d6d00ea2e51136ae4f8bde1c20abad1a73810a5dd74f13ced826e2775ef"
+    "manifest_fingerprint": "e4a5fb1d6223656f6adafab53a8caee1fa96f792f4966673c964f46f7d1f28e9"
 }

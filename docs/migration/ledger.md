@@ -5709,6 +5709,27 @@ No workload, sample denominator, relative acceptance factor, conditioning, or
 isolation rule was weakened. Because tracked source changed, the owner must run
 one new Local -> Pull Request -> Full sequence and stop for inspection.
 
+The first post-rollover authoritative Local at clean `03ab81b` passed 36 of 37
+operations and made only `deep_quality_local_certification@repository`
+incomplete. Its initiating error was stale governed source identity; the outer
+malformed-result message was secondary to the producer exception. Complete
+closure inspection found five stale mutant-source hashes, all matching
+`be811599` and all explained by the authorized profile-validation reuse changes
+in `a3831fda` and `36d13f24`; the other 50 governed paths remain current. Pull
+Request and Full were not started and zero authenticated Full samples were
+consumed. The failed Local evidence remains preserved.
+
+Canonical deep-quality governed source-identity refresh following intentional
+source changes from the Windows performance baseline rollover produced manifest
+fingerprint `e4a5fb1d6223656f6adafab53a8caee1fa96f792f4966673c964f46f7d1f28e9`
+without changing mutants, workloads, thresholds, or profile membership.
+Isolated deep-quality Local, Pull Request, and Full now pass 1/1, 22/22, and
+36/36 checks. Deterministic manifest-validation errors also retain the declared
+structured-result contract as explicit failures instead of causing a secondary
+malformed-result classification. Because these tracked authority and tooling
+changes create a new candidate, the owner must again run Local -> Pull Request
+-> Full from the final clean SHA.
+
 Release correctly did not start, no attestation was issued, and no cloud
 certification acceptance is claimed. P20-T02 remains paused, no publication
 work has begun, and no package, tag, GitHub Release, or `main` change occurred.

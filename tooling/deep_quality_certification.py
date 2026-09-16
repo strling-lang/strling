@@ -1019,7 +1019,25 @@ def certify(
 ) -> tuple[dict[str, Any], int]:
     started = time.monotonic()
     resolved = manifest or load_json(MANIFEST_PATH)
-    validate_manifest(resolved, root=root)
+    try:
+        validate_manifest(resolved, root=root)
+    except DeepQualityError as error:
+        observed_manifest = dict(resolved)
+        observed_manifest["manifest_fingerprint"] = manifest_fingerprint(resolved)
+        evidence = _build_evidence(
+            observed_manifest,
+            profile=profile,
+            started=started,
+            checks=[
+                {
+                    "id": "contract:manifest",
+                    "status": "failed",
+                    "details": {"code": error.code, "reason": str(error)},
+                }
+            ],
+            root=root,
+        )
+        return evidence, EXIT_CODES["failed"]
     maximum_seconds = cast(
         int, _profile_partitions(resolved)[profile]["maximum_duration_seconds"]
     )

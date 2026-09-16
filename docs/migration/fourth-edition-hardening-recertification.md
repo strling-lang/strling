@@ -464,4 +464,48 @@ CPython 3.11.15, PCRE2 10.42, and PCRE2 10.43 runtimes. The regenerated
 two-repeat evidence remains at zero findings and passes its offline verifier;
 this targeted source-bound refresh is not a profile certification result.
 
+## Post-rollover deep-quality identity remediation
+
+The authoritative campaign at clean candidate
+`03ab81b526c54872f7f8cee48dfd268238048293` stopped in Local with 36 passed,
+one incomplete, and zero failed operations. The sole incomplete operation was
+`deep_quality_local_certification@repository`. Its producer first reported
+stale governed identity for `core/src/capability_evaluation.rs`; because that
+exception preceded JSON output, the outer runner secondarily classified the
+empty structured result as malformed. Every other Local operation passed.
+Pull Request and Full were never invoked, so this campaign consumed zero
+authenticated Full samples. Its profile artifact, progress ledger, and console
+log remain preserved under
+`target/codex-tools/h08-authoritative-03ab81b526c54872f7f8cee48dfd268238048293-20260916T123457Z/`.
+
+Complete manifest closure inspection found exactly five stale source paths:
+capability evaluation, portability planning, and PCRE2, ECMAScript, and Python
+re lowering. Their governed hashes match `be811599` byte-for-byte. Commits
+`a3831fda` and `36d13f24` intentionally changed those files to reuse exact
+validated target-profile proof during the Windows rollover performance
+remediation; the adjacent changed validation and planning helper files are not
+deep-quality identity entries. All seven core paths were already H08-authorized,
+their focused lowering/capability/planning suites passed, and the 54-coordinate
+calibration passed the prior performance contract. The other 50 governed paths
+remain current, leaving no unexplained drift.
+
+The canonical `--refresh-source-identities` producer renewed the five source
+hashes plus the dependent manifest and synthetic-evidence fingerprints. The
+new manifest fingerprint is
+`e4a5fb1d6223656f6adafab53a8caee1fa96f792f4966673c964f46f7d1f28e9`.
+Mutation tokens, operators, test sources, workloads, denominators, thresholds,
+and profile membership are unchanged. The repository formatter preserved the
+same semantic fingerprint. The structured producer now converts deterministic
+manifest-validation exceptions into an explicit failed manifest check with the
+original code and reason, so the operation remains fail closed without the
+secondary malformed-result classification.
+
+Isolated deep-quality execution passes Local 1/1, Pull Request 22/22, and Full
+36/36. Full includes one manifest check, fourteen property suites, five fuzz
+targets, two sanitizer cases, and all fourteen mutants, with zero failed or
+unavailable checks. These are isolated producer proofs, not profile results and
+not performance sampling. Because tracked certification authority and tooling
+changed, the next authoritative campaign must start again at Local, continue
+through Pull Request, and stop after Full for inspection.
+
 **BLOCKED — NO-GO FOR P20-T02.**

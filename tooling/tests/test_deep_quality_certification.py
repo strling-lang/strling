@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import io
 import json
 import subprocess
 import time
@@ -29,6 +30,7 @@ from tooling.deep_quality_certification import (
     _run_properties,
     certify,
     fingerprint,
+    main,
     manifest_fingerprint,
     refresh_source_identities,
     validate_evidence,
@@ -168,6 +170,24 @@ class DeepQualityCertificationContractTests(unittest.TestCase):
             [check["id"] for check in evidence["checks"]], ["contract:manifest"]
         )
         self.assertEqual(evidence["operation_id"], "certification.deep-quality-local")
+
+    def test_stale_manifest_identity_emits_structured_failure(self) -> None:
+        stale = copy.deepcopy(self.manifest)
+        stale["mutants"][0]["source_sha256"] = "0" * 64
+        stale["manifest_fingerprint"] = manifest_fingerprint(stale)
+        output = io.StringIO()
+        with (
+            patch("tooling.deep_quality_certification.load_json", return_value=stale),
+            patch("sys.stdout", output),
+        ):
+            exit_code = main(["--profile", "local", "--json"])
+        result = json.loads(output.getvalue())
+        Draft202012Validator(self.schema).validate(result)
+        self.assertEqual(exit_code, 1)
+        self.assertEqual(result["status"], "failed")
+        self.assertEqual(result["operation_id"], "certification.deep-quality-local")
+        self.assertEqual(result["checks"][0]["status"], "failed")
+        self.assertEqual(result["checks"][0]["details"]["code"], "stale-source")
 
     def test_windows_python3_uses_the_active_governed_interpreter(self) -> None:
         with (

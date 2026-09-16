@@ -8,7 +8,7 @@ impl PortabilityPlan {
         target: &TargetProfile,
     ) -> Option<&TargetProfileReference> {
         (self.target_profile == self.validated_target_profile
-            && *target == self.validated_target_profile_snapshot)
+            && *target == *self.validated_target_profile_snapshot)
             .then_some(&self.validated_target_profile)
     }
 

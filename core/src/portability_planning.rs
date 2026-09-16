@@ -19,6 +19,7 @@ pub use equivalence::{
 
 use std::error::Error;
 use std::fmt;
+use std::sync::Arc;
 
 use validation::{aggregate_status, collect_rewrite_dependencies};
 
@@ -304,7 +305,7 @@ pub struct PortabilityPlan {
     validated_contract_version: ContractVersion,
     validated_specification_version: SpecificationVersion,
     validated_target_profile: TargetProfileReference,
-    validated_target_profile_snapshot: TargetProfile,
+    validated_target_profile_snapshot: Arc<TargetProfile>,
     validated_decisions: Vec<PlannedRequirement>,
     validated_rewrite_dependencies: Vec<RewriteDependency>,
     validated_unresolved_requirements: Vec<RequirementIdentity>,
@@ -465,7 +466,7 @@ fn plan_portability_for_validated_reference(
         validated_contract_version: input.contract_version,
         validated_specification_version: input.specification_version.clone(),
         validated_target_profile: evaluation.target_profile.clone(),
-        validated_target_profile_snapshot: evaluation.validated_target_profile.clone(),
+        validated_target_profile_snapshot: Arc::clone(&evaluation.validated_target_profile),
         validated_decisions,
         validated_rewrite_dependencies,
         validated_unresolved_requirements,
@@ -895,7 +896,7 @@ fn validate_correspondence(
         ));
     }
 
-    if evaluation.validated_target_profile != *target
+    if *evaluation.validated_target_profile != *target
         || evaluation.target_profile != *target_reference
         || evaluation.target_engine != target.engine
         || evaluation.target_runtime != target.runtime

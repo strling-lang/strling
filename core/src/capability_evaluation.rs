@@ -6,6 +6,7 @@
 
 use std::error::Error;
 use std::fmt;
+use std::sync::Arc;
 
 use crate::semantic::{
     AssertionPolarity, BuiltinClassName, CaseMatching, CharacterDomain, CharacterSetMember,
@@ -323,7 +324,7 @@ pub struct CapabilityEvaluation {
     pub target_runtime: Option<RuntimeIdentity>,
     pub requirements: SemanticRequirements,
     pub results: Vec<CapabilityResult>,
-    pub(crate) validated_target_profile: TargetProfile,
+    pub(crate) validated_target_profile: Arc<TargetProfile>,
 }
 
 impl SemanticRequirements {
@@ -441,7 +442,7 @@ fn evaluate_capabilities_for_validated_reference(
         target_runtime: target.runtime.clone(),
         requirements,
         results,
-        validated_target_profile: target.clone(),
+        validated_target_profile: Arc::new(target.clone()),
     })
 }
 

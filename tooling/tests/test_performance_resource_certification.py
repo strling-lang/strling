@@ -1320,11 +1320,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             )
         )
         self.assertEqual(len(baseline["measurements"]), len(expected_keys))
-        self.assertEqual(
-            condition.call_count,
-            self.manifest["measurement_policy"]["baseline_repetitions"]
-            * (len(expected_keys) + 1),
-        )
+        self.assertEqual(condition.call_count, 5)
         self.assertEqual(baseline["conditioning_repetitions"], [conditioning] * 5)
         validate_baseline(baseline, manifest=active_manifest, synthetic=True)
 

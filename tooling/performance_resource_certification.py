@@ -3164,6 +3164,7 @@ def validate_environment_rollover(
     candidate_baseline: Mapping[str, object],
     *,
     expected_os_build: str,
+    artifact_source_changes: Mapping[str, Sequence[str]] | None = None,
 ) -> dict[str, Any]:
     """Prove an OS-only rollover against the immediately prior active contract."""
 
@@ -3178,13 +3179,22 @@ def validate_environment_rollover(
             "rollover-contract-drift",
             "benchmark coordinates or performance policy changed during environment rollover",
         )
-    if (
+    artifact_fingerprints_preserved = (
         prior_baseline["artifact_fingerprints"]
-        != candidate_baseline["artifact_fingerprints"]
-    ):
+        == candidate_baseline["artifact_fingerprints"]
+    )
+    artifact_identity_accepted, artifact_identity = _artifact_identity_check(
+        cast(Mapping[str, object], prior_baseline["artifact_fingerprints"]),
+        cast(Mapping[str, object], candidate_baseline["artifact_fingerprints"]),
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=cast(str, candidate_baseline["source_commit"]),
+        source_changes=artifact_source_changes,
+    )
+    if not artifact_identity_accepted:
         raise PerformanceResourceError(
             "rollover-product-identity",
-            "release artifact identities changed during environment rollover",
+            "release artifact identities changed without candidate-source binding "
+            "during environment rollover",
         )
 
     prior_environment = cast(Mapping[str, object], prior_baseline["environment"])
@@ -3279,7 +3289,8 @@ def validate_environment_rollover(
         "environment_mismatches": mismatches,
         "comparison_count": len(comparisons),
         "failed_comparisons": 0,
-        "artifact_fingerprints_preserved": True,
+        "artifact_fingerprints_preserved": artifact_fingerprints_preserved,
+        "artifact_identity": artifact_identity,
         "contract_projection_preserved": True,
     }
 
@@ -4305,12 +4316,18 @@ def _baseline_command(
             raise PerformanceResourceError(
                 "rollover-history", "prior authority directory identity changed"
             )
+        artifact_source_changes = _artifact_source_changes(
+            baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+            candidate_source_commit=cast(str, baseline["source_commit"]),
+            root=root,
+        )
         rollover = validate_environment_rollover(
             prior_manifest,
             prior_baseline,
             activated,
             baseline,
             expected_os_build=expected_os_build,
+            artifact_source_changes=artifact_source_changes,
         )
     elif expected_os_build is not None:
         raise PerformanceResourceError(

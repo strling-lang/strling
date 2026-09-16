@@ -1432,6 +1432,52 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(report["comparison_count"], 54)
         self.assertEqual(report["failed_comparisons"], 0)
         self.assertTrue(report["artifact_fingerprints_preserved"])
+        self.assertEqual(
+            report["artifact_identity"]["policy"],
+            "baseline-exact-or-candidate-source-closure-changed",
+        )
+
+        source_bound = copy.deepcopy(candidate_baseline)
+        source_bound["source_commit"] = "2" * 40
+        for artifact in source_bound["artifact_fingerprints"].values():
+            artifact["sha256"] = "f" * 64
+        report = validate_environment_rollover(
+            prior_manifest,
+            prior_baseline,
+            candidate_manifest,
+            source_bound,
+            expected_os_build="26200.9278",
+            artifact_source_changes={
+                "runner": ["core/src/semantic/mod.rs"],
+                "kernel": ["core/src/semantic/mod.rs"],
+                "interop": ["core/src/semantic/mod.rs"],
+            },
+        )
+        self.assertFalse(report["artifact_fingerprints_preserved"])
+        self.assertEqual(
+            {
+                row["status"]
+                for row in cast(dict[str, Any], report["artifact_identity"])[
+                    "artifacts"
+                ].values()
+            },
+            {"candidate-source-bound"},
+        )
+
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_environment_rollover(
+                prior_manifest,
+                prior_baseline,
+                candidate_manifest,
+                source_bound,
+                expected_os_build="26200.9278",
+                artifact_source_changes={
+                    "runner": [],
+                    "kernel": [],
+                    "interop": [],
+                },
+            )
+        self.assertEqual(raised.exception.code, "rollover-product-identity")
 
         changed_policy = copy.deepcopy(candidate_manifest)
         changed_policy["measurement_policy"]["sample_iterations"] = 63

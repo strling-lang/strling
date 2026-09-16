@@ -12,7 +12,9 @@ scope:
         - .github/workflows/cd.yml
         - .github/workflows/dependency-review.yml
         - bindings/kotlin/gradle/verification-metadata.xml
+        - bindings/interop/Cargo.toml
         - bindings/typescript/package-lock.json
+        - core/internal/Cargo.toml
         - core/src/capability_evaluation.rs
         - core/src/ecmascript_lowering.rs
         - core/src/portability_planning.rs

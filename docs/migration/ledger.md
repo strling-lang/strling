@@ -5730,6 +5730,43 @@ malformed-result classification. Because these tracked authority and tooling
 changes create a new candidate, the owner must again run Local -> Pull Request
 -> Full from the final clean SHA.
 
+The authoritative campaign at clean candidate `df7ff737` passed Local 37/37 and
+Pull Request 79/79, then traversed all 125 Full operations and recorded 121
+passed, two failed, one waived, and one unavailable with zero started
+coordinates and zero authenticated samples. Both failures were repository
+defects.
+
+`build@perl` ran bare `make` against a `Makefile` that only `./setup.sh`
+generates, which no profile runs, and that ExtUtils::MakeMaker itself rejects
+once it is older than the interpreter `Config.pm` and `config.h`. A clean
+checkout therefore has no target and a stale tree fails once on purpose, so the
+operation could only pass after a manual setup with the identical interpreter.
+The Perl binding now owns its generated Makefile: `bindings/perl/build.sh`
+regenerates it from the tracked `Makefile.PL` and then builds, with no retry,
+second `make`, ignored exit code, or relaxed result. Clean-checkout, stale,
+repeated, and Windows-generated Makefile cases all build on the first
+invocation, and `lint@perl` and `test@perl` pass.
+
+`deep_quality_full_certification@repository` exhausted its unchanged
+3,600-second governed budget inside one sanitizer case, whose `cmake` configure
+alone took 2,205.6 seconds, after which every remaining check received the
+one-second floor and reported failed without running. The C adapter declared its
+interop dependencies with a recursive glob over exact manifest and lock paths,
+which walked 61,399 mostly Cargo-build entries across the 9p mount on every
+configure and, through configure-dependency tracking, before every build.
+Recursive globbing is now limited to source directories and the exact manifest
+and lock inputs are declared directly. The dependency set, cargo command, built
+artifacts, sanitizer isolation, and every budget and threshold are unchanged,
+while the governed C sanitizer sequence falls from 576.6, 591.3, and 0.2 seconds
+to 8, 66, and 1 seconds with 2/2 sanitizer tests passing.
+
+`performance_resource_full_certification@repository` had no repository defect.
+It reported `environment:identical-conditioning` unavailable because the native
+Windows host was not quiet under the governed conditioning policy, exited 2 with
+terminal status `unavailable`, and consumed no sample. That is the designed
+fail-closed environmental result, and no threshold, baseline, conditioning rule,
+performance policy, or host state was changed.
+
 Release correctly did not start, no attestation was issued, and no cloud
 certification acceptance is claimed. P20-T02 remains paused, no publication
 work has begun, and no package, tag, GitHub Release, or `main` change occurred.

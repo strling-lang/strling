@@ -508,4 +508,104 @@ not performance sampling. Because tracked certification authority and tooling
 changed, the next authoritative campaign must start again at Local, continue
 through Pull Request, and stop after Full for inspection.
 
+## Deterministic Perl build and measured-operation overhead correction
+
+The authoritative campaign at clean candidate
+`df7ff7370fdec1ae5d8f629d4cbba4d037162a57` passed Local 37/37 and Pull Request
+79/79 and then traversed all 125 Full operations, recording 121 passed, two
+failed, one waived, and one unavailable. Its structured performance evidence
+proves sample state `zero` with zero started coordinates and zero
+authenticated samples, so the attempt consumed no governed sample. The
+artifact, progress ledger, and console log remain preserved under
+`target/codex-tools/h08-pr-full-df7ff7370fdec1ae5d8f629d4cbba4d037162a57-20260918T034625Z/`.
+
+`build@perl` failed with exit 2. Its declared command is bare `make`, but the
+`Makefile` that `make` consumes is an untracked artifact generated from
+`Makefile.PL`, and only `./setup.sh` produced it. No certification profile runs
+`setup`. ExtUtils::MakeMaker also gives the generated Makefile a rule that
+depends on `Makefile.PL` plus the interpreter's `Config.pm` and `config.h`: on
+a clean checkout `make` has no target at all, and when the Makefile is older
+than the interpreter MakeMaker rebuilds it and then deliberately fails, telling
+the caller to rerun `make`. The governed WSL Perl 5.38.2 `Config.pm` and
+`config.h` carry mtime `2026-09-14T12:50:06`, later than the Makefile left in
+the tree, so the operation could only pass when an operator had already
+regenerated the Makefile with the identical interpreter. The same class of
+defect was corrected by hand at candidate `c3081cc2`, where a Windows-generated
+Makefile was consumed under WSL, and it recurred because nothing in the
+repository owned the generated Makefile.
+
+Both failure shapes reproduce exactly under the governed controller. A clean
+checkout exits 2 with `No targets specified and no makefile found`; a Makefile
+older than `Config.pm` reproduces the recorded Full output including the
+rebuild notice, the instruction to rerun `make`, the trailing `false`, and
+`make: *** [Makefile:796: Makefile] Error 1` on stderr.
+
+The correction gives the Perl binding ownership of its own generated Makefile.
+`bindings/perl/build.sh` regenerates the Makefile from the tracked
+`Makefile.PL` and then runs `make`, and the registered build command becomes
+`bash build.sh`, with `build.sh` declared among the binding configuration
+files. There is no retry, no second `make`, no ignored exit code and no sleep;
+dependency resolution, declared tools, capabilities, lint, test, clean and
+every certification threshold are unchanged. Four governed invocations now pass
+with exit 0: a clean checkout, a Makefile backdated behind `Config.pm`, an
+immediate repeat, and a Windows Strawberry Perl `gmake`-style Makefile consumed
+by the WSL controller. `lint@perl` passes and `test@perl` passes 15/15.
+
+`deep_quality_full_certification@repository` failed for a separate repository
+reason. The operation carries a governed whole-operation budget of 3,600
+seconds and hands each command the remaining budget with a one-second floor.
+`sanitizer:c-adapter-address-undefined` alone consumed 3,289.7 seconds, 2,205.6
+of them in its `cmake` configure step, so its build step was cut off at the
+remaining 1,084 seconds and the C++ sanitizer case plus all fourteen mutants
+then received the one-second floor and reported failed without running. The
+immediately preceding isolated Full that passed 36/36 shows the same shape on a
+quiet host: the two sanitizer cases consumed 2,283.9 of 3,600 seconds, 576.6
+and 575.0 in configure and 591.3 and 540.4 in build, leaving the whole
+operation only 417 seconds of headroom.
+
+The cause is in `bindings/c/CMakeLists.txt`. It declared the canonical interop
+dependency set with a single recursive file glob whose expressions included
+exact manifest and lock paths. A recursive glob walks the entire parent tree of
+every expression, so those three expressions traversed `bindings/interop` twice
+and `core/internal` once: 61,399 entries, almost all of them Cargo build
+output, across the 9p mount that exposes the repository to the WSL controller.
+Because the glob is declared with configure-dependency tracking, CMake repeats
+the identical traversal before every build, which is why the configure and the
+build step of each sanitizer case each cost roughly nine minutes. A
+pre-correction probe of the exact certification configure command was still
+inside that traversal after 429 seconds, in uninterruptible 9p client sleep on
+`newfstatat`, with 1,950 of 2,049 CPU ticks in system time.
+
+The correction limits recursive globbing to the wildcard source patterns for
+`bindings/interop/src`, `core/src` and `spec/interop/1.0`, and declares the
+exact manifest and lock inputs directly, including the interop workspace
+`fuzz` member that the recursive form resolved. The dependency set, the cargo
+command, the produced static library, the isolated temporary sanitizer build
+tree and the sanitizer flags are unchanged; only the repeated directory
+traversal is removed. No budget, timeout, threshold, workload, denominator or
+profile membership changed. The exact certification sanitizer sequence for the
+C surface now completes with configure 8 seconds, build 66 seconds and `ctest`
+1 second, passing 2/2 address and undefined-behaviour tests. The generated
+build-time glob verification now contains only the three source-directory
+expressions, and `build@c`, `build@cpp`, `test@c` and `test@cpp` pass through
+the ordinary persistent build trees, which reconfigure from the corrected file.
+
+`performance_resource_full_certification@repository` needed no repository
+change. It reported `environment:identical-conditioning` as unavailable with
+code `conditioning` and the reason that the native Windows host was not quiet
+under the governed conditioning policy, after single-fixed-logical-CPU
+selection, release artifact build, baseline artifact identity and the
+fingerprinted native environment check all passed. The producer exited 2, its
+terminal status is `unavailable` rather than failed or passed, and sample
+consumption is state `zero`. That is the designed fail-closed environmental
+result, so no threshold, baseline, conditioning rule, performance policy or
+host state was changed.
+
+Because tracked repository files changed again, the retained Local 37/37 and
+Pull Request 79/79 no longer qualify the candidate. The owner must run one new
+Local, then Pull Request, then a single Full at the new clean SHA under the
+unchanged `26200.9457` authority and stop for inspection. No Local, Pull
+Request, Full, Release, attestation, cloud acceptance, publication or tag
+action was performed during this correction task.
+
 **BLOCKED — NO-GO FOR P20-T02.**

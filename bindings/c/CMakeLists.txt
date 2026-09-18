@@ -33,16 +33,29 @@ else()
     )
 endif()
 
+# Only wildcard source patterns are globbed. GLOB_RECURSE walks the whole
+# parent tree of every expression, so naming an exact manifest or lock path
+# here makes CMake traverse bindings/interop and core/internal in full,
+# including their Cargo build directories. CONFIGURE_DEPENDS repeats that
+# traversal on every configure and every build, which dominates isolated
+# certification builds. The manifest and lock inputs are exact paths, and the
+# interop workspace manifest declares the fuzz member, so they are listed
+# directly instead.
 file(
     GLOB_RECURSE
-    STRLING_INTEROP_INPUTS
+    STRLING_INTEROP_SOURCE_INPUTS
     CONFIGURE_DEPENDS
     "${STRLING_REPOSITORY_ROOT}/bindings/interop/src/*.rs"
+    "${STRLING_REPOSITORY_ROOT}/core/src/*.rs"
+    "${STRLING_REPOSITORY_ROOT}/spec/interop/1.0/*.json"
+)
+
+set(STRLING_INTEROP_INPUTS
+    ${STRLING_INTEROP_SOURCE_INPUTS}
     "${STRLING_REPOSITORY_ROOT}/bindings/interop/Cargo.toml"
     "${STRLING_REPOSITORY_ROOT}/bindings/interop/Cargo.lock"
-    "${STRLING_REPOSITORY_ROOT}/core/src/*.rs"
+    "${STRLING_REPOSITORY_ROOT}/bindings/interop/fuzz/Cargo.toml"
     "${STRLING_REPOSITORY_ROOT}/core/internal/Cargo.toml"
-    "${STRLING_REPOSITORY_ROOT}/spec/interop/1.0/*.json"
 )
 
 add_custom_command(

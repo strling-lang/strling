@@ -2518,7 +2518,7 @@
             "files": {
                 "manifests": ["Makefile.PL", "dist.ini", "cpanfile"],
                 "locks": ["cpanfile.snapshot"],
-                "configs": ["setup.sh"]
+                "configs": ["setup.sh", "build.sh"]
             },
             "capabilities": {
                 "format": "not_yet_configured",
@@ -2549,7 +2549,7 @@
                 "native",
                 "perl"
             ],
-            "build": ["make"],
+            "build": ["bash", "build.sh"],
             "clean": ["make", "clean"],
             "test": ["prove", "-lv", "t/adapter.t"]
         },

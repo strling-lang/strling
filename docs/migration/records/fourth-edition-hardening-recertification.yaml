@@ -11,8 +11,10 @@ scope:
         - .github/workflows/ci.yml
         - .github/workflows/cd.yml
         - .github/workflows/dependency-review.yml
+        - bindings/c/CMakeLists.txt
         - bindings/kotlin/gradle/verification-metadata.xml
         - bindings/interop/Cargo.toml
+        - bindings/perl/build.sh
         - bindings/typescript/package-lock.json
         - core/internal/Cargo.toml
         - core/src/capability_evaluation.rs
@@ -173,6 +175,10 @@ change_classification:
             - Direct target lowering reuses private, exact planner and Semantic IR snapshots on the unchanged success path, falls back to full validation and canonical hashing for any caller-mutated input, and defers target-tree diagnostic path construction to failures; public contracts, calibrated benchmark workloads, validation outcomes, target semantics, and governed performance budgets remain unchanged.
             - >-
                 Deep-quality profile commands now preserve their declared structured-result contract when deterministic manifest validation fails: the manifest check is reported as failed JSON with the original error code and reason instead of raising before emitting a result.
+            - >-
+                The governed Perl build owns its generated Makefile: it regenerates the Makefile from the tracked Makefile.PL before invoking make, so a clean checkout and any Perl toolchain change build correctly on the first invocation. Dependency resolution, the declared tool set, the executed build, lint, and test commands, and every certification threshold remain unchanged; no retry, ignored exit code, or relaxed result is introduced.
+            - >-
+                The C adapter declares its canonical interop dependencies without recursively globbing Cargo build trees: exact manifest and lock inputs, including the interop workspace fuzz member, are named directly while recursive globbing stays limited to source directories. The dependency set, the built artifacts, and the sanitizer isolation boundary are unchanged; only the repeated configure-time and build-time directory traversal is removed.
     generated_output_change:
         level: compatible
         evidence:
@@ -208,7 +214,7 @@ invariant_inventory:
       positive_allowed_form: Local and Pull Request pass first; Full then Release pass at the same clean SHA with exact runtimes, governed samples, complete evidence, and only accepted waivers.
       forbidden_form: Sampling before a known deterministic failure is fixed, ambient runtime substitution, evidence transfer between candidates, retry after a sampled failure on an unchanged SHA, missing/incomplete operation, new waiver, publication action, or mixed source identity.
       mechanical_detection_method: Canonical profile artifacts, structured product-certification projections, exact-runtime evidence, performance sample-consumption state, waiver registry validation, and clean Git identity checks.
-      current_observed_state: The interrupted Full at be811599 passed 123 operations, retained only WVR-SEC-VSCE-LICENSE-001, made performance unavailable solely on the Windows 26200.9445 versus 26200.9457 identity mismatch, and proved zero authenticated samples and zero coordinates started in structured invocation d070493b417242ab8b28becefba4b56f. The immutable .9445 baseline is archived at history/dffac2d05330d2e2cd19edc3d9427bc95b12bb93e5b3cc7b16450e20841a98d0. Native qualification found only OS-build and attestation-fingerprint drift. Clean calibration source 36d13f24bcf0c182cb926b2f669c7650747fdd64 passed all 54 old-contract comparisons after source-bound artifact validation, error-only binary-size containment, and exact validated-profile snapshot reuse. Active baseline a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd now authenticates environment 07046a769a2618588399efd80156976d88f6fcb38886160c542d6757c836e14f and manifest 962897b9c1e5f2a908ab58adcc49473176ca46a86b1edae95f2cda37957070e0. A clean post-adoption native qualification reproduces the active environment. The authoritative Local at 03ab81b passed 36 of 37 operations and made only deep_quality_local_certification@repository incomplete because five intentional rollover source changes retained their be811599 deep-quality hashes; no Pull Request or Full profile started and no authenticated Full sample was consumed. Canonical refresh and isolated Local, Pull Request, and Full deep-quality proofs are green, but tracked authority changed, so the next authoritative campaign must restart Local, then Pull Request, then Full; Release remains separate and forbidden until Full is inspected.
+      current_observed_state: The interrupted Full at be811599 passed 123 operations, retained only WVR-SEC-VSCE-LICENSE-001, made performance unavailable solely on the Windows 26200.9445 versus 26200.9457 identity mismatch, and proved zero authenticated samples and zero coordinates started in structured invocation d070493b417242ab8b28becefba4b56f. The immutable .9445 baseline is archived at history/dffac2d05330d2e2cd19edc3d9427bc95b12bb93e5b3cc7b16450e20841a98d0. Native qualification found only OS-build and attestation-fingerprint drift. Clean calibration source 36d13f24bcf0c182cb926b2f669c7650747fdd64 passed all 54 old-contract comparisons after source-bound artifact validation, error-only binary-size containment, and exact validated-profile snapshot reuse. Active baseline a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd now authenticates environment 07046a769a2618588399efd80156976d88f6fcb38886160c542d6757c836e14f and manifest 962897b9c1e5f2a908ab58adcc49473176ca46a86b1edae95f2cda37957070e0. A clean post-adoption native qualification reproduces the active environment. The authoritative Local at 03ab81b passed 36 of 37 operations and made only deep_quality_local_certification@repository incomplete because five intentional rollover source changes retained their be811599 deep-quality hashes; no Pull Request or Full profile started and no authenticated Full sample was consumed. Canonical refresh and isolated Local, Pull Request, and Full deep-quality proofs are green, but tracked authority changed, so the next authoritative campaign must restart Local, then Pull Request, then Full; Release remains separate and forbidden until Full is inspected. The authoritative Local 37/37 and Pull Request 79/79 at df7ff737 then reached Full, which traversed all 125 operations and recorded 121 passed, two failed, one waived, and one unavailable without starting a coordinate or authenticating a sample. Both failures were repository defects and are now corrected. The Perl build regenerates its own generated Makefile from Makefile.PL before invoking make, and the C adapter no longer recursively globs Cargo build trees to declare its interop dependencies, which returns the governed deep-quality sanitizer cases from roughly nineteen minutes each to about seventy-five seconds each inside the unchanged 3600-second budget. The performance unavailability was the designed fail-closed native conditioning result and needed no repository change. Tracked files changed again, so the next authoritative campaign must restart Local, then Pull Request, then Full.
       expected_ratchet: The exact hardened source baseline is immutable evidence for P20-T02; any later semantic-core change requires a new certification event.
 checkpoints:
     - name: Candidate freeze and contract reconstruction
@@ -370,6 +376,47 @@ checkpoints:
           - check: Corrected candidate certification
             result: not_run
             details: Current-source focused checks, stable generation, clean-source Local/Pull Request, the single authorized Full, independent same-SHA Release, signing, and hosted integrity verification remain required. P20-T02 stays paused.
+    - name: Deterministic Perl build and measured-operation overhead correction
+      status: passed
+      evidence:
+          - check: Full disposition at df7ff737
+            result: passed
+            details: The canonical Full at df7ff7370fdec1ae5d8f629d4cbba4d037162a57 traversed all 125 operations and recorded 121 passed, 2 failed, 1 waived, and 1 unavailable. The failures were build@perl and deep_quality_full_certification@repository; performance_resource_full_certification@repository was unavailable. Its structured performance evidence proves sample state zero with zero started coordinates and zero authenticated samples, so no governed sample was consumed. The artifact, progress ledger, and console log remain preserved under target/codex-tools/h08-pr-full-df7ff7370fdec1ae5d8f629d4cbba4d037162a57-20260918T034625Z/.
+          - check: Perl build root cause
+            result: passed
+            details: build@perl executed its declared command make and exited 2. The Makefile it consumed is an untracked generated artifact of Makefile.PL that only ./setup.sh produced, and no certification profile runs setup. ExtUtils::MakeMaker generates a Makefile whose own rule depends on Makefile.PL plus the interpreter Config.pm and config.h; when that Makefile is absent make has no target, and when it is older than the interpreter MakeMaker rebuilds it and then deliberately runs its false step, asking the caller to rerun make. The governed WSL Perl 5.38.2 Config.pm and config.h carry mtime 2026-09-14T12:50:06, later than the Makefile left in the tree, so the operation could only pass when an operator had already regenerated the Makefile with the identical interpreter. The same class of defect was corrected by hand at candidate c3081cc2 and recurred because nothing in the repository owned the generated Makefile.
+          - check: Perl failure reproduction
+            result: passed
+            details: >-
+                Reproduced under the governed WSL controller. A clean checkout with no generated Makefile exits 2 with "No targets specified and no makefile found". A Makefile older than the interpreter Config.pm reproduces the recorded Full output exactly, including the Makefile.old clean step, the rebuild notice, the instruction to rerun make, the trailing false, and "make: *** [Makefile:796: Makefile] Error 1" on stderr with exit 2.
+          - check: Perl build remediation
+            result: passed
+            details: The Perl binding now owns its generated Makefile. bindings/perl/build.sh regenerates the Makefile from the tracked Makefile.PL and then runs make, and the registered build command becomes bash build.sh with build.sh declared among the binding configuration files. No retry, no second make, no ignored exit code, no sleep, and no relaxed result is introduced; dependency resolution, declared tools, capabilities, lint, test, clean, and every certification threshold are unchanged.
+          - check: Perl remediation proof
+            command: ./strling build perl
+            result: passed
+            details: >-
+                Four governed invocations pass with exit 0: a clean checkout with no generated Makefile, a Makefile backdated behind the interpreter Config.pm, an immediate repeat for idempotence, and a Windows Strawberry Perl gmake-style Makefile consumed by the WSL controller, which is the exact condition corrected by hand at c3081cc2. Every run regenerates a Unix-style Makefile bound to the active interpreter before building. lint@perl passes and test@perl passes 15 of 15 assertions.
+          - check: Deep-quality repository defect
+            result: passed
+            details: >-
+                deep_quality_full_certification carries a governed whole-operation budget of 3600 seconds and gives each command the remaining budget with a one-second floor. The failing Full consumed 3289.7 seconds inside sanitizer:c-adapter-address-undefined alone, 2205.6 of them in its cmake configure step, so its build step was cut off at the remaining 1084 seconds and the C++ sanitizer case plus all fourteen mutants then received the one-second floor and reported failed without running. The immediately preceding isolated Full that passed 36 of 36 shows the same shape on a quiet host: the two sanitizer cases consumed 2283.9 of 3600 seconds, with 576.6 and 575.0 seconds in configure and 591.3 and 540.4 seconds in build, leaving only 417 seconds of headroom for the entire operation.
+          - check: Deep-quality overhead root cause
+            result: passed
+            details: >-
+                bindings/c/CMakeLists.txt declared the canonical interop dependency set with one recursive file glob whose expressions included exact manifest and lock paths. A recursive glob walks the entire parent tree of every expression, so those three expressions traversed bindings/interop twice and core/internal once: 61,399 entries, almost all of them Cargo build output, across the 9p mount that exposes the repository to the WSL controller. The configure-dependency mode repeats the identical traversal before every build, which is why the configure and the build step of each sanitizer case each cost roughly nine minutes. A pre-correction probe of the exact certification configure command was still inside that traversal after 429 seconds, in uninterruptible 9p client sleep on newfstatat, with 1950 of 2049 CPU ticks in system time.
+          - check: Deep-quality overhead correction
+            result: passed
+            details: Recursive globbing is now limited to the wildcard source patterns for bindings/interop/src, core/src, and spec/interop/1.0, and the exact manifest and lock inputs, including the interop workspace fuzz member that the recursive form resolved, are declared directly. The dependency set, the cargo command, the produced static library, the isolated temporary sanitizer build tree, and the sanitizer flags are unchanged; only the repeated directory traversal is removed. No budget, timeout, threshold, workload, denominator, or profile membership changed.
+          - check: Deep-quality correction proof
+            result: passed
+            details: The exact certification sanitizer sequence for the C surface now completes with configure 8 seconds, build 66 seconds, and ctest 1 second, passing 2 of 2 address and undefined-behaviour tests, against 576.6, 591.3, and 0.2 seconds before the correction. The generated build-time glob verification now contains only the three source-directory expressions. build@c, build@cpp, test@c, and test@cpp also pass through the ordinary persistent build trees, which reconfigure from the corrected file.
+          - check: Performance-resource disposition
+            result: passed
+            details: No repository defect. Environmental conditioning failure only. performance_resource_full_certification@repository reported environment:identical-conditioning as unavailable with code conditioning and the reason that the native Windows host was not quiet under the governed conditioning policy, after single-fixed-logical-CPU selection, release artifact build, baseline artifact identity, and the fingerprinted native environment checks all passed. The producer exited 2, its terminal status is unavailable rather than failed or passed, and sample consumption is state zero with zero started coordinates and zero authenticated samples. That is the designed fail-closed environmental result. No threshold, baseline, conditioning rule, performance policy, or host state was changed.
+          - check: Required certification sequence
+            result: not_run
+            details: Tracked repository files changed, so the retained Local 37 of 37 and Pull Request 79 of 79 results no longer qualify the candidate. One new authoritative Local, then Pull Request, then a single Full must run at the new clean SHA under the unchanged 26200.9457 authority before any inspection, signing, or Release step. The consumed historical Full failures cannot be retried at their own source identities.
 commits:
     - sha: 1291ba864f1a3e6c7d0dd1b8591eba0fac0f7a28
       subject: "chore(certification): roll Windows performance baseline"
@@ -412,4 +459,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: The authorized Windows environment rollover is qualified and calibrated. P20-T02 remains paused until exact-source deterministic preflight, Full, Release, signed local attestation, and cheap cloud verification complete.
+    rationale: The authorized Windows environment rollover is qualified and calibrated, and the two repository defects that terminated the df7ff737 Full are corrected. P20-T02 remains paused until exact-source deterministic preflight, Full, Release, signed local attestation, and cheap cloud verification complete.

@@ -609,3 +609,61 @@ Request, Full, Release, attestation, cloud acceptance, publication or tag
 action was performed during this correction task.
 
 **BLOCKED — NO-GO FOR P20-T02.**
+
+## Partially sampled Full and native conditioning acquisition
+
+Clean candidate `9e5647d4d241c0887ed5c0e4dec46b901fa0530e` passed Local
+37/37 and Pull Request 79/79. Its Full profile traversed all 125 operations:
+123 passed, `WVR-SEC-VSCE-LICENSE-001` waived, one unavailable, and zero failed
+or incomplete. The unavailable operation was the native performance producer.
+Its invocation `f66dd788482c4270b7b1313027fcf80c` has an intact atomic result,
+streams, environment identity and progress ledger. It completed 27 coordinates
+and 1,539 authenticated samples, then rejected all three pre-measurement
+conditioning attempts for `latency:cli-startup/fixture:semantic-tiny`. No 28th
+coordinate or sample started. The terminal sample state is `consumed`, with
+`coordinates_started=coordinates_completed=27`,
+`authenticated_sample_count=completed_sample_count=1539`, null current
+coordinate, and terminal status `unavailable`. The preserved profile and atomic
+evidence are under
+`target/codex-tools/h08-recertification-9e5647d4d241c0887ed5c0e4dec46b901fa0530e-20260918T205104Z/`
+and `target/certification-operation-results/f66dd788482c4270b7b1313027fcf80c/`.
+Governance permits an unchanged-source Full retry only after preserved proof of
+zero authenticated samples, so this candidate cannot be sampled again.
+
+The failed producer discarded the raw rejected conditioner reports and retained
+only their count and generic reason. Direct, sample-free execution of the exact
+hashed native conditioner reproduced the environmental cause. CPU 20 recorded
+selected-busy values of 2,812, 4,766, 6,641, and 6,719 basis points across
+four observations spaced fifteen seconds apart, all above the unchanged 500
+basis-point limit. Further fifteen-second observations remained rejected
+through 07:30:45 local time and first passed at 07:31:02. This was a
+multi-minute burst on the selected measurement CPU even with no STRling
+certification profile running. Some observations also exceeded the existing
+selected interrupt or whole-host limits, but the selected-CPU limit alone was
+sufficient to reject them. The native delegation already authenticated CPU 20,
+CPU set 276, affinity, release artifacts, and the active Windows baseline. No
+unrelated process or host setting was changed.
+
+The repository's three-attempt, fifteen-second acquisition window cannot span
+that observed burst. The bounded acquisition is extended to 24 attempts at the
+same fifteen-second interval, allowing up to about six minutes for a genuinely
+quiet two-second window before each coordinate. Every rejected attempt remains
+outside the sample ledger; a passing native observation is still required
+immediately before each coordinate, and all 16 warmups, 64 samples, batch
+normalization, comparisons, ceilings, affinity and environment identities are
+unchanged. The exact native report's rejected observation and fingerprint are
+now retained in the attempt evidence. Report or identity defects stop acquisition
+without a quiet-host retry. This is an explicit acquisition-policy correction,
+not a reinterpretation of the consumed attempt or a baseline update. The
+corrected source requires a new clean SHA and a fresh Local, Pull Request, Full,
+independent same-SHA Release, attestation, and cloud verification sequence.
+
+Focused proof passes 51 performance-resource contract tests, including the
+bounded busy sequence and immediate failure on conditioner identity drift; 46
+governance tests, Ruff lint and formatting, and patch integrity also pass. Three
+sample-free invocations of the exact producer conditioning check at the failing
+coordinate all passed: the first acquired a quiet window on attempt 21 after
+20 preserved rejections in 347.473 seconds, and the next two passed on their
+first attempt. Their raw checks are retained in
+`target/codex-tools/h08-conditioning-acquisition-proof.json`. No authenticated
+performance sample was consumed in this proof.

@@ -58,7 +58,9 @@ RUNNER_MANIFEST_PATH = (
 LINUX_TARGET = "x86_64-unknown-linux-gnu"
 WINDOWS_TARGET = "x86_64-pc-windows-msvc"
 WINDOWS_CANONICAL_BUILD_DRIVE = "P:"
-MEASUREMENT_CONDITIONING_MAX_ATTEMPTS = 3
+# A native desktop can have multi-minute bursts on the pinned CPU.  Waiting for
+# the same authenticated quiet window does not consume or discard measurements.
+MEASUREMENT_CONDITIONING_MAX_ATTEMPTS = 24
 MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS = 15
 HOST_ATTESTATION_ENV = "STRLING_PERFORMANCE_HOST_ATTESTATION"
 ALLOWED_CLOCKSOURCES = {"tsc", "hyperv_clocksource_tsc_page"}
@@ -261,9 +263,18 @@ RESOURCE_COMMANDS: dict[str, list[list[str]]] = {
 class PerformanceResourceError(ValueError):
     """A deterministic performance/resource contract failure."""
 
-    def __init__(self, code: str, message: str) -> None:
+    def __init__(
+        self,
+        code: str,
+        message: str,
+        *,
+        observation: Mapping[str, object] | None = None,
+        report_fingerprint: str | None = None,
+    ) -> None:
         super().__init__(message)
         self.code = code
+        self.observation = dict(observation) if observation is not None else None
+        self.report_fingerprint = report_fingerprint
 
 
 def _coordinate_id(key: tuple[str, str | None]) -> str:
@@ -1999,7 +2010,7 @@ def _windows_conditioning_snapshot(
         )
         report = json.loads(completed.stdout)
     except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError) as error:
-        raise PerformanceResourceError("conditioning", str(error)) from error
+        raise PerformanceResourceError("conditioning-report", str(error)) from error
     expected_keys = {
         "conditioning_version",
         "status",
@@ -2013,7 +2024,7 @@ def _windows_conditioning_snapshot(
     }
     if not isinstance(report, dict) or set(report) != expected_keys:
         raise PerformanceResourceError(
-            "conditioning", "Windows conditioner report changed"
+            "conditioning-report", "Windows conditioner report changed"
         )
     if report["report_fingerprint"] != document_fingerprint(
         report, "report_fingerprint"
@@ -2037,25 +2048,42 @@ def _windows_conditioning_snapshot(
             "maximum_system_busy_basis_points"
         ],
     }
+    report_identity_matches = (
+        report["conditioning_version"] == performance_windows.CONDITIONING_VERSION
+        and report["policy_id"] == conditioning["policy_id"]
+        and report["host_attestation_fingerprint"]
+        == environment["host_attestation_fingerprint"]
+        and report["selected_logical_cpu"] == environment["selected_logical_cpu"]
+        and report["conditioning_identity_fingerprint"] == fingerprint(identity)
+        and identity.get("policy_id") == conditioning["policy_id"]
+        and identity.get("selected_logical_cpu") == environment["selected_logical_cpu"]
+        and identity.get("execution_resource") == execution
+        and identity.get("power") == evidence["power"]
+        and identity.get("limits") == expected_limits
+    )
+    if not report_identity_matches:
+        raise PerformanceResourceError(
+            "conditioning-identity", "Windows conditioner identity changed"
+        )
     if (
-        completed.returncode != 0
-        or report["conditioning_version"] != performance_windows.CONDITIONING_VERSION
-        or report["status"] != "passed"
-        or report["policy_id"] != conditioning["policy_id"]
-        or report["host_attestation_fingerprint"]
-        != environment["host_attestation_fingerprint"]
-        or report["selected_logical_cpu"] != environment["selected_logical_cpu"]
-        or report["conditioning_identity_fingerprint"] != fingerprint(identity)
-        or identity.get("policy_id") != conditioning["policy_id"]
-        or identity.get("selected_logical_cpu") != environment["selected_logical_cpu"]
-        or identity.get("execution_resource") != execution
-        or identity.get("power") != evidence["power"]
-        or identity.get("limits") != expected_limits
-        or observation.get("failures") != []
+        completed.returncode == 2
+        and report["status"] == "rejected"
+        and isinstance(observation.get("failures"), list)
+        and observation["failures"]
     ):
         raise PerformanceResourceError(
             "conditioning",
             "native Windows host was not quiet under the governed conditioning policy",
+            observation=observation,
+            report_fingerprint=cast(str, report["report_fingerprint"]),
+        )
+    if (
+        completed.returncode != 0
+        or report["status"] != "passed"
+        or observation.get("failures") != []
+    ):
+        raise PerformanceResourceError(
+            "conditioning-report", "Windows conditioner result changed"
         )
     live_execution = _execution_resource_identity(
         cast(int, environment["selected_logical_cpu"])
@@ -2211,6 +2239,8 @@ def _acquire_quiet_conditioning_snapshot(
             return _conditioning_snapshot(environment, root=root)
         except PerformanceResourceError as error:
             last_error = error
+            if error.code != "conditioning":
+                raise
             if attempt < MEASUREMENT_CONDITIONING_MAX_ATTEMPTS:
                 time.sleep(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
     assert last_error is not None
@@ -2847,24 +2877,32 @@ def _measurement_conditioning_check(
     fixture_label = key[1] if key[1] is not None else "fixture-free"
     check_id = f"environment:measurement-conditioning/{key[0]}/{fixture_label}"
     rejected_attempts: list[dict[str, object]] = []
+    last_error: PerformanceResourceError | None = None
     for attempt in range(1, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS + 1):
         try:
             snapshot = _conditioning_snapshot(environment, root=root)
         except PerformanceResourceError as error:
-            retrying = attempt < MEASUREMENT_CONDITIONING_MAX_ATTEMPTS
-            rejected_attempts.append(
-                {
-                    "attempt": attempt,
-                    "code": error.code,
-                    "reason": str(error),
-                    "settling_delay_seconds": (
-                        MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS if retrying else 0
-                    ),
-                }
+            last_error = error
+            retrying = (
+                error.code == "conditioning"
+                and attempt < MEASUREMENT_CONDITIONING_MAX_ATTEMPTS
             )
+            rejected: dict[str, object] = {
+                "attempt": attempt,
+                "code": error.code,
+                "reason": str(error),
+                "settling_delay_seconds": (
+                    MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS if retrying else 0
+                ),
+            }
+            if error.observation is not None:
+                rejected["quiescence_observation"] = error.observation
+                rejected["conditioner_report_fingerprint"] = error.report_fingerprint
+            rejected_attempts.append(rejected)
             if retrying:
                 time.sleep(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
-            continue
+                continue
+            break
         return {
             "id": check_id,
             "status": "passed",
@@ -2887,7 +2925,11 @@ def _measurement_conditioning_check(
             "maximum_attempts": MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
             "retry_delay_seconds": MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS,
             "rejected_attempts": rejected_attempts,
-            "reason": "native Windows host did not satisfy governed quiescence",
+            "reason": (
+                "native Windows host did not satisfy governed quiescence"
+                if last_error is not None and last_error.code == "conditioning"
+                else str(last_error)
+            ),
         },
     }
 

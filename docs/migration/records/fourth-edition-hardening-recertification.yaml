@@ -417,6 +417,18 @@ checkpoints:
           - check: Required certification sequence
             result: not_run
             details: Tracked repository files changed, so the retained Local 37 of 37 and Pull Request 79 of 79 results no longer qualify the candidate. One new authoritative Local, then Pull Request, then a single Full must run at the new clean SHA under the unchanged 26200.9457 authority before any inspection, signing, or Release step. The consumed historical Full failures cannot be retried at their own source identities.
+    - name: Partially sampled Full and bounded quiet-window acquisition
+      status: passed
+      evidence:
+          - check: Exact consumed-sample disposition
+            result: passed
+            details: Clean 9e5647d4 passed Local 37/37 and Pull Request 79/79; Full recorded 123 passed, one accepted waiver, one unavailable, and no failures or incomplete operations. Native performance invocation f66dd788482c4270b7b1313027fcf80c has intact atomic result and progress evidence with 27 started and completed coordinates, 1539 authenticated and completed samples, null current coordinate, consumed sample state, and unavailable terminal state after three rejected conditioners at latency:cli-startup/fixture:semantic-tiny. No unchanged-source Full retry is admissible.
+          - check: Native busy-window reproduction
+            result: passed
+            details: Sample-free exact native conditioner probes on the pinned CPU 20 showed selected-busy values 2812, 4766, 6641, and 6719 basis points at fifteen-second intervals against the unchanged 500-basis-point gate. The busy period persisted beyond three minutes and eventually passed without changing any unrelated process or host setting. The existing three-attempt acquisition window was too short for this transient condition.
+          - check: Bounded acquisition correction
+            result: passed
+            details: The source correction extends quiet-window acquisition to at most 24 attempts, retains each rejected native observation and report fingerprint, and stops without retry on report or identity defects. It does not change the two-second gate, selected/system/interrupt limits, measured workload, warmups, samples, batching, comparisons, baselines, affinity, or external applications. Focused performance contract tests pass 51/51, governance tests pass 46/46, and Ruff lint, formatting and patch integrity pass. Three sample-free exact-producer conditioning checks at the failed coordinate passed; the first needed 21 attempts and 347.473 seconds after 20 preserved rejections, then two immediate passes. No governed sample was consumed. A new clean source and full certification sequence remain required.
 commits:
     - sha: 1291ba864f1a3e6c7d0dd1b8591eba0fac0f7a28
       subject: "chore(certification): roll Windows performance baseline"

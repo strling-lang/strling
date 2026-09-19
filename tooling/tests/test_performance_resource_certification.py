@@ -540,6 +540,45 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(conditioning.call_count, 2)
         sleep.assert_called_once_with(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
 
+    @patch("tooling.performance_resource_certification.time.sleep")
+    @patch("tooling.performance_resource_certification._conditioning_snapshot")
+    def test_measurement_conditioning_waits_through_multi_minute_busy_period(
+        self, conditioning: Mock, sleep: Mock
+    ) -> None:
+        rejected_observation = {
+            "selected_busy_basis_points": 2_000,
+            "selected_interrupt_basis_points": 0,
+            "system_busy_basis_points": 700,
+            "failures": ["selected_busy_basis_points>500"],
+        }
+        conditioning.side_effect = [
+            PerformanceResourceError(
+                "conditioning",
+                "host busy",
+                observation=rejected_observation,
+                report_fingerprint="c" * 64,
+            )
+            for _ in range(7)
+        ] + [
+            {
+                "conditioning_identity_fingerprint": "a" * 64,
+                "snapshot_fingerprint": "b" * 64,
+                "quiescence_observation": {"failures": []},
+            }
+        ]
+        result = _measurement_conditioning_check(
+            ("latency:kernel-request", "fixture:simply-tiny"), environment={}
+        )
+        self.assertEqual(result["status"], "passed")
+        details = cast(dict[str, object], result["details"])
+        self.assertEqual(details["attempt"], 8)
+        rejected = cast(list[dict[str, object]], details["rejected_attempts"])
+        self.assertEqual(len(rejected), 7)
+        self.assertEqual(rejected[0]["quiescence_observation"], rejected_observation)
+        self.assertEqual(rejected[0]["conditioner_report_fingerprint"], "c" * 64)
+        self.assertEqual(conditioning.call_count, 8)
+        self.assertEqual(sleep.call_count, 7)
+
     @patch(
         "tooling.performance_resource_certification._conditioning_snapshot",
         side_effect=PerformanceResourceError("conditioning", "host busy"),
@@ -559,6 +598,26 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         self.assertEqual(conditioning.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS)
         self.assertEqual(sleep.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS - 1)
+
+    @patch(
+        "tooling.performance_resource_certification._conditioning_snapshot",
+        side_effect=PerformanceResourceError(
+            "conditioning-identity", "Windows conditioner identity changed"
+        ),
+    )
+    @patch("tooling.performance_resource_certification.time.sleep")
+    def test_measurement_conditioning_does_not_retry_identity_failure(
+        self, sleep: Mock, conditioning: Mock
+    ) -> None:
+        result = _measurement_conditioning_check(
+            ("latency:kernel-request", "fixture:simply-tiny"), environment={}
+        )
+        self.assertEqual(result["status"], "unavailable")
+        details = cast(dict[str, object], result["details"])
+        self.assertEqual(len(cast(list[object], details["rejected_attempts"])), 1)
+        self.assertEqual(details["reason"], "Windows conditioner identity changed")
+        conditioning.assert_called_once()
+        sleep.assert_not_called()
 
     @patch(
         "tooling.performance_resource_certification._conditioning_snapshot",
@@ -588,6 +647,22 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, "conditioning")
         self.assertEqual(conditioning.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS)
         self.assertEqual(sleep.call_count, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS - 1)
+
+    @patch(
+        "tooling.performance_resource_certification._conditioning_snapshot",
+        side_effect=PerformanceResourceError(
+            "conditioning-identity", "Windows conditioner identity changed"
+        ),
+    )
+    @patch("tooling.performance_resource_certification.time.sleep")
+    def test_calibration_conditioning_does_not_retry_identity_failure(
+        self, sleep: Mock, conditioning: Mock
+    ) -> None:
+        with self.assertRaises(PerformanceResourceError) as raised:
+            _acquire_quiet_conditioning_snapshot({})
+        self.assertEqual(raised.exception.code, "conditioning-identity")
+        conditioning.assert_called_once()
+        sleep.assert_not_called()
 
     @patch(
         "tooling.performance_resource_certification.platform.system",

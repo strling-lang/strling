@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import copy
+import io
+import json
 import shutil
 import tempfile
 import unittest
@@ -25,6 +27,7 @@ from tooling.performance_resource_certification import (
     _artifact_identity_check,
     _artifact_source_changes,
     _canonical_build_root,
+    _conditioning_acquisition_check,
     _enforce_governed_cpu_affinity,
     _external_workload_isolation_check,
     _git_invocation,
@@ -39,6 +42,7 @@ from tooling.performance_resource_certification import (
     _write_json,
     calibrate_baseline,
     certification_measurement_status,
+    certify,
     conditioning_identities_match,
     conditioning_snapshots_compatible,
     compare_hard_metric,
@@ -507,6 +511,143 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             "environment:measurement-conditioning/latency:kernel-request/fixture:simply-tiny",
         )
         self.assertEqual(conditioning.call_count, 1)
+
+    @patch("tooling.performance_resource_certification.time.sleep")
+    @patch("tooling.performance_resource_certification._conditioning_snapshot")
+    def test_initial_full_gate_uses_same_bounded_acquisition(
+        self, conditioning: Mock, sleep: Mock
+    ) -> None:
+        observation = {
+            "selected_busy_basis_points": 900,
+            "selected_interrupt_basis_points": 0,
+            "system_busy_basis_points": 100,
+            "failures": ["selected_busy_basis_points>500"],
+        }
+        conditioning.side_effect = [
+            PerformanceResourceError(
+                "conditioning",
+                "host busy",
+                observation=observation,
+                report_fingerprint="c" * 64,
+            ),
+            {
+                "conditioning_identity_fingerprint": "a" * 64,
+                "snapshot_fingerprint": "b" * 64,
+                "quiescence_observation": {"failures": []},
+            },
+        ]
+        result = _conditioning_acquisition_check(
+            "environment:identical-conditioning", environment={}
+        )
+        self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["id"], "environment:identical-conditioning")
+        details = cast(dict[str, Any], result["details"])
+        self.assertEqual(details["attempt"], 2)
+        self.assertEqual(
+            details["rejected_attempts"][0]["quiescence_observation"], observation
+        )
+        sleep.assert_called_once_with(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
+
+    def test_full_preflight_stops_before_authenticated_measurement(self) -> None:
+        baseline = load_json(BASELINE_PATH)
+        environment = baseline["environment"]
+        snapshot = baseline["conditioning_repetitions"][0]
+        initial = {
+            "id": "environment:identical-conditioning",
+            "status": "passed",
+            "details": {
+                "conditioning_identity_fingerprint": snapshot[
+                    "conditioning_identity_fingerprint"
+                ],
+                "conditioning_snapshot": snapshot,
+            },
+        }
+        isolation = {
+            "id": "environment:external-workload-isolation/pre-measurement/test",
+            "status": "passed",
+            "details": {"observed_workloads": []},
+        }
+        measurement_conditioning = {
+            "id": "environment:measurement-conditioning/test",
+            "status": "passed",
+            "details": {"rejected_attempts": []},
+        }
+        with (
+            patch(
+                "tooling.performance_resource_certification.validate_repository_contract",
+                return_value={},
+            ),
+            patch(
+                "tooling.performance_resource_certification._git_identity",
+                return_value=("f" * 40, False),
+            ),
+            patch(
+                "tooling.performance_resource_certification._enforce_governed_cpu_affinity",
+                return_value=[20],
+            ),
+            patch(
+                "tooling.performance_resource_certification._build_release_artifacts",
+                return_value=(
+                    "passed",
+                    {"artifacts": baseline["artifact_fingerprints"]},
+                ),
+            ),
+            patch(
+                "tooling.performance_resource_certification.live_environment",
+                return_value=environment,
+            ),
+            patch(
+                "tooling.performance_resource_certification._conditioning_acquisition_check",
+                return_value=initial,
+            ) as initial_gate,
+            patch(
+                "tooling.performance_resource_certification._external_workload_isolation_check",
+                return_value=isolation,
+            ) as workload_gate,
+            patch(
+                "tooling.performance_resource_certification._measurement_conditioning_check",
+                return_value=measurement_conditioning,
+            ) as coordinate_gate,
+            patch("tooling.performance_resource_certification._measure_key") as measure,
+        ):
+            result = certify("full", preflight_only=True)
+        self.assertEqual(result["status"], "passed")
+        initial_gate.assert_called_once()
+        workload_gate.assert_called_once()
+        coordinate_gate.assert_called_once()
+        measure.assert_not_called()
+
+    @patch(
+        "tooling.performance_resource_certification._should_delegate_windows_full",
+        return_value=False,
+    )
+    @patch("tooling.performance_resource_certification.certify")
+    def test_preflight_cli_emits_only_non_authoritative_zero_sample_result(
+        self, certify_call: Mock, _delegate: Mock
+    ) -> None:
+        certify_call.return_value = {
+            "commit": "f" * 40,
+            "checks": [
+                {"id": "environment:identical-conditioning", "status": "passed"}
+            ],
+            "deterministic_evidence": {"status": "passed"},
+        }
+        output = io.StringIO()
+        with patch("sys.stdout", output):
+            exit_code = performance_main(
+                ["--profile", "full", "--preflight-only", "--json"]
+            )
+        self.assertEqual(exit_code, 0)
+        result = json.loads(output.getvalue())
+        self.assertEqual(
+            result["artifact_kind"], "strling-performance-full-preflight-diagnostic"
+        )
+        self.assertFalse(result["authoritative"])
+        self.assertFalse(result["authenticated_measurement_performed"])
+        self.assertEqual(result["sample_consumption"]["authenticated_sample_count"], 0)
+        certify_call.assert_called_once_with(
+            "full", execution_ledger=None, preflight_only=True
+        )
 
     @patch(
         "tooling.performance_resource_certification._conditioning_snapshot",

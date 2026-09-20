@@ -2868,14 +2868,10 @@ def _measure_key(
     raise PerformanceResourceError("measurement-kind", operation_id)
 
 
-def _measurement_conditioning_check(
-    key: tuple[str, str | None],
-    *,
-    environment: Mapping[str, object],
-    root: Path = ROOT,
+def _conditioning_acquisition_check(
+    check_id: str, *, environment: Mapping[str, object], root: Path = ROOT
 ) -> dict[str, object]:
-    fixture_label = key[1] if key[1] is not None else "fixture-free"
-    check_id = f"environment:measurement-conditioning/{key[0]}/{fixture_label}"
+    """Use one bounded, evidence-retaining quiet-window search for Full gates."""
     rejected_attempts: list[dict[str, object]] = []
     last_error: PerformanceResourceError | None = None
     for attempt in range(1, MEASUREMENT_CONDITIONING_MAX_ATTEMPTS + 1):
@@ -2914,6 +2910,7 @@ def _measurement_conditioning_check(
                 "conditioning_identity_fingerprint": snapshot[
                     "conditioning_identity_fingerprint"
                 ],
+                "conditioning_snapshot": snapshot,
                 "snapshot_fingerprint": snapshot["snapshot_fingerprint"],
                 "quiescence_observation": snapshot["quiescence_observation"],
             },
@@ -2932,6 +2929,20 @@ def _measurement_conditioning_check(
             ),
         },
     }
+
+
+def _measurement_conditioning_check(
+    key: tuple[str, str | None],
+    *,
+    environment: Mapping[str, object],
+    root: Path = ROOT,
+) -> dict[str, object]:
+    fixture_label = key[1] if key[1] is not None else "fixture-free"
+    return _conditioning_acquisition_check(
+        f"environment:measurement-conditioning/{key[0]}/{fixture_label}",
+        environment=environment,
+        root=root,
+    )
 
 
 def _windows_external_workloads() -> list[dict[str, object]]:
@@ -3769,10 +3780,19 @@ def certify(
     root: Path = ROOT,
     allow_artifact_rebind: bool = False,
     execution_ledger: PerformanceExecutionLedger | None = None,
+    preflight_only: bool = False,
 ) -> dict[str, Any]:
+    if preflight_only and (profile != "full" or execution_ledger is not None):
+        raise PerformanceResourceError(
+            "preflight-context", "sample-free preflight requires standalone Full"
+        )
     repository = validate_repository_contract(root)
     manifest = load_json(root / MANIFEST_PATH.relative_to(ROOT))
     commit, dirty = _git_identity(root)
+    if preflight_only and dirty:
+        raise PerformanceResourceError(
+            "dirty-preflight", "sample-free Full preflight requires a clean worktree"
+        )
     checks: list[dict[str, Any]] = []
     if profile == "local":
         checks.append(
@@ -3942,39 +3962,28 @@ def certify(
             return _certification_evidence(
                 profile=profile, commit=commit, checks=checks, manifest=manifest
             )
-        try:
-            conditioning = _conditioning_snapshot(environment, root=root)
-        except PerformanceResourceError as error:
-            checks.append(
-                {
-                    "id": "environment:identical-conditioning",
-                    "status": "unavailable",
-                    "details": {"code": error.code, "reason": str(error)},
-                }
-            )
+        initial_conditioning = _conditioning_acquisition_check(
+            "environment:identical-conditioning", environment=environment, root=root
+        )
+        checks.append(initial_conditioning)
+        if initial_conditioning["status"] != "passed":
             return _certification_evidence(
                 profile=profile, commit=commit, checks=checks, manifest=manifest
             )
         baseline_conditioning = cast(
             Mapping[str, object], baseline["conditioning_repetitions"][0]
         )
+        initial_details = cast(dict[str, Any], initial_conditioning["details"])
         conditioning_matches = conditioning_snapshots_compatible(
-            baseline_conditioning, conditioning
+            baseline_conditioning,
+            cast(Mapping[str, object], initial_details["conditioning_snapshot"]),
         )
-        checks.append(
-            {
-                "id": "environment:identical-conditioning",
-                "status": "passed" if conditioning_matches else "unavailable",
-                "details": {
-                    "conditioning_identity_fingerprint": (
-                        conditioning_identity_fingerprint(conditioning)
-                    ),
-                    "baseline_conditioning_identity_fingerprint": (
-                        conditioning_identity_fingerprint(baseline_conditioning)
-                    ),
-                    "identical_conditioning_identity": conditioning_matches,
-                },
-            }
+        initial_details["baseline_conditioning_identity_fingerprint"] = (
+            conditioning_identity_fingerprint(baseline_conditioning)
+        )
+        initial_details["identical_conditioning_identity"] = conditioning_matches
+        initial_conditioning["status"] = (
+            "passed" if conditioning_matches else "unavailable"
         )
         if not conditioning_matches:
             return _certification_evidence(
@@ -4001,6 +4010,10 @@ def certify(
             )
             checks.append(measurement_conditioning)
             if measurement_conditioning["status"] != "passed":
+                return _certification_evidence(
+                    profile=profile, commit=commit, checks=checks, manifest=manifest
+                )
+            if preflight_only:
                 return _certification_evidence(
                     profile=profile, commit=commit, checks=checks, manifest=manifest
                 )
@@ -4586,6 +4599,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             parser = argparse.ArgumentParser(description=__doc__)
             parser.add_argument("--profile", choices=PROFILE_IDS, required=True)
+            parser.add_argument("--preflight-only", action="store_true")
             parser.add_argument("--json", action="store_true")
             parser.add_argument("--execution-directory")
             parser.add_argument("--certification-invocation-id")
@@ -4611,6 +4625,13 @@ def main(argv: list[str] | None = None) -> int:
                     "execution-context",
                     "invocation-bound execution arguments must be supplied together",
                 )
+            if arguments.preflight_only and (
+                arguments.profile != "full" or provided_execution_values
+            ):
+                raise PerformanceResourceError(
+                    "preflight-context",
+                    "sample-free preflight requires standalone Full without an execution ledger",
+                )
             if provided_execution_values:
                 commit, dirty = _git_identity(ROOT)
                 if dirty or commit != arguments.expected_source_sha:
@@ -4627,8 +4648,26 @@ def main(argv: list[str] | None = None) -> int:
                     certification_profile=arguments.certification_profile,
                     producer_profile=arguments.profile,
                 )
-            result = certify(arguments.profile, execution_ledger=execution_ledger)
+            result = certify(
+                arguments.profile,
+                execution_ledger=execution_ledger,
+                preflight_only=arguments.preflight_only,
+            )
             status = result["deterministic_evidence"]["status"]
+            if arguments.preflight_only:
+                result = {
+                    "artifact_kind": "strling-performance-full-preflight-diagnostic",
+                    "authoritative": False,
+                    "authenticated_measurement_performed": False,
+                    "sample_consumption": zero_sample_consumption(),
+                    "source_sha": result["commit"],
+                    "status": status,
+                    "checks": result["checks"],
+                    "description": (
+                        "Sample-free production Full gates through the first "
+                        "pre-measurement isolation and conditioning check"
+                    ),
+                }
         selected_exit = EXIT_CODES[status]
         if execution_ledger is not None:
             selected_exit = execution_ledger.write_result(

@@ -301,6 +301,30 @@ class AdversarialEvidenceTests(unittest.TestCase):
     def test_preserved_evidence_integrity(self):
         audit.validate_evidence(self.evidence, self.corpus)
 
+    def test_equivalent_write_preserves_empirical_provenance(self):
+        candidate = copy.deepcopy(self.evidence)
+        candidate["source_sha"] = "f" * 40
+        candidate["executed_at"] = "2099-01-01T00:00:00+00:00"
+        candidate["result_sha256"] = "0" * 64
+
+        selected, should_write = audit.select_evidence_for_write(
+            candidate, self.evidence
+        )
+
+        self.assertIs(self.evidence, selected)
+        self.assertFalse(should_write)
+
+    def test_materially_changed_evidence_is_rewritten(self):
+        candidate = copy.deepcopy(self.evidence)
+        candidate["runtimes"] = {**candidate["runtimes"], "new-runtime": {}}
+
+        selected, should_write = audit.select_evidence_for_write(
+            candidate, self.evidence
+        )
+
+        self.assertIs(candidate, selected)
+        self.assertTrue(should_write)
+
     def test_empirical_counts_cover_the_complete_matrix(self):
         self.assertEqual(
             {

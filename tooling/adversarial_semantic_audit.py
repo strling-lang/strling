@@ -784,6 +784,23 @@ def enforce_zero_findings(evidence: dict) -> None:
         raise ValueError(f"adversarial semantic hardgate has findings: {identifiers}")
 
 
+def select_evidence_for_write(
+    candidate: dict, existing: dict | None
+) -> tuple[dict, bool]:
+    """Preserve provenance when a fresh empirical run is materially identical."""
+
+    volatile = {"source_sha", "executed_at", "result_sha256"}
+    candidate_material = {k: v for k, v in candidate.items() if k not in volatile}
+    existing_material = (
+        None
+        if existing is None
+        else {k: v for k, v in existing.items() if k not in volatile}
+    )
+    if existing is not None and candidate_material == existing_material:
+        return existing, False
+    return candidate, True
+
+
 def empirical_counts(evidence: dict, corpus: dict) -> dict[str, int]:
     """Summarize the governed execution denominator without losing row evidence."""
 
@@ -1076,8 +1093,9 @@ def main() -> int:
         validate_evidence(evidence, corpus)
         if args.write:
             enforce_zero_findings(evidence)
-        if args.write:
-            write_evidence(evidence)
+            evidence, should_write = select_evidence_for_write(evidence, previous)
+            if should_write:
+                write_evidence(evidence)
         if args.output:
             write_evidence(evidence, args.output)
         result = certification_result(evidence, corpus, args.output)

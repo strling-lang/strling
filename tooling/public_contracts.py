@@ -1533,6 +1533,7 @@ def extract_swift_symbolgraph(
                 str(binding),
                 "--scratch-path",
                 str(scratch),
+                "--disable-index-store",
                 "--target",
                 "STRling",
             ],

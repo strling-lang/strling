@@ -730,6 +730,7 @@ type Flags struct {
         self.assertEqual(result["format"], "swift-symbolgraph-signatures")
         self.assertIn("build", calls[1])
         self.assertIn("--target", calls[1])
+        self.assertIn("--disable-index-store", calls[1])
         self.assertNotIn("dump-symbol-graph", calls[1])
         self.assertIn("-module-name", calls[2])
         self.assertIn("-minimum-access-level", calls[2])

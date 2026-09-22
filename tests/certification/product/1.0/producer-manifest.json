@@ -155,7 +155,11 @@
             "evidence_area": "architecture-governance",
             "requirement": "required",
             "result_contract": "certification-result-v1",
-            "structured_operation_id": "certification.local-attestation-contract"
+            "structured_operation_id": "certification.local-attestation-contract",
+            "payload_version_override": {
+                "field": "schema_version",
+                "value": "1.0.0"
+            }
         },
         {
             "operation_id": "generate_check",
@@ -316,7 +320,11 @@
             "evidence_area": "target-conformance",
             "requirement": "required",
             "result_contract": "certification-result-v1",
-            "structured_operation_id": "certification.adversarial-real-engine-equivalence"
+            "structured_operation_id": "certification.adversarial-real-engine-equivalence",
+            "payload_version_override": {
+                "field": "certification_version",
+                "value": "1.0.0"
+            }
         },
         {
             "operation_id": "pcre2_runtime_certification",

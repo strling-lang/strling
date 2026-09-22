@@ -9,10 +9,12 @@ from typing import Any, cast
 
 from jsonschema import Draft202012Validator
 
+from tooling.adversarial_semantic_audit import incomplete_result
 from tooling.certification import (
     build_certification_artifact,
     profile_definition_fingerprint,
 )
+from tooling.local_certification_attestation import contract_result
 from tooling.product_certification import (
     ProductCertificationError,
     aggregate_product_status,
@@ -162,6 +164,23 @@ class ProductCertificationContractTests(unittest.TestCase):
                     version["field"], {"schema_version", "certification_version"}
                 )
                 self.assertTrue(version["value"])
+
+    def test_specialized_payload_versions_match_their_producers(self) -> None:
+        payloads = {
+            "local_certification_attestation_contract": contract_result(ROOT, ROOT),
+            "adversarial_real_engine_equivalence": incomplete_result("fixture"),
+        }
+        producers = {
+            cast(str, producer["operation_id"]): producer
+            for producer in cast(list[dict[str, Any]], self.manifest["producers"])
+        }
+        for operation_id, payload in payloads.items():
+            producer = producers[operation_id]
+            version = cast(dict[str, str], producer["payload_version_override"])
+            self.assertEqual(version["value"], payload[version["field"]])
+            self.assertEqual(
+                producer["structured_operation_id"], payload["operation_id"]
+            )
 
     def test_manifest_claims_are_closed_over_known_producers(self) -> None:
         producer_ids = {
@@ -410,6 +429,14 @@ class ProductCertificationImplementationTests(unittest.TestCase):
             "1.0.0", evidence["security_dependency_integrity"]["schema_version"]
         )
         self.assertEqual("1.0.0", evidence["documentation_integrity"]["schema_version"])
+        self.assertEqual(
+            "1.0.0",
+            evidence["local_certification_attestation_contract"]["schema_version"],
+        )
+        self.assertEqual(
+            "1.0.0",
+            evidence["adversarial_real_engine_equivalence"]["schema_version"],
+        )
         self.assertEqual(
             "1.0.0", evidence["pcre2_runtime_certification"]["schema_version"]
         )

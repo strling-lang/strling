@@ -1132,7 +1132,7 @@
             "test_sources": [
                 {
                     "path": "tooling/tests/test_product_certification.py",
-                    "sha256": "da98498a812cc6a19e462d7fdd47618010fa47e09a0f730bec258b7bde3b678e"
+                    "sha256": "b40c1920e554c24de77cd7e8f9b9c3d0b8d99a5dfd409bfcdfe4c4c241d08893"
                 }
             ],
             "occurrence": 1,
@@ -1156,7 +1156,7 @@
             "test_sources": [
                 {
                     "path": "tooling/tests/test_product_certification.py",
-                    "sha256": "da98498a812cc6a19e462d7fdd47618010fa47e09a0f730bec258b7bde3b678e"
+                    "sha256": "b40c1920e554c24de77cd7e8f9b9c3d0b8d99a5dfd409bfcdfe4c4c241d08893"
                 }
             ],
             "occurrence": 1,
@@ -1188,5 +1188,5 @@
         "pull_request_mutants": 7,
         "full_mutants": 14
     },
-    "manifest_fingerprint": "e4a5fb1d6223656f6adafab53a8caee1fa96f792f4966673c964f46f7d1f28e9"
+    "manifest_fingerprint": "a5607ce0aba8562a016ed19616d1b11918afc1003e5f80ebe1c7884518c6307e"
 }

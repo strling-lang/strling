@@ -2,7 +2,7 @@ use std::fmt;
 use std::io::{self, Write};
 
 use serde::de::DeserializeOwned;
-use serde::Serialize;
+use serde::{Deserialize, Deserializer, Serialize};
 use serde_json::{Map, Value};
 use strling_kernel::protocol::CompileRequest;
 use strling_kernel::simply::{
@@ -18,6 +18,7 @@ pub const MAX_INTEROP_REQUEST_BYTES: usize = 10_485_760;
 pub const MAX_INTEROP_RESPONSE_BYTES: usize = 33_554_432;
 
 const ABI_DESCRIPTOR: &str = include_str!("../../../spec/interop/1.0/abi.json");
+const INITIAL_RESPONSE_CAPACITY: usize = 8_192;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum Operation {
@@ -130,6 +131,22 @@ struct ProfileInspection<'a> {
     target_profile: &'a TargetProfile,
 }
 
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct DirectEnvelope<'a> {
+    interop_protocol_version: &'a str,
+    operation: &'a str,
+    payload: DirectPayload,
+}
+
+#[derive(Deserialize)]
+#[serde(deny_unknown_fields)]
+struct DirectPayload {
+    compile_request: CompileRequest,
+    #[serde(default, deserialize_with = "deserialize_present_optional")]
+    target_profile: Option<TargetProfile>,
+}
+
 #[derive(Debug, Eq, PartialEq)]
 enum BoundedSerializationError {
     Limit,
@@ -154,7 +171,7 @@ struct LimitedWriter {
 impl LimitedWriter {
     fn new(limit: usize) -> Self {
         Self {
-            bytes: Vec::new(),
+            bytes: Vec::with_capacity(limit.min(INITIAL_RESPONSE_CAPACITY)),
             limit,
             exceeded: false,
         }
@@ -195,6 +212,9 @@ pub fn execute_bytes(request: &[u8]) -> Vec<u8> {
 fn dispatch(request: &[u8]) -> Result<Vec<u8>, InteropFailure> {
     if request.len() > MAX_INTEROP_REQUEST_BYTES {
         return Err(InteropFailure::new(InteropErrorCode::RequestTooLarge, "$"));
+    }
+    if let Some(response) = dispatch_direct(request) {
+        return response;
     }
     let text = std::str::from_utf8(request)
         .map_err(|_| InteropFailure::new(InteropErrorCode::InvalidUtf8, "$"))?;
@@ -240,6 +260,19 @@ fn dispatch(request: &[u8]) -> Result<Vec<u8>, InteropFailure> {
     }
 }
 
+fn dispatch_direct(request: &[u8]) -> Option<Result<Vec<u8>, InteropFailure>> {
+    let envelope: DirectEnvelope<'_> = serde_json::from_slice(request).ok()?;
+    if envelope.interop_protocol_version != INTEROP_PROTOCOL_VERSION
+        || envelope.operation != Operation::Compile.as_str()
+    {
+        return None;
+    }
+    Some(execute_request(
+        envelope.payload.compile_request,
+        envelope.payload.target_profile,
+    ))
+}
+
 fn dispatch_describe(payload: Value) -> Result<Vec<u8>, InteropFailure> {
     let operation = Operation::Describe;
     let object = payload_object(payload, operation)?;
@@ -268,11 +301,27 @@ fn dispatch_compile(payload: Value) -> Result<Vec<u8>, InteropFailure> {
         operation,
     )?;
     reject_extra_payload(&object, operation)?;
+    execute_request(request, target_profile)
+}
+
+fn execute_request(
+    request: CompileRequest,
+    target_profile: Option<TargetProfile>,
+) -> Result<Vec<u8>, InteropFailure> {
+    let operation = Operation::Compile;
     let result = strling_kernel::compile(&request, target_profile.as_ref()).map_err(|_| {
         InteropFailure::new(InteropErrorCode::CanonicalBoundaryFailure, "$.payload")
             .for_operation(operation)
     })?;
     Ok(serialize_completed(operation, &result))
+}
+
+fn deserialize_present_optional<'de, D, T>(deserializer: D) -> Result<Option<T>, D::Error>
+where
+    D: Deserializer<'de>,
+    T: Deserialize<'de>,
+{
+    T::deserialize(deserializer).map(Some)
 }
 
 fn dispatch_profile_inspect(payload: Value) -> Result<Vec<u8>, InteropFailure> {
@@ -487,6 +536,61 @@ mod tests {
     impl Serialize for SerializationFailure {
         fn serialize<S: Serializer>(&self, _serializer: S) -> Result<S::Ok, S::Error> {
             Err(S::Error::custom("controlled serialization failure"))
+        }
+    }
+
+    fn request_fixture() -> Value {
+        serde_json::from_str(include_str!(
+            "../../../spec/contracts/1.0/examples/compile-request/regex-compat-success.json"
+        ))
+        .expect("compile request fixture")
+    }
+
+    fn request_envelope(payload: Value) -> Vec<u8> {
+        serde_json::to_vec(&json!({
+            "interop_protocol_version": INTEROP_PROTOCOL_VERSION,
+            "operation": "compile",
+            "payload": payload,
+        }))
+        .expect("compile envelope")
+    }
+
+    #[test]
+    fn direct_path_matches_the_canonical_dispatch_result() {
+        let payload = json!({"compile_request": request_fixture()});
+        let request = request_envelope(payload.clone());
+        let typed = dispatch_direct(&request)
+            .expect("direct path selected")
+            .expect("direct request succeeds");
+        let canonical = dispatch_compile(payload).expect("canonical compile succeeds");
+        assert_eq!(canonical, typed);
+    }
+
+    #[test]
+    fn direct_path_defers_noncanonical_payloads_to_closed_validation() {
+        let cases = [
+            (
+                json!({
+                    "compile_request": request_fixture(),
+                    "target_profile": null,
+                }),
+                "$.payload.target_profile",
+            ),
+            (
+                json!({
+                    "compile_request": request_fixture(),
+                    "extra": true,
+                }),
+                "$.payload",
+            ),
+        ];
+        for (payload, path) in cases {
+            let request = request_envelope(payload);
+            assert!(dispatch_direct(&request).is_none());
+            let failure = dispatch(&request).expect_err("invalid payload remains rejected");
+            assert_eq!(InteropErrorCode::InvalidPayload, failure.code);
+            assert_eq!(path, failure.path);
+            assert_eq!(Some(Operation::Compile), failure.operation);
         }
     }
 

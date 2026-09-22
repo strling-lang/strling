@@ -12,6 +12,7 @@ scope:
         - .github/workflows/cd.yml
         - .github/workflows/dependency-review.yml
         - bindings/c/CMakeLists.txt
+        - bindings/interop/src/protocol.rs
         - bindings/kotlin/gradle/verification-metadata.xml
         - bindings/interop/Cargo.toml
         - bindings/perl/build.sh
@@ -179,6 +180,8 @@ change_classification:
                 The governed Perl build owns its generated Makefile: it regenerates the Makefile from the tracked Makefile.PL before invoking make, so a clean checkout and any Perl toolchain change build correctly on the first invocation. Dependency resolution, the declared tool set, the executed build, lint, and test commands, and every certification threshold remain unchanged; no retry, ignored exit code, or relaxed result is introduced.
             - >-
                 The C adapter declares its canonical interop dependencies without recursively globbing Cargo build trees: exact manifest and lock inputs, including the interop workspace fuzz member, are named directly while recursive globbing stays limited to source directories. The dependency set, the built artifacts, and the sanitizer isolation boundary are unchanged; only the repeated configure-time and build-time directory traversal is removed.
+            - >-
+                The canonical interop bridge decodes strict valid compile envelopes directly into the governed request and optional target-profile types, while every malformed or nonmatching request continues through the existing closed dispatcher with unchanged error identities. Successful responses reserve an 8 KiB initial buffer capped by the existing response limit. Protocol fields, kernel semantics, performance ceilings, sample counts, placement, and conditioning remain unchanged.
     generated_output_change:
         level: compatible
         evidence:

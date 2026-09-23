@@ -717,3 +717,51 @@ The substantive correction requires a new clean SHA, sample-free performance
 preflight, Local, Pull Request, Full, independent same-SHA no-reuse Release,
 attestation, and cloud verification. No authenticated performance sample has
 been taken for the corrected source.
+
+## Full success and independent Release launch-latency disposition
+
+Clean candidate `42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20` passed Local
+37/37 and Pull Request 79/79. Full traversed all 125 operations and closed with
+124 passed, the expected `WVR-SEC-VSCE-LICENSE-001` waiver, and zero failed,
+incomplete, or unavailable operations. Native performance invocation
+`844389fdca49417aa92b89ba316dba0e` consumed 3,204 authenticated samples
+across all 54 coordinates and passed. This is the first terminally green Full
+result in the H08 remediation sequence.
+
+The independent same-SHA no-reuse Release traversed the same 125-operation
+denominator with 123 passed, the expected waiver, and one failed operation.
+Performance invocation `f03691b8d3b543f4aad86ce463663a7e` consumed 321
+authenticated samples across six completed coordinates before
+`latency:cli-startup/fixture:simply-tiny` recorded a `30539050 ns` median.
+The unchanged relative ceiling was `28265718 ns`; the unchanged absolute
+ceiling of `31144588 ns` passed. Host isolation and conditioning checks passed,
+the other five sampled coordinates passed, and the exact kernel and runner
+artifact hashes equal the Full artifacts. This source identity is consumed and
+was not retried.
+
+Sample-free diagnosis against the preserved byte-identical artifacts then
+reproduced elevated executable-launch latency across three independent
+conditioned windows. Minimal `cmd.exe /c exit 0` medians were `54221300`,
+`53881300`, and `55734150 ns`; kernel `--help` medians were `42648600`,
+`43504700`, and `44548600 ns`; and exact non-authoritative CLI-coordinate
+medians were `47496950`, `46679900`, and `46292900 ns`. Every conditioner was
+valid, the exact runner remained on governed logical CPU 20, pre/post workload
+isolation passed, and no authenticated sample was produced by the diagnostic.
+
+The live environment fingerprint remains exactly
+`07046a769a2618588399efd80156976d88f6fcb38886160c542d6757c836e14f`,
+the active Windows `26200.9457` baseline identity. Repository rollover policy
+permits environment-version calibration only after an authenticated OS identity
+change and explicitly excludes unexplained performance changes. A same-identity
+rollover would fail `rollover-no-change`, so baseline
+`a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd`
+is retained without changing any workload, threshold, ceiling, sample count,
+conditioning rule, or host setting.
+
+This factual H08 record is a legitimate source change after the consumed
+Release attempt. It does not reinterpret that failure or authorize sampling
+while launch readiness remains outside the existing envelope. The new candidate
+must pass targeted record, governance, generated-artifact, format, and
+sample-free performance checks before Local, Pull Request, Full, and independent
+same-SHA Release certification. Release may start only after an immediate
+sample-free launch-readiness check is inside the unchanged relative ceiling.

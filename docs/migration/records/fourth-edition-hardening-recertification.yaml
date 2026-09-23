@@ -457,7 +457,37 @@ checkpoints:
           - check: Required certification sequence
             result: not_run
             details: The substantive correction requires a new clean SHA, sample-free performance preflight, Local 37/37, Pull Request 79/79, one new Full, independent same-SHA no-reuse Release, attestation, and cloud verification. No authenticated sample has been taken for the corrected source.
+    - name: Full success and independent Release launch-latency disposition
+      status: in_progress
+      evidence:
+          - check: Authoritative Local, Pull Request, and Full
+            result: passed
+            details: Clean candidate 42f57b28 passed Local 37/37 and Pull Request 79/79. Full traversed 125 operations with 124 passed, WVR-SEC-VSCE-LICENSE-001 waived, and zero failed, incomplete, or unavailable. Performance invocation 844389fdca49417aa92b89ba316dba0e consumed 3204 authenticated samples across all 54 coordinates and passed.
+          - check: Independent Release disposition
+            result: failed
+            details: The same-SHA no-reuse Release traversed all 125 operations with 123 passed, the expected waiver, and one failed performance operation. Invocation f03691b8d3b543f4aad86ce463663a7e consumed 321 authenticated samples across six completed coordinates before latency:cli-startup/fixture:simply-tiny measured 30539050 ns against the unchanged 28265718 ns relative and 31144588 ns absolute ceilings. The relative comparison failed, the absolute comparison passed, and this SHA was not retried.
+          - check: Sample-free launch-baseline matrix
+            result: failed
+            details: Three independent conditioned windows against the preserved byte-identical artifacts recorded cmd.exe exit medians of 54221300, 53881300, and 55734150 ns; kernel help medians of 42648600, 43504700, and 44548600 ns; and exact non-authoritative CLI-coordinate medians of 47496950, 46679900, and 46292900 ns. All conditioning and exact CPU-placement checks passed, pre/post isolation passed, and the diagnostic consumed zero authenticated samples.
+          - check: Baseline decision
+            result: passed
+            details: Retain baseline a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd. The live environment fingerprint remains the exact active Windows 26200.9457 identity 07046a769a2618588399efd80156976d88f6fcb38886160c542d6757c836e14f. Policy requires a changed authenticated OS identity and rejects unexplained performance changes, so a same-identity rollover is inadmissible. No workload, threshold, ceiling, sample count, conditioning rule, or host setting changed.
+          - check: Required certification sequence
+            result: not_run
+            details: This factual H08 record is a legitimate post-failure source change. Complete targeted validation and require sample-free launch readiness inside the unchanged envelope before Local 37/37, Pull Request 79/79, Full 124 plus the expected waiver, independent same-SHA Release, attestation, cloud verification, and closure.
 commits:
+    - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
+      subject: "perf(core): reuse safety validation context"
+    - sha: 7909b0e5a1ecc7938f1cf10bdf0bbd5c82762bb5
+      subject: "chore(certification): refresh deep quality identities"
+    - sha: 8b17e9b4620724d379e2292e92612d6e361c5449
+      subject: "fix(certification): declare specialized result versions"
+    - sha: 5399ae3634997c7f7a8593a6b0919951704937b8
+      subject: "perf(interop): streamline compile roundtrips"
+    - sha: 01e35849c722fd8ab0c9e5dd5e67e29808213645
+      subject: "fix(certification): preserve equivalent audit evidence"
+    - sha: 4534c763b24b4e4264328746a54a862740db2f36
+      subject: "fix(contracts): disable Swift indexing for API extraction"
     - sha: 1291ba864f1a3e6c7d0dd1b8591eba0fac0f7a28
       subject: "chore(certification): roll Windows performance baseline"
     - sha: 36d13f24bcf0c182cb926b2f669c7650747fdd64
@@ -499,4 +529,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: The authorized Windows environment rollover is qualified and calibrated, and the two repository defects that terminated the df7ff737 Full are corrected. P20-T02 remains paused until exact-source deterministic preflight, Full, Release, signed local attestation, and cheap cloud verification complete.
+    rationale: Candidate 42f57b28 passed Local, Pull Request, and Full, then consumed its independent Release opportunity on one CLI-startup relative regression. The same Windows 26200.9457 environment identity now has persistently elevated sample-free process-launch latency, and policy forbids a same-identity rollover. P20-T02 remains paused until launch readiness recovers and a new clean candidate passes Local, Pull Request, Full, independent Release, signed local attestation, and cheap cloud verification.

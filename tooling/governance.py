@@ -533,11 +533,14 @@ def rule_result(
         forbidden = configuration["forbidden_dependencies"]
         assert isinstance(source_patterns, list)
         assert isinstance(forbidden, list)
-        source_paths = [
-            path
-            for path in root.rglob("*.py")
-            if matches_any(path.relative_to(root).as_posix(), source_patterns)
-        ]
+        source_paths = sorted(
+            {
+                path
+                for pattern in source_patterns
+                for path in root.glob(str(pattern))
+                if path.is_file() and path.suffix == ".py"
+            }
+        )
         for source_path in source_paths:
             relative = source_path.relative_to(root).as_posix()
             dependencies, errors = python_dependencies(source_path)

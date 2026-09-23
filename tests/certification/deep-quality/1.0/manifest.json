@@ -923,7 +923,7 @@
             "category": "safety-diagnostics",
             "criticality": "critical",
             "source_path": "core/src/safety_analysis.rs",
-            "source_sha256": "15f0cef28ada40469635b9d1d2241c5e8021fb4cecb3757a56883462616a191c",
+            "source_sha256": "d0c11f6c7929f409ea12e39831b7524c82637faf3381736caf42ce4a890e60e4",
             "test_sources": [
                 {
                     "path": "core/tests/safety_analysis.rs",
@@ -958,7 +958,7 @@
             "category": "safety-diagnostics",
             "criticality": "high",
             "source_path": "core/src/safety_analysis.rs",
-            "source_sha256": "15f0cef28ada40469635b9d1d2241c5e8021fb4cecb3757a56883462616a191c",
+            "source_sha256": "d0c11f6c7929f409ea12e39831b7524c82637faf3381736caf42ce4a890e60e4",
             "test_sources": [
                 {
                     "path": "core/tests/safety_analysis.rs",
@@ -1188,5 +1188,5 @@
         "pull_request_mutants": 7,
         "full_mutants": 14
     },
-    "manifest_fingerprint": "a5607ce0aba8562a016ed19616d1b11918afc1003e5f80ebe1c7884518c6307e"
+    "manifest_fingerprint": "62b33b3654fc7f5cc62f58ff9864e21d11b8e395b9640371a074f735d5536b6c"
 }

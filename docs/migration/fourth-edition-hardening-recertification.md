@@ -667,3 +667,53 @@ coordinate all passed: the first acquired a quiet window on attempt 21 after
 first attempt. Their raw checks are retained in
 `target/codex-tools/h08-conditioning-acquisition-proof.json`. No authenticated
 performance sample was consumed in this proof.
+
+## Structural-safety sampled regression and validation reuse
+
+Clean candidate `7909b0e5a1ecc7938f1cf10bdf0bbd5c82762bb5` passed Local
+37/37 and Pull Request 79/79. Full traversed all 125 operations, recording 123
+passed, `WVR-SEC-VSCE-LICENSE-001` waived, and one failed performance
+operation. Invocation `8c82c5a66540474e9d8d39873955af99` consumed 769
+authenticated samples across 13 completed coordinates before
+`latency:structural-safety/fixture:semantic-large` recorded a `32269700 ns`
+median against unchanged relative and absolute ceilings of `30317155 ns` and
+`33073260 ns`. The relative comparison failed while the absolute comparison
+passed. This source identity is permanently consumed and was not retried.
+
+The combined structural-safety path called safety analysis with immutable
+foundational and structural stores for the same program. Safety analysis then
+derived that program's exact semantic identity twice and its reachable-node set
+three times while validating the foundational store, structural store, and
+result evidence. The correction derives each value once per safety invocation
+and reuses it across the unchanged correspondence checks. Standalone validators
+continue to derive their own context. Semantic validation, exact identity
+comparisons, node coverage and kind checks, relationship validation, evidence
+validation, finding limits, traversal, workload, warmups, samples, batching,
+conditioning, baseline, and acceptance ceilings are unchanged.
+
+Five consecutive direct executions of the exact native Windows runner
+coordinate on governed logical CPU 20 produce 64-sample medians from
+`23589700 ns` to `24138250 ns`, leaving `6178905 ns` to `6727455 ns` below the
+unchanged relative ceiling. Five pre-correction direct executions measured
+`28141900 ns` to `28856300 ns`. All 36 focused Rust 1.75 safety and structural
+tests pass, including mismatched prerequisite stores, malformed evidence,
+resource limits, deterministic properties, competition evidence, and
+repetition safety. The two deep-quality mutant source identities for the
+changed implementation and their dependent fingerprints are refreshed without
+changing mutant definitions, tests, workloads, thresholds, or profile
+membership.
+
+The same targeted proof exposed an independent governance traversal defect.
+The forbidden-dependency rule recursively walked the complete workspace before
+filtering for its exact declared tooling sources. Under WSL it remained in
+`p9_client_rpc` for more than nineteen minutes with unchanged I/O counters while
+crossing ignored build trees. The rule now expands only its declared source
+patterns, so tracked and untracked matching files remain covered while ignored
+`target` and cache trees outside those patterns are not traversed. A focused
+regression forbids repository-wide `rglob` use; the native command passes all
+four governance checks and 33 architecture rules.
+
+The substantive correction requires a new clean SHA, sample-free performance
+preflight, Local, Pull Request, Full, independent same-SHA no-reuse Release,
+attestation, and cloud verification. No authenticated performance sample has
+been taken for the corrected source.

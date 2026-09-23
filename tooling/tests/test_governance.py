@@ -3,6 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from tooling.governance import (
     Change,
@@ -629,6 +630,29 @@ class ArchitectureValidationTests(unittest.TestCase):
                 },
             }
         )
+        self.assertEqual("passed", result.status)
+        self.assertEqual([], result.findings)
+
+    def test_forbidden_dependency_does_not_walk_unmatched_trees(self) -> None:
+        (self.root / "tooling/governance.py").write_text(
+            "import json\n", encoding="utf-8"
+        )
+        with mock.patch.object(
+            Path,
+            "rglob",
+            side_effect=AssertionError("repository-wide traversal is forbidden"),
+        ):
+            result = self.evaluate(
+                {
+                    "id": "governance-boundary",
+                    "status": "enforced",
+                    "kind": "forbidden-dependency",
+                    "configuration": {
+                        "sources": ["tooling/governance.py"],
+                        "forbidden_dependencies": ["bindings"],
+                    },
+                }
+            )
         self.assertEqual("passed", result.status)
         self.assertEqual([], result.findings)
 

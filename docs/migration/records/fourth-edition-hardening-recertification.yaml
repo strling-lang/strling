@@ -24,6 +24,7 @@ scope:
         - core/src/portability_planning/validation.rs
         - core/src/post_lowering_requirements.rs
         - core/src/python_re_lowering.rs
+        - core/src/safety_analysis.rs
         - core/src/target/profile.rs
         - core/src/target_lowering.rs
         - core/src/validation/mod.rs
@@ -73,6 +74,7 @@ scope:
         - tooling/dependency_license_evidence.py
         - tooling/deep_quality_certification.py
         - tooling/exact_runtime_provision.py
+        - tooling/governance.py
         - tooling/jvm_adapter_runtime.py
         - tooling/local_certification_attestation.py
         - tooling/performance_resource_certification.py
@@ -182,6 +184,10 @@ change_classification:
                 The C adapter declares its canonical interop dependencies without recursively globbing Cargo build trees: exact manifest and lock inputs, including the interop workspace fuzz member, are named directly while recursive globbing stays limited to source directories. The dependency set, the built artifacts, and the sanitizer isolation boundary are unchanged; only the repeated configure-time and build-time directory traversal is removed.
             - >-
                 The canonical interop bridge decodes strict valid compile envelopes directly into the governed request and optional target-profile types, while every malformed or nonmatching request continues through the existing closed dispatcher with unchanged error identities. Successful responses reserve an 8 KiB initial buffer capped by the existing response limit. Protocol fields, kernel semantics, performance ceilings, sample counts, placement, and conditioning remain unchanged.
+            - >-
+                Safety analysis derives the exact semantic identity and reachable-node set once per invocation and reuses that context across foundational, structural, and result-evidence correspondence checks. Standalone validation entry points still derive their own context, and no validation, semantic result, performance workload, sample count, conditioning rule, baseline, or acceptance ceiling changes.
+            - >-
+                Forbidden-dependency architecture rules enumerate only their declared source patterns instead of recursively traversing the complete workspace before filtering. Tracked and untracked matching sources remain covered, while ignored build trees and caches outside every declared pattern are excluded from filesystem traversal.
     generated_output_change:
         level: compatible
         evidence:
@@ -189,6 +195,7 @@ change_classification:
             - Registered profile-source definitions are refreshed for the strengthened profile identities, and the root CLI snapshot records the additive certification command.
             - Semantic-authority retirement evidence is regenerated because the governed profile and CI authority graph changed while canonical semantics and retired-history boundaries remain unchanged.
             - The deep-quality governed source-identity refresh following intentional source changes from the Windows performance baseline rollover updates five mutant source hashes plus the dependent manifest and synthetic-fixture fingerprints without changing mutant definitions, workloads, thresholds, or profile membership.
+            - The safety-analysis performance correction refreshes only its two governed deep-quality mutant source hashes plus the dependent manifest and synthetic-fixture fingerprints; mutant definitions, tests, workloads, thresholds, and profile membership remain unchanged.
     documentation_only: false
     internal_implementation: true
 required_verification:
@@ -432,6 +439,24 @@ checkpoints:
           - check: Bounded acquisition correction
             result: passed
             details: The source correction extends quiet-window acquisition to at most 24 attempts, retains each rejected native observation and report fingerprint, and stops without retry on report or identity defects. It does not change the two-second gate, selected/system/interrupt limits, measured workload, warmups, samples, batching, comparisons, baselines, affinity, or external applications. Focused performance contract tests pass 51/51, governance tests pass 46/46, and Ruff lint, formatting and patch integrity pass. Three sample-free exact-producer conditioning checks at the failed coordinate passed; the first needed 21 attempts and 347.473 seconds after 20 preserved rejections, then two immediate passes. No governed sample was consumed. A new clean source and full certification sequence remain required.
+    - name: Structural-safety sampled regression correction
+      status: passed
+      evidence:
+          - check: Exact consumed-sample disposition
+            result: passed
+            details: Clean candidate 7909b0e5 passed Local 37/37 and Pull Request 79/79. Full traversed all 125 operations, recording 123 passed, the accepted waiver, and one failed performance operation. Invocation 8c82c5a66540474e9d8d39873955af99 consumed 769 authenticated samples across 13 completed coordinates before latency:structural-safety/fixture:semantic-large recorded a 32269700 ns median against the unchanged 30317155 ns relative and 33073260 ns absolute ceilings. The relative comparison failed while the absolute comparison passed. This source identity is permanently consumed and was not retried.
+          - check: Safety validation correction
+            result: passed
+            details: Safety analysis previously derived the same exact semantic identity twice and the same reachable-node set three times while validating one immutable foundational, structural, and result-evidence tuple. The corrected entry point derives each once and reuses them across the unchanged correspondence checks; standalone validators still derive their own context. The semantic program validation, exact identity comparisons, node coverage, node-kind checks, relationship validation, evidence validation, finding limits, traversal, workload, warmups, samples, conditioning, baseline, and ceilings are unchanged.
+          - check: Atomic performance and contract proof
+            result: passed
+            details: The exact native Windows runner coordinate passes five consecutive 64-sample executions on governed logical CPU 20 with medians from 23589700 to 24138250 ns, leaving 6178905 to 6727455 ns below the unchanged relative ceiling. Before the correction, five direct executions measured 28141900 to 28856300 ns. Focused Rust 1.75 safety and structural suites pass 36/36, including mismatched prerequisite stores, malformed evidence references, depth and node limits, deterministic properties, competition evidence, and repetition safety. The two registered deep-quality mutant source identities and dependent fingerprints are refreshed without changing their definitions or tests.
+          - check: Governance traversal correction
+            result: passed
+            details: A direct WSL governance run remained blocked in p9_client_rpc for more than nineteen minutes with unchanged I/O counters because the forbidden-dependency rule recursively traversed the complete workspace before filtering for its exact declared tooling files. The rule now expands only declared source patterns, retaining tracked and untracked matching-file coverage while excluding ignored target and cache trees. A focused regression forbids repository-wide rglob use, and the native command passes all four governance checks and 33 architecture rules.
+          - check: Required certification sequence
+            result: not_run
+            details: The substantive correction requires a new clean SHA, sample-free performance preflight, Local 37/37, Pull Request 79/79, one new Full, independent same-SHA no-reuse Release, attestation, and cloud verification. No authenticated sample has been taken for the corrected source.
 commits:
     - sha: 1291ba864f1a3e6c7d0dd1b8591eba0fac0f7a28
       subject: "chore(certification): roll Windows performance baseline"

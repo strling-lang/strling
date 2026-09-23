@@ -9,7 +9,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::semantic::{Node, RepetitionMaximum, SemanticProgram};
 use crate::semantic_analysis::{
-    semantic_program_identity, SemanticFacts, SemanticNodeKind, MAX_ANALYSIS_DEPTH,
+    semantic_program_identity, SemanticFacts, SemanticNodeKind, SemanticProgramIdentity,
+    MAX_ANALYSIS_DEPTH,
 };
 use crate::source::NodeId;
 use crate::structural_analysis::{
@@ -334,8 +335,9 @@ pub fn analyze_safety(
     input
         .validate()
         .map_err(SafetyAnalysisErrors::from_validation)?;
-    validate_foundational_correspondence(input, foundational)?;
-    validate_structural_correspondence(input, structural)?;
+    let (identity, node_ids) = validation_context(input)?;
+    validate_foundational_correspondence_with_context(input, foundational, identity, &node_ids)?;
+    validate_structural_correspondence_with_context(input, structural, identity, &node_ids)?;
 
     let (analysis, visited) = repetition::analyze(&input.root, foundational, structural)?;
     if visited != structural.len() || visited != foundational.len() {
@@ -345,13 +347,35 @@ pub fn analyze_safety(
         ));
     }
 
-    validate_analysis(input, structural, &analysis)?;
+    validate_analysis_with_node_ids(input, structural, &analysis, &node_ids)?;
     Ok(analysis)
+}
+
+fn validation_context(
+    input: &SemanticProgram,
+) -> Result<(SemanticProgramIdentity, BTreeSet<NodeId>), SafetyAnalysisErrors> {
+    let identity = semantic_program_identity(input).map_err(|error| {
+        invariant(
+            "$",
+            format!("semantic program identity could not be derived: {error}"),
+        )
+    })?;
+    Ok((identity, input.node_ids()))
 }
 
 pub(crate) fn validate_foundational_correspondence(
     input: &SemanticProgram,
     foundational: &SemanticFacts,
+) -> Result<(), SafetyAnalysisErrors> {
+    let (identity, node_ids) = validation_context(input)?;
+    validate_foundational_correspondence_with_context(input, foundational, identity, &node_ids)
+}
+
+fn validate_foundational_correspondence_with_context(
+    input: &SemanticProgram,
+    foundational: &SemanticFacts,
+    identity: SemanticProgramIdentity,
+    node_ids: &BTreeSet<NodeId>,
 ) -> Result<(), SafetyAnalysisErrors> {
     if input.contract_version != foundational.contract_version
         || input.specification_version != foundational.specification_version
@@ -361,12 +385,6 @@ pub(crate) fn validate_foundational_correspondence(
             "foundational fact versions do not match the semantic program",
         ));
     }
-    let identity = semantic_program_identity(input).map_err(|error| {
-        invariant(
-            "$",
-            format!("semantic program identity could not be derived: {error}"),
-        )
-    })?;
     if identity != foundational.program_identity() {
         return Err(stage_error(
             SafetyAnalysisErrorCode::MismatchedSemanticFacts,
@@ -374,8 +392,7 @@ pub(crate) fn validate_foundational_correspondence(
         ));
     }
 
-    let node_ids = input.node_ids();
-    for node_id in &node_ids {
+    for node_id in node_ids {
         if foundational.get(node_id).is_none() {
             return Err(stage_error(
                 SafetyAnalysisErrorCode::MissingSemanticFact,
@@ -415,6 +432,16 @@ pub(crate) fn validate_structural_correspondence(
     input: &SemanticProgram,
     structural: &StructuralFacts,
 ) -> Result<(), SafetyAnalysisErrors> {
+    let (identity, node_ids) = validation_context(input)?;
+    validate_structural_correspondence_with_context(input, structural, identity, &node_ids)
+}
+
+fn validate_structural_correspondence_with_context(
+    input: &SemanticProgram,
+    structural: &StructuralFacts,
+    identity: SemanticProgramIdentity,
+    node_ids: &BTreeSet<NodeId>,
+) -> Result<(), SafetyAnalysisErrors> {
     if input.contract_version != structural.contract_version
         || input.specification_version != structural.specification_version
     {
@@ -423,12 +450,6 @@ pub(crate) fn validate_structural_correspondence(
             "structural fact versions do not match the semantic program",
         ));
     }
-    let identity = semantic_program_identity(input).map_err(|error| {
-        invariant(
-            "$",
-            format!("semantic program identity could not be derived: {error}"),
-        )
-    })?;
     if identity != structural.program_identity() {
         return Err(stage_error(
             SafetyAnalysisErrorCode::MismatchedStructuralFacts,
@@ -436,8 +457,7 @@ pub(crate) fn validate_structural_correspondence(
         ));
     }
 
-    let node_ids = input.node_ids();
-    for node_id in &node_ids {
+    for node_id in node_ids {
         if structural.get(node_id).is_none() {
             return Err(stage_error(
                 SafetyAnalysisErrorCode::MissingStructuralFact,
@@ -456,7 +476,7 @@ pub(crate) fn validate_structural_correspondence(
 
     let mut pending = vec![&input.root];
     while let Some(node) = pending.pop() {
-        validate_structural_node(node, structural, &node_ids)?;
+        validate_structural_node(node, structural, node_ids)?;
         push_children(node, &mut pending);
     }
     Ok(())
@@ -594,6 +614,16 @@ pub(crate) fn validate_analysis(
     structural: &StructuralFacts,
     analysis: &SafetyAnalysis,
 ) -> Result<(), SafetyAnalysisErrors> {
+    let node_ids = input.node_ids();
+    validate_analysis_with_node_ids(input, structural, analysis, &node_ids)
+}
+
+fn validate_analysis_with_node_ids(
+    input: &SemanticProgram,
+    structural: &StructuralFacts,
+    analysis: &SafetyAnalysis,
+    node_ids: &BTreeSet<NodeId>,
+) -> Result<(), SafetyAnalysisErrors> {
     if analysis.findings.len() > MAX_SAFETY_FINDINGS {
         return Err(limit_error(
             SafetyAnalysisErrorCode::FindingLimitExceeded,
@@ -623,10 +653,9 @@ pub(crate) fn validate_analysis(
         ));
     }
 
-    let node_ids = input.node_ids();
     for finding in &analysis.findings {
         validate_evidence_ids(
-            &node_ids,
+            node_ids,
             &finding.primary_node_id,
             &finding.evidence_node_ids,
         )?;
@@ -641,7 +670,7 @@ pub(crate) fn validate_analysis(
     }
     for uncertainty in &analysis.uncertainties {
         validate_evidence_ids(
-            &node_ids,
+            node_ids,
             &uncertainty.primary_node_id,
             &uncertainty.evidence_node_ids,
         )?;

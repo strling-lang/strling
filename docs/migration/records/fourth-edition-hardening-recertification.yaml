@@ -497,6 +497,12 @@ checkpoints:
           - check: New candidate certification
             result: not_run
             details: Commit the governed authority and records, prove the final clean candidate with targeted and sample-free checks, then run Local, Pull Request, Full, immediate same-SHA Release readiness, independent no-reuse Release, signed attestation, cloud verification, and closure.
+          - check: Post-rollover Local disposition
+            result: failed
+            details: Clean candidate b1371f951955f38af5aea99d5066ce39a15d5791 passed 36 of 37 Local operations. Only hygiene@repository failed because the fully indented active baseline measured 1589193 bytes against the repository 1048576-byte tracked-file limit. Local consumed no authenticated performance samples; Pull Request and Full did not start.
+          - check: Baseline serialization correction
+            result: passed
+            details: The governed atomic writer now serializes only baseline.json files as compact UTF-8 JSON. The active file is 621909 bytes while its complete parsed authority, 54 measurements, 270 coordinate-conditioning snapshots, and baseline fingerprint remain unchanged. Manifests and evidence retain indented serialization, and a focused regression test protects both forms. A new clean candidate must restart Local.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

@@ -1719,8 +1719,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             )
             _write_json(governed, {"status": "passed"}, root=root)
             self.assertEqual(load_json(governed), {"status": "passed"})
-            self.assertTrue(governed.read_bytes().endswith(b"\n"))
+            self.assertEqual(
+                governed.read_text(encoding="utf-8"), '{"status":"passed"}\n'
+            )
             self.assertEqual(list(governed.parent.glob("*.tmp")), [])
+
+            manifest = governed.with_name("manifest.json")
+            _write_json(manifest, {"status": "passed"}, root=root)
+            self.assertEqual(
+                manifest.read_text(encoding="utf-8"),
+                '{\n    "status": "passed"\n}\n',
+            )
 
             with self.assertRaises(PerformanceResourceError) as raised:
                 _write_json(root / "outside.json", {"status": "failed"}, root=root)

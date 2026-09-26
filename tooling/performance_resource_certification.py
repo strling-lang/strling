@@ -3914,7 +3914,11 @@ def _write_json(path: Path, value: Mapping[str, object], *, root: Path = ROOT) -
         suffix=".tmp",
         delete=False,
     ) as output:
-        output.write(serialized_json(value))
+        output.write(
+            json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n"
+            if resolved.name == "baseline.json"
+            else serialized_json(value)
+        )
         temporary = Path(output.name)
     os.replace(temporary, resolved)
 

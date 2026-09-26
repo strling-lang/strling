@@ -900,3 +900,22 @@ records are tracked changes, they require a new clean candidate. That candidate
 must pass final targeted checks and sample-free launch readiness before Local,
 Pull Request, and Full. Release remains independently gated by an immediate
 same-SHA sample-free readiness check and the no-reuse launcher.
+
+## Post-rollover Local hygiene correction
+
+Clean candidate `b1371f951955f38af5aea99d5066ce39a15d5791` passed 36 of
+37 Local operations. Only `hygiene@repository` failed: the active baseline was
+`1589193` bytes after adding 270 full coordinate-conditioning snapshots, above
+the repository's `1048576`-byte tracked-file limit. Contracts, generated
+artifacts, governance, formatting, static analysis, core and interop tests, and
+the other Local operations passed. Local performed no authenticated performance
+sampling, and Pull Request and Full did not start.
+
+The governed atomic writer now serializes only `baseline.json` files as compact
+UTF-8 JSON. The active baseline becomes `621909` bytes while preserving the
+complete parsed document, all 54 measurements, all 270 conditioning snapshots,
+and baseline fingerprint
+`7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d`.
+Manifests, evidence records, and other governed JSON retain their existing
+indented form. A focused writer test protects both dispositions. Because this
+is a tracked tooling correction, the next clean candidate must restart Local.

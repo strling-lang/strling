@@ -5786,4 +5786,11 @@ authenticates environment
 `505a15ce4c35f0c3a53640c5589ca8121fea6dc91859a9d2ed7e4c15fc15ab8b`.
 No Full or Release sample was consumed by this governed qualification.
 
+The first post-rollover Local at clean `b1371f95` passed 36/37 operations and
+failed only repository hygiene because the fully indented active baseline was
+`1589193` bytes, above the `1048576`-byte file limit. The atomic governed writer
+now compacts only baseline files, reducing the same complete authority to
+`621909` bytes without changing its parsed content or fingerprint. No Pull
+Request, Full, or authenticated performance sample followed the failed Local.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL NEW FULL AND SEPARATE RELEASE COMPLETE.

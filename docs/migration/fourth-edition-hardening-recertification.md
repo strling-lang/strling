@@ -815,3 +815,15 @@ validation, governance, repository formatting, static analysis, and the exact
 public-contract check pass. The migration and its governed sample-free ratio
 proof must complete before a new candidate enters Local, Pull Request, Full,
 and independent no-reuse Release certification.
+Before the migration wrote any authority, native qualification detected a real
+OS identity change from Windows build `26200.9457` to `26200.9550`. The host,
+CPU topology, microcode, toolchain, conditioner hash, affinity, CPU set, power
+policy, timer, and reservation evidence are unchanged; only `os_version`, the
+host OS/kernel attestation strings, and their dependent attestation fingerprints
+differ. The unchanged-environment migration therefore failed closed with
+`launch-control-environment` and wrote no tracked files. The governed combined
+migration must recalibrate all 54 performance coordinates on build
+`26200.9550`, permit only the reviewed CLI comparison-model change, and require
+all 52 non-CLI coordinates to pass the prior active contract. This is the
+repository-authorized environment rollover path, not a same-identity ceiling
+change.

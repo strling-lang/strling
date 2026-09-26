@@ -565,6 +565,8 @@ python -m tooling.performance_resource_certification `
   --json
 ```
 
+If the authenticated Windows build changed before migration, the same command must name the active baseline fingerprint and exact new build with `--rollover-from` and `--expected-os-build`. That combined path recalibrates the complete performance denominator, admits only the reviewed CLI comparison-model change, and requires every non-CLI coordinate to pass the prior contract before writing the new authority.
+
 A native conditioner exit that contains exactly the existing
 `processor performance counters regressed` unavailable report is treated as an
 invalid observation and reacquired under the same bounded sample-free policy.

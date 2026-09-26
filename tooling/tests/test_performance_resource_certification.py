@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import io
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -66,6 +67,7 @@ from tooling.performance_resource_certification import (
     validate_baseline,
     validate_evidence,
     validate_environment_rollover,
+    validate_cli_launch_control_environment_rollover,
     validate_fixture_manifest,
     validate_manifest,
     validate_repository_contract,
@@ -172,6 +174,64 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         cls.fixtures = load_json(FIXTURE_PATH)
         cls.inventory = load_json(INVENTORY_PATH)
         cls.evidence = load_json(EVIDENCE_PATH)
+
+    def test_combined_os_rollover_allows_only_paired_cli_contract_change(self) -> None:
+        prior_baseline = load_json(BASELINE_PATH)
+        candidate_manifest = copy.deepcopy(self.manifest)
+        candidate_cli = next(
+            row
+            for row in candidate_manifest["operations"]
+            if row["id"] == "latency:cli-startup"
+        )
+        candidate_cli["comparison_model"] = "paired-same-binary-launch-control"
+        candidate_cli["description"] = "Paired same-binary launch-control comparison."
+        prior_environment = prior_baseline["environment"]
+        prior_environment["os_version"] = re.sub(
+            r"build \d+\.\d+", "build 26200.9457", prior_environment["os_version"]
+        )
+        prior_attestation = prior_environment["host_attestation"]
+        prior_attestation["host_os"] = re.sub(
+            r"build \d+\.\d+", "build 26200.9457", prior_attestation["host_os"]
+        )
+        candidate_baseline = copy.deepcopy(prior_baseline)
+        environment = candidate_baseline["environment"]
+        environment["os_version"] = environment["os_version"].replace(
+            "26200.9457", "26200.9550"
+        )
+        attestation = environment["host_attestation"]
+        attestation["host_os"] = attestation["host_os"].replace(
+            "26200.9457", "26200.9550"
+        )
+        attestation["attestation_fingerprint"] = "a" * 64
+        environment["host_attestation_fingerprint"] = "a" * 64
+        candidate_baseline["environment_fingerprint"] = "b" * 64
+
+        result = validate_cli_launch_control_environment_rollover(
+            self.manifest,
+            prior_baseline,
+            candidate_manifest,
+            candidate_baseline,
+            expected_os_build="26200.9550",
+        )
+        self.assertEqual(result["status"], "passed")
+        self.assertEqual(result["contract_change"], "paired-same-binary-launch-control")
+        self.assertEqual(result["failed_non_cli_comparisons"], 0)
+
+        drifted_manifest = copy.deepcopy(candidate_manifest)
+        next(
+            row
+            for row in drifted_manifest["operations"]
+            if row["id"] == "latency:semantic-parse"
+        )["description"] = "Unauthorized drift."
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_cli_launch_control_environment_rollover(
+                self.manifest,
+                prior_baseline,
+                drifted_manifest,
+                candidate_baseline,
+                expected_os_build="26200.9550",
+            )
+        self.assertEqual(raised.exception.code, "rollover-contract-drift")
 
     def test_schema_and_repository_contract_validate(self) -> None:
         Draft202012Validator.check_schema(self.schema)

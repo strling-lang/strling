@@ -3639,6 +3639,167 @@ def validate_environment_rollover(
     }
 
 
+def validate_cli_launch_control_environment_rollover(
+    prior_manifest: Mapping[str, object],
+    prior_baseline: Mapping[str, object],
+    candidate_manifest: Mapping[str, object],
+    candidate_baseline: Mapping[str, object],
+    *,
+    expected_os_build: str,
+    artifact_source_changes: Mapping[str, Sequence[str]] | None = None,
+) -> dict[str, Any]:
+    """Prove an OS rollover combined with the reviewed CLI signal migration."""
+
+    if not re.fullmatch(r"\d+\.\d+", expected_os_build):
+        raise PerformanceResourceError(
+            "rollover-os-build", "expected Windows build must be <build>.<ubr>"
+        )
+    prior_projection = _rollover_contract_projection(prior_manifest)
+    candidate_projection = _rollover_contract_projection(candidate_manifest)
+    prior_cli = next(
+        row
+        for row in cast(list[dict[str, Any]], prior_projection["operations"])
+        if row["id"] == "latency:cli-startup"
+    )
+    candidate_cli = next(
+        row
+        for row in cast(list[dict[str, Any]], candidate_projection["operations"])
+        if row["id"] == "latency:cli-startup"
+    )
+    if "comparison_model" in prior_cli:
+        raise PerformanceResourceError(
+            "launch-control-history",
+            "prior CLI contract already has a comparison model",
+        )
+    if candidate_cli.pop("comparison_model", None) != CLI_LAUNCH_COMPARISON_MODEL:
+        raise PerformanceResourceError(
+            "comparison-model", "candidate CLI contract lacks paired launch control"
+        )
+    candidate_cli["description"] = prior_cli["description"]
+    if prior_projection != candidate_projection:
+        raise PerformanceResourceError(
+            "rollover-contract-drift",
+            "only the reviewed CLI comparison model may change during this rollover",
+        )
+
+    artifact_fingerprints_preserved = (
+        prior_baseline["artifact_fingerprints"]
+        == candidate_baseline["artifact_fingerprints"]
+    )
+    artifact_identity_accepted, artifact_identity = _artifact_identity_check(
+        cast(Mapping[str, object], prior_baseline["artifact_fingerprints"]),
+        cast(Mapping[str, object], candidate_baseline["artifact_fingerprints"]),
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=cast(str, candidate_baseline["source_commit"]),
+        source_changes=artifact_source_changes,
+    )
+    if not artifact_identity_accepted:
+        raise PerformanceResourceError(
+            "rollover-product-identity",
+            "release artifact identities changed without candidate-source binding during rollover",
+        )
+
+    prior_environment = cast(Mapping[str, object], prior_baseline["environment"])
+    candidate_environment = cast(
+        Mapping[str, object], candidate_baseline["environment"]
+    )
+    if (
+        prior_environment.get("os") != "windows"
+        or candidate_environment.get("os") != "windows"
+    ):
+        raise PerformanceResourceError(
+            "rollover-platform", "environment rollover is authorized only for Windows"
+        )
+    observed_version = cast(str, candidate_environment["os_version"])
+    if f"build {expected_os_build}" not in observed_version:
+        raise PerformanceResourceError(
+            "rollover-os-build",
+            f"qualified environment is not Windows build {expected_os_build}",
+        )
+    if prior_environment["os_version"] == observed_version:
+        raise PerformanceResourceError(
+            "rollover-no-change", "environment rollover requires a changed OS identity"
+        )
+    permitted_environment_coordinates = {
+        "os_version",
+        "host_attestation.host_os",
+        "host_attestation.host_kernel_or_hypervisor",
+        "host_attestation.attestation_fingerprint",
+        "host_attestation_fingerprint",
+    }
+    mismatches = environment_mismatches(prior_environment, candidate_environment)
+    unexpected = [
+        row
+        for row in mismatches
+        if row["coordinate"] not in permitted_environment_coordinates
+    ]
+    if unexpected:
+        raise PerformanceResourceError(
+            "rollover-environment-drift",
+            "non-OS environment identity changed: "
+            + json.dumps(unexpected, sort_keys=True),
+        )
+
+    prior_rows = {
+        (row["operation_id"], row["fixture_id"]): row
+        for row in cast(list[dict[str, Any]], prior_baseline["measurements"])
+    }
+    candidate_rows = {
+        (row["operation_id"], row["fixture_id"]): row
+        for row in cast(list[dict[str, Any]], candidate_baseline["measurements"])
+    }
+    if set(prior_rows) != set(candidate_rows):
+        raise PerformanceResourceError(
+            "rollover-denominator", "performance measurement coordinates changed"
+        )
+    comparisons: list[dict[str, Any]] = []
+    failed: list[dict[str, Any]] = []
+    cli_raw_history: list[dict[str, Any]] = []
+    for key in performance_measurement_keys(prior_manifest):
+        prior = prior_rows[key]
+        candidate = candidate_rows[key]
+        comparison = compare_hard_metric(
+            baseline_median=prior["statistics"]["median"],
+            observed_median=candidate["statistics"]["median"],
+            relative_regression_basis_points=prior["budget"][
+                "relative_regression_basis_points"
+            ],
+            absolute_ceiling=prior["budget"]["absolute_ceiling"],
+        )
+        row = {
+            "operation_id": key[0],
+            "fixture_id": key[1],
+            "comparison": comparison,
+        }
+        if key[0] == "latency:cli-startup":
+            cli_raw_history.append(row)
+        else:
+            comparisons.append(row)
+            if comparison["status"] != "passed":
+                failed.append(row)
+    if failed:
+        raise PerformanceResourceError(
+            "rollover-regression",
+            "new environment calibration does not pass the prior non-CLI contract: "
+            + json.dumps(failed, sort_keys=True),
+        )
+    return {
+        "status": "passed",
+        "expected_os_build": expected_os_build,
+        "prior_environment_fingerprint": prior_baseline["environment_fingerprint"],
+        "candidate_environment_fingerprint": candidate_baseline[
+            "environment_fingerprint"
+        ],
+        "environment_mismatches": mismatches,
+        "non_cli_comparison_count": len(comparisons),
+        "failed_non_cli_comparisons": 0,
+        "cli_raw_history": cli_raw_history,
+        "artifact_fingerprints_preserved": artifact_fingerprints_preserved,
+        "artifact_identity": artifact_identity,
+        "contract_change": CLI_LAUNCH_COMPARISON_MODEL,
+    }
+
+
 def _write_json(path: Path, value: Mapping[str, object], *, root: Path = ROOT) -> None:
     governed_root = (root / "tests/certification/performance-resource/1.0").resolve()
     resolved = path.resolve()
@@ -4654,6 +4815,8 @@ def _migrate_cli_launch_control_command(
     *,
     confirm_paired_launch_control: bool,
     rationale: str,
+    rollover_from: str | None = None,
+    expected_os_build: str | None = None,
     root: Path = ROOT,
 ) -> dict[str, Any]:
     """Replace only the unstable CLI relative signal with a same-binary control."""
@@ -4723,12 +4886,29 @@ def _migrate_cli_launch_control_command(
         ],
         root=root,
     )
-    if not environments_compatible(
+    environment_compatible = environments_compatible(
         cast(Mapping[str, object], prior_baseline["environment"]), environment
+    )
+    if environment_compatible and (
+        rollover_from is not None or expected_os_build is not None
+    ):
+        raise PerformanceResourceError(
+            "rollover-no-change",
+            "CLI launch-control migration received rollover authority for an unchanged environment",
+        )
+    if not environment_compatible and (
+        rollover_from is None or expected_os_build is None
     ):
         raise PerformanceResourceError(
             "launch-control-environment",
-            "CLI launch-control migration requires the unchanged baseline environment",
+            "changed baseline environment requires --rollover-from and --expected-os-build",
+        )
+    if (
+        rollover_from is not None
+        and rollover_from != prior_baseline["baseline_fingerprint"]
+    ):
+        raise PerformanceResourceError(
+            "rollover-history", "rollover source is not the active baseline"
         )
 
     candidate_manifest = copy.deepcopy(prior_manifest)
@@ -4743,6 +4923,63 @@ def _migrate_cli_launch_control_command(
         "compare request work to a same-binary help launch while retaining the prior "
         "raw ceiling as diagnostic history."
     )
+
+    if not environment_compatible:
+        candidate_manifest, candidate_baseline = calibrate_baseline(
+            candidate_manifest,
+            fixtures,
+            artifacts=_release_artifacts(root),
+            artifact_fingerprints=observed_artifacts,
+            environment=environment,
+            source_commit=commit,
+            rationale=rationale,
+            root=root,
+        )
+        source_changes = _artifact_source_changes(
+            baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+            candidate_source_commit=commit,
+            root=root,
+        )
+        rollover = validate_cli_launch_control_environment_rollover(
+            prior_manifest,
+            prior_baseline,
+            candidate_manifest,
+            candidate_baseline,
+            expected_os_build=cast(str, expected_os_build),
+            artifact_source_changes=source_changes,
+        )
+        candidate_evidence = copy.deepcopy(prior_evidence)
+        candidate_evidence["manifest_fingerprint"] = candidate_manifest[
+            "manifest_fingerprint"
+        ]
+        validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+        validate_baseline(candidate_baseline, manifest=candidate_manifest)
+        validate_evidence(candidate_evidence, manifest=candidate_manifest)
+        prior_fingerprint = cast(str, prior_baseline["baseline_fingerprint"])
+        history = root / PERFORMANCE_HISTORY_PATH.relative_to(ROOT) / prior_fingerprint
+        if history.exists():
+            raise PerformanceResourceError(
+                "launch-control-history-exists",
+                f"refusing to overwrite immutable prior authority {history.relative_to(root)}",
+            )
+        _write_json(history / "manifest.json", prior_manifest, root=root)
+        _write_json(history / "baseline.json", prior_baseline, root=root)
+        _write_json(history / "valid-evidence.json", prior_evidence, root=root)
+        _write_json(manifest_path, candidate_manifest, root=root)
+        _write_json(baseline_path, candidate_baseline, root=root)
+        _write_json(evidence_path, candidate_evidence, root=root)
+        return {
+            "status": "passed",
+            "source_commit": commit,
+            "prior_baseline_fingerprint": prior_fingerprint,
+            "baseline_fingerprint": candidate_baseline["baseline_fingerprint"],
+            "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+            "history_path": history.relative_to(root).as_posix(),
+            "artifact_identity": artifact_identity,
+            "environment_rollover": rollover,
+            "migration_mode": "full-environment-rollover",
+            "measurement_count": len(candidate_baseline["measurements"]),
+        }
 
     baseline_rows = {
         (row["operation_id"], row["fixture_id"]): row
@@ -5221,11 +5458,15 @@ def main(argv: list[str] | None = None) -> int:
             parser.add_argument("migrate-cli-launch-control")
             parser.add_argument("--confirm-paired-launch-control", action="store_true")
             parser.add_argument("--rationale", required=True)
+            parser.add_argument("--rollover-from")
+            parser.add_argument("--expected-os-build")
             parser.add_argument("--json", action="store_true")
             arguments = parser.parse_args(values)
             result = _migrate_cli_launch_control_command(
                 confirm_paired_launch_control=(arguments.confirm_paired_launch_control),
                 rationale=arguments.rationale,
+                rollover_from=arguments.rollover_from,
+                expected_os_build=arguments.expected_os_build,
             )
             status = cast(str, result["status"])
         elif values and values[0] == "baseline":

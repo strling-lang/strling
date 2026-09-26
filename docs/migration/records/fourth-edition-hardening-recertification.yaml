@@ -518,6 +518,9 @@ checkpoints:
           - check: Direct-coordinate sample-accounting correction
             result: passed
             details: The producer now selects the comparison model before accessing controls. Direct coordinates authenticate request samples only, while paired CLI launch coordinates authenticate request and same-binary control samples. Focused tests cover both shapes and zero, consumed, and indeterminate ledger boundaries. No threshold, ratio, sample count, conditioning rule, ceiling, isolation rule, or authenticated-sample policy changed. A new clean candidate must restart Local and Pull Request before Full.
+          - check: Direct-accounting candidate Local disposition
+            result: failed
+            details: Clean candidate 42f11c44f2ed126fe70fa511e41e1596d64d962e passed 36 of 37 Local operations and failed only format_check@repository because the final focused test edit followed the prior formatting proof. Ruff normalized that single test file. Pull Request, Full, Release, and authenticated performance sampling did not start. A new clean candidate must restart Local.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

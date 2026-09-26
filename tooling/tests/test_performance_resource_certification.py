@@ -371,9 +371,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
     def test_full_certification_consumes_controls_only_for_paired_cli_coordinates(
         self,
     ) -> None:
-        direct = _authenticated_measurement_samples(
-            {"samples": [10, 11]}, "direct"
-        )
+        direct = _authenticated_measurement_samples({"samples": [10, 11]}, "direct")
         self.assertEqual(direct, ([10, 11], [], [10, 11]))
 
         paired = _authenticated_measurement_samples(

@@ -961,3 +961,10 @@ cover both evidence shapes plus zero, consumed, and indeterminate atomic sample
 boundaries. Thresholds, ratios, sample counts, conditioning, ceilings, workload
 isolation, and authenticated-sample rules are unchanged. The tracked correction
 requires a new clean candidate to restart Local and Pull Request before Full.
+
+Clean candidate `42f11c44f2ed126fe70fa511e41e1596d64d962e` stopped at
+Local 36/37. Only `format_check@repository` failed: a final focused test edit
+was not normalized after the preceding formatting proof. Ruff reformatted that
+single file; no semantic or certification policy changed. Pull Request, Full,
+Release, and authenticated performance sampling did not start. The formatting
+correction requires another clean candidate to restart Local.

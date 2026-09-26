@@ -5815,4 +5815,9 @@ coordinates retain request-only accounting. Focused producer and ledger tests
 pass. Release did not start, the sampled SHA is not retried, and the new clean
 candidate restarts at Local.
 
+Clean `42f11c44` passed 36/37 Local operations and failed only repository Ruff
+formatting after the last focused test edit. The single test file is now
+normalized. No PR, Full, Release, or authenticated performance sample started;
+the formatting-only commit requires a new clean candidate from Local.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL NEW FULL AND SEPARATE RELEASE COMPLETE.

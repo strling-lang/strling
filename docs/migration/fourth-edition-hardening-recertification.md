@@ -827,3 +827,21 @@ migration must recalibrate all 54 performance coordinates on build
 all 52 non-CLI coordinates to pass the prior active contract. This is the
 repository-authorized environment rollover path, not a same-identity ceiling
 change.
+
+The first full rollover calibration rejected
+`latency:pcre2-lower-serialize/fixture:simply-large` at `534 bp` relative MAD,
+just above the unchanged `500 bp` stability limit. Seven exact sample-free,
+conditioned repetitions then measured `9341900` to `9771750 ns`; their median
+was `9552200 ns` with `196 bp` relative MAD, and every repetition passed the
+prior ceiling. That isolated the calibration value as transient noise and
+justified one same-source calibration retry without a threshold or source
+change.
+
+The retry then exposed a defect in the initial CLI control arrangement:
+`simply-tiny` request/control ratios had `606 bp` MAD because the complete
+request and control blocks were measured sequentially, allowing normal host
+drift between them. The runner now warms both commands, measures every request
+immediately beside its same-binary control, and alternates request-first and
+control-first order. Sample and warmup counts, the request and control
+workloads, affinity, timer, conditioning, and the unchanged `500 bp` stability
+limit remain intact. Seven consecutive sample-free conditioned windows per CLI fixture pass with the interleaved runner. `simply-tiny` ratios are `[11361, 11485, 11233, 11434, 11636, 12284, 11334]` basis points, with median `11434` and `88 bp` relative MAD. `semantic-tiny` ratios are `[11452, 10922, 11918, 12054, 11668, 11812, 11843]`, with median `11812` and `122 bp` relative MAD. Both are well inside the unchanged `500 bp` limit; all fourteen raw request medians also pass their historical reference ceilings. The governed rollover may now be attempted again.

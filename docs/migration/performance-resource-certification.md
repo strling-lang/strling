@@ -536,11 +536,11 @@ warmup, sample, repetition, benchmark definition, or product behavior changed.
 `latency:cli-startup` retains raw process startup plus canonical request latency
 as authenticated diagnostic evidence. Its hard regression signal is the ratio
 of the request median to a separately warmed median from the same kernel
-executable invoked with `--help`. The runner measures the complete request block first, preserving
-the original workload and sampling order, then measures the control block with
-the same warmup count, sample count, affinity, timer, pipes, executable image,
-and conditioning window. Both arrays are authenticated evidence and count as
-consumed samples.
+executable invoked with `--help`. After separately warming both commands, the
+runner measures each request immediately beside its control and alternates
+request-first and control-first order. Both arrays use the same warmup count,
+sample count, affinity, timer, pipes, executable image, and conditioning window.
+Both arrays are authenticated evidence and count as consumed samples.
 
 This paired model isolates product request work from normal Windows process
 creation and image-load variance. Both a derived relative ratio limit and a

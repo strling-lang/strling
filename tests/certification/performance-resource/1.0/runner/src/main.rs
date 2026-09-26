@@ -34,7 +34,7 @@ use strling_kernel::validation::Validate;
 type RunResult<T> = Result<T, String>;
 type PreparedOperation = Box<dyn Fn() -> RunResult<usize>>;
 
-const RUNNER_VERSION: &str = "1.6.0";
+const RUNNER_VERSION: &str = "1.7.0";
 
 #[derive(Debug)]
 struct Arguments {
@@ -175,9 +175,18 @@ fn run() -> RunResult<()> {
     let mut control_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
     let mut checksum = 0usize;
     let divisor = u64::try_from(batch_iterations).map_err(|_| "batch overflow")?;
-    for _ in 0..arguments.samples {
+    if let Some(control) = &control_operation {
+        for _ in 0..arguments.warmups {
+            black_box(execute_batch(control, batch_iterations)?);
+            observe_execution_processor(
+                &mut observed_processor_groups,
+                &mut observed_logical_processors,
+            )?;
+        }
+    }
+    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64)> {
         let started = Instant::now();
-        checksum ^= black_box(execute_batch(&operation, batch_iterations)?);
+        checksum ^= black_box(execute_batch(prepared, batch_iterations)?);
         let nanoseconds = started.elapsed().as_nanos().max(1);
         let batch_elapsed = u64::try_from(nanoseconds).map_err(|_| "sample overflow")?;
         let normalized = batch_elapsed
@@ -185,34 +194,30 @@ fn run() -> RunResult<()> {
             .checked_div(divisor)
             .ok_or_else(|| "batch divisor is zero".to_owned())?
             .max(1);
-        batch_elapsed_samples.push(batch_elapsed);
-        samples.push(normalized);
         observe_execution_processor(
             &mut observed_processor_groups,
             &mut observed_logical_processors,
         )?;
-    }
+        Ok((normalized, batch_elapsed))
+    };
     if let Some(control) = &control_operation {
-        for _ in 0..arguments.warmups {
-            black_box(execute_batch(control, batch_iterations)?);
+        for sample_index in 0..arguments.samples {
+            let (request, control_sample) = if sample_index % 2 == 0 {
+                (measure(&operation)?, measure(control)?)
+            } else {
+                let control_sample = measure(control)?;
+                (measure(&operation)?, control_sample)
+            };
+            samples.push(request.0);
+            batch_elapsed_samples.push(request.1);
+            control_samples.push(control_sample.0);
+            control_batch_elapsed_samples.push(control_sample.1);
         }
+    } else {
         for _ in 0..arguments.samples {
-            let started = Instant::now();
-            checksum ^= black_box(execute_batch(control, batch_iterations)?);
-            let nanoseconds = started.elapsed().as_nanos().max(1);
-            let batch_elapsed =
-                u64::try_from(nanoseconds).map_err(|_| "control sample overflow")?;
-            let normalized = batch_elapsed
-                .saturating_add(divisor / 2)
-                .checked_div(divisor)
-                .ok_or_else(|| "batch divisor is zero".to_owned())?
-                .max(1);
-            control_batch_elapsed_samples.push(batch_elapsed);
-            control_samples.push(normalized);
-            observe_execution_processor(
-                &mut observed_processor_groups,
-                &mut observed_logical_processors,
-            )?;
+            let sample = measure(&operation)?;
+            samples.push(sample.0);
+            batch_elapsed_samples.push(sample.1);
         }
     }
     verify_execution_resource(&execution_resource, arguments.expected_logical_cpu)?;

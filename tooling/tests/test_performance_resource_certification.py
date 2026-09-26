@@ -124,19 +124,17 @@ class PerformanceRunnerBoundaryTests(unittest.TestCase):
         )
         self.assertNotIn("_for_reference", operation)
 
-    def test_cli_launch_control_uses_the_same_binary_after_raw_request_samples(
-        self,
-    ) -> None:
+    def test_cli_launch_control_interleaves_same_binary_samples(self) -> None:
         run = self.runner.split("fn run()", 1)[1].split("fn parse_arguments", 1)[0]
         control = self.runner.split("fn prepare_cli_launch_control", 1)[1].split(
             "fn prepare_operation", 1
         )[0]
         self.assertIn('.arg("--help")', control)
         self.assertIn("Command::new(&executable)", control)
-        self.assertLess(
-            run.index("for _ in 0..arguments.samples"),
-            run.index("if let Some(control) = &control_operation"),
-        )
+        self.assertIn("for sample_index in 0..arguments.samples", run)
+        self.assertIn("(measure(&operation)?, measure(control)?)", run)
+        self.assertIn("let control_sample = measure(control)?", run)
+        self.assertIn("sample_index % 2 == 0", run)
         self.assertIn('"control_samples": control_samples', run)
         self.assertIn(
             '"control_batch_elapsed_samples": control_batch_elapsed_samples', run

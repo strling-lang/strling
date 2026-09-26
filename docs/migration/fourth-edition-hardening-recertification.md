@@ -864,3 +864,39 @@ thresholds, attempts, delay, sampling, randomization, and acceptance limits are
 unchanged. Historical baselines remain valid under their declared repetition
 conditioning policy; the new `26200.9550` authority must use per-coordinate
 conditioning.
+
+## Windows 26200.9550 governed baseline qualification
+
+The governed combined environment and CLI comparison migration completed from
+clean source `46db35ffa44cd35df6731fc6d94a6cfa08a892b4`. It calibrated all 54
+coordinates with five repetitions and retained five coordinate-local
+conditioning snapshots in every row, for 270 coordinate snapshots in total.
+All 52 non-CLI coordinates passed their prior relative and absolute contracts;
+there were zero failed comparisons. The prior authority is archived intact at
+`tests/certification/performance-resource/1.0/history/a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd`.
+
+The active baseline fingerprint is
+`7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d`,
+the manifest fingerprint is
+`50ca85310dcc881356ff0ddee70df0147ea70b0af7363c7710353d3df317c608`,
+and the authenticated Windows `26200.9550` environment fingerprint is
+`505a15ce4c35f0c3a53640c5589ca8121fea6dc91859a9d2ed7e4c15fc15ab8b`.
+The OS and dependent attestation fingerprints are the only host-identity
+changes from the prior environment.
+
+For `semantic-tiny`, the five request medians produce a `24679800 ns` median,
+the same-binary control median is `21669300 ns`, and the ratio median is
+`11394` basis points against a derived absolute ratio ceiling of `13673`. For
+`simply-tiny`, the corresponding medians are `24510200 ns`, `21038300 ns`, and
+`11652` basis points against `13983`. Their ratio MADs are `90` and `174`
+basis points. Both historical raw reference ceilings pass and remain diagnostic
+evidence. The deterministic performance contract accepts the new authority.
+The 67 affected Python contract tests also pass against the active and archived
+authorities. No authenticated Full or Release sample was consumed by
+qualification.
+
+Because the baseline, manifest, evidence pointer, archived authority, and H08
+records are tracked changes, they require a new clean candidate. That candidate
+must pass final targeted checks and sample-free launch readiness before Local,
+Pull Request, and Full. Release remains independently gated by an immediate
+same-SHA sample-free readiness check and the no-reuse launcher.

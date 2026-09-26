@@ -5664,9 +5664,10 @@ task; P20-T02 is paused.
 
 ## V4-H08 - Hardened-core recertification and attested local evidence
 
--   Status: In progress — Windows 26200.9457 is governedly qualified and
-    calibrated; the new source candidate must restart Local, Pull Request,
-    and Full before any separate Release run.
+-   Status: In progress — Windows 26200.9550 is governedly qualified and
+    calibrated with coordinate-local conditioning and paired CLI launch
+    control; the new source candidate must restart Local, Pull Request, and
+    Full before any separate Release run.
 -   Starting checkpoint: `61338f1581e8ecf436fc59acbfae28a603a90382`
     on clean `dev`, identical to `origin/dev`.
 -   Historical deterministic candidate:
@@ -5770,5 +5771,19 @@ performance policy, or host state was changed.
 Release correctly did not start, no attestation was issued, and no cloud
 certification acceptance is claimed. P20-T02 remains paused, no publication
 work has begun, and no package, tag, GitHub Release, or `main` change occurred.
+
+Subsequent quiet-host diagnosis proved that raw fresh-process latency moved
+with a same-binary `--help` control and was not a stable release-blocking signal.
+The runner now interleaves request and control launches, the conditioner
+reacquires only the exact processor-counter discontinuity report, and baseline
+calibration authenticates a fresh quiet snapshot before every coordinate. A
+real Windows identity change to build `26200.9550` then authorized the combined
+environment rollover. Clean source `46db35ff` calibrated all 54 coordinates;
+all 52 non-CLI comparisons passed the prior contract, both CLI ratios passed,
+and all 270 coordinate-local conditioning snapshots are retained. Active
+baseline `7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d`
+authenticates environment
+`505a15ce4c35f0c3a53640c5589ca8121fea6dc91859a9d2ed7e4c15fc15ab8b`.
+No Full or Release sample was consumed by this governed qualification.
 
 BLOCKED — NO-GO FOR P20-T02 UNTIL NEW FULL AND SEPARATE RELEASE COMPLETE.

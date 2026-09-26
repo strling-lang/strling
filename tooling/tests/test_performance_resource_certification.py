@@ -3,7 +3,6 @@ from __future__ import annotations
 import copy
 import io
 import json
-import re
 import shutil
 import subprocess
 import tempfile
@@ -174,45 +173,27 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         cls.evidence = load_json(EVIDENCE_PATH)
 
     def test_combined_os_rollover_allows_only_paired_cli_contract_change(self) -> None:
-        prior_baseline = load_json(BASELINE_PATH)
+        prior_root = (
+            BASELINE_PATH.parent
+            / "history"
+            / "a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd"
+        )
+        prior_manifest = load_json(prior_root / "manifest.json")
+        prior_baseline = load_json(prior_root / "baseline.json")
         candidate_manifest = copy.deepcopy(self.manifest)
-        candidate_manifest["measurement_policy"]["conditioning_policy"] = (
-            "authenticated-identical-before-each-coordinate"
+        candidate_baseline = load_json(BASELINE_PATH)
+        artifact_source_changes = _artifact_source_changes(
+            baseline_source_commit=prior_baseline["source_commit"],
+            candidate_source_commit=candidate_baseline["source_commit"],
         )
-        candidate_cli = next(
-            row
-            for row in candidate_manifest["operations"]
-            if row["id"] == "latency:cli-startup"
-        )
-        candidate_cli["comparison_model"] = "paired-same-binary-launch-control"
-        candidate_cli["description"] = "Paired same-binary launch-control comparison."
-        prior_environment = prior_baseline["environment"]
-        prior_environment["os_version"] = re.sub(
-            r"build \d+\.\d+", "build 26200.9457", prior_environment["os_version"]
-        )
-        prior_attestation = prior_environment["host_attestation"]
-        prior_attestation["host_os"] = re.sub(
-            r"build \d+\.\d+", "build 26200.9457", prior_attestation["host_os"]
-        )
-        candidate_baseline = copy.deepcopy(prior_baseline)
-        environment = candidate_baseline["environment"]
-        environment["os_version"] = environment["os_version"].replace(
-            "26200.9457", "26200.9550"
-        )
-        attestation = environment["host_attestation"]
-        attestation["host_os"] = attestation["host_os"].replace(
-            "26200.9457", "26200.9550"
-        )
-        attestation["attestation_fingerprint"] = "a" * 64
-        environment["host_attestation_fingerprint"] = "a" * 64
-        candidate_baseline["environment_fingerprint"] = "b" * 64
 
         result = validate_cli_launch_control_environment_rollover(
-            self.manifest,
+            prior_manifest,
             prior_baseline,
             candidate_manifest,
             candidate_baseline,
             expected_os_build="26200.9550",
+            artifact_source_changes=artifact_source_changes,
         )
         self.assertEqual(result["status"], "passed")
         self.assertEqual(result["contract_change"], "paired-same-binary-launch-control")
@@ -226,11 +207,12 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )["description"] = "Unauthorized drift."
         with self.assertRaises(PerformanceResourceError) as raised:
             validate_cli_launch_control_environment_rollover(
-                self.manifest,
+                prior_manifest,
                 prior_baseline,
                 drifted_manifest,
                 candidate_baseline,
                 expected_os_build="26200.9550",
+                artifact_source_changes=artifact_source_changes,
             )
         self.assertEqual(raised.exception.code, "rollover-contract-drift")
 
@@ -1072,7 +1054,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         self.assertEqual(
             self.manifest["measurement_policy"]["conditioning_policy"],
-            "authenticated-identical-before-each-repetition",
+            "authenticated-identical-before-each-coordinate",
         )
         self.assertTrue(
             all(
@@ -1669,11 +1651,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 )
                 batch = 16
                 normalized = [base + (index % 3) for index in range(64)]
-                return {
+                result = {
                     "samples": normalized,
                     "batch_iterations": batch,
                     "batch_duration_samples": [value * batch for value in normalized],
                 }
+                if key[0] == "latency:cli-startup":
+                    result["control_samples"] = normalized
+                    result["control_batch_duration_samples"] = [
+                        value * batch for value in normalized
+                    ]
+                return result
             return {
                 "samples": [base],
                 "batch_iterations": 1,
@@ -2124,6 +2112,13 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         batch_duration_repetitions: dict[
             tuple[str, str | None], list[list[int]] | None
         ] = {}
+        control_repetitions: dict[tuple[str, str | None], list[list[int]] | None] = {}
+        control_batch_duration_repetitions: dict[
+            tuple[str, str | None], list[list[int]] | None
+        ] = {}
+        coordinate_conditioning_repetitions: dict[
+            tuple[str, str | None], list[dict[str, Any]] | None
+        ] = {}
         for key_index, key in enumerate(performance_measurement_keys(self.manifest)):
             operation = operations[key[0]]
             base = 100_000 + (key_index * 10_000)
@@ -2151,6 +2146,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             else:
                 batch_iterations[key] = 1
                 batch_duration_repetitions[key] = None
+            if operation.get("comparison_model") == "paired-same-binary-launch-control":
+                control_repetitions[key] = copy.deepcopy(repetition_rows)
+                control_batch_duration_repetitions[key] = copy.deepcopy(
+                    batch_duration_repetitions[key]
+                )
+            else:
+                control_repetitions[key] = None
+                control_batch_duration_repetitions[key] = None
+            coordinate_conditioning_repetitions[key] = [
+                self._conditioning_snapshot(environment) for _ in range(5)
+            ]
         return create_active_contract(
             self.manifest,
             self.fixtures,
@@ -2163,6 +2169,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             repetitions=repetitions,
             batch_iterations=batch_iterations,
             batch_duration_repetitions=batch_duration_repetitions,
+            control_repetitions=control_repetitions,
+            control_batch_duration_repetitions=(control_batch_duration_repetitions),
+            coordinate_conditioning_repetitions=(coordinate_conditioning_repetitions),
             rationale=(
                 "Synthetic complete calibration corpus for controlled contract tests."
             ),

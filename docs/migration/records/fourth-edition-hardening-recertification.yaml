@@ -485,6 +485,18 @@ checkpoints:
           - check: Required certification sequence
             result: not_run
             details: This factual H08 record is a legitimate post-failure source change. Complete targeted validation and require sample-free launch readiness inside the unchanged envelope before Local 37/37, Pull Request 79/79, Full 124 plus the expected waiver, independent same-SHA Release, attestation, cloud verification, and closure.
+          - check: Windows process-launch signal correction
+            result: passed
+            details: Raw fresh-process latency varied with a same-kernel --help launch under valid quiet-host conditioning. The runner now warms both commands, places every request adjacent to its control, and alternates their order. Seven consecutive sample-free conditioned windows per CLI fixture passed the unchanged 500-basis-point stability gate. Raw request latency remains authenticated diagnostic evidence; in-process and artifact-size gates remain hard.
+          - check: Coordinate-local baseline conditioning
+            result: passed
+            details: Calibration previously reused one opening quiet snapshot across each randomized 54-coordinate repetition, unlike Full and Release. It now acquires and retains a fresh authenticated snapshot immediately before every coordinate. Five repetitions produce 270 coordinate snapshots. Busy and interrupt thresholds, acquisition attempts, sampling, batching, workloads, randomization, and statistical acceptance limits are unchanged.
+          - check: Windows 26200.9550 governed rollover
+            result: passed
+            details: Clean source 46db35ffa44cd35df6731fc6d94a6cfa08a892b4 completed the combined environment and CLI-control migration. All 54 coordinates calibrated, all 52 non-CLI coordinates passed the prior contracts, and both CLI ratios passed. Active baseline 7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d authenticates environment 505a15ce4c35f0c3a53640c5589ca8121fea6dc91859a9d2ed7e4c15fc15ab8b; prior authority a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd is archived intact. No Full or Release sample was consumed.
+          - check: New candidate certification
+            result: not_run
+            details: Commit the governed authority and records, prove the final clean candidate with targeted and sample-free checks, then run Local, Pull Request, Full, immediate same-SHA Release readiness, independent no-reuse Release, signed attestation, cloud verification, and closure.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -539,4 +551,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 42f57b28 passed Local, Pull Request, and Full, then consumed its independent Release opportunity on one CLI-startup relative regression. The same Windows 26200.9457 environment identity now has persistently elevated sample-free process-launch latency, and policy forbids a same-identity rollover. P20-T02 remains paused until launch readiness recovers and a new clean candidate passes Local, Pull Request, Full, independent Release, signed local attestation, and cheap cloud verification.
+    rationale: Candidate 42f57b28 passed Local, Pull Request, and Full, then consumed its independent Release opportunity on one raw CLI-startup relative regression. The repository corrected that unstable signal with paired same-binary control and completed a governed Windows 26200.9550 environment rollover with all prior non-CLI contracts passing. P20-T02 remains paused until the new clean candidate passes Local, Pull Request, Full, independent Release, signed local attestation, and cheap cloud verification.

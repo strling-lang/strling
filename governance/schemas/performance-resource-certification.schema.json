@@ -1560,7 +1560,10 @@
                 },
                 "cpu_quota_policy": { "const": "unlimited" },
                 "conditioning_policy": {
-                    "const": "authenticated-identical-before-each-repetition"
+                    "enum": [
+                        "authenticated-identical-before-each-repetition",
+                        "authenticated-identical-before-each-coordinate"
+                    ]
                 },
                 "randomize_operation_order": { "const": true },
                 "statistics": {
@@ -1942,6 +1945,11 @@
                     "items": { "type": "integer", "minimum": 0 }
                 },
                 "statistics": { "$ref": "#/$defs/statistics" },
+                "coordinate_conditioning_repetitions": {
+                    "type": "array",
+                    "minItems": 3,
+                    "items": { "$ref": "#/$defs/conditioningSnapshot" }
+                },
                 "control_repetitions": {
                     "type": "array",
                     "minItems": 3,

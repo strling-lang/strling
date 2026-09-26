@@ -176,6 +176,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
     def test_combined_os_rollover_allows_only_paired_cli_contract_change(self) -> None:
         prior_baseline = load_json(BASELINE_PATH)
         candidate_manifest = copy.deepcopy(self.manifest)
+        candidate_manifest["measurement_policy"]["conditioning_policy"] = (
+            "authenticated-identical-before-each-coordinate"
+        )
         candidate_cli = next(
             row
             for row in candidate_manifest["operations"]
@@ -1646,9 +1649,13 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             )
         self.assertEqual(raised.exception.code, "conditioning-drift")
 
-    def test_calibration_executes_five_complete_repetitions(self) -> None:
+    def test_calibration_conditions_each_coordinate_in_five_repetitions(self) -> None:
         calls: dict[tuple[str, str | None], int] = {}
-        operations = {row["id"]: row for row in self.manifest["operations"]}
+        manifest = copy.deepcopy(self.manifest)
+        manifest["measurement_policy"]["conditioning_policy"] = (
+            "authenticated-identical-before-each-coordinate"
+        )
+        operations = {row["id"]: row for row in manifest["operations"]}
 
         observed_batches: dict[tuple[str, str | None], list[int | None]] = {}
 
@@ -1686,7 +1693,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             ) as condition,
         ):
             active_manifest, baseline = calibrate_baseline(
-                self.manifest,
+                manifest,
                 self.fixtures,
                 artifacts={},
                 artifact_fingerprints=self._artifact_fingerprints(),
@@ -1697,7 +1704,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 ),
             )
 
-        expected_keys = performance_measurement_keys(self.manifest)
+        expected_keys = performance_measurement_keys(manifest)
         self.assertEqual(set(calls), set(expected_keys))
         self.assertTrue(all(count == 5 for count in calls.values()))
         self.assertTrue(
@@ -1706,8 +1713,14 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             )
         )
         self.assertEqual(len(baseline["measurements"]), len(expected_keys))
-        self.assertEqual(condition.call_count, 5)
+        self.assertEqual(condition.call_count, 5 * len(expected_keys))
         self.assertEqual(baseline["conditioning_repetitions"], [conditioning] * 5)
+        self.assertTrue(
+            all(
+                row["coordinate_conditioning_repetitions"] == [conditioning] * 5
+                for row in baseline["measurements"]
+            )
+        )
         validate_baseline(baseline, manifest=active_manifest, synthetic=True)
 
     def test_governed_writer_is_atomic_and_confined(self) -> None:

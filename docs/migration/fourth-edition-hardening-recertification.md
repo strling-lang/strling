@@ -845,3 +845,22 @@ immediately beside its same-binary control, and alternates request-first and
 control-first order. Sample and warmup counts, the request and control
 workloads, affinity, timer, conditioning, and the unchanged `500 bp` stability
 limit remain intact. Seven consecutive sample-free conditioned windows per CLI fixture pass with the interleaved runner. `simply-tiny` ratios are `[11361, 11485, 11233, 11434, 11636, 12284, 11334]` basis points, with median `11434` and `88 bp` relative MAD. `semantic-tiny` ratios are `[11452, 10922, 11918, 12054, 11668, 11812, 11843]`, with median `11812` and `122 bp` relative MAD. Both are well inside the unchanged `500 bp` limit; all fourteen raw request medians also pass their historical reference ceilings. The governed rollover may now be attempted again.
+
+The next rollover calibration completed measurement but rejected replacement
+because `latency:normalization/fixture:simply-large` measured `5078500 ns`
+against the prior `4903690 ns` relative ceiling; the prior `5349480 ns`
+absolute ceiling passed. Seven exact sample-free conditioned repetitions then
+measured `[5000550, 4884200, 5082650, 4768050, 4859500, 4978450, 4753600] ns`.
+Their median is `4884200 ns`, their relative MAD is `238 bp`, and the median
+passes the prior relative ceiling.
+
+The outlier exposed that baseline calibration authenticated one quiet window at
+the start of each randomized 54-coordinate repetition, then reused that
+observation for every later coordinate. Full and Release already condition
+immediately before every coordinate. The corrected calibration does the same
+and retains five coordinate-local conditioning snapshots in every measurement
+row, while keeping the five repetition-envelope snapshots. Busy and interrupt
+thresholds, attempts, delay, sampling, randomization, and acceptance limits are
+unchanged. Historical baselines remain valid under their declared repetition
+conditioning policy; the new `26200.9550` authority must use per-coordinate
+conditioning.

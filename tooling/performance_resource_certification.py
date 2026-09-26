@@ -154,6 +154,7 @@ RESOURCE_OPERATION_IDS = [
 OPERATION_IDS = PERFORMANCE_OPERATION_IDS + RESOURCE_OPERATION_IDS
 RESOURCE_TARGET_DIRECTORY = "target/rust-1.75-resource-certification"
 CLI_LAUNCH_COMPARISON_MODEL = "paired-same-binary-launch-control"
+PER_COORDINATE_BASELINE_CONDITIONING = "authenticated-identical-before-each-coordinate"
 CLI_LAUNCH_CONTROL_FIELDS = {
     "control_repetitions",
     "control_batch_duration_repetitions",
@@ -753,7 +754,10 @@ def validate_manifest(
         or policy["execution_resource_policy"] != "platform-native-single-cpu-effective"
         or policy["cpu_quota_policy"] != "unlimited"
         or policy["conditioning_policy"]
-        != "authenticated-identical-before-each-repetition"
+        not in {
+            "authenticated-identical-before-each-repetition",
+            PER_COORDINATE_BASELINE_CONDITIONING,
+        }
         or not policy["randomize_operation_order"]
         or policy["statistics"] != ["median", "p95", "mad"]
     ):
@@ -1157,6 +1161,54 @@ def validate_baseline(
         ):
             raise PerformanceResourceError(
                 "measurement-environment", f"measurement environment changed for {key}"
+            )
+        coordinate_conditioning = measurement.get("coordinate_conditioning_repetitions")
+        requires_coordinate_conditioning = (
+            manifest["measurement_policy"]["conditioning_policy"]
+            == PER_COORDINATE_BASELINE_CONDITIONING
+        )
+        if requires_coordinate_conditioning:
+            if (
+                not isinstance(coordinate_conditioning, list)
+                or len(coordinate_conditioning) != expected_repetitions
+            ):
+                raise PerformanceResourceError(
+                    "coordinate-conditioning",
+                    f"coordinate conditioning repetition count changed for {key}",
+                )
+            for snapshot in coordinate_conditioning:
+                if snapshot["snapshot_fingerprint"] != document_fingerprint(
+                    snapshot, "snapshot_fingerprint"
+                ):
+                    raise PerformanceResourceError(
+                        "conditioning-fingerprint",
+                        f"coordinate conditioning snapshot changed for {key}",
+                    )
+                if (
+                    snapshot["host_attestation_fingerprint"]
+                    != baseline["environment"]["host_attestation_fingerprint"]
+                    or snapshot["conditioner_sha256"]
+                    != baseline["environment"]["host_attestation"]["conditioning"][
+                        "executable_sha256"
+                    ]
+                    or snapshot["selected_logical_cpu"]
+                    != baseline["environment"]["selected_logical_cpu"]
+                ):
+                    raise PerformanceResourceError(
+                        "conditioning-environment",
+                        f"coordinate conditioning does not match environment for {key}",
+                    )
+            if not conditioning_identities_match(
+                [*conditioning_repetitions, *coordinate_conditioning]
+            ):
+                raise PerformanceResourceError(
+                    "conditioning-drift",
+                    f"coordinate conditioning identity changed for {key}",
+                )
+        elif coordinate_conditioning is not None:
+            raise PerformanceResourceError(
+                "coordinate-conditioning",
+                f"unexpected coordinate conditioning for {key}",
             )
         repetitions = measurement["repetitions"]
         expected_repetitions = manifest["measurement_policy"]["baseline_repetitions"]
@@ -3263,6 +3315,10 @@ def create_active_contract(
         tuple[str, str | None], list[list[int]] | None
     ]
     | None = None,
+    coordinate_conditioning_repetitions: Mapping[
+        tuple[str, str | None], list[dict[str, Any]] | None
+    ]
+    | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if len(rationale.strip()) < 20:
         raise PerformanceResourceError(
@@ -3290,6 +3346,13 @@ def create_active_contract(
     control_batch_duration_repetitions = control_batch_duration_repetitions or {
         key: None for key in performance_measurement_keys(manifest)
     }
+    coordinate_conditioning_repetitions = coordinate_conditioning_repetitions or {
+        key: None for key in performance_measurement_keys(manifest)
+    }
+    requires_coordinate_conditioning = (
+        manifest["measurement_policy"]["conditioning_policy"]
+        == PER_COORDINATE_BASELINE_CONDITIONING
+    )
     rows: list[dict[str, Any]] = []
     for key in performance_measurement_keys(manifest):
         operation_id, fixture_id = key
@@ -3389,6 +3452,23 @@ def create_active_contract(
             else "Five governed repetition medians determine variance; the absolute "
             "ceiling is two derived relative budgets above the median."
         )
+        coordinate_conditioning = coordinate_conditioning_repetitions.get(key)
+        if requires_coordinate_conditioning:
+            if coordinate_conditioning is None:
+                raise PerformanceResourceError(
+                    "coordinate-conditioning",
+                    f"missing coordinate conditioning for {key}",
+                )
+            conditioning_fields = {
+                "coordinate_conditioning_repetitions": coordinate_conditioning
+            }
+        elif coordinate_conditioning is not None:
+            raise PerformanceResourceError(
+                "coordinate-conditioning",
+                f"unexpected coordinate conditioning for {key}",
+            )
+        else:
+            conditioning_fields = {}
         rows.append(
             {
                 "operation_id": operation_id,
@@ -3399,6 +3479,7 @@ def create_active_contract(
                 "batch_duration_repetitions": elapsed_repetitions,
                 "samples": representative,
                 "statistics": statistics_row,
+                **conditioning_fields,
                 **controlled_fields,
                 "budget": {
                     "state": "active",
@@ -3416,6 +3497,7 @@ def create_active_contract(
         or set(batch_duration_repetitions) != expected_keys
         or set(control_repetitions) != expected_keys
         or set(control_batch_duration_repetitions) != expected_keys
+        or set(coordinate_conditioning_repetitions) != expected_keys
     ):
         raise PerformanceResourceError(
             "baseline-denominator", "unexpected calibration measurement key"
@@ -3656,6 +3738,20 @@ def validate_cli_launch_control_environment_rollover(
         )
     prior_projection = _rollover_contract_projection(prior_manifest)
     candidate_projection = _rollover_contract_projection(candidate_manifest)
+    prior_conditioning_policy = prior_projection["measurement_policy"][
+        "conditioning_policy"
+    ]
+    candidate_conditioning_policy = candidate_projection["measurement_policy"][
+        "conditioning_policy"
+    ]
+    if candidate_conditioning_policy != PER_COORDINATE_BASELINE_CONDITIONING:
+        raise PerformanceResourceError(
+            "rollover-contract-drift",
+            "candidate baseline must condition immediately before each coordinate",
+        )
+    candidate_projection["measurement_policy"]["conditioning_policy"] = (
+        prior_conditioning_policy
+    )
     prior_cli = next(
         row
         for row in cast(list[dict[str, Any]], prior_projection["operations"])
@@ -3797,6 +3893,7 @@ def validate_cli_launch_control_environment_rollover(
         "artifact_fingerprints_preserved": artifact_fingerprints_preserved,
         "artifact_identity": artifact_identity,
         "contract_change": CLI_LAUNCH_COMPARISON_MODEL,
+        "baseline_conditioning_change": PER_COORDINATE_BASELINE_CONDITIONING,
     }
 
 
@@ -3941,19 +4038,49 @@ def calibrate_baseline(
         tuple[str, str | None], list[list[int]] | None
     ] = {key: [] if control_repetitions[key] is not None else None for key in keys}
     conditioning_repetitions: list[dict[str, Any]] = []
+    coordinate_conditioning_repetitions: dict[
+        tuple[str, str | None], list[dict[str, Any]] | None
+    ] = {
+        key: []
+        if manifest["measurement_policy"]["conditioning_policy"]
+        == PER_COORDINATE_BASELINE_CONDITIONING
+        else None
+        for key in keys
+    }
     policy = manifest["measurement_policy"]
     for repetition_index in range(policy["baseline_repetitions"]):
-        conditioning_repetitions.append(
-            _acquire_quiet_conditioning_snapshot(environment, root=root)
-        )
-        if not conditioning_identities_match(conditioning_repetitions):
-            raise PerformanceResourceError(
-                "conditioning-drift",
-                "conditioning identity changed between baseline repetitions",
-            )
         ordered = list(keys)
         random.Random(policy["order_seed"] + repetition_index).shuffle(ordered)
+        repetition_snapshot: dict[str, Any] | None = None
+        if policy["conditioning_policy"] != PER_COORDINATE_BASELINE_CONDITIONING:
+            repetition_snapshot = _acquire_quiet_conditioning_snapshot(
+                environment, root=root
+            )
         for key in ordered:
+            coordinate_snapshots = coordinate_conditioning_repetitions[key]
+            if coordinate_snapshots is not None:
+                coordinate_snapshot = _acquire_quiet_conditioning_snapshot(
+                    environment, root=root
+                )
+                coordinate_snapshots.append(coordinate_snapshot)
+                if repetition_snapshot is None:
+                    repetition_snapshot = coordinate_snapshot
+            if repetition_snapshot is None:
+                raise PerformanceResourceError(
+                    "coordinate-conditioning", "baseline repetition has no conditioning"
+                )
+            current_snapshot = (
+                coordinate_snapshot
+                if coordinate_snapshots is not None
+                else repetition_snapshot
+            )
+            if not conditioning_identities_match(
+                [*conditioning_repetitions, current_snapshot]
+            ):
+                raise PerformanceResourceError(
+                    "conditioning-drift",
+                    "conditioning identity changed between baseline coordinates",
+                )
             observation = _measure_key(
                 key,
                 manifest=manifest,
@@ -3994,6 +4121,7 @@ def calibrate_baseline(
                 raise PerformanceResourceError(
                     "launch-control-baseline", f"unexpected launch control for {key}"
                 )
+        conditioning_repetitions.append(repetition_snapshot)
     return create_active_contract(
         manifest,
         fixtures,
@@ -4007,6 +4135,7 @@ def calibrate_baseline(
         rationale=rationale,
         control_repetitions=control_repetitions,
         control_batch_duration_repetitions=control_batch_duration_repetitions,
+        coordinate_conditioning_repetitions=coordinate_conditioning_repetitions,
     )
 
 
@@ -4925,6 +5054,9 @@ def _migrate_cli_launch_control_command(
     )
 
     if not environment_compatible:
+        candidate_manifest["measurement_policy"]["conditioning_policy"] = (
+            PER_COORDINATE_BASELINE_CONDITIONING
+        )
         candidate_manifest, candidate_baseline = calibrate_baseline(
             candidate_manifest,
             fixtures,

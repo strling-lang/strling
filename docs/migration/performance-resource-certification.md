@@ -144,6 +144,13 @@ exactly sixteen warmups with the selected batch before collecting the same 64
 samples, and the safety target, maximum batch count, and minimum accepted batch
 median are unchanged.
 
+Baseline calibration acquires and retains a valid native conditioning snapshot
+immediately before every coordinate in every repetition. The five top-level
+repetition snapshots identify the repetition envelope; each measurement row
+binds its five coordinate-local snapshots. This matches Full and Release
+pre-coordinate conditioning and prevents a long randomized calibration
+repetition from carrying an earlier quiet observation across later host drift.
+
 All performance operations remain `planned` in CP2. The positive result is
 explicitly a synthetic contract fixture with zero commit identity and flags
 that deny live-measurement and baseline authority. CP3 must implement the

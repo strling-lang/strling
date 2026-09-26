@@ -5793,4 +5793,14 @@ now compacts only baseline files, reducing the same complete authority to
 `621909` bytes without changing its parsed content or fingerprint. No Pull
 Request, Full, or authenticated performance sample followed the failed Local.
 
+The compacted clean candidate `fa60bec1` passed Local 37/37. Pull Request
+passed 78/79 and failed only `test@repository`: the attestation verifier still
+reconstructed the two CLI launch coordinates with the retired direct-median
+comparison, causing 49 fixture-setup errors after the production performance
+contract moved to paired request/control evidence. The verifier and fixture now
+authenticate the paired control denominator, normalization, statistics, ratio,
+comparison, and doubled sample ledger. The exact repository operation passes
+1,220 tests with one governed skip. No Full, Release, or authenticated sample
+started; the tracked correction requires a new clean candidate from Local.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL NEW FULL AND SEPARATE RELEASE COMPLETE.

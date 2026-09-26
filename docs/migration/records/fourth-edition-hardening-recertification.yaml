@@ -503,6 +503,15 @@ checkpoints:
           - check: Baseline serialization correction
             result: passed
             details: The governed atomic writer now serializes only baseline.json files as compact UTF-8 JSON. The active file is 621909 bytes while its complete parsed authority, 54 measurements, 270 coordinate-conditioning snapshots, and baseline fingerprint remain unchanged. Manifests and evidence retain indented serialization, and a focused regression test protects both forms. A new clean candidate must restart Local.
+          - check: Compacted candidate Local
+            result: passed
+            details: Clean candidate fa60bec1f1599b710649d5016497cce11adb57c2 passed Local 37/37 with zero failed, waived, unavailable, or incomplete operations.
+          - check: Paired-measurement attestation disposition
+            result: failed
+            details: Pull Request passed 78/79 operations and failed only test@repository. Forty-nine attestation tests stopped during fixture setup because the verifier reconstructed latency:cli-startup with the retired direct-median comparison instead of the governed paired request/control evidence. Full and Release did not start, and no authenticated performance sample was consumed.
+          - check: Paired-measurement attestation correction
+            result: passed
+            details: The verifier now authenticates CLI control sample counts, normalization, statistics, request/control ratios, paired comparisons, and both request and control samples in the atomic ledger while rejecting control fields on direct coordinates. The fixture emits the production shape, two tamper regressions pass, and the exact failed repository operation passes 1220 tests with one governed skip in 2214.869 seconds. A new clean candidate must restart Local and Pull Request.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

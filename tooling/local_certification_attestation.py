@@ -702,16 +702,75 @@ def _validate_performance_measurements(
                 raise AttestationError(
                     f"performance quiescence or snapshot mismatch: {coordinate}"
                 )
-        comparison = performance.compare_hard_metric(
-            baseline_median=source["statistics"]["median"],
-            observed_median=statistics["median"],
-            relative_regression_basis_points=source["budget"][
-                "relative_regression_basis_points"
-            ],
-            absolute_ceiling=source["budget"]["absolute_ceiling"],
-        )
+        comparison_model = performance.operation_comparison_model(definition)
+        controlled_evidence_matches = True
+        coordinate_sample_count = expected_count
+        if comparison_model == performance.CLI_LAUNCH_COMPARISON_MODEL:
+            control_samples = details.get("control_samples")
+            control_elapsed = details.get("control_batch_duration_samples")
+            if (
+                not isinstance(control_samples, list)
+                or len(control_samples) != expected_count
+                or any(type(value) is not int or value < 0 for value in control_samples)
+            ):
+                raise AttestationError(
+                    f"performance control sample denominator mismatch: {coordinate}"
+                )
+            if (
+                not isinstance(control_elapsed, list)
+                or len(control_elapsed) != expected_count
+                or any(type(value) is not int or value < 0 for value in control_elapsed)
+                or control_samples
+                != [max(1, (value + batch // 2) // batch) for value in control_elapsed]
+            ):
+                raise AttestationError(
+                    f"performance control batch normalization mismatch: {coordinate}"
+                )
+            control_statistics = performance.sample_statistics(control_samples)
+            observed_relative_signal = performance.controlled_launch_signal(
+                statistics["median"], control_statistics["median"]
+            )
+            comparison = performance.compare_controlled_launch_metric(
+                baseline_relative_signal=source["relative_statistics"]["median"],
+                observed_relative_signal=observed_relative_signal,
+                observed_raw_median=statistics["median"],
+                relative_regression_basis_points=source["budget"][
+                    "relative_regression_basis_points"
+                ],
+                absolute_ceiling=source["budget"]["absolute_ceiling"],
+                raw_reference_ceiling=source["raw_reference_ceiling"],
+            )
+            controlled_evidence_matches = details.get(
+                "control_statistics"
+            ) == control_statistics and details.get("relative_signal") == {
+                "kind": "request-median-to-same-binary-control-ratio",
+                "unit": "basis-points",
+                "observed": observed_relative_signal,
+            }
+            coordinate_sample_count += expected_count
+        else:
+            unexpected_control_fields = {
+                "control_samples",
+                "control_statistics",
+                "relative_signal",
+                "control_batch_duration_samples",
+            } & set(details)
+            if unexpected_control_fields:
+                raise AttestationError(
+                    "unexpected performance control evidence for direct comparison: "
+                    f"{coordinate}"
+                )
+            comparison = performance.compare_hard_metric(
+                baseline_median=source["statistics"]["median"],
+                observed_median=statistics["median"],
+                relative_regression_basis_points=source["budget"][
+                    "relative_regression_basis_points"
+                ],
+                absolute_ceiling=source["budget"]["absolute_ceiling"],
+            )
         if (
             details.get("statistics") != statistics
+            or not controlled_evidence_matches
             or details.get("comparison") != comparison
             or details.get("enforcement") != definition["enforcement"]
             or details.get("disposition")
@@ -731,7 +790,7 @@ def _validate_performance_measurements(
             raise AttestationError(
                 f"performance statistics or acceptance mismatch: {coordinate}"
             )
-        sample_total += expected_count
+        sample_total += coordinate_sample_count
     consumption = integrity["sample_consumption"]
     if (
         consumption.get("state") != "consumed"

@@ -919,3 +919,23 @@ and baseline fingerprint
 Manifests, evidence records, and other governed JSON retain their existing
 indented form. A focused writer test protects both dispositions. Because this
 is a tracked tooling correction, the next clean candidate must restart Local.
+
+## Paired-measurement attestation correction
+
+Clean candidate `fa60bec1f1599b710649d5016497cce11adb57c2` passed Local
+37/37. Pull Request passed 78/79 operations and failed only `test@repository`:
+49 attestation tests stopped during fixture setup because the attestation
+verifier still reconstructed every performance coordinate with the direct
+median comparison. The active `latency:cli-startup` coordinates now use the
+governed paired same-binary request/control model. Full and Release did not
+start, and no authenticated performance sample was consumed.
+
+The verifier now authenticates the CLI control-sample denominator, batch
+normalization, statistics, request/control ratio, paired comparison, and both
+request and control contributions to the sample ledger. It rejects control
+fields on direct-comparison coordinates. The attestation fixture now emits the
+same production evidence shape, and focused regressions reject truncated or
+misnormalized control samples. The exact failed repository operation then
+passed 1,220 tests with one governed skip and zero failures in 2,214.869
+seconds. Because this correction changes tracked verifier source, the next
+clean candidate must restart Local and Pull Request before Full.

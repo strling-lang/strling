@@ -536,14 +536,47 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                     },
                 }
             )
-            comparison = performance.compare_hard_metric(
-                baseline_median=row["statistics"]["median"],
-                observed_median=row["statistics"]["median"],
-                relative_regression_basis_points=row["budget"][
-                    "relative_regression_basis_points"
-                ],
-                absolute_ceiling=row["budget"]["absolute_ceiling"],
-            )
+            controlled_details = {}
+            if (
+                performance.operation_comparison_model(definition)
+                == performance.CLI_LAUNCH_COMPARISON_MODEL
+            ):
+                control_samples = [row["control_statistics"]["median"]] * len(samples)
+                control_statistics = performance.sample_statistics(control_samples)
+                observed_relative_signal = performance.controlled_launch_signal(
+                    row["statistics"]["median"], control_statistics["median"]
+                )
+                comparison = performance.compare_controlled_launch_metric(
+                    baseline_relative_signal=row["relative_statistics"]["median"],
+                    observed_relative_signal=observed_relative_signal,
+                    observed_raw_median=row["statistics"]["median"],
+                    relative_regression_basis_points=row["budget"][
+                        "relative_regression_basis_points"
+                    ],
+                    absolute_ceiling=row["budget"]["absolute_ceiling"],
+                    raw_reference_ceiling=row["raw_reference_ceiling"],
+                )
+                controlled_details = {
+                    "control_samples": control_samples,
+                    "control_statistics": control_statistics,
+                    "relative_signal": {
+                        "kind": "request-median-to-same-binary-control-ratio",
+                        "unit": "basis-points",
+                        "observed": observed_relative_signal,
+                    },
+                    "control_batch_duration_samples": [
+                        sample * row["batch_iterations"] for sample in control_samples
+                    ],
+                }
+            else:
+                comparison = performance.compare_hard_metric(
+                    baseline_median=row["statistics"]["median"],
+                    observed_median=row["statistics"]["median"],
+                    relative_regression_basis_points=row["budget"][
+                        "relative_regression_basis_points"
+                    ],
+                    absolute_ceiling=row["budget"]["absolute_ceiling"],
+                )
             checks.append(
                 {
                     "id": f"measurement:{coordinate}",
@@ -551,6 +584,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                     "details": {
                         "samples": samples,
                         "statistics": performance.sample_statistics(samples),
+                        **controlled_details,
                         "enforcement": definition["enforcement"],
                         "comparison": comparison,
                         "disposition": "release-blocking"
@@ -1369,6 +1403,32 @@ class LocalCertificationAttestationTests(unittest.TestCase):
 
         self._resign_full_profile(mutate)
         with self.assertRaisesRegex(AttestationError, "batch normalization"):
+            self._verify()
+
+    def test_performance_cli_control_sample_count_is_authenticated(self) -> None:
+        def mutate(value):
+            details = next(
+                check["details"]
+                for check in value["operations"][0]["structured_evidence"]["checks"]
+                if check["id"].startswith("measurement:latency:cli-startup/")
+            )
+            details["control_samples"] = details["control_samples"][:-1]
+
+        self._resign_full_profile(mutate)
+        with self.assertRaisesRegex(AttestationError, "control sample denominator"):
+            self._verify()
+
+    def test_performance_cli_control_elapsed_must_normalize_to_samples(self) -> None:
+        def mutate(value):
+            details = next(
+                check["details"]
+                for check in value["operations"][0]["structured_evidence"]["checks"]
+                if check["id"].startswith("measurement:latency:cli-startup/")
+            )
+            details["control_batch_duration_samples"][0] += details["batch_iterations"]
+
+        self._resign_full_profile(mutate)
+        with self.assertRaisesRegex(AttestationError, "control batch normalization"):
             self._verify()
 
     def test_performance_latency_batch_must_equal_governed_batch(self) -> None:

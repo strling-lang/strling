@@ -5803,4 +5803,16 @@ comparison, and doubled sample ledger. The exact repository operation passes
 1,220 tests with one governed skip. No Full, Release, or authenticated sample
 started; the tracked correction requires a new clean candidate from Local.
 
+Clean candidate `148dc1a8` passed Local 37/37 and Pull Request 79/79. Full
+traversed all 125 operations with 123 passes and the expected waiver, but made
+`performance_resource_full_certification@repository` incomplete. Atomic
+invocation `628f450bdf0641ffbc098801803d0333` preserves four completed coordinates
+and 256 samples, then an indeterminate fifth memory coordinate. The producer
+unconditionally requested `control_samples`, although direct memory evidence
+does not contain paired launch controls. The correction gates control access
+and doubled ledger accounting on the paired CLI comparison model; direct
+coordinates retain request-only accounting. Focused producer and ledger tests
+pass. Release did not start, the sampled SHA is not retried, and the new clean
+candidate restarts at Local.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL NEW FULL AND SEPARATE RELEASE COMPLETE.

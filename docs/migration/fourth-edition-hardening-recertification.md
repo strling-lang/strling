@@ -939,3 +939,25 @@ misnormalized control samples. The exact failed repository operation then
 passed 1,220 tests with one governed skip and zero failures in 2,214.869
 seconds. Because this correction changes tracked verifier source, the next
 clean candidate must restart Local and Pull Request before Full.
+
+## Direct-coordinate sample-accounting correction
+
+Clean candidate `148dc1a88033cc08d72d23c111aef8508c80838e` passed Local
+37/37 and Pull Request 79/79. Full traversed all 125 operations and recorded
+123 passed, the expected `WVR-SEC-VSCE-LICENSE-001` waiver, and one incomplete
+operation. `performance_resource_full_certification@repository` completed four
+coordinates and 256 authenticated samples before starting
+`memory:kernel-peak-rss/fixture:semantic-large`; structured invocation
+`628f450bdf0641ffbc098801803d0333` correctly preserved the fifth coordinate as
+indeterminate. The producer then raised `KeyError: control_samples` because its
+new ledger accounting indexed paired launch controls for every measurement,
+including direct-comparison memory observations. Release did not start, and
+the sampled candidate is not retried.
+
+The producer now selects the comparison model before reading controls. Direct
+coordinates authenticate request samples alone; paired CLI launch coordinates
+authenticate both request and same-binary control samples. Focused regressions
+cover both evidence shapes plus zero, consumed, and indeterminate atomic sample
+boundaries. Thresholds, ratios, sample counts, conditioning, ceilings, workload
+isolation, and authenticated-sample rules are unchanged. The tracked correction
+requires a new clean candidate to restart Local and Pull Request before Full.

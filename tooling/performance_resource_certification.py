@@ -929,6 +929,16 @@ def operation_comparison_model(operation: Mapping[str, object]) -> str:
     return cast(str, operation.get("comparison_model", "direct"))
 
 
+def _authenticated_measurement_samples(
+    observation: Mapping[str, object], comparison_model: str
+) -> tuple[list[int], list[int], list[int]]:
+    samples = cast(list[int], observation["samples"])
+    control_samples: list[int] = []
+    if comparison_model == CLI_LAUNCH_COMPARISON_MODEL:
+        control_samples = cast(list[int], observation["control_samples"])
+    return samples, control_samples, [*samples, *control_samples]
+
+
 def controlled_launch_signal(request_median: int, control_median: int) -> int:
     if request_median <= 0 or control_median <= 0:
         raise PerformanceResourceError(
@@ -4622,18 +4632,20 @@ def certify(
                 batch_iterations=baseline_row["batch_iterations"],
                 root=root,
             )
-            samples = observation["samples"]
             operation = next(
                 row
                 for row in cast(list[dict[str, Any]], manifest["operations"])
                 if row["id"] == key[0]
             )
-            control_samples = observation["control_samples"]
+            comparison_model = operation_comparison_model(operation)
+            samples, control_samples, authenticated_samples = (
+                _authenticated_measurement_samples(observation, comparison_model)
+            )
             if execution_ledger is not None:
-                execution_ledger.complete_coordinate(key, [*samples, *control_samples])
+                execution_ledger.complete_coordinate(key, authenticated_samples)
             observed = sample_statistics(samples)
             controlled_details: dict[str, object] = {}
-            if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL:
+            if comparison_model == CLI_LAUNCH_COMPARISON_MODEL:
                 control_statistics = sample_statistics(control_samples)
                 observed_relative_signal = controlled_launch_signal(
                     observed["median"], control_statistics["median"]

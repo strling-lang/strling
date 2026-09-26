@@ -15,6 +15,7 @@ from unittest.mock import Mock, patch
 from jsonschema import Draft202012Validator
 
 from tooling.performance_resource_certification import (
+    CLI_LAUNCH_COMPARISON_MODEL,
     FIXTURE_IDS,
     MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
     MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS,
@@ -24,6 +25,7 @@ from tooling.performance_resource_certification import (
     PerformanceExecutionLedger,
     PerformanceResourceError,
     _acquire_quiet_conditioning_snapshot,
+    _authenticated_measurement_samples,
     _artifact_fingerprints_match,
     _artifact_identity_check,
     _artifact_source_changes,
@@ -365,6 +367,20 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                     self.assertEqual(3, result["process_exit_code"])
                 finally:
                     shutil.rmtree(directory, ignore_errors=True)
+
+    def test_full_certification_consumes_controls_only_for_paired_cli_coordinates(
+        self,
+    ) -> None:
+        direct = _authenticated_measurement_samples(
+            {"samples": [10, 11]}, "direct"
+        )
+        self.assertEqual(direct, ([10, 11], [], [10, 11]))
+
+        paired = _authenticated_measurement_samples(
+            {"samples": [10, 11], "control_samples": [4, 5]},
+            CLI_LAUNCH_COMPARISON_MODEL,
+        )
+        self.assertEqual(paired, ([10, 11], [4, 5], [10, 11, 4, 5]))
 
     @patch(
         "tooling.performance_resource_certification.certify",

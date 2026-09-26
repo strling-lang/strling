@@ -512,6 +512,12 @@ checkpoints:
           - check: Paired-measurement attestation correction
             result: passed
             details: The verifier now authenticates CLI control sample counts, normalization, statistics, request/control ratios, paired comparisons, and both request and control samples in the atomic ledger while rejecting control fields on direct coordinates. The fixture emits the production shape, two tamper regressions pass, and the exact failed repository operation passes 1220 tests with one governed skip in 2214.869 seconds. A new clean candidate must restart Local and Pull Request.
+          - check: Corrected-attestation candidate certification
+            result: failed
+            details: Clean candidate 148dc1a88033cc08d72d23c111aef8508c80838e passed Local 37/37 and Pull Request 79/79. Full traversed all 125 operations with 123 passed, WVR-SEC-VSCE-LICENSE-001 waived, and only performance_resource_full_certification@repository incomplete. Structured invocation 628f450bdf0641ffbc098801803d0333 preserves four completed coordinates and 256 authenticated samples, then an indeterminate memory:kernel-peak-rss/fixture:semantic-large coordinate. The producer raised KeyError control_samples because paired launch controls were indexed for a direct memory observation. Release did not start, and the sampled candidate is not retried.
+          - check: Direct-coordinate sample-accounting correction
+            result: passed
+            details: The producer now selects the comparison model before accessing controls. Direct coordinates authenticate request samples only, while paired CLI launch coordinates authenticate request and same-binary control samples. Focused tests cover both shapes and zero, consumed, and indeterminate ledger boundaries. No threshold, ratio, sample count, conditioning rule, ceiling, isolation rule, or authenticated-sample policy changed. A new clean candidate must restart Local and Pull Request before Full.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

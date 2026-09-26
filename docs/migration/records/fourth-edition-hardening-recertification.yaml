@@ -33,6 +33,7 @@ scope:
         - core/tests/portability_planning.rs
         - core/tests/python_re_lowering.rs
         - docs/migration/fourth-edition-hardening-recertification.md
+        - docs/migration/performance-resource-certification.md
         - docs/migration/ledger.md
         - docs/migration/records/fourth-edition-hardening-recertification.yaml
         - docs/releasing.md
@@ -50,6 +51,7 @@ scope:
         - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
         - governance/schemas/local-certification-attestation.schema.json
         - governance/schemas/local-certification-trust.schema.json
+        - governance/schemas/performance-resource-certification.schema.json
         - strling
         - strling.ps1
         - tests/certification/hardened-core/1.0/current/**
@@ -80,6 +82,7 @@ scope:
         - tooling/performance_resource_certification.py
         - tooling/production_certification.py
         - tooling/public_contracts.py
+        - tooling/structured_operation_execution.py
         - tooling/quality.py
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py
@@ -101,6 +104,7 @@ scope:
         - tooling/tests/test_python_re_lowering_architecture.py
         - tooling/tests/test_release_supply_chain_architecture.py
         - tooling/tests/test_security.py
+        - tooling/tests/test_structured_operation_execution.py
     forbidden_paths:
         - main
         - governance/baselines/**
@@ -152,6 +156,7 @@ change_classification:
         evidence:
             - Governance-only schemas define the trusted local certification policy and signed evidence bundle; no language or product protocol schema changes.
             - Empty captured stdout/stderr files are valid only for execution evidence stream roles; all structured evidence remains nonempty and hash-bound.
+            - The performance evidence schema compatibly admits an optional paired same-binary launch-control model, including authenticated control arrays, ratio statistics, and preserved raw diagnostic history; direct measurements remain unchanged.
     diagnostic_change:
         level: none
         evidence: []
@@ -174,6 +179,8 @@ change_classification:
             - The enforced generated-family check is restored to the Local/Pull Request offline contract while network-authenticated regeneration remains unchanged.
             - Full and Release remain the unchanged expensive result authorities but execute locally; cloud workflows verify a trusted exact-source attestation instead of recomputing them.
             - The attestation CLI is registered as a reviewed engineering-only tooling parser path; it cannot parse or define STRling language semantics.
+            - Windows CLI startup certification compares authenticated request latency with a same-executable help-launch control under the same accepted conditioning window; derived relative and absolute ratio limits remain hard gates, raw nanoseconds remain diagnostic evidence, and the prior raw ceiling is retained as history.
+            - A native processor-counter epoch discontinuity is reacquired only when it matches the exact existing unavailable report; malformed, identity, power, busy, and interrupt failures remain fail closed under the unchanged conditioning thresholds.
             - After a measured Full regression exposed repeated validation and canonical hashing of the same immutable profile in capability evaluation and planning, the existing TargetProfileSet boundary now caches its validated reference and provides equivalent fail-closed reference-based planning; post-lowering evaluation reuses the exact reference already validated by each lowering entry point.
             - Direct target lowering reuses private, exact planner and Semantic IR snapshots on the unchanged success path, falls back to full validation and canonical hashing for any caller-mutated input, and defers target-tree diagnostic path construction to failures; public contracts, calibrated benchmark workloads, validation outcomes, target semantics, and governed performance budgets remain unchanged.
             - >-

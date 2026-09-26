@@ -242,6 +242,17 @@ def authenticated_sample_count(structured_result: Mapping[str, object]) -> int:
                 "measurement evidence is missing an authenticated sample array"
             )
         total += len(samples)
+        control_samples = cast(dict[str, object], item["details"]).get(
+            "control_samples"
+        )
+        if control_samples is not None:
+            if not isinstance(control_samples, list) or not all(
+                isinstance(sample, int) and sample >= 0 for sample in control_samples
+            ):
+                raise StructuredExecutionError(
+                    "measurement evidence has an invalid authenticated control sample array"
+                )
+            total += len(control_samples)
     return total
 
 

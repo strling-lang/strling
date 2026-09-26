@@ -34,7 +34,7 @@ use strling_kernel::validation::Validate;
 type RunResult<T> = Result<T, String>;
 type PreparedOperation = Box<dyn Fn() -> RunResult<usize>>;
 
-const RUNNER_VERSION: &str = "1.5.0";
+const RUNNER_VERSION: &str = "1.6.0";
 
 #[derive(Debug)]
 struct Arguments {
@@ -136,6 +136,11 @@ fn run() -> RunResult<()> {
         &fixture,
         arguments.kernel_bin.as_deref(),
     )?;
+    let control_operation = if arguments.operation == "latency:cli-startup" {
+        Some(prepare_cli_launch_control(arguments.kernel_bin.as_deref())?)
+    } else {
+        None
+    };
     let batch_iterations = match (
         arguments.batch_iterations,
         arguments.minimum_sample_nanoseconds,
@@ -166,13 +171,15 @@ fn run() -> RunResult<()> {
     }
     let mut samples = Vec::with_capacity(arguments.samples);
     let mut batch_elapsed_samples = Vec::with_capacity(arguments.samples);
+    let mut control_samples = Vec::with_capacity(arguments.samples);
+    let mut control_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
     let mut checksum = 0usize;
+    let divisor = u64::try_from(batch_iterations).map_err(|_| "batch overflow")?;
     for _ in 0..arguments.samples {
         let started = Instant::now();
         checksum ^= black_box(execute_batch(&operation, batch_iterations)?);
         let nanoseconds = started.elapsed().as_nanos().max(1);
         let batch_elapsed = u64::try_from(nanoseconds).map_err(|_| "sample overflow")?;
-        let divisor = u64::try_from(batch_iterations).map_err(|_| "batch overflow")?;
         let normalized = batch_elapsed
             .saturating_add(divisor / 2)
             .checked_div(divisor)
@@ -184,6 +191,29 @@ fn run() -> RunResult<()> {
             &mut observed_processor_groups,
             &mut observed_logical_processors,
         )?;
+    }
+    if let Some(control) = &control_operation {
+        for _ in 0..arguments.warmups {
+            black_box(execute_batch(control, batch_iterations)?);
+        }
+        for _ in 0..arguments.samples {
+            let started = Instant::now();
+            checksum ^= black_box(execute_batch(control, batch_iterations)?);
+            let nanoseconds = started.elapsed().as_nanos().max(1);
+            let batch_elapsed =
+                u64::try_from(nanoseconds).map_err(|_| "control sample overflow")?;
+            let normalized = batch_elapsed
+                .saturating_add(divisor / 2)
+                .checked_div(divisor)
+                .ok_or_else(|| "batch divisor is zero".to_owned())?
+                .max(1);
+            control_batch_elapsed_samples.push(batch_elapsed);
+            control_samples.push(normalized);
+            observe_execution_processor(
+                &mut observed_processor_groups,
+                &mut observed_logical_processors,
+            )?;
+        }
     }
     verify_execution_resource(&execution_resource, arguments.expected_logical_cpu)?;
     let peak_working_set_bytes = peak_working_set_bytes()?;
@@ -215,6 +245,8 @@ fn run() -> RunResult<()> {
             "peak_working_set_bytes": peak_working_set_bytes,
             "batch_elapsed_samples": batch_elapsed_samples,
             "samples": samples,
+            "control_batch_elapsed_samples": control_batch_elapsed_samples,
+            "control_samples": control_samples,
             "checksum": checksum,
         }))
         .map_err(|error| error.to_string())?
@@ -1259,6 +1291,29 @@ fn prepare_cli_operation(
         if !output.status.success() {
             return Err(format!(
                 "CLI failed with {}: {}",
+                output.status,
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+        Ok(output.stdout.len())
+    }))
+}
+
+fn prepare_cli_launch_control(kernel_bin: Option<&Path>) -> RunResult<PreparedOperation> {
+    let executable = kernel_bin
+        .ok_or_else(|| "latency:cli-startup requires --kernel-bin".to_owned())?
+        .to_owned();
+    Ok(Box::new(move || {
+        let output = Command::new(&executable)
+            .arg("--help")
+            .stdin(Stdio::null())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .output()
+            .map_err(|error| error.to_string())?;
+        if !output.status.success() {
+            return Err(format!(
+                "CLI launch control failed with {}: {}",
                 output.status,
                 String::from_utf8_lossy(&output.stderr)
             ));

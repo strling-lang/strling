@@ -765,3 +765,53 @@ must pass targeted record, governance, generated-artifact, format, and
 sample-free performance checks before Local, Pull Request, Full, and independent
 same-SHA Release certification. Release may start only after an immediate
 sample-free launch-readiness check is inside the unchanged relative ceiling.
+
+## Windows process-launch signal correction
+
+The quiet-host readiness gate did not establish a stable margin beneath the
+`28265718 ns` relative ceiling. Five byte-identical `simply-tiny` runs measured
+`29146950`, `28005400`, `27990100`, `28084300`, and `27252200 ns`; repeating
+from the canonical repository paths measured `27696950`, `29216100`,
+`30147800`, `28365300`, and `26604450 ns`. Passes and failures alternated under
+valid conditioning, so the prior raw fresh-process signal is not a sufficiently
+stable release-blocking measure on the unchanged Windows identity.
+
+A same-executable launch control isolated the source of variance. In five
+conditioned windows, `simply-tiny` request/control medians were
+`27593550/24862750`, `26585700/23985650`, `51682200/48741050`,
+`27411950/23447150`, and `25813000/23274850 ns`. The third window nearly
+doubled both request and control latency, while their request/control ratio
+remained consistent with the other windows. Five `semantic-tiny` windows showed
+the same stable relationship. This demonstrates shared Windows process creation
+and image-load variance rather than a STRling request-work regression.
+
+`latency:cli-startup` therefore retains raw request nanoseconds as authenticated
+diagnostic evidence and compares a request median to a separately warmed
+`--help` median from the same kernel executable. Both arrays use the same
+sample count, timer, affinity, pipes, and accepted conditioning window, and both
+consume the authenticated sample opportunity. The ratio remains bounded by a
+derived relative limit and a separately derived absolute ratio ceiling. The
+prior raw ceiling remains visible as diagnostic history. Existing hard
+in-process latency and kernel artifact-size coordinates continue to block
+compiler-work and executable-growth regressions. No busy threshold, sample
+count, warmup count, repetition count, product workload, or unrelated host
+state is weakened or changed.
+
+A separate conditioner defect discarded the exact native unavailable report
+when Windows processor counters changed epoch during the two-second observation.
+The controller now reacquires only that exact counter-discontinuity report under
+the existing bounded conditioning policy. Malformed reports and identity,
+power, busy, or interrupt failures remain fail closed. Twenty sample-free raw
+observations reproduced three such discontinuities, with selected unrelated
+logical-processor idle and kernel counters regressing together or reporting a
+zero interval.
+
+The one-time migration is clean-source, archives the old manifest, baseline,
+and valid evidence by fingerprint, rebuilds source-bound artifacts, requires
+the unchanged environment and conditioning identity, and recalibrates only the
+two CLI coordinates. Every non-CLI baseline row is preserved byte for byte.
+Focused Python contract tests, the Rust 1.75 runner tests, performance contract
+validation, governance, repository formatting, static analysis, and the exact
+public-contract check pass. The migration and its governed sample-free ratio
+proof must complete before a new candidate enters Local, Pull Request, Full,
+and independent no-reuse Release certification.

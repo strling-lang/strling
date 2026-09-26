@@ -153,6 +153,17 @@ RESOURCE_OPERATION_IDS = [
 ]
 OPERATION_IDS = PERFORMANCE_OPERATION_IDS + RESOURCE_OPERATION_IDS
 RESOURCE_TARGET_DIRECTORY = "target/rust-1.75-resource-certification"
+CLI_LAUNCH_COMPARISON_MODEL = "paired-same-binary-launch-control"
+CLI_LAUNCH_CONTROL_FIELDS = {
+    "control_repetitions",
+    "control_batch_duration_repetitions",
+    "control_samples",
+    "control_statistics",
+    "relative_samples",
+    "relative_statistics",
+    "relative_unit",
+    "raw_reference_ceiling",
+}
 
 RESOURCE_COMMANDS: dict[str, list[list[str]]] = {
     "resource:frontend-limits": [
@@ -651,6 +662,25 @@ def validate_manifest(
     fixture_ids = set(FIXTURE_IDS)
     performance_states: set[str] = set()
     for operation in operations:
+        comparison_model = operation_comparison_model(operation)
+        expected_comparison_model = (
+            CLI_LAUNCH_COMPARISON_MODEL
+            if operation["id"] == "latency:cli-startup"
+            and "comparison_model" in operation
+            else "direct"
+        )
+        if comparison_model != expected_comparison_model:
+            raise PerformanceResourceError(
+                "comparison-model",
+                f"unsupported comparison model for {operation['id']}",
+            )
+        if (
+            comparison_model == CLI_LAUNCH_COMPARISON_MODEL
+            and operation["measurement_kind"] != "latency"
+        ):
+            raise PerformanceResourceError(
+                "comparison-model", "paired launch control requires a latency operation"
+            )
         if not set(operation["fixture_ids"]).issubset(fixture_ids):
             raise PerformanceResourceError(
                 "fixture-reference", f"unknown fixture for {operation['id']}"
@@ -891,6 +921,51 @@ def conditioning_snapshots_compatible(
     return baseline_controls == observed_controls
 
 
+def operation_comparison_model(operation: Mapping[str, object]) -> str:
+    return cast(str, operation.get("comparison_model", "direct"))
+
+
+def controlled_launch_signal(request_median: int, control_median: int) -> int:
+    if request_median <= 0 or control_median <= 0:
+        raise PerformanceResourceError(
+            "launch-control-statistic", "request and control medians must be positive"
+        )
+    return math.ceil(request_median * 10_000 / control_median)
+
+
+def compare_controlled_launch_metric(
+    *,
+    baseline_relative_signal: int,
+    observed_relative_signal: int,
+    observed_raw_median: int,
+    relative_regression_basis_points: int,
+    absolute_ceiling: int,
+    raw_reference_ceiling: int | None,
+) -> dict[str, object]:
+    relative_ceiling = math.floor(
+        baseline_relative_signal * (10_000 + relative_regression_basis_points) / 10_000
+    )
+    relative_passed = observed_relative_signal <= relative_ceiling
+    absolute_passed = observed_relative_signal <= absolute_ceiling
+    return {
+        "status": "passed" if relative_passed and absolute_passed else "failed",
+        "comparison_model": CLI_LAUNCH_COMPARISON_MODEL,
+        "baseline_relative_signal": baseline_relative_signal,
+        "observed_relative_signal": observed_relative_signal,
+        "relative_ceiling": relative_ceiling,
+        "observed_raw_median": observed_raw_median,
+        "raw_observation_disposition": "authenticated-informational-host-launch",
+        "raw_reference_ceiling": raw_reference_ceiling,
+        "raw_reference_would_pass": (
+            raw_reference_ceiling is not None
+            and observed_raw_median <= raw_reference_ceiling
+        ),
+        "absolute_ceiling": absolute_ceiling,
+        "relative_passed": relative_passed,
+        "absolute_passed": absolute_passed,
+    }
+
+
 def compare_hard_metric(
     *,
     baseline_median: int,
@@ -1050,6 +1125,7 @@ def validate_baseline(
     operations = {
         row["id"]: row for row in cast(list[dict[str, Any]], manifest["operations"])
     }
+
     seen: set[tuple[str, str | None]] = set()
     for measurement in baseline["measurements"]:
         key = (measurement["operation_id"], measurement["fixture_id"])
@@ -1160,8 +1236,78 @@ def validate_baseline(
             raise PerformanceResourceError(
                 "invalid-statistic", f"median must be positive for {key}"
             )
+        comparison_model = operation_comparison_model(operation)
+        relative_statistics = statistics_row
+        if comparison_model == CLI_LAUNCH_COMPARISON_MODEL:
+            missing_control_fields = CLI_LAUNCH_CONTROL_FIELDS - set(measurement)
+            if missing_control_fields:
+                raise PerformanceResourceError(
+                    "launch-control-baseline",
+                    f"missing launch-control fields for {key}: {sorted(missing_control_fields)}",
+                )
+            control_repetitions = measurement["control_repetitions"]
+            control_durations = measurement["control_batch_duration_repetitions"]
+            if (
+                len(control_repetitions) != expected_repetitions
+                or any(len(row) != expected_count for row in control_repetitions)
+                or len(control_durations) != expected_repetitions
+                or any(len(row) != expected_count for row in control_durations)
+            ):
+                raise PerformanceResourceError(
+                    "launch-control-sample-count",
+                    f"launch-control samples changed for {key}",
+                )
+            for normalized, elapsed in zip(control_repetitions, control_durations):
+                expected_control = [
+                    max(1, (value + (batch_iterations // 2)) // batch_iterations)
+                    for value in elapsed
+                ]
+                if normalized != expected_control:
+                    raise PerformanceResourceError(
+                        "launch-control-normalization",
+                        f"launch-control normalization changed for {key}",
+                    )
+            control_samples = [
+                sample_statistics(row)["median"] for row in control_repetitions
+            ]
+            if measurement["control_samples"] != control_samples:
+                raise PerformanceResourceError(
+                    "launch-control-samples",
+                    f"launch-control medians changed for {key}",
+                )
+            if measurement["control_statistics"] != sample_statistics(control_samples):
+                raise PerformanceResourceError(
+                    "launch-control-statistics",
+                    f"launch-control statistics changed for {key}",
+                )
+            relative_samples = [
+                controlled_launch_signal(request, control)
+                for request, control in zip(samples, control_samples)
+            ]
+            if measurement["relative_samples"] != relative_samples:
+                raise PerformanceResourceError(
+                    "launch-control-signal", f"relative launch signal changed for {key}"
+                )
+            relative_statistics = sample_statistics(relative_samples)
+            if measurement["relative_unit"] != "basis-points":
+                raise PerformanceResourceError(
+                    "launch-control-unit", f"relative launch unit changed for {key}"
+                )
+            if not isinstance(measurement["raw_reference_ceiling"], int):
+                raise PerformanceResourceError(
+                    "launch-control-history", f"prior raw ceiling is absent for {key}"
+                )
+            if measurement["relative_statistics"] != relative_statistics:
+                raise PerformanceResourceError(
+                    "launch-control-statistics",
+                    f"relative launch statistics changed for {key}",
+                )
+        elif CLI_LAUNCH_CONTROL_FIELDS & set(measurement):
+            raise PerformanceResourceError(
+                "launch-control-baseline", f"unexpected launch-control fields for {key}"
+            )
         relative_mad_basis_points = math.ceil(
-            statistics_row["mad"] * 10_000 / statistics_row["median"]
+            relative_statistics["mad"] * 10_000 / relative_statistics["median"]
         )
         if (
             relative_mad_basis_points
@@ -1176,8 +1322,8 @@ def validate_baseline(
                 "inactive-budget", f"active baseline requires a budget for {key}"
             )
         expected_budget = derived_relative_budget_basis_points(
-            median=statistics_row["median"],
-            mad=statistics_row["mad"],
+            median=relative_statistics["median"],
+            mad=relative_statistics["mad"],
             floor=manifest["measurement_policy"][
                 "minimum_relative_budget_basis_points"
             ],
@@ -1976,6 +2122,44 @@ def _execution_resource_cpuset(execution: Mapping[str, object]) -> str:
     return cast(str, execution["cgroup_cpuset_effective"])
 
 
+def _decode_windows_conditioning_report(
+    completed: subprocess.CompletedProcess[str],
+) -> dict[str, Any]:
+    """Decode one native report without losing fail-closed exit diagnostics."""
+
+    if not completed.stdout.strip():
+        try:
+            unavailable = json.loads(completed.stderr)
+        except json.JSONDecodeError:
+            unavailable = None
+        if unavailable == {
+            "reason": "processor performance counters regressed",
+            "status": "unavailable",
+        }:
+            raise PerformanceResourceError(
+                "conditioning-observation",
+                "native Windows processor counters changed epoch during observation",
+            )
+        reason = completed.stderr.strip() or "conditioner produced no diagnostic"
+        raise PerformanceResourceError(
+            "conditioning-report",
+            f"Windows conditioner exited {completed.returncode}: {reason}",
+        )
+    try:
+        report = json.loads(completed.stdout)
+    except json.JSONDecodeError as error:
+        reason = completed.stderr.strip()
+        suffix = f"; stderr: {reason}" if reason else ""
+        raise PerformanceResourceError(
+            "conditioning-report", f"{error}{suffix}"
+        ) from error
+    if not isinstance(report, dict):
+        raise PerformanceResourceError(
+            "conditioning-report", "Windows conditioner report is not an object"
+        )
+    return report
+
+
 def _windows_conditioning_snapshot(
     environment: Mapping[str, object], *, root: Path = ROOT
 ) -> dict[str, Any]:
@@ -2008,9 +2192,9 @@ def _windows_conditioning_snapshot(
             text=True,
             timeout=900,
         )
-        report = json.loads(completed.stdout)
-    except (OSError, subprocess.TimeoutExpired, json.JSONDecodeError) as error:
+    except (OSError, subprocess.TimeoutExpired) as error:
         raise PerformanceResourceError("conditioning-report", str(error)) from error
+    report = _decode_windows_conditioning_report(completed)
     expected_keys = {
         "conditioning_version",
         "status",
@@ -2239,7 +2423,7 @@ def _acquire_quiet_conditioning_snapshot(
             return _conditioning_snapshot(environment, root=root)
         except PerformanceResourceError as error:
             last_error = error
-            if error.code != "conditioning":
+            if error.code not in {"conditioning", "conditioning-observation"}:
                 raise
             if attempt < MEASUREMENT_CONDITIONING_MAX_ATTEMPTS:
                 time.sleep(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
@@ -2642,6 +2826,9 @@ def _runner_samples(
     observed_batch_iterations = result.get("batch_iterations")
     batch_elapsed_samples = result.get("batch_elapsed_samples", [])
     normalized_samples = result.get("samples", [])
+    control_samples = result.get("control_samples", [])
+    control_batch_elapsed_samples = result.get("control_batch_elapsed_samples", [])
+    expects_launch_control = operation_id == "latency:cli-startup"
     if (
         result.get("operation_id") != operation_id
         or result.get("fixture_id") != fixture_id
@@ -2653,6 +2840,13 @@ def _runner_samples(
         and observed_batch_iterations != batch_iterations
         or len(normalized_samples) != samples
         or len(batch_elapsed_samples) != samples
+        or expects_launch_control
+        and (
+            len(control_samples) != samples
+            or len(control_batch_elapsed_samples) != samples
+        )
+        or not expects_launch_control
+        and (control_samples != [] or control_batch_elapsed_samples != [])
         or not _runner_resource_matches(
             result,
             selected_logical_cpu=selected_logical_cpu,
@@ -2676,10 +2870,26 @@ def _runner_samples(
             "runner-batch-normalization",
             f"runner batch normalization changed for {operation_id}/{fixture_id}",
         )
+    normalized_control = [int(value) for value in control_samples]
+    control_elapsed = [int(value) for value in control_batch_elapsed_samples]
+    expected_control = [
+        max(
+            1,
+            (value + (observed_batch_iterations // 2)) // observed_batch_iterations,
+        )
+        for value in control_elapsed
+    ]
+    if normalized_control != expected_control:
+        raise PerformanceResourceError(
+            "runner-control-normalization",
+            f"runner launch-control normalization changed for {operation_id}/{fixture_id}",
+        )
     return {
         "samples": normalized,
         "batch_iterations": observed_batch_iterations,
         "batch_duration_samples": elapsed,
+        "control_samples": normalized_control,
+        "control_batch_duration_samples": control_elapsed,
     }
 
 
@@ -2880,7 +3090,7 @@ def _conditioning_acquisition_check(
         except PerformanceResourceError as error:
             last_error = error
             retrying = (
-                error.code == "conditioning"
+                error.code in {"conditioning", "conditioning-observation"}
                 and attempt < MEASUREMENT_CONDITIONING_MAX_ATTEMPTS
             )
             rejected: dict[str, object] = {
@@ -3047,6 +3257,12 @@ def create_active_contract(
     batch_iterations: Mapping[tuple[str, str | None], int],
     batch_duration_repetitions: Mapping[tuple[str, str | None], list[list[int]] | None],
     rationale: str,
+    control_repetitions: Mapping[tuple[str, str | None], list[list[int]] | None]
+    | None = None,
+    control_batch_duration_repetitions: Mapping[
+        tuple[str, str | None], list[list[int]] | None
+    ]
+    | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     if len(rationale.strip()) < 20:
         raise PerformanceResourceError(
@@ -3068,6 +3284,12 @@ def create_active_contract(
     operations = {
         row["id"]: row for row in cast(list[dict[str, Any]], manifest["operations"])
     }
+    control_repetitions = control_repetitions or {
+        key: None for key in performance_measurement_keys(manifest)
+    }
+    control_batch_duration_repetitions = control_batch_duration_repetitions or {
+        key: None for key in performance_measurement_keys(manifest)
+    }
     rows: list[dict[str, Any]] = []
     for key in performance_measurement_keys(manifest):
         operation_id, fixture_id = key
@@ -3085,8 +3307,39 @@ def create_active_contract(
         elapsed_repetitions = batch_duration_repetitions.get(key)
         representative = [sample_statistics(values)["median"] for values in repeated]
         statistics_row = sample_statistics(representative)
+        relative_statistics = statistics_row
+        control_rows = control_repetitions.get(key)
+        control_duration_rows = control_batch_duration_repetitions.get(key)
+        controlled_fields: dict[str, object] = {}
+        if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL:
+            if control_rows is None or control_duration_rows is None:
+                raise PerformanceResourceError(
+                    "launch-control-baseline", f"missing launch control for {key}"
+                )
+            control_samples = [
+                sample_statistics(values)["median"] for values in control_rows
+            ]
+            relative_samples = [
+                controlled_launch_signal(request, control)
+                for request, control in zip(representative, control_samples)
+            ]
+            relative_statistics = sample_statistics(relative_samples)
+            controlled_fields = {
+                "control_repetitions": control_rows,
+                "control_batch_duration_repetitions": control_duration_rows,
+                "control_samples": control_samples,
+                "control_statistics": sample_statistics(control_samples),
+                "relative_samples": relative_samples,
+                "relative_statistics": relative_statistics,
+                "relative_unit": "basis-points",
+                "raw_reference_ceiling": 0,
+            }
+        elif control_rows is not None or control_duration_rows is not None:
+            raise PerformanceResourceError(
+                "launch-control-baseline", f"unexpected launch control for {key}"
+            )
         relative_mad_basis_points = math.ceil(
-            statistics_row["mad"] * 10_000 / statistics_row["median"]
+            relative_statistics["mad"] * 10_000 / relative_statistics["median"]
         )
         maximum_relative_mad_basis_points = manifest["measurement_policy"][
             "maximum_relative_mad_basis_points"
@@ -3098,12 +3351,16 @@ def create_active_contract(
                     f"relative MAD is unstable for {key}: "
                     f"{relative_mad_basis_points} bp exceeds "
                     f"{maximum_relative_mad_basis_points} bp; "
-                    f"repetition medians={representative}"
+                    + (
+                        f"relative signals={relative_statistics}"
+                        if controlled_fields
+                        else f"repetition medians={representative}"
+                    )
                 ),
             )
         relative_budget = derived_relative_budget_basis_points(
-            median=statistics_row["median"],
-            mad=statistics_row["mad"],
+            median=relative_statistics["median"],
+            mad=relative_statistics["mad"],
             floor=manifest["measurement_policy"][
                 "minimum_relative_budget_basis_points"
             ],
@@ -3111,9 +3368,26 @@ def create_active_contract(
                 "maximum_relative_budget_basis_points"
             ],
         )
+        ceiling_source = cast(
+            list[int], controlled_fields.get("relative_samples", representative)
+        )
+        ceiling_statistics = (
+            relative_statistics if controlled_fields else statistics_row
+        )
         ceiling = max(
-            max(representative),
-            _absolute_ceiling(statistics_row["median"], relative_budget),
+            max(ceiling_source),
+            _absolute_ceiling(ceiling_statistics["median"], relative_budget),
+        )
+        if controlled_fields:
+            controlled_fields["raw_reference_ceiling"] = _absolute_ceiling(
+                statistics_row["median"], relative_budget
+            )
+        rationale_text = (
+            "Five request-to-same-binary-control ratios determine relative variance "
+            "and the absolute ratio ceiling; raw request latency remains authenticated."
+            if controlled_fields
+            else "Five governed repetition medians determine variance; the absolute "
+            "ceiling is two derived relative budgets above the median."
         )
         rows.append(
             {
@@ -3125,14 +3399,12 @@ def create_active_contract(
                 "batch_duration_repetitions": elapsed_repetitions,
                 "samples": representative,
                 "statistics": statistics_row,
+                **controlled_fields,
                 "budget": {
                     "state": "active",
                     "relative_regression_basis_points": relative_budget,
                     "absolute_ceiling": ceiling,
-                    "rationale": (
-                        "Five governed repetition medians determine variance; the "
-                        "absolute ceiling is two derived relative budgets above the median."
-                    ),
+                    "rationale": rationale_text,
                 },
                 "environment_fingerprint": environment_hash,
             }
@@ -3142,6 +3414,8 @@ def create_active_contract(
         set(repetitions) != expected_keys
         or set(batch_iterations) != expected_keys
         or set(batch_duration_repetitions) != expected_keys
+        or set(control_repetitions) != expected_keys
+        or set(control_batch_duration_repetitions) != expected_keys
     ):
         raise PerformanceResourceError(
             "baseline-denominator", "unexpected calibration measurement key"
@@ -3492,6 +3766,19 @@ def calibrate_baseline(
     batch_duration_repetitions: dict[tuple[str, str | None], list[list[int]] | None] = {
         key: [] for key in keys
     }
+    control_repetitions: dict[tuple[str, str | None], list[list[int]] | None] = {
+        key: []
+        if key[0] == "latency:cli-startup"
+        and operation_comparison_model(
+            next(row for row in manifest["operations"] if row["id"] == key[0])
+        )
+        == CLI_LAUNCH_COMPARISON_MODEL
+        else None
+        for key in keys
+    }
+    control_batch_duration_repetitions: dict[
+        tuple[str, str | None], list[list[int]] | None
+    ] = {key: [] if control_repetitions[key] is not None else None for key in keys}
     conditioning_repetitions: list[dict[str, Any]] = []
     policy = manifest["measurement_policy"]
     for repetition_index in range(policy["baseline_repetitions"]):
@@ -3535,6 +3822,17 @@ def calibrate_baseline(
                         f"batch duration evidence changed during calibration for {key}",
                     )
                 duration_rows.append(elapsed)
+            controls = control_repetitions[key]
+            control_durations = control_batch_duration_repetitions[key]
+            if controls is not None and control_durations is not None:
+                controls.append(observation["control_samples"])
+                control_durations.append(observation["control_batch_duration_samples"])
+            elif observation.get("control_samples", []) or observation.get(
+                "control_batch_duration_samples", []
+            ):
+                raise PerformanceResourceError(
+                    "launch-control-baseline", f"unexpected launch control for {key}"
+                )
     return create_active_contract(
         manifest,
         fixtures,
@@ -3546,6 +3844,8 @@ def calibrate_baseline(
         batch_iterations=batch_iterations,
         batch_duration_repetitions=batch_duration_repetitions,
         rationale=rationale,
+        control_repetitions=control_repetitions,
+        control_batch_duration_repetitions=control_batch_duration_repetitions,
     )
 
 
@@ -4029,22 +4329,54 @@ def certify(
                 root=root,
             )
             samples = observation["samples"]
-            if execution_ledger is not None:
-                execution_ledger.complete_coordinate(key, samples)
-            observed = sample_statistics(samples)
-            comparison = compare_hard_metric(
-                baseline_median=baseline_row["statistics"]["median"],
-                observed_median=observed["median"],
-                relative_regression_basis_points=baseline_row["budget"][
-                    "relative_regression_basis_points"
-                ],
-                absolute_ceiling=baseline_row["budget"]["absolute_ceiling"],
-            )
             operation = next(
                 row
                 for row in cast(list[dict[str, Any]], manifest["operations"])
                 if row["id"] == key[0]
             )
+            control_samples = observation["control_samples"]
+            if execution_ledger is not None:
+                execution_ledger.complete_coordinate(key, [*samples, *control_samples])
+            observed = sample_statistics(samples)
+            controlled_details: dict[str, object] = {}
+            if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL:
+                control_statistics = sample_statistics(control_samples)
+                observed_relative_signal = controlled_launch_signal(
+                    observed["median"], control_statistics["median"]
+                )
+                comparison = compare_controlled_launch_metric(
+                    baseline_relative_signal=baseline_row["relative_statistics"][
+                        "median"
+                    ],
+                    observed_relative_signal=observed_relative_signal,
+                    observed_raw_median=observed["median"],
+                    relative_regression_basis_points=baseline_row["budget"][
+                        "relative_regression_basis_points"
+                    ],
+                    absolute_ceiling=baseline_row["budget"]["absolute_ceiling"],
+                    raw_reference_ceiling=baseline_row["raw_reference_ceiling"],
+                )
+                controlled_details = {
+                    "control_samples": control_samples,
+                    "control_statistics": control_statistics,
+                    "relative_signal": {
+                        "kind": "request-median-to-same-binary-control-ratio",
+                        "unit": "basis-points",
+                        "observed": observed_relative_signal,
+                    },
+                    "control_batch_duration_samples": observation[
+                        "control_batch_duration_samples"
+                    ],
+                }
+            else:
+                comparison = compare_hard_metric(
+                    baseline_median=baseline_row["statistics"]["median"],
+                    observed_median=observed["median"],
+                    relative_regression_basis_points=baseline_row["budget"][
+                        "relative_regression_basis_points"
+                    ],
+                    absolute_ceiling=baseline_row["budget"]["absolute_ceiling"],
+                )
             status = certification_measurement_status(
                 enforcement=operation["enforcement"],
                 comparison_status=cast(str, comparison["status"]),
@@ -4057,6 +4389,7 @@ def certify(
                     "details": {
                         "samples": samples,
                         "statistics": observed,
+                        **controlled_details,
                         "comparison": comparison,
                         "enforcement": operation["enforcement"],
                         "disposition": (
@@ -4317,6 +4650,309 @@ def _delegate_windows_full(values: Sequence[str], root: Path = ROOT) -> int:
     return completed.returncode
 
 
+def _migrate_cli_launch_control_command(
+    *,
+    confirm_paired_launch_control: bool,
+    rationale: str,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    """Replace only the unstable CLI relative signal with a same-binary control."""
+
+    if not confirm_paired_launch_control:
+        raise PerformanceResourceError(
+            "launch-control-confirmation",
+            "CLI launch-control migration requires explicit confirmation",
+        )
+    if len(rationale.strip()) < 20:
+        raise PerformanceResourceError(
+            "baseline-rationale", "launch-control rationale must be reviewable"
+        )
+    commit, dirty = _git_identity(root)
+    if dirty:
+        raise PerformanceResourceError(
+            "dirty-launch-control-migration",
+            "CLI launch-control migration requires a clean worktree",
+        )
+    manifest_path = root / MANIFEST_PATH.relative_to(ROOT)
+    baseline_path = root / BASELINE_PATH.relative_to(ROOT)
+    evidence_path = root / VALID_EVIDENCE_PATH.relative_to(ROOT)
+    fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
+    prior_manifest = load_json(manifest_path)
+    prior_baseline = load_json(baseline_path)
+    prior_evidence = load_json(evidence_path)
+    validate_manifest(prior_manifest, root=root, fixtures=fixtures)
+    validate_baseline(prior_baseline, manifest=prior_manifest)
+    validate_evidence(prior_evidence, manifest=prior_manifest)
+    prior_operation = next(
+        row
+        for row in cast(list[dict[str, Any]], prior_manifest["operations"])
+        if row["id"] == "latency:cli-startup"
+    )
+    if "comparison_model" in prior_operation:
+        raise PerformanceResourceError(
+            "launch-control-already-active", "CLI launch control is already active"
+        )
+
+    _enforce_governed_cpu_affinity(prior_manifest)
+    build_status, build_details = _build_release_artifacts(root)
+    if build_status != "passed":
+        raise PerformanceResourceError(
+            "release-build", json.dumps(build_details, sort_keys=True)
+        )
+    observed_artifacts = cast(Mapping[str, object], build_details["artifacts"])
+    source_changes = _artifact_source_changes(
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=commit,
+        root=root,
+    )
+    artifact_identity_accepted, artifact_identity = _artifact_identity_check(
+        cast(Mapping[str, object], prior_baseline["artifact_fingerprints"]),
+        observed_artifacts,
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=commit,
+        source_changes=source_changes,
+    )
+    if not artifact_identity_accepted:
+        raise PerformanceResourceError(
+            "launch-control-artifact-identity",
+            "candidate artifacts are not bound to the migration source change",
+        )
+    environment = live_environment(
+        selected_logical_cpu=prior_manifest["measurement_policy"][
+            "selected_logical_cpu"
+        ],
+        root=root,
+    )
+    if not environments_compatible(
+        cast(Mapping[str, object], prior_baseline["environment"]), environment
+    ):
+        raise PerformanceResourceError(
+            "launch-control-environment",
+            "CLI launch-control migration requires the unchanged baseline environment",
+        )
+
+    candidate_manifest = copy.deepcopy(prior_manifest)
+    candidate_operation = next(
+        row
+        for row in cast(list[dict[str, Any]], candidate_manifest["operations"])
+        if row["id"] == "latency:cli-startup"
+    )
+    candidate_operation["comparison_model"] = CLI_LAUNCH_COMPARISON_MODEL
+    candidate_operation["description"] = (
+        "Measure representative canonical CLI validation and compilation commands; "
+        "compare request work to a same-binary help launch while retaining the prior "
+        "raw ceiling as diagnostic history."
+    )
+
+    baseline_rows = {
+        (row["operation_id"], row["fixture_id"]): row
+        for row in cast(list[dict[str, Any]], prior_baseline["measurements"])
+    }
+    keys = [
+        key
+        for key in performance_measurement_keys(prior_manifest)
+        if key[0] == "latency:cli-startup"
+    ]
+    repetitions: dict[tuple[str, str | None], list[list[int]]] = {
+        key: [] for key in keys
+    }
+    durations: dict[tuple[str, str | None], list[list[int]]] = {key: [] for key in keys}
+    controls: dict[tuple[str, str | None], list[list[int]]] = {key: [] for key in keys}
+    control_durations: dict[tuple[str, str | None], list[list[int]]] = {
+        key: [] for key in keys
+    }
+    conditioning_repetitions: list[dict[str, Any]] = []
+    policy = prior_manifest["measurement_policy"]
+    for repetition_index in range(policy["baseline_repetitions"]):
+        conditioning = _acquire_quiet_conditioning_snapshot(environment, root=root)
+        if not conditioning_snapshots_compatible(
+            cast(Mapping[str, object], prior_baseline["conditioning_repetitions"][0]),
+            conditioning,
+        ):
+            raise PerformanceResourceError(
+                "conditioning-drift",
+                "CLI launch-control conditioning identity differs from the baseline",
+            )
+        conditioning_repetitions.append(conditioning)
+        ordered = list(keys)
+        random.Random(policy["order_seed"] + repetition_index).shuffle(ordered)
+        for key in ordered:
+            prior_row = baseline_rows[key]
+            observation = _measure_key(
+                key,
+                manifest=candidate_manifest,
+                artifacts=_release_artifacts(root),
+                environment=environment,
+                batch_iterations=prior_row["batch_iterations"],
+                root=root,
+            )
+            if not observation["control_samples"]:
+                raise PerformanceResourceError(
+                    "launch-control-missing", f"runner omitted launch control for {key}"
+                )
+            repetitions[key].append(observation["samples"])
+            durations[key].append(observation["batch_duration_samples"])
+            controls[key].append(observation["control_samples"])
+            control_durations[key].append(observation["control_batch_duration_samples"])
+
+    candidate_rows = copy.deepcopy(prior_baseline["measurements"])
+    candidate_by_key = {
+        (row["operation_id"], row["fixture_id"]): row for row in candidate_rows
+    }
+    migration: list[dict[str, object]] = []
+    for key in keys:
+        prior_row = baseline_rows[key]
+        request_medians = [sample_statistics(row)["median"] for row in repetitions[key]]
+        control_medians = [sample_statistics(row)["median"] for row in controls[key]]
+        relative_samples = [
+            controlled_launch_signal(request, control)
+            for request, control in zip(request_medians, control_medians)
+        ]
+        relative_statistics = sample_statistics(relative_samples)
+        relative_mad_basis_points = math.ceil(
+            relative_statistics["mad"] * 10_000 / relative_statistics["median"]
+        )
+        if relative_mad_basis_points > policy["maximum_relative_mad_basis_points"]:
+            raise PerformanceResourceError(
+                "unstable-launch-control",
+                f"paired CLI signal is unstable for {key}: {relative_mad_basis_points} bp",
+            )
+        prior_absolute = prior_row["budget"]["absolute_ceiling"]
+        relative_budget = derived_relative_budget_basis_points(
+            median=relative_statistics["median"],
+            mad=relative_statistics["mad"],
+            floor=policy["minimum_relative_budget_basis_points"],
+            maximum=policy["maximum_relative_budget_basis_points"],
+        )
+        ratio_absolute_ceiling = max(
+            max(relative_samples),
+            _absolute_ceiling(relative_statistics["median"], relative_budget),
+        )
+        row = candidate_by_key[key]
+        row.update(
+            {
+                "repetitions": repetitions[key],
+                "batch_duration_repetitions": durations[key],
+                "samples": request_medians,
+                "statistics": sample_statistics(request_medians),
+                "control_repetitions": controls[key],
+                "control_batch_duration_repetitions": control_durations[key],
+                "control_samples": control_medians,
+                "control_statistics": sample_statistics(control_medians),
+                "relative_samples": relative_samples,
+                "relative_statistics": relative_statistics,
+                "relative_unit": "basis-points",
+                "raw_reference_ceiling": prior_absolute,
+                "budget": {
+                    "state": "active",
+                    "relative_regression_basis_points": relative_budget,
+                    "absolute_ceiling": ratio_absolute_ceiling,
+                    "rationale": (
+                        "Five request-to-same-binary-control ratios determine relative "
+                        "variance and an absolute ratio ceiling; raw nanoseconds remain "
+                        "authenticated diagnostic evidence."
+                    ),
+                },
+            }
+        )
+        migration.append(
+            {
+                "coordinate": _coordinate_id(key),
+                "request_medians": request_medians,
+                "control_medians": control_medians,
+                "relative_samples": relative_samples,
+                "relative_budget_basis_points": relative_budget,
+                "raw_reference_ceiling": prior_absolute,
+                "raw_absolute_passes": [
+                    value <= prior_absolute for value in request_medians
+                ],
+                "ratio_absolute_ceiling": ratio_absolute_ceiling,
+            }
+        )
+
+    cli_rows = [
+        row for row in candidate_rows if row["operation_id"] == "latency:cli-startup"
+    ]
+    candidate_operation["budget"] = {
+        "state": "active",
+        "relative_regression_basis_points": max(
+            row["budget"]["relative_regression_basis_points"] for row in cli_rows
+        ),
+        "absolute_ceiling": max(row["budget"]["absolute_ceiling"] for row in cli_rows),
+        "rationale": (
+            "Maximum paired relative budget and absolute ratio ceiling; fixture-specific "
+            "comparison authority remains in the authenticated baseline."
+        ),
+    }
+    candidate_manifest["manifest_fingerprint"] = document_fingerprint(
+        candidate_manifest, "manifest_fingerprint"
+    )
+    candidate_baseline = copy.deepcopy(prior_baseline)
+    candidate_baseline.update(
+        {
+            "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+            "source_commit": commit,
+            "environment": copy.deepcopy(environment),
+            "environment_fingerprint": environment_fingerprint(environment),
+            "artifact_fingerprints": copy.deepcopy(observed_artifacts),
+            "conditioning_repetitions": conditioning_repetitions,
+            "measurements": candidate_rows,
+            "update_command": (
+                "python3 -m tooling.performance_resource_certification "
+                "migrate-cli-launch-control --confirm-paired-launch-control "
+                "--rationale <reviewed-rationale>"
+            ),
+            "update_rationale": rationale,
+            "baseline_fingerprint": "0" * 64,
+        }
+    )
+    for row in candidate_rows:
+        row["environment_fingerprint"] = candidate_baseline["environment_fingerprint"]
+    candidate_baseline["baseline_fingerprint"] = document_fingerprint(
+        candidate_baseline, "baseline_fingerprint"
+    )
+    candidate_evidence = copy.deepcopy(prior_evidence)
+    candidate_evidence["manifest_fingerprint"] = candidate_manifest[
+        "manifest_fingerprint"
+    ]
+    validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+    validate_baseline(candidate_baseline, manifest=candidate_manifest)
+    validate_evidence(candidate_evidence, manifest=candidate_manifest)
+
+    prior_fingerprint = cast(str, prior_baseline["baseline_fingerprint"])
+    history = root / PERFORMANCE_HISTORY_PATH.relative_to(ROOT) / prior_fingerprint
+    if history.exists():
+        raise PerformanceResourceError(
+            "launch-control-history-exists",
+            f"refusing to overwrite immutable prior authority {history.relative_to(root)}",
+        )
+    _write_json(history / "manifest.json", prior_manifest, root=root)
+    _write_json(history / "baseline.json", prior_baseline, root=root)
+    _write_json(history / "valid-evidence.json", prior_evidence, root=root)
+    _write_json(manifest_path, candidate_manifest, root=root)
+    _write_json(baseline_path, candidate_baseline, root=root)
+    _write_json(evidence_path, candidate_evidence, root=root)
+    return {
+        "status": "passed",
+        "source_commit": commit,
+        "prior_baseline_fingerprint": prior_fingerprint,
+        "baseline_fingerprint": candidate_baseline["baseline_fingerprint"],
+        "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+        "history_path": history.relative_to(root).as_posix(),
+        "artifact_identity": artifact_identity,
+        "migration": migration,
+        "raw_reference_ceilings_preserved_as_diagnostics": True,
+        "non_cli_measurements_preserved": all(
+            candidate_by_key[key] == baseline_rows[key]
+            for key in baseline_rows
+            if key[0] != "latency:cli-startup"
+        ),
+        "governed_sample_count": sum(
+            len(row) for key in keys for row in [*repetitions[key], *controls[key]]
+        ),
+    }
+
+
 def _baseline_command(
     *,
     replace: bool,
@@ -4575,6 +5211,20 @@ def main(argv: list[str] | None = None) -> int:
             arguments = parser.parse_args(values)
             result = _reset_environment_command(
                 confirm_environment_rollover=(arguments.confirm_environment_rollover),
+                rationale=arguments.rationale,
+            )
+            status = cast(str, result["status"])
+        elif values and values[0] == "migrate-cli-launch-control":
+            parser = argparse.ArgumentParser(
+                description="Migrate CLI latency to paired launch control"
+            )
+            parser.add_argument("migrate-cli-launch-control")
+            parser.add_argument("--confirm-paired-launch-control", action="store_true")
+            parser.add_argument("--rationale", required=True)
+            parser.add_argument("--json", action="store_true")
+            arguments = parser.parse_args(values)
+            result = _migrate_cli_launch_control_command(
+                confirm_paired_launch_control=(arguments.confirm_paired_launch_control),
                 rationale=arguments.rationale,
             )
             status = cast(str, result["status"])

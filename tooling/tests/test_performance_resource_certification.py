@@ -4,6 +4,7 @@ import copy
 import io
 import json
 import shutil
+import subprocess
 import tempfile
 import unittest
 import uuid
@@ -28,6 +29,7 @@ from tooling.performance_resource_certification import (
     _artifact_source_changes,
     _canonical_build_root,
     _conditioning_acquisition_check,
+    _decode_windows_conditioning_report,
     _enforce_governed_cpu_affinity,
     _external_workload_isolation_check,
     _git_invocation,
@@ -45,7 +47,9 @@ from tooling.performance_resource_certification import (
     certify,
     conditioning_identities_match,
     conditioning_snapshots_compatible,
+    compare_controlled_launch_metric,
     compare_hard_metric,
+    controlled_launch_signal,
     create_active_contract,
     derived_relative_budget_basis_points,
     document_fingerprint,
@@ -117,6 +121,24 @@ class PerformanceRunnerBoundaryTests(unittest.TestCase):
             r"\s*&profile,\s*&evaluation\s*\)",
         )
         self.assertNotIn("_for_reference", operation)
+
+    def test_cli_launch_control_uses_the_same_binary_after_raw_request_samples(
+        self,
+    ) -> None:
+        run = self.runner.split("fn run()", 1)[1].split("fn parse_arguments", 1)[0]
+        control = self.runner.split("fn prepare_cli_launch_control", 1)[1].split(
+            "fn prepare_operation", 1
+        )[0]
+        self.assertIn('.arg("--help")', control)
+        self.assertIn("Command::new(&executable)", control)
+        self.assertLess(
+            run.index("for _ in 0..arguments.samples"),
+            run.index("if let Some(control) = &control_operation"),
+        )
+        self.assertIn('"control_samples": control_samples', run)
+        self.assertIn(
+            '"control_batch_elapsed_samples": control_batch_elapsed_samples', run
+        )
 
     def test_target_profile_proof_and_serialization_remain_in_each_timed_operation(
         self,
@@ -649,6 +671,33 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             "full", execution_ledger=None, preflight_only=True
         )
 
+    def test_windows_conditioner_counter_discontinuity_is_reacquirable(self) -> None:
+        completed = subprocess.CompletedProcess(
+            args=["python", "tooling/performance_windows.py", "condition"],
+            returncode=2,
+            stdout="",
+            stderr=(
+                '{"reason": "processor performance counters regressed", '
+                '"status": "unavailable"}\n'
+            ),
+        )
+        with self.assertRaises(PerformanceResourceError) as raised:
+            _decode_windows_conditioning_report(completed)
+        self.assertEqual(raised.exception.code, "conditioning-observation")
+        self.assertIn("changed epoch", str(raised.exception))
+
+    def test_windows_conditioner_empty_unknown_failure_is_not_retried(self) -> None:
+        completed = subprocess.CompletedProcess(
+            args=["python", "tooling/performance_windows.py", "condition"],
+            returncode=2,
+            stdout="",
+            stderr='{"reason": "power identity changed", "status": "unavailable"}\n',
+        )
+        with self.assertRaises(PerformanceResourceError) as raised:
+            _decode_windows_conditioning_report(completed)
+        self.assertEqual(raised.exception.code, "conditioning-report")
+        self.assertIn("power identity changed", str(raised.exception))
+
     @patch(
         "tooling.performance_resource_certification._conditioning_snapshot",
         side_effect=[
@@ -680,6 +729,34 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         self.assertEqual(conditioning.call_count, 2)
         sleep.assert_called_once_with(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
+
+    @patch(
+        "tooling.performance_resource_certification._conditioning_snapshot",
+        side_effect=[
+            PerformanceResourceError(
+                "conditioning-observation", "processor counters changed epoch"
+            ),
+            {
+                "conditioning_identity_fingerprint": "a" * 64,
+                "snapshot_fingerprint": "b" * 64,
+                "quiescence_observation": {"failures": []},
+            },
+        ],
+    )
+    @patch("tooling.performance_resource_certification.time.sleep")
+    def test_measurement_conditioning_reacquires_counter_discontinuity(
+        self, sleep: Mock, conditioning: Mock
+    ) -> None:
+        result = _measurement_conditioning_check(
+            ("latency:cli-startup", "fixture:simply-tiny"), environment={}
+        )
+        self.assertEqual(result["status"], "passed")
+        details = cast(dict[str, object], result["details"])
+        rejected = cast(list[dict[str, object]], details["rejected_attempts"])
+        self.assertEqual(rejected[0]["code"], "conditioning-observation")
+        self.assertEqual(details["attempt"], 2)
+        sleep.assert_called_once_with(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
+        self.assertEqual(conditioning.call_count, 2)
 
     @patch("tooling.performance_resource_certification.time.sleep")
     @patch("tooling.performance_resource_certification._conditioning_snapshot")
@@ -1017,6 +1094,41 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         self.assertEqual(inside["status"], "passed")
         self.assertEqual(exact["status"], "passed")
+        self.assertEqual(relative_over["status"], "failed")
+        self.assertFalse(relative_over["relative_passed"])
+        self.assertEqual(absolute_over["status"], "failed")
+        self.assertFalse(absolute_over["absolute_passed"])
+
+    def test_paired_launch_ratio_blocks_ratio_regressions_not_host_launch_drift(
+        self,
+    ) -> None:
+        self.assertEqual(controlled_launch_signal(27_000_000, 24_000_000), 11_250)
+        host_drift = compare_controlled_launch_metric(
+            baseline_relative_signal=11_250,
+            observed_relative_signal=12_000,
+            observed_raw_median=50_000_000,
+            relative_regression_basis_points=1000,
+            absolute_ceiling=13_000,
+            raw_reference_ceiling=31_000_000,
+        )
+        relative_over = compare_controlled_launch_metric(
+            baseline_relative_signal=11_250,
+            observed_relative_signal=12_376,
+            observed_raw_median=28_000_000,
+            relative_regression_basis_points=1000,
+            absolute_ceiling=13_000,
+            raw_reference_ceiling=31_000_000,
+        )
+        absolute_over = compare_controlled_launch_metric(
+            baseline_relative_signal=11_250,
+            observed_relative_signal=13_001,
+            observed_raw_median=28_000_000,
+            relative_regression_basis_points=2000,
+            absolute_ceiling=13_000,
+            raw_reference_ceiling=31_000_000,
+        )
+        self.assertEqual(host_drift["status"], "passed")
+        self.assertFalse(host_drift["raw_reference_would_pass"])
         self.assertEqual(relative_over["status"], "failed")
         self.assertFalse(relative_over["relative_passed"])
         self.assertEqual(absolute_over["status"], "failed")

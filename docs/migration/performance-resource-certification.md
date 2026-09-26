@@ -531,6 +531,48 @@ route. Raw wrapper Job ancestry remains visible in evidence, while the governed
 environment identity has zero mismatches. No threshold, ceiling, batch floor,
 warmup, sample, repetition, benchmark definition, or product behavior changed.
 
+## Windows CLI launch control
+
+`latency:cli-startup` retains raw process startup plus canonical request latency
+as authenticated diagnostic evidence. Its hard regression signal is the ratio
+of the request median to a separately warmed median from the same kernel
+executable invoked with `--help`. The runner measures the complete request block first, preserving
+the original workload and sampling order, then measures the control block with
+the same warmup count, sample count, affinity, timer, pipes, executable image,
+and conditioning window. Both arrays are authenticated evidence and count as
+consumed samples.
+
+This paired model isolates product request work from normal Windows process
+creation and image-load variance. Both a derived relative ratio limit and a
+derived absolute ratio ceiling remain release blocking. Raw request nanoseconds
+and the prior raw ceiling remain in authenticated evidence as diagnostics. The
+existing hard in-process latency coordinates and kernel artifact-size coordinate
+continue to cover compiler work and executable growth.
+
+Migration from the raw relative signal is a one-time, clean-source operation.
+It archives the prior manifest, baseline, and valid evidence by baseline
+fingerprint; rebuilds source-bound release artifacts; requires the unchanged
+baseline environment and conditioning identity; calibrates only the two CLI
+coordinates for five repetitions and rejects an unstable paired signal. Every
+non-CLI measurement is copied byte for byte, and both prior raw CLI ceilings are
+preserved as diagnostic history:
+
+```powershell
+python -m tooling.performance_resource_certification `
+  migrate-cli-launch-control `
+  --confirm-paired-launch-control `
+  --rationale "Reviewed same-binary launch-control migration" `
+  --json
+```
+
+A native conditioner exit that contains exactly the existing
+`processor performance counters regressed` unavailable report is treated as an
+invalid observation and reacquired under the same bounded sample-free policy.
+Other empty, malformed, identity, power, or conditioner failures remain
+immediately unavailable. This preserves the busy and interrupt thresholds and
+prevents a transient counter epoch change on an unrelated logical processor
+from being misreported as an unparseable conditioner result.
+
 ## Profile ownership
 
 -   Local validates the authored contract and fixture identities without timing

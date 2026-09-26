@@ -9,6 +9,7 @@ from pathlib import Path
 
 from tooling.structured_operation_execution import (
     StructuredExecutionError,
+    authenticated_sample_count,
     atomic_write_artifact,
     execution_context,
     validate_result_directory,
@@ -115,6 +116,12 @@ class StructuredOperationExecutionTests(unittest.TestCase):
             result_contract="certification-result-v1",
             actual_exit_code=actual_exit_code,
         )
+
+    def test_authenticated_sample_count_includes_paired_control_samples(self) -> None:
+        result = self._structured_result(samples=[10, 11, 12])
+        details = result["checks"][0]["details"]
+        details["control_samples"] = [7, 8, 9]
+        self.assertEqual(authenticated_sample_count(result), 6)
 
     def test_normal_success_and_failure_aggregate_with_exact_identity(self) -> None:
         self._write_result(samples=[10, 11, 12])

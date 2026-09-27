@@ -521,6 +521,12 @@ checkpoints:
           - check: Direct-accounting candidate Local disposition
             result: failed
             details: Clean candidate 42f11c44f2ed126fe70fa511e41e1596d64d962e passed 36 of 37 Local operations and failed only format_check@repository because the final focused test edit followed the prior formatting proof. Ruff normalized that single test file. Pull Request, Full, Release, and authenticated performance sampling did not start. A new clean candidate must restart Local.
+          - check: Complete campaign and trusted-verifier disposition
+            result: failed
+            details: Clean candidate 4d5ef0750847152e7e574f8442f1edcecb415c99 passed Local 37/37 and Pull Request 79/79. Full and independent no-reuse Release each completed 125 operations with 124 passed, only WVR-SEC-VSCE-LICENSE-001 waived, and zero failed, unavailable, or incomplete; evidence fingerprints are 8d43b97bc1a41b7c2c3f9a42c3df7a3040cc4707ab07cf13b4eb9eb0ed4da2ba and 984231c74a65751f9956f12985fc9c7721f5417ac2b8fe809fbf43671cdcbe24. Each authenticated 3332 performance samples under an independent invocation. Local attestation and verification passed with evidence root 403b6d03d1aa323f5e9dca83216649bb3a8fada33a18ac1b3e76895f838ebd11. Cloud-equivalent verification failed closed because immutable verifier f47bd092 predates coordinate-local conditioning and paired request/control evidence; candidate code was not substituted across the trust boundary. The signed bundle and failed cloud result remain diagnostic history and are not promoted.
+          - check: Trusted-verifier compatibility correction
+            result: passed
+            details: Integrity push/dispatch and delivery now pin already certified immutable revision 4d5ef0750847152e7e574f8442f1edcecb415c99, and the PR-base ancestry guard requires the same floor. That revision contains the reviewed paired-evidence verifier and matching trusted schemas. Candidate code remains data-only under isolated Python; the certifier, trust policy, closure allowlist, waiver scope, thresholds, sample counts, conditioning, workload isolation, and performance contracts are unchanged. The tracked workflow correction requires a new clean candidate to restart the complete campaign.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -575,4 +581,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 42f57b28 passed Local, Pull Request, and Full, then consumed its independent Release opportunity on one raw CLI-startup relative regression. The repository corrected that unstable signal with paired same-binary control and completed a governed Windows 26200.9550 environment rollover with all prior non-CLI contracts passing. P20-T02 remains paused until the new clean candidate passes Local, Pull Request, Full, independent Release, signed local attestation, and cheap cloud verification.
+    rationale: Candidate 4d5ef075 passed Local, Pull Request, Full, independent Release, and local attestation, but the pinned f47bd092 cloud verifier predates the paired launch-control contract and failed closed. Integrity and delivery now pin the already certified immutable 4d5ef075 verifier. P20-T02 remains paused until the resulting new clean candidate passes Local, Pull Request, Full, independent Release, signed local attestation, and cheap cloud verification.

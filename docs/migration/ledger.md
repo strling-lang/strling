@@ -5820,4 +5820,23 @@ formatting after the last focused test edit. The single test file is now
 normalized. No PR, Full, Release, or authenticated performance sample started;
 the formatting-only commit requires a new clean candidate from Local.
 
+Clean `4d5ef075` then passed Local 37/37 and Pull Request 79/79. Full and the
+independent no-reuse Release each passed 124/125 operations with only
+`WVR-SEC-VSCE-LICENSE-001` waived and no failures, unavailable results, or
+incomplete results. Their evidence fingerprints are `8d43b97bc1a41b7c2c3f9a42c3df7a3040cc4707ab07cf13b4eb9eb0ed4da2ba`
+and `984231c74a65751f9956f12985fc9c7721f5417ac2b8fe809fbf43671cdcbe24`;
+each authenticated 3,332 performance samples under an independent invocation.
+Local signing and verification passed with evidence root
+`403b6d03d1aa323f5e9dca83216649bb3a8fada33a18ac1b3e76895f838ebd11`.
+
+Cloud-equivalent verification correctly failed closed because immutable verifier
+`f47bd092` predates the paired launch-control schema and reconstruction logic.
+The candidate verifier was not substituted across the trust boundary. The
+minimal correction pins integrity and delivery to the already certified
+immutable `4d5ef075` verifier and raises the PR-base ancestry floor to the same
+revision. Trust keys, closure paths, waivers, acceptance thresholds, sampling,
+conditioning, and workload isolation remain unchanged. This tracked workflow
+change creates a new candidate, so none of the `4d5ef075` Full/Release evidence
+will be reused.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL NEW FULL AND SEPARATE RELEASE COMPLETE.

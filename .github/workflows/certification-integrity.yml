@@ -26,12 +26,12 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || 'f47bd09254c9a08e5578b549e45f41ad7278e1c9' }}
+                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || '4d5ef0750847152e7e574f8442f1edcecb415c99' }}
                   path: trusted
 
             - name: Require approved verifier in the trusted base
               run: |
-                  if ! git -C trusted merge-base --is-ancestor f47bd09254c9a08e5578b549e45f41ad7278e1c9 HEAD; then
+                  if ! git -C trusted merge-base --is-ancestor 4d5ef0750847152e7e574f8442f1edcecb415c99 HEAD; then
                     echo "Trusted base lacks the reviewed verifier. Owner-authorized base integration is required."
                     exit 1
                   fi

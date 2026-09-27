@@ -968,3 +968,36 @@ was not normalized after the preceding formatting proof. Ruff reformatted that
 single file; no semantic or certification policy changed. Pull Request, Full,
 Release, and authenticated performance sampling did not start. The formatting
 correction requires another clean candidate to restart Local.
+
+## Trusted-verifier compatibility correction
+
+Clean candidate `4d5ef0750847152e7e574f8442f1edcecb415c99` passed Local
+37/37 and Pull Request 79/79. Full and the independent no-reuse Release each
+completed all 125 operations with 124 passed, only
+`WVR-SEC-VSCE-LICENSE-001` waived, and zero failed, unavailable, or incomplete
+operations. Their evidence fingerprints are
+`8d43b97bc1a41b7c2c3f9a42c3df7a3040cc4707ab07cf13b4eb9eb0ed4da2ba`
+and
+`984231c74a65751f9956f12985fc9c7721f5417ac2b8fe809fbf43671cdcbe24`.
+Both authenticated 3,332 performance samples under distinct producer
+invocations. Local attestation creation and verification passed with evidence
+root `403b6d03d1aa323f5e9dca83216649bb3a8fada33a18ac1b3e76895f838ebd11`.
+
+The pinned cloud verifier at `f47bd09254c9a08e5578b549e45f41ad7278e1c9`
+then failed closed before accepting the bundle because its trusted performance
+schema and reconstruction code predate coordinate-local conditioning and the
+paired request/control comparison model. Substituting candidate code for the
+trusted verifier is forbidden. The signed evidence and failed cloud result are
+retained as diagnostic history; the bundle is not promoted to current closure
+authority.
+
+The minimal correction promotes the already certified and immutable
+`4d5ef0750847152e7e574f8442f1edcecb415c99` revision as the shared integrity
+and delivery verifier pin and PR-base ancestry floor. That revision contains
+the reviewed paired-evidence verifier, the matching trusted schemas, and the
+complete green Full/Release evidence described above. Candidate code remains
+data-only, isolated Python remains required, and the certifier, trust policy,
+closure allowlist, waiver scope, thresholds, sample counts, and performance
+contracts are unchanged. Because the workflow pin is tracked source, a new
+clean candidate must restart Local, Pull Request, Full, independent Release,
+attestation, and cloud verification.

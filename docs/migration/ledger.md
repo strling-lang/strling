@@ -5416,11 +5416,12 @@ failing SHA was not resampled.
     `8058770bcf8ae59d781b1ceff9880f09355e5388`
 -   Objective: Rebuild package manifests and dry-run publication pipelines
     around the canonical core under the ratified release policy
--   Entry boundary: NOT READY — V4-H08 is the next ordered task
+-   Entry boundary: NOT READY — V4-H08 closure policy correction requires a
+    new exact-source campaign
 
 V4-H05 reactivated P20-T02 after closing its original five-part campaign. The
 subsequent H06/H07 launch-readiness hardening and V4-H08 recertification
-sequence now takes precedence. No package version was changed, package manifest
+sequence still takes precedence. No package version was changed, package manifest
 or publication pipeline was rebuilt, production credential was used, public
 tag or release was created, or registry publication was attempted during
 P20-T01 or V4-H01 through V4-H07.
@@ -5664,10 +5665,8 @@ task; P20-T02 is paused.
 
 ## V4-H08 - Hardened-core recertification and attested local evidence
 
--   Status: In progress — Windows 26200.9550 is governedly qualified and
-    calibrated with coordinate-local conditioning and paired CLI launch
-    control; the new source candidate must restart Local, Pull Request, and
-    Full before any separate Release run.
+-   Status: In progress — the d041a697 campaign and trusted verification pass,
+    but signed-bundle formatting and hygiene policy require a new candidate.
 -   Starting checkpoint: `61338f1581e8ecf436fc59acbfae28a603a90382`
     on clean `dev`, identical to `origin/dev`.
 -   Historical deterministic candidate:
@@ -5839,4 +5838,34 @@ conditioning, and workload isolation remain unchanged. This tracked workflow
 change creates a new candidate, so none of the `4d5ef075` Full/Release evidence
 will be reused.
 
-BLOCKED — NO-GO FOR P20-T02 UNTIL NEW FULL AND SEPARATE RELEASE COMPLETE.
+Clean final candidate `d041a697e850f08d1d3c0a6e52d15a412dd02325`
+passed Local 37/37 and Pull Request 79/79. Full and independent no-reuse Release
+each completed all 125 operations with 124 passed, only
+`WVR-SEC-VSCE-LICENSE-001` waived, and zero failed, unavailable, or incomplete
+operations. Their evidence fingerprints are
+`97eb8a309d349a17f41130999ed7869077644dea0f5cadde89720fccfef552b8` and
+`33cb09e8f0cebe0b656f052afcb240174b9bf33e7fad60bce2f67c51a374eb92`.
+Each authenticated 3,332 samples under distinct performance invocation IDs
+`380cec82b1e942b9883bbf61909e5046` and
+`ea3e3b230eaa446e873569cf5ace4bd2`.
+
+The diagnostic signed bundle has evidence root
+`8b36fcfefbd7911e97589cd03905af898f2755aa985d934c28ed3853ac6c86c4`,
+signature SHA-256
+`976bd7d6b642641c988c27496f3870b7ec0edf69433faa26eef8a37b0ba66c3b`,
+and attestation SHA-256
+`4061f9c71b5d89b19502b2cc3418bbaea398479cc3afde25bf3575c8fef736c5`.
+Local verification and the pinned immutable `4d5ef075` verifier both returned
+`CLOUD_VERIFIED` before closure validation.
+
+Targeted closure validation then proved that repository formatting would
+rewrite the signed bundle and repository hygiene would reject its complete
+product projection and two profile artifacts above one MiB. The evidence was
+not altered or promoted. Formatting now excludes only the exact signed current
+bundle as serializer-owned, and hygiene waives size only for those three
+required artifacts. Focused tests guard both boundaries. These tracked policy
+changes create a new candidate, so Local, Pull Request, Full, independent
+Release, signing, trusted verification, and closure must repeat. No publication,
+push, tag, registry mutation, or public release occurred.
+
+BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

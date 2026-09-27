@@ -1001,3 +1001,45 @@ closure allowlist, waiver scope, thresholds, sample counts, and performance
 contracts are unchanged. Because the workflow pin is tracked source, a new
 clean candidate must restart Local, Pull Request, Full, independent Release,
 attestation, and cloud verification.
+
+## Closure-policy compatibility correction
+
+Clean candidate `d041a697e850f08d1d3c0a6e52d15a412dd02325` passed the
+complete ordered campaign without a tracked source change: Local 37/37, Pull
+Request 79/79, Full 124 passed plus only
+`WVR-SEC-VSCE-LICENSE-001`, and independent no-reuse Release 124 passed plus
+that same waiver. Full and Release each had zero failed, unavailable, or
+incomplete operations. Their evidence fingerprints are
+`97eb8a309d349a17f41130999ed7869077644dea0f5cadde89720fccfef552b8` and
+`33cb09e8f0cebe0b656f052afcb240174b9bf33e7fad60bce2f67c51a374eb92`.
+The two performance producers authenticated 3,332 samples apiece under
+distinct invocation identities `380cec82b1e942b9883bbf61909e5046` and
+`ea3e3b230eaa446e873569cf5ace4bd2`, proving Release did not reuse Full
+evidence.
+
+The diagnostic closure bundle bound the exact certified source, both complete
+profile artifacts, independent execution receipts, the real-engine
+observations, and the expected waiver. Its evidence root is
+`8b36fcfefbd7911e97589cd03905af898f2755aa985d934c28ed3853ac6c86c4`,
+signature SHA-256 is
+`976bd7d6b642641c988c27496f3870b7ec0edf69433faa26eef8a37b0ba66c3b`,
+and attestation SHA-256 is
+`4061f9c71b5d89b19502b2cc3418bbaea398479cc3afde25bf3575c8fef736c5`.
+Local verification and the immutable `4d5ef075` trusted verifier both pass;
+the resulting state is `CLOUD_VERIFIED`, never `PUBLISHABLE`.
+
+Targeted closure validation then found two repository-policy defects. The
+repository formatter selected the byte-authenticated bundle for Prettier
+rewriting, which would invalidate the evidence root and signature. Repository
+hygiene also rejected the complete product projection and both profile
+artifacts because their required evidence exceeds one MiB. The bundle was not
+rewritten, truncated, or promoted; it remains ignored diagnostic history.
+
+The narrow correction classifies only the exact current hardened-core bundle
+as serializer-owned signed evidence and grants maximum-file-size exceptions
+only to the three required complete artifacts. Focused tests enforce both
+boundaries. No language behavior, signature rule, evidence denominator,
+threshold, sample count, conditioning, workload isolation, or publication
+authority changes. Because formatting and hygiene policy are tracked source
+outside the closure allowlist, a new clean candidate must repeat the full
+campaign. P20-T02 remains paused and unstarted.

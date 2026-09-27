@@ -73,6 +73,22 @@ class FormattingPolicyTests(unittest.TestCase):
         )
         self.assertEqual([], selected)
 
+    def test_repository_target_excludes_signed_hardened_core_bundle(self) -> None:
+        policy = load_policy()
+        enforcement = cast(dict[str, object], policy["enforcement"])
+        targets = cast(dict[str, list[dict[str, object]]], enforcement["targets"])
+        step = targets["repository"][0]
+        signed_evidence = (
+            "tests/certification/hardened-core/1.0/current/"
+            "evidence/profile-full/profile-full.json"
+        )
+        selected = select_files(
+            [signed_evidence],
+            cast(list[str], step["include"]),
+            cast(list[str], step["exclude"]),
+        )
+        self.assertEqual([], selected)
+
     def test_check_commands_are_non_mutating(self) -> None:
         prettier = build_command(
             "prettier",

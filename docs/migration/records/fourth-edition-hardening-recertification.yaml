@@ -44,8 +44,10 @@ scope:
         - governance/change-control.json
         - governance/contracts/snapshots/root-cli.json
         - governance/dependency-license-evidence.json
+        - governance/formatting.json
         - governance/generated-artifacts.json
         - governance/local-certification-trust.json
+        - governance/repository-hygiene.json
         - governance/security.md
         - governance/security-policy.json
         - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
@@ -89,7 +91,9 @@ scope:
         - tooling/tests/test_dependency_license_evidence.py
         - tooling/tests/test_deep_quality_certification.py
         - tooling/tests/test_exact_runtime_provision.py
+        - tooling/tests/test_formatting.py
         - tooling/tests/test_governance.py
+        - tooling/tests/test_hygiene.py
         - tooling/tests/test_launch_readiness.py
         - tooling/tests/test_local_certification_attestation.py
         - tooling/tests/test_jvm_adapter_runtime.py
@@ -527,6 +531,18 @@ checkpoints:
           - check: Trusted-verifier compatibility correction
             result: passed
             details: Integrity push/dispatch and delivery now pin already certified immutable revision 4d5ef0750847152e7e574f8442f1edcecb415c99, and the PR-base ancestry guard requires the same floor. That revision contains the reviewed paired-evidence verifier and matching trusted schemas. Candidate code remains data-only under isolated Python; the certifier, trust policy, closure allowlist, waiver scope, thresholds, sample counts, conditioning, workload isolation, and performance contracts are unchanged. The tracked workflow correction requires a new clean candidate to restart the complete campaign.
+          - check: Final same-SHA certification campaign
+            result: passed
+            details: Clean candidate d041a697e850f08d1d3c0a6e52d15a412dd02325 passed Local 37/37 and Pull Request 79/79. Full and independent no-reuse Release each completed 125 operations with 124 passed, only WVR-SEC-VSCE-LICENSE-001 waived, and zero failed, unavailable, or incomplete. Their evidence fingerprints are 97eb8a309d349a17f41130999ed7869077644dea0f5cadde89720fccfef552b8 and 33cb09e8f0cebe0b656f052afcb240174b9bf33e7fad60bce2f67c51a374eb92. Each authenticated 3332 performance samples under distinct invocation identities 380cec82b1e942b9883bbf61909e5046 and ea3e3b230eaa446e873569cf5ace4bd2.
+          - check: Signed closure and trusted verification
+            result: passed
+            details: The diagnostic bundle binds certified source d041a697e850f08d1d3c0a6e52d15a412dd02325, evidence root 8b36fcfefbd7911e97589cd03905af898f2755aa985d934c28ed3853ac6c86c4, signature SHA-256 976bd7d6b642641c988c27496f3870b7ec0edf69433faa26eef8a37b0ba66c3b, and attestation SHA-256 4061f9c71b5d89b19502b2cc3418bbaea398479cc3afde25bf3575c8fef736c5. Local verification and the pinned immutable 4d5ef075 verifier both passed with CLOUD_VERIFIED before closure validation. No package, tag, push, registry, release, or publication action occurred.
+          - check: Closure policy compatibility
+            result: failed
+            details: Targeted closure validation found that repository formatting selected the signed bundle for Prettier rewriting and repository hygiene rejected its complete product projection plus both profile artifacts above the one MiB ceiling. Reformatting, truncating, or omitting signed evidence is forbidden. The d041a697 bundle is preserved as diagnostic history under ignored target evidence and is not promoted as current closure authority.
+          - check: Signed-bundle formatting and hygiene correction
+            result: passed
+            details: Formatting now classifies the exact current hardened-core bundle as serializer-owned signed evidence, while hygiene grants maximum-file-size exceptions only to the three required complete artifacts. Focused tests enforce the formatting exclusion and exact hygiene allowlist; no signature, evidence, profile, sample, threshold, conditioning, or publication rule is weakened. These tracked policy changes require another complete clean-source campaign.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -578,7 +594,19 @@ commits:
       subject: "test(certification): align cloud verification fitness"
     - sha: 7e58c04ad412fedef46f71b7d999dea56107f4e1
       subject: "fix(certification): repair final profile prerequisites"
+    - sha: b1371f951955f38af5aea99d5066ce39a15d5791
+      subject: "chore(certification): qualify Windows launch baseline"
+    - sha: fa60bec1f1599b710649d5016497cce11adb57c2
+      subject: "fix(certification): compact performance baseline"
+    - sha: 148dc1a88033cc08d72d23c111aef8508c80838e
+      subject: "fix(certification): verify paired launch evidence"
+    - sha: 42f11c44f2ed126fe70fa511e41e1596d64d962e
+      subject: "fix(certification): account direct performance samples"
+    - sha: 4d5ef0750847152e7e574f8442f1edcecb415c99
+      subject: "style(certification): normalize performance regression"
+    - sha: d041a697e850f08d1d3c0a6e52d15a412dd02325
+      subject: "fix(certification): advance trusted verifier pin"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 4d5ef075 passed Local, Pull Request, Full, independent Release, and local attestation, but the pinned f47bd092 cloud verifier predates the paired launch-control contract and failed closed. Integrity and delivery now pin the already certified immutable 4d5ef075 verifier. P20-T02 remains paused until the resulting new clean candidate passes Local, Pull Request, Full, independent Release, signed local attestation, and cheap cloud verification.
+    rationale: Candidate d041a697 passed the complete certification and trust campaign, but targeted closure validation exposed missing formatter ownership and exact hygiene exceptions for the signed bundle. The narrow policy correction is tracked source, so a new clean candidate must repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

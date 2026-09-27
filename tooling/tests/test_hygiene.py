@@ -58,6 +58,23 @@ class HygieneScannerTests(unittest.TestCase):
         self.assertEqual("tracked_files", policy["scope"])
         self.assertGreater(len(tracked_entries()), 100)
 
+    def test_repository_policy_waives_only_large_signed_closure_artifacts(self) -> None:
+        policy = load_policy()
+        prefix = "tests/certification/hardened-core/1.0/current/"
+        closure_waivers = {
+            item["path"]
+            for item in policy["allowed_intentional_artifacts"]
+            if item["path"].startswith(prefix)
+        }
+        self.assertEqual(
+            {
+                prefix + "evidence/product-release/product-certification-release.json",
+                prefix + "evidence/profile-full/profile-full.json",
+                prefix + "evidence/profile-release/profile-release.json",
+            },
+            closure_waivers,
+        )
+
     def test_prohibited_temporary_file_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

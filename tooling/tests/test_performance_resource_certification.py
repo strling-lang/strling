@@ -1238,6 +1238,48 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             operation.get("relative_estimator"), CLI_LAUNCH_RELATIVE_ESTIMATOR
         )
 
+    def test_paired_estimator_migration_preserves_raw_authority(self) -> None:
+        history = (
+            BASELINE_PATH.parent
+            / "history"
+            / "7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d"
+        )
+        prior = load_json(history / "baseline.json")
+        active = load_json(BASELINE_PATH)
+        self.assertEqual(
+            active["baseline_fingerprint"],
+            "fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e",
+        )
+
+        prior_rows = {
+            (row["operation_id"], row["fixture_id"]): row
+            for row in prior["measurements"]
+        }
+        active_rows = {
+            (row["operation_id"], row["fixture_id"]): row
+            for row in active["measurements"]
+        }
+        self.assertEqual(set(active_rows), set(prior_rows))
+        for key, active_row in active_rows.items():
+            prior_row = prior_rows[key]
+            if key[0] != "latency:cli-startup":
+                self.assertEqual(active_row, prior_row)
+                continue
+            for field in ("relative_samples", "relative_statistics"):
+                prior_row = {k: v for k, v in prior_row.items() if k != field}
+                active_row = {k: v for k, v in active_row.items() if k != field}
+            self.assertEqual(active_row, prior_row)
+            self.assertEqual(
+                active_rows[key]["relative_samples"],
+                [
+                    controlled_launch_estimate(requests, controls)
+                    for requests, controls in zip(
+                        active_rows[key]["repetitions"],
+                        active_rows[key]["control_repetitions"],
+                    )
+                ],
+            )
+
     def test_informational_trends_are_reported_without_blocking(self) -> None:
         self.assertEqual(
             certification_measurement_status(

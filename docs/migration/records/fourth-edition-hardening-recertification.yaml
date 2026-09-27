@@ -543,6 +543,12 @@ checkpoints:
           - check: Signed-bundle formatting and hygiene correction
             result: passed
             details: Formatting now classifies the exact current hardened-core bundle as serializer-owned signed evidence, while hygiene grants maximum-file-size exceptions only to the three required complete artifacts. Focused tests enforce the formatting exclusion and exact hygiene allowlist; no signature, evidence, profile, sample, threshold, conditioning, or publication rule is weakened. These tracked policy changes require another complete clean-source campaign.
+          - check: Closure-policy candidate readiness disposition
+            result: failed
+            details: Clean candidate 831d28c4144e61f4ab67bbd01875cbf965a6e826 passed Local 37/37 and Pull Request 79/79, then stopped before Full at the mandatory sample-free paired-launch gate. Four of five conditioned windows passed; the third semantic-tiny observation measured 13165 basis points against the unchanged 12533 relative ceiling while passing the 13673 absolute ceiling. Full, Release, and authenticated performance sampling did not start.
+          - check: Paired launch-estimator correction
+            result: passed
+            details: The runner already emitted interleaved request/control pairs, but production divided independently reduced medians and discarded their pairing. Production and trusted attestation now compute and reconstruct the median of all per-pair ratios, including the complete ratio stream and statistics in evidence. Governed migration archived baseline 7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d and deterministically derived fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e from the same raw measurements. All 54 coordinates, 270 conditioning snapshots, sample counts, 1000-basis-point relative budgets, and absolute ceilings 13673 and 13983 are preserved. A new clean candidate must prove repeated readiness and restart Local.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -606,7 +612,11 @@ commits:
       subject: "style(certification): normalize performance regression"
     - sha: d041a697e850f08d1d3c0a6e52d15a412dd02325
       subject: "fix(certification): advance trusted verifier pin"
+    - sha: 831d28c4144e61f4ab67bbd01875cbf965a6e826
+      subject: "fix(certification): preserve signed closure evidence"
+    - sha: 17abb37149e1cb8f354968c959aebd589328c5bb
+      subject: "fix(certification): preserve paired launch ratios"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate d041a697 passed the complete certification and trust campaign, but targeted closure validation exposed missing formatter ownership and exact hygiene exceptions for the signed bundle. The narrow policy correction is tracked source, so a new clean candidate must repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate 831d28c passed Local and Pull Request but the pre-Full predictor exposed a lossy paired-launch estimator. The corrected estimator and deterministically migrated baseline are tracked source, so a new clean candidate must prove repeated readiness and repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

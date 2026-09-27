@@ -1437,6 +1437,19 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "control batch normalization"):
             self._verify()
 
+    def test_performance_cli_pair_ratios_are_reconstructed(self) -> None:
+        def mutate(value):
+            details = next(
+                check["details"]
+                for check in value["operations"][0]["structured_evidence"]["checks"]
+                if check["id"].startswith("measurement:latency:cli-startup/")
+            )
+            details["relative_signal"]["samples"][0] += 1
+
+        self._resign_full_profile(mutate)
+        with self.assertRaisesRegex(AttestationError, "statistics or acceptance"):
+            self._verify()
+
     def test_performance_latency_batch_must_equal_governed_batch(self) -> None:
         def mutate(value):
             details = next(

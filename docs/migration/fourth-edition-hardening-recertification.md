@@ -1043,3 +1043,33 @@ threshold, sample count, conditioning, workload isolation, or publication
 authority changes. Because formatting and hygiene policy are tracked source
 outside the closure allowlist, a new clean candidate must repeat the full
 campaign. P20-T02 remains paused and unstarted.
+
+## Paired launch-estimator correction
+
+Clean candidate `831d28c4144e61f4ab67bbd01875cbf965a6e826` passed Local
+37/37 and Pull Request 79/79. The mandatory sample-free gate immediately before
+Full then stopped the campaign: four of five conditioned windows passed, but
+the third `latency:cli-startup/fixture:semantic-tiny` observation produced
+13,165 basis points against the unchanged 12,533 relative ceiling. Its 13,673
+absolute ceiling still passed. Full, Release, and authenticated performance
+sampling did not start at this source identity.
+
+The failure was treated as a certification-design defect. The native runner
+already emitted interleaved request/control pairs, but production reduced each
+stream independently and divided the request median by the control median.
+That aggregation discards the pair relationship named by the governed
+`paired-same-binary-launch-control` model. A bounded ten-window diagnostic
+confirmed that the retained per-pair ratios were stable inside the unchanged
+envelope; rerunning the unchanged profile was not used as diagnosis.
+
+The corrected estimator computes one request/control ratio for every
+interleaved pair and compares the median of those ratios. Production evidence
+records the complete ratio stream and statistics, and the trusted attestation
+verifier independently reconstructs them. The governed migration archived
+baseline `7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d`
+and deterministically derived active baseline
+`fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e`
+from its retained raw pairs. All raw request/control measurements, 54
+coordinates, 270 conditioning snapshots, sample counts, 1,000-basis-point
+relative budgets, and absolute ceilings 13,673 and 13,983 are unchanged. A new
+clean candidate must prove repeated paired readiness and restart at Local.

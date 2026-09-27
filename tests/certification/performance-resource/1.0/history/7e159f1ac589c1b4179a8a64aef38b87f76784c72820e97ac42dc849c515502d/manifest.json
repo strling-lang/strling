@@ -390,9 +390,8 @@
                 "absolute_ceiling": 13983,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
-            "description": "Measure representative canonical CLI validation and compilation commands; compare the median of interleaved request/control ratios to a same-binary help launch while retaining the prior raw ceiling as diagnostic history.",
-            "comparison_model": "paired-same-binary-launch-control",
-            "relative_estimator": "median-of-paired-request-control-ratios"
+            "description": "Measure representative canonical CLI validation and compilation commands; compare request work to a same-binary help launch while retaining the prior raw ceiling as diagnostic history.",
+            "comparison_model": "paired-same-binary-launch-control"
         },
         {
             "id": "latency:editor-interaction",
@@ -632,5 +631,5 @@
         "fixtures": 12,
         "resource_declarations": 56
     },
-    "manifest_fingerprint": "c5bb22db68390c44a33859d1792305352605da73383885d20f18c1ca3231daaa"
+    "manifest_fingerprint": "50ca85310dcc881356ff0ddee70df0147ea70b0af7363c7710353d3df317c608"
 }

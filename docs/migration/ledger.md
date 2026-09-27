@@ -5868,4 +5868,23 @@ changes create a new candidate, so Local, Pull Request, Full, independent
 Release, signing, trusted verification, and closure must repeat. No publication,
 push, tag, registry mutation, or public release occurred.
 
+Clean candidate `831d28c4144e61f4ab67bbd01875cbf965a6e826` passed Local
+37/37 and Pull Request 79/79, then stopped at the mandatory sample-free
+pre-Full gate. Four of five conditioned paired-launch windows passed; the third
+semantic-tiny observation was 13,165 basis points against the unchanged 12,533
+relative ceiling while still passing the 13,673 absolute ceiling. No Full,
+Release, or authenticated performance sample began.
+
+Diagnosis found that the runner preserved interleaved request/control pairs
+but production divided independently reduced medians. The corrected governed
+estimator now takes the median of all per-pair ratios, records the ratio stream,
+and requires the attestation verifier to reconstruct it. Baseline
+`7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d`
+is archived intact; active baseline
+`fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e`
+is a deterministic projection of the same raw request/control measurements.
+All sample counts, conditioning, 1,000-basis-point relative budgets, and
+absolute ceilings remain unchanged. The next clean candidate must restart the
+ordered campaign at Local after repeated sample-free readiness passes.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

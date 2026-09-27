@@ -1448,6 +1448,9 @@
                 "comparison_model": {
                     "enum": ["direct", "paired-same-binary-launch-control"]
                 },
+                "relative_estimator": {
+                    "const": "median-of-paired-request-control-ratios"
+                },
                 "unit": {
                     "enum": ["nanoseconds", "microseconds", "bytes", "status"]
                 },

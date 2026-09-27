@@ -543,9 +543,13 @@ class LocalCertificationAttestationTests(unittest.TestCase):
             ):
                 control_samples = [row["control_statistics"]["median"]] * len(samples)
                 control_statistics = performance.sample_statistics(control_samples)
-                observed_relative_signal = performance.controlled_launch_signal(
-                    row["statistics"]["median"], control_statistics["median"]
+                paired_relative_signals = performance.controlled_launch_signals(
+                    samples, control_samples
                 )
+                paired_relative_statistics = performance.sample_statistics(
+                    paired_relative_signals
+                )
+                observed_relative_signal = paired_relative_statistics["median"]
                 comparison = performance.compare_controlled_launch_metric(
                     baseline_relative_signal=row["relative_statistics"]["median"],
                     observed_relative_signal=observed_relative_signal,
@@ -560,9 +564,11 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                     "control_samples": control_samples,
                     "control_statistics": control_statistics,
                     "relative_signal": {
-                        "kind": "request-median-to-same-binary-control-ratio",
+                        "kind": performance.CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
                         "unit": "basis-points",
                         "observed": observed_relative_signal,
+                        "samples": paired_relative_signals,
+                        "statistics": paired_relative_statistics,
                     },
                     "control_batch_duration_samples": [
                         sample * row["batch_iterations"] for sample in control_samples

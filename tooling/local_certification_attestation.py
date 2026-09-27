@@ -726,10 +726,21 @@ def _validate_performance_measurements(
                 raise AttestationError(
                     f"performance control batch normalization mismatch: {coordinate}"
                 )
+            if (
+                performance.operation_relative_estimator(definition)
+                != performance.CLI_LAUNCH_RELATIVE_ESTIMATOR
+            ):
+                raise AttestationError(
+                    f"performance paired estimator is not governed: {coordinate}"
+                )
             control_statistics = performance.sample_statistics(control_samples)
-            observed_relative_signal = performance.controlled_launch_signal(
-                statistics["median"], control_statistics["median"]
+            paired_relative_signals = performance.controlled_launch_signals(
+                samples, control_samples
             )
+            paired_relative_statistics = performance.sample_statistics(
+                paired_relative_signals
+            )
+            observed_relative_signal = paired_relative_statistics["median"]
             comparison = performance.compare_controlled_launch_metric(
                 baseline_relative_signal=source["relative_statistics"]["median"],
                 observed_relative_signal=observed_relative_signal,
@@ -743,9 +754,11 @@ def _validate_performance_measurements(
             controlled_evidence_matches = details.get(
                 "control_statistics"
             ) == control_statistics and details.get("relative_signal") == {
-                "kind": "request-median-to-same-binary-control-ratio",
+                "kind": performance.CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
                 "unit": "basis-points",
                 "observed": observed_relative_signal,
+                "samples": paired_relative_signals,
+                "statistics": paired_relative_statistics,
             }
             coordinate_sample_count += expected_count
         else:

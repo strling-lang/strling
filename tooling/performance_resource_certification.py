@@ -154,6 +154,8 @@ RESOURCE_OPERATION_IDS = [
 OPERATION_IDS = PERFORMANCE_OPERATION_IDS + RESOURCE_OPERATION_IDS
 RESOURCE_TARGET_DIRECTORY = "target/rust-1.75-resource-certification"
 CLI_LAUNCH_COMPARISON_MODEL = "paired-same-binary-launch-control"
+CLI_LAUNCH_RELATIVE_ESTIMATOR = "median-of-paired-request-control-ratios"
+CLI_LAUNCH_RELATIVE_SIGNAL_KIND = "median-paired-request-control-ratios"
 PER_COORDINATE_BASELINE_CONDITIONING = "authenticated-identical-before-each-coordinate"
 CLI_LAUNCH_CONTROL_FIELDS = {
     "control_repetitions",
@@ -682,6 +684,18 @@ def validate_manifest(
             raise PerformanceResourceError(
                 "comparison-model", "paired launch control requires a latency operation"
             )
+        relative_estimator = operation_relative_estimator(operation)
+        if comparison_model == CLI_LAUNCH_COMPARISON_MODEL:
+            if relative_estimator not in {None, CLI_LAUNCH_RELATIVE_ESTIMATOR}:
+                raise PerformanceResourceError(
+                    "relative-estimator",
+                    f"unsupported paired launch estimator for {operation['id']}",
+                )
+        elif relative_estimator is not None:
+            raise PerformanceResourceError(
+                "relative-estimator",
+                f"direct comparison cannot define a relative estimator for {operation['id']}",
+            )
         if not set(operation["fixture_ids"]).issubset(fixture_ids):
             raise PerformanceResourceError(
                 "fixture-reference", f"unknown fixture for {operation['id']}"
@@ -929,6 +943,11 @@ def operation_comparison_model(operation: Mapping[str, object]) -> str:
     return cast(str, operation.get("comparison_model", "direct"))
 
 
+def operation_relative_estimator(operation: Mapping[str, object]) -> str | None:
+    estimator = operation.get("relative_estimator")
+    return cast(str, estimator) if estimator is not None else None
+
+
 def _authenticated_measurement_samples(
     observation: Mapping[str, object], comparison_model: str
 ) -> tuple[list[int], list[int], list[int]]:
@@ -945,6 +964,28 @@ def controlled_launch_signal(request_median: int, control_median: int) -> int:
             "launch-control-statistic", "request and control medians must be positive"
         )
     return math.ceil(request_median * 10_000 / control_median)
+
+
+def controlled_launch_signals(
+    request_samples: Sequence[int], control_samples: Sequence[int]
+) -> list[int]:
+    if not request_samples or len(request_samples) != len(control_samples):
+        raise PerformanceResourceError(
+            "launch-control-pairs",
+            "request and control samples must form a non-empty one-to-one sequence",
+        )
+    return [
+        controlled_launch_signal(request, control)
+        for request, control in zip(request_samples, control_samples)
+    ]
+
+
+def controlled_launch_estimate(
+    request_samples: Sequence[int], control_samples: Sequence[int]
+) -> int:
+    return sample_statistics(
+        controlled_launch_signals(request_samples, control_samples)
+    )["median"]
 
 
 def compare_controlled_launch_metric(
@@ -1342,10 +1383,18 @@ def validate_baseline(
                     "launch-control-statistics",
                     f"launch-control statistics changed for {key}",
                 )
-            relative_samples = [
-                controlled_launch_signal(request, control)
-                for request, control in zip(samples, control_samples)
-            ]
+            if operation_relative_estimator(operation) is None:
+                relative_samples = [
+                    controlled_launch_signal(request, control)
+                    for request, control in zip(samples, control_samples)
+                ]
+            else:
+                relative_samples = [
+                    controlled_launch_estimate(request_row, control_row)
+                    for request_row, control_row in zip(
+                        repetitions, control_repetitions
+                    )
+                ]
             if measurement["relative_samples"] != relative_samples:
                 raise PerformanceResourceError(
                     "launch-control-signal", f"relative launch signal changed for {key}"
@@ -3392,10 +3441,16 @@ def create_active_contract(
             control_samples = [
                 sample_statistics(values)["median"] for values in control_rows
             ]
-            relative_samples = [
-                controlled_launch_signal(request, control)
-                for request, control in zip(representative, control_samples)
-            ]
+            if operation_relative_estimator(operation) is None:
+                relative_samples = [
+                    controlled_launch_signal(request, control)
+                    for request, control in zip(representative, control_samples)
+                ]
+            else:
+                relative_samples = [
+                    controlled_launch_estimate(request_row, control_row)
+                    for request_row, control_row in zip(repeated, control_rows)
+                ]
             relative_statistics = sample_statistics(relative_samples)
             controlled_fields = {
                 "control_repetitions": control_rows,
@@ -3780,6 +3835,11 @@ def validate_cli_launch_control_environment_rollover(
     if candidate_cli.pop("comparison_model", None) != CLI_LAUNCH_COMPARISON_MODEL:
         raise PerformanceResourceError(
             "comparison-model", "candidate CLI contract lacks paired launch control"
+        )
+    candidate_estimator = candidate_cli.pop("relative_estimator", None)
+    if candidate_estimator not in {None, CLI_LAUNCH_RELATIVE_ESTIMATOR}:
+        raise PerformanceResourceError(
+            "relative-estimator", "candidate CLI contract has an unknown estimator"
         )
     candidate_cli["description"] = prior_cli["description"]
     if prior_projection != candidate_projection:
@@ -4646,10 +4706,20 @@ def certify(
             observed = sample_statistics(samples)
             controlled_details: dict[str, object] = {}
             if comparison_model == CLI_LAUNCH_COMPARISON_MODEL:
+                if (
+                    operation_relative_estimator(operation)
+                    != CLI_LAUNCH_RELATIVE_ESTIMATOR
+                ):
+                    raise PerformanceResourceError(
+                        "relative-estimator",
+                        f"paired launch estimator is not governed for {key}",
+                    )
                 control_statistics = sample_statistics(control_samples)
-                observed_relative_signal = controlled_launch_signal(
-                    observed["median"], control_statistics["median"]
+                paired_relative_signals = controlled_launch_signals(
+                    samples, control_samples
                 )
+                paired_relative_statistics = sample_statistics(paired_relative_signals)
+                observed_relative_signal = paired_relative_statistics["median"]
                 comparison = compare_controlled_launch_metric(
                     baseline_relative_signal=baseline_row["relative_statistics"][
                         "median"
@@ -4666,9 +4736,11 @@ def certify(
                     "control_samples": control_samples,
                     "control_statistics": control_statistics,
                     "relative_signal": {
-                        "kind": "request-median-to-same-binary-control-ratio",
+                        "kind": CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
                         "unit": "basis-points",
                         "observed": observed_relative_signal,
+                        "samples": paired_relative_signals,
+                        "statistics": paired_relative_statistics,
                     },
                     "control_batch_duration_samples": observation[
                         "control_batch_duration_samples"
@@ -5063,10 +5135,11 @@ def _migrate_cli_launch_control_command(
         if row["id"] == "latency:cli-startup"
     )
     candidate_operation["comparison_model"] = CLI_LAUNCH_COMPARISON_MODEL
+    candidate_operation["relative_estimator"] = CLI_LAUNCH_RELATIVE_ESTIMATOR
     candidate_operation["description"] = (
         "Measure representative canonical CLI validation and compilation commands; "
-        "compare request work to a same-binary help launch while retaining the prior "
-        "raw ceiling as diagnostic history."
+        "compare the median of interleaved request/control ratios to a same-binary "
+        "help launch while retaining the prior raw ceiling as diagnostic history."
     )
 
     if not environment_compatible:
@@ -5190,8 +5263,8 @@ def _migrate_cli_launch_control_command(
         request_medians = [sample_statistics(row)["median"] for row in repetitions[key]]
         control_medians = [sample_statistics(row)["median"] for row in controls[key]]
         relative_samples = [
-            controlled_launch_signal(request, control)
-            for request, control in zip(request_medians, control_medians)
+            controlled_launch_estimate(request_row, control_row)
+            for request_row, control_row in zip(repetitions[key], controls[key])
         ]
         relative_statistics = sample_statistics(relative_samples)
         relative_mad_basis_points = math.ceil(
@@ -5233,9 +5306,9 @@ def _migrate_cli_launch_control_command(
                     "relative_regression_basis_points": relative_budget,
                     "absolute_ceiling": ratio_absolute_ceiling,
                     "rationale": (
-                        "Five request-to-same-binary-control ratios determine relative "
-                        "variance and an absolute ratio ceiling; raw nanoseconds remain "
-                        "authenticated diagnostic evidence."
+                        "Five medians of interleaved request-to-same-binary-control "
+                        "ratios determine relative variance and an absolute ratio ceiling; "
+                        "raw nanoseconds remain authenticated diagnostic evidence."
                     ),
                 },
             }
@@ -5335,6 +5408,191 @@ def _migrate_cli_launch_control_command(
         "governed_sample_count": sum(
             len(row) for key in keys for row in [*repetitions[key], *controls[key]]
         ),
+    }
+
+
+def _migrate_paired_launch_estimator_command(
+    *,
+    confirm_paired_estimator: bool,
+    rationale: str,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    """Derive the paired launch estimator from retained interleaved samples."""
+
+    if not confirm_paired_estimator:
+        raise PerformanceResourceError(
+            "paired-estimator-confirmation",
+            "paired launch estimator migration requires explicit confirmation",
+        )
+    if len(rationale.strip()) < 20:
+        raise PerformanceResourceError(
+            "baseline-rationale", "paired estimator rationale must be reviewable"
+        )
+    commit, dirty = _git_identity(root)
+    if dirty:
+        raise PerformanceResourceError(
+            "dirty-paired-estimator-migration",
+            "paired estimator migration requires a clean worktree",
+        )
+
+    manifest_path = root / MANIFEST_PATH.relative_to(ROOT)
+    baseline_path = root / BASELINE_PATH.relative_to(ROOT)
+    evidence_path = root / VALID_EVIDENCE_PATH.relative_to(ROOT)
+    fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
+    prior_manifest = load_json(manifest_path)
+    prior_baseline = load_json(baseline_path)
+    prior_evidence = load_json(evidence_path)
+    validate_manifest(prior_manifest, root=root, fixtures=fixtures)
+    validate_baseline(prior_baseline, manifest=prior_manifest, fixtures=fixtures)
+    validate_evidence(prior_evidence, manifest=prior_manifest)
+
+    prior_operation = next(
+        row
+        for row in cast(list[dict[str, Any]], prior_manifest["operations"])
+        if row["id"] == "latency:cli-startup"
+    )
+    if operation_comparison_model(prior_operation) != CLI_LAUNCH_COMPARISON_MODEL:
+        raise PerformanceResourceError(
+            "paired-estimator-model", "CLI launch control is not active"
+        )
+    if operation_relative_estimator(prior_operation) is not None:
+        raise PerformanceResourceError(
+            "paired-estimator-already-active",
+            "the median paired-ratio estimator is already active",
+        )
+
+    source_changes = _artifact_source_changes(
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=commit,
+        root=root,
+    )
+    changed_artifact_sources = {
+        name: paths for name, paths in source_changes.items() if paths
+    }
+    if changed_artifact_sources:
+        raise PerformanceResourceError(
+            "paired-estimator-artifact-source",
+            "estimator migration cannot preserve artifact identities after product source changes",
+        )
+
+    candidate_manifest = copy.deepcopy(prior_manifest)
+    candidate_operation = next(
+        row
+        for row in cast(list[dict[str, Any]], candidate_manifest["operations"])
+        if row["id"] == "latency:cli-startup"
+    )
+    candidate_operation["relative_estimator"] = CLI_LAUNCH_RELATIVE_ESTIMATOR
+    candidate_operation["description"] = (
+        "Measure representative canonical CLI validation and compilation commands; "
+        "compare the median of interleaved request/control ratios to a same-binary "
+        "help launch while retaining the prior raw ceiling as diagnostic history."
+    )
+    candidate_manifest["manifest_fingerprint"] = document_fingerprint(
+        candidate_manifest, "manifest_fingerprint"
+    )
+
+    candidate_baseline = copy.deepcopy(prior_baseline)
+    migration: list[dict[str, object]] = []
+    for row in cast(list[dict[str, Any]], candidate_baseline["measurements"]):
+        if row["operation_id"] != "latency:cli-startup":
+            continue
+        prior_row = next(
+            candidate
+            for candidate in cast(list[dict[str, Any]], prior_baseline["measurements"])
+            if candidate["operation_id"] == row["operation_id"]
+            and candidate["fixture_id"] == row["fixture_id"]
+        )
+        relative_samples = [
+            controlled_launch_estimate(request_samples, control_samples)
+            for request_samples, control_samples in zip(
+                row["repetitions"], row["control_repetitions"]
+            )
+        ]
+        relative_statistics = sample_statistics(relative_samples)
+        derived_budget = derived_relative_budget_basis_points(
+            median=relative_statistics["median"],
+            mad=relative_statistics["mad"],
+            floor=candidate_manifest["measurement_policy"][
+                "minimum_relative_budget_basis_points"
+            ],
+            maximum=candidate_manifest["measurement_policy"][
+                "maximum_relative_budget_basis_points"
+            ],
+        )
+        if derived_budget != row["budget"]["relative_regression_basis_points"]:
+            raise PerformanceResourceError(
+                "paired-estimator-budget-drift",
+                f"paired estimator would alter the governed relative threshold for "
+                f"{(row['operation_id'], row['fixture_id'])}",
+            )
+        row["relative_samples"] = relative_samples
+        row["relative_statistics"] = relative_statistics
+        migration.append(
+            {
+                "coordinate": _coordinate_id(
+                    (cast(str, row["operation_id"]), cast(str, row["fixture_id"]))
+                ),
+                "prior_relative_samples": prior_row["relative_samples"],
+                "paired_relative_samples": relative_samples,
+                "relative_budget_basis_points": derived_budget,
+                "absolute_ceiling": row["budget"]["absolute_ceiling"],
+                "raw_samples_preserved": (
+                    row["repetitions"] == prior_row["repetitions"]
+                    and row["control_repetitions"] == prior_row["control_repetitions"]
+                ),
+            }
+        )
+
+    candidate_baseline.update(
+        {
+            "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+            "source_commit": commit,
+            "update_rationale": rationale,
+            "baseline_fingerprint": "0" * 64,
+        }
+    )
+    candidate_baseline["baseline_fingerprint"] = document_fingerprint(
+        candidate_baseline, "baseline_fingerprint"
+    )
+    candidate_evidence = copy.deepcopy(prior_evidence)
+    candidate_evidence["manifest_fingerprint"] = candidate_manifest[
+        "manifest_fingerprint"
+    ]
+
+    validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+    validate_baseline(
+        candidate_baseline, manifest=candidate_manifest, fixtures=fixtures
+    )
+    validate_evidence(candidate_evidence, manifest=candidate_manifest)
+    if any(not cast(bool, row["raw_samples_preserved"]) for row in migration):
+        raise PerformanceResourceError(
+            "paired-estimator-sample-drift", "retained raw samples changed"
+        )
+
+    prior_fingerprint = cast(str, prior_baseline["baseline_fingerprint"])
+    history = root / PERFORMANCE_HISTORY_PATH.relative_to(ROOT) / prior_fingerprint
+    if history.exists():
+        raise PerformanceResourceError(
+            "paired-estimator-history-exists",
+            f"refusing to overwrite immutable prior authority {history.relative_to(root)}",
+        )
+    _write_json(history / "manifest.json", prior_manifest, root=root)
+    _write_json(history / "baseline.json", prior_baseline, root=root)
+    _write_json(history / "valid-evidence.json", prior_evidence, root=root)
+    _write_json(manifest_path, candidate_manifest, root=root)
+    _write_json(baseline_path, candidate_baseline, root=root)
+    _write_json(evidence_path, candidate_evidence, root=root)
+    return {
+        "status": "passed",
+        "source_commit": commit,
+        "prior_baseline_fingerprint": prior_fingerprint,
+        "baseline_fingerprint": candidate_baseline["baseline_fingerprint"],
+        "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+        "history_path": history.relative_to(root).as_posix(),
+        "relative_estimator": CLI_LAUNCH_RELATIVE_ESTIMATOR,
+        "raw_measurements_preserved": True,
+        "thresholds_preserved": True,
+        "migration": migration,
     }
 
 
@@ -5615,6 +5873,20 @@ def main(argv: list[str] | None = None) -> int:
                 rationale=arguments.rationale,
                 rollover_from=arguments.rollover_from,
                 expected_os_build=arguments.expected_os_build,
+            )
+            status = cast(str, result["status"])
+        elif values and values[0] == "migrate-paired-launch-estimator":
+            parser = argparse.ArgumentParser(
+                description="Derive CLI launch ratios from retained sample pairs"
+            )
+            parser.add_argument("migrate-paired-launch-estimator")
+            parser.add_argument("--confirm-paired-estimator", action="store_true")
+            parser.add_argument("--rationale", required=True)
+            parser.add_argument("--json", action="store_true")
+            arguments = parser.parse_args(values)
+            result = _migrate_paired_launch_estimator_command(
+                confirm_paired_estimator=arguments.confirm_paired_estimator,
+                rationale=arguments.rationale,
             )
             status = cast(str, result["status"])
         elif values and values[0] == "baseline":

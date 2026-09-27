@@ -16,6 +16,7 @@ from jsonschema import Draft202012Validator
 
 from tooling.performance_resource_certification import (
     CLI_LAUNCH_COMPARISON_MODEL,
+    CLI_LAUNCH_RELATIVE_ESTIMATOR,
     FIXTURE_IDS,
     MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
     MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS,
@@ -51,7 +52,9 @@ from tooling.performance_resource_certification import (
     conditioning_snapshots_compatible,
     compare_controlled_launch_metric,
     compare_hard_metric,
+    controlled_launch_estimate,
     controlled_launch_signal,
+    controlled_launch_signals,
     create_active_contract,
     derived_relative_budget_basis_points,
     document_fingerprint,
@@ -182,8 +185,13 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         prior_manifest = load_json(prior_root / "manifest.json")
         prior_baseline = load_json(prior_root / "baseline.json")
-        candidate_manifest = copy.deepcopy(self.manifest)
-        candidate_baseline = load_json(BASELINE_PATH)
+        launch_control_root = (
+            BASELINE_PATH.parent
+            / "history"
+            / "7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d"
+        )
+        candidate_manifest = load_json(launch_control_root / "manifest.json")
+        candidate_baseline = load_json(launch_control_root / "baseline.json")
         artifact_source_changes = _artifact_source_changes(
             baseline_source_commit=prior_baseline["source_commit"],
             candidate_source_commit=candidate_baseline["source_commit"],
@@ -1190,6 +1198,45 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertFalse(relative_over["relative_passed"])
         self.assertEqual(absolute_over["status"], "failed")
         self.assertFalse(absolute_over["absolute_passed"])
+
+    def test_paired_launch_estimator_preserves_interleaved_pairs(self) -> None:
+        requests = [100, 1_000, 1_000]
+        controls = [100, 100, 1_000]
+        paired = controlled_launch_signals(requests, controls)
+
+        self.assertEqual(paired, [10_000, 100_000, 10_000])
+        self.assertEqual(controlled_launch_estimate(requests, controls), 10_000)
+        self.assertEqual(
+            controlled_launch_signal(
+                sample_statistics(requests)["median"],
+                sample_statistics(controls)["median"],
+            ),
+            100_000,
+        )
+        self.assertNotEqual(
+            controlled_launch_estimate(requests, controls),
+            controlled_launch_signal(
+                sample_statistics(requests)["median"],
+                sample_statistics(controls)["median"],
+            ),
+        )
+        for request_samples, control_samples in (([], []), ([100], [100, 100])):
+            with self.subTest(
+                request_samples=request_samples, control_samples=control_samples
+            ):
+                with self.assertRaises(PerformanceResourceError) as raised:
+                    controlled_launch_estimate(request_samples, control_samples)
+                self.assertEqual(raised.exception.code, "launch-control-pairs")
+
+    def test_cli_operation_governs_paired_ratio_estimator(self) -> None:
+        operation = next(
+            row
+            for row in self.manifest["operations"]
+            if row["id"] == "latency:cli-startup"
+        )
+        self.assertEqual(
+            operation.get("relative_estimator"), CLI_LAUNCH_RELATIVE_ESTIMATOR
+        )
 
     def test_informational_trends_are_reported_without_blocking(self) -> None:
         self.assertEqual(

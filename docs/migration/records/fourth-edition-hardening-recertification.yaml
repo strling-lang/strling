@@ -549,6 +549,12 @@ checkpoints:
           - check: Paired launch-estimator correction
             result: passed
             details: The runner already emitted interleaved request/control pairs, but production divided independently reduced medians and discarded their pairing. Production and trusted attestation now compute and reconstruct the median of all per-pair ratios, including the complete ratio stream and statistics in evidence. Governed migration archived baseline 7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d and deterministically derived fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e from the same raw measurements. All 54 coordinates, 270 conditioning snapshots, sample counts, 1000-basis-point relative budgets, and absolute ceilings 13673 and 13983 are preserved. A new clean candidate must prove repeated readiness and restart Local.
+          - check: Paired-estimator candidate disposition
+            result: failed
+            details: Clean candidate 50e6b962aa364dfbf49e152d3a16ff2f5bc4e6e6 passed the complete sample-free preflight, five consecutive conditioned paired-launch windows, and Local 37/37. Pull Request passed 72 operations before test@lsp failed at stage 73/79 after 237 seconds. The exact governed LSP operation then passed 572/572 tests in 219 seconds under the same frozen source and exact runtime environment. Full, Release, and authenticated performance sampling did not start.
+          - check: Profile fail-fast evidence correction
+            result: passed
+            details: The profile runner started stage 74 after recording the blocking LSP failure and retained failed child output in memory until the profile returned. Enforcing stop-on-failure therefore made atomic diagnostic evidence unavailable. The runner now stops after the first failed, unavailable, or incomplete result while preserving the exact completed-prefix JSON artifact, progress ledger, and bounded blocking-operation output. A focused regression prevents later execution after a blocking result, and the complete quality-runner test module passes. This tracked correction requires a new clean candidate to restart at Local.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -616,7 +622,9 @@ commits:
       subject: "fix(certification): preserve signed closure evidence"
     - sha: 17abb37149e1cb8f354968c959aebd589328c5bb
       subject: "fix(certification): preserve paired launch ratios"
+    - sha: 50e6b962aa364dfbf49e152d3a16ff2f5bc4e6e6
+      subject: "fix(certification): migrate paired launch estimator"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 831d28c passed Local and Pull Request but the pre-Full predictor exposed a lossy paired-launch estimator. The corrected estimator and deterministically migrated baseline are tracked source, so a new clean candidate must prove repeated readiness and repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate 50e6b962 passed all sample-free predictors and Local, then stopped in Pull Request when the profile runner both continued after a blocking LSP result and withheld its child output until profile completion. The fail-fast evidence correction is tracked source, so a new clean candidate must repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

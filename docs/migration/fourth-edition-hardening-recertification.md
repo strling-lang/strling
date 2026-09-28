@@ -1073,3 +1073,30 @@ from its retained raw pairs. All raw request/control measurements, 54
 coordinates, 270 conditioning snapshots, sample counts, 1,000-basis-point
 relative budgets, and absolute ceilings 13,673 and 13,983 are unchanged. A new
 clean candidate must prove repeated paired readiness and restart at Local.
+
+## Profile fail-fast correction
+
+Clean candidate `50e6b962aa364dfbf49e152d3a16ff2f5bc4e6e6` passed every
+sample-free predictor, including five consecutive conditioned paired-launch
+windows, and then passed Local 37/37. Pull Request passed its first 72
+operations, including the 44-minute repository test operation, before
+`test@lsp` reported failure at stage 73/79 after 237 seconds. The campaign was
+stopped before Full, Release, or authenticated performance sampling.
+
+The exact governed `./strling test lsp` operation passed independently with
+572/572 tests in 219 seconds under the same frozen source and exact runtime
+environment. The profile runner nevertheless started stage 74 after recording
+the blocking failure, while retaining the failed child output in memory until
+the whole profile returned. Enforcing the campaign's stop-on-failure rule
+therefore made the failed operation's diagnostic output unavailable. That is a
+deterministic certification-orchestration defect, not an acceptable reason to
+rerun the unchanged expensive profile.
+
+The runner now stops immediately after the first failed, unavailable, or
+incomplete operation. It still finalizes the progress ledger, writes the JSON
+artifact for the exact completed prefix, and renders only the blocking
+operation's bounded child output. A focused regression proves that a later
+operation cannot execute after a blocking result, and the complete quality
+runner test module remains green. This tracked correction requires another
+clean candidate to restart at Local; if the LSP operation fails again, its
+exact output will be preserved for atomic diagnosis.

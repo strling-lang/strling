@@ -1547,6 +1547,8 @@ class QualityRunner:
             results.append(result)
             if progress is not None and timing is not None:
                 progress.stage_terminal(timing, result.status)
+            if result.status in ("failed", "unavailable", "incomplete"):
+                break
         return results
 
     def run_repository_operation(

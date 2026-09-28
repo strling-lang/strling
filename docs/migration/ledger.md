@@ -5887,4 +5887,21 @@ All sample counts, conditioning, 1,000-basis-point relative budgets, and
 absolute ceilings remain unchanged. The next clean candidate must restart the
 ordered campaign at Local after repeated sample-free readiness passes.
 
+Clean candidate `50e6b962aa364dfbf49e152d3a16ff2f5bc4e6e6` passed the
+complete sample-free preflight, five consecutive conditioned paired-launch
+windows, and Local 37/37. Pull Request passed 72 operations before `test@lsp`
+failed at stage 73/79 after 237 seconds. The exact LSP operation then passed
+572/572 tests in 219 seconds under the same source and exact runtime
+environment. Full, Release, and authenticated performance sampling did not
+start.
+
+The profile runner continued into stage 74 after the blocking result and held
+the failed child output until profile completion. Stopping the campaign as
+required consequently discarded the evidence needed to identify an atomic LSP
+failure. The runner now stops on the first failed, unavailable, or incomplete
+result while preserving the completed-prefix JSON artifact, progress ledger,
+and bounded blocking-operation output. A focused regression and the complete
+quality-runner module prove the correction. Because this is tracked source, a
+new clean candidate must restart at Local.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

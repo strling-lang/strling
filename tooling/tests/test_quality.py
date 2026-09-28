@@ -1845,6 +1845,42 @@ class QualityRoutingTests(unittest.TestCase):
                 all(record["operation_count"] == 3 for record in stage_records)
             )
 
+    def test_profile_stops_after_first_blocking_result(self) -> None:
+        alpha = target_config(
+            {"lint": "configured", "typecheck": "configured", "build": "configured"},
+            {
+                "lint": ["fixture-pass"],
+                "typecheck": ["fixture-failure"],
+                "build": ["fixture-must-not-run"],
+            },
+        )
+        data = policy(alpha=alpha)
+        members = [
+            {"operation": "lint", "targets": ["alpha"]},
+            {"operation": "typecheck", "targets": ["alpha"]},
+            {"operation": "build", "targets": ["alpha"]},
+        ]
+        policy_data = cast(dict[str, object], data["policy"])
+        profiles = cast(dict[str, object], policy_data["profiles"])
+        for raw_profile in profiles.values():
+            cast(dict[str, object], raw_profile)["operations"] = members
+
+        invoked: list[str] = []
+
+        def execute(_target: Target, operation: str, _command: list[str]) -> Execution:
+            invoked.append(operation)
+            if operation == "typecheck":
+                return Execution(7, stderr="focused failure\n")
+            return Execution(0)
+
+        results = QualityRunner(Toolchain(data, Path.cwd()), execute).run_profile(
+            "pull-request", None
+        )
+
+        self.assertEqual(invoked, ["lint", "typecheck"])
+        self.assertEqual([result.status for result in results], ["passed", "failed"])
+        self.assertEqual(results[-1].stderr, "focused failure\n")
+
     def test_interrupted_progress_ledger_retains_parseable_completed_lines(
         self,
     ) -> None:

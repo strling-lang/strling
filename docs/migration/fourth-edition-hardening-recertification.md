@@ -1137,5 +1137,23 @@ or discarded-sample rule. A one-time clean-source migration must recalibrate
 all 54 coordinates under five coordinate-local conditioned repetitions, prove
 every new median against the prior hard ceilings, archive baseline
 `fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e`,
-and preserve every prior budget and ceiling. The resulting tracked authority
-requires a new candidate to restart at Local.
+and retain or tighten every prior budget and ceiling. The resulting tracked
+authority requires a new candidate to restart at Local.
+
+The first governed calibration completed measurement and then failed closed
+before writing because the migration substituted its one-time command for the
+baseline's canonical update command. The focused regression now performs full
+manifest and baseline validation and preserves the canonical command. The
+second calibration also wrote nothing: its first coordinate derived a relative
+budget above the prior 1,000-basis-point threshold, and exact budget
+preservation conflicted with the baseline validator's derivation invariant.
+The migration now retains the newly derived budget only when it is equal to or
+stricter than the prior threshold, caps every absolute ceiling at its prior
+value, and rejects any weakening before writing.
+
+Five independent non-authoritative five-repetition groups then exercised the
+exact failing `latency:semantic-parse/fixture:semantic-tiny` boundary with 128
+warmups. All five groups derived the unchanged 1,000-basis-point budget; their
+median-of-medians values were `9609`, `9558`, `9612`, `9709`, and `9714 ns`,
+and all passed the prior relative and absolute ceilings. The 25 observations
+used authenticated conditioning but entered no certification sample ledger.

@@ -5921,9 +5921,19 @@ passed but showed the same settling direction. Five conditioned runs with 128
 fixed warmups passed at 616,016-661,766 ns without directional degradation or
 workload-isolation defects. The governed correction therefore raises only the
 latency warmup count from 16 to 128. A one-time five-repetition recalibration
-must pass all 54 coordinates against their prior hard ceilings, preserve every
-budget and threshold, and archive the current baseline before a new candidate
-restarts at Local. Sample counts, workloads, batching, ratios, conditioning,
-affinity, and authenticated-sample rules remain unchanged.
+must pass all 54 coordinates against their prior hard ceilings, retain or
+tighten every budget and threshold, and archive the current baseline before a
+new candidate restarts at Local. Sample counts, workloads, batching, ratios,
+conditioning, affinity, and authenticated-sample rules remain unchanged.
+
+Two complete calibration measurements subsequently failed closed before any
+authority write. The first exposed an incorrect one-time update-command
+substitution; the second derived a budget above the prior threshold and exposed
+that exact preservation conflicts with the validator's derivation invariant.
+The corrected migration preserves the canonical update command, accepts only
+an equal-or-stricter derived relative budget, and caps absolute ceilings at
+their prior values. Five independent five-repetition semantic-parse tiny
+diagnostics then derived 1,000 basis points in every group and passed all prior
+ceilings without entering an authenticated certification ledger.
 
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

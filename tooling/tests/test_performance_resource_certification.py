@@ -261,10 +261,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
 
         self.assertEqual(len(comparisons), 54)
         self.assertTrue(all(row["status"] == "passed" for row in comparisons))
-        self.assertEqual(
-            [row["budget"] for row in candidate_baseline["measurements"]],
-            [row["budget"] for row in prior_baseline["measurements"]],
-        )
+        for candidate, prior in zip(
+            candidate_baseline["measurements"], prior_baseline["measurements"]
+        ):
+            self.assertLessEqual(
+                candidate["budget"]["relative_regression_basis_points"],
+                prior["budget"]["relative_regression_basis_points"],
+            )
+            self.assertLessEqual(
+                candidate["budget"]["absolute_ceiling"],
+                prior["budget"]["absolute_ceiling"],
+            )
         validate_manifest(candidate_manifest, fixtures=self.fixtures)
         validate_baseline(
             candidate_baseline,
@@ -281,6 +288,19 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 copy.deepcopy(prior_baseline),
             )
         self.assertEqual(raised.exception.code, "warmup-contract-drift")
+
+        weakened_baseline = copy.deepcopy(prior_baseline)
+        weakened_baseline["measurements"][0]["budget"][
+            "relative_regression_basis_points"
+        ] += 1
+        with self.assertRaises(PerformanceResourceError) as raised:
+            _preserve_warmup_migration_thresholds(
+                self.manifest,
+                prior_baseline,
+                copy.deepcopy(candidate_manifest),
+                weakened_baseline,
+            )
+        self.assertEqual(raised.exception.code, "warmup-budget-weakening")
 
     def test_resource_identity_refresh_does_not_recalibrate_measurements(self) -> None:
         stale = copy.deepcopy(self.inventory)

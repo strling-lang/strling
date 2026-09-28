@@ -5674,7 +5674,18 @@ def _preserve_warmup_migration_thresholds(
                 "comparison": comparison,
             }
         )
-        candidate["budget"] = copy.deepcopy(prior["budget"])
+        if (
+            candidate["budget"]["relative_regression_basis_points"]
+            > prior["budget"]["relative_regression_basis_points"]
+        ):
+            raise PerformanceResourceError(
+                "warmup-budget-weakening",
+                f"recalibration would weaken the prior relative budget for {key}",
+            )
+        candidate["budget"]["absolute_ceiling"] = min(
+            candidate["budget"]["absolute_ceiling"],
+            prior["budget"]["absolute_ceiling"],
+        )
 
     failed = [row for row in comparisons if row["status"] != "passed"]
     if failed:
@@ -5683,13 +5694,17 @@ def _preserve_warmup_migration_thresholds(
             f"{len(failed)} recalibrated coordinates exceed prior hard ceilings",
         )
 
-    prior_operations = {
-        row["id"]: row
-        for row in cast(list[dict[str, Any]], prior_manifest["operations"])
-    }
     for operation_id in PERFORMANCE_OPERATION_IDS:
-        candidate_operations[operation_id]["budget"] = copy.deepcopy(
-            prior_operations[operation_id]["budget"]
+        operation_rows = [
+            row for key, row in candidate_rows.items() if key[0] == operation_id
+        ]
+        candidate_operations[operation_id]["budget"][
+            "relative_regression_basis_points"
+        ] = max(
+            row["budget"]["relative_regression_basis_points"] for row in operation_rows
+        )
+        candidate_operations[operation_id]["budget"]["absolute_ceiling"] = max(
+            row["budget"]["absolute_ceiling"] for row in operation_rows
         )
     candidate_manifest["manifest_fingerprint"] = document_fingerprint(
         candidate_manifest, "manifest_fingerprint"

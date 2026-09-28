@@ -5946,4 +5946,14 @@ minimum. This evidence shape necessarily requires a newly qualified trusted
 verifier, so one pin-only complete campaign must follow its first successful
 Full/Release qualification before cloud closure.
 
+The next clean-source calibration failed closed before writes on a
+semantic-analysis pathological relative MAD of 561 basis points. Direct
+single-coordinate evidence showed five-repetition estimator intermittency:
+one of five groups exceeded the unchanged 500-basis-point limit even though
+all 25 observations passed the prior hard ceilings. All sliding nine-value
+windows passed, followed by five fresh nine-repetition groups at 217, 342, 37,
+55, and 323 basis points. Calibration now collects nine repetitions for every
+coordinate; warmups, samples, thresholds, conditioning, and workloads are not
+weakened.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

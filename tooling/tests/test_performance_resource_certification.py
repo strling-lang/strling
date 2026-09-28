@@ -23,6 +23,7 @@ from tooling.performance_resource_certification import (
     OPERATION_IDS,
     PERFORMANCE_OPERATION_IDS,
     RESOURCE_OPERATION_IDS,
+    STATIONARY_BASELINE_REPETITIONS,
     STATIONARY_WARMUP_ITERATIONS,
     PerformanceExecutionLedger,
     PerformanceResourceError,
@@ -250,7 +251,48 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         candidate_manifest["measurement_policy"]["warmup_iterations"] = (
             STATIONARY_WARMUP_ITERATIONS
         )
+        candidate_manifest["measurement_policy"]["baseline_repetitions"] = (
+            STATIONARY_BASELINE_REPETITIONS
+        )
         candidate_baseline = copy.deepcopy(prior_baseline)
+        candidate_baseline["conditioning_repetitions"].extend(
+            copy.deepcopy(candidate_baseline["conditioning_repetitions"][:4])
+        )
+        for measurement in candidate_baseline["measurements"]:
+            measurement["repetitions"].extend(
+                copy.deepcopy(measurement["repetitions"][:4])
+            )
+            measurement["samples"] = [
+                sample_statistics(repetition)["median"]
+                for repetition in measurement["repetitions"]
+            ]
+            measurement["statistics"] = sample_statistics(measurement["samples"])
+            coordinate_conditioning = measurement["coordinate_conditioning_repetitions"]
+            coordinate_conditioning.extend(copy.deepcopy(coordinate_conditioning[:4]))
+            if measurement["batch_duration_repetitions"] is not None:
+                measurement["batch_duration_repetitions"].extend(
+                    copy.deepcopy(measurement["batch_duration_repetitions"][:4])
+                )
+            if "control_repetitions" in measurement:
+                measurement["control_repetitions"].extend(
+                    copy.deepcopy(measurement["control_repetitions"][:4])
+                )
+                measurement["control_batch_duration_repetitions"].extend(
+                    copy.deepcopy(measurement["control_batch_duration_repetitions"][:4])
+                )
+                measurement["control_samples"] = [
+                    sample_statistics(repetition)["median"]
+                    for repetition in measurement["control_repetitions"]
+                ]
+                measurement["control_statistics"] = sample_statistics(
+                    measurement["control_samples"]
+                )
+                measurement["relative_samples"].extend(
+                    copy.deepcopy(measurement["relative_samples"][:4])
+                )
+                measurement["relative_statistics"] = sample_statistics(
+                    measurement["relative_samples"]
+                )
 
         comparisons = _preserve_warmup_migration_thresholds(
             self.manifest,
@@ -1827,9 +1869,15 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             )
         self.assertEqual(raised.exception.code, "conditioning-drift")
 
-    def test_calibration_conditions_each_coordinate_in_five_repetitions(self) -> None:
+    def test_calibration_conditions_each_coordinate_in_nine_repetitions(self) -> None:
         calls: dict[tuple[str, str | None], int] = {}
         manifest = copy.deepcopy(self.manifest)
+        manifest["measurement_policy"]["warmup_iterations"] = (
+            STATIONARY_WARMUP_ITERATIONS
+        )
+        manifest["measurement_policy"]["baseline_repetitions"] = (
+            STATIONARY_BASELINE_REPETITIONS
+        )
         manifest["measurement_policy"]["conditioning_policy"] = (
             "authenticated-identical-before-each-coordinate"
         )
@@ -1890,18 +1938,28 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
 
         expected_keys = performance_measurement_keys(manifest)
         self.assertEqual(set(calls), set(expected_keys))
-        self.assertTrue(all(count == 5 for count in calls.values()))
+        self.assertTrue(
+            all(count == STATIONARY_BASELINE_REPETITIONS for count in calls.values())
+        )
         self.assertTrue(
             all(
-                values == [None, 16, 16, 16, 16] for values in observed_batches.values()
+                values == [None, *([16] * (STATIONARY_BASELINE_REPETITIONS - 1))]
+                for values in observed_batches.values()
             )
         )
         self.assertEqual(len(baseline["measurements"]), len(expected_keys))
-        self.assertEqual(condition.call_count, 5 * len(expected_keys))
-        self.assertEqual(baseline["conditioning_repetitions"], [conditioning] * 5)
+        self.assertEqual(
+            condition.call_count,
+            STATIONARY_BASELINE_REPETITIONS * len(expected_keys),
+        )
+        self.assertEqual(
+            baseline["conditioning_repetitions"],
+            [conditioning] * STATIONARY_BASELINE_REPETITIONS,
+        )
         self.assertTrue(
             all(
-                row["coordinate_conditioning_repetitions"] == [conditioning] * 5
+                row["coordinate_conditioning_repetitions"]
+                == [conditioning] * STATIONARY_BASELINE_REPETITIONS
                 for row in baseline["measurements"]
             )
         )

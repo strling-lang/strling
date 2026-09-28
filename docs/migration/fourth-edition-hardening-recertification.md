@@ -1175,3 +1175,17 @@ Pull Request, Full, and independent Release to qualify its verifier revision.
 A subsequent pin-only candidate must then repeat the complete campaign before
 cloud verification and final H08 closure, following the same trust-promotion
 sequence already used for the paired-measurement verifier.
+
+The first clean-source calibration under capped-budget provenance then stopped
+before writes because one semantic-analysis pathological coordinate produced
+`561 bp` relative MAD from five repetition medians, above the unchanged
+`500 bp` stability limit, while still passing both prior hard ceilings. Five
+independent five-repetition diagnostics reproduced the estimator intermittency:
+four groups passed at `448`, `93`, `43`, and `449 bp`, while one failed at
+`777 bp`; all 25 observations passed the prior ceilings. Every sliding
+nine-observation window from that evidence passed (`353 bp` maximum), and five
+fresh nine-repetition groups passed at `217`, `342`, `37`, `55`, and `323 bp`.
+The stationary authority therefore strengthens the calibration denominator
+from five to nine repetitions for all 54 coordinates. The `500 bp` limit,
+128 warmups, 64 samples, conditioning, workloads, and hard ceilings remain
+unchanged.

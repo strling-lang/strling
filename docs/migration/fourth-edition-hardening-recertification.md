@@ -1206,3 +1206,31 @@ cover the compact representation. The resulting governed baseline is
 `43f4b9cec4f4f7e135f31af0eb94a04faabfa74af3850198d5d735be2ebc01c6`, below
 the unchanged 1 MiB hygiene ceiling without removing measurements,
 observations, or semantic evidence.
+
+Clean candidate `7d12882385a50472dc8625168538bd73de0149f5` passed all
+targeted predictors, five paired-launch readiness windows, Local `37/37`, and
+Pull Request `79/79`. Full stopped fail-fast at operation 22 after 20 passes and
+the expected waiver. Performance invocation
+`c8fb794769e244969a59193b7f5e4b78` preserved 1,219 authenticated samples across
+21 completed coordinates before
+`latency:editor-interaction/fixture:semantic-large` measured a `193386200 ns`
+median against the unchanged `186888460 ns` relative and `203878320 ns`
+absolute ceilings. The relative comparison failed while the absolute
+comparison passed. Conditioning, workload isolation, environment identity,
+and exact artifact hashes passed, so the consumed source is not retried.
+
+Five exact non-authoritative reproductions of that coordinate then passed at
+medians `169116150`, `172620550`, `169506950`, `175872850`, and `174950100 ns`.
+Every repetition used production conditioning, isolation, 128 warmups, the
+frozen batch size, and 64 samples; none entered an authenticated ledger. Their
+half-window medians showed no directional settling.
+
+The diagnostic exposed a readiness-design defect: the production Full
+preflight returned immediately after conditioning the first shuffled
+coordinate and never invoked a workload. It therefore could not predict a
+non-CLI latency failure. The preflight now derives the slowest direct
+hard-latency coordinate from governed baseline duration and requires five
+consecutive production-equivalent conditioned, isolated passes outside the
+authenticated ledger. The current sentinel is the failed
+editor/semantic-large coordinate. Thresholds, ceilings, warmups, sample count,
+batching, workloads, conditioning, and paired CLI logic are unchanged.

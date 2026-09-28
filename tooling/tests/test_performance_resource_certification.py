@@ -19,6 +19,7 @@ from tooling.performance_resource_certification import (
     CLI_LAUNCH_RELATIVE_ESTIMATOR,
     DERIVED_RELATIVE_BUDGET_FORMULA,
     FIXTURE_IDS,
+    FULL_PREFLIGHT_SENTINEL_REPETITIONS,
     MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
     MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS,
     OPERATION_IDS,
@@ -38,6 +39,7 @@ from tooling.performance_resource_certification import (
     _decode_windows_conditioning_report,
     _enforce_governed_cpu_affinity,
     _external_workload_isolation_check,
+    _full_preflight_sentinel_key,
     _git_invocation,
     _load_host_attestation,
     _measurement_conditioning_check,
@@ -842,7 +844,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         sleep.assert_called_once_with(MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS)
 
-    def test_full_preflight_stops_before_authenticated_measurement(self) -> None:
+    def test_full_preflight_runs_repeated_sample_free_sentinel(self) -> None:
         baseline = load_json(BASELINE_PATH)
         environment = baseline["environment"]
         snapshot = baseline["conditioning_repetitions"][0]
@@ -902,14 +904,45 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 "tooling.performance_resource_certification._measurement_conditioning_check",
                 return_value=measurement_conditioning,
             ) as coordinate_gate,
-            patch("tooling.performance_resource_certification._measure_key") as measure,
+            patch(
+                "tooling.performance_resource_certification._measure_key",
+                return_value={
+                    "samples": [1] * 64,
+                    "batch_iterations": 1,
+                    "batch_duration_samples": [1] * 64,
+                },
+            ) as measure,
         ):
             result = certify("full", preflight_only=True)
         self.assertEqual(result["status"], "passed")
         initial_gate.assert_called_once()
-        workload_gate.assert_called_once()
-        coordinate_gate.assert_called_once()
-        measure.assert_not_called()
+        self.assertEqual(
+            workload_gate.call_count, FULL_PREFLIGHT_SENTINEL_REPETITIONS * 2
+        )
+        self.assertEqual(
+            coordinate_gate.call_count, FULL_PREFLIGHT_SENTINEL_REPETITIONS
+        )
+        self.assertEqual(measure.call_count, FULL_PREFLIGHT_SENTINEL_REPETITIONS)
+        diagnostic_checks = [
+            row
+            for row in result["checks"]
+            if row["id"].startswith("diagnostic:sample-free-full-readiness/")
+        ]
+        self.assertEqual(len(diagnostic_checks), FULL_PREFLIGHT_SENTINEL_REPETITIONS)
+        self.assertTrue(
+            all(
+                row["details"]["authenticated_sample_count"] == 0
+                for row in diagnostic_checks
+            )
+        )
+
+    def test_full_preflight_selects_slowest_direct_hard_latency(self) -> None:
+        manifest = load_json(MANIFEST_PATH)
+        baseline = load_json(BASELINE_PATH)
+        self.assertEqual(
+            _full_preflight_sentinel_key(manifest, baseline),
+            ("latency:editor-interaction", "fixture:semantic-large"),
+        )
 
     @patch(
         "tooling.performance_resource_certification._should_delegate_windows_full",

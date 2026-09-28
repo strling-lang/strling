@@ -66,6 +66,7 @@ LEGACY_WARMUP_ITERATIONS = 16
 STATIONARY_WARMUP_ITERATIONS = 128
 LEGACY_BASELINE_REPETITIONS = 5
 STATIONARY_BASELINE_REPETITIONS = 9
+FULL_PREFLIGHT_SENTINEL_REPETITIONS = 5
 DERIVED_RELATIVE_BUDGET_FORMULA = "max(floor, ceil(6 * mad / median * 10000))"
 CAPPED_RELATIVE_BUDGET_FORMULA = (
     "min(prior hard ceiling, max(floor, ceil(6 * mad / median * 10000)))"
@@ -3309,6 +3310,43 @@ def _measure_key(
     raise PerformanceResourceError("measurement-kind", operation_id)
 
 
+def _full_preflight_sentinel_key(
+    manifest: Mapping[str, object], baseline: Mapping[str, object]
+) -> tuple[str, str]:
+    """Select the slowest direct hard-latency coordinate as the readiness sentinel."""
+
+    operations = {
+        row["id"]: row for row in cast(list[dict[str, Any]], manifest["operations"])
+    }
+    policy = cast(Mapping[str, int], manifest["measurement_policy"])
+    warmups = policy["warmup_iterations"]
+    samples = policy["sample_iterations"]
+    candidates: list[tuple[int, tuple[str, str]]] = []
+    for row in cast(list[dict[str, Any]], baseline["measurements"]):
+        operation = operations[row["operation_id"]]
+        fixture_id = row["fixture_id"]
+        if (
+            operation["enforcement"] != "hard"
+            or operation["measurement_kind"] != "latency"
+            or operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL
+            or not isinstance(fixture_id, str)
+        ):
+            continue
+        estimated_duration = (
+            cast(int, row["statistics"]["median"])
+            * cast(int, row["batch_iterations"])
+            * (warmups + samples)
+        )
+        candidates.append(
+            (estimated_duration, (cast(str, row["operation_id"]), fixture_id))
+        )
+    if not candidates:
+        raise PerformanceResourceError(
+            "preflight-sentinel", "no direct hard-latency readiness coordinate exists"
+        )
+    return max(candidates, key=lambda item: (item[0], item[1]))[1]
+
+
 def _conditioning_acquisition_check(
     check_id: str, *, environment: Mapping[str, object], root: Path = ROOT
 ) -> dict[str, object]:
@@ -4778,6 +4816,101 @@ def certify(
             (row["operation_id"], row["fixture_id"]): row
             for row in baseline["measurements"]
         }
+        if preflight_only:
+            sentinel_key = _full_preflight_sentinel_key(manifest, baseline)
+            sentinel_row = baseline_rows[sentinel_key]
+            fixture_label = sentinel_key[1]
+            for repetition in range(1, FULL_PREFLIGHT_SENTINEL_REPETITIONS + 1):
+                pre_measurement_isolation = _external_workload_isolation_check(
+                    sentinel_key, phase="pre-measurement"
+                )
+                checks.append(pre_measurement_isolation)
+                if pre_measurement_isolation["status"] != "passed":
+                    return _certification_evidence(
+                        profile=profile,
+                        commit=commit,
+                        checks=checks,
+                        manifest=manifest,
+                    )
+                measurement_conditioning = _measurement_conditioning_check(
+                    sentinel_key, environment=environment, root=root
+                )
+                checks.append(measurement_conditioning)
+                if measurement_conditioning["status"] != "passed":
+                    return _certification_evidence(
+                        profile=profile,
+                        commit=commit,
+                        checks=checks,
+                        manifest=manifest,
+                    )
+                observation = _measure_key(
+                    sentinel_key,
+                    manifest=manifest,
+                    artifacts=artifacts,
+                    environment=environment,
+                    batch_iterations=sentinel_row["batch_iterations"],
+                    root=root,
+                )
+                observed_samples = cast(list[int], observation["samples"])
+                observed = sample_statistics(observed_samples)
+                comparison = compare_hard_metric(
+                    baseline_median=sentinel_row["statistics"]["median"],
+                    observed_median=observed["median"],
+                    relative_regression_basis_points=sentinel_row["budget"][
+                        "relative_regression_basis_points"
+                    ],
+                    absolute_ceiling=sentinel_row["budget"]["absolute_ceiling"],
+                )
+                midpoint = len(observed_samples) // 2
+                checks.append(
+                    {
+                        "id": (
+                            "diagnostic:sample-free-full-readiness/"
+                            f"{repetition}/{sentinel_key[0]}/{fixture_label}"
+                        ),
+                        "status": comparison["status"],
+                        "details": {
+                            "authoritative": False,
+                            "authenticated_sample_count": 0,
+                            "repetition": repetition,
+                            "required_consecutive_repetitions": (
+                                FULL_PREFLIGHT_SENTINEL_REPETITIONS
+                            ),
+                            "selection": "slowest-direct-hard-latency-coordinate",
+                            "samples": observed_samples,
+                            "statistics": observed,
+                            "first_half_statistics": sample_statistics(
+                                observed_samples[:midpoint]
+                            ),
+                            "second_half_statistics": sample_statistics(
+                                observed_samples[midpoint:]
+                            ),
+                            "comparison": comparison,
+                            "batch_iterations": observation["batch_iterations"],
+                            "batch_duration_samples": observation[
+                                "batch_duration_samples"
+                            ],
+                            "unit": sentinel_row["unit"],
+                        },
+                    }
+                )
+                post_measurement_isolation = _external_workload_isolation_check(
+                    sentinel_key, phase="post-measurement"
+                )
+                checks.append(post_measurement_isolation)
+                if (
+                    post_measurement_isolation["status"] != "passed"
+                    or comparison["status"] != "passed"
+                ):
+                    return _certification_evidence(
+                        profile=profile,
+                        commit=commit,
+                        checks=checks,
+                        manifest=manifest,
+                    )
+            return _certification_evidence(
+                profile=profile, commit=commit, checks=checks, manifest=manifest
+            )
         ordered = performance_measurement_keys(manifest)
         random.Random(manifest["measurement_policy"]["order_seed"]).shuffle(ordered)
         for key in ordered:
@@ -4794,10 +4927,6 @@ def certify(
             )
             checks.append(measurement_conditioning)
             if measurement_conditioning["status"] != "passed":
-                return _certification_evidence(
-                    profile=profile, commit=commit, checks=checks, manifest=manifest
-                )
-            if preflight_only:
                 return _certification_evidence(
                     profile=profile, commit=commit, checks=checks, manifest=manifest
                 )

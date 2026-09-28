@@ -5642,6 +5642,7 @@ def _preserve_warmup_migration_thresholds(
 
     candidate_operations = {row["id"]: row for row in candidate_manifest["operations"]}
     comparisons: list[dict[str, object]] = []
+    budget_weakenings: list[dict[str, object]] = []
     for key in performance_measurement_keys(prior_manifest):
         prior = prior_rows[key]
         candidate = candidate_rows[key]
@@ -5678,9 +5679,14 @@ def _preserve_warmup_migration_thresholds(
             candidate["budget"]["relative_regression_basis_points"]
             > prior["budget"]["relative_regression_basis_points"]
         ):
-            raise PerformanceResourceError(
-                "warmup-budget-weakening",
-                f"recalibration would weaken the prior relative budget for {key}",
+            budget_weakenings.append(
+                {
+                    "coordinate": _coordinate_id(key),
+                    "prior": prior["budget"]["relative_regression_basis_points"],
+                    "candidate": candidate["budget"][
+                        "relative_regression_basis_points"
+                    ],
+                }
             )
         candidate["budget"]["absolute_ceiling"] = min(
             candidate["budget"]["absolute_ceiling"],
@@ -5692,6 +5698,12 @@ def _preserve_warmup_migration_thresholds(
         raise PerformanceResourceError(
             "warmup-regression",
             f"{len(failed)} recalibrated coordinates exceed prior hard ceilings",
+        )
+    if budget_weakenings:
+        raise PerformanceResourceError(
+            "warmup-budget-weakening",
+            "recalibration would weaken prior relative budgets: "
+            f"{json.dumps(budget_weakenings, sort_keys=True)}",
         )
 
     for operation_id in PERFORMANCE_OPERATION_IDS:

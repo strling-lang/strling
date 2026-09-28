@@ -64,6 +64,10 @@ MEASUREMENT_CONDITIONING_MAX_ATTEMPTS = 24
 MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS = 15
 LEGACY_WARMUP_ITERATIONS = 16
 STATIONARY_WARMUP_ITERATIONS = 128
+DERIVED_RELATIVE_BUDGET_FORMULA = "max(floor, ceil(6 * mad / median * 10000))"
+CAPPED_RELATIVE_BUDGET_FORMULA = (
+    "min(prior hard ceiling, max(floor, ceil(6 * mad / median * 10000)))"
+)
 HOST_ATTESTATION_ENV = "STRLING_PERFORMANCE_HOST_ATTESTATION"
 ALLOWED_CLOCKSOURCES = {"tsc", "hyperv_clocksource_tsc_page"}
 WINDOWS_ENVIRONMENT_PATH = ROOT / "tooling/performance_windows.py"
@@ -1184,6 +1188,21 @@ def validate_baseline(
         row["id"]: row for row in cast(list[dict[str, Any]], manifest["operations"])
     }
 
+    budget_formula = manifest["measurement_policy"]["relative_budget_formula"]
+    capped_budget_policy = budget_formula == CAPPED_RELATIVE_BUDGET_FORMULA
+    prior_baseline_fingerprint = baseline.get("prior_baseline_fingerprint")
+    if capped_budget_policy:
+        if not isinstance(prior_baseline_fingerprint, str):
+            raise PerformanceResourceError(
+                "budget-provenance",
+                "capped relative budgets require a prior baseline fingerprint",
+            )
+    elif prior_baseline_fingerprint is not None:
+        raise PerformanceResourceError(
+            "budget-provenance",
+            "derived relative budgets cannot claim prior-baseline capping",
+        )
+
     seen: set[tuple[str, str | None]] = set()
     for measurement in baseline["measurements"]:
         key = (measurement["operation_id"], measurement["fixture_id"])
@@ -1445,7 +1464,52 @@ def validate_baseline(
                 "maximum_relative_budget_basis_points"
             ],
         )
-        if budget["relative_regression_basis_points"] != expected_budget:
+        cap_fields = {
+            "derived_relative_regression_basis_points",
+            "prior_relative_regression_basis_points",
+            "derived_absolute_ceiling",
+            "prior_absolute_ceiling",
+        }
+        if capped_budget_policy:
+            missing_cap_fields = cap_fields - set(budget)
+            if missing_cap_fields:
+                raise PerformanceResourceError(
+                    "budget-provenance",
+                    f"capped budget fields are missing for {key}: "
+                    f"{sorted(missing_cap_fields)}",
+                )
+            derived_ceiling_source = (
+                measurement["relative_samples"]
+                if comparison_model == CLI_LAUNCH_COMPARISON_MODEL
+                else samples
+            )
+            expected_derived_absolute = max(
+                max(derived_ceiling_source),
+                _absolute_ceiling(relative_statistics["median"], expected_budget),
+            )
+            if (
+                budget["derived_relative_regression_basis_points"] != expected_budget
+                or budget["derived_absolute_ceiling"] != expected_derived_absolute
+                or budget["relative_regression_basis_points"]
+                != min(
+                    expected_budget,
+                    budget["prior_relative_regression_basis_points"],
+                )
+                or budget["absolute_ceiling"]
+                != min(
+                    expected_derived_absolute,
+                    budget["prior_absolute_ceiling"],
+                )
+            ):
+                raise PerformanceResourceError(
+                    "budget-provenance", f"capped budget changed for {key}"
+                )
+        elif cap_fields & set(budget):
+            raise PerformanceResourceError(
+                "budget-provenance",
+                f"derived budget contains capped-policy fields for {key}",
+            )
+        elif budget["relative_regression_basis_points"] != expected_budget:
             raise PerformanceResourceError(
                 "budget-derivation", f"relative budget changed for {key}"
             )
@@ -5607,6 +5671,9 @@ def _preserve_warmup_migration_thresholds(
 ) -> list[dict[str, object]]:
     """Require the recalibrated measurements to pass every prior hard ceiling."""
 
+    candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
+        CAPPED_RELATIVE_BUDGET_FORMULA
+    )
     prior_projection = copy.deepcopy(dict(prior_manifest))
     candidate_projection = copy.deepcopy(candidate_manifest)
     prior_projection.pop("manifest_fingerprint", None)
@@ -5616,6 +5683,12 @@ def _preserve_warmup_migration_thresholds(
     )
     candidate_projection["measurement_policy"]["warmup_iterations"] = (
         "reviewed-stationary-warmup"
+    )
+    prior_projection["measurement_policy"]["relative_budget_formula"] = (
+        "reviewed-prior-ceiling-cap"
+    )
+    candidate_projection["measurement_policy"]["relative_budget_formula"] = (
+        "reviewed-prior-ceiling-cap"
     )
     for projection in (prior_projection, candidate_projection):
         for operation in projection["operations"]:
@@ -5642,7 +5715,6 @@ def _preserve_warmup_migration_thresholds(
 
     candidate_operations = {row["id"]: row for row in candidate_manifest["operations"]}
     comparisons: list[dict[str, object]] = []
-    budget_weakenings: list[dict[str, object]] = []
     for key in performance_measurement_keys(prior_manifest):
         prior = prior_rows[key]
         candidate = candidate_rows[key]
@@ -5668,44 +5740,70 @@ def _preserve_warmup_migration_thresholds(
                 ],
                 absolute_ceiling=prior["budget"]["absolute_ceiling"],
             )
+        relative_statistics = (
+            candidate["relative_statistics"]
+            if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL
+            else candidate["statistics"]
+        )
+        derived_relative = derived_relative_budget_basis_points(
+            median=relative_statistics["median"],
+            mad=relative_statistics["mad"],
+            floor=candidate_manifest["measurement_policy"][
+                "minimum_relative_budget_basis_points"
+            ],
+            maximum=candidate_manifest["measurement_policy"][
+                "maximum_relative_budget_basis_points"
+            ],
+        )
+        derived_ceiling_source = (
+            candidate["relative_samples"]
+            if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL
+            else candidate["samples"]
+        )
+        derived_absolute = max(
+            max(derived_ceiling_source),
+            _absolute_ceiling(relative_statistics["median"], derived_relative),
+        )
+        prior_relative = prior["budget"]["relative_regression_basis_points"]
+        prior_absolute = prior["budget"]["absolute_ceiling"]
+        candidate["budget"] = {
+            "state": "active",
+            "relative_regression_basis_points": min(derived_relative, prior_relative),
+            "absolute_ceiling": min(derived_absolute, prior_absolute),
+            "derived_relative_regression_basis_points": derived_relative,
+            "prior_relative_regression_basis_points": prior_relative,
+            "derived_absolute_ceiling": derived_absolute,
+            "prior_absolute_ceiling": prior_absolute,
+            "rationale": (
+                "Five governed repetition medians derive the candidate budget; "
+                "the immediately prior hard ceilings cap any relaxation."
+            ),
+        }
         comparisons.append(
             {
                 "coordinate": _coordinate_id(key),
                 "status": comparison["status"],
                 "comparison": comparison,
+                "relative_budget": {
+                    "derived": derived_relative,
+                    "prior": prior_relative,
+                    "active": candidate["budget"]["relative_regression_basis_points"],
+                },
+                "absolute_ceiling": {
+                    "derived": derived_absolute,
+                    "prior": prior_absolute,
+                    "active": candidate["budget"]["absolute_ceiling"],
+                },
             }
-        )
-        if (
-            candidate["budget"]["relative_regression_basis_points"]
-            > prior["budget"]["relative_regression_basis_points"]
-        ):
-            budget_weakenings.append(
-                {
-                    "coordinate": _coordinate_id(key),
-                    "prior": prior["budget"]["relative_regression_basis_points"],
-                    "candidate": candidate["budget"][
-                        "relative_regression_basis_points"
-                    ],
-                }
-            )
-        candidate["budget"]["absolute_ceiling"] = min(
-            candidate["budget"]["absolute_ceiling"],
-            prior["budget"]["absolute_ceiling"],
         )
 
     failed = [row for row in comparisons if row["status"] != "passed"]
     if failed:
         raise PerformanceResourceError(
             "warmup-regression",
-            f"{len(failed)} recalibrated coordinates exceed prior hard ceilings",
+            f"{len(failed)} recalibrated coordinates exceed prior hard ceilings: "
+            f"{json.dumps(failed, sort_keys=True)}",
         )
-    if budget_weakenings:
-        raise PerformanceResourceError(
-            "warmup-budget-weakening",
-            "recalibration would weaken prior relative budgets: "
-            f"{json.dumps(budget_weakenings, sort_keys=True)}",
-        )
-
     for operation_id in PERFORMANCE_OPERATION_IDS:
         operation_rows = [
             row for key, row in candidate_rows.items() if key[0] == operation_id
@@ -5723,6 +5821,9 @@ def _preserve_warmup_migration_thresholds(
     )
     candidate_baseline["manifest_fingerprint"] = candidate_manifest[
         "manifest_fingerprint"
+    ]
+    candidate_baseline["prior_baseline_fingerprint"] = prior_baseline[
+        "baseline_fingerprint"
     ]
     candidate_baseline["baseline_fingerprint"] = "0" * 64
     candidate_baseline["baseline_fingerprint"] = document_fingerprint(

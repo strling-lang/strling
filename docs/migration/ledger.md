@@ -5936,4 +5936,14 @@ their prior values. Five independent five-repetition semantic-parse tiny
 diagnostics then derived 1,000 basis points in every group and passed all prior
 ceilings without entering an authenticated certification ledger.
 
+A third complete calibration reported all remaining conflicts at once: seven
+coordinates had newly derived relative budgets above their prior hard values.
+Retrying randomized repetitions until those estimates happened to match is not
+permitted. The replacement contract records derived, prior, and active capped
+relative/absolute values plus the prior baseline fingerprint; validation
+reconstructs the derived values and requires the active threshold to be the
+minimum. This evidence shape necessarily requires a newly qualified trusted
+verifier, so one pin-only complete campaign must follow its first successful
+Full/Release qualification before cloud closure.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

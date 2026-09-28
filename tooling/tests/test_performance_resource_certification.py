@@ -272,12 +272,40 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 candidate["budget"]["absolute_ceiling"],
                 prior["budget"]["absolute_ceiling"],
             )
+            self.assertEqual(
+                candidate["budget"]["relative_regression_basis_points"],
+                min(
+                    candidate["budget"]["derived_relative_regression_basis_points"],
+                    candidate["budget"]["prior_relative_regression_basis_points"],
+                ),
+            )
+            self.assertEqual(
+                candidate["budget"]["absolute_ceiling"],
+                min(
+                    candidate["budget"]["derived_absolute_ceiling"],
+                    candidate["budget"]["prior_absolute_ceiling"],
+                ),
+            )
         validate_manifest(candidate_manifest, fixtures=self.fixtures)
         validate_baseline(
             candidate_baseline,
             manifest=candidate_manifest,
             fixtures=self.fixtures,
         )
+        tampered_baseline = copy.deepcopy(candidate_baseline)
+        tampered_baseline["measurements"][0]["budget"][
+            "derived_relative_regression_basis_points"
+        ] += 1
+        tampered_baseline["baseline_fingerprint"] = document_fingerprint(
+            tampered_baseline, "baseline_fingerprint"
+        )
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_baseline(
+                tampered_baseline,
+                manifest=candidate_manifest,
+                fixtures=self.fixtures,
+            )
+        self.assertEqual(raised.exception.code, "budget-provenance")
         drifted = copy.deepcopy(candidate_manifest)
         drifted["measurement_policy"]["sample_iterations"] += 1
         with self.assertRaises(PerformanceResourceError) as raised:
@@ -289,18 +317,23 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             )
         self.assertEqual(raised.exception.code, "warmup-contract-drift")
 
-        weakened_baseline = copy.deepcopy(prior_baseline)
-        weakened_baseline["measurements"][0]["budget"][
-            "relative_regression_basis_points"
-        ] += 1
+        regressed_baseline = copy.deepcopy(prior_baseline)
+        first_measurement = regressed_baseline["measurements"][0]
+        first_measurement["statistics"]["median"] = (
+            first_measurement["budget"]["absolute_ceiling"] * 2
+        )
         with self.assertRaises(PerformanceResourceError) as raised:
             _preserve_warmup_migration_thresholds(
                 self.manifest,
                 prior_baseline,
                 copy.deepcopy(candidate_manifest),
-                weakened_baseline,
+                regressed_baseline,
             )
-        self.assertEqual(raised.exception.code, "warmup-budget-weakening")
+        self.assertEqual(raised.exception.code, "warmup-regression")
+        self.assertIn(
+            first_measurement["operation_id"],
+            str(raised.exception),
+        )
 
     def test_resource_identity_refresh_does_not_recalibrate_measurements(self) -> None:
         stale = copy.deepcopy(self.inventory)

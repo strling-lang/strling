@@ -1157,3 +1157,21 @@ warmups. All five groups derived the unchanged 1,000-basis-point budget; their
 median-of-medians values were `9609`, `9558`, `9612`, `9709`, and `9714 ns`,
 and all passed the prior relative and absolute ceilings. The 25 observations
 used authenticated conditioning but entered no certification sample ledger.
+
+The next complete calibration used aggregate budget-drift reporting and
+rejected seven coordinates whose freshly derived budgets exceeded their prior
+hard thresholds. This proved that repeating until five random repetition
+medians happen to recreate every old variance estimate would be an invalid
+methodology. The governed baseline now records the derived relative budget and
+absolute ceiling, the corresponding prior hard values, their capped active
+values, and the prior baseline fingerprint. Validation independently
+reconstructs the derived values and requires each active threshold to equal
+`min(derived, prior)`. Any missing or altered provenance fails closed.
+
+This explicit policy is incompatible with immutable trusted verifier
+`4d5ef075`, which predates both 128 warmups and capped-budget provenance. The
+first clean candidate under the new authority must therefore complete Local,
+Pull Request, Full, and independent Release to qualify its verifier revision.
+A subsequent pin-only candidate must then repeat the complete campaign before
+cloud verification and final H08 closure, following the same trust-promotion
+sequence already used for the paired-measurement verifier.

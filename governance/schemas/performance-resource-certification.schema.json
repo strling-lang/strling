@@ -1403,6 +1403,24 @@
                     "type": ["integer", "null"],
                     "minimum": 0
                 },
+                "derived_relative_regression_basis_points": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                },
+                "prior_relative_regression_basis_points": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                },
+                "derived_absolute_ceiling": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "prior_absolute_ceiling": {
+                    "type": "integer",
+                    "minimum": 0
+                },
                 "rationale": { "type": "string", "minLength": 20 }
             }
         },
@@ -1575,7 +1593,10 @@
                 },
                 "p95_method": { "const": "nearest-rank" },
                 "relative_budget_formula": {
-                    "const": "max(floor, ceil(6 * mad / median * 10000))"
+                    "enum": [
+                        "max(floor, ceil(6 * mad / median * 10000))",
+                        "min(prior hard ceiling, max(floor, ceil(6 * mad / median * 10000)))"
+                    ]
                 },
                 "minimum_relative_budget_basis_points": {
                     "type": "integer",
@@ -2016,6 +2037,7 @@
                 "baseline_kind": { "const": "strling-performance-baseline" },
                 "baseline_state": { "enum": ["planned", "active"] },
                 "manifest_fingerprint": { "$ref": "#/$defs/sha256" },
+                "prior_baseline_fingerprint": { "$ref": "#/$defs/sha256" },
                 "fixture_manifest_fingerprint": { "$ref": "#/$defs/sha256" },
                 "source_commit": { "$ref": "#/$defs/gitSha" },
                 "environment": { "$ref": "#/$defs/environment" },

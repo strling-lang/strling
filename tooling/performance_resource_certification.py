@@ -5807,11 +5807,6 @@ def _migrate_stationary_warmups_command(
         rationale=rationale,
         root=root,
     )
-    candidate_baseline["update_command"] = (
-        "python3 -m tooling.performance_resource_certification "
-        "migrate-stationary-warmups --confirm-stationary-warmups "
-        "--rationale <reviewed-rationale>"
-    )
     comparisons = _preserve_warmup_migration_thresholds(
         prior_manifest,
         prior_baseline,

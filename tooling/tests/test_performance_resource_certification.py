@@ -265,6 +265,12 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             [row["budget"] for row in candidate_baseline["measurements"]],
             [row["budget"] for row in prior_baseline["measurements"]],
         )
+        validate_manifest(candidate_manifest, fixtures=self.fixtures)
+        validate_baseline(
+            candidate_baseline,
+            manifest=candidate_manifest,
+            fixtures=self.fixtures,
+        )
         drifted = copy.deepcopy(candidate_manifest)
         drifted["measurement_policy"]["sample_iterations"] += 1
         with self.assertRaises(PerformanceResourceError) as raised:

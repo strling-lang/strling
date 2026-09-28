@@ -17,9 +17,9 @@
         "sha256": "96d036cf2528d61385c127a469f7db52300c363f1d88009e94fb36cfa6ae9915"
     },
     "measurement_policy": {
-        "warmup_iterations": 128,
+        "warmup_iterations": 16,
         "sample_iterations": 64,
-        "baseline_repetitions": 9,
+        "baseline_repetitions": 5,
         "minimum_sample_duration_nanoseconds": 1000000,
         "batch_duration_safety_factor": 2,
         "maximum_batch_iterations": 4096,
@@ -38,7 +38,7 @@
             "mad"
         ],
         "p95_method": "nearest-rank",
-        "relative_budget_formula": "min(prior hard ceiling, max(floor, ceil(6 * mad / median * 10000)))",
+        "relative_budget_formula": "max(floor, ceil(6 * mad / median * 10000))",
         "minimum_relative_budget_basis_points": 1000,
         "maximum_relative_budget_basis_points": 4000,
         "maximum_relative_mad_basis_points": 500,
@@ -115,7 +115,7 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 8559540,
+                "absolute_ceiling": 8704980,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Parse valid Semantic STRling source without including later compiler stages."
@@ -138,7 +138,7 @@
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
-                "relative_regression_basis_points": 1000,
+                "relative_regression_basis_points": 1106,
                 "absolute_ceiling": 14333160,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
@@ -162,7 +162,7 @@
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
-                "relative_regression_basis_points": 1000,
+                "relative_regression_basis_points": 1043,
                 "absolute_ceiling": 11486172,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
@@ -188,7 +188,7 @@
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
-                "relative_regression_basis_points": 1000,
+                "relative_regression_basis_points": 1027,
                 "absolute_ceiling": 5835060,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
@@ -214,8 +214,8 @@
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
-                "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 19844700,
+                "relative_regression_basis_points": 1753,
+                "absolute_ceiling": 22614398,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Produce semantic facts from normalized programs without target lowering or serialization."
@@ -238,8 +238,8 @@
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
-                "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 27043860,
+                "relative_regression_basis_points": 1790,
+                "absolute_ceiling": 27439680,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Measure structural and safety analysis together while retaining distinct result evidence."
@@ -287,7 +287,7 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 30857580,
+                "absolute_ceiling": 30998220,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Lower and serialize canonical programs for PCRE2 without executing the resulting regex."
@@ -312,7 +312,7 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 34328580,
+                "absolute_ceiling": 34878720,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Lower and serialize canonical programs for ECMAScript without executing the resulting regex."
@@ -336,8 +336,8 @@
             "required_environment": "fingerprinted-native-x86_64",
             "budget": {
                 "state": "active",
-                "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 33811200,
+                "relative_regression_basis_points": 1035,
+                "absolute_ceiling": 35068380,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Lower and serialize canonical programs for Python re without executing the resulting regex."
@@ -364,7 +364,7 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 117887580,
+                "absolute_ceiling": 126621960,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Measure complete canonical CompileRequest to CompileResult work including result serialization."
@@ -412,7 +412,7 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 203878320,
+                "absolute_ceiling": 206007240,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Measure bounded diagnostics, formatting, completion, symbols, and rewrite intelligence interactions."
@@ -434,7 +434,7 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 906256,
+                "absolute_ceiling": 909360,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Measure canonical byte-protocol decoding, kernel invocation, encoding, and retained-allocation round trips."
@@ -457,7 +457,7 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 741960,
+                "absolute_ceiling": 789660,
                 "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
             },
             "description": "Report available host-adapter overhead separately from compiler time and support certification."
@@ -632,5 +632,5 @@
         "fixtures": 12,
         "resource_declarations": 56
     },
-    "manifest_fingerprint": "8efce9dfa700039ee2b387cd4e0763e44f87a2052f914c3905b211008f3fd117"
+    "manifest_fingerprint": "c5bb22db68390c44a33859d1792305352605da73383885d20f18c1ca3231daaa"
 }

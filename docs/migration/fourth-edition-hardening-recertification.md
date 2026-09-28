@@ -1189,3 +1189,20 @@ The stationary authority therefore strengthens the calibration denominator
 from five to nine repetitions for all 54 coordinates. The `500 bp` limit,
 128 warmups, 64 samples, conditioning, workloads, and hard ceilings remain
 unchanged.
+
+The governed nine-repetition calibration at source
+`88651d7ce8504a63157e98bded9394b25ff8d7e1` then passed all 54 coordinates and
+all prior relative and absolute ceilings. It retained 486 per-coordinate
+conditioning snapshots, capped 22 derived thresholds at their prior hard
+values, archived baseline
+`fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e`, and
+produced manifest
+`8efce9dfa700039ee2b387cd4e0763e44f87a2052f914c3905b211008f3fd117`.
+Persisted snapshots omit only the repeated conditioning-identity hash, which
+is derivable from their retained controls; live conditioner reports still
+authenticate that hash before acquisition. Snapshot and baseline fingerprints
+cover the compact representation. The resulting governed baseline is
+1,035,872 bytes with fingerprint
+`43f4b9cec4f4f7e135f31af0eb94a04faabfa74af3850198d5d735be2ebc01c6`, below
+the unchanged 1 MiB hygiene ceiling without removing measurements,
+observations, or semantic evidence.

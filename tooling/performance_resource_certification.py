@@ -914,17 +914,63 @@ def conditioning_identity_fingerprint(snapshot: Mapping[str, object]) -> str:
     value = snapshot.get("conditioning_identity_fingerprint")
     if isinstance(value, str):
         return value
-    return cast(str, snapshot["snapshot_fingerprint"])
+    return fingerprint(_conditioning_identity_projection(snapshot))
+
+
+def _conditioning_identity_projection(
+    snapshot: Mapping[str, object],
+) -> dict[str, object]:
+    excluded = {
+        "conditioning_identity_fingerprint",
+        "quiescence_observation",
+        "snapshot_fingerprint",
+    }
+    return {
+        key: copy.deepcopy(value)
+        for key, value in snapshot.items()
+        if key not in excluded
+    }
 
 
 def conditioning_identities_match(
     snapshots: Sequence[Mapping[str, object]],
 ) -> bool:
-    return bool(snapshots) and all(
-        conditioning_identity_fingerprint(snapshot)
-        == conditioning_identity_fingerprint(snapshots[0])
+    if not snapshots:
+        return False
+    if all(
+        isinstance(snapshot.get("conditioning_identity_fingerprint"), str)
+        for snapshot in snapshots
+    ):
+        return all(
+            conditioning_identity_fingerprint(snapshot)
+            == conditioning_identity_fingerprint(snapshots[0])
+            for snapshot in snapshots[1:]
+        )
+    identity = _conditioning_identity_projection(snapshots[0])
+    return all(
+        _conditioning_identity_projection(snapshot) == identity
         for snapshot in snapshots[1:]
     )
+
+
+def _compact_baseline_conditioning_snapshots(
+    baseline: dict[str, Any],
+) -> None:
+    """Drop a derivable identity hash while retaining all conditioning controls."""
+
+    snapshots = [
+        *baseline["conditioning_repetitions"],
+        *[
+            snapshot
+            for measurement in baseline["measurements"]
+            for snapshot in measurement.get("coordinate_conditioning_repetitions", [])
+        ],
+    ]
+    for snapshot in snapshots:
+        snapshot.pop("conditioning_identity_fingerprint", None)
+        snapshot["snapshot_fingerprint"] = document_fingerprint(
+            snapshot, "snapshot_fingerprint"
+        )
 
 
 def conditioning_snapshots_compatible(
@@ -1189,7 +1235,7 @@ def validate_baseline(
     if not conditioning_identities_match(conditioning_repetitions):
         raise PerformanceResourceError(
             "conditioning-drift",
-            "all five baseline repetitions require identical conditioning identity",
+            "all baseline repetitions require identical conditioning identity",
         )
     operations = {
         row["id"]: row for row in cast(list[dict[str, Any]], manifest["operations"])
@@ -3468,7 +3514,7 @@ def create_active_contract(
     ] or not conditioning_identities_match(conditioning_repetitions):
         raise PerformanceResourceError(
             "conditioning-drift",
-            "all five baseline repetitions require identical conditioning identity",
+            "all baseline repetitions require identical conditioning identity",
         )
     operations = {
         row["id"]: row for row in cast(list[dict[str, Any]], manifest["operations"])
@@ -5838,6 +5884,7 @@ def _preserve_warmup_migration_thresholds(
     candidate_baseline["prior_baseline_fingerprint"] = prior_baseline[
         "baseline_fingerprint"
     ]
+    _compact_baseline_conditioning_snapshots(candidate_baseline)
     candidate_baseline["baseline_fingerprint"] = "0" * 64
     candidate_baseline["baseline_fingerprint"] = document_fingerprint(
         candidate_baseline, "baseline_fingerprint"
@@ -6021,27 +6068,8 @@ def _baseline_command(
             "active-baseline",
             "replace requires a reviewed manifest reset or new version",
         )
-    _enforce_governed_cpu_affinity(manifest)
-    build_status, build_details = _build_release_artifacts(root)
-    if build_status != "passed":
-        raise PerformanceResourceError(
-            "release-build", json.dumps(build_details, sort_keys=True)
-        )
-    environment = live_environment(
-        selected_logical_cpu=manifest["measurement_policy"]["selected_logical_cpu"],
-        root=root,
-    )
-    activated, baseline = calibrate_baseline(
-        manifest,
-        fixtures,
-        artifacts=_release_artifacts(root),
-        artifact_fingerprints=cast(Mapping[str, object], build_details["artifacts"]),
-        environment=environment,
-        source_commit=commit,
-        rationale=rationale,
-        root=root,
-    )
-    rollover = None
+    prior_manifest: dict[str, Any] | None = None
+    prior_baseline: dict[str, Any] | None = None
     if rollover_from is not None:
         if expected_os_build is None:
             raise PerformanceResourceError(
@@ -6058,13 +6086,71 @@ def _baseline_command(
             )
         prior_manifest = load_json(prior_manifest_path)
         prior_baseline = load_json(prior_baseline_path)
-        prior_fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
-        validate_manifest(prior_manifest, root=root, fixtures=prior_fixtures)
+        validate_manifest(prior_manifest, root=root, fixtures=fixtures)
         validate_baseline(prior_baseline, manifest=prior_manifest)
         if prior_baseline["baseline_fingerprint"] != rollover_from:
             raise PerformanceResourceError(
                 "rollover-history", "prior authority directory identity changed"
             )
+    elif expected_os_build is not None:
+        raise PerformanceResourceError(
+            "rollover-history",
+            "--expected-os-build requires --rollover-from",
+        )
+    capped_policy = (
+        manifest["measurement_policy"]["relative_budget_formula"]
+        == CAPPED_RELATIVE_BUDGET_FORMULA
+    )
+    if capped_policy and (prior_manifest is None or prior_baseline is None):
+        raise PerformanceResourceError(
+            "baseline-prior",
+            "capped baseline calibration requires --rollover-from prior authority",
+        )
+    _enforce_governed_cpu_affinity(manifest)
+    build_status, build_details = _build_release_artifacts(root)
+    if build_status != "passed":
+        raise PerformanceResourceError(
+            "release-build", json.dumps(build_details, sort_keys=True)
+        )
+    environment = live_environment(
+        selected_logical_cpu=manifest["measurement_policy"]["selected_logical_cpu"],
+        root=root,
+    )
+    calibration_manifest = copy.deepcopy(manifest)
+    if capped_policy:
+        calibration_manifest["measurement_policy"]["relative_budget_formula"] = (
+            DERIVED_RELATIVE_BUDGET_FORMULA
+        )
+        calibration_manifest["manifest_fingerprint"] = document_fingerprint(
+            calibration_manifest, "manifest_fingerprint"
+        )
+    activated, baseline = calibrate_baseline(
+        calibration_manifest,
+        fixtures,
+        artifacts=_release_artifacts(root),
+        artifact_fingerprints=cast(Mapping[str, object], build_details["artifacts"]),
+        environment=environment,
+        source_commit=commit,
+        rationale=rationale,
+        root=root,
+    )
+    if capped_policy:
+        if prior_manifest is None or prior_baseline is None:
+            raise AssertionError("capped baseline prior authority disappeared")
+        _preserve_warmup_migration_thresholds(
+            prior_manifest,
+            prior_baseline,
+            activated,
+            baseline,
+        )
+    rollover = None
+    if rollover_from is not None:
+        if (
+            expected_os_build is None
+            or prior_manifest is None
+            or prior_baseline is None
+        ):
+            raise AssertionError("validated rollover authority disappeared")
         artifact_source_changes = _artifact_source_changes(
             baseline_source_commit=cast(str, prior_baseline["source_commit"]),
             candidate_source_commit=cast(str, baseline["source_commit"]),
@@ -6077,11 +6163,6 @@ def _baseline_command(
             baseline,
             expected_os_build=expected_os_build,
             artifact_source_changes=artifact_source_changes,
-        )
-    elif expected_os_build is not None:
-        raise PerformanceResourceError(
-            "rollover-history",
-            "--expected-os-build requires --rollover-from",
         )
     evidence = load_json(root / VALID_EVIDENCE_PATH.relative_to(ROOT))
     evidence["manifest_fingerprint"] = activated["manifest_fingerprint"]

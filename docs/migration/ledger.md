@@ -5956,4 +5956,14 @@ windows passed, followed by five fresh nine-repetition groups at 217, 342, 37,
 coordinate; warmups, samples, thresholds, conditioning, and workloads are not
 weakened.
 
+The clean-source nine-repetition calibration at
+`88651d7ce8504a63157e98bded9394b25ff8d7e1` passed all 54 coordinates and prior
+hard ceilings, retained 486 conditioning snapshots, capped 22 derived
+thresholds, and archived baseline `fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e`.
+Lossless persisted-snapshot normalization removes only the repeated derivable
+conditioning-identity hash while retaining every control and observation.
+The active baseline is 1,035,872 bytes with fingerprint
+`43f4b9cec4f4f7e135f31af0eb94a04faabfa74af3850198d5d735be2ebc01c6`;
+the unchanged 1 MiB hygiene ceiling is satisfied.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

@@ -17,6 +17,7 @@ from jsonschema import Draft202012Validator
 from tooling.performance_resource_certification import (
     CLI_LAUNCH_COMPARISON_MODEL,
     CLI_LAUNCH_RELATIVE_ESTIMATOR,
+    DERIVED_RELATIVE_BUDGET_FORMULA,
     FIXTURE_IDS,
     MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
     MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS,
@@ -52,6 +53,7 @@ from tooling.performance_resource_certification import (
     certification_measurement_status,
     certify,
     conditioning_identities_match,
+    conditioning_identity_fingerprint,
     conditioning_snapshots_compatible,
     compare_controlled_launch_metric,
     compare_hard_metric,
@@ -246,8 +248,14 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(result["resource_declaration_count"], 56)
 
     def test_stationary_warmup_migration_preserves_every_hard_ceiling(self) -> None:
-        prior_baseline = load_json(BASELINE_PATH)
-        candidate_manifest = copy.deepcopy(self.manifest)
+        prior_authority = (
+            BASELINE_PATH.parent
+            / "history"
+            / "fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e"
+        )
+        prior_manifest = load_json(prior_authority / "manifest.json")
+        prior_baseline = load_json(prior_authority / "baseline.json")
+        candidate_manifest = copy.deepcopy(prior_manifest)
         candidate_manifest["measurement_policy"]["warmup_iterations"] = (
             STATIONARY_WARMUP_ITERATIONS
         )
@@ -295,7 +303,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 )
 
         comparisons = _preserve_warmup_migration_thresholds(
-            self.manifest,
+            prior_manifest,
             prior_baseline,
             candidate_manifest,
             candidate_baseline,
@@ -334,6 +342,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             manifest=candidate_manifest,
             fixtures=self.fixtures,
         )
+        self.assertFalse(
+            any(
+                "conditioning_identity_fingerprint" in snapshot
+                for measurement in candidate_baseline["measurements"]
+                for snapshot in measurement["coordinate_conditioning_repetitions"]
+            )
+        )
+        self.assertLess(
+            len(json.dumps(candidate_baseline, separators=(",", ":"))) + 1,
+            1_048_576,
+        )
         tampered_baseline = copy.deepcopy(candidate_baseline)
         tampered_baseline["measurements"][0]["budget"][
             "derived_relative_regression_basis_points"
@@ -352,7 +371,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         drifted["measurement_policy"]["sample_iterations"] += 1
         with self.assertRaises(PerformanceResourceError) as raised:
             _preserve_warmup_migration_thresholds(
-                self.manifest,
+                prior_manifest,
                 prior_baseline,
                 drifted,
                 copy.deepcopy(prior_baseline),
@@ -366,7 +385,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         with self.assertRaises(PerformanceResourceError) as raised:
             _preserve_warmup_migration_thresholds(
-                self.manifest,
+                prior_manifest,
                 prior_baseline,
                 copy.deepcopy(candidate_manifest),
                 regressed_baseline,
@@ -388,6 +407,59 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         validate_resource_inventory(inventory)
         validate_baseline(refreshed_baseline, manifest=manifest)
         validate_evidence(evidence, manifest=manifest)
+
+    def test_capped_baseline_can_chain_prior_ceiling_provenance(self) -> None:
+        prior_manifest = copy.deepcopy(self.manifest)
+        prior_baseline = load_json(BASELINE_PATH)
+        candidate_manifest = copy.deepcopy(prior_manifest)
+        candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
+            DERIVED_RELATIVE_BUDGET_FORMULA
+        )
+        candidate_baseline = copy.deepcopy(prior_baseline)
+        candidate_baseline.pop("prior_baseline_fingerprint")
+        for measurement in candidate_baseline["measurements"]:
+            budget = measurement["budget"]
+            budget["relative_regression_basis_points"] = budget.pop(
+                "derived_relative_regression_basis_points"
+            )
+            budget["absolute_ceiling"] = budget.pop("derived_absolute_ceiling")
+            budget.pop("prior_relative_regression_basis_points")
+            budget.pop("prior_absolute_ceiling")
+        candidate_rows = {
+            row["operation_id"]: [] for row in candidate_baseline["measurements"]
+        }
+        for row in candidate_baseline["measurements"]:
+            candidate_rows[row["operation_id"]].append(row)
+        for operation in candidate_manifest["operations"]:
+            if operation["id"] not in PERFORMANCE_OPERATION_IDS:
+                continue
+            rows = candidate_rows[operation["id"]]
+            operation["budget"]["relative_regression_basis_points"] = max(
+                row["budget"]["relative_regression_basis_points"] for row in rows
+            )
+            operation["budget"]["absolute_ceiling"] = max(
+                row["budget"]["absolute_ceiling"] for row in rows
+            )
+
+        comparisons = _preserve_warmup_migration_thresholds(
+            prior_manifest,
+            prior_baseline,
+            candidate_manifest,
+            candidate_baseline,
+        )
+
+        self.assertEqual(len(comparisons), 54)
+        self.assertTrue(all(row["status"] == "passed" for row in comparisons))
+        self.assertEqual(
+            candidate_baseline["prior_baseline_fingerprint"],
+            prior_baseline["baseline_fingerprint"],
+        )
+        validate_manifest(candidate_manifest, fixtures=self.fixtures)
+        validate_baseline(
+            candidate_baseline,
+            manifest=candidate_manifest,
+            fixtures=self.fixtures,
+        )
 
     @patch.dict("os.environ", {}, clear=True)
     @patch(
@@ -778,9 +850,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             "id": "environment:identical-conditioning",
             "status": "passed",
             "details": {
-                "conditioning_identity_fingerprint": snapshot[
-                    "conditioning_identity_fingerprint"
-                ],
+                "conditioning_identity_fingerprint": (
+                    conditioning_identity_fingerprint(snapshot)
+                ),
                 "conditioning_snapshot": snapshot,
             },
         }
@@ -1380,7 +1452,12 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             / "7e159f1ac589c1b4179a8a64aef38b87f76784c72820e97ac42dc849c515502d"
         )
         prior = load_json(history / "baseline.json")
-        active = load_json(BASELINE_PATH)
+        active = load_json(
+            BASELINE_PATH.parent
+            / "history"
+            / "fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e"
+            / "baseline.json"
+        )
         self.assertEqual(
             active["baseline_fingerprint"],
             "fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e",
@@ -1704,6 +1781,14 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         second["conditioning_identity_fingerprint"] = "4" * 64
         self.assertFalse(conditioning_identities_match([first, second]))
 
+        compact_first = copy.deepcopy(first)
+        compact_second = copy.deepcopy(first)
+        compact_first.pop("conditioning_identity_fingerprint")
+        compact_second.pop("conditioning_identity_fingerprint")
+        self.assertTrue(conditioning_identities_match([compact_first, compact_second]))
+        compact_second["effective_cpuset"] = "different-cpuset"
+        self.assertFalse(conditioning_identities_match([compact_first, compact_second]))
+
     def test_guest_generated_hypervisor_attestation_is_rejected(self) -> None:
         attestation = copy.deepcopy(self._environment()["host_attestation"])
         attestation["environment_kind"] = "hypervisor-host-pinned"
@@ -1846,7 +1931,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, "batch-duration-minimum")
         self.assertIn("batch_iterations=16", str(raised.exception))
         self.assertIn(
-            "repetition_medians=[100, 100, 100, 100, 100]",
+            f"repetition_medians={[100] * STATIONARY_BASELINE_REPETITIONS}",
             str(raised.exception),
         )
 
@@ -1877,6 +1962,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         manifest["measurement_policy"]["baseline_repetitions"] = (
             STATIONARY_BASELINE_REPETITIONS
+        )
+        manifest["measurement_policy"]["relative_budget_formula"] = (
+            DERIVED_RELATIVE_BUDGET_FORMULA
         )
         manifest["measurement_policy"]["conditioning_policy"] = (
             "authenticated-identical-before-each-coordinate"
@@ -2369,7 +2457,12 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self, *, unstable_first: bool = False
     ) -> tuple[dict[str, Any], dict[str, Any]]:
         environment = self._environment()
-        operations = {row["id"]: row for row in self.manifest["operations"]}
+        manifest = copy.deepcopy(self.manifest)
+        manifest["measurement_policy"]["relative_budget_formula"] = (
+            DERIVED_RELATIVE_BUDGET_FORMULA
+        )
+        operations = {row["id"]: row for row in manifest["operations"]}
+        repetition_count = manifest["measurement_policy"]["baseline_repetitions"]
         repetitions: dict[tuple[str, str | None], list[list[int]]] = {}
         batch_iterations: dict[tuple[str, str | None], int] = {}
         batch_duration_repetitions: dict[
@@ -2382,11 +2475,11 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         coordinate_conditioning_repetitions: dict[
             tuple[str, str | None], list[dict[str, Any]] | None
         ] = {}
-        for key_index, key in enumerate(performance_measurement_keys(self.manifest)):
+        for key_index, key in enumerate(performance_measurement_keys(manifest)):
             operation = operations[key[0]]
             base = 100_000 + (key_index * 10_000)
             repetition_rows = []
-            for repetition in range(5):
+            for repetition in range(repetition_count):
                 repetition_offset = repetition * 20
                 if unstable_first and key_index == 0:
                     repetition_offset = repetition * 10_000
@@ -2418,15 +2511,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 control_repetitions[key] = None
                 control_batch_duration_repetitions[key] = None
             coordinate_conditioning_repetitions[key] = [
-                self._conditioning_snapshot(environment) for _ in range(5)
+                self._conditioning_snapshot(environment)
+                for _ in range(repetition_count)
             ]
         return create_active_contract(
-            self.manifest,
+            manifest,
             self.fixtures,
             environment=environment,
             artifact_fingerprints=self._artifact_fingerprints(),
             conditioning_repetitions=[
-                self._conditioning_snapshot(environment) for _ in range(5)
+                self._conditioning_snapshot(environment)
+                for _ in range(repetition_count)
             ],
             source_commit="1" * 40,
             repetitions=repetitions,

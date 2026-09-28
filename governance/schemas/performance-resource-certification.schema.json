@@ -1327,7 +1327,6 @@
                 "timer_source",
                 "process_power_policy",
                 "power_state",
-                "conditioning_identity_fingerprint",
                 "quiescence_observation",
                 "snapshot_fingerprint"
             ],

@@ -23,6 +23,7 @@ from tooling.performance_resource_certification import (
     OPERATION_IDS,
     PERFORMANCE_OPERATION_IDS,
     RESOURCE_OPERATION_IDS,
+    STATIONARY_WARMUP_ITERATIONS,
     PerformanceExecutionLedger,
     PerformanceResourceError,
     _acquire_quiet_conditioning_snapshot,
@@ -38,6 +39,7 @@ from tooling.performance_resource_certification import (
     _git_invocation,
     _load_host_attestation,
     _measurement_conditioning_check,
+    _preserve_warmup_migration_thresholds,
     _resolved_command,
     _resolved_environment,
     _runner_resource_matches,
@@ -241,6 +243,38 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(result["operation_count"], 22)
         self.assertEqual(result["fixture_count"], 12)
         self.assertEqual(result["resource_declaration_count"], 56)
+
+    def test_stationary_warmup_migration_preserves_every_hard_ceiling(self) -> None:
+        prior_baseline = load_json(BASELINE_PATH)
+        candidate_manifest = copy.deepcopy(self.manifest)
+        candidate_manifest["measurement_policy"]["warmup_iterations"] = (
+            STATIONARY_WARMUP_ITERATIONS
+        )
+        candidate_baseline = copy.deepcopy(prior_baseline)
+
+        comparisons = _preserve_warmup_migration_thresholds(
+            self.manifest,
+            prior_baseline,
+            candidate_manifest,
+            candidate_baseline,
+        )
+
+        self.assertEqual(len(comparisons), 54)
+        self.assertTrue(all(row["status"] == "passed" for row in comparisons))
+        self.assertEqual(
+            [row["budget"] for row in candidate_baseline["measurements"]],
+            [row["budget"] for row in prior_baseline["measurements"]],
+        )
+        drifted = copy.deepcopy(candidate_manifest)
+        drifted["measurement_policy"]["sample_iterations"] += 1
+        with self.assertRaises(PerformanceResourceError) as raised:
+            _preserve_warmup_migration_thresholds(
+                self.manifest,
+                prior_baseline,
+                drifted,
+                copy.deepcopy(prior_baseline),
+            )
+        self.assertEqual(raised.exception.code, "warmup-contract-drift")
 
     def test_resource_identity_refresh_does_not_recalibrate_measurements(self) -> None:
         stale = copy.deepcopy(self.inventory)

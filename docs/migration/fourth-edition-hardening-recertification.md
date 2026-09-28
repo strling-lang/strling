@@ -1100,3 +1100,42 @@ operation cannot execute after a blocking result, and the complete quality
 runner test module remains green. This tracked correction requires another
 clean candidate to restart at Local; if the LSP operation fails again, its
 exact output will be preserved for atomic diagnosis.
+
+## Release end-to-end stationarity correction
+
+Clean candidate `1bb1241d46daa09abf955681d181c77179456446` passed every
+sample-free predictor, five consecutive paired-launch windows, Local 37/37,
+Pull Request 79/79, and Full with 124 passed plus only
+`WVR-SEC-VSCE-LICENSE-001` waived. Full performance invocation
+`2ff60dd7b9384b3fbae822e720e1fece` completed all 54 coordinates and
+authenticated 3,332 samples. The immediate pre-Release Full preflight and five
+paired-launch windows also passed.
+
+The independent no-reuse Release stopped fail-fast at operation 22/125.
+Performance invocation `6bb6a1d778cd4b53868fd0440090bbb7` authenticated 513
+samples across eight completed coordinates before
+`latency:end-to-end/fixture:simply-common` measured a `791350 ns` median.
+That exceeded the unchanged `724422 ns` relative and `790280 ns` absolute
+ceilings. Conditioning, workload isolation, environment identity, and exact
+runner, kernel, and interop artifact hashes all passed. This source identity is
+consumed and is not retried.
+
+The failed sequence shifted from an `830150 ns` first-half median to
+`737650 ns` in its second half. Five exact non-authoritative repetitions with
+the existing 16 warmups all passed but retained the same early/late movement.
+Five further conditioned repetitions with 128 fixed warmups passed at medians
+`616016`, `661766`, `620183`, `622000`, and `625233 ns`; every window passed
+isolation, and their first- and second-half medians no longer showed the
+Release failure's directional settling. None of these diagnostics entered an
+authenticated sample ledger.
+
+The governed policy therefore strengthens latency warmups from 16 to 128 while
+retaining all 64 authenticated samples, batching, workloads, ratios,
+conditioning, affinity, thresholds, and absolute ceilings. The existing batch
+duration contract makes this a bounded settling interval rather than a retry
+or discarded-sample rule. A one-time clean-source migration must recalibrate
+all 54 coordinates under five coordinate-local conditioned repetitions, prove
+every new median against the prior hard ceilings, archive baseline
+`fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e`,
+and preserve every prior budget and ceiling. The resulting tracked authority
+requires a new candidate to restart at Local.

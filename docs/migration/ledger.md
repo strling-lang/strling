@@ -5904,4 +5904,26 @@ and bounded blocking-operation output. A focused regression and the complete
 quality-runner module prove the correction. Because this is tracked source, a
 new clean candidate must restart at Local.
 
+Clean candidate `1bb1241d46daa09abf955681d181c77179456446` then passed all
+sample-free predictors, Local 37/37, Pull Request 79/79, and Full with 124
+passed plus only the expected waiver. Full performance invocation
+`2ff60dd7b9384b3fbae822e720e1fece` authenticated 3,332 samples over all 54
+coordinates. The immediate pre-Release gates also passed. Independent Release
+stopped at operation 22 when invocation `6bb6a1d778cd4b53868fd0440090bbb7`
+measured `latency:end-to-end/fixture:simply-common` at 791,350 ns against the
+unchanged 724,422 ns relative and 790,280 ns absolute ceilings. Its 513
+authenticated samples and eight completed coordinates are preserved; the
+source identity is consumed and was not retried.
+
+The failure's first-half median was 830,150 ns and its second-half median was
+737,650 ns. Five exact sample-free reproductions with the existing 16 warmups
+passed but showed the same settling direction. Five conditioned runs with 128
+fixed warmups passed at 616,016-661,766 ns without directional degradation or
+workload-isolation defects. The governed correction therefore raises only the
+latency warmup count from 16 to 128. A one-time five-repetition recalibration
+must pass all 54 coordinates against their prior hard ceilings, preserve every
+budget and threshold, and archive the current baseline before a new candidate
+restarts at Local. Sample counts, workloads, batching, ratios, conditioning,
+affinity, and authenticated-sample rules remain unchanged.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

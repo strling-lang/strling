@@ -62,6 +62,8 @@ WINDOWS_CANONICAL_BUILD_DRIVE = "P:"
 # the same authenticated quiet window does not consume or discard measurements.
 MEASUREMENT_CONDITIONING_MAX_ATTEMPTS = 24
 MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS = 15
+LEGACY_WARMUP_ITERATIONS = 16
+STATIONARY_WARMUP_ITERATIONS = 128
 HOST_ATTESTATION_ENV = "STRLING_PERFORMANCE_HOST_ATTESTATION"
 ALLOWED_CLOCKSOURCES = {"tsc", "hyperv_clocksource_tsc_page"}
 WINDOWS_ENVIRONMENT_PATH = ROOT / "tooling/performance_windows.py"
@@ -753,7 +755,8 @@ def validate_manifest(
         )
     policy = manifest["measurement_policy"]
     if (
-        policy["warmup_iterations"] != 16
+        policy["warmup_iterations"]
+        not in {LEGACY_WARMUP_ITERATIONS, STATIONARY_WARMUP_ITERATIONS}
         or policy["sample_iterations"] != 64
         or policy["baseline_repetitions"] != 5
         or policy["minimum_sample_duration_nanoseconds"] != 1_000_000
@@ -5596,6 +5599,259 @@ def _migrate_paired_launch_estimator_command(
     }
 
 
+def _preserve_warmup_migration_thresholds(
+    prior_manifest: Mapping[str, object],
+    prior_baseline: Mapping[str, object],
+    candidate_manifest: dict[str, Any],
+    candidate_baseline: dict[str, Any],
+) -> list[dict[str, object]]:
+    """Require the recalibrated measurements to pass every prior hard ceiling."""
+
+    prior_projection = copy.deepcopy(dict(prior_manifest))
+    candidate_projection = copy.deepcopy(candidate_manifest)
+    prior_projection.pop("manifest_fingerprint", None)
+    candidate_projection.pop("manifest_fingerprint", None)
+    prior_projection["measurement_policy"]["warmup_iterations"] = (
+        "reviewed-stationary-warmup"
+    )
+    candidate_projection["measurement_policy"]["warmup_iterations"] = (
+        "reviewed-stationary-warmup"
+    )
+    for projection in (prior_projection, candidate_projection):
+        for operation in projection["operations"]:
+            if operation["id"] in PERFORMANCE_OPERATION_IDS:
+                operation["budget"] = "preserved-prior-hard-ceilings"
+    if prior_projection != candidate_projection:
+        raise PerformanceResourceError(
+            "warmup-contract-drift",
+            "only the reviewed warmup iteration count may change",
+        )
+
+    prior_rows = {
+        (row["operation_id"], row["fixture_id"]): row
+        for row in cast(list[dict[str, Any]], prior_baseline["measurements"])
+    }
+    candidate_rows = {
+        (row["operation_id"], row["fixture_id"]): row
+        for row in cast(list[dict[str, Any]], candidate_baseline["measurements"])
+    }
+    if set(prior_rows) != set(candidate_rows):
+        raise PerformanceResourceError(
+            "warmup-denominator-drift", "measurement coordinates changed"
+        )
+
+    candidate_operations = {row["id"]: row for row in candidate_manifest["operations"]}
+    comparisons: list[dict[str, object]] = []
+    for key in performance_measurement_keys(prior_manifest):
+        prior = prior_rows[key]
+        candidate = candidate_rows[key]
+        operation = candidate_operations[key[0]]
+        if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL:
+            comparison = compare_controlled_launch_metric(
+                baseline_relative_signal=prior["relative_statistics"]["median"],
+                observed_relative_signal=candidate["relative_statistics"]["median"],
+                observed_raw_median=candidate["statistics"]["median"],
+                relative_regression_basis_points=prior["budget"][
+                    "relative_regression_basis_points"
+                ],
+                absolute_ceiling=prior["budget"]["absolute_ceiling"],
+                raw_reference_ceiling=prior["raw_reference_ceiling"],
+            )
+            candidate["raw_reference_ceiling"] = prior["raw_reference_ceiling"]
+        else:
+            comparison = compare_hard_metric(
+                baseline_median=prior["statistics"]["median"],
+                observed_median=candidate["statistics"]["median"],
+                relative_regression_basis_points=prior["budget"][
+                    "relative_regression_basis_points"
+                ],
+                absolute_ceiling=prior["budget"]["absolute_ceiling"],
+            )
+        comparisons.append(
+            {
+                "coordinate": _coordinate_id(key),
+                "status": comparison["status"],
+                "comparison": comparison,
+            }
+        )
+        candidate["budget"] = copy.deepcopy(prior["budget"])
+
+    failed = [row for row in comparisons if row["status"] != "passed"]
+    if failed:
+        raise PerformanceResourceError(
+            "warmup-regression",
+            f"{len(failed)} recalibrated coordinates exceed prior hard ceilings",
+        )
+
+    prior_operations = {
+        row["id"]: row
+        for row in cast(list[dict[str, Any]], prior_manifest["operations"])
+    }
+    for operation_id in PERFORMANCE_OPERATION_IDS:
+        candidate_operations[operation_id]["budget"] = copy.deepcopy(
+            prior_operations[operation_id]["budget"]
+        )
+    candidate_manifest["manifest_fingerprint"] = document_fingerprint(
+        candidate_manifest, "manifest_fingerprint"
+    )
+    candidate_baseline["manifest_fingerprint"] = candidate_manifest[
+        "manifest_fingerprint"
+    ]
+    candidate_baseline["baseline_fingerprint"] = "0" * 64
+    candidate_baseline["baseline_fingerprint"] = document_fingerprint(
+        candidate_baseline, "baseline_fingerprint"
+    )
+    return comparisons
+
+
+def _migrate_stationary_warmups_command(
+    *,
+    confirm_stationary_warmups: bool,
+    rationale: str,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    """Recalibrate after strengthening fixed warmups without relaxing ceilings."""
+
+    if not confirm_stationary_warmups:
+        raise PerformanceResourceError(
+            "warmup-confirmation",
+            "stationary warmup migration requires explicit confirmation",
+        )
+    if len(rationale.strip()) < 20:
+        raise PerformanceResourceError(
+            "baseline-rationale", "warmup rationale must be reviewable"
+        )
+    commit, dirty = _git_identity(root)
+    if dirty:
+        raise PerformanceResourceError(
+            "dirty-warmup-migration",
+            "stationary warmup migration requires a clean worktree",
+        )
+
+    manifest_path = root / MANIFEST_PATH.relative_to(ROOT)
+    baseline_path = root / BASELINE_PATH.relative_to(ROOT)
+    evidence_path = root / VALID_EVIDENCE_PATH.relative_to(ROOT)
+    fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
+    prior_manifest = load_json(manifest_path)
+    prior_baseline = load_json(baseline_path)
+    prior_evidence = load_json(evidence_path)
+    validate_manifest(prior_manifest, root=root, fixtures=fixtures)
+    validate_baseline(prior_baseline, manifest=prior_manifest, fixtures=fixtures)
+    validate_evidence(prior_evidence, manifest=prior_manifest)
+    if (
+        prior_manifest["measurement_policy"]["warmup_iterations"]
+        != LEGACY_WARMUP_ITERATIONS
+    ):
+        raise PerformanceResourceError(
+            "warmup-already-active",
+            "the active contract does not use the legacy warmup count",
+        )
+
+    prior_fingerprint = cast(str, prior_baseline["baseline_fingerprint"])
+    history = root / PERFORMANCE_HISTORY_PATH.relative_to(ROOT) / prior_fingerprint
+    if history.exists():
+        raise PerformanceResourceError(
+            "warmup-history-exists",
+            f"refusing to overwrite immutable prior authority {history.relative_to(root)}",
+        )
+
+    _enforce_governed_cpu_affinity(prior_manifest)
+    build_status, build_details = _build_release_artifacts(root)
+    if build_status != "passed":
+        raise PerformanceResourceError(
+            "release-build", json.dumps(build_details, sort_keys=True)
+        )
+    artifacts = cast(Mapping[str, object], build_details["artifacts"])
+    source_changes = _artifact_source_changes(
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=commit,
+        root=root,
+    )
+    artifact_accepted, artifact_identity = _artifact_identity_check(
+        cast(Mapping[str, object], prior_baseline["artifact_fingerprints"]),
+        artifacts,
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=commit,
+        source_changes=source_changes,
+    )
+    if not artifact_accepted:
+        raise PerformanceResourceError(
+            "warmup-artifact-identity",
+            "candidate artifacts are not bound to the migration source",
+        )
+    environment = live_environment(
+        selected_logical_cpu=prior_manifest["measurement_policy"][
+            "selected_logical_cpu"
+        ],
+        root=root,
+    )
+    if not environments_compatible(
+        cast(Mapping[str, object], prior_baseline["environment"]), environment
+    ):
+        raise PerformanceResourceError(
+            "warmup-environment",
+            "stationary warmup migration requires the active baseline environment",
+        )
+
+    candidate_manifest = copy.deepcopy(prior_manifest)
+    candidate_manifest["measurement_policy"]["warmup_iterations"] = (
+        STATIONARY_WARMUP_ITERATIONS
+    )
+    candidate_manifest, candidate_baseline = calibrate_baseline(
+        candidate_manifest,
+        fixtures,
+        artifacts=_release_artifacts(root),
+        artifact_fingerprints=artifacts,
+        environment=environment,
+        source_commit=commit,
+        rationale=rationale,
+        root=root,
+    )
+    candidate_baseline["update_command"] = (
+        "python3 -m tooling.performance_resource_certification "
+        "migrate-stationary-warmups --confirm-stationary-warmups "
+        "--rationale <reviewed-rationale>"
+    )
+    comparisons = _preserve_warmup_migration_thresholds(
+        prior_manifest,
+        prior_baseline,
+        candidate_manifest,
+        candidate_baseline,
+    )
+    candidate_evidence = copy.deepcopy(prior_evidence)
+    candidate_evidence["manifest_fingerprint"] = candidate_manifest[
+        "manifest_fingerprint"
+    ]
+    validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+    validate_baseline(
+        candidate_baseline, manifest=candidate_manifest, fixtures=fixtures
+    )
+    validate_evidence(candidate_evidence, manifest=candidate_manifest)
+
+    _write_json(history / "manifest.json", prior_manifest, root=root)
+    _write_json(history / "baseline.json", prior_baseline, root=root)
+    _write_json(history / "valid-evidence.json", prior_evidence, root=root)
+    _write_json(manifest_path, candidate_manifest, root=root)
+    _write_json(baseline_path, candidate_baseline, root=root)
+    _write_json(evidence_path, candidate_evidence, root=root)
+    return {
+        "status": "passed",
+        "source_commit": commit,
+        "prior_baseline_fingerprint": prior_fingerprint,
+        "baseline_fingerprint": candidate_baseline["baseline_fingerprint"],
+        "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+        "history_path": history.relative_to(root).as_posix(),
+        "artifact_identity": artifact_identity,
+        "warmup_iterations": STATIONARY_WARMUP_ITERATIONS,
+        "sample_iterations": candidate_manifest["measurement_policy"][
+            "sample_iterations"
+        ],
+        "thresholds_preserved": True,
+        "failed_prior_ceiling_comparisons": 0,
+        "comparisons": comparisons,
+    }
+
+
 def _baseline_command(
     *,
     replace: bool,
@@ -5886,6 +6142,20 @@ def main(argv: list[str] | None = None) -> int:
             arguments = parser.parse_args(values)
             result = _migrate_paired_launch_estimator_command(
                 confirm_paired_estimator=arguments.confirm_paired_estimator,
+                rationale=arguments.rationale,
+            )
+            status = cast(str, result["status"])
+        elif values and values[0] == "migrate-stationary-warmups":
+            parser = argparse.ArgumentParser(
+                description="Strengthen warmups and recalibrate under prior ceilings"
+            )
+            parser.add_argument("migrate-stationary-warmups")
+            parser.add_argument("--confirm-stationary-warmups", action="store_true")
+            parser.add_argument("--rationale", required=True)
+            parser.add_argument("--json", action="store_true")
+            arguments = parser.parse_args(values)
+            result = _migrate_stationary_warmups_command(
+                confirm_stationary_warmups=arguments.confirm_stationary_warmups,
                 rationale=arguments.rationale,
             )
             status = cast(str, result["status"])

@@ -555,6 +555,15 @@ checkpoints:
           - check: Profile fail-fast evidence correction
             result: passed
             details: The profile runner started stage 74 after recording the blocking LSP failure and retained failed child output in memory until the profile returned. Enforcing stop-on-failure therefore made atomic diagnostic evidence unavailable. The runner now stops after the first failed, unavailable, or incomplete result while preserving the exact completed-prefix JSON artifact, progress ledger, and bounded blocking-operation output. A focused regression prevents later execution after a blocking result, and the complete quality-runner test module passes. This tracked correction requires a new clean candidate to restart at Local.
+          - check: Fail-fast candidate certification disposition
+            result: failed
+            details: Clean candidate 1bb1241d46daa09abf955681d181c77179456446 passed all sample-free predictors, five paired-launch readiness windows, Local 37/37, Pull Request 79/79, and Full 124 passed plus only WVR-SEC-VSCE-LICENSE-001 waived. Full performance invocation 2ff60dd7b9384b3fbae822e720e1fece authenticated 3332 samples across all 54 coordinates. The immediate pre-Release gates passed. Independent no-reuse Release stopped at operation 22 when invocation 6bb6a1d778cd4b53868fd0440090bbb7 measured latency:end-to-end/fixture:simply-common at 791350 ns against unchanged 724422 relative and 790280 absolute ceilings. It preserved 513 authenticated samples and eight completed coordinates. Conditioning, isolation, environment, and exact artifact hashes passed. The consumed source is not retried.
+          - check: End-to-end stationarity diagnosis
+            result: passed
+            details: The failed 64-sample sequence moved from an 830150 ns first-half median to 737650 ns in its second half. Five exact non-authoritative 16-warmup repetitions passed but retained early/late movement. Five conditioned repetitions with 128 fixed warmups passed at medians 616016, 661766, 620183, 622000, and 625233 ns with clean workload isolation and no authenticated samples. This isolates insufficient pre-sample settling coverage in the certification method rather than a product or artifact regression.
+          - check: Stationary warmup migration correction
+            result: passed
+            details: The governed migration strengthens latency warmups from 16 to 128 while retaining 64 authenticated samples, all workloads, batching, conditioning, affinity, ratios, thresholds, and absolute ceilings. It requires one clean-source five-repetition recalibration of all 54 coordinates, rejects any coordinate outside its prior hard ceilings, archives baseline fcadf7f648c826b392e551ca51788eaa25dd77a2a087a01a3abb62ff4f98c39e, and preserves every prior budget. Focused contract tests cover all 54 coordinates and reject unrelated policy drift. The recalibrated authority requires a new clean candidate to restart at Local.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -624,7 +633,9 @@ commits:
       subject: "fix(certification): preserve paired launch ratios"
     - sha: 50e6b962aa364dfbf49e152d3a16ff2f5bc4e6e6
       subject: "fix(certification): migrate paired launch estimator"
+    - sha: 1bb1241d46daa09abf955681d181c77179456446
+      subject: "fix(certification): stop profiles on blocking results"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 50e6b962 passed all sample-free predictors and Local, then stopped in Pull Request when the profile runner both continued after a blocking LSP result and withheld its child output until profile completion. The fail-fast evidence correction is tracked source, so a new clean candidate must repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate 1bb1241d passed Local, Pull Request, and Full, then consumed its independent Release opportunity on a latency:end-to-end stationarity failure despite green immediate readiness gates. The 128-warmup methodology correction and governed recalibration are tracked authority changes, so a new clean candidate must repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

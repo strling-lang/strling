@@ -67,6 +67,8 @@ STATIONARY_WARMUP_ITERATIONS = 128
 LEGACY_BASELINE_REPETITIONS = 5
 STATIONARY_BASELINE_REPETITIONS = 9
 FULL_PREFLIGHT_SENTINEL_REPETITIONS = 5
+MAXIMUM_DESCHEDULING_NANOSECONDS = 50_000_000
+MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER = 2
 DERIVED_RELATIVE_BUDGET_FORMULA = "max(floor, ceil(6 * mad / median * 10000))"
 CAPPED_RELATIVE_BUDGET_FORMULA = (
     "min(prior hard ceiling, max(floor, ceil(6 * mad / median * 10000)))"
@@ -3058,8 +3060,30 @@ def _runner_samples(
     observed_batch_iterations = result.get("batch_iterations")
     batch_elapsed_samples = result.get("batch_elapsed_samples", [])
     normalized_samples = result.get("samples", [])
+    process_cpu_samples = result.get("process_cpu_samples", [])
+    process_cpu_batch_elapsed_samples = result.get(
+        "process_cpu_batch_elapsed_samples", []
+    )
+    process_cpu_utilization_basis_points = result.get(
+        "process_cpu_utilization_basis_points", []
+    )
     control_samples = result.get("control_samples", [])
     control_batch_elapsed_samples = result.get("control_batch_elapsed_samples", [])
+    control_process_cpu_samples = result.get("control_process_cpu_samples", [])
+    control_process_cpu_batch_elapsed_samples = result.get(
+        "control_process_cpu_batch_elapsed_samples", []
+    )
+    control_process_cpu_utilization_basis_points = result.get(
+        "control_process_cpu_utilization_basis_points", []
+    )
+    rejected_batch_elapsed_samples = result.get("rejected_batch_elapsed_samples", [])
+    rejected_process_cpu_batch_elapsed_samples = result.get(
+        "rejected_process_cpu_batch_elapsed_samples", []
+    )
+    rejected_process_cpu_utilization_basis_points = result.get(
+        "rejected_process_cpu_utilization_basis_points", []
+    )
+    rejected_count = len(rejected_batch_elapsed_samples)
     expects_launch_control = operation_id == "latency:cli-startup"
     if (
         result.get("operation_id") != operation_id
@@ -3072,13 +3096,33 @@ def _runner_samples(
         and observed_batch_iterations != batch_iterations
         or len(normalized_samples) != samples
         or len(batch_elapsed_samples) != samples
+        or len(process_cpu_samples) != samples
+        or len(process_cpu_batch_elapsed_samples) != samples
+        or len(process_cpu_utilization_basis_points) != samples
+        or result.get("maximum_descheduling_nanoseconds")
+        != MAXIMUM_DESCHEDULING_NANOSECONDS
+        or result.get("maximum_sample_attempts")
+        != samples * MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER
+        or result.get("sample_attempts") != samples + rejected_count
+        or len(rejected_process_cpu_batch_elapsed_samples) != rejected_count
+        or len(rejected_process_cpu_utilization_basis_points) != rejected_count
         or expects_launch_control
         and (
             len(control_samples) != samples
             or len(control_batch_elapsed_samples) != samples
+            or len(control_process_cpu_samples) != samples
+            or len(control_process_cpu_batch_elapsed_samples) != samples
+            or len(control_process_cpu_utilization_basis_points) != samples
+            or rejected_count != 0
         )
         or not expects_launch_control
-        and (control_samples != [] or control_batch_elapsed_samples != [])
+        and (
+            control_samples != []
+            or control_batch_elapsed_samples != []
+            or control_process_cpu_samples != []
+            or control_process_cpu_batch_elapsed_samples != []
+            or control_process_cpu_utilization_basis_points != []
+        )
         or not _runner_resource_matches(
             result,
             selected_logical_cpu=selected_logical_cpu,
@@ -3090,6 +3134,9 @@ def _runner_samples(
         )
     normalized = [int(value) for value in normalized_samples]
     elapsed = [int(value) for value in batch_elapsed_samples]
+    normalized_cpu = [int(value) for value in process_cpu_samples]
+    cpu_elapsed = [int(value) for value in process_cpu_batch_elapsed_samples]
+    cpu_utilization = [int(value) for value in process_cpu_utilization_basis_points]
     expected = [
         max(
             1,
@@ -3102,8 +3149,57 @@ def _runner_samples(
             "runner-batch-normalization",
             f"runner batch normalization changed for {operation_id}/{fixture_id}",
         )
+    expected_cpu = [
+        max(
+            1,
+            (value + (observed_batch_iterations // 2)) // observed_batch_iterations,
+        )
+        for value in cpu_elapsed
+    ]
+    expected_utilization = [
+        min(10_000, cpu * 10_000 // wall)
+        for wall, cpu in zip(elapsed, cpu_elapsed, strict=True)
+    ]
+    if normalized_cpu != expected_cpu or cpu_utilization != expected_utilization:
+        raise PerformanceResourceError(
+            "runner-cpu-accounting",
+            f"runner CPU accounting changed for {operation_id}/{fixture_id}",
+        )
+    rejected_elapsed = [int(value) for value in rejected_batch_elapsed_samples]
+    rejected_cpu_elapsed = [
+        int(value) for value in rejected_process_cpu_batch_elapsed_samples
+    ]
+    rejected_cpu_utilization = [
+        int(value) for value in rejected_process_cpu_utilization_basis_points
+    ]
+    if not expects_launch_control and (
+        any(
+            wall - cpu > MAXIMUM_DESCHEDULING_NANOSECONDS
+            for wall, cpu in zip(elapsed, cpu_elapsed, strict=True)
+        )
+        or any(
+            wall - cpu <= MAXIMUM_DESCHEDULING_NANOSECONDS
+            for wall, cpu in zip(rejected_elapsed, rejected_cpu_elapsed, strict=True)
+        )
+        or rejected_cpu_utilization
+        != [
+            min(10_000, cpu * 10_000 // wall)
+            for wall, cpu in zip(rejected_elapsed, rejected_cpu_elapsed, strict=True)
+        ]
+    ):
+        raise PerformanceResourceError(
+            "runner-sample-authenticity",
+            f"runner sample authenticity changed for {operation_id}/{fixture_id}",
+        )
     normalized_control = [int(value) for value in control_samples]
     control_elapsed = [int(value) for value in control_batch_elapsed_samples]
+    normalized_control_cpu = [int(value) for value in control_process_cpu_samples]
+    control_cpu_elapsed = [
+        int(value) for value in control_process_cpu_batch_elapsed_samples
+    ]
+    control_cpu_utilization = [
+        int(value) for value in control_process_cpu_utilization_basis_points
+    ]
     expected_control = [
         max(
             1,
@@ -3116,12 +3212,75 @@ def _runner_samples(
             "runner-control-normalization",
             f"runner launch-control normalization changed for {operation_id}/{fixture_id}",
         )
+    expected_control_cpu = [
+        max(
+            1,
+            (value + (observed_batch_iterations // 2)) // observed_batch_iterations,
+        )
+        for value in control_cpu_elapsed
+    ]
+    expected_control_utilization = [
+        min(10_000, cpu * 10_000 // wall)
+        for wall, cpu in zip(control_elapsed, control_cpu_elapsed, strict=True)
+    ]
+    if (
+        normalized_control_cpu != expected_control_cpu
+        or control_cpu_utilization != expected_control_utilization
+    ):
+        raise PerformanceResourceError(
+            "runner-control-cpu-accounting",
+            f"runner launch-control CPU accounting changed for {operation_id}/{fixture_id}",
+        )
     return {
         "samples": normalized,
         "batch_iterations": observed_batch_iterations,
         "batch_duration_samples": elapsed,
+        "process_cpu_samples": normalized_cpu,
+        "process_cpu_batch_duration_samples": cpu_elapsed,
+        "process_cpu_utilization_basis_points": cpu_utilization,
+        "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
+        "maximum_sample_attempts": samples * MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER,
+        "sample_attempts": samples + rejected_count,
+        "rejected_batch_duration_samples": rejected_elapsed,
+        "rejected_process_cpu_batch_duration_samples": rejected_cpu_elapsed,
+        "rejected_process_cpu_utilization_basis_points": rejected_cpu_utilization,
         "control_samples": normalized_control,
         "control_batch_duration_samples": control_elapsed,
+        "control_process_cpu_samples": normalized_control_cpu,
+        "control_process_cpu_batch_duration_samples": control_cpu_elapsed,
+        "control_process_cpu_utilization_basis_points": control_cpu_utilization,
+    }
+
+
+def _sample_authenticity_details(
+    observation: Mapping[str, object],
+) -> dict[str, object]:
+    if "sample_attempts" not in observation:
+        return {}
+    return {
+        "sample_authenticity": {
+            "maximum_descheduling_nanoseconds": observation[
+                "maximum_descheduling_nanoseconds"
+            ],
+            "maximum_sample_attempts": observation["maximum_sample_attempts"],
+            "sample_attempts": observation["sample_attempts"],
+            "process_cpu_samples": observation["process_cpu_samples"],
+            "process_cpu_batch_duration_samples": observation[
+                "process_cpu_batch_duration_samples"
+            ],
+            "process_cpu_utilization_basis_points": observation[
+                "process_cpu_utilization_basis_points"
+            ],
+            "rejected_batch_duration_samples": observation[
+                "rejected_batch_duration_samples"
+            ],
+            "rejected_process_cpu_batch_duration_samples": observation[
+                "rejected_process_cpu_batch_duration_samples"
+            ],
+            "rejected_process_cpu_utilization_basis_points": observation[
+                "rejected_process_cpu_utilization_basis_points"
+            ],
+        }
     }
 
 
@@ -4890,6 +5049,7 @@ def certify(
                             "batch_duration_samples": observation[
                                 "batch_duration_samples"
                             ],
+                            **_sample_authenticity_details(observation),
                             "unit": sentinel_row["unit"],
                         },
                     }
@@ -5027,6 +5187,7 @@ def certify(
                         "would_exceed_budget": comparison["status"] == "failed",
                         "batch_iterations": observation["batch_iterations"],
                         "batch_duration_samples": observation["batch_duration_samples"],
+                        **_sample_authenticity_details(observation),
                         "unit": baseline_row["unit"],
                     },
                 }

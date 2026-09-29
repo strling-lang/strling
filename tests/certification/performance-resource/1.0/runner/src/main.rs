@@ -34,7 +34,9 @@ use strling_kernel::validation::Validate;
 type RunResult<T> = Result<T, String>;
 type PreparedOperation = Box<dyn Fn() -> RunResult<usize>>;
 
-const RUNNER_VERSION: &str = "1.7.0";
+const RUNNER_VERSION: &str = "1.8.0";
+const MAXIMUM_DESCHEDULING_NANOSECONDS: u64 = 50_000_000;
+const MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER: usize = 2;
 
 #[derive(Debug)]
 struct Arguments {
@@ -171,8 +173,22 @@ fn run() -> RunResult<()> {
     }
     let mut samples = Vec::with_capacity(arguments.samples);
     let mut batch_elapsed_samples = Vec::with_capacity(arguments.samples);
+    let mut process_cpu_samples = Vec::with_capacity(arguments.samples);
+    let mut process_cpu_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
+    let mut process_cpu_utilization_basis_points = Vec::with_capacity(arguments.samples);
     let mut control_samples = Vec::with_capacity(arguments.samples);
     let mut control_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
+    let mut control_process_cpu_samples = Vec::with_capacity(arguments.samples);
+    let mut control_process_cpu_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
+    let mut control_process_cpu_utilization_basis_points = Vec::with_capacity(arguments.samples);
+    let mut rejected_batch_elapsed_samples = Vec::new();
+    let mut rejected_process_cpu_batch_elapsed_samples = Vec::new();
+    let mut rejected_process_cpu_utilization_basis_points = Vec::new();
+    let maximum_sample_attempts = arguments
+        .samples
+        .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
+        .ok_or_else(|| "sample attempt limit overflow".to_owned())?;
+    let mut sample_attempts = 0usize;
     let mut checksum = 0usize;
     let divisor = u64::try_from(batch_iterations).map_err(|_| "batch overflow")?;
     if let Some(control) = &control_operation {
@@ -184,24 +200,44 @@ fn run() -> RunResult<()> {
             )?;
         }
     }
-    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64)> {
+    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64, u64, u64, u64)> {
+        let cpu_started = process_cpu_time_nanoseconds()?;
         let started = Instant::now();
         checksum ^= black_box(execute_batch(prepared, batch_iterations)?);
         let nanoseconds = started.elapsed().as_nanos().max(1);
+        let cpu_nanoseconds = process_cpu_time_nanoseconds()?
+            .saturating_sub(cpu_started)
+            .max(1);
         let batch_elapsed = u64::try_from(nanoseconds).map_err(|_| "sample overflow")?;
+        let batch_cpu = u64::try_from(cpu_nanoseconds).map_err(|_| "CPU sample overflow")?;
         let normalized = batch_elapsed
             .saturating_add(divisor / 2)
             .checked_div(divisor)
             .ok_or_else(|| "batch divisor is zero".to_owned())?
             .max(1);
+        let normalized_cpu = batch_cpu
+            .saturating_add(divisor / 2)
+            .checked_div(divisor)
+            .ok_or_else(|| "batch divisor is zero".to_owned())?
+            .max(1);
+        let utilization_basis_points =
+            u64::try_from((u128::from(batch_cpu) * 10_000 / u128::from(batch_elapsed)).min(10_000))
+                .map_err(|_| "CPU utilization overflow".to_owned())?;
         observe_execution_processor(
             &mut observed_processor_groups,
             &mut observed_logical_processors,
         )?;
-        Ok((normalized, batch_elapsed))
+        Ok((
+            normalized,
+            batch_elapsed,
+            normalized_cpu,
+            batch_cpu,
+            utilization_basis_points,
+        ))
     };
     if let Some(control) = &control_operation {
         for sample_index in 0..arguments.samples {
+            sample_attempts += 1;
             let (request, control_sample) = if sample_index % 2 == 0 {
                 (measure(&operation)?, measure(control)?)
             } else {
@@ -210,14 +246,36 @@ fn run() -> RunResult<()> {
             };
             samples.push(request.0);
             batch_elapsed_samples.push(request.1);
+            process_cpu_samples.push(request.2);
+            process_cpu_batch_elapsed_samples.push(request.3);
+            process_cpu_utilization_basis_points.push(request.4);
             control_samples.push(control_sample.0);
             control_batch_elapsed_samples.push(control_sample.1);
+            control_process_cpu_samples.push(control_sample.2);
+            control_process_cpu_batch_elapsed_samples.push(control_sample.3);
+            control_process_cpu_utilization_basis_points.push(control_sample.4);
         }
     } else {
-        for _ in 0..arguments.samples {
+        while samples.len() < arguments.samples {
+            if sample_attempts >= maximum_sample_attempts {
+                return Err(format!(
+                    "measurement interference prevented {} authentic samples within {maximum_sample_attempts} attempts",
+                    arguments.samples
+                ));
+            }
+            sample_attempts += 1;
             let sample = measure(&operation)?;
+            if !sample_is_authentic(sample.1, sample.3) {
+                rejected_batch_elapsed_samples.push(sample.1);
+                rejected_process_cpu_batch_elapsed_samples.push(sample.3);
+                rejected_process_cpu_utilization_basis_points.push(sample.4);
+                continue;
+            }
             samples.push(sample.0);
             batch_elapsed_samples.push(sample.1);
+            process_cpu_samples.push(sample.2);
+            process_cpu_batch_elapsed_samples.push(sample.3);
+            process_cpu_utilization_basis_points.push(sample.4);
         }
     }
     verify_execution_resource(&execution_resource, arguments.expected_logical_cpu)?;
@@ -250,13 +308,29 @@ fn run() -> RunResult<()> {
             "peak_working_set_bytes": peak_working_set_bytes,
             "batch_elapsed_samples": batch_elapsed_samples,
             "samples": samples,
+            "process_cpu_batch_elapsed_samples": process_cpu_batch_elapsed_samples,
+            "process_cpu_samples": process_cpu_samples,
+            "process_cpu_utilization_basis_points": process_cpu_utilization_basis_points,
+            "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
+            "maximum_sample_attempts": maximum_sample_attempts,
+            "sample_attempts": sample_attempts,
+            "rejected_batch_elapsed_samples": rejected_batch_elapsed_samples,
+            "rejected_process_cpu_batch_elapsed_samples": rejected_process_cpu_batch_elapsed_samples,
+            "rejected_process_cpu_utilization_basis_points": rejected_process_cpu_utilization_basis_points,
             "control_batch_elapsed_samples": control_batch_elapsed_samples,
             "control_samples": control_samples,
+            "control_process_cpu_batch_elapsed_samples": control_process_cpu_batch_elapsed_samples,
+            "control_process_cpu_samples": control_process_cpu_samples,
+            "control_process_cpu_utilization_basis_points": control_process_cpu_utilization_basis_points,
             "checksum": checksum,
         }))
         .map_err(|error| error.to_string())?
     );
     Ok(())
+}
+
+fn sample_is_authentic(wall_nanoseconds: u64, process_cpu_nanoseconds: u64) -> bool {
+    wall_nanoseconds.saturating_sub(process_cpu_nanoseconds) <= MAXIMUM_DESCHEDULING_NANOSECONDS
 }
 
 fn parse_arguments() -> RunResult<Arguments> {
@@ -426,6 +500,35 @@ fn peak_working_set_bytes() -> RunResult<Option<u64>> {
     Ok(None)
 }
 
+#[cfg(target_os = "linux")]
+fn process_cpu_time_nanoseconds() -> RunResult<u128> {
+    #[repr(C)]
+    struct Timespec {
+        seconds: i64,
+        nanoseconds: i64,
+    }
+
+    extern "C" {
+        fn clock_gettime(clock_id: i32, time: *mut Timespec) -> i32;
+    }
+
+    const CLOCK_PROCESS_CPUTIME_ID: i32 = 2;
+    let mut time = Timespec {
+        seconds: 0,
+        nanoseconds: 0,
+    };
+    if unsafe { clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &mut time) } != 0 {
+        return Err(format!(
+            "clock_gettime(CLOCK_PROCESS_CPUTIME_ID) failed: {}",
+            std::io::Error::last_os_error()
+        ));
+    }
+    if time.seconds < 0 || !(0..1_000_000_000).contains(&time.nanoseconds) {
+        return Err("process CPU clock returned an invalid value".to_owned());
+    }
+    Ok((time.seconds as u128) * 1_000_000_000 + time.nanoseconds as u128)
+}
+
 #[cfg(target_os = "windows")]
 mod windows_placement {
     use super::{ExecutionResource, RunResult};
@@ -468,9 +571,22 @@ mod windows_placement {
         state_mask: u32,
     }
 
+    #[repr(C)]
+    struct FileTime {
+        low: u32,
+        high: u32,
+    }
+
     #[link(name = "kernel32")]
     extern "system" {
         fn GetCurrentProcess() -> Handle;
+        fn GetProcessTimes(
+            process: Handle,
+            creation_time: *mut FileTime,
+            exit_time: *mut FileTime,
+            kernel_time: *mut FileTime,
+            user_time: *mut FileTime,
+        ) -> i32;
         fn GetProcessAffinityMask(
             process: Handle,
             process_mask: *mut usize,
@@ -539,6 +655,28 @@ mod windows_placement {
         Ok((0..usize::BITS as usize)
             .filter(|index| process_mask & (1usize << index) != 0)
             .collect())
+    }
+
+    pub fn process_cpu_time_nanoseconds() -> RunResult<u128> {
+        let mut creation = FileTime { low: 0, high: 0 };
+        let mut exit = FileTime { low: 0, high: 0 };
+        let mut kernel = FileTime { low: 0, high: 0 };
+        let mut user = FileTime { low: 0, high: 0 };
+        if unsafe {
+            GetProcessTimes(
+                current_process(),
+                &mut creation,
+                &mut exit,
+                &mut kernel,
+                &mut user,
+            )
+        } == 0
+        {
+            return Err(last_error("GetProcessTimes"));
+        }
+        let kernel_ticks = (u64::from(kernel.high) << 32) | u64::from(kernel.low);
+        let user_ticks = (u64::from(user.high) << 32) | u64::from(user.low);
+        Ok(u128::from(kernel_ticks.saturating_add(user_ticks)) * 100)
     }
 
     fn cpu_set_state(expected: usize, process: Handle) -> RunResult<(u32, u8, u8, u8, u64)> {
@@ -841,6 +979,11 @@ fn peak_working_set_bytes() -> RunResult<Option<u64>> {
     windows_placement::peak_working_set_bytes().map(Some)
 }
 
+#[cfg(target_os = "windows")]
+fn process_cpu_time_nanoseconds() -> RunResult<u128> {
+    windows_placement::process_cpu_time_nanoseconds()
+}
+
 #[cfg(not(any(target_os = "linux", target_os = "windows")))]
 fn effective_cpu_affinity() -> RunResult<Vec<usize>> {
     Err("governed CPU affinity requires native Linux or Windows".to_owned())
@@ -870,6 +1013,11 @@ fn observe_execution_processor(
 #[cfg(not(any(target_os = "linux", target_os = "windows")))]
 fn peak_working_set_bytes() -> RunResult<Option<u64>> {
     Err("peak working set observation is unavailable".to_owned())
+}
+
+#[cfg(not(any(target_os = "linux", target_os = "windows")))]
+fn process_cpu_time_nanoseconds() -> RunResult<u128> {
+    Err("process CPU-time observation is unavailable".to_owned())
 }
 
 #[allow(dead_code)]
@@ -1469,7 +1617,10 @@ fn prepare_operation(
 
 #[cfg(test)]
 mod affinity_tests {
-    use super::{format_cpu_set, parse_cpu_set, select_batch_iterations_with};
+    use super::{
+        format_cpu_set, parse_cpu_set, sample_is_authentic, select_batch_iterations_with,
+        MAXIMUM_DESCHEDULING_NANOSECONDS,
+    };
 
     #[test]
     fn cpu_sets_are_parsed_and_rendered_deterministically() {
@@ -1498,5 +1649,18 @@ mod affinity_tests {
         assert_eq!(selected, 3);
         assert_eq!(requested, [1, 1, 3, 3]);
         assert!(observations.next().is_none());
+    }
+
+    #[test]
+    fn sample_authenticity_rejects_only_excess_descheduling() {
+        assert!(sample_is_authentic(
+            100_000_000,
+            100_000_000 - MAXIMUM_DESCHEDULING_NANOSECONDS
+        ));
+        assert!(!sample_is_authentic(
+            100_000_001,
+            100_000_000 - MAXIMUM_DESCHEDULING_NANOSECONDS
+        ));
+        assert!(sample_is_authentic(100_000_000, 110_000_000));
     }
 }

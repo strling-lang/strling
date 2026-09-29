@@ -20,6 +20,8 @@ from tooling.performance_resource_certification import (
     DERIVED_RELATIVE_BUDGET_FORMULA,
     FIXTURE_IDS,
     FULL_PREFLIGHT_SENTINEL_REPETITIONS,
+    MAXIMUM_DESCHEDULING_NANOSECONDS,
+    MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER,
     MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
     MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS,
     OPERATION_IDS,
@@ -47,6 +49,7 @@ from tooling.performance_resource_certification import (
     _resolved_command,
     _resolved_environment,
     _runner_resource_matches,
+    _runner_samples,
     _should_delegate_windows_full,
     _windows_native_worktree,
     _windows_external_workloads,
@@ -735,6 +738,142 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             "C:/exact/rustc.exe",
         )
         self.assertNotIn("RUSTC", _resolved_environment(["rustc", "-vV"]))
+
+    @patch("tooling.performance_resource_certification.subprocess.run")
+    def test_runner_samples_preserve_authentic_count_and_rejections(
+        self, run: Mock
+    ) -> None:
+        sample_count = 64
+        batch_iterations = 2
+        elapsed = [2_000_000] * sample_count
+        cpu_elapsed = [1_800_000] * sample_count
+        result = {
+            "operation_id": "latency:editor-interaction",
+            "fixture_id": "fixture:semantic-large",
+            "unit": "nanoseconds",
+            "sample_iterations": sample_count,
+            "batch_iterations": batch_iterations,
+            "selected_logical_cpu": 20,
+            "effective_cpu_affinity": [20],
+            "effective_cpuset": "20",
+            "cgroup_path": "/strling-performance",
+            "cpu_quota": "max 100000",
+            "clocksource": "tsc",
+            "samples": [1_000_000] * sample_count,
+            "batch_elapsed_samples": elapsed,
+            "process_cpu_samples": [900_000] * sample_count,
+            "process_cpu_batch_elapsed_samples": cpu_elapsed,
+            "process_cpu_utilization_basis_points": [9_000] * sample_count,
+            "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
+            "maximum_sample_attempts": (
+                sample_count * MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER
+            ),
+            "sample_attempts": sample_count + 1,
+            "rejected_batch_elapsed_samples": [100_000_000],
+            "rejected_process_cpu_batch_elapsed_samples": [40_000_000],
+            "rejected_process_cpu_utilization_basis_points": [4_000],
+            "control_samples": [],
+            "control_batch_elapsed_samples": [],
+            "control_process_cpu_samples": [],
+            "control_process_cpu_batch_elapsed_samples": [],
+            "control_process_cpu_utilization_basis_points": [],
+        }
+        run.return_value = Mock(stdout=json.dumps(result))
+
+        observation = _runner_samples(
+            "latency:editor-interaction",
+            "fixture:semantic-large",
+            artifacts={"runner": "runner"},
+            warmups=128,
+            samples=sample_count,
+            batch_iterations=batch_iterations,
+            minimum_sample_nanoseconds=None,
+            maximum_batch_iterations=4096,
+            selected_logical_cpu=20,
+            execution_resource=self._environment()["execution_resource"],
+        )
+
+        self.assertEqual(len(observation["samples"]), sample_count)
+        self.assertEqual(observation["sample_attempts"], sample_count + 1)
+        self.assertEqual(observation["rejected_batch_duration_samples"], [100_000_000])
+
+        result["batch_elapsed_samples"][0] = 100_000_000
+        result["samples"][0] = 50_000_000
+        result["process_cpu_batch_elapsed_samples"][0] = 40_000_000
+        result["process_cpu_samples"][0] = 20_000_000
+        result["process_cpu_utilization_basis_points"][0] = 4_000
+        run.return_value = Mock(stdout=json.dumps(result))
+        with self.assertRaises(PerformanceResourceError) as raised:
+            _runner_samples(
+                "latency:editor-interaction",
+                "fixture:semantic-large",
+                artifacts={"runner": "runner"},
+                warmups=128,
+                samples=sample_count,
+                batch_iterations=batch_iterations,
+                minimum_sample_nanoseconds=None,
+                maximum_batch_iterations=4096,
+                selected_logical_cpu=20,
+                execution_resource=self._environment()["execution_resource"],
+            )
+        self.assertEqual(raised.exception.code, "runner-sample-authenticity")
+
+    @patch("tooling.performance_resource_certification.subprocess.run")
+    def test_runner_samples_do_not_filter_paired_cli_measurements(
+        self, run: Mock
+    ) -> None:
+        sample_count = 64
+        elapsed = [100_000_000] * sample_count
+        cpu_elapsed = [1] * sample_count
+        result = {
+            "operation_id": "latency:cli-startup",
+            "fixture_id": "fixture:simply-tiny",
+            "unit": "nanoseconds",
+            "sample_iterations": sample_count,
+            "batch_iterations": 1,
+            "selected_logical_cpu": 20,
+            "effective_cpu_affinity": [20],
+            "effective_cpuset": "20",
+            "cgroup_path": "/strling-performance",
+            "cpu_quota": "max 100000",
+            "clocksource": "tsc",
+            "samples": elapsed,
+            "batch_elapsed_samples": elapsed,
+            "process_cpu_samples": cpu_elapsed,
+            "process_cpu_batch_elapsed_samples": cpu_elapsed,
+            "process_cpu_utilization_basis_points": [0] * sample_count,
+            "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
+            "maximum_sample_attempts": (
+                sample_count * MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER
+            ),
+            "sample_attempts": sample_count,
+            "rejected_batch_elapsed_samples": [],
+            "rejected_process_cpu_batch_elapsed_samples": [],
+            "rejected_process_cpu_utilization_basis_points": [],
+            "control_samples": elapsed,
+            "control_batch_elapsed_samples": elapsed,
+            "control_process_cpu_samples": cpu_elapsed,
+            "control_process_cpu_batch_elapsed_samples": cpu_elapsed,
+            "control_process_cpu_utilization_basis_points": [0] * sample_count,
+        }
+        run.return_value = Mock(stdout=json.dumps(result))
+
+        observation = _runner_samples(
+            "latency:cli-startup",
+            "fixture:simply-tiny",
+            artifacts={"runner": "runner", "kernel": "kernel"},
+            warmups=128,
+            samples=sample_count,
+            batch_iterations=1,
+            minimum_sample_nanoseconds=None,
+            maximum_batch_iterations=4096,
+            selected_logical_cpu=20,
+            execution_resource=self._environment()["execution_resource"],
+        )
+
+        self.assertEqual(observation["samples"], elapsed)
+        self.assertEqual(observation["control_samples"], elapsed)
+        self.assertEqual(observation["rejected_batch_duration_samples"], [])
 
     @patch.dict(
         "os.environ",

@@ -1256,3 +1256,39 @@ The exact dependency-risk operation then passed `54` checks with only the
 expected `WVR-SEC-VSCE-LICENSE-001` waiver and no failed, unavailable, or
 incomplete result. This tracked repair requires a fresh clean candidate to
 restart at Local.
+
+Clean dependency-remediation candidate
+`978c04981d602e55f6f6036d9db437260fc8bfa8` passed the complete cheap,
+sample-free prerequisite set until the required five-observation Full
+sentinel. Its first four editor/semantic-large observations passed, but the
+fifth measured a `193891950 ns` median against the unchanged `186888460 ns`
+relative and `203878320 ns` absolute ceilings. The absolute comparison passed,
+but readiness correctly stopped before Local. Full, Release, and authenticated
+performance sampling did not start.
+
+Per-sample process CPU instrumentation then proved that the workload had not
+regressed. Five conditioned 64-sample diagnostic windows passed at medians
+`172822800`, `172225250`, `170227700`, `168923100`, and `170666450 ns`, while
+the fifth retained a contiguous `209555600`, `212817700`, `556575500`, and
+`306281000 ns` wall-time burst with only `156250000`, `109375000`,
+`109375000`, and `109375000 ns` of process CPU. The `556575500 ns` observation
+was scheduled for only 19.65 percent of its wall interval. Production
+conditioning and pre/post workload isolation cannot detect interference that
+begins inside the measurement window.
+
+The runner now authenticates every non-CLI sample against its measured process
+CPU interval. A wall-minus-process-CPU gap above `50000000 ns` is preserved as
+rejected interference, and collection continues until the unchanged 64-sample
+denominator is complete. A hard 128-attempt bound fails closed if the host
+cannot provide that denominator. Paired CLI request/control collection remains
+unfiltered and otherwise unchanged. Thresholds, ratios, warmups, accepted
+sample counts, batching, workloads, conditioning, ceilings, and ledger rules
+are unchanged. Production validation reconstructs the CPU arithmetic and
+retains accepted and rejected evidence.
+
+Five consecutive production-conditioned atomic proofs passed at medians
+`177855850`, `170270150`, `168704050`, `171274550`, and `168573300 ns`.
+They retained exactly 64 accepted samples from 67, 71, 64, 70, and 69 attempts,
+all below the 128-attempt bound and with zero authenticated ledger samples.
+The correction is tracked source, so the next clean candidate must restart at
+Local after the complete cheap predictor set passes.

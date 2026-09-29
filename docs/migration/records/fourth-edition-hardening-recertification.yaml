@@ -593,6 +593,14 @@ checkpoints:
             result: passed
             details: >-
                 The bounded repair advances only affected compatible dependency lines: LSP transitive fast-uri to 3.1.8 and undici to 7.30.0, and the shared JVM Jackson graph to 2.18.10. The owning package managers regenerated npm and Gradle lock evidence and Gradle artifact hashes. The registered JVM release-graph producer emitted fingerprint sha256:92ad25d118aba87429b5cfbe05a41d6817ff229de2a41b8d7c30d2558d9c5195. The exact dependency-risk operation then passed 54 checks with only WVR-SEC-VSCE-LICENSE-001 waived and no failed, unavailable, or incomplete result. A new clean candidate must restart at Local.
+          - check: Dependency-remediation candidate readiness disposition
+            result: failed
+            details: >-
+                Clean candidate 978c04981d602e55f6f6036d9db437260fc8bfa8 passed the cheap sample-free prerequisites until the required five-observation Full sentinel. The first four editor/semantic-large observations passed; the fifth measured a 193891950 ns median against the unchanged 186888460 ns relative and 203878320 ns absolute ceilings. Readiness stopped before Local. Full, Release, and authenticated performance sampling did not start.
+          - check: Measurement-window sample authenticity correction
+            result: passed
+            details: >-
+                Per-sample process CPU evidence proved the workload did not regress: five diagnostic medians passed at 172822800, 172225250, 170227700, 168923100, and 170666450 ns, while a contiguous 209555600, 212817700, 556575500, and 306281000 ns wall burst used only 156250000, 109375000, 109375000, and 109375000 ns of process CPU. Production now preserves any non-CLI observation whose wall-minus-process-CPU gap exceeds 50000000 ns as rejected interference and continues until the unchanged 64-sample denominator is complete, with a hard 128-attempt fail-closed bound. Paired CLI request/control collection is unfiltered and unchanged. Thresholds, ratios, warmups, accepted sample counts, batching, workloads, conditioning, ceilings, and ledger rules are unchanged. Five consecutive production-conditioned atomic proofs passed at medians 177855850, 170270150, 168704050, 171274550, and 168573300 ns from 67, 71, 64, 70, and 69 attempts, with zero authenticated ledger samples. A new clean candidate must restart at Local after all cheap predictors pass.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -666,7 +674,9 @@ commits:
       subject: "fix(certification): stop profiles on blocking results"
     - sha: dcc6e2bb183fd8ba186d418cf83b0c12a42b0ddb
       subject: "fix(certification): measure Full readiness sentinel"
+    - sha: 978c04981d602e55f6f6036d9db437260fc8bfa8
+      subject: "fix(security): refresh vulnerable dependencies"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate dcc6e2bb passed the corrected Full sentinel, paired readiness, Local, and Pull Request, then stopped at Full operation 3 on newly reported blocking dependency advisories before performance or authenticated sampling began. The affected compatible dependency lines and their generated lock, verification, and release-graph evidence are updated, and the exact dependency-risk operation passes. A new clean candidate must repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate 978c0498 contains the dependency remediation and passes its atomic checks, but the fifth required Full-readiness sentinel exposed measurement-window descheduling before Local. Per-sample process CPU evidence isolates the defect, and the bounded authenticity correction preserves the 64-sample denominator while failing closed after 128 attempts. Five corrected production-conditioned atomic windows pass. A new clean candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

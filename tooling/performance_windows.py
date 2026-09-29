@@ -21,9 +21,9 @@ import uuid
 from typing import Any, Mapping, Sequence
 
 
-CONDITIONING_VERSION = "1.4.0"
-POLICY_ID = "native-windows-supported-controls-quiescence-v5"
-OBSERVATION_MILLISECONDS = 2_000
+CONDITIONING_VERSION = "1.5.0"
+POLICY_ID = "native-windows-supported-controls-quiescence-v6"
+OBSERVATION_MILLISECONDS = 10_000
 MAXIMUM_SELECTED_BUSY_BASIS_POINTS = 500
 MAXIMUM_SELECTED_INTERRUPT_BASIS_POINTS = 100
 MAXIMUM_SYSTEM_BUSY_BASIS_POINTS = 1_500

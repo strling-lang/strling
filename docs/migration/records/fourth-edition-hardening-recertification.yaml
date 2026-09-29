@@ -88,6 +88,7 @@ scope:
         - tooling/jvm_adapter_package.py
         - tooling/local_certification_attestation.py
         - tooling/performance_resource_certification.py
+        - tooling/performance_windows.py
         - tooling/production_certification.py
         - tooling/public_contracts.py
         - tooling/structured_operation_execution.py
@@ -107,6 +108,7 @@ scope:
         - tooling/tests/test_pcre2_lowering_architecture.py
         - tooling/tests/test_profile_source_identity.py
         - tooling/tests/test_performance_resource_certification.py
+        - tooling/tests/test_performance_windows.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_production_certification.py
         - tooling/tests/test_public_contracts.py
@@ -621,6 +623,14 @@ checkpoints:
             result: passed
             details: >-
                 Clean-source migration at 75ce95993ccec228d3a24cbedb3c4a45512c45e0 archived baseline c94bda9ed4ae2dcdfce00ce3d89cf63ef78d38b042eb7c2978ec6b1b6ece1c53 without consuming samples, preserved every raw repetition, and produced manifest c8ff8e5a19515ec16157ecc3393df42c8b0e8450cd71199c7e016715cc5ab42e and baseline 00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a. Both governed relative budgets remain 1000 basis points and the prior effective ceilings remain exactly 12658 and 12337.
+          - check: Order-balanced candidate disposition
+            result: failed
+            details: >-
+                Clean candidate 8055584440e8e3dacab0efce277b59fe0f252a48 passed every cheap predictor, five paired-launch readiness windows, Local 37/37, Pull Request 79/79, and the immediate pre-Full gates. Full stopped fail-fast at operation 22 after 20 passes and the expected waiver. Performance invocation c20e958cc97e459b998cbd9a9bbb7160 authenticated 1027 samples across 18 completed coordinates before latency:semantic-analysis/fixture:simply-common measured 96808 ns against unchanged 89146 ns relative and 98165 ns absolute ceilings. The relative comparison failed while the absolute comparison passed. Release did not start, and the consumed source is not retried.
+          - check: Sustained recovery conditioning correction
+            result: passed
+            details: >-
+                The exact complete producer reproduced the coordinate at 96983 ns with zero authenticated ledger samples, while five isolated conditioned observations passed between 81004 and 84100 ns. Prefix bisection proved that the first five shuffled operations followed by the target passed at 78396 ns, the first six followed by the target failed at 90167 ns, and the sixth operation latency:cli-startup/fixture:simply-tiny alone followed by the target passed at 82084 ns. The defect is cumulative producer state: the two-second Windows quiescence observation can accept a quiet host before the selected CPU recovers from sustained launch work. Adding eight seconds after the exact failing prefix, for ten seconds total before the target, restored a passing 80061 ns median; a twelve-second total check passed at 81750 ns. The Windows supported-controls conditioning policy advances from v5/1.4.0 to v6/1.5.0 and strengthens its observation from 2000 to 10000 milliseconds. Busy and interrupt thresholds, ceilings, ratios, warmups, samples, batching, workloads, isolation, and authenticated-sample rules remain unchanged. The new conditioner identity requires a clean-source governed recalibration before recertification restarts at Local.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

@@ -1380,3 +1380,39 @@ and baseline `00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a`.
 The governed relative budgets remain `1000` basis points. Effective ceilings
 remain exactly `12658` and `12337`; the migration cannot admit evidence that
 the prior authority would have rejected.
+
+Clean order-balanced candidate
+`8055584440e8e3dacab0efce277b59fe0f252a48` passed every cheap predictor,
+five paired-launch readiness windows, Local `37/37`, Pull Request `79/79`, and
+the immediate pre-Full gates. Full stopped fail-fast at operation 22 after 20
+passes and the expected waiver. Performance invocation
+`c20e958cc97e459b998cbd9a9bbb7160` authenticated 1,027 samples across 18
+completed coordinates before `latency:semantic-analysis/fixture:simply-common`
+measured `96808 ns` against the unchanged `89146 ns` relative and `98165 ns`
+absolute ceilings. The relative comparison failed while the absolute
+comparison passed. Release did not start, and the consumed source is not
+retried.
+
+The exact complete producer reproduced the coordinate at `96983 ns` with zero
+authenticated ledger samples, while five isolated conditioned observations
+passed between `81004` and `84100 ns`. Prefix bisection then proved that the
+first five shuffled operations followed by the target passed at `78396 ns`,
+the first six followed by the target failed at `90167 ns`, and the sixth
+operation (`latency:cli-startup/fixture:simply-tiny`) alone followed by the
+target passed at `82084 ns`. The defect is therefore cumulative producer state,
+not a product regression or a single leaking operation. The governed baseline
+independently contains fast `78673`–`83902 ns` and sustained-work
+`92021`–`92954 ns` repetition medians for this coordinate, but its median
+authority is `81042 ns`.
+
+The existing two-second Windows quiescence observation could accept a quiet
+host before the selected CPU had recovered from sustained launch work. Adding
+eight seconds after the failing prefix, for ten seconds total before the target,
+restored a passing median of `80061 ns`; a twelve-second total check passed at
+`81750 ns`. The Windows supported-controls conditioning policy therefore moves
+from v5/`1.4.0` to v6/`1.5.0` and strengthens its observation from 2,000 to
+10,000 milliseconds. Busy and interrupt thresholds, performance ceilings,
+ratios, warmups, sample counts, batching, workloads, isolation, and
+authenticated-sample rules remain unchanged. Because the conditioner identity
+is baseline authority, the correction requires a clean-source governed
+recalibration before Local restarts.

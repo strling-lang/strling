@@ -821,17 +821,40 @@
                 "maximum_selected_interrupt_basis_points",
                 "maximum_system_busy_basis_points"
             ],
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "policy_id": {
+                                "const": "native-windows-supported-controls-quiescence-v6"
+                            }
+                        },
+                        "required": ["policy_id"]
+                    },
+                    "then": {
+                        "properties": {
+                            "observation_milliseconds": { "const": 10000 }
+                        }
+                    },
+                    "else": {
+                        "properties": {
+                            "observation_milliseconds": { "const": 2000 }
+                        }
+                    }
+                }
+            ],
             "properties": {
                 "policy_id": {
                     "enum": [
                         "native-windows-fixed-frequency-quiescence-v3",
                         "native-windows-core-reservation-quiescence-v4",
-                        "native-windows-supported-controls-quiescence-v5"
+                        "native-windows-supported-controls-quiescence-v5",
+                        "native-windows-supported-controls-quiescence-v6"
                     ]
                 },
                 "implementation_path": { "$ref": "#/$defs/repositoryPath" },
                 "executable_sha256": { "$ref": "#/$defs/sha256" },
-                "observation_milliseconds": { "const": 2000 },
+                "observation_milliseconds": { "enum": [2000, 10000] },
                 "maximum_selected_busy_basis_points": { "const": 500 },
                 "maximum_selected_interrupt_basis_points": { "const": 100 },
                 "maximum_system_busy_basis_points": { "const": 1500 }
@@ -991,7 +1014,10 @@
                             "conditioning": {
                                 "properties": {
                                     "policy_id": {
-                                        "const": "native-windows-supported-controls-quiescence-v5"
+                                        "enum": [
+                                            "native-windows-supported-controls-quiescence-v5",
+                                            "native-windows-supported-controls-quiescence-v6"
+                                        ]
                                     }
                                 }
                             }
@@ -1337,7 +1363,8 @@
                     "enum": [
                         "native-windows-fixed-frequency-quiescence-v3",
                         "native-windows-core-reservation-quiescence-v4",
-                        "native-windows-supported-controls-quiescence-v5"
+                        "native-windows-supported-controls-quiescence-v5",
+                        "native-windows-supported-controls-quiescence-v6"
                     ]
                 },
                 "host_attestation_fingerprint": { "$ref": "#/$defs/sha256" },

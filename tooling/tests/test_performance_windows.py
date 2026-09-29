@@ -10,9 +10,12 @@ from pathlib import Path
 
 from tooling.performance_resource_certification import _windows_host_attestation
 from tooling.performance_windows import (
+    CONDITIONING_VERSION,
     MAXIMUM_SELECTED_BUSY_BASIS_POINTS,
     MAXIMUM_SELECTED_INTERRUPT_BASIS_POINTS,
     MAXIMUM_SYSTEM_BUSY_BASIS_POINTS,
+    OBSERVATION_MILLISECONDS,
+    POLICY_ID,
     WindowsQualificationError,
     evaluate_quiescence,
     guest_indicators,
@@ -42,6 +45,11 @@ def _counter(
 
 
 class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
+    def test_conditioning_policy_requires_sustained_recovery_window(self) -> None:
+        self.assertEqual(CONDITIONING_VERSION, "1.5.0")
+        self.assertEqual(POLICY_ID, "native-windows-supported-controls-quiescence-v6")
+        self.assertEqual(OBSERVATION_MILLISECONDS, 10_000)
+
     def test_cpu_set_records_authenticate_group_core_and_class(self) -> None:
         record = struct.pack(
             "<IIIHBBBBBBIQ",

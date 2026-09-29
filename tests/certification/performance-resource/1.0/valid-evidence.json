@@ -16,7 +16,7 @@
             }
         }
     ],
-    "manifest_fingerprint": "8efce9dfa700039ee2b387cd4e0763e44f87a2052f914c3905b211008f3fd117",
+    "manifest_fingerprint": "4a2fa3940b587a17ab36332576c922f2a58f467dbbde2b9036085d5922b10907",
     "commit": "0000000000000000000000000000000000000000",
     "deterministic_evidence": {
         "profile": "local",

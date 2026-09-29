@@ -609,6 +609,10 @@ checkpoints:
             result: passed
             details: >-
                 The consumed simply-large sequence stayed near 33 ms for most of its first 58 observations before returning to the baseline's approximately 16.5 ms range. Five direct conditioned reproductions passed at 16423650, 16420550, 16669900, 16426500, and 16729000 ns. The exact complete producer then reproduced without an authenticated ledger on structural-safety/semantic-pathological: its first-half median was 1265775 ns, its second-half median was 1058425 ns, and its 1187400 ns overall median exceeded the 1124530 ns relative ceiling. This proves a fixed-warmup-duration defect across dissimilar batch costs. The governed migration now supports strengthening 128 warmups to 512 while retaining 64 samples, nine repetitions, frozen batching, workloads, ratios, conditioning, authenticity rules, and every prior hard ceiling. Five 512-warmup atomic windows for each failed coordinate passed: semantic-analysis at 14159200, 14205900, 13751300, 13814450, and 14241350 ns; structural-safety at 960600, 891325, 893800, 885475, and 888725 ns. The first complete migration attempt wrote no authority because the active capped-budget formula reached calibration before its required prior-baseline fingerprint existed. Validation failed closed with budget-provenance. The corrected ordering calibrates with the derived formula and only then applies the unchanged prior-ceiling cap and provenance transformation; a focused current-authority regression passes. A clean-source 54-coordinate migration must pass all prior ceilings and archive the current authority before recertification.
+          - check: Sustained warmup authority calibration
+            result: passed
+            details: >-
+                Corrected clean-source migration at 42be2a6af7b2c81f2ecf10f545c08d973f6bf74e passed all 54 coordinates and every prior relative and absolute ceiling. It retained 512 warmups, 64 samples, nine repetitions, and 486 coordinate-local conditioning snapshots; archived baseline 43f4b9cec4f4f7e135f31af0eb94a04faabfa74af3850198d5d735be2ebc01c6; and produced manifest 4a2fa3940b587a17ab36332576c922f2a58f467dbbde2b9036085d5922b10907. All active budgets are equal to or stricter than their prior hard authority. The compact 1033842-byte baseline has fingerprint c94bda9ed4ae2dcdfce00ce3d89cf63ef78d38b042eb7c2978ec6b1b6ece1c53 and remains below the unchanged one MiB limit without removing measurements or semantic evidence.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -686,7 +690,11 @@ commits:
       subject: "fix(security): refresh vulnerable dependencies"
     - sha: c3ef5eaaf509cb0aa3c66cb9d35c19dc554065e1
       subject: "fix(certification): reject descheduled performance samples"
+    - sha: 6d70a55da25cc05969fb3cab39a2a5fbe5e21fc9
+      subject: "fix(certification): sustain performance warmups"
+    - sha: 42be2a6af7b2c81f2ecf10f545c08d973f6bf74e
+      subject: "fix(certification): order warmup migration provenance"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolate insufficient fixed settling duration across heterogeneous batch costs. Ten 512-warmup atomic windows pass under unchanged hard limits. The clean-source 54-coordinate governed migration must now pass all prior ceilings and archive the active authority; its resulting candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolated insufficient fixed settling duration across heterogeneous batch costs. Ten 512-warmup atomic windows passed under unchanged hard limits. The corrected clean-source migration at 42be2a6a then passed all 54 coordinates and every prior ceiling, archived the active authority, and retained or tightened every budget. The resulting clean candidate must now repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

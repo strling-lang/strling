@@ -404,8 +404,15 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
 
     def test_sustained_warmup_contract_preserves_measurement_denominators(self) -> None:
+        active_baseline = load_json(BASELINE_PATH)
+        prior_manifest = load_json(
+            BASELINE_PATH.parent
+            / "history"
+            / active_baseline["prior_baseline_fingerprint"]
+            / "manifest.json"
+        )
         prior_warmups, target_warmups, manifest = _warmup_migration_manifest(
-            self.manifest
+            prior_manifest
         )
         manifest["manifest_fingerprint"] = document_fingerprint(
             manifest, "manifest_fingerprint"
@@ -424,7 +431,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         self.assertEqual(
             manifest["measurement_policy"]["sample_iterations"],
-            self.manifest["measurement_policy"]["sample_iterations"],
+            prior_manifest["measurement_policy"]["sample_iterations"],
         )
         self.assertEqual(
             manifest["measurement_policy"]["baseline_repetitions"],

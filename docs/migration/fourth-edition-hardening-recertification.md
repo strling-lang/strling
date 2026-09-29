@@ -1334,3 +1334,16 @@ calibration manifest first, then applies the existing prior-ceiling cap and
 provenance transformation to the complete result. A focused regression starts
 from the current capped authority and proves the 128-to-512 step preserves the
 sample and nine-repetition denominators.
+
+The corrected clean-source migration at
+`42be2a6af7b2c81f2ecf10f545c08d973f6bf74e` passed all 54 coordinates and all
+prior relative and absolute ceilings. It retained 512 warmups, 64 samples,
+nine repetitions, and 486 coordinate-local conditioning snapshots, archived
+baseline `43f4b9cec4f4f7e135f31af0eb94a04faabfa74af3850198d5d735be2ebc01c6`,
+and produced manifest
+`4a2fa3940b587a17ab36332576c922f2a58f467dbbde2b9036085d5922b10907`.
+Every active budget is equal to or stricter than its prior hard authority. The
+compact baseline is 1,033,842 bytes with fingerprint
+`c94bda9ed4ae2dcdfce00ce3d89cf63ef78d38b042eb7c2978ec6b1b6ece1c53`,
+below the unchanged 1 MiB hygiene limit without removing measurements or
+semantic evidence.

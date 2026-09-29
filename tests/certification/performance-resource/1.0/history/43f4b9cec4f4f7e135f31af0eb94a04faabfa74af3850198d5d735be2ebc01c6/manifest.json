@@ -1,0 +1,636 @@
+{
+    "schema_version": "1.0.0",
+    "manifest_kind": "strling-performance-resource-manifest",
+    "task_start_commit": "f4f9cc03cc1277d99a65470ef911e9bfbdee78eb",
+    "authority": {
+        "semantic_authority": "specification-and-contracts",
+        "resource_authority": "canonical-source-declarations-and-tests",
+        "target_runtime_performance": "excluded",
+        "baseline_policy": "explicit-attributable-update-only"
+    },
+    "fixture_manifest": {
+        "path": "tests/certification/performance-resource/1.0/fixtures/fixture-manifest.json",
+        "sha256": "f8b075fd39ecee0bac4d4c5b86e773c45401202f324cf1cb6869329230b61d01"
+    },
+    "resource_inventory": {
+        "path": "tests/certification/performance-resource/1.0/fixtures/resource-limits.json",
+        "sha256": "96d036cf2528d61385c127a469f7db52300c363f1d88009e94fb36cfa6ae9915"
+    },
+    "measurement_policy": {
+        "warmup_iterations": 128,
+        "sample_iterations": 64,
+        "baseline_repetitions": 9,
+        "minimum_sample_duration_nanoseconds": 1000000,
+        "batch_duration_safety_factor": 2,
+        "maximum_batch_iterations": 4096,
+        "order_seed": 1804,
+        "single_worker": true,
+        "cpu_affinity_policy": "single-fixed-logical-cpu",
+        "selected_logical_cpu": 20,
+        "host_reservation_policy": "authenticated-native-placement-or-host-pinned-reservation",
+        "execution_resource_policy": "platform-native-single-cpu-effective",
+        "cpu_quota_policy": "unlimited",
+        "conditioning_policy": "authenticated-identical-before-each-coordinate",
+        "randomize_operation_order": true,
+        "statistics": [
+            "median",
+            "p95",
+            "mad"
+        ],
+        "p95_method": "nearest-rank",
+        "relative_budget_formula": "min(prior hard ceiling, max(floor, ceil(6 * mad / median * 10000)))",
+        "minimum_relative_budget_basis_points": 1000,
+        "maximum_relative_budget_basis_points": 4000,
+        "maximum_relative_mad_basis_points": 500,
+        "baseline_update_command": "python3 -m tooling.performance_resource_certification baseline --replace --rationale <reviewed-rationale>",
+        "ordinary_certification_may_update_baseline": false
+    },
+    "profile_partitions": [
+        {
+            "id": "local",
+            "operation_id": "certification.performance-resource-local",
+            "maximum_duration_seconds": 30,
+            "operation_ids": []
+        },
+        {
+            "id": "pull-request",
+            "operation_id": "certification.performance-resource-pull-request",
+            "maximum_duration_seconds": 900,
+            "operation_ids": [
+                "resource:frontend-limits",
+                "resource:kernel-limits",
+                "resource:target-limits",
+                "resource:editor-interop-limits",
+                "resource:no-match-limits"
+            ]
+        },
+        {
+            "id": "full",
+            "operation_id": "certification.performance-resource-full",
+            "maximum_duration_seconds": 3600,
+            "operation_ids": [
+                "latency:semantic-parse",
+                "latency:legacy-import",
+                "latency:kernel-request",
+                "latency:normalization",
+                "latency:semantic-analysis",
+                "latency:structural-safety",
+                "latency:capability-portability",
+                "latency:pcre2-lower-serialize",
+                "latency:ecmascript-lower-serialize",
+                "latency:python-re-lower-serialize",
+                "latency:end-to-end",
+                "latency:cli-startup",
+                "latency:editor-interaction",
+                "latency:interop-roundtrip",
+                "latency:supported-host-overhead",
+                "memory:kernel-peak-rss",
+                "size:kernel-artifacts",
+                "resource:frontend-limits",
+                "resource:kernel-limits",
+                "resource:target-limits",
+                "resource:editor-interop-limits",
+                "resource:no-match-limits"
+            ]
+        }
+    ],
+    "operations": [
+        {
+            "id": "latency:semantic-parse",
+            "family": "frontend",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-tiny",
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:semantic-pathological"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 8559540,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Parse valid Semantic STRling source without including later compiler stages."
+        },
+        {
+            "id": "latency:legacy-import",
+            "family": "frontend",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:legacy-tiny",
+                "fixture:legacy-common",
+                "fixture:legacy-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 14333160,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Import regex-compatible source without claiming target regex execution performance."
+        },
+        {
+            "id": "latency:kernel-request",
+            "family": "compiler-stage",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:simply-tiny",
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 11486172,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Decode, validate, and route canonical CompileRequest input before result serialization."
+        },
+        {
+            "id": "latency:normalization",
+            "family": "compiler-stage",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:semantic-pathological",
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 5835060,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Normalize authenticated semantic programs independently from downstream analysis and target work."
+        },
+        {
+            "id": "latency:semantic-analysis",
+            "family": "compiler-stage",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:semantic-pathological",
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 19844700,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Produce semantic facts from normalized programs without target lowering or serialization."
+        },
+        {
+            "id": "latency:structural-safety",
+            "family": "compiler-stage",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:semantic-pathological"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 27043860,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Measure structural and safety analysis together while retaining distinct result evidence."
+        },
+        {
+            "id": "latency:capability-portability",
+            "family": "compiler-stage",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 46974900,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Evaluate target capabilities and portability plans without folding target serialization into the metric."
+        },
+        {
+            "id": "latency:pcre2-lower-serialize",
+            "family": "target",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 30857580,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Lower and serialize canonical programs for PCRE2 without executing the resulting regex."
+        },
+        {
+            "id": "latency:ecmascript-lower-serialize",
+            "family": "target",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 34328580,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Lower and serialize canonical programs for ECMAScript without executing the resulting regex."
+        },
+        {
+            "id": "latency:python-re-lower-serialize",
+            "family": "target",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 33811200,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Lower and serialize canonical programs for Python re without executing the resulting regex."
+        },
+        {
+            "id": "latency:end-to-end",
+            "family": "compiler-stage",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-tiny",
+                "fixture:semantic-common",
+                "fixture:semantic-large",
+                "fixture:simply-tiny",
+                "fixture:simply-common",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 117887580,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Measure complete canonical CompileRequest to CompileResult work including result serialization."
+        },
+        {
+            "id": "latency:cli-startup",
+            "family": "product-entrypoint",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-tiny",
+                "fixture:simply-tiny"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 13983,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Measure representative canonical CLI validation and compilation commands; compare the median of interleaved request/control ratios to a same-binary help launch while retaining the prior raw ceiling as diagnostic history.",
+            "comparison_model": "paired-same-binary-launch-control",
+            "relative_estimator": "median-of-paired-request-control-ratios"
+        },
+        {
+            "id": "latency:editor-interaction",
+            "family": "product-entrypoint",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-common",
+                "fixture:semantic-large"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 203878320,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Measure bounded diagnostics, formatting, completion, symbols, and rewrite intelligence interactions."
+        },
+        {
+            "id": "latency:interop-roundtrip",
+            "family": "transport",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:protocol-common"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 906256,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Measure canonical byte-protocol decoding, kernel invocation, encoding, and retained-allocation round trips."
+        },
+        {
+            "id": "latency:supported-host-overhead",
+            "family": "adapter",
+            "measurement_kind": "latency",
+            "unit": "nanoseconds",
+            "enforcement": "informational",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:simply-common",
+                "fixture:protocol-common"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "supported-host",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 741960,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Report available host-adapter overhead separately from compiler time and support certification."
+        },
+        {
+            "id": "memory:kernel-peak-rss",
+            "family": "memory",
+            "measurement_kind": "peak-rss",
+            "unit": "bytes",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-large",
+                "fixture:simply-large",
+                "fixture:protocol-common"
+            ],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 25111757,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Measure isolated optimized-process peak resident memory for large compiler and interop workloads."
+        },
+        {
+            "id": "size:kernel-artifacts",
+            "family": "artifact",
+            "measurement_kind": "artifact-bytes",
+            "unit": "bytes",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [],
+            "profiles": [
+                "full"
+            ],
+            "required_environment": "fingerprinted-native-x86_64",
+            "budget": {
+                "state": "active",
+                "relative_regression_basis_points": 1000,
+                "absolute_ceiling": 12020122,
+                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+            },
+            "description": "Record optimized canonical kernel binary and interop-library bytes without package or publication changes."
+        },
+        {
+            "id": "resource:frontend-limits",
+            "family": "resource-limit",
+            "measurement_kind": "resource-limit",
+            "unit": "status",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-pathological",
+                "fixture:legacy-large"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
+            "required_environment": "any",
+            "budget": {
+                "state": "not-applicable",
+                "relative_regression_basis_points": null,
+                "absolute_ceiling": null,
+                "rationale": "Existing exact-and-one-over frontend resource contracts are functional hard gates, not timing budgets."
+            },
+            "description": "Certify source bytes, nesting, nodes, captures, sets, identifiers, and numeric frontend boundaries."
+        },
+        {
+            "id": "resource:kernel-limits",
+            "family": "resource-limit",
+            "measurement_kind": "resource-limit",
+            "unit": "status",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
+            "required_environment": "any",
+            "budget": {
+                "state": "not-applicable",
+                "relative_regression_basis_points": null,
+                "absolute_ceiling": null,
+                "rationale": "Existing exact-and-one-over kernel resource contracts are functional hard gates, not timing budgets."
+            },
+            "description": "Certify request, target profile, semantic node/depth, diagnostics, analysis, and planning limits."
+        },
+        {
+            "id": "resource:target-limits",
+            "family": "resource-limit",
+            "measurement_kind": "resource-limit",
+            "unit": "status",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-large",
+                "fixture:simply-large"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
+            "required_environment": "any",
+            "budget": {
+                "state": "not-applicable",
+                "relative_regression_basis_points": null,
+                "absolute_ceiling": null,
+                "rationale": "Existing target lowering and serialization ceilings are functional hard gates, not timing budgets."
+            },
+            "description": "Certify PCRE2, ECMAScript, and Python re lowering depth/node and serialization size limits."
+        },
+        {
+            "id": "resource:editor-interop-limits",
+            "family": "resource-limit",
+            "measurement_kind": "resource-limit",
+            "unit": "status",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-large",
+                "fixture:protocol-pathological"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
+            "required_environment": "any",
+            "budget": {
+                "state": "not-applicable",
+                "relative_regression_basis_points": null,
+                "absolute_ceiling": null,
+                "rationale": "Existing editor and canonical interop ceilings are functional hard gates, not timing budgets."
+            },
+            "description": "Certify editor result/request ceilings and canonical interop request/response byte boundaries."
+        },
+        {
+            "id": "resource:no-match-limits",
+            "family": "resource-limit",
+            "measurement_kind": "resource-limit",
+            "unit": "status",
+            "enforcement": "hard",
+            "state": "active",
+            "fixture_ids": [
+                "fixture:semantic-pathological"
+            ],
+            "profiles": [
+                "pull-request",
+                "full"
+            ],
+            "required_environment": "any",
+            "budget": {
+                "state": "not-applicable",
+                "relative_regression_basis_points": null,
+                "absolute_ceiling": null,
+                "rationale": "Existing explanation subject/work/depth/finding/elapsed ceilings are functional hard gates, not benchmark values."
+            },
+            "description": "Certify no-match subject bytes/scalars, steps, depth, branches, findings, and elapsed-time bounds."
+        }
+    ],
+    "expected_counts": {
+        "operations": 22,
+        "performance_operations": 17,
+        "resource_operations": 5,
+        "fixtures": 12,
+        "resource_declarations": 56
+    },
+    "manifest_fingerprint": "8efce9dfa700039ee2b387cd4e0763e44f87a2052f914c3905b211008f3fd117"
+}

@@ -601,6 +601,14 @@ checkpoints:
             result: passed
             details: >-
                 Per-sample process CPU evidence proved the workload did not regress: five diagnostic medians passed at 172822800, 172225250, 170227700, 168923100, and 170666450 ns, while a contiguous 209555600, 212817700, 556575500, and 306281000 ns wall burst used only 156250000, 109375000, 109375000, and 109375000 ns of process CPU. Production now preserves any non-CLI observation whose wall-minus-process-CPU gap exceeds 50000000 ns as rejected interference and continues until the unchanged 64-sample denominator is complete, with a hard 128-attempt fail-closed bound. Paired CLI request/control collection is unfiltered and unchanged. Thresholds, ratios, warmups, accepted sample counts, batching, workloads, conditioning, ceilings, and ledger rules are unchanged. Five consecutive production-conditioned atomic proofs passed at medians 177855850, 170270150, 168704050, 171274550, and 168573300 ns from 67, 71, 64, 70, and 69 attempts, with zero authenticated ledger samples. A new clean candidate must restart at Local after all cheap predictors pass.
+          - check: Sample-authenticity candidate disposition
+            result: failed
+            details: >-
+                Clean candidate c3ef5eaaf509cb0aa3c66cb9d35c19dc554065e1 passed every cheap predictor, five Full sentinel windows, five paired-launch windows, Local 37/37, and Pull Request 79/79. Full stopped fail-fast at operation 22 after 20 passes and the expected waiver. Performance invocation 8bddb93157ec4d77b89631b84779b896 completed all 52 coordinates and preserved 3267 authenticated samples before latency:semantic-analysis/fixture:simply-large measured 33001200 ns against 18190975 ns relative and 19844700 ns absolute ceilings. Its sample state is consumed and the source is not retried.
+          - check: Sustained warmup diagnosis and correction
+            result: passed
+            details: >-
+                The consumed simply-large sequence stayed near 33 ms for most of its first 58 observations before returning to the baseline's approximately 16.5 ms range. Five direct conditioned reproductions passed at 16423650, 16420550, 16669900, 16426500, and 16729000 ns. The exact complete producer then reproduced without an authenticated ledger on structural-safety/semantic-pathological: its first-half median was 1265775 ns, its second-half median was 1058425 ns, and its 1187400 ns overall median exceeded the 1124530 ns relative ceiling. This proves a fixed-warmup-duration defect across dissimilar batch costs. The governed migration now supports strengthening 128 warmups to 512 while retaining 64 samples, nine repetitions, frozen batching, workloads, ratios, conditioning, authenticity rules, and every prior hard ceiling. Five 512-warmup atomic windows for each failed coordinate passed: semantic-analysis at 14159200, 14205900, 13751300, 13814450, and 14241350 ns; structural-safety at 960600, 891325, 893800, 885475, and 888725 ns. A clean-source 54-coordinate migration must pass all prior ceilings and archive the current authority before recertification.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -676,7 +684,9 @@ commits:
       subject: "fix(certification): measure Full readiness sentinel"
     - sha: 978c04981d602e55f6f6036d9db437260fc8bfa8
       subject: "fix(security): refresh vulnerable dependencies"
+    - sha: c3ef5eaaf509cb0aa3c66cb9d35c19dc554065e1
+      subject: "fix(certification): reject descheduled performance samples"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 978c0498 contains the dependency remediation and passes its atomic checks, but the fifth required Full-readiness sentinel exposed measurement-window descheduling before Local. Per-sample process CPU evidence isolates the defect, and the bounded authenticity correction preserves the 64-sample denominator while failing closed after 128 attempts. Five corrected production-conditioned atomic windows pass. A new clean candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolate insufficient fixed settling duration across heterogeneous batch costs. Ten 512-warmup atomic windows pass under unchanged hard limits. The clean-source 54-coordinate governed migration must now pass all prior ceilings and archive the active authority; its resulting candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

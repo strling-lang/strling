@@ -29,6 +29,7 @@ from tooling.performance_resource_certification import (
     RESOURCE_OPERATION_IDS,
     STATIONARY_BASELINE_REPETITIONS,
     STATIONARY_WARMUP_ITERATIONS,
+    SUSTAINED_WARMUP_ITERATIONS,
     PerformanceExecutionLedger,
     PerformanceResourceError,
     _acquire_quiet_conditioning_snapshot,
@@ -399,6 +400,29 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertIn(
             first_measurement["operation_id"],
             str(raised.exception),
+        )
+
+    def test_sustained_warmup_contract_preserves_measurement_denominators(self) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["measurement_policy"]["warmup_iterations"] = (
+            SUSTAINED_WARMUP_ITERATIONS
+        )
+        manifest["manifest_fingerprint"] = document_fingerprint(
+            manifest, "manifest_fingerprint"
+        )
+
+        validate_manifest(
+            manifest,
+            fixtures=self.fixtures,
+            inventory=self.inventory,
+        )
+        self.assertEqual(
+            manifest["measurement_policy"]["sample_iterations"],
+            self.manifest["measurement_policy"]["sample_iterations"],
+        )
+        self.assertEqual(
+            manifest["measurement_policy"]["baseline_repetitions"],
+            STATIONARY_BASELINE_REPETITIONS,
         )
 
     def test_resource_identity_refresh_does_not_recalibrate_measurements(self) -> None:

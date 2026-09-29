@@ -64,6 +64,7 @@ MEASUREMENT_CONDITIONING_MAX_ATTEMPTS = 24
 MEASUREMENT_CONDITIONING_RETRY_DELAY_SECONDS = 15
 LEGACY_WARMUP_ITERATIONS = 16
 STATIONARY_WARMUP_ITERATIONS = 128
+SUSTAINED_WARMUP_ITERATIONS = 512
 LEGACY_BASELINE_REPETITIONS = 5
 STATIONARY_BASELINE_REPETITIONS = 9
 FULL_PREFLIGHT_SENTINEL_REPETITIONS = 5
@@ -771,6 +772,7 @@ def validate_manifest(
         not in {
             (LEGACY_WARMUP_ITERATIONS, LEGACY_BASELINE_REPETITIONS),
             (STATIONARY_WARMUP_ITERATIONS, STATIONARY_BASELINE_REPETITIONS),
+            (SUSTAINED_WARMUP_ITERATIONS, STATIONARY_BASELINE_REPETITIONS),
         }
         or policy["sample_iterations"] != 64
         or policy["minimum_sample_duration_nanoseconds"] != 1_000_000
@@ -6216,13 +6218,15 @@ def _migrate_stationary_warmups_command(
     validate_manifest(prior_manifest, root=root, fixtures=fixtures)
     validate_baseline(prior_baseline, manifest=prior_manifest, fixtures=fixtures)
     validate_evidence(prior_evidence, manifest=prior_manifest)
-    if (
-        prior_manifest["measurement_policy"]["warmup_iterations"]
-        != LEGACY_WARMUP_ITERATIONS
-    ):
+    prior_warmups = prior_manifest["measurement_policy"]["warmup_iterations"]
+    target_warmups = {
+        LEGACY_WARMUP_ITERATIONS: STATIONARY_WARMUP_ITERATIONS,
+        STATIONARY_WARMUP_ITERATIONS: SUSTAINED_WARMUP_ITERATIONS,
+    }.get(prior_warmups)
+    if target_warmups is None:
         raise PerformanceResourceError(
             "warmup-already-active",
-            "the active contract does not use the legacy warmup count",
+            "the active contract already uses the strongest governed warmup count",
         )
 
     prior_fingerprint = cast(str, prior_baseline["baseline_fingerprint"])
@@ -6272,9 +6276,7 @@ def _migrate_stationary_warmups_command(
         )
 
     candidate_manifest = copy.deepcopy(prior_manifest)
-    candidate_manifest["measurement_policy"]["warmup_iterations"] = (
-        STATIONARY_WARMUP_ITERATIONS
-    )
+    candidate_manifest["measurement_policy"]["warmup_iterations"] = target_warmups
     candidate_manifest["measurement_policy"]["baseline_repetitions"] = (
         STATIONARY_BASELINE_REPETITIONS
     )
@@ -6318,7 +6320,8 @@ def _migrate_stationary_warmups_command(
         "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
         "history_path": history.relative_to(root).as_posix(),
         "artifact_identity": artifact_identity,
-        "warmup_iterations": STATIONARY_WARMUP_ITERATIONS,
+        "prior_warmup_iterations": prior_warmups,
+        "warmup_iterations": target_warmups,
         "baseline_repetitions": STATIONARY_BASELINE_REPETITIONS,
         "sample_iterations": candidate_manifest["measurement_policy"][
             "sample_iterations"

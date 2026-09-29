@@ -1292,3 +1292,36 @@ They retained exactly 64 accepted samples from 67, 71, 64, 70, and 69 attempts,
 all below the 128-attempt bound and with zero authenticated ledger samples.
 The correction is tracked source, so the next clean candidate must restart at
 Local after the complete cheap predictor set passes.
+
+Clean authenticity-remediation candidate
+`c3ef5eaaf509cb0aa3c66cb9d35c19dc554065e1` passed the complete cheap
+predictor set, five Full sentinel windows, five paired-launch windows, Local
+`37/37`, and Pull Request `79/79`. Full stopped fail-fast at operation 22 after
+20 passes and the expected waiver. Performance invocation
+`8bddb93157ec4d77b89631b84779b896` completed all 52 coordinates and preserved
+3,267 authenticated samples before
+`latency:semantic-analysis/fixture:simply-large` reported a `33001200 ns`
+median against `18190975 ns` relative and `19844700 ns` absolute ceilings.
+Its sample state is permanently consumed and the candidate is not retried.
+
+The failed window spent most of its first 58 observations near `33 ms` before
+returning to the baseline's approximately `16.5 ms` range. Five direct
+production-conditioned reproductions passed at medians `16423650`, `16420550`,
+`16669900`, `16426500`, and `16729000 ns`. The exact complete producer then
+reproduced the defect without an authenticated ledger on a different short
+coordinate: `latency:structural-safety/fixture:semantic-pathological` shifted
+from a `1265775 ns` first-half median to `1058425 ns` in its second half and
+failed at `1187400 ns`. That sequence distinguishes directional execution-rate
+settling from a product regression or an ordinary external-host explanation.
+
+The fixed count of 128 warmups provides radically different settling duration
+across the frozen batch sizes. The governed migration therefore strengthens
+fixed warmups from 128 to 512 while retaining all 64 samples, nine baseline
+repetitions, batch sizes, workloads, conditioning, ratios, hard thresholds,
+absolute ceilings, and sample-authenticity rules. Five 512-warmup atomic proofs
+for each failed coordinate passed. Semantic-analysis medians were `14159200`,
+`14205900`, `13751300`, `13814450`, and `14241350 ns`; structural-safety
+medians were `960600`, `891325`, `893800`, `885475`, and `888725 ns`. The
+one-time clean-source migration must recalibrate all 54 coordinates, pass every
+prior hard ceiling, archive the prior authority, and retain or tighten every
+budget before a new candidate can restart at Local.

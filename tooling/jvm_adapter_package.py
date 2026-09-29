@@ -19,9 +19,9 @@ ROOT = Path(__file__).resolve().parents[1]
 GRAPH_PATH = ROOT / "tests/adapters/3.0/release-graph.json"
 OSV_ENDPOINT = "https://api.osv.dev/v1/querybatch"
 EXTERNAL_PACKAGES = (
-    ("com.fasterxml.jackson.core:jackson-annotations", "2.18.9", "Apache-2.0"),
-    ("com.fasterxml.jackson.core:jackson-core", "2.18.9", "Apache-2.0"),
-    ("com.fasterxml.jackson.core:jackson-databind", "2.18.9", "Apache-2.0"),
+    ("com.fasterxml.jackson.core:jackson-annotations", "2.18.10", "Apache-2.0"),
+    ("com.fasterxml.jackson.core:jackson-core", "2.18.10", "Apache-2.0"),
+    ("com.fasterxml.jackson.core:jackson-databind", "2.18.10", "Apache-2.0"),
     ("net.java.dev.jna:jna", "5.19.1", "LGPL-2.1-or-later OR Apache-2.0"),
     ("org.jetbrains:annotations", "13.0", "Apache-2.0"),
     ("org.jetbrains.kotlin:kotlin-stdlib", "2.0.20", "Apache-2.0"),
@@ -36,16 +36,16 @@ ROOT_GRAPHS = {
         "com.strling:strling:3.0.0",
         "com.strling:strling-jvm:3.0.0",
         "net.java.dev.jna:jna:5.19.1",
-        "com.fasterxml.jackson.core:jackson-databind:2.18.9",
-        "com.fasterxml.jackson.core:jackson-annotations:2.18.9",
-        "com.fasterxml.jackson.core:jackson-core:2.18.9",
+        "com.fasterxml.jackson.core:jackson-databind:2.18.10",
+        "com.fasterxml.jackson.core:jackson-annotations:2.18.10",
+        "com.fasterxml.jackson.core:jackson-core:2.18.10",
     ),
     "jvm": (
         "com.strling:strling-jvm:3.0.0",
         "net.java.dev.jna:jna:5.19.1",
-        "com.fasterxml.jackson.core:jackson-databind:2.18.9",
-        "com.fasterxml.jackson.core:jackson-annotations:2.18.9",
-        "com.fasterxml.jackson.core:jackson-core:2.18.9",
+        "com.fasterxml.jackson.core:jackson-databind:2.18.10",
+        "com.fasterxml.jackson.core:jackson-annotations:2.18.10",
+        "com.fasterxml.jackson.core:jackson-core:2.18.10",
     ),
     "kotlin": (
         "com.strling:strling-kotlin:3.0.0",
@@ -53,9 +53,9 @@ ROOT_GRAPHS = {
         "org.jetbrains:annotations:13.0",
         "com.strling:strling-jvm:3.0.0",
         "net.java.dev.jna:jna:5.19.1",
-        "com.fasterxml.jackson.core:jackson-databind:2.18.9",
-        "com.fasterxml.jackson.core:jackson-annotations:2.18.9",
-        "com.fasterxml.jackson.core:jackson-core:2.18.9",
+        "com.fasterxml.jackson.core:jackson-databind:2.18.10",
+        "com.fasterxml.jackson.core:jackson-annotations:2.18.10",
+        "com.fasterxml.jackson.core:jackson-core:2.18.10",
     ),
 }
 
@@ -86,7 +86,7 @@ def _require_manifest_markers() -> None:
             "<artifactId>jna</artifactId>",
             "<jna.version>5.19.1</jna.version>",
             "<artifactId>jackson-databind</artifactId>",
-            "<jackson.version>2.18.9</jackson.version>",
+            "<jackson.version>2.18.10</jackson.version>",
             "<artifactId>maven-jar-plugin</artifactId>",
             "<addMavenDescriptor>false</addMavenDescriptor>",
         ),

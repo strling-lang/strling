@@ -13,6 +13,9 @@ scope:
         - .github/workflows/dependency-review.yml
         - bindings/c/CMakeLists.txt
         - bindings/interop/src/protocol.rs
+        - bindings/jvm/README.md
+        - bindings/jvm/pom.xml
+        - bindings/kotlin/gradle.lockfile
         - bindings/kotlin/gradle/verification-metadata.xml
         - bindings/interop/Cargo.toml
         - bindings/perl/build.sh
@@ -33,6 +36,7 @@ scope:
         - core/tests/portability_planning.rs
         - core/tests/python_re_lowering.rs
         - docs/migration/fourth-edition-hardening-recertification.md
+        - docs/migration/jvm-adapter-migration.md
         - docs/migration/performance-resource-certification.md
         - docs/migration/ledger.md
         - docs/migration/records/fourth-edition-hardening-recertification.yaml
@@ -67,6 +71,7 @@ scope:
         - tests/certification/performance-resource/1.0/history/**
         - tests/certification/performance-resource/1.0/runner/src/main.rs
         - tests/certification/profile-source/1.0/definitions.json
+        - tests/adapters/3.0/release-graph.json
         - tests/conformance/adversarial/1.0/evidence.json
         - tests/conformance/evidence/shared-cross-engine-observations.json
         - tests/conformance/evidence/stdlib-runtime-observations.json
@@ -80,6 +85,7 @@ scope:
         - tooling/exact_runtime_provision.py
         - tooling/governance.py
         - tooling/jvm_adapter_runtime.py
+        - tooling/jvm_adapter_package.py
         - tooling/local_certification_attestation.py
         - tooling/performance_resource_certification.py
         - tooling/production_certification.py
@@ -130,12 +136,14 @@ scope:
     permitted_generated_changes:
         - adversarial-semantic-observations
         - dependency-license-evidence
+        - jvm-adapter-release-graph
         - package-manager-lockfiles
         - profile-source-definitions
         - public-contract-snapshots
         - semantic-authority-retirement-evidence
         - shared-cross-engine-observations
         - stdlib-runtime-observations
+        - version-synchronized-metadata
     expected_generated_outputs: []
     required_verification_levels:
         - contract
@@ -577,6 +585,14 @@ checkpoints:
             result: passed
             details: >-
                 Five exact non-authoritative reproductions of the failed editor coordinate passed at medians 169116150, 172620550, 169506950, 175872850, and 174950100 ns, with clean conditioning and isolation, no directional half-window settling, and zero authenticated samples. Inspection proved the production Full preflight returned after conditioning the first shuffled coordinate without measuring any workload, so it could not predict non-CLI latency admissibility. The preflight now derives the slowest direct hard-latency coordinate from governed baseline duration, currently the failed editor/semantic-large coordinate, and requires five consecutive production-equivalent 128-warmup, 64-sample, conditioned and isolated passes outside the authenticated ledger. Thresholds, ceilings, warmups, samples, batching, workloads, conditioning, and paired CLI logic remain unchanged.
+          - check: Full-sentinel candidate disposition
+            result: failed
+            details: >-
+                Clean candidate dcc6e2bb183fd8ba186d418cf83b0c12a42b0ddb passed the corrected five-observation Full sentinel, five paired-launch readiness windows, Local 37/37, and Pull Request 79/79. Full stopped fail-fast at operation 3 after two passes when security_dependency_risk@repository reported blocking advisories for LSP fast-uri 3.1.6 and JVM/Kotlin jackson-databind 2.18.9, plus nonblocking findings for LSP undici 7.29.0 and the same Jackson coordinate. The exact atomic operation reproduced all three failed checks with completed advisory retrieval. Full performance and authenticated sampling never started; the source identity is consumed and is not retried.
+          - check: Dependency advisory remediation
+            result: passed
+            details: >-
+                The bounded repair advances only affected compatible dependency lines: LSP transitive fast-uri to 3.1.8 and undici to 7.30.0, and the shared JVM Jackson graph to 2.18.10. The owning package managers regenerated npm and Gradle lock evidence and Gradle artifact hashes. The registered JVM release-graph producer emitted fingerprint sha256:92ad25d118aba87429b5cfbe05a41d6817ff229de2a41b8d7c30d2558d9c5195. The exact dependency-risk operation then passed 54 checks with only WVR-SEC-VSCE-LICENSE-001 waived and no failed, unavailable, or incomplete result. A new clean candidate must restart at Local.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -648,7 +664,9 @@ commits:
       subject: "fix(certification): migrate paired launch estimator"
     - sha: 1bb1241d46daa09abf955681d181c77179456446
       subject: "fix(certification): stop profiles on blocking results"
+    - sha: dcc6e2bb183fd8ba186d418cf83b0c12a42b0ddb
+      subject: "fix(certification): measure Full readiness sentinel"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 7d128823 passed Local and Pull Request, then consumed its Full opportunity on a latency:editor-interaction failure that the prior sample-free gate could not predict because it measured no workload. The corrected gate requires five consecutive production-equivalent observations of the derived slowest direct hard-latency sentinel without consuming authenticated samples. A new clean candidate must pass that predictor, then repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate dcc6e2bb passed the corrected Full sentinel, paired readiness, Local, and Pull Request, then stopped at Full operation 3 on newly reported blocking dependency advisories before performance or authenticated sampling began. The affected compatible dependency lines and their generated lock, verification, and release-graph evidence are updated, and the exact dependency-risk operation passes. A new clean candidate must repeat Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

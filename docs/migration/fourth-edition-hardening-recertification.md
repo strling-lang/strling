@@ -1234,3 +1234,25 @@ consecutive production-equivalent conditioned, isolated passes outside the
 authenticated ledger. The current sentinel is the failed
 editor/semantic-large coordinate. Thresholds, ceilings, warmups, sample count,
 batching, workloads, conditioning, and paired CLI logic are unchanged.
+
+Clean candidate `dcc6e2bb183fd8ba186d418cf83b0c12a42b0ddb` passed the
+corrected five-observation Full sentinel, five paired-launch readiness windows,
+Local `37/37`, and Pull Request `79/79`. Full then stopped fail-fast at
+operation 3 after two passes. `security_dependency_risk@repository` reported
+new blocking advisories for LSP `fast-uri` 3.1.6 and JVM/Kotlin
+`jackson-databind` 2.18.9, plus nonblocking findings for LSP `undici` 7.29.0
+and the same Jackson coordinate. The exact atomic operation reproduced all
+three failed checks with completed advisory retrieval. Full performance and
+authenticated sampling never started; the source identity is consumed and is
+not retried.
+
+The bounded remediation advances only affected compatible dependency lines:
+LSP transitive `fast-uri` to 3.1.8 and `undici` to 7.30.0, and the shared JVM
+Jackson graph to 2.18.10. The owning package managers regenerated the npm and
+Gradle lock evidence and Gradle artifact hashes, and the registered JVM graph
+producer emitted fingerprint
+`sha256:92ad25d118aba87429b5cfbe05a41d6817ff229de2a41b8d7c30d2558d9c5195`.
+The exact dependency-risk operation then passed `54` checks with only the
+expected `WVR-SEC-VSCE-LICENSE-001` waiver and no failed, unavailable, or
+incomplete result. This tracked repair requires a fresh clean candidate to
+restart at Local.

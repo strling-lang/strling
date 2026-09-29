@@ -104,7 +104,7 @@ language source, validate semantic meaning, select a target, plan portability,
 lower or emit a target artifact, implement a standard helper, execute regex, or
 fall back to a historical JVM compiler.
 
-Jackson is pinned to 2.18.9 for strict JSON transport. It creates no language
+Jackson is pinned to 2.18.10 for strict JSON transport. It creates no language
 semantics and is included in the certified runtime release graph.
 
 ## Public-surface dispositions

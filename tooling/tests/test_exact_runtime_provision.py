@@ -25,9 +25,9 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
     def maven_fixture(self, directory: Path) -> tuple[Path, Path, Path]:
         repository = directory / "repository"
         coordinates = (
-            "com.fasterxml.jackson.core:jackson-annotations:2.18.9",
-            "com.fasterxml.jackson.core:jackson-core:2.18.9",
-            "com.fasterxml.jackson.core:jackson-databind:2.18.9",
+            "com.fasterxml.jackson.core:jackson-annotations:2.18.10",
+            "com.fasterxml.jackson.core:jackson-core:2.18.10",
+            "com.fasterxml.jackson.core:jackson-databind:2.18.10",
             "net.java.dev.jna:jna:5.19.1",
         )
         components = []

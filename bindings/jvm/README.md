@@ -30,7 +30,7 @@ does not infer Linux, macOS, or alternate-architecture runtime support.
 
 The exact runtime graph is checked in at
 [`tests/adapters/3.0/release-graph.json`](../../tests/adapters/3.0/release-graph.json).
-JNA 5.19.1 uses its Apache-2.0 license branch. Jackson 2.18.9 is pinned after
+JNA 5.19.1 uses its Apache-2.0 license branch. Jackson 2.18.10 is pinned after
 live advisory remediation. Java and Kotlin share this bridge and may not carry
 an alternate JNA/JNI/Panama or semantic route.
 

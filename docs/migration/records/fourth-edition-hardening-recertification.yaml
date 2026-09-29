@@ -617,6 +617,10 @@ checkpoints:
             result: passed
             details: >-
                 Clean candidate bbae6b613ca7562c1eaf44c8d52378519b51aba2 passed all non-sampling predictors and the production Full sample-free gate. Paired CLI readiness passed four windows, then stopped before Local when simply-tiny measured 12531 basis points against the unchanged 12337 ceiling. That window's request-first and control-first medians split to 15302 and 7819, proving that the aggregate median depended on two inner tail values instead of balancing the deliberately alternating launch orders. The estimator now takes each order-stratum median and combines them with an integer geometric mean. The ten retained diagnostic coordinates become 11459/11400, 11535/11702, 11393/11343, 12098/11432, and 11132/10939 basis points; all pass. The sample-free retained-evidence migration preserves every raw sample, sample count, warmup, relative budget, and prior effective ratio ceiling. No authenticated sample was consumed.
+          - check: Paired launch authority migration
+            result: passed
+            details: >-
+                Clean-source migration at 75ce95993ccec228d3a24cbedb3c4a45512c45e0 archived baseline c94bda9ed4ae2dcdfce00ce3d89cf63ef78d38b042eb7c2978ec6b1b6ece1c53 without consuming samples, preserved every raw repetition, and produced manifest c8ff8e5a19515ec16157ecc3393df42c8b0e8450cd71199c7e016715cc5ab42e and baseline 00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a. Both governed relative budgets remain 1000 basis points and the prior effective ceilings remain exactly 12658 and 12337.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -700,7 +704,9 @@ commits:
       subject: "fix(certification): order warmup migration provenance"
     - sha: bbae6b613ca7562c1eaf44c8d52378519b51aba2
       subject: "cert(performance): migrate sustained warmup baseline"
+    - sha: 75ce95993ccec228d3a24cbedb3c4a45512c45e0
+      subject: "fix(certification): balance paired launch orders"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolated insufficient fixed settling duration across heterogeneous batch costs. The corrected 512-warmup migration passed all 54 coordinates and every prior ceiling. Candidate bbae6b61 then passed the non-sampling predictors and Full sample-free gate, but paired readiness stopped before Local after exposing a request-first/control-first ratio split that made the aggregate median order-sensitive. The order-balanced geometric estimator passes all ten retained diagnostic coordinates and can migrate authority sample-free while preserving raw evidence, budgets, and prior effective ceilings. A new clean candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolated insufficient fixed settling duration across heterogeneous batch costs. The corrected 512-warmup migration passed all 54 coordinates and every prior ceiling. Candidate bbae6b61 then passed the non-sampling predictors and Full sample-free gate, but paired readiness stopped before Local after exposing a request-first/control-first ratio split that made the aggregate median order-sensitive. The order-balanced geometric estimator passes all ten retained diagnostic coordinates. Its clean-source retained-evidence migration at 75ce9599 preserved raw evidence, relative budgets, and prior effective ceilings without authenticated sampling. A new clean candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

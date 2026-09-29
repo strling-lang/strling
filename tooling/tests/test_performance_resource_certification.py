@@ -405,12 +405,18 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
 
     def test_sustained_warmup_contract_preserves_measurement_denominators(self) -> None:
         active_baseline = load_json(BASELINE_PATH)
-        prior_manifest = load_json(
-            BASELINE_PATH.parent
-            / "history"
-            / active_baseline["prior_baseline_fingerprint"]
-            / "manifest.json"
-        )
+        prior_fingerprint = active_baseline["prior_baseline_fingerprint"]
+        while True:
+            history = BASELINE_PATH.parent / "history" / prior_fingerprint
+            prior_manifest = load_json(history / "manifest.json")
+            if (
+                prior_manifest["measurement_policy"]["warmup_iterations"]
+                == STATIONARY_WARMUP_ITERATIONS
+            ):
+                break
+            prior_fingerprint = load_json(history / "baseline.json")[
+                "prior_baseline_fingerprint"
+            ]
         prior_warmups, target_warmups, manifest = _warmup_migration_manifest(
             prior_manifest
         )
@@ -1697,7 +1703,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             self.assertEqual(
                 active_rows[key]["relative_samples"],
                 [
-                    controlled_launch_estimate(requests, controls)
+                    sample_statistics(controlled_launch_signals(requests, controls))[
+                        "median"
+                    ]
                     for requests, controls in zip(
                         active_rows[key]["repetitions"],
                         active_rows[key]["control_repetitions"],

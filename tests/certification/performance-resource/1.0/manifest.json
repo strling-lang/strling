@@ -387,12 +387,12 @@
             "budget": {
                 "state": "active",
                 "relative_regression_basis_points": 1000,
-                "absolute_ceiling": 13983,
-                "rationale": "Maximum measured fixture budget and ceiling; fixture-specific comparison authority remains in the authenticated baseline."
+                "absolute_ceiling": 12658,
+                "rationale": "Maximum order-balanced relative budget and preserved prior effective ratio ceiling; fixture-specific authority remains in the baseline."
             },
-            "description": "Measure representative canonical CLI validation and compilation commands; compare the median of interleaved request/control ratios to a same-binary help launch while retaining the prior raw ceiling as diagnostic history.",
+            "description": "Measure representative canonical CLI validation and compilation commands; compare the geometric mean of request-first and control-first paired-ratio medians to a same-binary help launch while retaining prior effective ceilings.",
             "comparison_model": "paired-same-binary-launch-control",
-            "relative_estimator": "median-of-paired-request-control-ratios"
+            "relative_estimator": "order-balanced-geometric-mean-of-paired-request-control-ratios"
         },
         {
             "id": "latency:editor-interaction",
@@ -632,5 +632,5 @@
         "fixtures": 12,
         "resource_declarations": 56
     },
-    "manifest_fingerprint": "4a2fa3940b587a17ab36332576c922f2a58f467dbbde2b9036085d5922b10907"
+    "manifest_fingerprint": "c8ff8e5a19515ec16157ecc3393df42c8b0e8450cd71199c7e016715cc5ab42e"
 }

@@ -1370,3 +1370,13 @@ relax either CLI coordinate. The five observed windows produce balanced values
 of `11459/11400`, `11535/11702`, `11393/11343`, `12098/11432`, and
 `11132/10939` basis points for semantic-tiny/simply-tiny respectively; all ten
 pass their unchanged prior effective ceilings.
+
+The clean-source retained-evidence migration at
+`75ce95993ccec228d3a24cbedb3c4a45512c45e0` archived baseline
+`c94bda9ed4ae2dcdfce00ce3d89cf63ef78d38b042eb7c2978ec6b1b6ece1c53`
+without consuming samples. It preserved every raw repetition and produced
+manifest `c8ff8e5a19515ec16157ecc3393df42c8b0e8450cd71199c7e016715cc5ab42e`
+and baseline `00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a`.
+The governed relative budgets remain `1000` basis points. Effective ceilings
+remain exactly `12658` and `12337`; the migration cannot admit evidence that
+the prior authority would have rejected.

@@ -1,0 +1,38 @@
+{
+    "schema_version": "certification-result-v1",
+    "evidence_kind": "synthetic-contract-fixture",
+    "operation_id": "certification.performance-resource-local",
+    "profile": "local",
+    "status": "passed",
+    "duration_ms": null,
+    "checks": [
+        {
+            "id": "contract:performance-resource-manifest",
+            "status": "passed",
+            "details": {
+                "fixture": true,
+                "live_measurement": false,
+                "baseline_authority": false
+            }
+        }
+    ],
+    "manifest_fingerprint": "4a2fa3940b587a17ab36332576c922f2a58f467dbbde2b9036085d5922b10907",
+    "commit": "0000000000000000000000000000000000000000",
+    "deterministic_evidence": {
+        "profile": "local",
+        "status": "passed",
+        "checks": [
+            {
+                "id": "contract:performance-resource-manifest",
+                "status": "passed",
+                "details": {
+                    "fixture": true,
+                    "live_measurement": false,
+                    "baseline_authority": false
+                }
+            }
+        ]
+    },
+    "evidence_fingerprint": "46080f88f79961cdfe9a94253acf5da1f3802623dd628e7c93919fdbab652204",
+    "disclaimer": "Synthetic schema and fail-closed contract fixture only; this is not live task evidence, a measured baseline, or readiness proof."
+}

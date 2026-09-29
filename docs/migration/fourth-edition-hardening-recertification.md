@@ -1347,3 +1347,26 @@ compact baseline is 1,033,842 bytes with fingerprint
 `c94bda9ed4ae2dcdfce00ce3d89cf63ef78d38b042eb7c2978ec6b1b6ece1c53`,
 below the unchanged 1 MiB hygiene limit without removing measurements or
 semantic evidence.
+
+Clean warmup-migration candidate
+`bbae6b613ca7562c1eaf44c8d52378519b51aba2` passed the complete non-sampling
+predictor set and the production Full sample-free gate. The paired CLI
+diagnostic then passed its first four conditioned windows but stopped before
+Local when window five measured `fixture:simply-tiny` at `12531` basis points
+against the unchanged `12337` ceiling. The same window exposed an order split:
+request-first pairs had a `15302` median while control-first pairs had a `7819`
+median. The aggregate median therefore depended on the two inner tail values
+rather than a balanced estimate of the deliberately alternating launch orders.
+No authenticated samples were consumed.
+
+The paired estimator now computes each launch-order stratum median separately
+and combines them with an integer geometric mean, which cancels reciprocal
+first/second-launch drift while preserving one-to-one request/control pairs.
+All raw samples, sample counts, warmups, conditioning, ratios, relative budgets,
+and prior effective ratio ceilings remain governed. Retained baseline samples
+permit a sample-free authority migration: every candidate effective ceiling is
+capped at its immediately prior effective ceiling, so the correction cannot
+relax either CLI coordinate. The five observed windows produce balanced values
+of `11459/11400`, `11535/11702`, `11393/11343`, `12098/11432`, and
+`11132/10939` basis points for semantic-tiny/simply-tiny respectively; all ten
+pass their unchanged prior effective ceilings.

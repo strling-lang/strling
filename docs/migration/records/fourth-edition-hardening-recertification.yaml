@@ -613,6 +613,10 @@ checkpoints:
             result: passed
             details: >-
                 Corrected clean-source migration at 42be2a6af7b2c81f2ecf10f545c08d973f6bf74e passed all 54 coordinates and every prior relative and absolute ceiling. It retained 512 warmups, 64 samples, nine repetitions, and 486 coordinate-local conditioning snapshots; archived baseline 43f4b9cec4f4f7e135f31af0eb94a04faabfa74af3850198d5d735be2ebc01c6; and produced manifest 4a2fa3940b587a17ab36332576c922f2a58f467dbbde2b9036085d5922b10907. All active budgets are equal to or stricter than their prior hard authority. The compact 1033842-byte baseline has fingerprint c94bda9ed4ae2dcdfce00ce3d89cf63ef78d38b042eb7c2978ec6b1b6ece1c53 and remains below the unchanged one MiB limit without removing measurements or semantic evidence.
+          - check: Paired launch order-balance correction
+            result: passed
+            details: >-
+                Clean candidate bbae6b613ca7562c1eaf44c8d52378519b51aba2 passed all non-sampling predictors and the production Full sample-free gate. Paired CLI readiness passed four windows, then stopped before Local when simply-tiny measured 12531 basis points against the unchanged 12337 ceiling. That window's request-first and control-first medians split to 15302 and 7819, proving that the aggregate median depended on two inner tail values instead of balancing the deliberately alternating launch orders. The estimator now takes each order-stratum median and combines them with an integer geometric mean. The ten retained diagnostic coordinates become 11459/11400, 11535/11702, 11393/11343, 12098/11432, and 11132/10939 basis points; all pass. The sample-free retained-evidence migration preserves every raw sample, sample count, warmup, relative budget, and prior effective ratio ceiling. No authenticated sample was consumed.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -694,7 +698,9 @@ commits:
       subject: "fix(certification): sustain performance warmups"
     - sha: 42be2a6af7b2c81f2ecf10f545c08d973f6bf74e
       subject: "fix(certification): order warmup migration provenance"
+    - sha: bbae6b613ca7562c1eaf44c8d52378519b51aba2
+      subject: "cert(performance): migrate sustained warmup baseline"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolated insufficient fixed settling duration across heterogeneous batch costs. Ten 512-warmup atomic windows passed under unchanged hard limits. The corrected clean-source migration at 42be2a6a then passed all 54 coordinates and every prior ceiling, archived the active authority, and retained or tightened every budget. The resulting clean candidate must now repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolated insufficient fixed settling duration across heterogeneous batch costs. The corrected 512-warmup migration passed all 54 coordinates and every prior ceiling. Candidate bbae6b61 then passed the non-sampling predictors and Full sample-free gate, but paired readiness stopped before Local after exposing a request-first/control-first ratio split that made the aggregate median order-sensitive. The order-balanced geometric estimator passes all ten retained diagnostic coordinates and can migrate authority sample-free while preserving raw evidence, budgets, and prior effective ceilings. A new clean candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

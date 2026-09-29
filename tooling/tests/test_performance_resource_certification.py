@@ -1616,18 +1616,18 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertFalse(absolute_over["absolute_passed"])
 
     def test_paired_launch_estimator_preserves_interleaved_pairs(self) -> None:
-        requests = [100, 1_000, 1_000]
-        controls = [100, 100, 1_000]
+        requests = [200, 50, 220, 55]
+        controls = [100, 100, 100, 100]
         paired = controlled_launch_signals(requests, controls)
 
-        self.assertEqual(paired, [10_000, 100_000, 10_000])
-        self.assertEqual(controlled_launch_estimate(requests, controls), 10_000)
+        self.assertEqual(paired, [20_000, 5_000, 22_000, 5_500])
+        self.assertEqual(controlled_launch_estimate(requests, controls), 10_500)
         self.assertEqual(
             controlled_launch_signal(
                 sample_statistics(requests)["median"],
                 sample_statistics(controls)["median"],
             ),
-            100_000,
+            12_700,
         )
         self.assertNotEqual(
             controlled_launch_estimate(requests, controls),
@@ -1636,13 +1636,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 sample_statistics(controls)["median"],
             ),
         )
-        for request_samples, control_samples in (([], []), ([100], [100, 100])):
+        for request_samples, control_samples, code in (
+            ([], [], "launch-control-pairs"),
+            ([100], [100, 100], "launch-control-pairs"),
+            ([100], [100], "launch-control-order-balance"),
+        ):
             with self.subTest(
                 request_samples=request_samples, control_samples=control_samples
             ):
                 with self.assertRaises(PerformanceResourceError) as raised:
                     controlled_launch_estimate(request_samples, control_samples)
-                self.assertEqual(raised.exception.code, "launch-control-pairs")
+                self.assertEqual(raised.exception.code, code)
 
     def test_cli_operation_governs_paired_ratio_estimator(self) -> None:
         operation = next(

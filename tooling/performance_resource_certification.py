@@ -166,8 +166,13 @@ RESOURCE_OPERATION_IDS = [
 OPERATION_IDS = PERFORMANCE_OPERATION_IDS + RESOURCE_OPERATION_IDS
 RESOURCE_TARGET_DIRECTORY = "target/rust-1.75-resource-certification"
 CLI_LAUNCH_COMPARISON_MODEL = "paired-same-binary-launch-control"
-CLI_LAUNCH_RELATIVE_ESTIMATOR = "median-of-paired-request-control-ratios"
-CLI_LAUNCH_RELATIVE_SIGNAL_KIND = "median-paired-request-control-ratios"
+LEGACY_CLI_LAUNCH_RELATIVE_ESTIMATOR = "median-of-paired-request-control-ratios"
+CLI_LAUNCH_RELATIVE_ESTIMATOR = (
+    "order-balanced-geometric-mean-of-paired-request-control-ratios"
+)
+CLI_LAUNCH_RELATIVE_SIGNAL_KIND = (
+    "order-balanced-geometric-mean-paired-request-control-ratios"
+)
 PER_COORDINATE_BASELINE_CONDITIONING = "authenticated-identical-before-each-coordinate"
 CLI_LAUNCH_CONTROL_FIELDS = {
     "control_repetitions",
@@ -698,7 +703,11 @@ def validate_manifest(
             )
         relative_estimator = operation_relative_estimator(operation)
         if comparison_model == CLI_LAUNCH_COMPARISON_MODEL:
-            if relative_estimator not in {None, CLI_LAUNCH_RELATIVE_ESTIMATOR}:
+            if relative_estimator not in {
+                None,
+                LEGACY_CLI_LAUNCH_RELATIVE_ESTIMATOR,
+                CLI_LAUNCH_RELATIVE_ESTIMATOR,
+            }:
                 raise PerformanceResourceError(
                     "relative-estimator",
                     f"unsupported paired launch estimator for {operation['id']}",
@@ -1048,9 +1057,17 @@ def controlled_launch_signals(
 def controlled_launch_estimate(
     request_samples: Sequence[int], control_samples: Sequence[int]
 ) -> int:
-    return sample_statistics(
-        controlled_launch_signals(request_samples, control_samples)
-    )["median"]
+    paired = controlled_launch_signals(request_samples, control_samples)
+    if len(paired) < 2 or len(paired) % 2 != 0:
+        raise PerformanceResourceError(
+            "launch-control-order-balance",
+            "paired launch samples require equal non-empty request-first and control-first strata",
+        )
+    request_first = sample_statistics(paired[::2])["median"]
+    control_first = sample_statistics(paired[1::2])["median"]
+    product = request_first * control_first
+    root = math.isqrt(product)
+    return root if root * root == product else root + 1
 
 
 def compare_controlled_launch_metric(
@@ -1463,10 +1480,20 @@ def validate_baseline(
                     "launch-control-statistics",
                     f"launch-control statistics changed for {key}",
                 )
-            if operation_relative_estimator(operation) is None:
+            relative_estimator = operation_relative_estimator(operation)
+            if relative_estimator is None:
                 relative_samples = [
                     controlled_launch_signal(request, control)
                     for request, control in zip(samples, control_samples)
+                ]
+            elif relative_estimator == LEGACY_CLI_LAUNCH_RELATIVE_ESTIMATOR:
+                relative_samples = [
+                    sample_statistics(
+                        controlled_launch_signals(request_row, control_row)
+                    )["median"]
+                    for request_row, control_row in zip(
+                        repetitions, control_repetitions
+                    )
                 ]
             else:
                 relative_samples = [
@@ -3760,10 +3787,18 @@ def create_active_contract(
             control_samples = [
                 sample_statistics(values)["median"] for values in control_rows
             ]
-            if operation_relative_estimator(operation) is None:
+            relative_estimator = operation_relative_estimator(operation)
+            if relative_estimator is None:
                 relative_samples = [
                     controlled_launch_signal(request, control)
                     for request, control in zip(representative, control_samples)
+                ]
+            elif relative_estimator == LEGACY_CLI_LAUNCH_RELATIVE_ESTIMATOR:
+                relative_samples = [
+                    sample_statistics(
+                        controlled_launch_signals(request_row, control_row)
+                    )["median"]
+                    for request_row, control_row in zip(repeated, control_rows)
                 ]
             else:
                 relative_samples = [
@@ -5130,7 +5165,9 @@ def certify(
                     samples, control_samples
                 )
                 paired_relative_statistics = sample_statistics(paired_relative_signals)
-                observed_relative_signal = paired_relative_statistics["median"]
+                observed_relative_signal = controlled_launch_estimate(
+                    samples, control_samples
+                )
                 comparison = compare_controlled_launch_metric(
                     baseline_relative_signal=baseline_row["relative_statistics"][
                         "median"
@@ -5867,10 +5904,13 @@ def _migrate_paired_launch_estimator_command(
         raise PerformanceResourceError(
             "paired-estimator-model", "CLI launch control is not active"
         )
-    if operation_relative_estimator(prior_operation) is not None:
+    if (
+        operation_relative_estimator(prior_operation)
+        != LEGACY_CLI_LAUNCH_RELATIVE_ESTIMATOR
+    ):
         raise PerformanceResourceError(
             "paired-estimator-already-active",
-            "the median paired-ratio estimator is already active",
+            "the order-balanced paired-ratio estimator is already active or the legacy estimator is unavailable",
         )
 
     source_changes = _artifact_source_changes(
@@ -5896,8 +5936,8 @@ def _migrate_paired_launch_estimator_command(
     candidate_operation["relative_estimator"] = CLI_LAUNCH_RELATIVE_ESTIMATOR
     candidate_operation["description"] = (
         "Measure representative canonical CLI validation and compilation commands; "
-        "compare the median of interleaved request/control ratios to a same-binary "
-        "help launch while retaining the prior raw ceiling as diagnostic history."
+        "compare the geometric mean of request-first and control-first paired-ratio "
+        "medians to a same-binary help launch while retaining prior effective ceilings."
     )
     candidate_manifest["manifest_fingerprint"] = document_fingerprint(
         candidate_manifest, "manifest_fingerprint"
@@ -5931,14 +5971,43 @@ def _migrate_paired_launch_estimator_command(
                 "maximum_relative_budget_basis_points"
             ],
         )
-        if derived_budget != row["budget"]["relative_regression_basis_points"]:
-            raise PerformanceResourceError(
-                "paired-estimator-budget-drift",
-                f"paired estimator would alter the governed relative threshold for "
-                f"{(row['operation_id'], row['fixture_id'])}",
-            )
+        prior_budget = copy.deepcopy(prior_row["budget"])
+        prior_effective_ceiling = min(
+            cast(int, prior_budget["absolute_ceiling"]),
+            math.floor(
+                cast(int, prior_row["relative_statistics"]["median"])
+                * (10_000 + cast(int, prior_budget["relative_regression_basis_points"]))
+                / 10_000
+            ),
+        )
+        derived_absolute_ceiling = max(
+            max(relative_samples),
+            _absolute_ceiling(relative_statistics["median"], derived_budget),
+        )
+        governed_relative_budget = min(
+            derived_budget,
+            cast(int, prior_budget["relative_regression_basis_points"]),
+        )
         row["relative_samples"] = relative_samples
         row["relative_statistics"] = relative_statistics
+        row["budget"].update(
+            {
+                "relative_regression_basis_points": governed_relative_budget,
+                "absolute_ceiling": min(
+                    derived_absolute_ceiling, prior_effective_ceiling
+                ),
+                "derived_relative_regression_basis_points": derived_budget,
+                "prior_relative_regression_basis_points": cast(
+                    int, prior_budget["relative_regression_basis_points"]
+                ),
+                "derived_absolute_ceiling": derived_absolute_ceiling,
+                "prior_absolute_ceiling": prior_effective_ceiling,
+                "rationale": (
+                    "Retained interleaved samples derive the order-balanced candidate "
+                    "budget; the immediately prior effective ratio ceiling caps any relaxation."
+                ),
+            }
+        )
         migration.append(
             {
                 "coordinate": _coordinate_id(
@@ -5947,6 +6016,8 @@ def _migrate_paired_launch_estimator_command(
                 "prior_relative_samples": prior_row["relative_samples"],
                 "paired_relative_samples": relative_samples,
                 "relative_budget_basis_points": derived_budget,
+                "governed_relative_budget_basis_points": governed_relative_budget,
+                "prior_effective_ceiling": prior_effective_ceiling,
                 "absolute_ceiling": row["budget"]["absolute_ceiling"],
                 "raw_samples_preserved": (
                     row["repetitions"] == prior_row["repetitions"]
@@ -5955,10 +6026,31 @@ def _migrate_paired_launch_estimator_command(
             }
         )
 
+    cli_rows = [
+        row
+        for row in cast(list[dict[str, Any]], candidate_baseline["measurements"])
+        if row["operation_id"] == "latency:cli-startup"
+    ]
+    candidate_operation["budget"] = {
+        "state": "active",
+        "relative_regression_basis_points": max(
+            row["budget"]["relative_regression_basis_points"] for row in cli_rows
+        ),
+        "absolute_ceiling": max(row["budget"]["absolute_ceiling"] for row in cli_rows),
+        "rationale": (
+            "Maximum order-balanced relative budget and preserved prior effective "
+            "ratio ceiling; fixture-specific authority remains in the baseline."
+        ),
+    }
+    candidate_manifest["manifest_fingerprint"] = document_fingerprint(
+        candidate_manifest, "manifest_fingerprint"
+    )
+
     candidate_baseline.update(
         {
             "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
             "source_commit": commit,
+            "prior_baseline_fingerprint": prior_baseline["baseline_fingerprint"],
             "update_rationale": rationale,
             "baseline_fingerprint": "0" * 64,
         }

@@ -1325,3 +1325,12 @@ medians were `960600`, `891325`, `893800`, `885475`, and `888725 ns`. The
 one-time clean-source migration must recalibrate all 54 coordinates, pass every
 prior hard ceiling, archive the prior authority, and retain or tighten every
 budget before a new candidate can restart at Local.
+
+The first complete 512-warmup migration attempt wrote no authority because
+calibration inherited the active capped-budget formula before the migration
+had attached its required prior-baseline fingerprint. Validation failed closed
+with `budget-provenance`. The migration now constructs an uncapped derived
+calibration manifest first, then applies the existing prior-ceiling cap and
+provenance transformation to the complete result. A focused regression starts
+from the current capped authority and proves the 128-to-512 step preserves the
+sample and nine-repetition denominators.

@@ -6184,6 +6184,32 @@ def _preserve_warmup_migration_thresholds(
     return comparisons
 
 
+def _warmup_migration_manifest(
+    prior_manifest: Mapping[str, object],
+) -> tuple[int, int, dict[str, Any]]:
+    """Prepare the next governed warmup step for uncapped calibration."""
+
+    prior_warmups = prior_manifest["measurement_policy"]["warmup_iterations"]
+    target_warmups = {
+        LEGACY_WARMUP_ITERATIONS: STATIONARY_WARMUP_ITERATIONS,
+        STATIONARY_WARMUP_ITERATIONS: SUSTAINED_WARMUP_ITERATIONS,
+    }.get(prior_warmups)
+    if target_warmups is None:
+        raise PerformanceResourceError(
+            "warmup-already-active",
+            "the active contract already uses the strongest governed warmup count",
+        )
+    candidate_manifest = copy.deepcopy(dict(prior_manifest))
+    candidate_manifest["measurement_policy"]["warmup_iterations"] = target_warmups
+    candidate_manifest["measurement_policy"]["baseline_repetitions"] = (
+        STATIONARY_BASELINE_REPETITIONS
+    )
+    candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
+        DERIVED_RELATIVE_BUDGET_FORMULA
+    )
+    return cast(int, prior_warmups), target_warmups, candidate_manifest
+
+
 def _migrate_stationary_warmups_command(
     *,
     confirm_stationary_warmups: bool,
@@ -6218,16 +6244,9 @@ def _migrate_stationary_warmups_command(
     validate_manifest(prior_manifest, root=root, fixtures=fixtures)
     validate_baseline(prior_baseline, manifest=prior_manifest, fixtures=fixtures)
     validate_evidence(prior_evidence, manifest=prior_manifest)
-    prior_warmups = prior_manifest["measurement_policy"]["warmup_iterations"]
-    target_warmups = {
-        LEGACY_WARMUP_ITERATIONS: STATIONARY_WARMUP_ITERATIONS,
-        STATIONARY_WARMUP_ITERATIONS: SUSTAINED_WARMUP_ITERATIONS,
-    }.get(prior_warmups)
-    if target_warmups is None:
-        raise PerformanceResourceError(
-            "warmup-already-active",
-            "the active contract already uses the strongest governed warmup count",
-        )
+    prior_warmups, target_warmups, candidate_manifest = _warmup_migration_manifest(
+        prior_manifest
+    )
 
     prior_fingerprint = cast(str, prior_baseline["baseline_fingerprint"])
     history = root / PERFORMANCE_HISTORY_PATH.relative_to(ROOT) / prior_fingerprint
@@ -6275,11 +6294,6 @@ def _migrate_stationary_warmups_command(
             "stationary warmup migration requires the active baseline environment",
         )
 
-    candidate_manifest = copy.deepcopy(prior_manifest)
-    candidate_manifest["measurement_policy"]["warmup_iterations"] = target_warmups
-    candidate_manifest["measurement_policy"]["baseline_repetitions"] = (
-        STATIONARY_BASELINE_REPETITIONS
-    )
     candidate_manifest, candidate_baseline = calibrate_baseline(
         candidate_manifest,
         fixtures,

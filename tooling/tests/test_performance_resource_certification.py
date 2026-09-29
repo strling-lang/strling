@@ -54,6 +54,7 @@ from tooling.performance_resource_certification import (
     _should_delegate_windows_full,
     _windows_native_worktree,
     _windows_external_workloads,
+    _warmup_migration_manifest,
     _write_json,
     calibrate_baseline,
     certification_measurement_status,
@@ -403,9 +404,8 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
 
     def test_sustained_warmup_contract_preserves_measurement_denominators(self) -> None:
-        manifest = copy.deepcopy(self.manifest)
-        manifest["measurement_policy"]["warmup_iterations"] = (
-            SUSTAINED_WARMUP_ITERATIONS
+        prior_warmups, target_warmups, manifest = _warmup_migration_manifest(
+            self.manifest
         )
         manifest["manifest_fingerprint"] = document_fingerprint(
             manifest, "manifest_fingerprint"
@@ -415,6 +415,12 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             manifest,
             fixtures=self.fixtures,
             inventory=self.inventory,
+        )
+        self.assertEqual(prior_warmups, STATIONARY_WARMUP_ITERATIONS)
+        self.assertEqual(target_warmups, SUSTAINED_WARMUP_ITERATIONS)
+        self.assertEqual(
+            manifest["measurement_policy"]["relative_budget_formula"],
+            DERIVED_RELATIVE_BUDGET_FORMULA,
         )
         self.assertEqual(
             manifest["measurement_policy"]["sample_iterations"],

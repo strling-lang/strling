@@ -631,6 +631,10 @@ checkpoints:
             result: passed
             details: >-
                 The exact complete producer reproduced the coordinate at 96983 ns with zero authenticated ledger samples, while five isolated conditioned observations passed between 81004 and 84100 ns. Prefix bisection proved that the first five shuffled operations followed by the target passed at 78396 ns, the first six followed by the target failed at 90167 ns, and the sixth operation latency:cli-startup/fixture:simply-tiny alone followed by the target passed at 82084 ns. The defect is cumulative producer state: the two-second Windows quiescence observation can accept a quiet host before the selected CPU recovers from sustained launch work. Adding eight seconds after the exact failing prefix, for ten seconds total before the target, restored a passing 80061 ns median; a twelve-second total check passed at 81750 ns. The Windows supported-controls conditioning policy advances from v5/1.4.0 to v6/1.5.0 and strengthens its observation from 2000 to 10000 milliseconds. Busy and interrupt thresholds, ceilings, ratios, warmups, samples, batching, workloads, isolation, and authenticated-sample rules remain unchanged. The new conditioner identity requires a clean-source governed recalibration before recertification restarts at Local.
+          - check: Sustained recovery authority reset
+            result: passed
+            details: >-
+                At clean correction source 804f16e0d8e100847b12ca9566e73c52ab6b7f4d, the governed sample-free reset archived baseline 00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a byte-for-byte and produced planned manifest 90890dfac6fafad899b0029831dcc5063c589079d4f9bdee06f3e335bb963544. No measurement or authenticated sample was consumed. One clean-source 54-coordinate recalibration must now prove the strengthened v6 conditioning identity against every immediately prior hard ceiling.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -716,7 +720,11 @@ commits:
       subject: "cert(performance): migrate sustained warmup baseline"
     - sha: 75ce95993ccec228d3a24cbedb3c4a45512c45e0
       subject: "fix(certification): balance paired launch orders"
+    - sha: 8055584440e8e3dacab0efce277b59fe0f252a48
+      subject: "cert(performance): migrate order-balanced launch authority"
+    - sha: 804f16e0d8e100847b12ca9566e73c52ab6b7f4d
+      subject: "fix(certification): sustain Windows recovery conditioning"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate c3ef5eaa passed all predictors, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose directional sample sequence and direct exact-producer reproduction isolated insufficient fixed settling duration across heterogeneous batch costs. The corrected 512-warmup migration passed all 54 coordinates and every prior ceiling. Candidate bbae6b61 then passed the non-sampling predictors and Full sample-free gate, but paired readiness stopped before Local after exposing a request-first/control-first ratio split that made the aggregate median order-sensitive. The order-balanced geometric estimator passes all ten retained diagnostic coordinates. Its clean-source retained-evidence migration at 75ce9599 preserved raw evidence, relative budgets, and prior effective ceilings without authenticated sampling. A new clean candidate must repeat every cheap predictor, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate 80555844 passed every predictor, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose exact producer and prefix bisection isolated insufficient Windows recovery conditioning after cumulative launch work. The v6 policy strengthens the observation from two to ten seconds without changing thresholds, ceilings, ratios, warmups, samples, batching, workloads, isolation, or authenticated-sample rules. The old authority is archived. One clean-source governed recalibration must pass every prior hard ceiling before a new candidate repeats all predictors, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

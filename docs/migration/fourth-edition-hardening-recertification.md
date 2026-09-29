@@ -1416,3 +1416,13 @@ ratios, warmups, sample counts, batching, workloads, isolation, and
 authenticated-sample rules remain unchanged. Because the conditioner identity
 is baseline authority, the correction requires a clean-source governed
 recalibration before Local restarts.
+
+At clean correction source
+`804f16e0d8e100847b12ca9566e73c52ab6b7f4d`, the governed sample-free reset
+archived baseline
+`00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a`
+byte-for-byte and produced planned manifest
+`90890dfac6fafad899b0029831dcc5063c589079d4f9bdee06f3e335bb963544`.
+No measurement or authenticated sample was consumed. The next step is one
+clean-source 54-coordinate recalibration under the strengthened v6 conditioning
+identity and every immediately prior hard ceiling.

@@ -132,7 +132,7 @@ fn run() -> RunResult<()> {
         &mut observed_processor_groups,
         &mut observed_logical_processors,
     )?;
-    let fixture = materialize_fixture(&arguments.fixture)?;
+    let fixture = materialize_fixture(&arguments.fixture, &arguments.operation)?;
     let operation = prepare_operation(
         &arguments.operation,
         &fixture,
@@ -1298,7 +1298,11 @@ fn interop_request(request: &CompileRequest) -> RunResult<Vec<u8>> {
     .map_err(|error| error.to_string())
 }
 
-fn materialize_fixture(fixture: &str) -> RunResult<MaterializedFixture> {
+fn retains_serialized_fixture_views(operation: &str) -> bool {
+    operation != "memory:kernel-peak-rss"
+}
+
+fn materialize_fixture(fixture: &str, operation: &str) -> RunResult<MaterializedFixture> {
     let (source, source_document, semantic) = if fixture.starts_with("fixture:semantic-") {
         let source = semantic_source(fixture)?;
         let document = semantic_document(&source)?;
@@ -1327,8 +1331,14 @@ fn materialize_fixture(fixture: &str) -> RunResult<MaterializedFixture> {
         ));
     };
     let request = compile_request(&semantic)?;
-    let request_bytes = serde_json::to_vec(&request).map_err(|error| error.to_string())?;
-    let interop_request = interop_request(&request)?;
+    let (request_bytes, interop_request) = if retains_serialized_fixture_views(operation) {
+        (
+            serde_json::to_vec(&request).map_err(|error| error.to_string())?,
+            interop_request(&request)?,
+        )
+    } else {
+        (Vec::new(), Vec::new())
+    };
     Ok(MaterializedFixture {
         id: fixture.to_owned(),
         source,
@@ -1618,8 +1628,8 @@ fn prepare_operation(
 #[cfg(test)]
 mod affinity_tests {
     use super::{
-        format_cpu_set, parse_cpu_set, sample_is_authentic, select_batch_iterations_with,
-        MAXIMUM_DESCHEDULING_NANOSECONDS,
+        format_cpu_set, parse_cpu_set, retains_serialized_fixture_views, sample_is_authentic,
+        select_batch_iterations_with, MAXIMUM_DESCHEDULING_NANOSECONDS,
     };
 
     #[test]
@@ -1662,5 +1672,14 @@ mod affinity_tests {
             100_000_000 - MAXIMUM_DESCHEDULING_NANOSECONDS
         ));
         assert!(sample_is_authentic(100_000_000, 110_000_000));
+    }
+
+    #[test]
+    fn peak_rss_skips_unused_serialized_fixture_views() {
+        assert!(!retains_serialized_fixture_views("memory:kernel-peak-rss"));
+        assert!(retains_serialized_fixture_views("latency:kernel-request"));
+        assert!(retains_serialized_fixture_views(
+            "latency:interop-roundtrip"
+        ));
     }
 }

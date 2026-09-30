@@ -515,28 +515,32 @@ blocks timing, and an unstable coordinate remains a product/harness or
 Windows-environment investigation under the unchanged limits.
 
 A reviewed same-build conditioner migration has a separate, narrower command.
-It is authorized only for the recorded Windows CPU 20 to topology-equivalent CPU
-24 move and the conditioner v5/2-second to v6/10-second transition. The command
-requires the clean planned reset plus its immutable archived authority, permits
-only the enumerated derived placement and conditioner identity coordinates,
-keeps all quietness thresholds unchanged, rebuilds source-bound release
-artifacts, and recalibrates all 54 coordinates. Every new non-CLI median and
-paired CLI ratio must pass the archived relative and absolute ceilings before
-the command writes active authority:
+It is authorized only for the recorded Windows CPU 20 to reviewed quiet
+performance-core CPU 1 move and the conditioner v5/2-second to v6/10-second
+transition. The command requires the clean planned reset plus its immutable
+archived authority, permits only the 34 enumerated derived placement, processor-
+class, reservation, attestation, and conditioner identity coordinates, keeps
+all quietness thresholds unchanged, rebuilds source-bound release artifacts,
+and recalibrates all 54 coordinates. Every new non-CLI median and paired CLI
+ratio must pass the archived relative and absolute ceilings before the command
+writes active authority:
 
 ```powershell
 python -m tooling.performance_resource_certification `
   migrate-conditioning-cpu `
   --confirm-sustained-recovery `
-  --selected-logical-cpu 24 `
+  --selected-logical-cpu 1 `
   --rollover-from <prior-baseline-fingerprint> `
-  --rationale "Reviewed sustained recovery on equivalent Windows CPU" `
+  --rationale "Reviewed sustained recovery on quiet Windows performance core" `
   --json
 ```
 
-This command does not authorize a Windows-build, hardware-class, topology,
-toolchain, power, timer, workload, sampling, threshold, or product-identity
-change. Any such mismatch or any prior-ceiling regression fails before writes.
+This command authorizes only the exact recorded efficiency-0 single-thread to
+efficiency-1 sibling-pair topology transition on the same processor, group,
+last-level cache, NUMA node, power controls, timer, toolchains, and Windows
+build. Any other topology, hardware, toolchain, workload, sampling, threshold,
+or product-identity mismatch, or any prior-ceiling regression, fails before
+writes.
 
 Native Windows focused proof covers the exact CPU-set/core/class mapping,
 affinity and CPU-set enforcement, actual execution-processor observation,

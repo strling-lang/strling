@@ -174,8 +174,8 @@ CLI_LAUNCH_RELATIVE_SIGNAL_KIND = (
     "order-balanced-geometric-mean-paired-request-control-ratios"
 )
 PER_COORDINATE_BASELINE_CONDITIONING = "authenticated-identical-before-each-coordinate"
-GOVERNED_WINDOWS_LOGICAL_CPUS = {20, 24}
-CONDITIONING_CPU_MIGRATION = (20, 24)
+GOVERNED_WINDOWS_LOGICAL_CPUS = {1, 20}
+CONDITIONING_CPU_MIGRATION = (20, 1)
 CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES = {
     "effective_cpu_affinity",
     "effective_cpuset",
@@ -184,8 +184,10 @@ CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES = {
     "execution_resource.process_default_cpu_set_ids",
     "execution_resource.processor_topology.core_index",
     "execution_resource.processor_topology.cpu_set_id",
+    "execution_resource.processor_topology.efficiency_class",
     "execution_resource.processor_topology.logical_processor_index",
     "execution_resource.processor_topology.physical_core_identity",
+    "execution_resource.processor_topology.scheduling_class",
     "execution_resource.processor_topology.thread_siblings",
     "execution_resource.selected_cpu_set_id",
     "execution_resource.selected_logical_processor",
@@ -202,8 +204,10 @@ CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES = {
     "host_attestation.reservation_evidence.process_default_cpu_set_ids",
     "host_attestation.reservation_evidence.selected_cpu_topology.core_index",
     "host_attestation.reservation_evidence.selected_cpu_topology.cpu_set_id",
+    "host_attestation.reservation_evidence.selected_cpu_topology.efficiency_class",
     "host_attestation.reservation_evidence.selected_cpu_topology.logical_processor_index",
     "host_attestation.reservation_evidence.selected_cpu_topology.physical_core_identity",
+    "host_attestation.reservation_evidence.selected_cpu_topology.scheduling_class",
     "host_attestation.reservation_evidence.selected_cpu_topology.thread_siblings",
     "host_attestation_fingerprint",
     "selected_logical_cpu",
@@ -4182,7 +4186,7 @@ def validate_conditioning_cpu_migration(
     *,
     artifact_source_changes: Mapping[str, Sequence[str]] | None = None,
 ) -> dict[str, Any]:
-    """Prove the reviewed sustained-conditioning move to an equivalent CPU."""
+    """Prove the reviewed sustained-conditioning move to the quiet performance core."""
 
     prior_cpu = cast(int, prior_manifest["measurement_policy"]["selected_logical_cpu"])
     candidate_cpu = cast(
@@ -4191,7 +4195,7 @@ def validate_conditioning_cpu_migration(
     if (prior_cpu, candidate_cpu) != CONDITIONING_CPU_MIGRATION:
         raise PerformanceResourceError(
             "conditioning-cpu-migration",
-            "reviewed conditioning migration must move logical CPU 20 to 24",
+            "reviewed conditioning migration must move logical CPU 20 to 1",
         )
 
     prior_projection = _rollover_contract_projection(prior_manifest)
@@ -4211,7 +4215,7 @@ def validate_conditioning_cpu_migration(
     if prior_projection != candidate_projection:
         raise PerformanceResourceError(
             "conditioning-cpu-contract-drift",
-            "only the reviewed equivalent logical CPU and derived capped budgets may change",
+            "only the reviewed performance-core CPU and derived capped budgets may change",
         )
 
     artifact_fingerprints_preserved = (
@@ -4297,21 +4301,25 @@ def validate_conditioning_cpu_migration(
     candidate_topology = cast(
         Mapping[str, object], candidate_environment["execution_resource"]
     )["processor_topology"]
-    topology_fields = (
+    stationary_topology_fields = (
         "processor_group",
         "last_level_cache_index",
         "numa_node_index",
-        "efficiency_class",
-        "scheduling_class",
     )
     if any(
-        prior_topology[field] != candidate_topology[field] for field in topology_fields
-    ) or len(prior_topology["thread_siblings"]) != len(
-        candidate_topology["thread_siblings"]
-    ):
+        prior_topology[field] != candidate_topology[field]
+        for field in stationary_topology_fields
+    ) or (
+        prior_topology["efficiency_class"],
+        prior_topology["scheduling_class"],
+        prior_topology["thread_siblings"],
+        candidate_topology["efficiency_class"],
+        candidate_topology["scheduling_class"],
+        candidate_topology["thread_siblings"],
+    ) != (0, 0, [20], 1, 1, [0, 1]):
         raise PerformanceResourceError(
             "conditioning-cpu-topology",
-            "selected CPUs must have equivalent governed topology",
+            "migration must use the reviewed quiet performance-core topology",
         )
 
     return {
@@ -4327,7 +4335,7 @@ def validate_conditioning_cpu_migration(
         "artifact_identity": artifact_identity,
         "contract_projection_preserved": True,
         "conditioning_thresholds_preserved": True,
-        "topology_equivalent": True,
+        "performance_core_topology_reviewed": True,
     }
 
 
@@ -6656,7 +6664,7 @@ def _migrate_conditioning_cpu_command(
     rationale: str,
     root: Path = ROOT,
 ) -> dict[str, Any]:
-    """Recalibrate v6 conditioning on the reviewed equivalent Windows CPU."""
+    """Recalibrate v6 conditioning on the reviewed quiet Windows performance core."""
 
     if not confirm_sustained_recovery:
         raise PerformanceResourceError(
@@ -7152,7 +7160,7 @@ def main(argv: list[str] | None = None) -> int:
             status = cast(str, result["status"])
         elif values and values[0] == "migrate-conditioning-cpu":
             parser = argparse.ArgumentParser(
-                description="Migrate sustained conditioning to an equivalent CPU"
+                description="Migrate sustained conditioning to a quiet performance core"
             )
             parser.add_argument("migrate-conditioning-cpu")
             parser.add_argument("--confirm-sustained-recovery", action="store_true")

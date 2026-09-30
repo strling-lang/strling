@@ -2524,7 +2524,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         prior_manifest = load_json(history / "manifest.json")
         prior_baseline = load_json(history / "baseline.json")
         candidate_manifest = copy.deepcopy(prior_manifest)
-        candidate_manifest["measurement_policy"]["selected_logical_cpu"] = 24
+        candidate_manifest["measurement_policy"]["selected_logical_cpu"] = 1
         candidate_manifest["manifest_fingerprint"] = document_fingerprint(
             candidate_manifest, "manifest_fingerprint"
         )
@@ -2539,23 +2539,25 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, "measurement-policy")
         candidate_baseline = copy.deepcopy(prior_baseline)
         environment = candidate_baseline["environment"]
-        environment["selected_logical_cpu"] = 24
-        environment["effective_cpu_affinity"] = [24]
+        environment["selected_logical_cpu"] = 1
+        environment["effective_cpu_affinity"] = [1]
         environment["effective_cpuset"] = (
-            "group-0:logical-24:cpu-set-280:core-24:efficiency-0"
+            "group-0:logical-1:cpu-set-257:core-0:efficiency-1"
         )
         execution = environment["execution_resource"]
-        execution["effective_cpu_affinity"] = [24]
-        execution["process_affinity_mask"] = "0x0000000001000000"
-        execution["process_default_cpu_set_ids"] = [280]
-        execution["selected_cpu_set_id"] = 280
-        execution["selected_logical_processor"] = 24
+        execution["effective_cpu_affinity"] = [1]
+        execution["process_affinity_mask"] = "0x0000000000000002"
+        execution["process_default_cpu_set_ids"] = [257]
+        execution["selected_cpu_set_id"] = 257
+        execution["selected_logical_processor"] = 1
         topology = execution["processor_topology"]
-        topology["core_index"] = 24
-        topology["cpu_set_id"] = 280
-        topology["logical_processor_index"] = 24
-        topology["physical_core_identity"] = "group-0/core-24/efficiency-0"
-        topology["thread_siblings"] = [24]
+        topology["core_index"] = 0
+        topology["cpu_set_id"] = 257
+        topology["efficiency_class"] = 1
+        topology["logical_processor_index"] = 1
+        topology["physical_core_identity"] = "group-0/core-0/efficiency-1"
+        topology["scheduling_class"] = 1
+        topology["thread_siblings"] = [0, 1]
 
         attestation = environment["host_attestation"]
         attestation["attestation_fingerprint"] = "a" * 64
@@ -2565,21 +2567,23 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         conditioning["policy_id"] = "native-windows-supported-controls-quiescence-v6"
         reservation = attestation["reservation"]
         reservation["evidence_sha256"] = "c" * 64
-        reservation["host_logical_processors"] = [24]
-        reservation["host_physical_core_identity"] = "group-0/core-24/efficiency-0"
-        reservation["reservation_id"] = "windows-reviewed-cpu-24"
+        reservation["host_logical_processors"] = [1]
+        reservation["host_physical_core_identity"] = "group-0/core-0/efficiency-1"
+        reservation["reservation_id"] = "windows-reviewed-cpu-1"
         reservation_evidence = attestation["reservation_evidence"]
-        reservation_evidence["process_affinity_mask"] = "0x0000000001000000"
-        reservation_evidence["process_default_cpu_set_ids"] = [280]
+        reservation_evidence["process_affinity_mask"] = "0x0000000000000002"
+        reservation_evidence["process_default_cpu_set_ids"] = [257]
         reservation_evidence["power"]["selected_processor_frequency"][
             "processor_number"
-        ] = 24
+        ] = 1
         evidence_topology = reservation_evidence["selected_cpu_topology"]
-        evidence_topology["core_index"] = 24
-        evidence_topology["cpu_set_id"] = 280
-        evidence_topology["logical_processor_index"] = 24
-        evidence_topology["physical_core_identity"] = "group-0/core-24/efficiency-0"
-        evidence_topology["thread_siblings"] = [24]
+        evidence_topology["core_index"] = 0
+        evidence_topology["cpu_set_id"] = 257
+        evidence_topology["efficiency_class"] = 1
+        evidence_topology["logical_processor_index"] = 1
+        evidence_topology["physical_core_identity"] = "group-0/core-0/efficiency-1"
+        evidence_topology["scheduling_class"] = 1
+        evidence_topology["thread_siblings"] = [0, 1]
         environment["host_attestation_fingerprint"] = "a" * 64
         candidate_baseline["environment_fingerprint"] = environment_fingerprint(
             environment
@@ -2593,7 +2597,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         )
         self.assertEqual(report["status"], "passed")
         self.assertEqual(report["prior_selected_logical_cpu"], 20)
-        self.assertEqual(report["selected_logical_cpu"], 24)
+        self.assertEqual(report["selected_logical_cpu"], 1)
         self.assertEqual(
             {
                 row["coordinate"]
@@ -2602,7 +2606,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES,
         )
         self.assertTrue(report["conditioning_thresholds_preserved"])
-        self.assertTrue(report["topology_equivalent"])
+        self.assertTrue(report["performance_core_topology_reviewed"])
 
         threshold_manifest = copy.deepcopy(candidate_manifest)
         threshold_manifest["measurement_policy"]["relative_budget_formula"] = (
@@ -2614,7 +2618,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             prior_baseline,
             threshold_manifest,
             threshold_baseline,
-            selected_logical_cpu_migration=(20, 24),
+            selected_logical_cpu_migration=(20, 1),
         )
         self.assertEqual(len(comparisons), 54)
         self.assertTrue(all(row["status"] == "passed" for row in comparisons))

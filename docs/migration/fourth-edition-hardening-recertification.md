@@ -1473,7 +1473,18 @@ peak-working-set counter only after both compiles. A deterministic bundle
 manifest binds both runner executables as the single source-bound runner
 artifact. Eight governed direct observations measured `7032832`–`7073792
 bytes`, all below the unchanged `7353139` relative and `7947879` absolute
-ceilings. Repeated production-conditioned proof is required before calibration.
+ceilings. Five subsequent production-conditioned observations passed at
+`7036928`, `7049216`, `7032832`, `7036928`, and `7036928 bytes`.
+
+The same clean runner bundle then passed five conditioned
+`latency:end-to-end/fixture:simply-tiny` windows at `32076`, `32404`, `32089`,
+`32847`, and `31643 ns` against the unchanged `57618 ns` relative ceiling. It
+also passed five exact six-operation cumulative-trigger windows followed by
+`latency:semantic-analysis/fixture:simply-common` at `41504`, `41523`, `41594`,
+`41529`, and `41533 ns` against the unchanged `89146 ns` relative ceiling.
+All three predictors are therefore repeatedly green with meaningful margin and
+zero authenticated samples; one all-or-nothing 54-coordinate calibration may
+now begin.
 
 The revised governed migration therefore permits exactly CPU 20 to CPU 1 and
 v5/2,000-millisecond to v6/10,000-millisecond identity changes. It enumerates

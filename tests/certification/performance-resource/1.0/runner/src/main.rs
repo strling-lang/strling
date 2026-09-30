@@ -34,9 +34,10 @@ use strling_kernel::validation::Validate;
 type RunResult<T> = Result<T, String>;
 type PreparedOperation = Box<dyn Fn() -> RunResult<usize>>;
 
-const RUNNER_VERSION: &str = "1.8.0";
+const RUNNER_VERSION: &str = "1.9.0";
 const MAXIMUM_DESCHEDULING_NANOSECONDS: u64 = 50_000_000;
 const MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER: usize = 2;
+const MEMORY_WORKER_BINARY: &str = "strling-performance-memory-worker.exe";
 
 #[derive(Debug)]
 struct Arguments {
@@ -132,6 +133,14 @@ fn run() -> RunResult<()> {
         &mut observed_processor_groups,
         &mut observed_logical_processors,
     )?;
+    #[cfg(target_os = "windows")]
+    if arguments.operation == "memory:kernel-peak-rss" {
+        return run_inherited_memory_parent(
+            &arguments,
+            &execution_resource,
+            effective_cpu_affinity,
+        );
+    }
     let fixture = materialize_fixture(&arguments.fixture, &arguments.operation)?;
     let operation = prepare_operation(
         &arguments.operation,
@@ -171,16 +180,21 @@ fn run() -> RunResult<()> {
             &mut observed_logical_processors,
         )?;
     }
-    let mut samples = Vec::with_capacity(arguments.samples);
-    let mut batch_elapsed_samples = Vec::with_capacity(arguments.samples);
-    let mut process_cpu_samples = Vec::with_capacity(arguments.samples);
-    let mut process_cpu_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
-    let mut process_cpu_utilization_basis_points = Vec::with_capacity(arguments.samples);
-    let mut control_samples = Vec::with_capacity(arguments.samples);
-    let mut control_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
-    let mut control_process_cpu_samples = Vec::with_capacity(arguments.samples);
-    let mut control_process_cpu_batch_elapsed_samples = Vec::with_capacity(arguments.samples);
-    let mut control_process_cpu_utilization_basis_points = Vec::with_capacity(arguments.samples);
+    let evidence_capacity = if captures_timing_evidence(&arguments.operation) {
+        arguments.samples
+    } else {
+        0
+    };
+    let mut samples = Vec::with_capacity(evidence_capacity);
+    let mut batch_elapsed_samples = Vec::with_capacity(evidence_capacity);
+    let mut process_cpu_samples = Vec::with_capacity(evidence_capacity);
+    let mut process_cpu_batch_elapsed_samples = Vec::with_capacity(evidence_capacity);
+    let mut process_cpu_utilization_basis_points = Vec::with_capacity(evidence_capacity);
+    let mut control_samples = Vec::with_capacity(evidence_capacity);
+    let mut control_batch_elapsed_samples = Vec::with_capacity(evidence_capacity);
+    let mut control_process_cpu_samples = Vec::with_capacity(evidence_capacity);
+    let mut control_process_cpu_batch_elapsed_samples = Vec::with_capacity(evidence_capacity);
+    let mut control_process_cpu_utilization_basis_points = Vec::with_capacity(evidence_capacity);
     let mut rejected_batch_elapsed_samples = Vec::new();
     let mut rejected_process_cpu_batch_elapsed_samples = Vec::new();
     let mut rejected_process_cpu_utilization_basis_points = Vec::new();
@@ -256,7 +270,8 @@ fn run() -> RunResult<()> {
             control_process_cpu_utilization_basis_points.push(control_sample.4);
         }
     } else {
-        while samples.len() < arguments.samples {
+        let mut accepted_samples = 0usize;
+        while accepted_samples < arguments.samples {
             if sample_attempts >= maximum_sample_attempts {
                 return Err(format!(
                     "measurement interference prevented {} authentic samples within {maximum_sample_attempts} attempts",
@@ -271,11 +286,14 @@ fn run() -> RunResult<()> {
                 rejected_process_cpu_utilization_basis_points.push(sample.4);
                 continue;
             }
-            samples.push(sample.0);
-            batch_elapsed_samples.push(sample.1);
-            process_cpu_samples.push(sample.2);
-            process_cpu_batch_elapsed_samples.push(sample.3);
-            process_cpu_utilization_basis_points.push(sample.4);
+            accepted_samples += 1;
+            if captures_timing_evidence(&arguments.operation) {
+                samples.push(sample.0);
+                batch_elapsed_samples.push(sample.1);
+                process_cpu_samples.push(sample.2);
+                process_cpu_batch_elapsed_samples.push(sample.3);
+                process_cpu_utilization_basis_points.push(sample.4);
+            }
         }
     }
     verify_execution_resource(&execution_resource, arguments.expected_logical_cpu)?;
@@ -329,8 +347,146 @@ fn run() -> RunResult<()> {
     Ok(())
 }
 
+#[cfg(target_os = "windows")]
+fn run_inherited_memory_parent(
+    arguments: &Arguments,
+    execution_resource: &ExecutionResource,
+    effective_cpu_affinity: Vec<usize>,
+) -> RunResult<()> {
+    let expected = arguments
+        .expected_logical_cpu
+        .ok_or_else(|| "memory worker requires --expected-logical-cpu".to_owned())?;
+    let cpu_set_id = execution_resource
+        .selected_cpu_set_id
+        .ok_or_else(|| "memory worker requires a selected CPU set".to_owned())?;
+    if arguments.batch_iterations.is_some()
+        || arguments.minimum_sample_nanoseconds.is_some()
+        || arguments.maximum_batch_iterations != 1
+    {
+        return Err("memory worker requires the governed single-iteration batch".to_owned());
+    }
+    verify_execution_resource(execution_resource, Some(expected))?;
+    let fixture = materialize_fixture(&arguments.fixture, &arguments.operation)?;
+    let request = serde_json::to_vec(&fixture.request).map_err(|error| error.to_string())?;
+    let worker_arguments = vec![
+        "--warmups".to_owned(),
+        arguments.warmups.to_string(),
+        "--samples".to_owned(),
+        arguments.samples.to_string(),
+        "--expected-logical-cpu".to_owned(),
+        expected.to_string(),
+        "--expected-cpu-set-id".to_owned(),
+        cpu_set_id.to_string(),
+    ];
+    let worker = env::current_exe()
+        .map_err(|error| error.to_string())?
+        .parent()
+        .ok_or_else(|| "memory worker directory is absent".to_owned())?
+        .join(MEMORY_WORKER_BINARY);
+    let mut child = Command::new(&worker)
+        .args(&worker_arguments)
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|error| error.to_string())?;
+    child
+        .stdin
+        .take()
+        .ok_or_else(|| "memory worker stdin is unavailable".to_owned())?
+        .write_all(&request)
+        .map_err(|error| error.to_string())?;
+    let output = child
+        .wait_with_output()
+        .map_err(|error| error.to_string())?;
+    if !output.status.success() {
+        return Err(format!(
+            "inherited memory worker failed with {}: {}",
+            output.status,
+            String::from_utf8_lossy(&output.stderr)
+        ));
+    }
+    let worker: Value =
+        serde_json::from_slice(&output.stdout).map_err(|error| error.to_string())?;
+    let peak_working_set_bytes = worker
+        .get("peak_working_set_bytes")
+        .and_then(Value::as_u64)
+        .ok_or_else(|| "memory worker peak working set is absent".to_owned())?;
+    let sample_attempts = worker
+        .get("sample_attempts")
+        .and_then(Value::as_u64)
+        .ok_or_else(|| "memory worker sample attempts are absent".to_owned())?;
+    let maximum_sample_attempts = arguments
+        .samples
+        .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
+        .ok_or_else(|| "sample attempt limit overflow".to_owned())?;
+    if worker.get("worker_contract") != Some(&json!("isolated-peak-rss-v1"))
+        || worker.get("effective_cpu_affinity") != Some(&json!([expected]))
+        || worker.get("observed_processor_groups")
+            != Some(&json!([execution_resource.processor_group]))
+        || worker.get("observed_logical_processors") != Some(&json!([expected]))
+        || sample_attempts < arguments.samples as u64
+        || sample_attempts > maximum_sample_attempts as u64
+    {
+        return Err("inherited memory worker evidence is not governed".to_owned());
+    }
+    verify_execution_resource(execution_resource, Some(expected))?;
+    println!(
+        "{}",
+        serde_json::to_string(&json!({
+            "runner_version": RUNNER_VERSION,
+            "operation_id": arguments.operation,
+            "fixture_id": arguments.fixture,
+            "unit": "nanoseconds",
+            "warmup_iterations": arguments.warmups,
+            "sample_iterations": arguments.samples,
+            "batch_iterations": 1,
+            "selected_logical_cpu": arguments.expected_logical_cpu,
+            "effective_cpu_affinity": effective_cpu_affinity,
+            "platform": execution_resource.platform,
+            "placement_mechanism": execution_resource.placement_mechanism,
+            "effective_cpuset": execution_resource.effective_cpuset,
+            "cgroup_path": execution_resource.cgroup_path,
+            "cpu_quota": execution_resource.cpu_quota,
+            "clocksource": execution_resource.clocksource,
+            "processor_group": execution_resource.processor_group,
+            "selected_cpu_set_id": execution_resource.selected_cpu_set_id,
+            "cpu_set_allocation_state": execution_resource.cpu_set_allocation_state,
+            "timer_source": execution_resource.timer_source,
+            "process_power_policy": execution_resource.process_power_policy,
+            "observed_processor_groups": worker["observed_processor_groups"],
+            "observed_logical_processors": worker["observed_logical_processors"],
+            "peak_working_set_bytes": peak_working_set_bytes,
+            "batch_elapsed_samples": [],
+            "samples": [],
+            "process_cpu_batch_elapsed_samples": [],
+            "process_cpu_samples": [],
+            "process_cpu_utilization_basis_points": [],
+            "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
+            "maximum_sample_attempts": maximum_sample_attempts,
+            "sample_attempts": sample_attempts,
+            "rejected_batch_elapsed_samples": [],
+            "rejected_process_cpu_batch_elapsed_samples": [],
+            "rejected_process_cpu_utilization_basis_points": [],
+            "control_batch_elapsed_samples": [],
+            "control_samples": [],
+            "control_process_cpu_batch_elapsed_samples": [],
+            "control_process_cpu_samples": [],
+            "control_process_cpu_utilization_basis_points": [],
+            "checksum": worker["checksum"],
+            "memory_worker_contract": worker["worker_contract"],
+        }))
+        .map_err(|error| error.to_string())?
+    );
+    Ok(())
+}
+
 fn sample_is_authentic(wall_nanoseconds: u64, process_cpu_nanoseconds: u64) -> bool {
     wall_nanoseconds.saturating_sub(process_cpu_nanoseconds) <= MAXIMUM_DESCHEDULING_NANOSECONDS
+}
+
+fn captures_timing_evidence(operation: &str) -> bool {
+    operation != "memory:kernel-peak-rss"
 }
 
 fn parse_arguments() -> RunResult<Arguments> {
@@ -800,7 +956,7 @@ mod windows_placement {
         Ok(())
     }
 
-    fn enforce_high_qos() -> RunResult<serde_json::Value> {
+    fn set_high_qos() -> RunResult<()> {
         let state = ProcessPowerThrottlingState {
             version: PROCESS_POWER_THROTTLING_CURRENT_VERSION,
             control_mask: PROCESS_POWER_THROTTLING_EXECUTION_SPEED,
@@ -817,6 +973,11 @@ mod windows_placement {
         {
             return Err(last_error("SetProcessInformation(ProcessPowerThrottling)"));
         }
+        Ok(())
+    }
+
+    fn enforce_high_qos() -> RunResult<serde_json::Value> {
+        set_high_qos()?;
         Ok(json!({
             "api": "SetProcessInformation(ProcessPowerThrottling)",
             "version": PROCESS_POWER_THROTTLING_CURRENT_VERSION,
@@ -1628,8 +1789,8 @@ fn prepare_operation(
 #[cfg(test)]
 mod affinity_tests {
     use super::{
-        format_cpu_set, parse_cpu_set, retains_serialized_fixture_views, sample_is_authentic,
-        select_batch_iterations_with, MAXIMUM_DESCHEDULING_NANOSECONDS,
+        captures_timing_evidence, format_cpu_set, parse_cpu_set, retains_serialized_fixture_views,
+        sample_is_authentic, select_batch_iterations_with, MAXIMUM_DESCHEDULING_NANOSECONDS,
     };
 
     #[test]
@@ -1681,5 +1842,7 @@ mod affinity_tests {
         assert!(retains_serialized_fixture_views(
             "latency:interop-roundtrip"
         ));
+        assert!(!captures_timing_evidence("memory:kernel-peak-rss"));
+        assert!(captures_timing_evidence("latency:end-to-end"));
     }
 }

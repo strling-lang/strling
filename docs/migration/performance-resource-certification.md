@@ -375,9 +375,16 @@ processor current/maximum/limit MHz from `CallNtPowerInformation`,
 the selected CPU-set allocation flags and allocation tag, the successfully
 enforced process HighQoS execution-speed policy,
 QueryPerformanceCounter frequency and resolution, Rust/Cargo/Python identities
-and hashes, release profile/target, and the three release artifact hashes.
-Windows peak RSS comes from the native process peak-working-set counter rather
-than a compatibility utility.
+and hashes, release profile/target, and the three release artifact hashes. The
+runner identity is a deterministic bundle manifest that binds the general
+measurement runner and its kernel-only peak-RSS worker; kernel and interop keep
+their direct binary fingerprints. Windows peak RSS comes from the isolated
+worker's native process peak-working-set counter rather than a compatibility
+utility. The parent first enforces and verifies the complete Windows resource
+contract. The worker then reapplies the exact attested affinity, CPU-set ID,
+HighQoS policy, and unlimited Job quota, observes the selected processor, and
+executes the unchanged canonical warmup and measured compile. This prevents
+unrelated general-runner code pages from being counted as kernel peak RSS.
 
 Before qualification and every calibration repetition, one two-second native
 processor-counter observation rejects selected-CPU busy time above 500 basis

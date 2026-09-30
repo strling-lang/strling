@@ -11,6 +11,9 @@ RUNNER_MANIFEST = (
     ROOT / "tests/certification/performance-resource/1.0/runner/Cargo.toml"
 )
 RUNNER_SOURCE = ROOT / "tests/certification/performance-resource/1.0/runner/src/main.rs"
+MEMORY_WORKER_SOURCE = (
+    ROOT / "tests/certification/performance-resource/1.0/runner/src/memory_worker.rs"
+)
 BARE_METAL_ENVIRONMENT = (
     ROOT
     / "tests/certification/performance-resource/1.0/environment/bare_metal_linux.py"
@@ -54,7 +57,9 @@ class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
     def test_runner_is_publish_false_and_resists_optimization(self) -> None:
         manifest = RUNNER_MANIFEST.read_text(encoding="utf-8")
         source = RUNNER_SOURCE.read_text(encoding="utf-8")
+        memory_worker = MEMORY_WORKER_SOURCE.read_text(encoding="utf-8")
         self.assertIn("publish = false", manifest)
+        self.assertIn("strling-performance-memory-worker", manifest)
         self.assertIn("std::hint::black_box", source)
         self.assertIn('"memory:kernel-peak-rss"', source)
         self.assertIn('"unit": "nanoseconds"', source)
@@ -73,6 +78,13 @@ class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
         self.assertIn("K32GetProcessMemoryInfo", source)
         self.assertIn("let request: strling::CompileRequest", source)
         self.assertIn("strling::compile(&request, None)", source)
+        self.assertIn('"isolated-peak-rss-v1"', memory_worker)
+        self.assertIn("strling_kernel::compile(request, None)", memory_worker)
+        self.assertIn("SetProcessAffinityMask", memory_worker)
+        self.assertIn("SetProcessDefaultCpuSets", memory_worker)
+        self.assertIn("SetProcessInformation", memory_worker)
+        self.assertIn("QueryInformationJobObject", memory_worker)
+        self.assertIn("K32GetProcessMemoryInfo", memory_worker)
 
     def test_bare_metal_qualification_is_offline_and_fail_closed(self) -> None:
         source = BARE_METAL_ENVIRONMENT.read_text(encoding="utf-8")

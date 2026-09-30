@@ -1841,6 +1841,43 @@ def _release_artifacts(root: Path = ROOT) -> dict[str, object]:
     return {"runner": runner, "kernel": kernel, "interop": interop}
 
 
+def _memory_worker_artifact(root: Path = ROOT) -> Path:
+    suffix = ".exe" if os.name == "nt" else ""
+    return (
+        root
+        / "tests/certification/performance-resource/1.0/runner/target/release"
+        / f"strling-performance-memory-worker{suffix}"
+    )
+
+
+def _write_runner_bundle_artifact(
+    artifacts: Mapping[str, object], *, root: Path = ROOT
+) -> Path:
+    runner = cast(Path, artifacts["runner"])
+    memory_worker = _memory_worker_artifact(root)
+    bundle = {
+        "schema_version": "1.0.0",
+        "bundle_kind": "strling-performance-runner-bundle",
+        "artifacts": [
+            {
+                "role": "measurement-runner",
+                "path": runner.relative_to(root).as_posix(),
+                "sha256": file_fingerprint(runner),
+                "bytes": runner.stat().st_size,
+            },
+            {
+                "role": "peak-rss-worker",
+                "path": memory_worker.relative_to(root).as_posix(),
+                "sha256": file_fingerprint(memory_worker),
+                "bytes": memory_worker.stat().st_size,
+            },
+        ],
+    }
+    path = runner.parent / "strling-performance-runner-bundle.json"
+    _write_json(path, bundle, root=root)
+    return path
+
+
 @contextmanager
 def _canonical_build_root(root: Path) -> Iterator[Path]:
     if platform.system().lower() != "windows":
@@ -1943,15 +1980,27 @@ def _build_release_artifacts(root: Path = ROOT) -> tuple[str, dict[str, object]]
             "reason": str(error),
         }
     artifacts = _release_artifacts(root)
+    memory_worker = _memory_worker_artifact(root)
     missing = [
         str(path) for path in artifacts.values() if not cast(Path, path).is_file()
     ]
+    if not memory_worker.is_file():
+        missing.append(str(memory_worker))
     if not missing and aggregate_status(statuses) == "passed":
+        runner_bundle = _write_runner_bundle_artifact(artifacts, root=root)
         artifact_details = {
             name: {
-                "path": str(cast(Path, path).relative_to(root)).replace("\\", "/"),
-                "sha256": file_fingerprint(cast(Path, path)),
-                "bytes": cast(Path, path).stat().st_size,
+                "path": str(
+                    (
+                        runner_bundle if name == "runner" else cast(Path, path)
+                    ).relative_to(root)
+                ).replace("\\", "/"),
+                "sha256": file_fingerprint(
+                    runner_bundle if name == "runner" else cast(Path, path)
+                ),
+                "bytes": (runner_bundle if name == "runner" else cast(Path, path))
+                .stat()
+                .st_size,
             }
             for name, path in artifacts.items()
         }

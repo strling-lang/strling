@@ -1458,11 +1458,22 @@ plateau at `7372800 bytes` (four observations) with one `7446528-byte`
 observation. All passed the absolute ceiling but missed the prior relative
 ceiling by at least 19,661 bytes. The release runner, kernel, and interop DLLs
 were byte-identical to the archived authority, proving this was not product
-growth. Inspection instead found that the peak-RSS runner retained serialized
-JSON and interop request buffers that its operation never reads. The runner now
-omits only those unused views for `memory:kernel-peak-rss`; its compile request,
-workload, warmups, samples, batching, isolation, and both prior ceilings remain
-unchanged. Repeated atomic proof is required before another calibration.
+growth. Removing serialized buffers and generic timing-evidence allocations did
+not lower the plateau, falsifying allocation retention as the cause. Direct
+instrumentation instead proved that the coordinate included pages from the
+9 MiB multi-operation certification runner and its Windows topology/evidence
+machinery before it measured the kernel workload.
+
+The corrected Windows path keeps that runner as the control owner but moves the
+unchanged canonical request, one warmup compile, and one measured compile into
+a 3.15 MiB kernel-only worker. The worker reapplies the parent's attested
+affinity, CPU-set ID, HighQoS policy, and unlimited Job quota, authenticates the
+same descheduling rule, observes actual execution on CPU 1, and reads its native
+peak-working-set counter only after both compiles. A deterministic bundle
+manifest binds both runner executables as the single source-bound runner
+artifact. Eight governed direct observations measured `7032832`–`7073792
+bytes`, all below the unchanged `7353139` relative and `7947879` absolute
+ceilings. Repeated production-conditioned proof is required before calibration.
 
 The revised governed migration therefore permits exactly CPU 20 to CPU 1 and
 v5/2,000-millisecond to v6/10,000-millisecond identity changes. It enumerates

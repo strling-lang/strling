@@ -58,6 +58,7 @@ from tooling.performance_resource_certification import (
     _windows_external_workloads,
     _warmup_migration_manifest,
     _write_json,
+    _write_runner_bundle_artifact,
     calibrate_baseline,
     certification_measurement_status,
     certify,
@@ -256,6 +257,34 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(result["operation_count"], 22)
         self.assertEqual(result["fixture_count"], 12)
         self.assertEqual(result["resource_declaration_count"], 56)
+
+    def test_runner_bundle_binds_measurement_and_memory_binaries(self) -> None:
+        temporary_parent = ROOT / "target/codex-tools"
+        temporary_parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(
+            prefix="performance-runner-bundle-", dir=temporary_parent
+        ) as temporary:
+            root = Path(temporary)
+            release = (
+                root
+                / "tests/certification/performance-resource/1.0/runner/target/release"
+            )
+            release.mkdir(parents=True)
+            runner = release / "strling-performance-runner.exe"
+            worker = release / "strling-performance-memory-worker.exe"
+            runner.write_bytes(b"measurement-runner")
+            worker.write_bytes(b"peak-rss-worker")
+            bundle_path = _write_runner_bundle_artifact({"runner": runner}, root=root)
+            bundle = load_json(bundle_path)
+            self.assertEqual(bundle["bundle_kind"], "strling-performance-runner-bundle")
+            self.assertEqual(
+                [row["role"] for row in bundle["artifacts"]],
+                ["measurement-runner", "peak-rss-worker"],
+            )
+            self.assertEqual(
+                [row["bytes"] for row in bundle["artifacts"]],
+                [len(b"measurement-runner"), len(b"peak-rss-worker")],
+            )
 
     def test_stationary_warmup_migration_preserves_every_hard_ceiling(self) -> None:
         prior_authority = (

@@ -1426,3 +1426,30 @@ byte-for-byte and produced planned manifest
 No measurement or authenticated sample was consumed. The next step is one
 clean-source 54-coordinate recalibration under the strengthened v6 conditioning
 identity and every immediately prior hard ceiling.
+
+The first native v6 qualification then correctly refused CPU 20: its ten-second
+window observed `4297` selected-busy basis points against the unchanged `500`
+basis-point limit. Independent all-core windows continued to show CPU 20
+occupied while the machine as a whole was admissibly quiet. This is not treated
+as host noise. A fixed-core certification design that cannot select an
+equivalent admissible core would make the readiness predictor unusable.
+
+Topology inspection identified logical CPUs 16–31 as the same efficiency-0,
+single-thread processor class. CPU 24 preserves CPU group, last-level cache,
+NUMA node, efficiency class, scheduling class, power controls, timer, toolchains,
+and Windows build. It passed five v6 conditioning windows during the bounded
+screen and then passed the exact six-operation cumulative trigger followed by
+`latency:semantic-analysis/fixture:simply-common` at `78800`, `78984`, `77553`,
+`83590`, and `79938 ns`, all below the unchanged `89146 ns` relative ceiling.
+
+The governed migration therefore permits exactly CPU 20 to CPU 24 and
+v5/2,000-millisecond to v6/10,000-millisecond identity changes. It enumerates
+the 30 derived placement, reservation, attestation, and conditioner coordinates;
+requires every other environment coordinate and all conditioner thresholds to
+remain identical; requires the archived authority and a clean planned reset;
+rebuilds source-bound release artifacts; recalibrates all 54 coordinates; and
+requires each non-CLI metric and paired CLI ratio to pass every prior relative
+and absolute ceiling before writing active authority. Calibration failure writes
+nothing. This resolves the readiness blocker without weakening any threshold,
+ceiling, ratio, warmup, sample count, workload, isolation, or authenticated-
+sample rule.

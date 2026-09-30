@@ -174,6 +174,40 @@ CLI_LAUNCH_RELATIVE_SIGNAL_KIND = (
     "order-balanced-geometric-mean-paired-request-control-ratios"
 )
 PER_COORDINATE_BASELINE_CONDITIONING = "authenticated-identical-before-each-coordinate"
+GOVERNED_WINDOWS_LOGICAL_CPUS = {20, 24}
+CONDITIONING_CPU_MIGRATION = (20, 24)
+CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES = {
+    "effective_cpu_affinity",
+    "effective_cpuset",
+    "execution_resource.effective_cpu_affinity",
+    "execution_resource.process_affinity_mask",
+    "execution_resource.process_default_cpu_set_ids",
+    "execution_resource.processor_topology.core_index",
+    "execution_resource.processor_topology.cpu_set_id",
+    "execution_resource.processor_topology.logical_processor_index",
+    "execution_resource.processor_topology.physical_core_identity",
+    "execution_resource.processor_topology.thread_siblings",
+    "execution_resource.selected_cpu_set_id",
+    "execution_resource.selected_logical_processor",
+    "host_attestation.attestation_fingerprint",
+    "host_attestation.conditioning.executable_sha256",
+    "host_attestation.conditioning.observation_milliseconds",
+    "host_attestation.conditioning.policy_id",
+    "host_attestation.reservation.evidence_sha256",
+    "host_attestation.reservation.host_logical_processors",
+    "host_attestation.reservation.host_physical_core_identity",
+    "host_attestation.reservation.reservation_id",
+    "host_attestation.reservation_evidence.power.selected_processor_frequency.processor_number",
+    "host_attestation.reservation_evidence.process_affinity_mask",
+    "host_attestation.reservation_evidence.process_default_cpu_set_ids",
+    "host_attestation.reservation_evidence.selected_cpu_topology.core_index",
+    "host_attestation.reservation_evidence.selected_cpu_topology.cpu_set_id",
+    "host_attestation.reservation_evidence.selected_cpu_topology.logical_processor_index",
+    "host_attestation.reservation_evidence.selected_cpu_topology.physical_core_identity",
+    "host_attestation.reservation_evidence.selected_cpu_topology.thread_siblings",
+    "host_attestation_fingerprint",
+    "selected_logical_cpu",
+}
 CLI_LAUNCH_CONTROL_FIELDS = {
     "control_repetitions",
     "control_batch_duration_repetitions",
@@ -790,7 +824,7 @@ def validate_manifest(
         or policy["order_seed"] != 1804
         or not policy["single_worker"]
         or policy["cpu_affinity_policy"] != "single-fixed-logical-cpu"
-        or policy["selected_logical_cpu"] != 20
+        or policy["selected_logical_cpu"] not in GOVERNED_WINDOWS_LOGICAL_CPUS
         or policy["host_reservation_policy"]
         != "authenticated-native-placement-or-host-pinned-reservation"
         or policy["execution_resource_policy"] != "platform-native-single-cpu-effective"
@@ -4140,6 +4174,163 @@ def validate_environment_rollover(
     }
 
 
+def validate_conditioning_cpu_migration(
+    prior_manifest: Mapping[str, object],
+    prior_baseline: Mapping[str, object],
+    candidate_manifest: Mapping[str, object],
+    candidate_baseline: Mapping[str, object],
+    *,
+    artifact_source_changes: Mapping[str, Sequence[str]] | None = None,
+) -> dict[str, Any]:
+    """Prove the reviewed sustained-conditioning move to an equivalent CPU."""
+
+    prior_cpu = cast(int, prior_manifest["measurement_policy"]["selected_logical_cpu"])
+    candidate_cpu = cast(
+        int, candidate_manifest["measurement_policy"]["selected_logical_cpu"]
+    )
+    if (prior_cpu, candidate_cpu) != CONDITIONING_CPU_MIGRATION:
+        raise PerformanceResourceError(
+            "conditioning-cpu-migration",
+            "reviewed conditioning migration must move logical CPU 20 to 24",
+        )
+
+    prior_projection = _rollover_contract_projection(prior_manifest)
+    candidate_projection = _rollover_contract_projection(candidate_manifest)
+    prior_projection["measurement_policy"]["selected_logical_cpu"] = (
+        "reviewed-equivalent-logical-cpu"
+    )
+    candidate_projection["measurement_policy"]["selected_logical_cpu"] = (
+        "reviewed-equivalent-logical-cpu"
+    )
+    prior_projection["measurement_policy"]["relative_budget_formula"] = (
+        "reviewed-prior-ceiling-cap"
+    )
+    candidate_projection["measurement_policy"]["relative_budget_formula"] = (
+        "reviewed-prior-ceiling-cap"
+    )
+    if prior_projection != candidate_projection:
+        raise PerformanceResourceError(
+            "conditioning-cpu-contract-drift",
+            "only the reviewed equivalent logical CPU and derived capped budgets may change",
+        )
+
+    artifact_fingerprints_preserved = (
+        prior_baseline["artifact_fingerprints"]
+        == candidate_baseline["artifact_fingerprints"]
+    )
+    artifact_identity_accepted, artifact_identity = _artifact_identity_check(
+        cast(Mapping[str, object], prior_baseline["artifact_fingerprints"]),
+        cast(Mapping[str, object], candidate_baseline["artifact_fingerprints"]),
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=cast(str, candidate_baseline["source_commit"]),
+        source_changes=artifact_source_changes,
+    )
+    if not artifact_identity_accepted:
+        raise PerformanceResourceError(
+            "conditioning-cpu-product-identity",
+            "release artifact identities changed without candidate-source binding",
+        )
+
+    prior_environment = cast(Mapping[str, object], prior_baseline["environment"])
+    candidate_environment = cast(
+        Mapping[str, object], candidate_baseline["environment"]
+    )
+    if (
+        prior_environment.get("os") != "windows"
+        or candidate_environment.get("os") != "windows"
+        or prior_environment.get("os_version")
+        != candidate_environment.get("os_version")
+    ):
+        raise PerformanceResourceError(
+            "conditioning-cpu-platform",
+            "conditioning CPU migration requires the same governed Windows build",
+        )
+
+    mismatches = environment_mismatches(prior_environment, candidate_environment)
+    mismatch_coordinates = {cast(str, row["coordinate"]) for row in mismatches}
+    if mismatch_coordinates != CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES:
+        raise PerformanceResourceError(
+            "conditioning-cpu-environment-drift",
+            "environment delta is not the exact reviewed CPU/conditioner migration: "
+            + json.dumps(mismatches, sort_keys=True),
+        )
+
+    prior_attestation = cast(
+        Mapping[str, object], prior_environment["host_attestation"]
+    )
+    candidate_attestation = cast(
+        Mapping[str, object], candidate_environment["host_attestation"]
+    )
+    prior_conditioning = cast(Mapping[str, object], prior_attestation["conditioning"])
+    candidate_conditioning = cast(
+        Mapping[str, object], candidate_attestation["conditioning"]
+    )
+    if (
+        prior_conditioning.get("policy_id")
+        != "native-windows-supported-controls-quiescence-v5"
+        or prior_conditioning.get("observation_milliseconds") != 2_000
+        or candidate_conditioning.get("policy_id")
+        != "native-windows-supported-controls-quiescence-v6"
+        or candidate_conditioning.get("observation_milliseconds") != 10_000
+    ):
+        raise PerformanceResourceError(
+            "conditioning-cpu-policy",
+            "migration must strengthen the reviewed v5/2s conditioner to v6/10s",
+        )
+    threshold_fields = (
+        "maximum_selected_busy_basis_points",
+        "maximum_selected_interrupt_basis_points",
+        "maximum_system_busy_basis_points",
+    )
+    if any(
+        prior_conditioning.get(field) != candidate_conditioning.get(field)
+        for field in threshold_fields
+    ):
+        raise PerformanceResourceError(
+            "conditioning-cpu-threshold-drift",
+            "conditioning thresholds must remain unchanged",
+        )
+
+    prior_topology = cast(
+        Mapping[str, object], prior_environment["execution_resource"]
+    )["processor_topology"]
+    candidate_topology = cast(
+        Mapping[str, object], candidate_environment["execution_resource"]
+    )["processor_topology"]
+    topology_fields = (
+        "processor_group",
+        "last_level_cache_index",
+        "numa_node_index",
+        "efficiency_class",
+        "scheduling_class",
+    )
+    if any(
+        prior_topology[field] != candidate_topology[field] for field in topology_fields
+    ) or len(prior_topology["thread_siblings"]) != len(
+        candidate_topology["thread_siblings"]
+    ):
+        raise PerformanceResourceError(
+            "conditioning-cpu-topology",
+            "selected CPUs must have equivalent governed topology",
+        )
+
+    return {
+        "status": "passed",
+        "prior_selected_logical_cpu": prior_cpu,
+        "selected_logical_cpu": candidate_cpu,
+        "prior_environment_fingerprint": prior_baseline["environment_fingerprint"],
+        "candidate_environment_fingerprint": candidate_baseline[
+            "environment_fingerprint"
+        ],
+        "environment_mismatches": mismatches,
+        "artifact_fingerprints_preserved": artifact_fingerprints_preserved,
+        "artifact_identity": artifact_identity,
+        "contract_projection_preserved": True,
+        "conditioning_thresholds_preserved": True,
+        "topology_equivalent": True,
+    }
+
+
 def validate_cli_launch_control_environment_rollover(
     prior_manifest: Mapping[str, object],
     prior_baseline: Mapping[str, object],
@@ -6105,6 +6296,8 @@ def _preserve_warmup_migration_thresholds(
     prior_baseline: Mapping[str, object],
     candidate_manifest: dict[str, Any],
     candidate_baseline: dict[str, Any],
+    *,
+    selected_logical_cpu_migration: tuple[int, int] | None = None,
 ) -> list[dict[str, object]]:
     """Require the recalibrated measurements to pass every prior hard ceiling."""
 
@@ -6133,6 +6326,23 @@ def _preserve_warmup_migration_thresholds(
     candidate_projection["measurement_policy"]["relative_budget_formula"] = (
         "reviewed-prior-ceiling-cap"
     )
+    if selected_logical_cpu_migration is not None:
+        prior_cpu, candidate_cpu = selected_logical_cpu_migration
+        if (
+            prior_projection["measurement_policy"]["selected_logical_cpu"] != prior_cpu
+            or candidate_projection["measurement_policy"]["selected_logical_cpu"]
+            != candidate_cpu
+        ):
+            raise PerformanceResourceError(
+                "warmup-contract-drift",
+                "candidate does not implement the reviewed logical CPU migration",
+            )
+        prior_projection["measurement_policy"]["selected_logical_cpu"] = (
+            "reviewed-equivalent-logical-cpu"
+        )
+        candidate_projection["measurement_policy"]["selected_logical_cpu"] = (
+            "reviewed-equivalent-logical-cpu"
+        )
     for projection in (prior_projection, candidate_projection):
         for operation in projection["operations"]:
             if operation["id"] in PERFORMANCE_OPERATION_IDS:
@@ -6140,7 +6350,7 @@ def _preserve_warmup_migration_thresholds(
     if prior_projection != candidate_projection:
         raise PerformanceResourceError(
             "warmup-contract-drift",
-            "only the reviewed warmup and baseline repetition counts may change",
+            "only reviewed calibration-strength and logical-CPU coordinates may change",
         )
 
     prior_rows = {
@@ -6435,6 +6645,167 @@ def _migrate_stationary_warmups_command(
         "thresholds_preserved": True,
         "failed_prior_ceiling_comparisons": 0,
         "comparisons": comparisons,
+    }
+
+
+def _migrate_conditioning_cpu_command(
+    *,
+    confirm_sustained_recovery: bool,
+    selected_logical_cpu: int,
+    rollover_from: str,
+    rationale: str,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    """Recalibrate v6 conditioning on the reviewed equivalent Windows CPU."""
+
+    if not confirm_sustained_recovery:
+        raise PerformanceResourceError(
+            "conditioning-cpu-confirmation",
+            "conditioning CPU migration requires explicit sustained-recovery confirmation",
+        )
+    if selected_logical_cpu != CONDITIONING_CPU_MIGRATION[1]:
+        raise PerformanceResourceError(
+            "conditioning-cpu-migration",
+            f"reviewed migration target is logical CPU {CONDITIONING_CPU_MIGRATION[1]}",
+        )
+    if len(rationale.strip()) < 20:
+        raise PerformanceResourceError(
+            "baseline-rationale", "conditioning CPU rationale must be reviewable"
+        )
+    commit, dirty = _git_identity(root)
+    if dirty:
+        raise PerformanceResourceError(
+            "dirty-conditioning-cpu-migration",
+            "conditioning CPU migration requires a clean worktree",
+        )
+
+    manifest_path = root / MANIFEST_PATH.relative_to(ROOT)
+    baseline_path = root / BASELINE_PATH.relative_to(ROOT)
+    evidence_path = root / VALID_EVIDENCE_PATH.relative_to(ROOT)
+    fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
+    planned_manifest = load_json(manifest_path)
+    planned_evidence = load_json(evidence_path)
+    validate_manifest(planned_manifest, root=root, fixtures=fixtures)
+    validate_evidence(planned_evidence, manifest=planned_manifest)
+    if any(
+        row["state"] != "planned"
+        for row in cast(list[dict[str, Any]], planned_manifest["operations"])
+        if row["id"] in PERFORMANCE_OPERATION_IDS
+    ):
+        raise PerformanceResourceError(
+            "conditioning-cpu-planned-baseline",
+            "migration requires the reviewed completely planned reset state",
+        )
+
+    history = root / PERFORMANCE_HISTORY_PATH.relative_to(ROOT) / rollover_from
+    prior_manifest_path = history / "manifest.json"
+    prior_baseline_path = history / "baseline.json"
+    prior_evidence_path = history / "valid-evidence.json"
+    if not all(
+        path.is_file()
+        for path in (prior_manifest_path, prior_baseline_path, prior_evidence_path)
+    ):
+        raise PerformanceResourceError(
+            "conditioning-cpu-history",
+            f"missing immutable prior authority {history.relative_to(root)}",
+        )
+    prior_manifest = load_json(prior_manifest_path)
+    prior_baseline = load_json(prior_baseline_path)
+    prior_evidence = load_json(prior_evidence_path)
+    validate_manifest(prior_manifest, root=root, fixtures=fixtures)
+    validate_baseline(prior_baseline, manifest=prior_manifest, fixtures=fixtures)
+    validate_evidence(prior_evidence, manifest=prior_manifest)
+    if prior_baseline["baseline_fingerprint"] != rollover_from:
+        raise PerformanceResourceError(
+            "conditioning-cpu-history", "prior authority directory identity changed"
+        )
+    if _rollover_contract_projection(prior_manifest) != _rollover_contract_projection(
+        planned_manifest
+    ):
+        raise PerformanceResourceError(
+            "conditioning-cpu-planned-drift",
+            "planned reset no longer projects to the prior active contract",
+        )
+
+    candidate_manifest = copy.deepcopy(planned_manifest)
+    candidate_manifest["measurement_policy"]["selected_logical_cpu"] = (
+        selected_logical_cpu
+    )
+    candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
+        DERIVED_RELATIVE_BUDGET_FORMULA
+    )
+    candidate_manifest["manifest_fingerprint"] = document_fingerprint(
+        candidate_manifest, "manifest_fingerprint"
+    )
+    validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+    _enforce_governed_cpu_affinity(candidate_manifest)
+
+    build_status, build_details = _build_release_artifacts(root)
+    if build_status != "passed":
+        raise PerformanceResourceError(
+            "release-build", json.dumps(build_details, sort_keys=True)
+        )
+    artifacts = cast(Mapping[str, object], build_details["artifacts"])
+    environment = live_environment(
+        selected_logical_cpu=selected_logical_cpu,
+        root=root,
+    )
+    candidate_manifest, candidate_baseline = calibrate_baseline(
+        candidate_manifest,
+        fixtures,
+        artifacts=_release_artifacts(root),
+        artifact_fingerprints=artifacts,
+        environment=environment,
+        source_commit=commit,
+        rationale=rationale,
+        root=root,
+    )
+    comparisons = _preserve_warmup_migration_thresholds(
+        prior_manifest,
+        prior_baseline,
+        candidate_manifest,
+        candidate_baseline,
+        selected_logical_cpu_migration=CONDITIONING_CPU_MIGRATION,
+    )
+    source_changes = _artifact_source_changes(
+        baseline_source_commit=cast(str, prior_baseline["source_commit"]),
+        candidate_source_commit=commit,
+        root=root,
+    )
+    migration = validate_conditioning_cpu_migration(
+        prior_manifest,
+        prior_baseline,
+        candidate_manifest,
+        candidate_baseline,
+        artifact_source_changes=source_changes,
+    )
+    candidate_evidence = copy.deepcopy(planned_evidence)
+    candidate_evidence["manifest_fingerprint"] = candidate_manifest[
+        "manifest_fingerprint"
+    ]
+    validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+    validate_baseline(
+        candidate_baseline, manifest=candidate_manifest, fixtures=fixtures
+    )
+    validate_evidence(candidate_evidence, manifest=candidate_manifest)
+
+    _write_json(manifest_path, candidate_manifest, root=root)
+    _write_json(baseline_path, candidate_baseline, root=root)
+    _write_json(evidence_path, candidate_evidence, root=root)
+    return {
+        "status": "passed",
+        "source_commit": commit,
+        "prior_baseline_fingerprint": rollover_from,
+        "baseline_fingerprint": candidate_baseline["baseline_fingerprint"],
+        "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+        "history_path": history.relative_to(root).as_posix(),
+        "selected_logical_cpu": selected_logical_cpu,
+        "measurement_count": len(candidate_baseline["measurements"]),
+        "conditioning_cpu_migration": migration,
+        "thresholds_preserved": True,
+        "failed_prior_ceiling_comparisons": 0,
+        "comparisons": comparisons,
+        "build": build_details,
     }
 
 
@@ -6776,6 +7147,24 @@ def main(argv: list[str] | None = None) -> int:
             arguments = parser.parse_args(values)
             result = _migrate_stationary_warmups_command(
                 confirm_stationary_warmups=arguments.confirm_stationary_warmups,
+                rationale=arguments.rationale,
+            )
+            status = cast(str, result["status"])
+        elif values and values[0] == "migrate-conditioning-cpu":
+            parser = argparse.ArgumentParser(
+                description="Migrate sustained conditioning to an equivalent CPU"
+            )
+            parser.add_argument("migrate-conditioning-cpu")
+            parser.add_argument("--confirm-sustained-recovery", action="store_true")
+            parser.add_argument("--selected-logical-cpu", type=int, required=True)
+            parser.add_argument("--rollover-from", required=True)
+            parser.add_argument("--rationale", required=True)
+            parser.add_argument("--json", action="store_true")
+            arguments = parser.parse_args(values)
+            result = _migrate_conditioning_cpu_command(
+                confirm_sustained_recovery=arguments.confirm_sustained_recovery,
+                selected_logical_cpu=arguments.selected_logical_cpu,
+                rollover_from=arguments.rollover_from,
                 rationale=arguments.rationale,
             )
             status = cast(str, result["status"])

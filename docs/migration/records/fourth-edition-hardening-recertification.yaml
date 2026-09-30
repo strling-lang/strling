@@ -635,6 +635,10 @@ checkpoints:
             result: passed
             details: >-
                 At clean correction source 804f16e0d8e100847b12ca9566e73c52ab6b7f4d, the governed sample-free reset archived baseline 00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a byte-for-byte and produced planned manifest 90890dfac6fafad899b0029831dcc5063c589079d4f9bdee06f3e335bb963544. No measurement or authenticated sample was consumed. One clean-source 54-coordinate recalibration must now prove the strengthened v6 conditioning identity against every immediately prior hard ceiling.
+          - check: Equivalent-core recovery qualification
+            result: passed
+            details: >-
+                Native v6 qualification correctly rejected governed CPU 20 at 4297 selected-busy basis points against the unchanged 500-basis-point limit, and independent all-core windows showed CPU 20 persistently occupied while the system remained quiet. Topology-equivalent efficiency-0 single-thread CPU 24 preserves processor group, cache, NUMA, scheduling class, power controls, timer, toolchains, and Windows build. It passed the bounded conditioning screen and five exact six-operation cumulative-trigger windows at 78800, 78984, 77553, 83590, and 79938 ns against the unchanged 89146 ns relative ceiling. The governed migration permits exactly the 30 derived CPU-placement, reservation, attestation, and v5/2000-ms to v6/10000-ms conditioner coordinates; rejects every other environment or contract change; and requires all 54 recalibrated coordinates, including paired CLI ratios, to pass every prior hard ceiling before writing authority. No threshold, ceiling, ratio, warmup, sample count, workload, isolation, or authenticated-sample rule is weakened.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -724,7 +728,9 @@ commits:
       subject: "cert(performance): migrate order-balanced launch authority"
     - sha: 804f16e0d8e100847b12ca9566e73c52ab6b7f4d
       subject: "fix(certification): sustain Windows recovery conditioning"
+    - sha: ed2bfee640c1ca4988b4f6ed48a9528c8ead9e3c
+      subject: "cert(performance): archive short recovery authority"
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Candidate 80555844 passed every predictor, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose exact producer and prefix bisection isolated insufficient Windows recovery conditioning after cumulative launch work. The v6 policy strengthens the observation from two to ten seconds without changing thresholds, ceilings, ratios, warmups, samples, batching, workloads, isolation, or authenticated-sample rules. The old authority is archived. One clean-source governed recalibration must pass every prior hard ceiling before a new candidate repeats all predictors, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.
+    rationale: Candidate 80555844 passed every predictor, Local 37/37, and Pull Request 79/79, then consumed a Full performance failure whose exact producer and prefix bisection isolated insufficient Windows recovery conditioning after cumulative launch work. The v6 policy strengthens the observation from two to ten seconds without changing thresholds, ceilings, ratios, warmups, samples, batching, workloads, isolation, or authenticated-sample rules. CPU 20 is persistently occupied under the sustained window; topology-equivalent CPU 24 passed five exact cumulative-trigger observations with the unchanged ceiling. The old authority is archived, and the exact same-build CPU/conditioner migration is governed. One clean-source 54-coordinate recalibration must pass every prior hard ceiling before a new candidate repeats all predictors, Local, Pull Request, Full, independent no-reuse Release, signing, trusted verification, and closure before P20-T02 begins.

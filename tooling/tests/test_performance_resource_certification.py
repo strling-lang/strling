@@ -17,9 +17,11 @@ from jsonschema import Draft202012Validator
 from tooling.performance_resource_certification import (
     CLI_LAUNCH_COMPARISON_MODEL,
     CLI_LAUNCH_RELATIVE_ESTIMATOR,
+    CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES,
     DERIVED_RELATIVE_BUDGET_FORMULA,
     FIXTURE_IDS,
     FULL_PREFLIGHT_SENTINEL_REPETITIONS,
+    GOVERNED_WINDOWS_LOGICAL_CPUS,
     MAXIMUM_DESCHEDULING_NANOSECONDS,
     MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER,
     MEASUREMENT_CONDITIONING_MAX_ATTEMPTS,
@@ -81,6 +83,7 @@ from tooling.performance_resource_certification import (
     refresh_resource_identities,
     sample_statistics,
     validate_baseline,
+    validate_conditioning_cpu_migration,
     validate_evidence,
     validate_environment_rollover,
     validate_cli_launch_control_environment_rollover,
@@ -457,8 +460,12 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         validate_evidence(evidence, manifest=manifest)
 
     def test_capped_baseline_can_chain_prior_ceiling_provenance(self) -> None:
-        prior_manifest = copy.deepcopy(self.manifest)
         prior_baseline = load_json(BASELINE_PATH)
+        history = (
+            BASELINE_PATH.parent / "history" / prior_baseline["baseline_fingerprint"]
+        )
+        prior_manifest = load_json(history / "manifest.json")
+        prior_baseline = load_json(history / "baseline.json")
         candidate_manifest = copy.deepcopy(prior_manifest)
         candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
             DERIVED_RELATIVE_BUDGET_FORMULA
@@ -1482,8 +1489,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             self.manifest["measurement_policy"]["cpu_affinity_policy"],
             "single-fixed-logical-cpu",
         )
-        self.assertEqual(
-            self.manifest["measurement_policy"]["selected_logical_cpu"], 20
+        self.assertIn(
+            self.manifest["measurement_policy"]["selected_logical_cpu"],
+            GOVERNED_WINDOWS_LOGICAL_CPUS,
         )
         self.assertEqual(
             self.manifest["measurement_policy"]["host_reservation_policy"],
@@ -2506,6 +2514,132 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 expected_os_build="26200.9278",
             )
         self.assertEqual(raised.exception.code, "rollover-regression")
+
+    def test_conditioning_cpu_migration_is_exact_and_same_build(self) -> None:
+        history = (
+            BASELINE_PATH.parent
+            / "history"
+            / "00087567449973c0ca1b7bf649b2a82ce5b4dc3157c2dc37c6285e0aa97ad98a"
+        )
+        prior_manifest = load_json(history / "manifest.json")
+        prior_baseline = load_json(history / "baseline.json")
+        candidate_manifest = copy.deepcopy(prior_manifest)
+        candidate_manifest["measurement_policy"]["selected_logical_cpu"] = 24
+        candidate_manifest["manifest_fingerprint"] = document_fingerprint(
+            candidate_manifest, "manifest_fingerprint"
+        )
+        validate_manifest(candidate_manifest, fixtures=self.fixtures)
+        invalid_cpu = copy.deepcopy(candidate_manifest)
+        invalid_cpu["measurement_policy"]["selected_logical_cpu"] = 21
+        invalid_cpu["manifest_fingerprint"] = document_fingerprint(
+            invalid_cpu, "manifest_fingerprint"
+        )
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_manifest(invalid_cpu, fixtures=self.fixtures)
+        self.assertEqual(raised.exception.code, "measurement-policy")
+        candidate_baseline = copy.deepcopy(prior_baseline)
+        environment = candidate_baseline["environment"]
+        environment["selected_logical_cpu"] = 24
+        environment["effective_cpu_affinity"] = [24]
+        environment["effective_cpuset"] = (
+            "group-0:logical-24:cpu-set-280:core-24:efficiency-0"
+        )
+        execution = environment["execution_resource"]
+        execution["effective_cpu_affinity"] = [24]
+        execution["process_affinity_mask"] = "0x0000000001000000"
+        execution["process_default_cpu_set_ids"] = [280]
+        execution["selected_cpu_set_id"] = 280
+        execution["selected_logical_processor"] = 24
+        topology = execution["processor_topology"]
+        topology["core_index"] = 24
+        topology["cpu_set_id"] = 280
+        topology["logical_processor_index"] = 24
+        topology["physical_core_identity"] = "group-0/core-24/efficiency-0"
+        topology["thread_siblings"] = [24]
+
+        attestation = environment["host_attestation"]
+        attestation["attestation_fingerprint"] = "a" * 64
+        conditioning = attestation["conditioning"]
+        conditioning["executable_sha256"] = "b" * 64
+        conditioning["observation_milliseconds"] = 10_000
+        conditioning["policy_id"] = "native-windows-supported-controls-quiescence-v6"
+        reservation = attestation["reservation"]
+        reservation["evidence_sha256"] = "c" * 64
+        reservation["host_logical_processors"] = [24]
+        reservation["host_physical_core_identity"] = "group-0/core-24/efficiency-0"
+        reservation["reservation_id"] = "windows-reviewed-cpu-24"
+        reservation_evidence = attestation["reservation_evidence"]
+        reservation_evidence["process_affinity_mask"] = "0x0000000001000000"
+        reservation_evidence["process_default_cpu_set_ids"] = [280]
+        reservation_evidence["power"]["selected_processor_frequency"][
+            "processor_number"
+        ] = 24
+        evidence_topology = reservation_evidence["selected_cpu_topology"]
+        evidence_topology["core_index"] = 24
+        evidence_topology["cpu_set_id"] = 280
+        evidence_topology["logical_processor_index"] = 24
+        evidence_topology["physical_core_identity"] = "group-0/core-24/efficiency-0"
+        evidence_topology["thread_siblings"] = [24]
+        environment["host_attestation_fingerprint"] = "a" * 64
+        candidate_baseline["environment_fingerprint"] = environment_fingerprint(
+            environment
+        )
+
+        report = validate_conditioning_cpu_migration(
+            prior_manifest,
+            prior_baseline,
+            candidate_manifest,
+            candidate_baseline,
+        )
+        self.assertEqual(report["status"], "passed")
+        self.assertEqual(report["prior_selected_logical_cpu"], 20)
+        self.assertEqual(report["selected_logical_cpu"], 24)
+        self.assertEqual(
+            {
+                row["coordinate"]
+                for row in cast(list[dict[str, Any]], report["environment_mismatches"])
+            },
+            CONDITIONING_CPU_MIGRATION_ENVIRONMENT_COORDINATES,
+        )
+        self.assertTrue(report["conditioning_thresholds_preserved"])
+        self.assertTrue(report["topology_equivalent"])
+
+        threshold_manifest = copy.deepcopy(candidate_manifest)
+        threshold_manifest["measurement_policy"]["relative_budget_formula"] = (
+            DERIVED_RELATIVE_BUDGET_FORMULA
+        )
+        threshold_baseline = copy.deepcopy(candidate_baseline)
+        comparisons = _preserve_warmup_migration_thresholds(
+            prior_manifest,
+            prior_baseline,
+            threshold_manifest,
+            threshold_baseline,
+            selected_logical_cpu_migration=(20, 24),
+        )
+        self.assertEqual(len(comparisons), 54)
+        self.assertTrue(all(row["status"] == "passed" for row in comparisons))
+
+        drifted = copy.deepcopy(candidate_baseline)
+        drifted["environment"]["cpu_model"] = "different CPU"
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_conditioning_cpu_migration(
+                prior_manifest,
+                prior_baseline,
+                candidate_manifest,
+                drifted,
+            )
+        self.assertEqual(raised.exception.code, "conditioning-cpu-environment-drift")
+
+        changed_contract = copy.deepcopy(candidate_manifest)
+        changed_contract["measurement_policy"]["sample_iterations"] -= 1
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_conditioning_cpu_migration(
+                prior_manifest,
+                prior_baseline,
+                changed_contract,
+                candidate_baseline,
+            )
+        self.assertEqual(raised.exception.code, "conditioning-cpu-contract-drift")
 
     def test_environment_rollover_reset_preserves_nonperformance_contract(self) -> None:
         planned = planned_environment_rollover_manifest(self.manifest)

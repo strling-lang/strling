@@ -1496,3 +1496,22 @@ all 54 coordinates; and requires each non-CLI metric and paired CLI ratio to
 pass every prior relative and absolute ceiling before writing active authority.
 Calibration failure writes nothing. No threshold, ceiling, ratio, warmup,
 sample count, workload, isolation, or authenticated-sample rule is weakened.
+
+The clean-source migration at
+`9d36da894c826cf2331d43fb413c3bb0b34db08e` passed on September 30, 2026.
+All 54 coordinates completed nine governed repetitions with 486 retained
+coordinate-conditioning observations. All 52 non-CLI comparisons and both
+paired CLI-ratio comparisons passed every prior ceiling. The accepted baseline
+fingerprint is
+`28838ccce1b6c7dc9bbf094354a108c5e419927476a3d3879b6b0aecd56008be`,
+and the manifest fingerprint is
+`bcce3beb87a97e0e04a0e7a7d0f5700cd3146092317d13fccf4da87e03748e7d`.
+Compact baseline serialization retains all authority in 1,024,915 bytes,
+below the unchanged 1 MiB tracked-file limit. Five preceding CPU 1 paired-CLI
+diagnostic windows also passed with zero authenticated samples. The former
+tool-owned invocation lost its process and terminal result on a session
+transition without accepting authority; only the retained owner invocation's
+successful result is accepted. Console, progress, observations, and exit
+evidence are preserved under `target/codex-tools/h08-cpu1-calibration-9d36da89`.
+Targeted validation and a new clean candidate freeze must precede all readiness
+predictors and the Local → Pull Request → Full → independent Release sequence.

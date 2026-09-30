@@ -491,7 +491,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
     def test_capped_baseline_can_chain_prior_ceiling_provenance(self) -> None:
         prior_baseline = load_json(BASELINE_PATH)
         history = (
-            BASELINE_PATH.parent / "history" / prior_baseline["baseline_fingerprint"]
+            BASELINE_PATH.parent
+            / "history"
+            / prior_baseline["prior_baseline_fingerprint"]
         )
         prior_manifest = load_json(history / "manifest.json")
         prior_baseline = load_json(history / "baseline.json")
@@ -2077,6 +2079,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, "unsupported-host-attestation")
 
     def test_single_cpu_affinity_is_enforced_and_fail_closed(self) -> None:
+        selected = self.manifest["measurement_policy"]["selected_logical_cpu"]
         with (
             patch(
                 "tooling.performance_resource_certification.platform.system",
@@ -2084,7 +2087,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             ),
             patch(
                 "tooling.performance_resource_certification.os.sched_getaffinity",
-                side_effect=[{0, 20, 30}, {20}],
+                side_effect=[{0, selected, 30}, {selected}],
                 create=True,
             ),
             patch(
@@ -2092,8 +2095,8 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 create=True,
             ) as setter,
         ):
-            self.assertEqual(_enforce_governed_cpu_affinity(self.manifest), [20])
-            setter.assert_called_once_with(0, {20})
+            self.assertEqual(_enforce_governed_cpu_affinity(self.manifest), [selected])
+            setter.assert_called_once_with(0, {selected})
 
         with (
             patch(
@@ -2102,7 +2105,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             ),
             patch(
                 "tooling.performance_resource_certification.os.sched_getaffinity",
-                return_value={0, 1},
+                return_value={selected + 1, selected + 2},
                 create=True,
             ),
         ):

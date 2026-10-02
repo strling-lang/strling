@@ -658,10 +658,11 @@
                     "lock": "bindings/kotlin/gradle.lockfile",
                     "configurations": [
                         "testCompileClasspath",
+                        "testImplementationDependenciesMetadata",
                         "testRuntimeClasspath"
                     ]
                 },
-                "evidence": "The exact JUnit BOM 5.10.1 metadata component is approved only on the enumerated Gradle test classpaths; any other or distributed configuration is a blocking scope violation."
+                "evidence": "The exact JUnit BOM 5.10.1 metadata component is approved only on the enumerated Gradle test classpaths and test implementation dependency metadata; any other or distributed configuration is a blocking scope violation."
             },
             {
                 "id": "LIC-GRADLE-JUNIT-API-5.10.1",

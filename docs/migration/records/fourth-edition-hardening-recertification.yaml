@@ -79,6 +79,7 @@ scope:
         - tests/conformance/evidence/stdlib-runtime-observations.json
         - tests/architecture/semantic-authority/1.0/evidence.json
         - tests/_design/unit/test_certification_readiness.md
+        - tests/_design/unit/test_jvm_dependency_alignment.md
         - toolchain.json
         - tooling/adversarial_semantic_audit.py
         - tooling/architecture_fitness.py
@@ -110,6 +111,7 @@ scope:
         - tooling/tests/test_launch_readiness.py
         - tooling/tests/test_local_certification_attestation.py
         - tooling/tests/test_jvm_adapter_runtime.py
+        - tooling/tests/test_jvm_adapter_package.py
         - tooling/tests/test_ecmascript_lowering_architecture.py
         - tooling/tests/test_pcre2_lowering_architecture.py
         - tooling/tests/test_profile_source_identity.py
@@ -658,6 +660,25 @@ checkpoints:
             result: not_run
             details: >-
                 On October 2 the owner authorized proving all non-performance requirements before a final explicitly confirmed idle-host window. Candidate d4c8c705ba1eca2d46dacf811ce2af755a8b01b9 passed Local 37/37 on September 30, then PR stopped at test@repository with 71 passes, one failure, and seven not reached. Its runner-bundle fixture incorrectly created .exe names on Linux; the focused reproducer confirms the defect and the test-only suffix correction passes. Development readiness derives all operations from toolchain.json, deferring only the governed performance-resource producer: Local 1/37, PR 2/79, Full 3/125, and Release 3/125. Selected denominators are 36, 77, 122, and 122, preserving the expected license waiver. Artifacts and independent Release receipts are explicitly non-authoritative, performance-deferred, closure-forbidden, and invalid as authoritative profile evidence. No performance policy or authoritative profile definition changes. Non-performance downstream proof, exact-SHA freeze, and the prepared final owner command remain pending; H08 is open.
+          - check: Non-performance dependency-risk failure and narrow recovery
+            result: failed
+            details: >-
+                Clean readiness candidate 97bb1ee21fcf920e08a2b7daf2ab327ad5b80b02 passed Local 36/36 and Pull Request 77/77. Full stopped fail-fast at operation 3 after two passes when security_dependency_risk@repository reported blocking high-severity brace-expansion advisories in TypeScript/LSP and Jackson advisories in shared JVM/Kotlin dependencies. The exact command reproduced four failed checks with completed retrieval; 119 Full operations were not reached, and independent Release and downstream signing did not start. The narrow patch-release repair preserves all security/performance policies and requires repeated atomic risk proof plus direct-dependent validation before retry. Actual selected-stage comparison proves Full contains every Local36/PR77 non-performance operation with identical definitions, permitting fresh Full operation-coverage proof while preserving earlier-SHA Local/PR artifacts unchanged. This does not claim separate Local/PR execution at a repaired SHA or authorize authoritative evidence reuse. Independent Release remains fresh/no-reuse; final normal certification and H08 closure await explicit idle-host confirmation.
+    - name: Owner-scoped JUnit test dependency disposition and atomic proof
+      status: passed
+      evidence:
+          - check: Exact test-only scope and negative runtime guard
+            result: passed
+            details: >-
+                The owner approved only the exact JUnit BOM and JUnit test dependencies under the existing test-classpath license policy. Native Gradle records org.junit:junit-bom:5.10.1 on testImplementationDependenciesMetadata and two test classpaths. Only that exact disposition gained the test metadata configuration; package, version, license, root, required usage and production/runtime restrictions remain unchanged. A negative regression adds runtimeClasspath to the exact JUnit row and requires scope_violation. No generalized waiver, distributed dependency permission or performance policy changed.
+          - check: Repeated risk and direct-dependent proof
+            result: passed
+            details: >-
+                Three focused tests and all 70 affected security/JVM tests pass. Two fresh live security risk invocations produce byte-identical evidence with 54 passed checks, only WVR-SEC-VSCE-LICENSE-001 waived, and zero failed, unavailable or incomplete. Dependency integrity, unchanged static suppression baseline 53 with zero findings, governance and architecture, hygiene, formatting and whitespace pass. Fifteen previously unfinished unaffected direct dependents passed separately. The retained Windows wrapper did not write its exit JSON; the final shell pass marker and every atomic operation output are preserved, and no wrapper exit code is inferred. No readiness profile or performance operation ran during this correction.
+          - check: Post-authoritative verifier trust sequence
+            result: not_run
+            details: >-
+                The owner selected qualification only after a complete future authoritative performance-inclusive campaign, followed by a pin-only verifier workflow commit and a second complete campaign at the new SHA before trusted cloud verification and closure. Old immutable pin 4d5ef0750847152e7e574f8442f1edcecb415c99 remains unchanged and is not claimed compatible with current-format signed evidence. Development readiness cannot substitute for either Full/Release campaign. H08 remains open and performance is intentionally deferred until explicit idle-host confirmation.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

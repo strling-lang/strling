@@ -1,9 +1,9 @@
 # This is a Gradle generated file for dependency locking.
 # Manual edits can break the build and are not advised.
 # This file is expected to be part of source control.
-com.fasterxml.jackson.core:jackson-annotations:2.18.10=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
-com.fasterxml.jackson.core:jackson-core:2.18.10=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
-com.fasterxml.jackson.core:jackson-databind:2.18.10=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-annotations:2.18.11=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-core:2.18.11=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-databind:2.18.11=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
 com.strling:strling-jvm:3.0.0=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
 net.java.dev.jna:jna:5.19.1=apiDependenciesMetadata,compileClasspath,implementationDependenciesMetadata,runtimeClasspath,testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
 org.apiguardian:apiguardian-api:1.1.2=testCompileClasspath,testRuntimeClasspath
@@ -33,6 +33,6 @@ org.junit.jupiter:junit-jupiter-engine:5.10.1=testRuntimeClasspath
 org.junit.platform:junit-platform-commons:1.10.1=testCompileClasspath,testRuntimeClasspath
 org.junit.platform:junit-platform-engine:1.10.1=testRuntimeClasspath
 org.junit.platform:junit-platform-launcher:1.10.1=testRuntimeClasspath
-org.junit:junit-bom:5.10.1=testCompileClasspath,testRuntimeClasspath
+org.junit:junit-bom:5.10.1=testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath
 org.opentest4j:opentest4j:1.3.0=testCompileClasspath,testRuntimeClasspath
 empty=annotationProcessor,compileOnlyDependenciesMetadata,intransitiveDependenciesMetadata,kotlinCompilerPluginClasspath,kotlinNativeCompilerPluginClasspath,kotlinScriptDefExtensions,testAnnotationProcessor,testApiDependenciesMetadata,testCompileOnlyDependenciesMetadata,testIntransitiveDependenciesMetadata,testKotlinScriptDefExtensions

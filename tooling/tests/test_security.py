@@ -146,9 +146,70 @@ class RepositorySecurityPolicyTests(unittest.TestCase):
         )
         self.assertEqual(["kotlin-gradle"], disposition["dependency_roots"])
         self.assertEqual(
-            ["testCompileClasspath", "testRuntimeClasspath"],
+            [
+                "testCompileClasspath",
+                "testImplementationDependenciesMetadata",
+                "testRuntimeClasspath",
+            ],
             disposition["reachability_evidence"]["configurations"],
         )
+
+    def test_gradle_junit_bom_disposition_rejects_runtime_reachability(self) -> None:
+        configured = json.loads(
+            (REPOSITORY_ROOT / "governance/security-policy.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        disposition = next(
+            item
+            for item in configured["license_policy"]["scoped_permitted"]
+            if item["id"] == "LIC-GRADLE-JUNIT-BOM-5.10.1"
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            lock = (REPOSITORY_ROOT / "bindings/kotlin/gradle.lockfile").read_text(
+                encoding="utf-8"
+            )
+            (root / "gradle.lockfile").write_text(lock, encoding="utf-8")
+            fixture_disposition = json.loads(json.dumps(disposition))
+            fixture_disposition["reachability_evidence"]["lock"] = "gradle.lockfile"
+            configured["license_policy"]["scoped_permitted"] = [fixture_disposition]
+            dependency_root = {
+                "id": "kotlin-gradle",
+                "ecosystem": "gradle",
+                "usage": "runtime",
+                "manifests": ["build.gradle.kts"],
+                "locks": ["gradle.lockfile"],
+            }
+            engine = SecurityEngine(root, configured, tracked_files=[])
+            arguments = {
+                "root_id": "kotlin-gradle",
+                "dependency_root": dependency_root,
+                "ecosystem": disposition["ecosystem"],
+                "package": disposition["package"],
+                "version": disposition["version"],
+                "expression": disposition["license"],
+            }
+            self.assertEqual(
+                "scoped_permitted",
+                engine._dependency_license_classification(**arguments)[0],
+            )
+            self.assertIn(
+                "org.junit:junit-bom:5.10.1=testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath\n",
+                lock,
+            )
+            (root / "gradle.lockfile").write_text(
+                lock.replace(
+                    "org.junit:junit-bom:5.10.1=testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath\n",
+                    "org.junit:junit-bom:5.10.1=testCompileClasspath,testImplementationDependenciesMetadata,testRuntimeClasspath,runtimeClasspath\n",
+                    1,
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                "scope_violation",
+                engine._dependency_license_classification(**arguments)[0],
+            )
 
     def test_cpan_runtime_dispositions_select_exact_artistic_material(self) -> None:
         configured = json.loads(

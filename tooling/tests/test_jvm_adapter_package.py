@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
@@ -10,6 +11,44 @@ from tooling import jvm_adapter_package as package
 
 
 class JvmAdapterPackageTests(unittest.TestCase):
+    def test_jackson_manifest_lock_and_release_graph_agree(self) -> None:
+        namespace = {"m": "http://maven.apache.org/POM/4.0.0"}
+        manifest = ET.parse(package.ROOT / "bindings/jvm/pom.xml")
+        version = manifest.findtext(
+            "m:properties/m:jackson.version", namespaces=namespace
+        )
+        self.assertIsNotNone(version)
+        declared = {
+            f"{name}:{release}"
+            for name, release, _ in package.EXTERNAL_PACKAGES
+            if name.startswith("com.fasterxml.jackson.core:")
+        }
+        expected = {
+            f"com.fasterxml.jackson.core:jackson-{name}:{version}"
+            for name in ("annotations", "core", "databind")
+        }
+        self.assertEqual(expected, declared)
+        for coordinates in package.ROOT_GRAPHS.values():
+            self.assertEqual(
+                expected,
+                {
+                    item
+                    for item in coordinates
+                    if item.startswith("com.fasterxml.jackson.core:")
+                },
+            )
+        lock = (package.ROOT / "bindings/kotlin/gradle.lockfile").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(
+            expected,
+            {
+                line.split("=", 1)[0]
+                for line in lock.splitlines()
+                if line.startswith("com.fasterxml.jackson.core:")
+            },
+        )
+
     def test_repository_gradle_wrapper_precedes_host_tool(self) -> None:
         with TemporaryDirectory() as directory:
             root = Path(directory)

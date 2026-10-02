@@ -1572,3 +1572,66 @@ compatibility loader removed those suppressions without changing the existing
 profile controller or the managed suppression baseline. All eight readiness
 tests, standalone operation selection, and the unchanged 53-suppression static
 gate passed the focused correction; no performance measurement was repeated.
+
+### October 2 dependency-risk readiness correction
+
+Clean development candidate `97bb1ee21fcf920e08a2b7daf2ab327ad5b80b02`
+passed Local non-performance readiness 36/36 and Pull Request non-performance
+readiness 77/77. Full readiness stopped at operation 3 after two passes:
+`security_dependency_risk@repository` reported blocking high-severity
+brace-expansion advisories in the TypeScript/LSP locks and Jackson advisories in
+the shared JVM/Kotlin graph. The exact security command reproduced all four
+failed checks with completed retrieval; 119 Full operations were not reached.
+Independent Release and downstream campaign signing did not start. No
+performance observations or authenticated samples were consumed.
+
+The narrow repair refreshes only brace-expansion patch releases within existing
+declared ranges and the shared Jackson maintenance pin, preserving all security
+and performance policies. Gradle owns its lock and verification-metadata
+serialization; the registered JVM producer owns the release-graph projection.
+Repeated advisory proof and direct-dependent validation must pass before any
+readiness retry.
+
+A read-only comparison of the actual selected stage definitions proves that
+Full contains all 36 Local and 77 Pull Request non-performance operations with
+identical definitions. The repaired SHA will nevertheless execute Local and
+Pull Request afresh before Full, so each readiness profile has its own exact-SHA
+result. The retained earlier-SHA artifacts remain historical and are not
+relabeled. Independent Release still executes afresh without Full evidence
+reuse. Authoritative final certification will execute its normal governed
+profile progression with performance restored, only after explicit idle-host
+confirmation. H08 remains open.
+
+### October 2 exact JUnit test-scope decision and atomic proof
+
+The owner approved only the exact JUnit BOM and JUnit test dependencies under
+the existing test-classpath license policy. Native Gradle lock regeneration
+records the JUnit BOM 5.10.1 on `testImplementationDependenciesMetadata` as
+well as its two test classpaths. The exact scoped disposition now names that
+test metadata configuration; package, version, license, dependency root,
+required usage, and every production/runtime restriction remain unchanged.
+A negative regression adds `runtimeClasspath` to that exact JUnit lock row and
+requires a scope violation. No generalized waiver or distributed dependency
+permission was added.
+
+The focused three-test scope proof and all 70 affected security/JVM unit tests
+pass. Two independent live `security.py risk --json` invocations produce
+identical evidence: 54 passed checks, only the existing
+`WVR-SEC-VSCE-LICENSE-001` waiver, and zero failed, unavailable, or incomplete
+checks. Dependency integrity, static analysis with its unchanged 53 managed
+suppressions, governance and architecture, hygiene, formatting, and whitespace
+also pass. All 15 previously unfinished unaffected direct dependents passed
+separately. The retained Windows wrapper did not write its exit JSON, so no
+wrapper exit code is inferred; its final shell pass marker and each atomic
+operation output are preserved. No readiness profile or performance operation
+ran during this correction.
+
+The owner chose the post-authoritative verifier-promotion sequence. The old
+immutable pin remains unchanged and is not claimed compatible with the current
+signed evidence format. After explicit idle-host confirmation, a complete
+performance-inclusive campaign must qualify the new verifier revision; a
+pin-only workflow commit must then create a new source identity and a second
+complete Local, Pull Request, Full, and independent no-reuse Release campaign
+must precede trusted cloud verification and formal closure. The first
+campaign's Full/Release evidence cannot be reused. H08 remains open, and the
+present development-only readiness evidence is never authoritative.

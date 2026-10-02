@@ -78,10 +78,12 @@ scope:
         - tests/conformance/evidence/shared-cross-engine-observations.json
         - tests/conformance/evidence/stdlib-runtime-observations.json
         - tests/architecture/semantic-authority/1.0/evidence.json
+        - tests/_design/unit/test_certification_readiness.md
         - toolchain.json
         - tooling/adversarial_semantic_audit.py
         - tooling/architecture_fitness.py
         - tooling/core_stage_boundaries.py
+        - tooling/certification_readiness.py
         - tooling/dependency_license_evidence.py
         - tooling/deep_quality_certification.py
         - tooling/exact_runtime_provision.py
@@ -89,6 +91,7 @@ scope:
         - tooling/jvm_adapter_runtime.py
         - tooling/jvm_adapter_package.py
         - tooling/local_certification_attestation.py
+        - tooling/nonperformance_production_readiness.py
         - tooling/performance_resource_certification.py
         - tooling/performance_windows.py
         - tooling/production_certification.py
@@ -97,6 +100,7 @@ scope:
         - tooling/quality.py
         - tooling/lsp-server/package-lock.json
         - tooling/tests/test_adversarial_semantic_audit.py
+        - tooling/tests/test_certification_readiness.py
         - tooling/tests/test_dependency_license_evidence.py
         - tooling/tests/test_deep_quality_certification.py
         - tooling/tests/test_exact_runtime_provision.py
@@ -650,6 +654,10 @@ checkpoints:
             result: passed
             details: >-
                 Clean source 9d36da894c826cf2331d43fb413c3bb0b34db08e completed all 54 coordinates over nine governed repetitions with 486 retained coordinate-conditioning observations on September 30, 2026. All 52 non-CLI comparisons and both paired CLI-ratio coordinates passed every prior ceiling. Baseline 28838ccce1b6c7dc9bbf094354a108c5e419927476a3d3879b6b0aecd56008be and manifest bcce3beb87a97e0e04a0e7a7d0f5700cd3146092317d13fccf4da87e03748e7d are accepted with unchanged thresholds, sample counts, conditioning limits, isolation, and authentication rules. Compact baseline serialization is 1024915 bytes, below the unchanged 1048576-byte hygiene limit. Five preceding CPU1 paired-CLI diagnostic windows passed with zero authenticated samples. The former tool-owned invocation lost its process and terminal result on session transition and accepted no baseline; only the retained owner invocation is accepted. Console, progress, observations, and exit evidence remain under target/codex-tools/h08-cpu1-calibration-9d36da89. Targeted validation and a new clean candidate freeze must precede all sample-free predictors and the complete certification sequence.
+          - check: Performance-deferred readiness authorization
+            result: not_run
+            details: >-
+                On October 2 the owner authorized proving all non-performance requirements before a final explicitly confirmed idle-host window. Candidate d4c8c705ba1eca2d46dacf811ce2af755a8b01b9 passed Local 37/37 on September 30, then PR stopped at test@repository with 71 passes, one failure, and seven not reached. Its runner-bundle fixture incorrectly created .exe names on Linux; the focused reproducer confirms the defect and the test-only suffix correction passes. Development readiness derives all operations from toolchain.json, deferring only the governed performance-resource producer: Local 1/37, PR 2/79, Full 3/125, and Release 3/125. Selected denominators are 36, 77, 122, and 122, preserving the expected license waiver. Artifacts and independent Release receipts are explicitly non-authoritative, performance-deferred, closure-forbidden, and invalid as authoritative profile evidence. No performance policy or authoritative profile definition changes. Non-performance downstream proof, exact-SHA freeze, and the prepared final owner command remain pending; H08 is open.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

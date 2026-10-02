@@ -1515,3 +1515,60 @@ successful result is accepted. Console, progress, observations, and exit
 evidence are preserved under `target/codex-tools/h08-cpu1-calibration-9d36da89`.
 Targeted validation and a new clean candidate freeze must precede all readiness
 predictors and the Local → Pull Request → Full → independent Release sequence.
+
+## Performance-deferred development readiness
+
+On September 30, clean candidate `d4c8c705ba1eca2d46dacf811ce2af755a8b01b9`
+passed Local 37/37. Pull Request stopped after 71 passes when operation 72,
+`test@repository`, failed because its runner-bundle fixture created Windows
+`.exe` names on Linux. Seven operations were not reached; Full and Release did
+not start. The correction follows the host's executable suffix in the test
+fixture only and leaves production performance logic unchanged.
+
+The owner requested a performance-deferred readiness workflow on October 2.
+`python3 -m tooling.certification_readiness --profile <profile> --plan` derives
+the exact operation selection from `toolchain.json`. Local defers its one
+performance-resource operation; Pull Request defers two; Full and Release defer
+all three. Thus readiness denominators are 36, 77, 122, and 122, respectively.
+The existing license waiver remains governed, not a performance deferral.
+
+Execution requires a clean committed candidate and a fresh `--artifact` path.
+Every other governed operation executes under its original profile identity,
+with the same fail-fast producer logic and durable progress. Independent Release
+readiness uses `python3 -m tooling.nonperformance_production_readiness
+--artifact-directory <fresh-directory>` to create fresh source, rebuild, regenerate,
+and preserve original producer evidence without Full reuse. Its receipt and
+profile-shaped evidence are explicitly non-authoritative.
+
+Artifacts use `strling-nonperformance-readiness`, `authoritative: false`,
+`performance_deferred: true`, and `closure_authorized: false`. They enumerate
+every intentionally deferred governed definition and are rejected by the normal
+profile schema, product certification, and attestation path. Deferred operations
+are never recorded as passed. No normal profile membership, performance
+baseline, threshold, sample count, conditioning, isolation, or authentication
+rule changes. H08 remains open. The final performance-inclusive campaign may
+start only after the owner explicitly confirms an idle host.
+
+Initial atomic proof passes all eight readiness tests and the runner-bundle
+fixture on both Linux and Windows. Real authorized-key signing and isolated
+signature verification pass under a separate development namespace; that same
+signature is rejected under the authoritative namespace. The closure projection
+has a deterministic, schema-valid, history-preserving dry self-test and rejects
+missing, partial, or invalid authoritative performance sample counts. None of
+these diagnostics is an authoritative profile or closure result.
+
+The ignored native owner initially lost its exit receipt because Windows
+PowerShell treats ordinary native stderr as a terminating error under
+`ErrorActionPreference=Stop`. An exact two-case reproducer identifies that cause.
+Direct process stream capture retains both stdout and stderr under the same
+strict preference, with an unconditional exit receipt. Only unfinished dependent
+validation was resumed after confirming the former owner and child were absent.
+The existing immutable verifier pin rejects current-format synthetic evidence;
+reviewed verifier-promotion authority remains a separate pending decision.
+
+The retained dependent suite passed 244 tests (one declared skip). Static
+analysis then correctly rejected six new unmanaged import suppressions. A local
+compatibility loader removed those suppressions without changing the existing
+profile controller or the managed suppression baseline. All eight readiness
+tests, standalone operation selection, and the unchanged 53-suppression static
+gate passed the focused correction; no performance measurement was repeated.

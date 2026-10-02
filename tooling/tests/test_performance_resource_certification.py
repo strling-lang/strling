@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import io
 import json
+import os
 import shutil
 import subprocess
 import tempfile
@@ -270,8 +271,9 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 / "tests/certification/performance-resource/1.0/runner/target/release"
             )
             release.mkdir(parents=True)
-            runner = release / "strling-performance-runner.exe"
-            worker = release / "strling-performance-memory-worker.exe"
+            suffix = ".exe" if os.name == "nt" else ""
+            runner = release / f"strling-performance-runner{suffix}"
+            worker = release / f"strling-performance-memory-worker{suffix}"
             runner.write_bytes(b"measurement-runner")
             worker.write_bytes(b"peak-rss-worker")
             bundle_path = _write_runner_bundle_artifact({"runner": runner}, root=root)

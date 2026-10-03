@@ -20,6 +20,7 @@ scope:
         - bindings/interop/Cargo.toml
         - bindings/perl/build.sh
         - bindings/typescript/package-lock.json
+        - bindings/typescript/package.json
         - core/internal/Cargo.toml
         - core/src/capability_evaluation.rs
         - core/src/ecmascript_lowering.rs
@@ -100,6 +101,7 @@ scope:
         - tooling/structured_operation_execution.py
         - tooling/quality.py
         - tooling/lsp-server/package-lock.json
+        - tooling/lsp-server/package.json
         - tooling/tests/test_adversarial_semantic_audit.py
         - tooling/tests/test_certification_readiness.py
         - tooling/tests/test_dependency_license_evidence.py
@@ -679,6 +681,61 @@ checkpoints:
             result: not_run
             details: >-
                 The owner selected qualification only after a complete future authoritative performance-inclusive campaign, followed by a pin-only verifier workflow commit and a second complete campaign at the new SHA before trusted cloud verification and closure. Old immutable pin 4d5ef0750847152e7e574f8442f1edcecb415c99 remains unchanged and is not claimed compatible with current-format signed evidence. Development readiness cannot substitute for either Full/Release campaign. H08 remains open and performance is intentionally deferred until explicit idle-host confirmation.
+    - name: Non-performance Release advisory recovery through upstream tooling replacement
+      status: in_progress
+      evidence:
+          - check: Retained non-performance campaign disposition
+            result: failed
+            details: >-
+                Clean source 421079c263e3d9f7710ccae0d51deeba26c20ddd passed actual Local 36/36, Pull Request 77/77, and Full with 121 passes plus only WVR-SEC-VSCE-LICENSE-001. Fresh independent no-reuse Release stopped at operation 3 after two passes: the completed dependency-risk retrieval identified GHSA-vfj7-8cjw-p6xm against braces 3.0.3 in both TypeScript and LSP tooling. Release, downstream signing, final freeze, and closure are not passed. Every retained artifact remains non-authoritative and performance-deferred; H08 is open.
+          - check: Upstream mitigation and compatible replacement assessment
+            result: passed
+            details: >-
+                The reviewed GitHub advisory affects braces through 3.0.3 and lists no patched release. Upstream braces PR 72 proposes a maximum depth of 100 for parser and direct AST walkers; retaining the published affected package would still block the unchanged npm risk gate. The published flupkejs replacement was rejected after source review found incorrect numeric-range compilation and unbounded nested expansion. Official npm metadata instead identifies Jest 30.5.2 using picomatch and VSCE 4.0.0 using tinyglobby, both supporting governed Node 22. ts-jest 29.4.14 explicitly supports Jest 30; matching Jest 30 type declarations remove the old Jest 29 graph. This is build/test tooling replacement, with no product dependency, runtime, API, security waiver, severity, or performance policy change.
+          - check: Dependency serialization and required compatibility proof
+            result: not_run
+            details: >-
+                Native npm 10.9.8 serialized only the two affected lockfiles from reviewed manifests; both graphs contain no braces or micromatch dependency. The existing VSCE signing override and all ten waived package/version bindings remain unchanged. Package-manager lockfiles remain a transitional registered family with no generic certified reproduction command. Frozen installs, unchanged test discovery, TypeScript tests, LSP assembly and clean-source package certification, repeated live security risk, dependency integrity, contracts, governance, architecture, static analysis, hygiene, and fresh non-performance profile progression remain required before this remediation is accepted. Performance-inclusive work remains deferred until explicit human idle-host confirmation; verifier promotion remains post-authoritative.
+          - check: Unchanged security policy regression and recovery execution boundary
+            result: passed
+            details: >-
+                All 55 existing security unit tests passed on the governed Windows Python runtime. A narrow temporary-file write probe reproduced the unprivileged sandbox ACL failure; the same probe and suite passed with scoped elevation, without changing security code, fixtures, suppressions, or policy. Native schema validation and whitespace checks passed. Retained owner PID 25700 launched at 2026-10-03T04:54:58Z for the unchanged live dependency-risk gate only, preserving original stdout/stderr and strict exit receipts. This is not yet a live-risk pass, installed-tool compatibility pass, new-source readiness profile pass, or closure claim. Subsequent compatibility must preserve the existing five TypeScript suites and all 18 tests. The active continuation schedule observes retained execution no more often than every 15 minutes and pauses when no execution is active.
+          - check: First live unchanged risk gate after dependency replacement
+            result: passed
+            details: >-
+                Retained target/codex-tools/h08-braces-security-20261003T045459Z completed the unchanged repository risk command with exit 0 in both shell and Windows owner receipts. The real retrieval passed 54 checks, with only WVR-SEC-VSCE-LICENSE-001 and zero failed, unavailable, or incomplete checks. Both security.vulnerability.lsp-npm and security.vulnerability.typescript-npm passed. All ten waiver findings retain their existing exact package/version/license bindings; no new vulnerability waiver, suppression, severity change, or scope expansion was introduced. Legacy Jest 29 discovery subsequently returned the same five existing suites and exited 0 without interruption. Retained compatibility owner PID 44168 launched at 2026-10-03T05:11:28Z for frozen installs and all required direct dependents, including a second unchanged live risk check. Those unfinished checks, new-source profiles, final freeze, authoritative certification, and closure are not yet passed.
+          - check: Frozen installs and unchanged TypeScript compatibility
+            result: passed
+            details: >-
+                Retained target/codex-tools/h08-braces-dependents-20261003T051130Z passed native frozen npm installs for both roots. Post-install SHA256 checks prove neither manifest nor lockfile changed; both graphs remain free of braces and micromatch, with the same ten VSCE license bindings. Jest 30 discovery returned the exact five legacy suite paths, and all five suites and all 18 existing tests passed without source, configuration, exclusion, timeout, or assertion changes. Explicit fail-closed inventory checks passed. This does not substitute for the unfinished LSP proof or fresh clean-source readiness profiles.
+          - check: LSP component terminal failure and narrow diagnosis
+            result: failed
+            details: >-
+                The retained component execution stopped at lsp-test with 564 passes and eight request timeouts, recorded in the original stdout and exit-1 shell and Windows receipts at 2026-10-03T05:31:58Z. All failures belong to TestQuantifierProductMatrix.test_valid_quantifier_combinations and invoke the same canonical debug kernel on the mounted Windows checkout with the unchanged five-second transport limit. No semantic assertion regression, dependency API failure, or proven root cause is claimed. An isolated reproduction of only that 90-case quantifier family retains the exact kernel hash ae875def2a1fda306e6613c0f7b951253287f0f4397eee634a3c18efb59f87db and unchanged timeout; its result is pending. No expensive full-suite or profile retry, timeout increase, performance observation, or host-idle assumption has been made. Subsequent LSP assembly, second live risk, integrity, contracts, static/governance/hygiene, final freeze, and closure remain pending.
+          - check: Unchanged-timeout focused LSP proof and unexecuted continuation
+            result: passed
+            details: >-
+                The retained narrow reproducer exited 0 and passed all 90 original quantifier-product cases, including the eight previously timed-out cases, with the same canonical debug kernel bytes and the unchanged five-second transport limit. Original full-component evidence of 564 passes and eight timeouts remains retained; the focused pass does not establish a root cause or replace fresh complete clean-source profiles. No test source, assertion, discovery, timeout, kernel, performance policy, or authoritative meaning changed. At 2026-10-03T06:06:23Z retained owner PID 18812 started only the never-executed assembly, second live risk, integrity, registered contracts, exact runtimes, formatting, static analysis, governance, hygiene, and whitespace remainder. Their results remain pending. All remediation evidence is non-authoritative, performance-deferred, and closure-forbidden; H08 remains open.
+          - check: Assembled replacement payload and second live unchanged security gate
+            result: passed
+            details: >-
+                Retained target/codex-tools/h08-braces-remainder-20261003T060634Z passed the registered LSP payload assembly using the new VSCE graph. The second real unchanged risk retrieval passed 54 checks with only WVR-SEC-VSCE-LICENSE-001, zero failed, unavailable, or incomplete checks, and the same ten exact package/version/license waiver bindings. Both affected npm vulnerability checks passed. Dependency integrity separately passed all 30 checks without waiver or failure. These are direct-dependent development proofs, not new clean-source profile, authoritative certification, cloud verification, or closure passes.
+          - check: Contract generator filesystem failure and exact-surface diagnosis
+            result: failed
+            details: >-
+                The remainder stopped at contracts-write with exit 1 in matching shell and Windows receipts at 2026-10-03T06:12:44Z. The registered generator raised OSError errno 22 while opening governance/contracts/snapshots/python-public-api.json for writing; no tracked snapshot change is present. Native Windows and elevated WSL non-truncating write-access opens subsequently passed with the exact snapshot SHA256 f43f8149d099f27ca535b6dc3e63ad5067ced4cd41a9c1632d782b77faec858f unchanged. A persistent permissions failure or proven root cause is not claimed. A retained narrow registered generator/checker reproduction for only the failed Python surface is pending; no unchanged expensive family retry, generator/source patch, security weakening, performance operation, or closure claim has been made.
+          - check: Exact failed contract surface reproduction and minimum continuation
+            result: passed
+            details: >-
+                Retained target/codex-tools/h08-contracts-narrow-20261003T063219Z exited 0: the registered Python-only public-contract writer and both pre-write and post-write checks passed, with snapshot bytes unchanged. The original whole-family writer failure remains failed historical evidence; its errno-22 cause is unproven, and no source, generator, filesystem-policy, or baseline patch was inferred. The minimum continuation runs the registry's whole-family contract verification, which fails on any source/snapshot mismatch, followed by only never-executed runtime, formatting, static, governance, hygiene, and whitespace checks. It does not retry or claim a pass for the failed whole-family writer. Completed assembly, live security, integrity, installs, TypeScript tests, and the focused LSP proof are retained without duplicate execution. Fresh complete clean-source profiles remain required; performance is deferred and H08 is open.
+          - check: Whole-family contract verification and completed atomic checks
+            result: passed
+            details: >-
+                Retained target/codex-tools/h08-braces-checks-remainder-20261003T064911Z completed all seven previously unexecuted checks with matching exit-0 shell and Windows receipts at 2026-10-03T07:12:12Z. The registry's exact whole-family contract verification passed all 26 surfaces and change declarations, including both TypeScript surfaces, with no new tracked snapshot output. The existing declared root CLI addition remains additive; it is not an npm-remediation API change. Exact governed runtime identities, changed-file Prettier, unchanged static suppression baseline 53 with five waivers and zero findings, governance and every architecture rule, hygiene over 2242 tracked files with zero findings, and whitespace passed. The earlier whole-family writer error and eight LSP component timeouts remain historical failures with their unchanged focused passing proofs, not inferred root-cause corrections or blanket full-suite passes.
+          - check: Remediated clean-source readiness progression and owner stop boundary
+            result: not_run
+            details: >-
+                The next authorized step commits only the two build/test manifests, their native lockfiles, and this truthful open H08 record, then requires a clean exact candidate SHA. Registered clean-source LSP package certification, fresh actual Local 36, Pull Request 77, Full 122 with only WVR-SEC-VSCE-LICENSE-001, fresh independent no-reuse Release 122, and development-namespace actual signing with isolated verifier and in-memory closure validation remain required; old profile artifacts are not relabelled. The latest owner instruction supersedes idle heartbeat pausing: retain the existing schedule until all remediated non-performance profiles and final downstream, exact-SHA predictor, freeze, and owner-guard proofs pass, then delete it and report readiness for explicit human idle-host authorization. Performance remains intentionally deferred, verifier qualification and pin-only promotion remain post-authoritative, and H08 remains open. No push, publication, registry mutation, trust promotion, or performance-inclusive execution is authorized now.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"

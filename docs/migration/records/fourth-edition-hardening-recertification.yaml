@@ -29,6 +29,7 @@ scope:
         - core/src/post_lowering_requirements.rs
         - core/src/python_re_lowering.rs
         - core/src/safety_analysis.rs
+        - core/src/semantic_frontend.rs
         - core/src/target/profile.rs
         - core/src/target_lowering.rs
         - core/src/validation/mod.rs
@@ -79,6 +80,7 @@ scope:
         - tests/conformance/evidence/shared-cross-engine-observations.json
         - tests/conformance/evidence/stdlib-runtime-observations.json
         - tests/architecture/semantic-authority/1.0/evidence.json
+        - tests/_design/unit/semantic_frontend_token_borrowing.md
         - tests/_design/unit/test_certification_readiness.md
         - tests/_design/unit/test_jvm_dependency_alignment.md
         - toolchain.json

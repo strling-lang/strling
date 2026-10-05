@@ -478,9 +478,11 @@ enum SyntaxSetMember {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
-enum TokenKind {
-    Word(String),
-    Number(String),
+enum TokenKind<'a> {
+    // Unescaped lexemes are exact slices of the immutable source. Completion
+    // trials still use the same parser, without allocating each keyword again.
+    Word(&'a str),
+    Number(&'a str),
     String(String),
     LeftBrace,
     RightBrace,
@@ -490,8 +492,8 @@ enum TokenKind {
 }
 
 #[derive(Clone, Debug, Eq, PartialEq)]
-struct Token {
-    kind: TokenKind,
+struct Token<'a> {
+    kind: TokenKind<'a>,
     start: usize,
     end: usize,
     separated: bool,
@@ -512,7 +514,7 @@ impl<'a> Lexer<'a> {
         }
     }
 
-    fn next_token(&mut self) -> Result<Token, RawError> {
+    fn next_token(&mut self) -> Result<Token<'a>, RawError> {
         let separated = self.skip_layout();
         let start = self.position;
         let Some(character) = self.peek_char() else {
@@ -539,11 +541,11 @@ impl<'a> Lexer<'a> {
             '"' => return self.lex_string(separated),
             value if value.is_ascii_digit() => {
                 self.advance_while(|next| next.is_ascii_digit() || next == '.');
-                TokenKind::Number(self.text[start..self.position].to_owned())
+                TokenKind::Number(&self.text[start..self.position])
             }
             value if value.is_alphabetic() || value == '_' => {
                 self.advance_while(|next| next.is_alphanumeric() || next == '_');
-                TokenKind::Word(self.text[start..self.position].to_owned())
+                TokenKind::Word(&self.text[start..self.position])
             }
             value => {
                 self.position += value.len_utf8();
@@ -583,7 +585,7 @@ impl<'a> Lexer<'a> {
         self.position != start
     }
 
-    fn lex_string(&mut self, separated: bool) -> Result<Token, RawError> {
+    fn lex_string(&mut self, separated: bool) -> Result<Token<'a>, RawError> {
         let start = self.position;
         self.position += 1;
         let mut value = String::new();
@@ -700,7 +702,7 @@ impl<'a> Lexer<'a> {
 
 struct Parser<'a> {
     lexer: Lexer<'a>,
-    current: Token,
+    current: Token<'a>,
     material_nodes: usize,
     captures: usize,
     capture_declarations: Vec<SyntaxIdentifier>,
@@ -775,7 +777,7 @@ impl<'a> Parser<'a> {
             return Err(RawError::new(SemanticFrontendErrorCode::InvalidHeader, 0));
         }
         match &self.current.kind {
-            TokenKind::Number(version) if version == SOURCE_EDITION => {
+            TokenKind::Number(version) if *version == SOURCE_EDITION => {
                 self.bump()?;
             }
             TokenKind::Number(_) => {
@@ -1282,7 +1284,7 @@ impl<'a> Parser<'a> {
                 token.start,
             ));
         }
-        if RESERVED_WORDS.binary_search(&value.as_str()).is_ok() {
+        if RESERVED_WORDS.binary_search(value).is_ok() {
             return Err(RawError::new(
                 SemanticFrontendErrorCode::ReservedIdentifier,
                 token.start,
@@ -1290,7 +1292,7 @@ impl<'a> Parser<'a> {
         }
         self.bump()?;
         Ok(SyntaxIdentifier {
-            value: value.clone(),
+            value: (*value).to_owned(),
             span: ByteSpan {
                 start: token.start,
                 end: token.end,
@@ -1299,16 +1301,18 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_string(&mut self) -> Result<SyntaxString, RawError> {
-        let token = self.current.clone();
-        let TokenKind::String(value) = &token.kind else {
+        if !matches!(self.current.kind, TokenKind::String(_)) {
             return Err(RawError::new(
                 SemanticFrontendErrorCode::UnexpectedToken,
-                token.start,
+                self.current.start,
             ));
+        }
+        let token = self.bump()?;
+        let TokenKind::String(value) = token.kind else {
+            unreachable!("the checked string token is moved unchanged by bump");
         };
-        self.bump()?;
         Ok(SyntaxString {
-            value: value.clone(),
+            value,
             span: ByteSpan {
                 start: token.start,
                 end: token.end,
@@ -1369,7 +1373,11 @@ impl<'a> Parser<'a> {
         self.parse_integer()
     }
 
-    fn expect_word(&mut self, expected: &str, required_layout: bool) -> Result<Token, RawError> {
+    fn expect_word(
+        &mut self,
+        expected: &str,
+        required_layout: bool,
+    ) -> Result<Token<'a>, RawError> {
         if required_layout {
             self.require_layout(SemanticFrontendErrorCode::UnexpectedToken)?;
         }
@@ -1382,7 +1390,7 @@ impl<'a> Parser<'a> {
         self.bump()
     }
 
-    fn expect_left_brace(&mut self) -> Result<Token, RawError> {
+    fn expect_left_brace(&mut self) -> Result<Token<'a>, RawError> {
         if !matches!(self.current.kind, TokenKind::LeftBrace) {
             return Err(RawError::new(
                 SemanticFrontendErrorCode::MissingDelimiter,
@@ -1392,7 +1400,7 @@ impl<'a> Parser<'a> {
         self.bump()
     }
 
-    fn expect_right_brace(&mut self) -> Result<Token, RawError> {
+    fn expect_right_brace(&mut self) -> Result<Token<'a>, RawError> {
         if !matches!(self.current.kind, TokenKind::RightBrace) {
             return Err(RawError::new(
                 SemanticFrontendErrorCode::MissingDelimiter,
@@ -1402,7 +1410,7 @@ impl<'a> Parser<'a> {
         self.bump()
     }
 
-    fn expect_semicolon(&mut self) -> Result<Token, RawError> {
+    fn expect_semicolon(&mut self) -> Result<Token<'a>, RawError> {
         if !matches!(self.current.kind, TokenKind::Semicolon) {
             return Err(RawError::new(
                 SemanticFrontendErrorCode::MissingDelimiter,
@@ -1431,7 +1439,7 @@ impl<'a> Parser<'a> {
         self.current_word() == Some(expected)
     }
 
-    fn bump(&mut self) -> Result<Token, RawError> {
+    fn bump(&mut self) -> Result<Token<'a>, RawError> {
         let next = self.lexer.next_token()?;
         Ok(std::mem::replace(&mut self.current, next))
     }
@@ -1443,21 +1451,17 @@ fn valid_identifier(value: &str) -> bool {
         && bytes.all(|byte| byte.is_ascii_lowercase() || byte.is_ascii_digit() || byte == b'_')
 }
 
-fn unsupported_code(token: &Token) -> Option<SemanticFrontendErrorCode> {
+fn unsupported_code(token: &Token<'_>) -> Option<SemanticFrontendErrorCode> {
     match &token.kind {
-        TokenKind::Word(value)
-            if matches!(value.as_str(), "target" | "profile" | "engine" | "option") =>
-        {
+        TokenKind::Word(value) if matches!(*value, "target" | "profile" | "engine" | "option") => {
             Some(SemanticFrontendErrorCode::UnsupportedTargetAnnotation)
         }
-        TokenKind::Word(value)
-            if matches!(value.as_str(), "module" | "import" | "include" | "export") =>
-        {
+        TokenKind::Word(value) if matches!(*value, "module" | "import" | "include" | "export") => {
             Some(SemanticFrontendErrorCode::UnsupportedModuleImport)
         }
         TokenKind::Word(value)
             if matches!(
-                value.as_str(),
+                *value,
                 "portability"
                     | "portable"
                     | "require"
@@ -2123,7 +2127,7 @@ fn semantic_editor_tokens(
                     Some(EditorTokenType::Function)
                 } else if reference_spans.contains(&(token.start, token.end)) {
                     Some(EditorTokenType::Variable)
-                } else if keywords.contains(value) {
+                } else if keywords.contains(*value) {
                     Some(EditorTokenType::Keyword)
                 } else {
                     None
@@ -2590,5 +2594,40 @@ fn format_string(value: &str, output: &mut String) {
 fn indent(level: usize, output: &mut String) {
     for _ in 0..level {
         output.push_str("    ");
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{Lexer, TokenKind};
+
+    #[test]
+    fn unescaped_lexemes_borrow_exact_source_without_changing_decoding_or_spans() {
+        let source = String::from("# layout\r\nsequence café 1.0 4294967295 \"\\u{1F600}\\n\"");
+        let mut lexer = Lexer::new(&source);
+        for expected in ["sequence", "café", "1.0", "4294967295"] {
+            let token = lexer.next_token().expect("valid unescaped lexeme");
+            let cloned = token.clone();
+            let (TokenKind::Word(value) | TokenKind::Number(value)) = &token.kind else {
+                panic!("unescaped token kind");
+            };
+            let (TokenKind::Word(cloned_value) | TokenKind::Number(cloned_value)) = cloned.kind
+            else {
+                panic!("cloned unescaped token kind");
+            };
+            assert_eq!(*value, expected);
+            assert_eq!(&source[token.start..token.end], expected);
+            assert_eq!(value.as_ptr(), source[token.start..token.end].as_ptr());
+            assert_eq!(cloned_value.as_ptr(), value.as_ptr());
+            assert!(token.separated);
+        }
+        let string = lexer.next_token().expect("escaped string");
+        assert_eq!(string.kind, TokenKind::String("😀\n".to_owned()));
+        assert_eq!(&source[string.start..string.end], "\"\\u{1F600}\\n\"");
+        let eof = lexer.next_token().expect("end of input");
+        assert_eq!(eof.kind, TokenKind::Eof);
+        assert_eq!((eof.start, eof.end), (source.len(), source.len()));
+        assert_eq!(lexer.comments.len(), 1);
+        assert_eq!(lexer.comments[0].text, " layout");
     }
 }

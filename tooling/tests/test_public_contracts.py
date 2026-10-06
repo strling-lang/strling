@@ -496,6 +496,40 @@ return surface
         self.assertEqual(result.classification, "additive")
         self.assertIn("snapshot is stale", result.findings)
 
+    def test_exact_regeneration_skips_write_but_changed_output_requires_it(
+        self,
+    ) -> None:
+        self.write_header("int strling_parse(const char* text);\n")
+        surface = c_surface()
+        process_surface(surface, root=self.root, check=False)
+        destination = self.root / "snapshots/c.json"
+        first = destination.read_bytes()
+        original_open = Path.open
+
+        def reject_write(path: Path, mode: str = "r", *args: object, **kwargs: object):
+            if path == destination and "w" in mode:
+                raise OSError(22, "snapshot write denied")
+            return original_open(path, mode, *args, **kwargs)
+
+        with mock.patch.object(Path, "open", autospec=True, side_effect=reject_write):
+            self.assertEqual(
+                process_surface(surface, root=self.root, check=False).status, "passed"
+            )
+            self.write_header("int strling_parse(const char* text, int flags);\n")
+            self.assertEqual(
+                process_surface(surface, root=self.root, check=True).status, "failed"
+            )
+            with self.assertRaisesRegex(OSError, "snapshot write denied"):
+                process_surface(surface, root=self.root, check=False)
+        self.assertEqual(destination.read_bytes(), first)
+        self.assertEqual(
+            process_surface(surface, root=self.root, check=False).status, "passed"
+        )
+        self.assertNotEqual(destination.read_bytes(), first)
+        self.assertEqual(
+            process_surface(surface, root=self.root, check=True).status, "passed"
+        )
+
     def test_removed_public_symbol_fails_as_breaking(self) -> None:
         self.write_header(
             "int strling_parse(const char* text);\n"
@@ -723,10 +757,20 @@ type Flags struct {
                 )
             return CompletedProcess(arguments, 0, "", "")
 
-        with mock.patch(
-            "tooling.public_contracts._required_tool", return_value=str(swift)
+        with (
+            mock.patch(
+                "tooling.public_contracts._required_tool", return_value=str(swift)
+            ),
+            mock.patch(
+                "tooling.public_contracts.tempfile.TemporaryDirectory",
+                wraps=tempfile.TemporaryDirectory,
+            ) as temporary_directory,
         ):
             result = extract_swift_symbolgraph(surface, self.root, runner)
+        temporary_directory.assert_called_once_with(prefix="strling-swift-public-")
+        scratch = Path(calls[1][calls[1].index("--scratch-path") + 1])
+        self.assertFalse(scratch.is_relative_to(self.root))
+        self.assertFalse(scratch.exists())
         self.assertEqual(result["format"], "swift-symbolgraph-signatures")
         self.assertIn("build", calls[1])
         self.assertIn("--target", calls[1])
@@ -734,6 +778,22 @@ type Flags struct {
         self.assertNotIn("dump-symbol-graph", calls[1])
         self.assertIn("-module-name", calls[2])
         self.assertIn("-minimum-access-level", calls[2])
+
+        def failed_runner(
+            arguments: list[str], **kwargs: object
+        ) -> CompletedProcess[str]:
+            if "build" in arguments:
+                calls.append(arguments)
+                return CompletedProcess(arguments, 1, "", "build I/O failure")
+            return runner(arguments, **kwargs)
+
+        with mock.patch(
+            "tooling.public_contracts._required_tool", return_value=str(swift)
+        ):
+            with self.assertRaisesRegex(ContractError, "build I/O failure"):
+                extract_swift_symbolgraph(surface, self.root, failed_runner)
+        failed_scratch = Path(calls[-1][calls[-1].index("--scratch-path") + 1])
+        self.assertFalse(failed_scratch.exists())
 
     def test_swift_extractor_follows_the_installed_command_symlink(self) -> None:
         toolchain = self.root / "toolchain/bin"

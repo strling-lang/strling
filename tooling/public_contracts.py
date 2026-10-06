@@ -1505,11 +1505,9 @@ def extract_swift_symbolgraph(
     swift = _required_tool("STRLING_SWIFT", ("swift", "swift.exe"))
     symbolgraph_extractor = _swift_symbolgraph_extractor(swift)
     binding = root / "bindings/swift"
-    scratch_root = root / "target"
-    scratch_root.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(
-        prefix="strling-swift-public-", dir=scratch_root
-    ) as directory:
+    # Keep disposable compiler caches on the platform's temporary filesystem,
+    # independent of a repository checkout on a shared or virtual filesystem.
+    with tempfile.TemporaryDirectory(prefix="strling-swift-public-") as directory:
         scratch = Path(directory)
         target_info_raw = run_command(
             [swift, "-print-target-info"], cwd=root, runner=runner
@@ -2659,9 +2657,13 @@ def process_surface(
                     ["snapshot is stale", *comparison.findings],
                 )
         else:
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            with destination.open("w", encoding="utf-8", newline="\n") as handle:
-                handle.write(serialized(current))
+            content = serialized(current)
+            if not destination.is_file() or destination.read_bytes() != content.encode(
+                "utf-8"
+            ):
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                with destination.open("w", encoding="utf-8", newline="\n") as handle:
+                    handle.write(content)
     except ContractError as exc:
         return SurfaceResult(
             identifier,

@@ -108,6 +108,7 @@ scope:
         - tooling/tests/test_certification_readiness.py
         - tooling/tests/test_dependency_license_evidence.py
         - tooling/tests/test_deep_quality_certification.py
+        - tooling/tests/test_diagnostic_architecture.py
         - tooling/tests/test_exact_runtime_provision.py
         - tooling/tests/test_formatting.py
         - tooling/tests/test_governance.py

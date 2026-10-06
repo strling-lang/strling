@@ -226,8 +226,13 @@ class SemanticRewriteBoundaryTests(unittest.TestCase):
             sources["core/src/editor_intelligence.rs"],
         )
 
-        sources["core/src/semantic_frontend.rs"] += (
-            "\n// request_semantic_rewrite(input, foundational, structural, request)\n"
+        frontend = sources["core/src/semantic_frontend.rs"]
+        test_marker = frontend.find("\n#[cfg(test)]")
+        self.assertGreater(test_marker, 0)
+        sources["core/src/semantic_frontend.rs"] = (
+            frontend[:test_marker]
+            + "\n// request_semantic_rewrite(input, foundational, structural, request)\n"
+            + frontend[test_marker:]
         )
         with self.assertRaisesRegex(CoreContractError, "ungoverned direct caller"):
             validate_source_boundaries(sources, ALLOWED_RUNTIME_DEPENDENCIES)

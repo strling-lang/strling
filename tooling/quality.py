@@ -79,6 +79,9 @@ STRUCTURED_RESULT_CONTRACT_PREFIXES = {
     "certification-result-v1": "certification.",
 }
 PROFILE_FAILURE_OUTPUT_LIMIT = 8_000
+PROFILE_FAILURE_OUTPUT_ROOT = (
+    Path(__file__).resolve().parent.parent / "target/certification-failure-output"
+)
 VERSION_PROBE_TIMEOUT_EXIT_CODE = 124
 PROFILE_HEARTBEAT_SECONDS = 5 * 60
 
@@ -2057,6 +2060,21 @@ def _render_profile_failure_details(results: Sequence[OperationResult]) -> None:
             if not content:
                 continue
             if len(content) > PROFILE_FAILURE_OUTPUT_LIMIT:
+                try:
+                    output_directory = PROFILE_FAILURE_OUTPUT_ROOT / uuid.uuid4().hex
+                    output_directory.mkdir(parents=True, exist_ok=False)
+                    output_path = output_directory / f"{label}.txt"
+                    retained = atomic_write_stream(output_path, content)
+                    print(
+                        f"\n{identity} full {label}: {output_path} "
+                        f"(sha256={retained['sha256']}, bytes={retained['bytes']})",
+                        file=stream,
+                    )
+                except (OSError, StructuredExecutionError) as error:
+                    print(
+                        f"\n{identity} full {label} preservation failed: {error}",
+                        file=stream,
+                    )
                 content = (
                     "...[earlier output truncated]...\n"
                     + content[-PROFILE_FAILURE_OUTPUT_LIMIT:]

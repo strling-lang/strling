@@ -2103,6 +2103,89 @@ class QualityRoutingTests(unittest.TestCase):
 
 
 class ProfileFailureRenderingTests(unittest.TestCase):
+    def test_long_failed_output_is_retained_before_console_truncation(self) -> None:
+        content = "decisive early finding: \u03bb\n" + "x" * 20_000
+        result = OperationResult(
+            "generate_check",
+            "repository",
+            "failed",
+            ["fixture"],
+            1,
+            "fixture failure",
+            stdout=content,
+            stderr=content + "\nlast detail",
+        )
+        stdout = StringIO()
+        stderr = StringIO()
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            with (
+                patch("quality.PROFILE_FAILURE_OUTPUT_ROOT", root),
+                redirect_stdout(stdout),
+                redirect_stderr(stderr),
+            ):
+                _render_profile_failure_details([result])
+            retained = sorted(root.glob("*/*.txt"))
+            self.assertEqual(2, len(retained))
+            for path in retained:
+                expected = content if path.name == "stdout.txt" else result.stderr
+                self.assertEqual(expected.encode("utf-8"), path.read_bytes())
+                rendered = (
+                    stdout.getvalue()
+                    if path.name == "stdout.txt"
+                    else stderr.getvalue()
+                )
+                self.assertIn(str(path), rendered)
+                self.assertIn("sha256=", rendered)
+                self.assertIn(f"bytes={len(expected.encode('utf-8'))}", rendered)
+                self.assertIn("...[earlier output truncated]...", rendered)
+                self.assertNotIn("decisive early finding", rendered)
+            self.assertEqual(content, result.stdout)
+            self.assertEqual(1, result.exit_code)
+            self.assertEqual("failed", result.status)
+
+    def test_output_preservation_error_does_not_replace_operation_failure(self) -> None:
+        result = OperationResult(
+            "generate_check",
+            "repository",
+            "failed",
+            ["fixture"],
+            1,
+            "fixture failure",
+            stdout="early finding\n" + "x" * 20_000,
+        )
+        stdout = StringIO()
+        with (
+            patch(
+                "quality.atomic_write_stream",
+                side_effect=structured_execution.StructuredExecutionError(
+                    "disk unavailable"
+                ),
+            ),
+            TemporaryDirectory() as directory,
+            patch("quality.PROFILE_FAILURE_OUTPUT_ROOT", Path(directory)),
+            redirect_stdout(stdout),
+        ):
+            _render_profile_failure_details([result])
+        self.assertIn("preservation failed: disk unavailable", stdout.getvalue())
+        self.assertIn("...[earlier output truncated]...", stdout.getvalue())
+        self.assertEqual(1, result.exit_code)
+        self.assertEqual("failed", result.status)
+
+    def test_passed_long_output_creates_no_failure_diagnostic(self) -> None:
+        result = OperationResult(
+            "generate_check",
+            "repository",
+            "passed",
+            ["fixture"],
+            0,
+            None,
+            stdout="x" * 20_000,
+        )
+        with patch("quality.atomic_write_stream") as preserve:
+            _render_profile_failure_details([result])
+        preserve.assert_not_called()
+
     def test_failed_profile_operation_exposes_only_its_child_output(self) -> None:
         results = [
             OperationResult(

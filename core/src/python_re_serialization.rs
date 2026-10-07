@@ -821,11 +821,11 @@ fn validate_ascii_identifier(value: &str) -> Result<(), &'static str> {
     Ok(())
 }
 
-fn escape_pattern_character<'a>(
+fn escape_pattern_character(
     character: char,
     pattern_kind: PythonRePatternKind,
-    scalar_buffer: &'a mut [u8; 4],
-) -> Cow<'a, str> {
+    scalar_buffer: &mut [u8; 4],
+) -> Cow<'_, str> {
     match character {
         '\\' | '^' | '$' | '.' | '|' | '?' | '*' | '+' | '(' | ')' | '[' | ']' | '{' | '}' => {
             Cow::Owned(format!(r"\{character}"))

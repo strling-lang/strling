@@ -141,6 +141,50 @@ fn str_artifact_projects_exact_flags_options_requirements_and_utf8_provenance() 
 }
 
 #[test]
+fn literal_scalars_keep_exact_escaping_and_utf8_source_map_boundaries() {
+    let cases = [
+        ("AZaz09_-,/:;=@!%&<>~é中😀", "AZaz09_-,/:;=@!%&<>~é中😀"),
+        (r"\^$.|?*+()[]{}", r"\\\^\$\.\|\?\*\+\(\)\[\]\{\}"),
+        (
+            " #\0\t\n\r\u{85}\u{a0}\u{2028}\u{2029}",
+            r"\x20\x23\x00\x09\x0a\x0d\x85\xa0\u2028\u2029",
+        ),
+    ];
+    for (text, expected) in cases {
+        let semantic = program(literal("node:literal.scalar", text));
+        let target = str_profile();
+        let lowered = lower(&semantic, &target);
+        let before = lowered.clone();
+        let artifact = serialize_python_re(&lowered).expect("literal artifact");
+        assert_eq!(artifact.pattern.text, expected);
+        assert_eq!(lowered, before);
+        assert_eq!(artifact.source_map.len(), 1);
+        assert_eq!(artifact.source_map[0].generated_span.start, 0);
+        assert_eq!(
+            artifact.source_map[0].generated_span.end as usize,
+            expected.len()
+        );
+        assert!(artifact.emission_diagnostics.is_empty());
+        artifact
+            .validate_against_profile(&target)
+            .expect("exact profile");
+        assert_eq!(
+            artifact,
+            serialize_python_re(&lowered).expect("repeat artifact")
+        );
+        if text.is_ascii() {
+            let bytes_target = bytes_profile();
+            let bytes_artifact = serialize_python_re(&lower(&semantic, &bytes_target))
+                .expect("ASCII bytes literal artifact");
+            assert_eq!(bytes_artifact.pattern.text, expected);
+            bytes_artifact
+                .validate_against_profile(&bytes_target)
+                .expect("bytes profile");
+        }
+    }
+}
+
+#[test]
 fn operation_spellings_preserve_precedence_positions_captures_and_assertions() {
     let semantic = program(json!({
         "node_id": "node:syntax.root",

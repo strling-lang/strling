@@ -28,6 +28,7 @@ scope:
         - core/src/portability_planning/validation.rs
         - core/src/post_lowering_requirements.rs
         - core/src/python_re_lowering.rs
+        - core/src/python_re_serialization.rs
         - core/src/safety_analysis.rs
         - core/src/semantic_frontend.rs
         - core/src/target/profile.rs
@@ -37,6 +38,7 @@ scope:
         - core/tests/pcre2_lowering.rs
         - core/tests/portability_planning.rs
         - core/tests/python_re_lowering.rs
+        - core/tests/python_re_serialization.rs
         - docs/migration/fourth-edition-hardening-recertification.md
         - docs/migration/jvm-adapter-migration.md
         - docs/migration/performance-resource-certification.md

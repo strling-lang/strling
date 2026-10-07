@@ -5,6 +5,7 @@
 //! [`TargetArtifact`]. It does not evaluate capabilities, plan or apply
 //! rewrites, execute Python, or consult ambient state.
 
+use std::borrow::Cow;
 use std::collections::{BTreeMap, BTreeSet};
 use std::convert::TryFrom;
 use std::error::Error;
@@ -479,10 +480,11 @@ fn emit_node(
             emitter.push(")", &node.provenance)?;
         }
         PythonReOperation::Literal(text) => {
+            let mut scalar_buffer = [0; 4];
             for character in text.chars() {
                 validate_scalar_for_kind(character, pattern_kind, node)?;
                 emitter.push(
-                    &escape_pattern_character(character, pattern_kind),
+                    &escape_pattern_character(character, pattern_kind, &mut scalar_buffer),
                     &node.provenance,
                 )?;
             }
@@ -819,16 +821,20 @@ fn validate_ascii_identifier(value: &str) -> Result<(), &'static str> {
     Ok(())
 }
 
-fn escape_pattern_character(character: char, pattern_kind: PythonRePatternKind) -> String {
+fn escape_pattern_character<'a>(
+    character: char,
+    pattern_kind: PythonRePatternKind,
+    scalar_buffer: &'a mut [u8; 4],
+) -> Cow<'a, str> {
     match character {
         '\\' | '^' | '$' | '.' | '|' | '?' | '*' | '+' | '(' | ')' | '[' | ']' | '{' | '}' => {
-            format!(r"\{character}")
+            Cow::Owned(format!(r"\{character}"))
         }
-        ' ' | '#' => code_point_escape(character, pattern_kind),
+        ' ' | '#' => Cow::Owned(code_point_escape(character, pattern_kind)),
         value if value.is_control() || value.is_whitespace() => {
-            code_point_escape(value, pattern_kind)
+            Cow::Owned(code_point_escape(value, pattern_kind))
         }
-        value => value.to_string(),
+        value => Cow::Borrowed(value.encode_utf8(scalar_buffer)),
     }
 }
 
@@ -919,20 +925,21 @@ mod tests {
 
     #[test]
     fn primitive_spellings_are_canonical() {
+        let mut scalar_buffer = [0; 4];
         assert_eq!(
-            escape_pattern_character('.', PythonRePatternKind::Str),
+            escape_pattern_character('.', PythonRePatternKind::Str, &mut scalar_buffer),
             r"\."
         );
         assert_eq!(
-            escape_pattern_character(' ', PythonRePatternKind::Str),
+            escape_pattern_character(' ', PythonRePatternKind::Str, &mut scalar_buffer),
             r"\x20"
         );
         assert_eq!(
-            escape_pattern_character('\u{2028}', PythonRePatternKind::Str),
+            escape_pattern_character('\u{2028}', PythonRePatternKind::Str, &mut scalar_buffer),
             r"\u2028"
         );
         assert_eq!(
-            escape_pattern_character('😀', PythonRePatternKind::Str),
+            escape_pattern_character('😀', PythonRePatternKind::Str, &mut scalar_buffer),
             "😀"
         );
         assert_eq!(

@@ -156,6 +156,7 @@ scope:
         - dependency-license-evidence
         - jvm-adapter-release-graph
         - package-manager-lockfiles
+        - performance-resource-source-identities
         - profile-source-definitions
         - public-contract-snapshots
         - semantic-authority-retirement-evidence

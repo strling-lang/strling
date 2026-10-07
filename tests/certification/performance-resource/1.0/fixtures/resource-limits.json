@@ -349,7 +349,7 @@
                 },
                 {
                     "path": "core/tests/python_re_serialization.rs",
-                    "sha256": "013642bb6bd35d36b1dfc5e659be6623fd22b97f79cf8a941655596bd3ef3334"
+                    "sha256": "29dc51d40dcf8c8f3f09e06bc99446e79fd52db5fe1ec71b95c9a1b62be68f75"
                 }
             ],
             "disposition": "read-only-existing-limit"
@@ -476,5 +476,5 @@
         }
     ],
     "declaration_count": 56,
-    "inventory_fingerprint": "c389d60f98eccecf8ab482f6429c41e90e7d457959b79188ae365f926f8806d1"
+    "inventory_fingerprint": "1ec9917fdd77e05fcd2dedf43b1af5a6f9ce44e197596422ea7f01f122282d19"
 }

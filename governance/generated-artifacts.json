@@ -1593,6 +1593,57 @@
             "enforcement": "enforced"
         },
         {
+            "id": "performance-resource-source-identities",
+            "category": "version-synchronized-metadata",
+            "description": "Identity-only in-place renewal of governed resource regression-test hashes and dependent inventory, manifest, retained baseline, and synthetic-evidence fingerprints. Existing declarations, limits, operation definitions, measured baseline data, budgets, environment, conditioning, and measurement policy are retained authority, not generated or recalibrated by this command.",
+            "authoritative_sources": [
+                "core/src/**",
+                "core/cli/strling-editor-core.rs",
+                "bindings/interop/src/protocol.rs",
+                "governance/schemas/performance-resource-certification.schema.json",
+                "tests/certification/performance-resource/1.0/fixtures/fixture-manifest.json"
+            ],
+            "generator_inputs": [
+                "core/tests/*.rs",
+                "bindings/interop/tests/protocol.rs",
+                "tooling/performance_resource_certification.py"
+            ],
+            "generator": {
+                "implementation_paths": [
+                    "tooling/performance_resource_certification.py"
+                ],
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.performance_resource_certification",
+                    "refresh-identities",
+                    "--json"
+                ],
+                "working_directory": "."
+            },
+            "outputs": [
+                "tests/certification/performance-resource/1.0/fixtures/resource-limits.json",
+                "tests/certification/performance-resource/1.0/manifest.json",
+                "tests/certification/performance-resource/1.0/baseline.json",
+                "tests/certification/performance-resource/1.0/valid-evidence.json"
+            ],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "operational-projection",
+            "verification": {
+                "method": "command-check",
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.performance_resource_certification",
+                    "--profile",
+                    "local",
+                    "--json"
+                ]
+            },
+            "enforcement": "enforced"
+        },
+        {
             "id": "adversarial-semantic-observations",
             "category": "audit-certification-output",
             "description": "Empirical adversarial raw engine observations; the enforced offline verifier binds evidence to current audit inputs and requires zero semantic or diagnostic findings.",

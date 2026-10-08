@@ -78,6 +78,7 @@ from tooling.performance_resource_certification import (
     environment_identity_fingerprint,
     environment_mismatches,
     environments_compatible,
+    file_fingerprint,
     load_json,
     main as performance_main,
     performance_measurement_keys,
@@ -193,6 +194,88 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         cls.fixtures = load_json(FIXTURE_PATH)
         cls.inventory = load_json(INVENTORY_PATH)
         cls.evidence = load_json(EVIDENCE_PATH)
+
+    def _validate_historical_candidate(
+        self,
+        manifest: dict[str, Any],
+        baseline: dict[str, Any] | None = None,
+    ) -> None:
+        """Validate migration policy in copies bound to today's inventory source.
+
+        Historical inputs remain untouched for the migration comparisons. These
+        copies are unit-test validation context, not refreshed historical proof.
+        Production validation retains all source checks and hard ceilings.
+        """
+        validation_manifest = copy.deepcopy(manifest)
+        validation_manifest["resource_inventory"]["sha256"] = file_fingerprint(
+            INVENTORY_PATH
+        )
+        validation_manifest["manifest_fingerprint"] = document_fingerprint(
+            validation_manifest, "manifest_fingerprint"
+        )
+        validate_manifest(
+            validation_manifest, fixtures=self.fixtures, inventory=self.inventory
+        )
+        if baseline is not None:
+            validation_baseline = copy.deepcopy(baseline)
+            validation_baseline["manifest_fingerprint"] = validation_manifest[
+                "manifest_fingerprint"
+            ]
+            validation_baseline["baseline_fingerprint"] = document_fingerprint(
+                validation_baseline, "baseline_fingerprint"
+            )
+            validate_baseline(
+                validation_baseline,
+                manifest=validation_manifest,
+                fixtures=self.fixtures,
+            )
+
+    def test_historical_validation_context_preserves_contract_and_source_checks(
+        self,
+    ) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["resource_inventory"]["sha256"] = "0" * 64
+        manifest["manifest_fingerprint"] = document_fingerprint(
+            manifest, "manifest_fingerprint"
+        )
+        baseline = load_json(BASELINE_PATH)
+        baseline["manifest_fingerprint"] = manifest["manifest_fingerprint"]
+        baseline["baseline_fingerprint"] = document_fingerprint(
+            baseline, "baseline_fingerprint"
+        )
+        original_manifest = copy.deepcopy(manifest)
+        original_baseline = copy.deepcopy(baseline)
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_manifest(manifest, fixtures=self.fixtures)
+        self.assertEqual(raised.exception.code, "stale-resource-inventory")
+        with (
+            patch(
+                f"{__name__}.validate_manifest", wraps=validate_manifest
+            ) as checked_manifest,
+            patch(
+                f"{__name__}.validate_baseline", wraps=validate_baseline
+            ) as checked_baseline,
+        ):
+            self._validate_historical_candidate(manifest, baseline)
+        bound_manifest = copy.deepcopy(checked_manifest.call_args.args[0])
+        bound_baseline = copy.deepcopy(checked_baseline.call_args.args[0])
+        self.assertEqual(
+            bound_manifest["resource_inventory"]["sha256"],
+            file_fingerprint(INVENTORY_PATH),
+        )
+        bound_manifest["resource_inventory"]["sha256"] = manifest["resource_inventory"][
+            "sha256"
+        ]
+        bound_manifest["manifest_fingerprint"] = manifest["manifest_fingerprint"]
+        bound_baseline["manifest_fingerprint"] = baseline["manifest_fingerprint"]
+        bound_baseline["baseline_fingerprint"] = baseline["baseline_fingerprint"]
+        self.assertEqual(bound_manifest, original_manifest)
+        self.assertEqual(bound_baseline, original_baseline)
+        self.assertEqual(manifest, original_manifest)
+        self.assertEqual(baseline, original_baseline)
+        with self.assertRaises(PerformanceResourceError) as raised:
+            validate_manifest(manifest, fixtures=self.fixtures)
+        self.assertEqual(raised.exception.code, "stale-resource-inventory")
 
     def test_combined_os_rollover_allows_only_paired_cli_contract_change(self) -> None:
         prior_root = (
@@ -377,12 +460,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                     candidate["budget"]["prior_absolute_ceiling"],
                 ),
             )
-        validate_manifest(candidate_manifest, fixtures=self.fixtures)
-        validate_baseline(
-            candidate_baseline,
-            manifest=candidate_manifest,
-            fixtures=self.fixtures,
-        )
+        self._validate_historical_candidate(candidate_manifest, candidate_baseline)
         self.assertFalse(
             any(
                 "conditioning_identity_fingerprint" in snapshot
@@ -402,11 +480,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             tampered_baseline, "baseline_fingerprint"
         )
         with self.assertRaises(PerformanceResourceError) as raised:
-            validate_baseline(
-                tampered_baseline,
-                manifest=candidate_manifest,
-                fixtures=self.fixtures,
-            )
+            self._validate_historical_candidate(candidate_manifest, tampered_baseline)
         self.assertEqual(raised.exception.code, "budget-provenance")
         drifted = copy.deepcopy(candidate_manifest)
         drifted["measurement_policy"]["sample_iterations"] += 1
@@ -458,11 +532,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             manifest, "manifest_fingerprint"
         )
 
-        validate_manifest(
-            manifest,
-            fixtures=self.fixtures,
-            inventory=self.inventory,
-        )
+        self._validate_historical_candidate(manifest)
         self.assertEqual(prior_warmups, STATIONARY_WARMUP_ITERATIONS)
         self.assertEqual(target_warmups, SUSTAINED_WARMUP_ITERATIONS)
         self.assertEqual(
@@ -542,12 +612,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
             candidate_baseline["prior_baseline_fingerprint"],
             prior_baseline["baseline_fingerprint"],
         )
-        validate_manifest(candidate_manifest, fixtures=self.fixtures)
-        validate_baseline(
-            candidate_baseline,
-            manifest=candidate_manifest,
-            fixtures=self.fixtures,
-        )
+        self._validate_historical_candidate(candidate_manifest, candidate_baseline)
 
     @patch.dict("os.environ", {}, clear=True)
     @patch(
@@ -2562,14 +2627,14 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         candidate_manifest["manifest_fingerprint"] = document_fingerprint(
             candidate_manifest, "manifest_fingerprint"
         )
-        validate_manifest(candidate_manifest, fixtures=self.fixtures)
+        self._validate_historical_candidate(candidate_manifest)
         invalid_cpu = copy.deepcopy(candidate_manifest)
         invalid_cpu["measurement_policy"]["selected_logical_cpu"] = 21
         invalid_cpu["manifest_fingerprint"] = document_fingerprint(
             invalid_cpu, "manifest_fingerprint"
         )
         with self.assertRaises(PerformanceResourceError) as raised:
-            validate_manifest(invalid_cpu, fixtures=self.fixtures)
+            self._validate_historical_candidate(invalid_cpu)
         self.assertEqual(raised.exception.code, "measurement-policy")
         candidate_baseline = copy.deepcopy(prior_baseline)
         environment = candidate_baseline["environment"]

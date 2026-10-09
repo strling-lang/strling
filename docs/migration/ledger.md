@@ -5966,4 +5966,110 @@ The active baseline is 1,035,872 bytes with fingerprint
 `43f4b9cec4f4f7e135f31af0eb94a04faabfa74af3850198d5d735be2ebc01c6`;
 the unchanged 1 MiB hygiene ceiling is satisfied.
 
+### October 9 autonomous launch-normalization remediation
+
+The owner authorized autonomous cause-backed remediation, both complete
+source-distinct campaigns and closure on the idle governed host; no further
+environmental recovery or owner decision is pending. H08 remains open and
+P20-T02 remains unavailable until real certification and closure pass.
+
+Clean `bd58294fa2162e43e735e8c3d2ab7c6d5ac9b240` passed Local 37/37 and
+Pull Request 79/79. Full failed fast after 22 of 125 operations: 20 passed,
+the sole VSCE license waiver and one CLI-startup performance failure; 103
+operations were not reached. Semantic-tiny measured 16968 basis points against
+12658 absolute and 12984 relative ceilings. All 64 request/control pairs and
+the exact original failed artifact remain retained. Release and downstream
+qualification did not begin; no old result is relabeled.
+
+Bounded process traces attribute diagnostic spikes to native Windows process
+security-token cleanup before child creation, not STRling child work. The exact
+original failure is not invalidated by that separate attribution. Fixed
+negative-control campaigns retained all 36, 27 and 36 windows respectively.
+Strict alternating order aliases periodic cleanup; the power-of-two proposal
+failed the existing variability limit when cleanup became period six. The
+general half-complementary proposal passed aggregate nine-repeat criteria but
+still exposed an identical-help phase-slip counterexample. Neither proposal
+was activated or counted as certification. All 99 windows were reviewed.
+
+The reviewed correction uses an exact all-sample marginal-median ratio and
+64-pair half-complementary acquisition. Independent identity, reciprocity,
+scaling, monotonicity, real-slowdown injection and bounded-contamination
+regressions preserve complete samples and historical estimator behavior.
+Migration requires fresh source-bound calibration of all 54 coordinates,
+immutable prior authority and every prior effective ceiling as a cap. At this
+checkpoint native runner regressions pass 8/8 and pure normalization/cap/
+independent-verifier regressions pass 7/7; complete direct dependents,
+prospective live proof, calibration and both authoritative campaigns remain
+pending. Compiler-macro and sandbox-only test-setup failures are retained as
+development failures, not performance evidence. H08 is not closed.
+
+The expanded deterministic suite now passes 10 tests, including fresh synthetic
+calibration reconstruction, declared-estimator verifier fixtures, failed-prefix
+retention, no same-source calibration retry and strict policy-drift rejection.
+Both affected registered identity generators and checks pass with no output
+changes; the prior baseline bytes remain unchanged. Governance (33 rules),
+static analysis and the public-contract check pass. The retained complete
+direct-dependent unit run is still in progress and has reported a failure whose
+terminal traceback is pending; this does not authorize freezing or sampling.
+
+The retained native development run subsequently completed 125 unit cases:
+124 passed and the isolated-verifier case failed before verifier execution
+because native Python found `jsonschema` only in user-site, which `-I`
+intentionally excludes. Its exact traceback is retained; isolation and
+candidate-import rejection are not relaxed. Minimum replay in the existing
+isolated WSL tooling runtime and current direct regressions are pending.
+
+The complete generated-artifact run returned zero from every enforced family
+but failed its final repository-byte stability guard: three authored sources
+changed during that retained run. It remains failed, not relabeled. The
+unchanged stability-guard regressions pass 12/12, both affected exact registered
+family checks pass on stable sources and repository hygiene passes with zero
+findings. Fresh complete generation on the future clean qualification SHA is
+still required. No engineering commit, prospective proof, calibration or new
+authoritative campaign is claimed at this checkpoint.
+
+The minimum isolated-runtime recovery subsequently passed twice using the
+existing WSL system `jsonschema` 4.10.3 under `python3 -I`; all 73 current
+performance and 10 normalization regressions also passed. No installation,
+isolation, verifier import boundary or original failed receipt was changed.
+
+The fresh engineering dependency-risk operation then failed on two critical
+and one moderate advisories affecting TypeScript's development-only transitive
+Handlebars 4.7.9. The exact failed result remains retained with SHA-256
+`c6a38ab6268034e2685a7458d8bac14bcd8a84ad090637d5202f2a0568a5520a`.
+The official compatible patch 4.7.10 was resolved with npm 10.9.8, preserving
+registry archive and integrity provenance. Only its lock entry and upstream
+dependency-range metadata changed; the manifest, every other resolved package,
+Jest 30.5.2 and ts-jest 29.4.14 remain unchanged. The package-manager lockfile
+family is registered transitional metadata without a universal certified
+generator; this explicitly authorized security repair uses the owning resolver
+and real integrity, advisory, license and direct TypeScript tests, not generated
+agreement as authority. Repeated real security and direct-dependent recovery
+are still pending at this checkpoint. The moderate sprintf-js advisory has no
+patched version; it remains visible under the unchanged nonblocking severity
+policy, without any new waiver. No performance candidate has been frozen.
+
+The targeted lock repair subsequently passed two real npm vulnerability and
+license checks, 30/30 integrity checks, and two complete network risk operations
+each with 54 passed checks, only the existing VSCE waiver and zero failed,
+unavailable or incomplete checks. Fresh `npm ci` and the unchanged canonical
+TypeScript build/test command passed. Attestation contract, profile-source
+definitions and repository static analysis passed; the latter retains 53
+managed suppressions, five existing waivers and zero findings. The terminal
+receipt completed at 2026-10-09T10:16:10Z. These are development proofs, not
+authoritative profiles or replacement-source certification.
+
+Prelaunch guard review corrected two prepared-helper contract assumptions:
+the complete security aggregate is `waived`, not `passed`, when the exact
+accepted VSCE disposition is present; the definition checker needs its
+supported JSON option and emits identity-only details rather than a status
+field. Strict reconstruction now requires all 55 checks, the exact ten scoped
+waiver bindings and current expiry, rejects any additional waiver or blocking
+severity, and validates the definition artifact/role/fingerprint independently.
+All 28 negative guards pass, including rejection of the original real failed
+security result. A native self-test invocation that omitted repository
+`PYTHONPATH` is retained and its minimum environment-correct replay passes;
+no isolation setting or substantive guard was relaxed. Prospective live proof,
+calibration, both source-distinct campaigns and closure remain unexecuted.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

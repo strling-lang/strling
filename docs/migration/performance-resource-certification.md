@@ -617,6 +617,60 @@ immediately unavailable. This preserves the busy and interrupt thresholds and
 prevents a transient counter epoch change on an unrelated logical processor
 from being misreported as an unparseable conditioner result.
 
+## Reviewed typical-launch normalization transition
+
+Historical manifests retain their own estimator interpretation. The optional
+`exact-ratio-of-all-sample-marginal-medians` estimator must be declared together
+with `half-complementary-adjacent-pairs-64-v1`. Its acquisition performs 32
+control-first adjacent pairs followed by 32 request-first pairs, retaining all
+64 request and 64 control observations. Every fixed physical-launch period
+from 2 through 64 has label discrepancy at most two; divisors of 64 cancel
+exactly. Constant and linear ordinal log-cost trends also cancel. These are
+ordinal guarantees, not an assumption that host cleanup never changes phase.
+
+On activation, the governed typical warmed-latency signal becomes the exact ratio
+of the two marginal medians. With sorted positive integer arrays `R` and `C`, it is
+`ceil(10000 * (R[31] + R[32]) / (C[31] + C[32]))`. There is no intermediate
+median rounding, floating-point computation, filtering, rejection or sample
+deletion. Raw arrays, per-pair diagnostic ratios, wall/CPU evidence, median,
+p95, MAD, launch labels and doubled authenticated consumption remain retained.
+The verifier independently reconstructs the statistic and allocation from
+the immutable source contract and complete evidence.
+
+This location statistic has exact identical-distribution and arbitrary
+re-pairing invariance, exact common-unit scaling, reciprocity subject only to
+final conservative rounding, monotonicity and full-array slowdown sensitivity.
+It does not claim immunity at or beyond 50% contamination. Deterministic
+negative controls demonstrate why the historical arithmetic interpolation of
+order-stratum pair-ratio medians is not a valid normalization: identical
+distributions can produce 16668 basis points in both comparison directions.
+Separately, changing host cleanup phase can bias even an all-sample geometric
+ratio despite fixed-period-balanced acquisition. Neither counterexample
+retroactively changes any failed authoritative result.
+
+Activation is an explicit, one-use clean-source migration:
+
+```powershell
+python -m tooling.performance_resource_certification migrate-cli-normalization `
+  --confirm-launch-normalization `
+  --rationale "Reviewed normalization invariants and independent live proofs" `
+  --json
+```
+
+The migration rebuilds exact-source artifacts, requires the existing environment
+and conditioning, and freshly calibrates all 54 coordinates with the existing
+512 warmups, 64 latency samples and nine repetitions. Each new median must pass
+the prior contract. Every active absolute ceiling is capped by the minimum of
+its freshly derived value and the prior _effective_ relative/absolute ceiling;
+every relative budget is capped by its prior value. The 500bp variability limit,
+all workloads, isolation, security and profile membership remain unchanged.
+The prior manifest, baseline and synthetic evidence are archived byte-for-byte.
+The ignored, source-keyed calibration attempt retains start events, complete raw
+observations, conditioning and terminal failure before any activation; an
+unchanged source cannot repeat a consumed calibration attempt. Prospective live
+negative controls and direct regressions precede this migration. Calibration
+and diagnostic evidence are never authoritative profile or closure evidence.
+
 ## Profile ownership
 
 -   Local validates the authored contract and fixture identities without timing

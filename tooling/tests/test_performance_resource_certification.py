@@ -1022,6 +1022,44 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
         self.assertEqual(observation["samples"], elapsed)
         self.assertEqual(observation["control_samples"], elapsed)
         self.assertEqual(observation["rejected_batch_duration_samples"], [])
+        from tooling.performance_resource_certification import (
+            ROBUST_CLI_LAUNCH_SCHEDULE,
+        )
+
+        result["cli_launch_schedule"] = ROBUST_CLI_LAUNCH_SCHEDULE
+        result["request_first"] = [False] * 32 + [True] * 32
+
+        def measure(schedule=ROBUST_CLI_LAUNCH_SCHEDULE, count=64):
+            run.return_value = Mock(stdout=json.dumps(result))
+            return _runner_samples(
+                "latency:cli-startup",
+                "fixture:simply-tiny",
+                artifacts={"runner": "runner", "kernel": "kernel"},
+                warmups=512,
+                samples=count,
+                batch_iterations=1,
+                minimum_sample_nanoseconds=None,
+                maximum_batch_iterations=4096,
+                selected_logical_cpu=20,
+                execution_resource=self._environment()["execution_resource"],
+                cli_launch_schedule=schedule,
+            )
+
+        bound = measure()
+        self.assertEqual(bound["request_first"], result["request_first"])
+        self.assertEqual(bound["cli_launch_schedule"], ROBUST_CLI_LAUNCH_SCHEDULE)
+        self.assertEqual(bound["samples"], elapsed)
+        self.assertIn("--cli-launch-schedule", run.call_args.args[0])
+        for order in ([], [True] * 64, [0] * 32 + [1] * 32):
+            result["request_first"] = order
+            with self.assertRaises(PerformanceResourceError) as raised:
+                measure()
+            self.assertEqual(raised.exception.code, "launch-control-schedule")
+        for schedule, count in (("unknown", 64), (ROBUST_CLI_LAUNCH_SCHEDULE, 63)):
+            run.reset_mock()
+            with self.assertRaises(PerformanceResourceError):
+                measure(schedule, count)
+            run.assert_not_called()
 
     @patch.dict(
         "os.environ",
@@ -2330,6 +2368,7 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
 
         environment = self._environment()
         conditioning = self._conditioning_snapshot(environment)
+        events = []
         with (
             patch(
                 "tooling.performance_resource_certification._measure_key",
@@ -2350,9 +2389,20 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 rationale=(
                     "Synthetic orchestration proof for all governed repetitions."
                 ),
+                observation_recorder=events.append,
             )
 
         expected_keys = performance_measurement_keys(manifest)
+        self.assertEqual(len(events), 2 * 9 * len(expected_keys))
+        self.assertEqual(events[0]["event"], "coordinate-start")
+        self.assertEqual(events[1]["event"], "coordinate-observation")
+        self.assertEqual(events[1]["conditioning"], conditioning)
+        self.assertEqual(
+            len(events[1]["observation"]["samples"]),
+            64
+            if operations[next(iter(calls))[0]]["measurement_kind"] == "latency"
+            else 1,
+        )
         self.assertEqual(set(calls), set(expected_keys))
         self.assertTrue(
             all(count == STATIONARY_BASELINE_REPETITIONS for count in calls.values())

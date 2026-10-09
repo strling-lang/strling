@@ -1495,8 +1495,12 @@
                 "relative_estimator": {
                     "enum": [
                         "median-of-paired-request-control-ratios",
-                        "order-balanced-geometric-mean-of-paired-request-control-ratios"
+                        "order-balanced-geometric-mean-of-paired-request-control-ratios",
+                        "exact-ratio-of-all-sample-marginal-medians"
                     ]
+                },
+                "launch_schedule": {
+                    "enum": ["half-complementary-adjacent-pairs-64-v1"]
                 },
                 "unit": {
                     "enum": ["nanoseconds", "microseconds", "bytes", "status"]

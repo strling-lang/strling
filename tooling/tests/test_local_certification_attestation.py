@@ -549,7 +549,24 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                 paired_relative_statistics = performance.sample_statistics(
                     paired_relative_signals
                 )
-                observed_relative_signal = paired_relative_statistics["median"]
+                estimator = performance.operation_relative_estimator(definition)
+                normalized = (
+                    estimator == performance.ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+                )
+                if normalized:
+                    # Independently authored synthetic evidence follows its
+                    # declared contract, not a producer-reported aggregate.
+                    ordered_request = sorted(samples)
+                    ordered_control = sorted(control_samples)
+                    numerator = 10_000 * (ordered_request[31] + ordered_request[32])
+                    denominator = ordered_control[31] + ordered_control[32]
+                    observed_relative_signal = (
+                        numerator + denominator - 1
+                    ) // denominator
+                else:
+                    observed_relative_signal = performance.controlled_launch_estimate(
+                        samples, control_samples
+                    )
                 comparison = performance.compare_controlled_launch_metric(
                     baseline_relative_signal=row["relative_statistics"]["median"],
                     observed_relative_signal=observed_relative_signal,
@@ -564,7 +581,9 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                     "control_samples": control_samples,
                     "control_statistics": control_statistics,
                     "relative_signal": {
-                        "kind": performance.CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
+                        "kind": performance.ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+                        if normalized
+                        else performance.CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
                         "unit": "basis-points",
                         "observed": observed_relative_signal,
                         "samples": paired_relative_signals,
@@ -573,6 +592,14 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                     "control_batch_duration_samples": [
                         sample * row["batch_iterations"] for sample in control_samples
                     ],
+                    **(
+                        {
+                            "cli_launch_schedule": performance.ROBUST_CLI_LAUNCH_SCHEDULE,
+                            "request_first": [False] * 32 + [True] * 32,
+                        }
+                        if normalized
+                        else {}
+                    ),
                 }
             else:
                 comparison = performance.compare_hard_metric(

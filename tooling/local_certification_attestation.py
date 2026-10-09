@@ -365,6 +365,31 @@ def _validate_security_evidence(
         raise AttestationError("security producer aggregate contradicts check evidence")
 
 
+def _reconstruct_normalized_cli_median(
+    definition: Mapping[str, Any],
+    details: Mapping[str, Any],
+) -> int:
+    """Reconstruct the new location statistic without importing producer arithmetic."""
+    performance = _helper_module("performance_resource_certification")
+    requests, controls = details.get("samples"), details.get("control_samples")
+    if (
+        definition.get("launch_schedule") != performance.ROBUST_CLI_LAUNCH_SCHEDULE
+        or details.get("cli_launch_schedule") != definition.get("launch_schedule")
+        or details.get("request_first") != [index >= 32 for index in range(64)]
+        or any(type(value) is not bool for value in details.get("request_first", []))
+        or not isinstance(requests, list)
+        or not isinstance(controls, list)
+        or len(requests) != 64
+        or len(controls) != 64
+        or any(type(value) is not int or value <= 0 for value in [*requests, *controls])
+    ):
+        raise AttestationError("performance launch allocation or median input mismatch")
+    ordered_request, ordered_control = sorted(requests), sorted(controls)
+    numerator = 10_000 * (ordered_request[31] + ordered_request[32])
+    denominator = ordered_control[31] + ordered_control[32]
+    return (numerator + denominator - 1) // denominator
+
+
 def _validate_performance_measurements(
     repository_root: Path,
     source_sha: str,
@@ -726,10 +751,14 @@ def _validate_performance_measurements(
                 raise AttestationError(
                     f"performance control batch normalization mismatch: {coordinate}"
                 )
-            if (
-                performance.operation_relative_estimator(definition)
-                != performance.CLI_LAUNCH_RELATIVE_ESTIMATOR
-            ):
+            estimator = performance.operation_relative_estimator(definition)
+            robust_location = (
+                estimator == performance.ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+            )
+            if estimator not in {
+                performance.CLI_LAUNCH_RELATIVE_ESTIMATOR,
+                performance.ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR,
+            }:
                 raise AttestationError(
                     f"performance paired estimator is not governed: {coordinate}"
                 )
@@ -740,7 +769,14 @@ def _validate_performance_measurements(
             paired_relative_statistics = performance.sample_statistics(
                 paired_relative_signals
             )
-            observed_relative_signal = paired_relative_statistics["median"]
+            if robust_location:
+                observed_relative_signal = _reconstruct_normalized_cli_median(
+                    definition, details
+                )
+            else:
+                observed_relative_signal = performance.controlled_launch_estimate(
+                    samples, control_samples
+                )
             comparison = performance.compare_controlled_launch_metric(
                 baseline_relative_signal=source["relative_statistics"]["median"],
                 observed_relative_signal=observed_relative_signal,
@@ -754,7 +790,9 @@ def _validate_performance_measurements(
             controlled_evidence_matches = details.get(
                 "control_statistics"
             ) == control_statistics and details.get("relative_signal") == {
-                "kind": performance.CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
+                "kind": performance.ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+                if robust_location
+                else performance.CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
                 "unit": "basis-points",
                 "observed": observed_relative_signal,
                 "samples": paired_relative_signals,
@@ -767,6 +805,8 @@ def _validate_performance_measurements(
                 "control_statistics",
                 "relative_signal",
                 "control_batch_duration_samples",
+                "cli_launch_schedule",
+                "request_first",
             } & set(details)
             if unexpected_control_fields:
                 raise AttestationError(

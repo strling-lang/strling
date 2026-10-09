@@ -22,7 +22,7 @@ import tempfile
 import time
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, Iterator, Mapping, Sequence, cast
+from typing import Any, Callable, Iterator, Mapping, Sequence, cast
 
 from jsonschema import Draft202012Validator
 
@@ -172,6 +172,13 @@ CLI_LAUNCH_RELATIVE_ESTIMATOR = (
 )
 CLI_LAUNCH_RELATIVE_SIGNAL_KIND = (
     "order-balanced-geometric-mean-paired-request-control-ratios"
+)
+ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR = "exact-ratio-of-all-sample-marginal-medians"
+ROBUST_CLI_LAUNCH_SCHEDULE = "half-complementary-adjacent-pairs-64-v1"
+ROBUST_CLI_LAUNCH_DESCRIPTION = (
+    "Measure representative canonical CLI validation and compilation commands; "
+    "compare exact all-sample marginal medians against a same-binary help launch "
+    "while retaining prior effective ceilings."
 )
 PER_COORDINATE_BASELINE_CONDITIONING = "authenticated-identical-before-each-coordinate"
 GOVERNED_WINDOWS_LOGICAL_CPUS = {1, 20}
@@ -745,6 +752,7 @@ def validate_manifest(
                 None,
                 LEGACY_CLI_LAUNCH_RELATIVE_ESTIMATOR,
                 CLI_LAUNCH_RELATIVE_ESTIMATOR,
+                ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR,
             }:
                 raise PerformanceResourceError(
                     "relative-estimator",
@@ -754,6 +762,16 @@ def validate_manifest(
             raise PerformanceResourceError(
                 "relative-estimator",
                 f"direct comparison cannot define a relative estimator for {operation['id']}",
+            )
+        expected_launch_schedule = (
+            ROBUST_CLI_LAUNCH_SCHEDULE
+            if relative_estimator == ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+            else None
+        )
+        if operation.get("launch_schedule") != expected_launch_schedule:
+            raise PerformanceResourceError(
+                "launch-control-schedule",
+                "estimator and acquisition schedule must be bound",
             )
         if not set(operation["fixture_ids"]).issubset(fixture_ids):
             raise PerformanceResourceError(
@@ -1106,6 +1124,39 @@ def controlled_launch_estimate(
     product = request_first * control_first
     root = math.isqrt(product)
     return root if root * root == product else root + 1
+
+
+def normalized_launch_median(
+    request_samples: Sequence[int], control_samples: Sequence[int]
+) -> int:
+    """Exact typical warm-latency ratio; retain all inputs, round only at the end.
+
+    The historical order-stratified estimator remains a separate function.
+    Marginal medians preserve identity and normalization under independent
+    permutation, while avoiding attribution of sparse host launch cleanup as
+    product work. Paired acquisition and all raw/CPU evidence remain mandatory.
+    """
+    if not request_samples or len(request_samples) != len(control_samples):
+        raise PerformanceResourceError(
+            "launch-control-pairs", "request/control samples must form complete pairs"
+        )
+    if len(request_samples) != 64:
+        raise PerformanceResourceError(
+            "launch-control-count", "normalized launch location requires all 64 pairs"
+        )
+    if any(
+        type(value) is not int or value <= 0
+        for value in (*request_samples, *control_samples)
+    ):
+        raise PerformanceResourceError(
+            "launch-control-statistic",
+            "request/control timings must be positive integers",
+        )
+    ordered_request = sorted(request_samples)
+    controls = sorted(control_samples)
+    numerator = (ordered_request[31] + ordered_request[32]) * 10_000
+    denominator = controls[31] + controls[32]
+    return (numerator + denominator - 1) // denominator
 
 
 def compare_controlled_launch_metric(
@@ -1529,6 +1580,13 @@ def validate_baseline(
                     sample_statistics(
                         controlled_launch_signals(request_row, control_row)
                     )["median"]
+                    for request_row, control_row in zip(
+                        repetitions, control_repetitions
+                    )
+                ]
+            elif relative_estimator == ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR:
+                relative_samples = [
+                    normalized_launch_median(request_row, control_row)
                     for request_row, control_row in zip(
                         repetitions, control_repetitions
                     )
@@ -3129,6 +3187,7 @@ def _runner_samples(
     maximum_batch_iterations: int,
     selected_logical_cpu: int,
     execution_resource: Mapping[str, object],
+    cli_launch_schedule: str | None = None,
     root: Path = ROOT,
 ) -> dict[str, Any]:
     command = [
@@ -3154,6 +3213,16 @@ def _runner_samples(
         )
     if operation_id == "latency:cli-startup":
         command.extend(["--kernel-bin", str(artifacts["kernel"])])
+    if cli_launch_schedule is not None:
+        if (
+            operation_id != "latency:cli-startup"
+            or cli_launch_schedule != ROBUST_CLI_LAUNCH_SCHEDULE
+            or samples != 64
+        ):
+            raise PerformanceResourceError(
+                "launch-control-schedule", "unknown or incomplete launch allocation"
+            )
+        command.extend(["--cli-launch-schedule", cli_launch_schedule])
     try:
         completed = subprocess.run(
             command,
@@ -3201,6 +3270,15 @@ def _runner_samples(
     )
     rejected_count = len(rejected_batch_elapsed_samples)
     expects_launch_control = operation_id == "latency:cli-startup"
+    if cli_launch_schedule is not None and (
+        result.get("cli_launch_schedule") != cli_launch_schedule
+        or result.get("request_first") != [index >= 32 for index in range(64)]
+        or any(type(value) is not bool for value in result.get("request_first", []))
+    ):
+        raise PerformanceResourceError(
+            "launch-control-schedule",
+            "runner omitted or changed the bound launch allocation",
+        )
     if (
         result.get("operation_id") != operation_id
         or result.get("fixture_id") != fixture_id
@@ -3365,6 +3443,14 @@ def _runner_samples(
         "control_process_cpu_samples": normalized_control_cpu,
         "control_process_cpu_batch_duration_samples": control_cpu_elapsed,
         "control_process_cpu_utilization_basis_points": control_cpu_utilization,
+        **(
+            {
+                "cli_launch_schedule": cli_launch_schedule,
+                "request_first": result["request_first"],
+            }
+            if cli_launch_schedule is not None
+            else {}
+        ),
     }
 
 
@@ -3553,6 +3639,12 @@ def _measure_key(
             selected_logical_cpu=selected_logical_cpu,
             execution_resource=cast(
                 Mapping[str, object], environment["execution_resource"]
+            ),
+            **(
+                {"cli_launch_schedule": ROBUST_CLI_LAUNCH_SCHEDULE}
+                if operation_relative_estimator(operation)
+                == ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+                else {}
             ),
             root=root,
         )
@@ -3885,6 +3977,11 @@ def create_active_contract(
                     sample_statistics(
                         controlled_launch_signals(request_row, control_row)
                     )["median"]
+                    for request_row, control_row in zip(repeated, control_rows)
+                ]
+            elif relative_estimator == ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR:
+                relative_samples = [
+                    normalized_launch_median(request_row, control_row)
                     for request_row, control_row in zip(repeated, control_rows)
                 ]
             else:
@@ -4690,6 +4787,7 @@ def calibrate_baseline(
     environment: Mapping[str, object],
     source_commit: str,
     rationale: str,
+    observation_recorder: Callable[[dict[str, Any]], None] | None = None,
     root: Path = ROOT,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     keys = performance_measurement_keys(manifest)
@@ -4733,6 +4831,14 @@ def calibrate_baseline(
                 environment, root=root
             )
         for key in ordered:
+            if observation_recorder is not None:
+                observation_recorder(
+                    {
+                        "event": "coordinate-start",
+                        "repetition": repetition_index + 1,
+                        "coordinate": _coordinate_id(key),
+                    }
+                )
             coordinate_snapshots = coordinate_conditioning_repetitions[key]
             if coordinate_snapshots is not None:
                 coordinate_snapshot = _acquire_quiet_conditioning_snapshot(
@@ -4765,6 +4871,16 @@ def calibrate_baseline(
                 batch_iterations=batch_iterations.get(key),
                 root=root,
             )
+            if observation_recorder is not None:
+                observation_recorder(
+                    {
+                        "event": "coordinate-observation",
+                        "repetition": repetition_index + 1,
+                        "coordinate": _coordinate_id(key),
+                        "conditioning": current_snapshot,
+                        "observation": observation,
+                    }
+                )
             observed_batch_iterations = observation["batch_iterations"]
             if (
                 key in batch_iterations
@@ -5400,10 +5516,10 @@ def certify(
             observed = sample_statistics(samples)
             controlled_details: dict[str, object] = {}
             if comparison_model == CLI_LAUNCH_COMPARISON_MODEL:
-                if (
-                    operation_relative_estimator(operation)
-                    != CLI_LAUNCH_RELATIVE_ESTIMATOR
-                ):
+                if operation_relative_estimator(operation) not in {
+                    CLI_LAUNCH_RELATIVE_ESTIMATOR,
+                    ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR,
+                }:
                     raise PerformanceResourceError(
                         "relative-estimator",
                         f"paired launch estimator is not governed for {key}",
@@ -5413,8 +5529,14 @@ def certify(
                     samples, control_samples
                 )
                 paired_relative_statistics = sample_statistics(paired_relative_signals)
-                observed_relative_signal = controlled_launch_estimate(
-                    samples, control_samples
+                robust_location = (
+                    operation_relative_estimator(operation)
+                    == ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+                )
+                observed_relative_signal = (
+                    normalized_launch_median(samples, control_samples)
+                    if robust_location
+                    else controlled_launch_estimate(samples, control_samples)
                 )
                 comparison = compare_controlled_launch_metric(
                     baseline_relative_signal=baseline_row["relative_statistics"][
@@ -5432,7 +5554,9 @@ def certify(
                     "control_samples": control_samples,
                     "control_statistics": control_statistics,
                     "relative_signal": {
-                        "kind": CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
+                        "kind": ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+                        if robust_location
+                        else CLI_LAUNCH_RELATIVE_SIGNAL_KIND,
                         "unit": "basis-points",
                         "observed": observed_relative_signal,
                         "samples": paired_relative_signals,
@@ -5441,6 +5565,14 @@ def certify(
                     "control_batch_duration_samples": observation[
                         "control_batch_duration_samples"
                     ],
+                    **(
+                        {
+                            "cli_launch_schedule": observation["cli_launch_schedule"],
+                            "request_first": observation["request_first"],
+                        }
+                        if robust_location
+                        else {}
+                    ),
                 }
             else:
                 comparison = compare_hard_metric(
@@ -6355,9 +6487,16 @@ def _preserve_warmup_migration_thresholds(
     candidate_baseline: dict[str, Any],
     *,
     selected_logical_cpu_migration: tuple[int, int] | None = None,
+    launch_normalization_migration: bool = False,
 ) -> list[dict[str, object]]:
     """Require the recalibrated measurements to pass every prior hard ceiling."""
 
+    if launch_normalization_migration and candidate_manifest["measurement_policy"][
+        "relative_budget_formula"
+    ] not in {DERIVED_RELATIVE_BUDGET_FORMULA, CAPPED_RELATIVE_BUDGET_FORMULA}:
+        raise PerformanceResourceError(
+            "launch-normalization-contract-drift", "unknown calibration budget formula"
+        )
     candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
         CAPPED_RELATIVE_BUDGET_FORMULA
     )
@@ -6365,6 +6504,44 @@ def _preserve_warmup_migration_thresholds(
     candidate_projection = copy.deepcopy(candidate_manifest)
     prior_projection.pop("manifest_fingerprint", None)
     candidate_projection.pop("manifest_fingerprint", None)
+    if launch_normalization_migration:
+        if selected_logical_cpu_migration is not None or prior_projection[
+            "measurement_policy"
+        ] != {
+            **candidate_projection["measurement_policy"],
+            "relative_budget_formula": prior_projection["measurement_policy"][
+                "relative_budget_formula"
+            ],
+        }:
+            raise PerformanceResourceError(
+                "launch-normalization-contract-drift",
+                "launch normalization cannot change any sampling or environment policy",
+            )
+        prior_cli = next(
+            row
+            for row in prior_projection["operations"]
+            if row["id"] == "latency:cli-startup"
+        )
+        candidate_cli = next(
+            row
+            for row in candidate_projection["operations"]
+            if row["id"] == "latency:cli-startup"
+        )
+        if (
+            prior_cli.get("relative_estimator") != CLI_LAUNCH_RELATIVE_ESTIMATOR
+            or prior_cli.get("launch_schedule") is not None
+            or candidate_cli.get("relative_estimator")
+            != ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+            or candidate_cli.get("launch_schedule") != ROBUST_CLI_LAUNCH_SCHEDULE
+            or candidate_cli.get("description") != ROBUST_CLI_LAUNCH_DESCRIPTION
+        ):
+            raise PerformanceResourceError(
+                "launch-normalization-transition",
+                "only the reviewed old-to-marginal-median CLI transition is permitted",
+            )
+        candidate_cli["relative_estimator"] = prior_cli["relative_estimator"]
+        candidate_cli["description"] = prior_cli["description"]
+        candidate_cli.pop("launch_schedule")
     prior_projection["measurement_policy"]["warmup_iterations"] = (
         "reviewed-stationary-warmup"
     )
@@ -6476,6 +6653,16 @@ def _preserve_warmup_migration_thresholds(
         )
         prior_relative = prior["budget"]["relative_regression_basis_points"]
         prior_absolute = prior["budget"]["absolute_ceiling"]
+        if launch_normalization_migration:
+            prior_statistics = (
+                prior["relative_statistics"]
+                if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL
+                else prior["statistics"]
+            )
+            prior_absolute = min(
+                prior_absolute,
+                prior_statistics["median"] * (10_000 + prior_relative) // 10_000,
+            )
         candidate["budget"] = {
             "state": "active",
             "relative_regression_basis_points": min(derived_relative, prior_relative),
@@ -6485,7 +6672,10 @@ def _preserve_warmup_migration_thresholds(
             "derived_absolute_ceiling": derived_absolute,
             "prior_absolute_ceiling": prior_absolute,
             "rationale": (
-                "Five governed repetition medians derive the candidate budget; "
+                "Fresh governed repetition medians derive the candidate budget; "
+                "the immediately prior effective ceilings cap any relaxation."
+                if launch_normalization_migration
+                else "Five governed repetition medians derive the candidate budget; "
                 "the immediately prior hard ceilings cap any relaxation."
             ),
         }
@@ -6541,6 +6731,275 @@ def _preserve_warmup_migration_thresholds(
         candidate_baseline, "baseline_fingerprint"
     )
     return comparisons
+
+
+def _write_calibration_diagnostic(
+    path: Path,
+    value: Mapping[str, object],
+    *,
+    root: Path = ROOT,
+) -> None:
+    directory = (root / "target/performance-calibration").resolve()
+    resolved = path.resolve()
+    if (
+        resolved.parent.parent != directory
+        or re.fullmatch(r"[0-9a-f]{40}", resolved.parent.name) is None
+        or resolved.suffix != ".json"
+        or resolved.exists()
+    ):
+        raise PerformanceResourceError(
+            "calibration-write-boundary", "invalid or existing receipt"
+        )
+    with tempfile.NamedTemporaryFile(
+        mode="w",
+        encoding="utf-8",
+        newline="\n",
+        dir=resolved.parent,
+        delete=False,
+        prefix=f".{resolved.name}.",
+        suffix=".tmp",
+    ) as stream:
+        stream.write(serialized_json(value))
+        stream.flush()
+        os.fsync(stream.fileno())
+        temporary = Path(stream.name)
+    os.replace(temporary, resolved)
+
+
+def _migrate_cli_normalization_command(
+    *,
+    confirm_launch_normalization: bool,
+    rationale: str,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    """Acquire fresh source-bound calibration, retaining all prior effective caps."""
+    if not confirm_launch_normalization:
+        raise PerformanceResourceError(
+            "launch-normalization-confirmation",
+            "reviewed normalization requires confirmation",
+        )
+    if len(rationale.strip()) < 20:
+        raise PerformanceResourceError(
+            "baseline-rationale", "rationale must be reviewable"
+        )
+    commit, dirty = _git_identity(root)
+    if dirty:
+        raise PerformanceResourceError(
+            "dirty-launch-normalization",
+            "normalization migration requires a clean source",
+        )
+    paths = {
+        "manifest.json": root / MANIFEST_PATH.relative_to(ROOT),
+        "baseline.json": root / BASELINE_PATH.relative_to(ROOT),
+        "valid-evidence.json": root / VALID_EVIDENCE_PATH.relative_to(ROOT),
+    }
+    prior_bytes = {name: path.read_bytes() for name, path in paths.items()}
+    prior_manifest = load_json(paths["manifest.json"])
+    prior_baseline = load_json(paths["baseline.json"])
+    prior_evidence = load_json(paths["valid-evidence.json"])
+    fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
+    validate_manifest(prior_manifest, root=root, fixtures=fixtures)
+    validate_baseline(prior_baseline, manifest=prior_manifest, fixtures=fixtures)
+    validate_evidence(prior_evidence, manifest=prior_manifest)
+    candidate_manifest = copy.deepcopy(prior_manifest)
+    cli = next(
+        row
+        for row in candidate_manifest["operations"]
+        if row["id"] == "latency:cli-startup"
+    )
+    if cli.get("relative_estimator") != CLI_LAUNCH_RELATIVE_ESTIMATOR or cli.get(
+        "launch_schedule"
+    ):
+        raise PerformanceResourceError(
+            "launch-normalization-transition", "the old paired estimator must be active"
+        )
+    cli["relative_estimator"] = ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
+    cli["launch_schedule"] = ROBUST_CLI_LAUNCH_SCHEDULE
+    cli["description"] = ROBUST_CLI_LAUNCH_DESCRIPTION
+    candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
+        DERIVED_RELATIVE_BUDGET_FORMULA
+    )
+    history = (
+        root
+        / PERFORMANCE_HISTORY_PATH.relative_to(ROOT)
+        / prior_baseline["baseline_fingerprint"]
+    )
+    if history.exists():
+        raise PerformanceResourceError(
+            "launch-normalization-history-exists", "prior history already exists"
+        )
+    # A calibration attempt is immutable and never retried at an unchanged source.
+    retained = root / "target/performance-calibration" / commit
+    try:
+        retained.mkdir(parents=True, exist_ok=False)
+    except FileExistsError as error:
+        raise PerformanceResourceError(
+            "launch-normalization-source-consumed",
+            "this source already attempted calibration",
+        ) from error
+    request = {
+        "artifact_kind": "strling-launch-normalization-calibration",
+        "source_commit": commit,
+        "authoritative": False,
+        "certification_eligible": False,
+        "rationale": rationale,
+        "prior_artifacts": {
+            name: hashlib.sha256(data).hexdigest() for name, data in prior_bytes.items()
+        },
+        "measurement_policy": candidate_manifest["measurement_policy"],
+        "relative_estimator": ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR,
+        "launch_schedule": ROBUST_CLI_LAUNCH_SCHEDULE,
+        "coordinates": [
+            _coordinate_id(key) for key in performance_measurement_keys(prior_manifest)
+        ],
+    }
+    _write_calibration_diagnostic(retained / "request.json", request, root=root)
+
+    def record(event: dict[str, Any]) -> None:
+        with (retained / "observations.jsonl").open(
+            "a", encoding="utf-8", newline="\n"
+        ) as stream:
+            stream.write(
+                json.dumps(
+                    {
+                        "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                        **event,
+                    },
+                    sort_keys=True,
+                )
+                + "\n"
+            )
+            stream.flush()
+            os.fsync(stream.fileno())
+
+    try:
+        _enforce_governed_cpu_affinity(prior_manifest)
+        build_status, build_details = _build_release_artifacts(root)
+        if build_status != "passed":
+            raise PerformanceResourceError(
+                "release-build", json.dumps(build_details, sort_keys=True)
+            )
+        artifacts = cast(Mapping[str, object], build_details["artifacts"])
+        source_changes = _artifact_source_changes(
+            baseline_source_commit=prior_baseline["source_commit"],
+            candidate_source_commit=commit,
+            root=root,
+        )
+        accepted, artifact_identity = _artifact_identity_check(
+            prior_baseline["artifact_fingerprints"],
+            artifacts,
+            baseline_source_commit=prior_baseline["source_commit"],
+            candidate_source_commit=commit,
+            source_changes=source_changes,
+        )
+        if not accepted:
+            raise PerformanceResourceError(
+                "launch-normalization-artifacts", "unbound artifacts"
+            )
+        environment = live_environment(
+            selected_logical_cpu=prior_manifest["measurement_policy"][
+                "selected_logical_cpu"
+            ],
+            root=root,
+        )
+        if not environments_compatible(prior_baseline["environment"], environment):
+            raise PerformanceResourceError(
+                "launch-normalization-environment", "environment drift"
+            )
+        record(
+            {
+                "event": "calibration-start",
+                "environment": environment,
+                "artifact_identity": artifact_identity,
+            }
+        )
+        candidate_manifest, candidate_baseline = calibrate_baseline(
+            candidate_manifest,
+            fixtures,
+            artifacts=_release_artifacts(root),
+            artifact_fingerprints=artifacts,
+            environment=environment,
+            source_commit=commit,
+            rationale=rationale,
+            observation_recorder=record,
+            root=root,
+        )
+        # Retain the entire fresh candidate even when variance or prior caps deny activation.
+        _write_calibration_diagnostic(
+            retained / "candidate-baseline.json", candidate_baseline, root=root
+        )
+        comparisons = _preserve_warmup_migration_thresholds(
+            prior_manifest,
+            prior_baseline,
+            candidate_manifest,
+            candidate_baseline,
+            launch_normalization_migration=True,
+        )
+        candidate_evidence = copy.deepcopy(prior_evidence)
+        candidate_evidence["manifest_fingerprint"] = candidate_manifest[
+            "manifest_fingerprint"
+        ]
+        validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+        validate_baseline(
+            candidate_baseline, manifest=candidate_manifest, fixtures=fixtures
+        )
+        validate_evidence(candidate_evidence, manifest=candidate_manifest)
+        current_commit, current_dirty = _git_identity(root)
+        if (
+            current_dirty
+            or current_commit != commit
+            or any(
+                path.read_bytes() != prior_bytes[name] for name, path in paths.items()
+            )
+        ):
+            raise PerformanceResourceError(
+                "launch-normalization-source-drift", "source changed during calibration"
+            )
+        history.mkdir(parents=True, exist_ok=False)
+        for name, data in prior_bytes.items():
+            with (history / name).open("xb") as stream:
+                stream.write(data)
+            if (history / name).read_bytes() != data:
+                raise PerformanceResourceError(
+                    "launch-normalization-history", "history bytes changed"
+                )
+        _write_json(paths["manifest.json"], candidate_manifest, root=root)
+        _write_json(paths["baseline.json"], candidate_baseline, root=root)
+        _write_json(paths["valid-evidence.json"], candidate_evidence, root=root)
+        result = {
+            "status": "passed",
+            "source_commit": commit,
+            "prior_baseline_fingerprint": prior_baseline["baseline_fingerprint"],
+            "baseline_fingerprint": candidate_baseline["baseline_fingerprint"],
+            "manifest_fingerprint": candidate_manifest["manifest_fingerprint"],
+            "history_path": history.relative_to(root).as_posix(),
+            "retained_attempt": retained.relative_to(root).as_posix(),
+            "all_prior_effective_ceilings_preserved": True,
+            "fresh_calibration_coordinates": len(comparisons),
+            "comparisons": comparisons,
+            "relative_estimator": ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR,
+            "launch_schedule": ROBUST_CLI_LAUNCH_SCHEDULE,
+            "history_bytes_preserved": True,
+            "authoritative": False,
+            "certification_eligible": False,
+        }
+        _write_calibration_diagnostic(retained / "terminal.json", result, root=root)
+        return result
+    except (PerformanceResourceError, OSError, ValueError) as error:
+        _write_calibration_diagnostic(
+            retained / "terminal.json",
+            {
+                "status": "failed",
+                "source_commit": commit,
+                "code": getattr(error, "code", type(error).__name__),
+                "message": str(error),
+                "authoritative": False,
+                "certification_eligible": False,
+                "history_not_rewritten": True,
+            },
+            root=root,
+        )
+        raise
 
 
 def _warmup_migration_manifest(
@@ -7190,6 +7649,20 @@ def main(argv: list[str] | None = None) -> int:
             arguments = parser.parse_args(values)
             result = _migrate_paired_launch_estimator_command(
                 confirm_paired_estimator=arguments.confirm_paired_estimator,
+                rationale=arguments.rationale,
+            )
+            status = cast(str, result["status"])
+        elif values and values[0] == "migrate-cli-normalization":
+            parser = argparse.ArgumentParser(
+                description="Recalibrate reviewed CLI normalization under every prior effective ceiling"
+            )
+            parser.add_argument("migrate-cli-normalization")
+            parser.add_argument("--confirm-launch-normalization", action="store_true")
+            parser.add_argument("--rationale", required=True)
+            parser.add_argument("--json", action="store_true")
+            arguments = parser.parse_args(values)
+            result = _migrate_cli_normalization_command(
+                confirm_launch_normalization=arguments.confirm_launch_normalization,
                 rationale=arguments.rationale,
             )
             status = cast(str, result["status"])

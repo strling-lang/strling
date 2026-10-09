@@ -83,6 +83,7 @@ scope:
         - tests/conformance/evidence/stdlib-runtime-observations.json
         - tests/architecture/semantic-authority/1.0/evidence.json
         - tests/_design/unit/semantic_frontend_token_borrowing.md
+        - tests/_design/unit/performance-launch-normalization.md
         - tests/_design/unit/test_certification_readiness.md
         - tests/_design/unit/test_jvm_dependency_alignment.md
         - toolchain.json
@@ -116,6 +117,7 @@ scope:
         - tooling/tests/test_governance.py
         - tooling/tests/test_hygiene.py
         - tooling/tests/test_launch_readiness.py
+        - tooling/tests/test_launch_normalization.py
         - tooling/tests/test_local_certification_attestation.py
         - tooling/tests/test_jvm_adapter_runtime.py
         - tooling/tests/test_jvm_adapter_package.py
@@ -257,7 +259,7 @@ required_verification:
       expected_result: Exact source/profile/invocation/runtime/sample/waiver bindings pass; stale, fabricated, missing, altered, or untrusted evidence fails closed; cloud performs no expensive recomputation.
     - name: Repository closure
       command: Run governance, generated-artifact, public-contract, documentation, formatting, and patch-integrity checks after recording certification.
-      expected_result: The campaign record is complete, P20-T02 is activated but not started, HEAD equals origin/dev, and the worktree is clean.
+      expected_result: The campaign record is complete, P20-T02 is activated but not started, the exact local closure SHA is committed, and the worktree is clean; no push is authorized.
 invariant_inventory:
     - invariant_id: single-source-hardened-certification
       architectural_claim: Deterministic, exact-engine, Full, and independent no-reuse Release evidence all authenticate one clean Fourth Edition source baseline before publication preparation resumes.
@@ -758,6 +760,39 @@ checkpoints:
             result: not_run
             details: >-
                 Final record validation, a clean records-only commit, once-at-exact-SHA non-performance predictors, freeze and prepared two-campaign owner guard tests remain required. The executed profile source remains b7b741bebd9232e72e1834479d900dd1943d6035; a later record SHA must be identified separately without copying or relabelling those artifacts. The continuation schedule remains active until those readiness gates pass. Performance is intentionally deferred until explicit human idle-host confirmation. Only then may the owner complete the first authoritative campaign, qualify the verifier, make a pin-only promotion commit, complete a second authoritative campaign at the new SHA, perform pinned cloud verification and close H08. No performance conditioning, paired diagnostic or preflight, live sampling, performance-inclusive profile, trust promotion, closure, push, tag, upload, publication or registry mutation has been performed in this continuation.
+    - name: Autonomous launch-normalization remediation after consumed Full
+      status: in_progress
+      evidence:
+          - check: Actual failed authoritative campaign remains immutable
+            result: failed
+            details: >-
+                Clean bd58294fa2162e43e735e8c3d2ab7c6d5ac9b240 passed Local 37/37 and Pull Request 79/79. Full selected 125 and executed 22 with 20 passed, sole WVR-SEC-VSCE-LICENSE-001 waived and CLI-startup failed; 103 operations were not reached. Semantic-tiny observed 16968 basis points above absolute 12658 and relative 12984. All 64 complete pairs, original failure stdout SHA256 7871e524d081784748ff4900809c398192fdf58adc226199d6028c8e1098b920 and terminal receipt remain preserved. No Release or verifier qualification followed. This consumed source is not retried.
+          - check: Prospective negative-control failures and bounded root cause
+            result: passed
+            details: >-
+                Diagnostic traces with zero lost events/buffers attribute measured launch spikes to native Windows security-token cleanup before child creation, not the exact original failure's invalidity. All 99 windows in fixed 36/27/36 plans were retained and reviewed. Strict alternation aliases periodic cleanup; the power-of-two schedule fails at period six; the half-complementary schedule bounds every fixed period 2 through 64 but an identical-help control still exposes phase-slip geometric normalization bias. No proposal was activated, no sample discarded, no original result invalidated and no certification or environmental cure claimed.
+          - check: Governed typical-launch correction and current development proofs
+            result: passed
+            details: >-
+                Exact all64 marginal-median normalization has independent identity, permutation, scaling, reciprocity, monotonicity, slowdown-injection and less-than-half contamination proofs, with no immunity claim at the median breakdown boundary. Native allocation regressions pass within the complete 8-test runner suite and the initial seven pure normalization/cap/independent-verifier tests pass. Historical estimators remain reconstructible. The explicit clean-source migration requires fresh 54-coordinate calibration, immutable prior bytes, retained raw failed prefixes, unchanged counts/conditioning/security and every prior effective ceiling as a cap. Prospective live proof, clean freeze and both authoritative campaigns remain pending. Development compile and sandbox test-setup failures do not change performance evidence.
+          - check: Expanded deterministic regression and registered identities
+            result: passed
+            details: The expanded 10-test suite proves independently authored fresh calibration and verifier-fixture reconstruction, exact medians, allocation binding, failed raw prefixes, exclusive diagnostic writes, no unchanged-source calibration retry, prior effective ceiling caps and strict policy-drift rejection. Both exact registered identity generators and verification commands pass with zero generated output changes; the original baseline bytes are unchanged. Governance passes all 33 rules, static analysis passes and the public-contract check passes. The retained complete direct-dependent unit run is still in progress with one failure marker and terminal traceback pending; no complete-suite success, frozen candidate, prospective sampling or certification is claimed.
+          - check: Terminal development failures retained and minimum recovery
+            result: not_run
+            details: Native development suite terminal failure retains 124 passed of 125 unit cases and the isolated-verifier traceback; Python-I cannot import jsonschema because the native installation provides it only in user-site. No verifier logic ran in that failed case, no candidate import was allowed and isolation remains unchanged. Atomic replay twice in the existing isolated WSL tooling runtime and current direct regressions are pending. Complete generated-artifact check remains failed solely at repository-byte stability after three authored files changed during execution; every enforced family returned zero. Unchanged guard regressions pass 12/12, both affected registered family checks pass on stable sources and hygiene passes with zero findings. Fresh exact-SHA complete generation remains required. No clean engineering candidate, prospective proof, calibration, authoritative campaign or closure is claimed.
+          - check: Minimum isolated-runtime recovery completed without policy changes
+            result: passed
+            details: Existing WSL system jsonschema 4.10.3 is importable under python3 -I; the unchanged isolated-verifier candidate-import rejection case passes twice and the current 73 performance plus 10 normalization regressions pass. No host installation, isolation relaxation or verifier logic substitution was needed. Original native 124-of-125 development failure remains retained, as does the concurrent-edit generation failure. No authoritative profile result is inferred.
+          - check: Fresh critical Handlebars advisory and compatible lock-only correction
+            result: failed
+            details: Fresh engineering dependency-risk terminated with 53 passed, one failed check and the sole VSCE waiver. The exact failed JSON SHA256 c6a38ab6268034e2685a7458d8bac14bcd8a84ad090637d5202f2a0568a5520a retains two critical and one moderate Handlebars4.7.9 advisory and one moderate sprintf-js1.0.3 advisory. The official compatible Handlebars4.7.10 patch was resolved with npm10.9.8; only its development-only lock entry and upstream minimist range changed. Manifest, all other package resolutions, Jest30.5.2, ts-jest29.4.14, public/runtime surfaces, security policy and waivers are unchanged. Registered lockfiles remain transitional without a universal certified generator; owning-resolver provenance plus repeated real security and canonical TypeScript direct tests are required and currently pending. The unpatched moderate sprintf-js finding remains visible and nonblocking under existing policy, not waived or reclassified.
+          - check: Compatible security correction and direct recovery completed
+            result: passed
+            details: Terminal receipt completed at 2026-10-09T10:16:10Z with exit0. Two actual npm advisory and license checks pass; integrity passes 30 checks. Two complete real network risk operations each pass 54 checks with only WVR-SEC-VSCE-LICENSE-001 waived and zero failed, unavailable or incomplete checks. Fresh npmci and the unchanged canonical TypeScript build/test operation pass. Attestation contract, plain profile-source definition check and static analysis pass; static retains 53 managed suppressions, five existing waivers and zero findings. Moderate unpatched sprintf-js remains visible under unchanged severity policy. Original failed risk evidence is not relabeled; these results are dirty-source development proofs, not authoritative profile results.
+          - check: Prepared exact-source guards follow actual result contracts
+            result: passed
+            details: All 28 negative guard regressions pass. The prospective freeze reconstructs the complete55-check security aggregate, exact ten VSCE package/version/license bindings and unchanged scope/current expiry; additional waivers, bad statuses or blocking severity reject, including the original real failed security result. Definition checking uses the supported JSON serializer and verifies exact identity-only artifact/role/fingerprint rather than inventing a passed status. The12-path engineering allowlist includes only the new security lock correction plus reviewed normalization sources/tests/records; calibration-stage writes permit only the six required active/history artifacts and three explicit record paths. A missing-PYTHONPATH native helper self-test failure is preserved and only its correct root environment is replayed. No prospective live proof, calibration, profile, promotion or closure has occurred.
 commits:
     - sha: 42f57b28eed2f70034ddfc8f3f36f3fd4abeaf20
       subject: "perf(core): reuse safety validation context"
@@ -858,4 +893,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Historical accepted performance baseline and failed-campaign evidence remain unchanged. Remediated clean source b7b741bebd9232e72e1834479d900dd1943d6035 completed actual non-performance Local 36/36, Pull Request 77/77, Full 121 passes plus the sole existing license waiver, and fresh independent no-reuse Release with the same 121-pass/one-waiver result. Development-only actual signing, isolated pinned verifier plumbing and in-memory closure dry validation passed without authoritative meaning or tracked closure. Final records-only validation, clean freeze, once exact-SHA non-performance predictors and guarded owner preparation remain pending. Performance is intentionally deferred; explicit human idle-host confirmation must precede a complete authoritative campaign, verifier qualification, pin-only promotion, a second complete authoritative campaign at the new SHA, pinned cloud verification and formal H08 closure. P20-T02 remains blocked until that closure.
+    rationale: Newest human authority confirms the idle host and requires autonomous cause-backed remediation through actual H08 closure; no owner guidance or favorable environmental recovery wait remains. The consumed bd58294 campaign passed Local 37 and PR 79 but Full failed at CLI startup after 20 passes and the sole license waiver, leaving 103 operations unrun. Its exact evidence and all diagnostic counterexamples remain historical. The normalization correction, direct dependents, prospective live proofs, history-preserving capped calibration, clean freeze, complete first qualification campaign, signing, isolated reviewed-verifier qualification, exact pin-only promotion, second source-distinct campaign with fresh independent Release, pinned isolated verification and evidence-only closure remain required. No readiness or diagnostic result substitutes for certification, and P20-T02 remains blocked until genuine clean local closure. No push or publication is authorized.

@@ -34,7 +34,8 @@ use strling_kernel::validation::Validate;
 type RunResult<T> = Result<T, String>;
 type PreparedOperation = Box<dyn Fn() -> RunResult<usize>>;
 
-const RUNNER_VERSION: &str = "1.9.0";
+const RUNNER_VERSION: &str = "1.10.0";
+const ROBUST_CLI_LAUNCH_SCHEDULE: &str = "half-complementary-adjacent-pairs-64-v1";
 const MAXIMUM_DESCHEDULING_NANOSECONDS: u64 = 50_000_000;
 const MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER: usize = 2;
 const MEMORY_WORKER_BINARY: &str = "strling-performance-memory-worker.exe";
@@ -50,6 +51,7 @@ struct Arguments {
     maximum_batch_iterations: usize,
     expected_logical_cpu: Option<usize>,
     kernel_bin: Option<PathBuf>,
+    cli_launch_schedule: Option<String>,
     ping: bool,
 }
 
@@ -97,6 +99,14 @@ fn run() -> RunResult<()> {
     }
     if arguments.warmups == 0 || arguments.samples == 0 {
         return Err("warmups and samples must be positive".to_owned());
+    }
+    if let Some(schedule) = arguments.cli_launch_schedule.as_deref() {
+        if arguments.operation != "latency:cli-startup"
+            || arguments.samples != 64
+            || schedule != ROBUST_CLI_LAUNCH_SCHEDULE
+        {
+            return Err("unknown or incomplete CLI launch schedule".to_owned());
+        }
     }
     let execution_resource = match arguments.expected_logical_cpu {
         Some(expected) => effective_execution_resource(expected)?,
@@ -252,7 +262,12 @@ fn run() -> RunResult<()> {
     if let Some(control) = &control_operation {
         for sample_index in 0..arguments.samples {
             sample_attempts += 1;
-            let (request, control_sample) = if sample_index % 2 == 0 {
+            let request_first = if arguments.cli_launch_schedule.is_some() {
+                robust_cli_request_first(sample_index)
+            } else {
+                sample_index % 2 == 0
+            };
+            let (request, control_sample) = if request_first {
                 (measure(&operation)?, measure(control)?)
             } else {
                 let control_sample = measure(control)?;
@@ -298,51 +313,55 @@ fn run() -> RunResult<()> {
     }
     verify_execution_resource(&execution_resource, arguments.expected_logical_cpu)?;
     let peak_working_set_bytes = peak_working_set_bytes()?;
+    let mut result = json!({
+        "runner_version": RUNNER_VERSION,
+        "operation_id": arguments.operation,
+        "fixture_id": fixture.id,
+        "unit": "nanoseconds",
+        "warmup_iterations": arguments.warmups,
+        "sample_iterations": arguments.samples,
+        "batch_iterations": batch_iterations,
+        "selected_logical_cpu": arguments.expected_logical_cpu,
+        "effective_cpu_affinity": effective_cpu_affinity,
+        "platform": execution_resource.platform,
+        "placement_mechanism": execution_resource.placement_mechanism,
+        "effective_cpuset": execution_resource.effective_cpuset,
+        "cgroup_path": execution_resource.cgroup_path,
+        "cpu_quota": execution_resource.cpu_quota,
+        "clocksource": execution_resource.clocksource,
+        "processor_group": execution_resource.processor_group,
+        "selected_cpu_set_id": execution_resource.selected_cpu_set_id,
+        "cpu_set_allocation_state": execution_resource.cpu_set_allocation_state,
+        "timer_source": execution_resource.timer_source,
+        "process_power_policy": execution_resource.process_power_policy,
+        "observed_processor_groups": observed_processor_groups,
+        "observed_logical_processors": observed_logical_processors,
+        "peak_working_set_bytes": peak_working_set_bytes,
+        "batch_elapsed_samples": batch_elapsed_samples,
+        "samples": samples,
+        "process_cpu_batch_elapsed_samples": process_cpu_batch_elapsed_samples,
+        "process_cpu_samples": process_cpu_samples,
+        "process_cpu_utilization_basis_points": process_cpu_utilization_basis_points,
+        "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
+        "maximum_sample_attempts": maximum_sample_attempts,
+        "sample_attempts": sample_attempts,
+        "rejected_batch_elapsed_samples": rejected_batch_elapsed_samples,
+        "rejected_process_cpu_batch_elapsed_samples": rejected_process_cpu_batch_elapsed_samples,
+        "rejected_process_cpu_utilization_basis_points": rejected_process_cpu_utilization_basis_points,
+        "control_batch_elapsed_samples": control_batch_elapsed_samples,
+        "control_samples": control_samples,
+        "control_process_cpu_batch_elapsed_samples": control_process_cpu_batch_elapsed_samples,
+        "control_process_cpu_samples": control_process_cpu_samples,
+        "control_process_cpu_utilization_basis_points": control_process_cpu_utilization_basis_points,
+        "checksum": checksum,
+    });
+    if arguments.cli_launch_schedule.is_some() {
+        result["cli_launch_schedule"] = json!(arguments.cli_launch_schedule);
+        result["request_first"] = json!((0..64).map(robust_cli_request_first).collect::<Vec<_>>());
+    }
     println!(
         "{}",
-        serde_json::to_string(&json!({
-            "runner_version": RUNNER_VERSION,
-            "operation_id": arguments.operation,
-            "fixture_id": fixture.id,
-            "unit": "nanoseconds",
-            "warmup_iterations": arguments.warmups,
-            "sample_iterations": arguments.samples,
-            "batch_iterations": batch_iterations,
-            "selected_logical_cpu": arguments.expected_logical_cpu,
-            "effective_cpu_affinity": effective_cpu_affinity,
-            "platform": execution_resource.platform,
-            "placement_mechanism": execution_resource.placement_mechanism,
-            "effective_cpuset": execution_resource.effective_cpuset,
-            "cgroup_path": execution_resource.cgroup_path,
-            "cpu_quota": execution_resource.cpu_quota,
-            "clocksource": execution_resource.clocksource,
-            "processor_group": execution_resource.processor_group,
-            "selected_cpu_set_id": execution_resource.selected_cpu_set_id,
-            "cpu_set_allocation_state": execution_resource.cpu_set_allocation_state,
-            "timer_source": execution_resource.timer_source,
-            "process_power_policy": execution_resource.process_power_policy,
-            "observed_processor_groups": observed_processor_groups,
-            "observed_logical_processors": observed_logical_processors,
-            "peak_working_set_bytes": peak_working_set_bytes,
-            "batch_elapsed_samples": batch_elapsed_samples,
-            "samples": samples,
-            "process_cpu_batch_elapsed_samples": process_cpu_batch_elapsed_samples,
-            "process_cpu_samples": process_cpu_samples,
-            "process_cpu_utilization_basis_points": process_cpu_utilization_basis_points,
-            "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
-            "maximum_sample_attempts": maximum_sample_attempts,
-            "sample_attempts": sample_attempts,
-            "rejected_batch_elapsed_samples": rejected_batch_elapsed_samples,
-            "rejected_process_cpu_batch_elapsed_samples": rejected_process_cpu_batch_elapsed_samples,
-            "rejected_process_cpu_utilization_basis_points": rejected_process_cpu_utilization_basis_points,
-            "control_batch_elapsed_samples": control_batch_elapsed_samples,
-            "control_samples": control_samples,
-            "control_process_cpu_batch_elapsed_samples": control_process_cpu_batch_elapsed_samples,
-            "control_process_cpu_samples": control_process_cpu_samples,
-            "control_process_cpu_utilization_basis_points": control_process_cpu_utilization_basis_points,
-            "checksum": checksum,
-        }))
-        .map_err(|error| error.to_string())?
+        serde_json::to_string(&result).map_err(|error| error.to_string())?
     );
     Ok(())
 }
@@ -485,6 +504,10 @@ fn sample_is_authentic(wall_nanoseconds: u64, process_cpu_nanoseconds: u64) -> b
     wall_nanoseconds.saturating_sub(process_cpu_nanoseconds) <= MAXIMUM_DESCHEDULING_NANOSECONDS
 }
 
+fn robust_cli_request_first(sample_index: usize) -> bool {
+    sample_index >= 32
+}
+
 fn captures_timing_evidence(operation: &str) -> bool {
     operation != "memory:kernel-peak-rss"
 }
@@ -502,6 +525,7 @@ fn parse_arguments() -> RunResult<Arguments> {
             maximum_batch_iterations: 1,
             expected_logical_cpu: None,
             kernel_bin: None,
+            cli_launch_schedule: None,
             ping: true,
         });
     }
@@ -514,6 +538,7 @@ fn parse_arguments() -> RunResult<Arguments> {
     let mut maximum_batch_iterations = None;
     let mut expected_logical_cpu = None;
     let mut kernel_bin = None;
+    let mut cli_launch_schedule = None;
     let mut index = 0;
     while index < values.len() {
         let flag = &values[index];
@@ -550,6 +575,7 @@ fn parse_arguments() -> RunResult<Arguments> {
                 )
             }
             "--kernel-bin" => kernel_bin = Some(PathBuf::from(value)),
+            "--cli-launch-schedule" => cli_launch_schedule = Some(value.clone()),
             _ => return Err(format!("unknown argument {flag}")),
         }
         index += 2;
@@ -564,8 +590,60 @@ fn parse_arguments() -> RunResult<Arguments> {
         maximum_batch_iterations: maximum_batch_iterations.unwrap_or(1),
         expected_logical_cpu,
         kernel_bin,
+        cli_launch_schedule,
         ping: false,
     })
+}
+
+#[cfg(test)]
+mod launch_schedule_tests {
+    use super::robust_cli_request_first;
+
+    fn request_at(slot: usize) -> bool {
+        robust_cli_request_first(slot / 2) == (slot % 2 == 0)
+    }
+
+    #[test]
+    fn adjacent_pairs_and_orders_are_complete_and_balanced() {
+        assert_eq!((0..64).filter(|&i| robust_cli_request_first(i)).count(), 32);
+        for pair in 0..64 {
+            assert_ne!(request_at(pair * 2), request_at(pair * 2 + 1));
+        }
+        for slot in 0..64 {
+            assert_ne!(request_at(slot), request_at(slot + 64));
+        }
+    }
+
+    #[test]
+    fn every_fixed_period_phase_has_discrepancy_at_most_two() {
+        for period in 2..=64 {
+            for phase in 0..period {
+                let discrepancy: i32 = (phase..128)
+                    .step_by(period)
+                    .map(|s| if request_at(s) { 1 } else { -1 })
+                    .sum();
+                assert!(discrepancy.abs() <= 2);
+                if 64 % period == 0 {
+                    assert_eq!(discrepancy, 0);
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn constant_and_linear_ordinal_log_drift_cancel() {
+        for power in 0..=1 {
+            let request: u64 = (0usize..128)
+                .filter(|&s| request_at(s))
+                .map(|s| (s as u64).pow(power))
+                .sum();
+            let control: u64 = (0usize..128)
+                .filter(|&s| !request_at(s))
+                .map(|s| (s as u64).pow(power))
+                .sum();
+            assert_eq!(request, control);
+        }
+    }
 }
 
 #[cfg(target_os = "linux")]

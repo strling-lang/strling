@@ -175,6 +175,7 @@ CLI_LAUNCH_RELATIVE_SIGNAL_KIND = (
 )
 ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR = "exact-ratio-of-all-sample-marginal-medians"
 ROBUST_CLI_LAUNCH_SCHEDULE = "half-complementary-adjacent-pairs-64-v1"
+NATIVE_CPU_ACCOUNTING_BATCH_TARGET_NANOSECONDS = 31_250_000
 ROBUST_CLI_LAUNCH_DESCRIPTION = (
     "Measure representative canonical CLI validation and compilation commands; "
     "compare exact all-sample marginal medians against a same-binary help launch "
@@ -842,6 +843,11 @@ def validate_manifest(
         or policy["sample_iterations"] != 64
         or policy["minimum_sample_duration_nanoseconds"] != 1_000_000
         or policy["batch_duration_safety_factor"] != 2
+        or (
+            "native_cpu_accounting_batch_target_nanoseconds" in policy
+            and policy["native_cpu_accounting_batch_target_nanoseconds"]
+            != NATIVE_CPU_ACCOUNTING_BATCH_TARGET_NANOSECONDS
+        )
         or policy["maximum_batch_iterations"] != 4096
         or policy["order_seed"] != 1804
         or not policy["single_worker"]
@@ -3602,6 +3608,25 @@ def _artifact_size(artifacts: Mapping[str, object]) -> int:
     )
 
 
+def _batch_selection_target(
+    policy: Mapping[str, Any], environment: Mapping[str, object], operation_id: str
+) -> int:
+    """Increase native in-process work without changing acceptance or CLI controls."""
+    target = (
+        policy["minimum_sample_duration_nanoseconds"]
+        * policy["batch_duration_safety_factor"]
+    )
+    native_target = policy.get("native_cpu_accounting_batch_target_nanoseconds")
+    if native_target is not None:
+        if native_target != NATIVE_CPU_ACCOUNTING_BATCH_TARGET_NANOSECONDS:
+            raise PerformanceResourceError(
+                "measurement-policy", "unknown native CPU-accounting batch target"
+            )
+        if environment.get("os") == "windows" and operation_id != "latency:cli-startup":
+            target = max(target, native_target)
+    return target
+
+
 def _measure_key(
     key: tuple[str, str | None],
     *,
@@ -3622,7 +3647,6 @@ def _measure_key(
             raise PerformanceResourceError("fixture-required", operation_id)
         policy = manifest["measurement_policy"]
         selected_logical_cpu = policy["selected_logical_cpu"]
-        minimum_duration = policy["minimum_sample_duration_nanoseconds"]
         return _runner_samples(
             operation_id,
             fixture_id,
@@ -3633,7 +3657,7 @@ def _measure_key(
             minimum_sample_nanoseconds=(
                 None
                 if batch_iterations is not None
-                else minimum_duration * policy["batch_duration_safety_factor"]
+                else _batch_selection_target(policy, environment, operation_id)
             ),
             maximum_batch_iterations=policy["maximum_batch_iterations"],
             selected_logical_cpu=selected_logical_cpu,
@@ -6505,6 +6529,20 @@ def _preserve_warmup_migration_thresholds(
     prior_projection.pop("manifest_fingerprint", None)
     candidate_projection.pop("manifest_fingerprint", None)
     if launch_normalization_migration:
+        precision_field = "native_cpu_accounting_batch_target_nanoseconds"
+        candidate_precision = candidate_projection["measurement_policy"].get(
+            precision_field
+        )
+        if candidate_precision is not None:
+            if (
+                precision_field in prior_projection["measurement_policy"]
+                or candidate_precision != NATIVE_CPU_ACCOUNTING_BATCH_TARGET_NANOSECONDS
+            ):
+                raise PerformanceResourceError(
+                    "launch-normalization-contract-drift",
+                    "only the reviewed native CPU-accounting target may be added",
+                )
+            candidate_projection["measurement_policy"].pop(precision_field)
         if selected_logical_cpu_migration is not None or prior_projection[
             "measurement_policy"
         ] != {
@@ -6819,6 +6857,9 @@ def _migrate_cli_normalization_command(
     candidate_manifest["measurement_policy"]["relative_budget_formula"] = (
         DERIVED_RELATIVE_BUDGET_FORMULA
     )
+    candidate_manifest["measurement_policy"][
+        "native_cpu_accounting_batch_target_nanoseconds"
+    ] = NATIVE_CPU_ACCOUNTING_BATCH_TARGET_NANOSECONDS
     history = (
         root
         / PERFORMANCE_HISTORY_PATH.relative_to(ROOT)

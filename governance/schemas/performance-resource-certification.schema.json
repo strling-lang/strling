@@ -1593,6 +1593,9 @@
                     "type": "integer",
                     "minimum": 1
                 },
+                "native_cpu_accounting_batch_target_nanoseconds": {
+                    "const": 31250000
+                },
                 "maximum_batch_iterations": {
                     "type": "integer",
                     "minimum": 1

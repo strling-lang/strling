@@ -21,6 +21,75 @@ from tooling.performance_resource_certification import (
 
 
 class LaunchNormalizationTests(unittest.TestCase):
+    def test_cpu_accounting_representation_is_not_interval_resolution(self):
+        # Independent integer accounting clock, not measured timing or producer code.
+        quantum = 15_625_000
+        phases = [0, quantum - 1] + [quantum * index // 64 for index in range(64)]
+        short_deltas = {
+            ((phase + 2_000_000) // quantum - phase // quantum) * quantum
+            for phase in phases
+        }
+        self.assertEqual(short_deltas, {0, quantum})
+        for phase in phases:
+            self.assertEqual(
+                ((phase + 2 * quantum) // quantum - phase // quantum) * quantum,
+                31_250_000,
+            )
+
+    def test_native_precision_target_preserves_legacy_and_cli_selection(self):
+        policy = copy.deepcopy(
+            performance.load_json(performance.MANIFEST_PATH)["measurement_policy"]
+        )
+        field = "native_cpu_accounting_batch_target_nanoseconds"
+        operation = "latency:supported-host-overhead"
+        self.assertEqual(
+            performance._batch_selection_target(policy, {"os": "windows"}, operation),
+            2_000_000,
+        )
+        policy[field] = 31_250_000
+        self.assertEqual(
+            performance._batch_selection_target(policy, {"os": "windows"}, operation),
+            31_250_000,
+        )
+        self.assertEqual(
+            performance._batch_selection_target(policy, {"os": "linux"}, operation),
+            2_000_000,
+        )
+        self.assertEqual(
+            performance._batch_selection_target(
+                policy, {"os": "windows"}, "latency:cli-startup"
+            ),
+            2_000_000,
+        )
+        for value in (0, 2_000_000, 31_250_001):
+            with self.subTest(value=value):
+                policy[field] = value
+                with self.assertRaises(performance.PerformanceResourceError):
+                    performance._batch_selection_target(
+                        policy, {"os": "windows"}, operation
+                    )
+
+    def test_native_precision_reuses_exact_count_without_reselecting(self):
+        manifest = copy.deepcopy(performance.load_json(performance.MANIFEST_PATH))
+        manifest["measurement_policy"][
+            "native_cpu_accounting_batch_target_nanoseconds"
+        ] = 31_250_000
+        with patch.object(performance, "_runner_samples", return_value={}) as runner:
+            for count, target in ((None, 31_250_000), (80, None)):
+                performance._measure_key(
+                    ("latency:supported-host-overhead", "fixture:protocol-common"),
+                    manifest=manifest,
+                    artifacts={},
+                    environment={"os": "windows", "execution_resource": {}},
+                    batch_iterations=count,
+                )
+                options = runner.call_args.kwargs
+                self.assertEqual(options["minimum_sample_nanoseconds"], target)
+                self.assertEqual(options["batch_iterations"], count)
+                self.assertEqual(options["warmups"], 512)
+                self.assertEqual(options["samples"], 64)
+                self.assertEqual(options["maximum_batch_iterations"], 4096)
+
     def test_migration_requires_confirmation_and_clean_source_before_io(self):
         for confirm, dirty, code in (
             (False, False, "launch-normalization-confirmation"),
@@ -51,6 +120,9 @@ class LaunchNormalizationTests(unittest.TestCase):
         manifest["measurement_policy"]["relative_budget_formula"] = (
             performance.DERIVED_RELATIVE_BUDGET_FORMULA
         )
+        manifest["measurement_policy"][
+            "native_cpu_accounting_batch_target_nanoseconds"
+        ] = 31_250_000
         cli = next(
             row for row in manifest["operations"] if row["id"] == "latency:cli-startup"
         )
@@ -316,6 +388,9 @@ class LaunchNormalizationTests(unittest.TestCase):
         cli["relative_estimator"] = performance.ROBUST_CLI_LAUNCH_RELATIVE_ESTIMATOR
         cli["launch_schedule"] = performance.ROBUST_CLI_LAUNCH_SCHEDULE
         cli["description"] = performance.ROBUST_CLI_LAUNCH_DESCRIPTION
+        candidate_manifest["measurement_policy"][
+            "native_cpu_accounting_batch_target_nanoseconds"
+        ] = 31_250_000
         # Synthetic fresh calibration medians remain at their prior locations.
         # This tests the cap algebra, not a calibration or a reassignment of old samples.
         comparisons = performance._preserve_warmup_migration_thresholds(
@@ -348,6 +423,8 @@ class LaunchNormalizationTests(unittest.TestCase):
             ("baseline_repetitions", 5),
             ("maximum_relative_mad_basis_points", 600),
             ("selected_logical_cpu", 20),
+            ("native_cpu_accounting_batch_target_nanoseconds", 2_000_000),
+            ("native_cpu_accounting_batch_target_nanoseconds", 31_250_001),
         ):
             changed = copy.deepcopy(candidate_manifest)
             changed["measurement_policy"][field] = value

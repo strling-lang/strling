@@ -671,6 +671,70 @@ unchanged source cannot repeat a consumed calibration attempt. Prospective live
 negative controls and direct regressions precede this migration. Calibration
 and diagnostic evidence are never authoritative profile or closure evidence.
 
+## Native in-process CPU-accounting batch resolution
+
+The clean engineering source `58145a0b889ba3a6d71004452203440e74b1ceb0`
+passed its fixed 36-window prospective CLI-normalization proof. Its first fresh
+54-coordinate, nine-repetition calibration nevertheless failed at
+`latency:supported-host-overhead/fixture:protocol-common`: repetition medians
+393230, 362370, 417960, 416600, 369250, 404990, 359660, 370120 and 389090ns
+yielded 510bp MAD, above the unchanged 500bp gate. All 973 ledger events,
+complete raw observations and terminal failure remain retained; no active
+baseline, budget or history artifact changed. This source is consumed and is
+not retried as a calibration.
+
+The retained approximately 2ms in-process batches reported CPU deltas of one
+(the existing zero-delta sentinel) or 15,625,000ns. A FILETIME value's 100ns
+representation does not establish its interval resolution. An independently
+authored integer accounting-clock model demonstrates that identical 2ms work
+can report zero or one quantum depending on phase; an exact two-quantum interval
+has the same CPU delta for every phase. This is an attribution/measurement
+precision defect, not evidence that compiler output or semantics are wrong.
+
+A fixed diagnostic then acquired nine each of prior-short batches (5
+operations, 512 warmups), long batches (80 operations, 512 warmups), and short
+batches with equal total warmup work (5 operations, 8192 warmups), in rotating
+order. Every window retained all 64 observations and real unchanged pre/post
+isolation and conditioning. Independent reconstruction of all 27 windows and
+1728 samples passed. Between-window MAD was respectively 181, 81 and 258bp;
+zero-delta CPU samples numbered 507, 3 and 506 out of 576 per variant. Every
+long-window median remained below the prior 430750ns ceiling. This supports
+stronger batching rather than more warmups or a product-slowdown claim; it does
+not invalidate the original 510bp failure or certify a new source.
+
+The prospective schema-bound native in-process selection target is
+31,250,000ns, two observed accounting quanta. It supplements, never reduces,
+the prior 2ms selector target. Legacy manifests keep their original target,
+and CLI process-launch controls keep separate unchanged batching. Two
+consecutive selector probes are still required; every count remains capped at
+4096 and is reused exactly by Full and independent Release. This is a target,
+not a claim that every later batch reaches it: the existing maximum count and
+1ms minimum accepted batch median still govern fast operations. No sample is
+filtered because of quantization or unfavorable timing. CPU raw evidence stays
+visible, including any residual zero deltas.
+
+The 512 warmups, 64 samples, nine repetitions, per-coordinate conditioning,
+50ms descheduling rule, 500bp MAD, budget floor/maximum, isolation and all prior
+effective ceilings remain unchanged. Only explicit clean-source migration may
+introduce the declared target, using a fresh all-54-coordinate calibration and
+immutable prior history. New pure clock, native/legacy/CLI routing, exact-count
+reuse and cap/policy-drift regressions pass; new-source direct dependents,
+registered checks, clean freeze, prospective proof, calibration and both full
+authoritative campaigns remain required. No acceptance gate is made easier.
+
+The engineering direct checks subsequently completed at
+2026-10-09T16:37:25Z: all 86 performance/normalization unit cases and a separate
+13-case normalization repeat pass; all 36 negative freeze guards pass. The
+registered identity-only generator and verifier changed zero outputs and
+preserved the original baseline bytes. Complete generated validation,
+governance, exact runtime, contracts, hygiene, formatting, static analysis,
+dependency integrity, two real dependency-risk runs, attestation contract and
+definition identity all pass. The repeated real risk denominator remains
+54 PASS plus only the existing VSCE license waiver. This is sample-free
+development evidence, not exact-SHA qualification or authoritative profile
+evidence; the clean new-source proof/calibration and both complete campaigns
+are still required.
+
 ## Profile ownership
 
 -   Local validates the authored contract and fixture identities without timing

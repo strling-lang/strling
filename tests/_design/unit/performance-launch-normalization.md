@@ -53,3 +53,24 @@ dependencies, host security/power settings, broader waivers or publication.
 -   Migration archives prior authority and cannot increase any effective ceiling,
     counts, conditioning allowance, isolation allowance or waiver.
 -   No diagnostic or readiness output is attributed as authoritative certification.
+
+## Native CPU-accounting batch precision
+
+The native process CPU clock's observed 15,625,000ns increments are much larger
+than the prior approximately 2ms batches. FILETIME's 100ns representation is not
+an observed resolution guarantee. Independent integer-clock counterexamples
+must retain the entire phase range: short intervals can report zero or one
+whole accounting quantum for identical CPU work; a two-quantum interval has an
+exact delta for every phase in that model.
+
+The reviewed native in-process selector target is 31,250,000ns. This increases
+measurement work, not an acceptance ceiling. Legacy manifests retain their
+prior target. The CLI's process-launch control keeps its separate unchanged
+target and batching. Every selected count stays bounded by 4,096; the 1ms
+minimum accepted batch median, 512 warmups, 64 samples, nine repetitions,
+50ms descheduling gate, 500bp MAD, and all prior effective ceilings remain
+unchanged. Reuse of an authenticated baseline count must not reselect it.
+
+Tests must reject arbitrary precision targets and policy changes, prove native
+versus legacy and CLI selection, preserve all 54 prior caps, and require a
+fresh clean-source calibration. Fixed diagnostic success is not certification.

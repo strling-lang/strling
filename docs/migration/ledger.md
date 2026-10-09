@@ -6072,4 +6072,46 @@ security result. A native self-test invocation that omitted repository
 no isolation setting or substantive guard was relaxed. Prospective live proof,
 calibration, both source-distinct campaigns and closure remain unexecuted.
 
+The engineering correction was frozen as clean
+`58145a0b889ba3a6d71004452203440e74b1ceb0`. Its actual fixed prospective
+36-window proof completed and independently reconstructed every raw pair:
+zero-request/help medians 10161/10008bp with MAD 61/89bp and actual
+semantic/Simply medians 11204/10990bp with MAD 48/148bp, every actual window
+under prior effective ceilings. These are source-bound non-authoritative
+proofs, not Local, PR, Full, Release or closure evidence.
+
+That source's first fresh complete calibration failed at supported-host
+protocol-common with MAD 510bp against unchanged 500bp. All nine repetitions
+and all 54 coordinates were acquired, the complete 973-event raw ledger and
+terminal failure retained, and no baseline activated. It is consumed and will
+not repeat calibration. Its approximately 2ms batches expose 15.625ms process
+CPU accounting steps, invalidating fine per-batch CPU attribution, not the
+failed verdict. A fixed 27-window atomic diagnostic separated longer batching
+from equal-total-work warmup: nine-window MAD was 181bp for prior-short,
+81bp for long and 258bp for equal-work-short; zero CPU deltas numbered
+507/3/506 out of 576 each. Every long-window median remained under the prior
+ceiling. All 1728 samples and pre/post conditioning/isolation independently
+reconstruct, without discarded observations or a product-slowdown assertion.
+
+The cause-backed prospective correction adds only a schema-bound native
+in-process selector target of 31.25ms, two observed accounting quanta. Legacy
+and CLI targets remain unchanged. Warmups, samples, repetitions, 4096 batch
+cap, 1ms accepted minimum, 50ms descheduling, 500bp MAD and all prior effective
+ceilings remain unchanged; longer measurement work cannot loosen comparison
+authority. Clock quantization, routing, exact-count reuse and cap/differential
+policy regressions pass. The complete current 86-test performance and
+normalization direct suite passes, as does a separate 13-test normalization
+repeat. All 36 current negative freeze guards pass, including eight new
+precision/policy cases. The registered identity-only generator and verifier
+pass with zero output changes and the original baseline byte hash intact.
+The complete sample-free engineering prerequisite owner terminated zero at
+2026-10-09T16:37:25Z: governance, exact runtime, contracts, complete generated
+validation, hygiene (2245 files/zero findings), format, static analysis,
+dependency integrity, two real dependency-risk runs, attestation contract and
+exact definition identity all pass. Both real risk runs retain 54 PASS and
+only the existing VSCE license waiver, with zero failed/unavailable/incomplete.
+These development checks do not become profile results. A new clean source
+and fresh source-bound proof/calibration are next. Neither diagnostic success
+nor this engineering change closes H08 or permits a sampled-source retry.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

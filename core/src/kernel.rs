@@ -9,8 +9,9 @@ use serde::Serialize;
 
 use crate::capability_pipeline::compile_semantic_portability;
 use crate::compiler_pipeline::{
-    project_target_neutral_stages, run_target_neutral_stages, MAX_PIPELINE_DIAGNOSTICS,
-    MAX_PIPELINE_SEMANTIC_DEPTH, MAX_PIPELINE_SEMANTIC_NODES,
+    project_target_neutral_stages, project_target_neutral_stages_with_explanation,
+    run_target_neutral_stages, MAX_PIPELINE_DIAGNOSTICS, MAX_PIPELINE_SEMANTIC_DEPTH,
+    MAX_PIPELINE_SEMANTIC_NODES,
 };
 use crate::diagnostic::{
     compare_diagnostics, CompilerPhase, Diagnostic, DiagnosticCategory, DiagnosticCode,
@@ -412,12 +413,12 @@ fn compile_semantic_request(
                     });
                 }
             };
-            let explanation = stages.explanation.clone();
-            let result = project_target_neutral_stages(stages, compiler).map_err(|error| {
-                KernelCompileError::StageFailure {
-                    stage: KernelStage::ResultProjection,
-                    message: error.to_string(),
-                }
+            let (result, explanation) = project_target_neutral_stages_with_explanation(
+                stages, compiler,
+            )
+            .map_err(|error| KernelCompileError::StageFailure {
+                stage: KernelStage::ResultProjection,
+                message: error.to_string(),
             })?;
             (result, None, explanation)
         }

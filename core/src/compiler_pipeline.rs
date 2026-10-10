@@ -128,6 +128,17 @@ pub(crate) fn project_target_neutral_stages(
     stages: TargetNeutralStages,
     compiler: &CompilerIdentity,
 ) -> Result<CompileResult, CompilerPipelineErrors> {
+    project_target_neutral_stages_with_explanation(stages, compiler).map(|(result, _)| result)
+}
+
+/// Move completed explanation evidence alongside the validated result instead
+/// of cloning it before consuming the stage bundle. All result validation and
+/// stage correspondence checks are identical to the result-only projection.
+pub(crate) fn project_target_neutral_stages_with_explanation(
+    stages: TargetNeutralStages,
+    compiler: &CompilerIdentity,
+) -> Result<(CompileResult, ExplanationDocument), CompilerPipelineErrors> {
+    let explanation = stages.explanation;
     let result = CompileResult {
         contract_version: stages.normalized.contract_version,
         compiler: compiler.clone(),
@@ -145,7 +156,7 @@ pub(crate) fn project_target_neutral_stages(
     result
         .validate()
         .map_err(CompilerPipelineErrors::ResultValidation)?;
-    Ok(result)
+    Ok((result, explanation))
 }
 
 pub(crate) struct TargetNeutralStages {
@@ -298,6 +309,32 @@ mod tests {
         assert!(result.analysis.is_some());
         assert!(result.portability.is_none());
         assert!(result.artifact.is_none());
+    }
+
+    #[test]
+    fn owned_projection_preserves_result_bytes_and_moves_explanation_storage() {
+        let semantic = program(json!({
+            "node_id": "node:literal",
+            "kind": "literal",
+            "text": "aβ"
+        }));
+        let expected = compile_semantic_diagnostics(&semantic, &compiler()).unwrap();
+        let stages = run_target_neutral_stages(&semantic).unwrap();
+        assert!(!stages.explanation.nodes.is_empty());
+        let original_nodes = stages.explanation.nodes.as_ptr();
+        let original_explanation = serde_json::to_vec(&stages.explanation).unwrap();
+        let (result, explanation) =
+            project_target_neutral_stages_with_explanation(stages, &compiler()).unwrap();
+        assert_eq!(
+            serde_json::to_vec(&result).unwrap(),
+            serde_json::to_vec(&expected).unwrap()
+        );
+        assert_eq!(explanation.nodes.as_ptr(), original_nodes);
+        assert_eq!(
+            serde_json::to_vec(&explanation).unwrap(),
+            original_explanation
+        );
+        result.validate().unwrap();
     }
 
     #[test]

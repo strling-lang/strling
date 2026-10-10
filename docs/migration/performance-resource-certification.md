@@ -735,6 +735,106 @@ development evidence, not exact-SHA qualification or authoritative profile
 evidence; the clean new-source proof/calibration and both complete campaigns
 are still required.
 
+## Retained ceiling failures and allocation-only product correction
+
+Engineering source `03eb9400e8d85c15d767d0b13ec4d6f86f931a17`
+passed its actual 36-window prospective launch proof. Its first complete
+54-coordinate, nine-repetition calibration acquired all 973 ledger events and
+passed every 500bp MAD gate, but failed eleven unchanged prior ceilings:
+legacy import/common; kernel request validation/Simply tiny and common;
+semantic analysis/common and pathological; structural safety/common and
+pathological; end-to-end/Simply tiny and common; interop/protocol common;
+and peak RSS/protocol common. All raw distributions and terminal failure
+remain immutable. The source is consumed, no baseline activated and an
+unchanged whole-stage retry is forbidden.
+
+The fixed 27-window Simply-tiny batch diagnostic retained all 1728 wall/CPU
+samples. Nine-window medians for batch73/warmups512, batch942/warmups512,
+and batch73/warmups8192 were 34124, 34433 and 33615ns; all exceed the
+unchanged 27920ns ceiling despite MAD133/169/96bp passing. The last variant
+is longer warmup work, not an equal-work control. This rules out batching or
+warmup count as the sole cause, not the failed verdict or other source causes.
+
+Subsequent wall-only attribution measured nine rotations of fifteen current
+public stages, 135 windows/8640 raw timings, and independently reconstructed
+all observations, artifact/source identities, conditioning and isolation.
+The review is retained at
+`target/codex-tools/h08-simply-tiny-stage-independent-review-03eb9400.json`,
+SHA256 `72c92939b5389712ffdaa2b7a5bc6723b3d5e7666a61a07f9680bcb1f8e58884`.
+Explanation projection including serialization median10973ns, explicit
+serialization2223ns, clone701ns and canonical digest2399ns identify current
+avoidable work. These overlap and are not additive exclusive intervals.
+The separate-build whole-operation29248ns result is diagnostic, not an
+authenticated acceptance value or a proven historical-source comparison.
+Failed initial import, diagnostic-ID and archive-build receipts remain failed
+zero-timing evidence; public API, dependency and native-access recovery did
+not weaken isolation, policy or architecture.
+
+Under the later explicit autonomous-remediation authority, the smallest
+allocation correction moves existing completed explanation evidence and streams
+the same serialized JSON bytes into SHA256 through a 512-byte stack buffer.
+It preserves all result/stage validation and correspondence, canonical object
+ordering, typed field order, serialization errors and public contracts. No
+memoization, validation bypass, unsafe code, dependency, ceiling, sample,
+baseline or waiver change is introduced. Three actual native Rust1.75 library
+runs passed all30 tests each, 90 executions, including byte/pointer equivalence
+and refusing serialization after a valid prefix. These are unfrozen-source
+correctness proofs; performance improvement, registered synchronization,
+subsystem/prerequisite validation, clean new-source proof/calibration and both
+complete authoritative campaigns remain pending. No previous sample is
+relabeled and no failed consumed source is retried.
+
+Canonical core489/interop22/direct tooling146 actual tests then passed, with
+all Cargo failure/ignore/filter counts zero. All five affected checked-in
+registered generator/verifier pairs passed; only adversarial producer metadata
+and its dependent fingerprint changed, with raw observations unchanged.
+The performance baseline byteSHA remains
+`12efe6ff072e79c98c2e94c56be81a39a54d60b6e97a9605234e15b401e20073`.
+Disposable LSP payload certification remains required in Full/Release.
+The engineering owner stopped at governance because the task record omitted
+the exact three later-authorized compiler allocation paths; all33 architecture
+rules passed. The failed receipt is preserved and the unchanged atomic scope
+validator reproduced all three findings. Only those exact task paths are
+declared in recovery, without wildcard, exemption, security or gate changes.
+Scope regression proof and the never-executed prerequisites remain pending;
+completed expensive core/dependent and generator operations are not repeated.
+No performance or authoritative certification progress is inferred.
+
+The subsequent exact scope correction passed eleven negative rejection cases,
+with every other scope field unchanged; review SHA256 is
+`336b7dbf6709805a54ed213801c5363a7bd7bc8c6ae4c383fb55a3251be7b511`.
+Independent prefix review SHA256
+`40c8973f6a8bc0ad95ebfbddc56e87e63df0e07a262b48a800beb1894f3c9093`
+reconstructs fourteen completed operations, actual test counts, baseline bytes
+and all41 unchanged adversarial cases. Text generator success markers are
+checked as text, not inferred from their misleading `.json` filenames or a
+failed JSON-reading diagnostic. Corrected governance regression/full checks
+and only the unrun prerequisites follow. Performance benefit, new clean
+source, fresh predictor/calibration and both campaigns remain unproved.
+
+The separate one-use sample-free remainder completed terminal0 at
+2026-10-10T02:53:31Z. Its47 governance regressions, corrected full governance,
+33 architecture rules, generated/hygiene/format/static/integrity prerequisites,
+attestation contract and definition identity pass. Two new actual security
+runs retain54PASS plus only the exact VSCE license waiver and no
+failed/unavailable/incomplete check. Both retain the actual Jest30.5.2,
+@types/jest30.0.0 and ts-jest29.4.14 proofs and ten exact test-only JUnit
+bindings. A review-only filter failure including existing Trove4j is preserved;
+the corrected exact JUnit selection rejects seven invalid mutations. No
+security producer, license approval or waiver changed. Independent review
+SHA256 is `73af5a6377e2ff6abe53acf68c9b97f376acc65241f3f5eca2cac7f7b39070dd`.
+The fourteen original completed operations were not replayed and original
+governance failure remains failed. These are working-source engineering proofs,
+not a clean-source profile or measured improvement. Fresh atomic performance
+proof at a newly frozen source precedes any eligible full calibration;
+consumed03 never retries. Both whole campaigns and final closure remain required.
+
+An initial exact-path stage failed before mutation on an empty orphaned Git
+index lock. Read-only native/Linux queries found no Git owner; the lock was
+recoverably preserved, not discarded, without resetting the index or
+interrupting a process. Original cause is unproved. This tooling recovery
+does not change source, performance policy, samples or certification authority.
+
 ## Profile ownership
 
 -   Local validates the authored contract and fixture identities without timing
@@ -759,3 +859,10 @@ target profiles or outputs, public APIs, packages, dependencies, support tiers,
 or existing hard resource values. It cannot publish, upload, release, push, or
 turn measurements from unlike machines into a common performance claim. Any
 need for one of those changes is a new governed decision, not a benchmark fix.
+
+That paragraph retains the original measurement-only task boundary. The later
+human autonomous-remediation instruction separately authorizes narrowly
+cause-backed reversible product optimizations and compatible secure tooling
+corrections, with regression and generated-artifact verification. It does not
+authorize semantic, public-output, security, comparison-ceiling, evidence,
+license, isolation or trust weakening, nor publication.

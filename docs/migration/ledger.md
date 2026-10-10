@@ -6114,4 +6114,131 @@ These development checks do not become profile results. A new clean source
 and fresh source-bound proof/calibration are next. Neither diagnostic success
 nor this engineering change closes H08 or permits a sampled-source retry.
 
+The next clean engineering source was
+`03eb9400e8d85c15d767d0b13ec4d6f86f931a17`. Its fixed 36-window
+prospective CLI proof passed, with independently reconstructed semantic/Simply
+medians 11127/10957bp and MAD 78/51bp, every point under the unchanged prior
+ceilings. The subsequent first complete calibration acquired all 54
+coordinates across nine repetitions (973 ledger events), passed every 500bp
+MAD gate, but failed eleven prior effective ceilings. The retained ledger
+SHA256 is `ef48f88ca3f932965218a02427035fbb0473ecbddad19bd0bc003ee3fa4faab0`;
+the independent all-coordinate review SHA256 is
+`fd99c8204ee5a7dfb73ddd9880b4ce94e16a8373aab751088ba522ff822f3f40`.
+No baseline activated. This source is consumed and must not retry calibration.
+
+A fixed atomic Simply-tiny diagnostic retained nine windows each of old batch
+73/512 warmups, new batch 942/512 warmups, and old batch 73/8192 warmups.
+All 27 windows and 1728 wall/CPU observations independently reconstruct;
+medians 34124/34433/33615ns all exceed the unchanged 27920ns ceiling.
+Their respective MAD values 133/169/96bp pass. The last variant has more total
+warmup work, not equal work. Thus batching or warmup count alone does not
+explain the failure; no unfavorable observation was discarded.
+
+The following current-source wall-only stage attribution completed at
+2026-10-10T00:48:22Z: nine rotations of fifteen stages, 135 windows and
+8640 raw timings. Independent reconstruction passed (review SHA256
+`72c92939b5389712ffdaa2b7a5bc6723b3d5e7666a61a07f9680bcb1f8e58884`).
+Whole compile plus serialization median was 29248ns in this separate build;
+explanation projection including serialization was 10973ns, explanation
+serialization 2223ns, explanation clone 701ns and canonical digest 2399ns.
+These are overlapping wall-only stage observations, not additive CPU costs,
+a baseline-source cause, or certification evidence. The initial private-module
+import failure, incorrect diagnostic compiler-ID preflight, and archive-access
+failure are preserved as failed zero-timing attempts. Recovery used existing
+public APIs, exact production registry dependencies and ordinary scoped native
+access; no private API export, policy bypass or host setting change occurred.
+
+The authorized product correction now moves the completed neutral explanation
+instead of cloning it and hashes the exact existing Serde JSON byte stream
+through a 512-byte stack buffer instead of a temporary heap vector. Recursive
+canonical key sorting, typed field order, validation, correspondence,
+provenance, error handling, limits and all public output contracts are retained.
+All three native Rust 1.75 library runs completed at
+2026-10-10T01:04:49Z: 30 tests each, 90 actual passes, zero failed, ignored or
+filtered. They include pointer/byte equivalence, chunk boundaries, Unicode,
+escaping, maximum integers and failure after a serialized prefix. Terminal
+receipt SHA256 is
+`2e139fb405c1b8c09163f3952e422adabab30b18bfa9cbbeb4f50063e86b4d3c`.
+The earlier five-test digest proof predates the partial-failure test and remains
+separate. Performance benefit is not yet proved. Current source is dirty;
+core/direct dependents, exact runtime, the six registered generated families,
+cheap/static/security prerequisites, new clean freeze and fresh source-bound
+performance proof remain required. No cap, baseline, count, waiver or trust
+contract changed. The latest actual campaign still has Local37 and PR79 PASS,
+Full20 PASS plus one failed operation and the sole license waiver, with 103
+operations unrun; no Release, signing, trust promotion or closure has passed.
+
+The subsequent canonical core operation passed 489 tests across 91 result
+groups, interop passed 22 across four groups, and nine direct tooling modules
+passed 146 cases. All failed/ignored/filtered Cargo counts are zero. These are
+additional actual working-source proofs, not relabeled native repetitions.
+Exact registered generator/verifier pairs passed for all five affected
+checked-in families. Only adversarial evidence metadata changed: source hashes,
+parent HEAD annotation, execution time and its dependent fingerprint. Raw
+observations, repeat count, corpus, findings and run identity are unchanged;
+public snapshots, performance identities, shared and stdlib outputs are
+byte-unchanged. Original performance baseline byteSHA remains
+`12efe6ff072e79c98c2e94c56be81a39a54d60b6e97a9605234e15b401e20073`.
+The sixth disposable LSP payload remains a governed Full/Release requirement.
+
+That owner terminated with exit1 at 2026-10-10T02:09:59Z on governance,
+before the remaining prerequisites ran. Contracts, release policy, change
+declarations and all 33 architecture rules passed. Scope alone rejected
+`core/src/compiler_pipeline.rs`, `core/src/kernel.rs` and
+`core/src/semantic_analysis.rs`: the task record did not yet declare these
+later human-authorized allocation-only edits. Its original failed governance
+SHA256 `730c4f00a29b06f4270d5d129ad7f90fa389ee77105388cf9a10d74de18851ee`
+and both terminal receipts remain immutable. The unchanged atomic scope
+validator reproduced exactly those three findings. The reversible correction
+adds only those three exact paths to the task's allowlist, preserving diff
+authority, forbidden/expected files, generated permissions, verification
+levels, waivers and architecture/security checks. No wildcard or exemption is
+added. Guarded scope regression proof and the never-executed prerequisite
+remainder follow; completed core, interop, direct tests and generators do not
+repeat. This is certification-control metadata recovery, not evidence of a
+product regression or a passing authoritative campaign. H08 remains OPEN.
+
+The subsequent unchanged atomic scope review passed all 11 negative guards:
+each missing authorized file and eight unrelated/adjacent paths still reject.
+Every other scope field is preserved. Review SHA256 is
+`336b7dbf6709805a54ed213801c5363a7bd7bc8c6ae4c383fb55a3251be7b511`.
+Independent prefix review SHA256
+`40c8973f6a8bc0ad95ebfbddc56e87e63df0e07a262b48a800beb1894f3c9093`
+reconstructs the actual test denominators, fourteen completed operations,
+original failed terminal, unchanged baseline and all 41 unchanged raw
+adversarial cases. Six generator logs have text success markers despite their
+`.json` filenames; a failed JSON-reading diagnostic was not used as proof.
+Their actual text markers and byte hashes were separately checked. Only
+governance regression tests, corrected full governance and the never-executed
+sample-free prerequisite remainder are next. No performance acceptance,
+authoritative profile progress or clean candidate freeze is inferred.
+
+The one-use remainder owner completed zero at 2026-10-10T02:53:31Z,
+without replaying the fourteen completed operations. All 47 governance
+regression tests, corrected complete-diff governance and 33 architecture rules,
+complete generated check, hygiene (2245 files/zero findings), format, static
+analysis, dependency integrity, attestation contract and definition identity
+pass. Both new real security runs independently validate all 55 checks:
+54 PASS and only `WVR-SEC-VSCE-LICENSE-001`, zero failed/unavailable/incomplete.
+Jest30.5.2, @types/jest30.0.0 and ts-jest29.4.14 are observed in both scans;
+the exact ten JUnit bindings remain non-distributed build/test only. An
+initial independent-review filter incorrectly included separately approved
+Trove4j; its failed receipt is preserved, and the exact JUnit predicate passes
+seven rejection cases without changing any real scanner or approval.
+Independent remainder review SHA256 is
+`73af5a6377e2ff6abe53acf68c9b97f376acc65241f3f5eca2cac7f7b39070dd`.
+The original failed scope receipt remains failed. This completes sample-free
+working-source engineering prerequisites, not exact-SHA profile results or
+performance acceptance. Exact eight-path commit/clean freeze and fresh atomic
+product performance proof are next; both complete authoritative campaigns,
+independent Release, signing, trust qualification/promotion and closure remain
+required. H08 remains OPEN.
+
+The exact-path stage initially failed before changing the index because an
+empty orphaned `.git/index.lock` remained. Read-only Windows/Linux process
+queries found no Git owner; the zero-byte file was recoverably preserved under
+`target/codex-tools/h08-preserved-empty-index-lock-20261010T030426Z`.
+No index reset, data discard or process interruption occurred. Lock origin is
+unproved; the failed staging diagnostic and direct-query evidence are retained.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

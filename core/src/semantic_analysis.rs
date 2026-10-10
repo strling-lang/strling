@@ -5,11 +5,10 @@ use std::error::Error;
 use std::fmt;
 
 use serde::{Deserialize, Serialize};
-use sha2::{Digest, Sha256};
 
 use crate::semantic::{Node, SemanticProgram};
 use crate::source::{CaptureId, ContractVersion, NodeId, SpecificationVersion};
-use crate::validation::{Validate, ValidationCode, ValidationErrors};
+use crate::validation::{serialized_sha256, Validate, ValidationCode, ValidationErrors};
 
 mod capture;
 mod consumption;
@@ -287,10 +286,7 @@ pub fn analyze(input: &SemanticProgram) -> Result<SemanticFacts, SemanticAnalysi
 pub(crate) fn semantic_program_identity(
     input: &SemanticProgram,
 ) -> Result<SemanticProgramIdentity, serde_json::Error> {
-    let canonical_bytes = serde_json::to_vec(input)?;
-    Ok(SemanticProgramIdentity(
-        Sha256::digest(canonical_bytes).into(),
-    ))
+    serialized_sha256(input).map(SemanticProgramIdentity)
 }
 
 fn enforce_depth_limit(root: &Node) -> Result<(), SemanticAnalysisErrors> {

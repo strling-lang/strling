@@ -2,6 +2,7 @@
 
 use std::error::Error;
 use std::fmt;
+use std::io::{self, Write};
 
 use serde::de::DeserializeOwned;
 use serde::{Deserialize, Deserializer, Serialize};
@@ -154,7 +155,59 @@ where
 {
     let mut value = serde_json::to_value(value)?;
     canonicalize(&mut value);
-    Ok(Sha256::digest(serde_json::to_vec(&value)?).into())
+    serialized_sha256(&value)
+}
+
+/// Hash the exact deterministic Serde JSON byte stream without materializing a
+/// second heap buffer. This deliberately does not canonicalize struct fields;
+/// callers that require recursively sorted object keys do so before this step.
+pub(crate) fn serialized_sha256<T>(value: &T) -> Result<[u8; 32], serde_json::Error>
+where
+    T: Serialize,
+{
+    let mut writer = JsonDigestWriter {
+        digest: Sha256::new(),
+        buffer: [0; 512],
+        used: 0,
+    };
+    serde_json::to_writer(&mut writer, value)?;
+    writer.drain();
+    Ok(writer.digest.finalize().into())
+}
+
+struct JsonDigestWriter {
+    digest: Sha256,
+    buffer: [u8; 512],
+    used: usize,
+}
+
+impl JsonDigestWriter {
+    fn drain(&mut self) {
+        self.digest.update(&self.buffer[..self.used]);
+        self.used = 0;
+    }
+}
+
+impl Write for JsonDigestWriter {
+    fn write(&mut self, mut bytes: &[u8]) -> io::Result<usize> {
+        let length = bytes.len();
+        while !bytes.is_empty() {
+            let available = self.buffer.len() - self.used;
+            let taken = available.min(bytes.len());
+            self.buffer[self.used..self.used + taken].copy_from_slice(&bytes[..taken]);
+            self.used += taken;
+            bytes = &bytes[taken..];
+            if self.used == self.buffer.len() {
+                self.drain();
+            }
+        }
+        Ok(length)
+    }
+
+    fn flush(&mut self) -> io::Result<()> {
+        self.drain();
+        Ok(())
+    }
 }
 
 fn canonicalize(value: &mut Value) {
@@ -213,11 +266,53 @@ pub(crate) fn nonempty(value: &str, path: impl Into<String>, errors: &mut Valida
 
 #[cfg(test)]
 mod canonical_digest_tests {
-    use super::canonical_sha256;
+    use super::{canonical_sha256, serialized_sha256, JsonDigestWriter};
     use serde::{Serialize, Serializer};
     use serde_json::Value;
     use sha2::{Digest, Sha256};
     use std::fmt::Write;
+
+    #[test]
+    fn serialized_digest_preserves_all_bytes_across_buffer_boundaries() {
+        #[derive(Serialize)]
+        struct Example {
+            z_text: String,
+            a_values: Vec<u64>,
+        }
+        for length in [
+            0, 1, 63, 64, 65, 255, 256, 257, 511, 512, 513, 1023, 1024, 1025, 8192,
+        ] {
+            let value = Example {
+                z_text: format!("{}\0\r\n\t\"\\βé😀", "x".repeat(length)),
+                a_values: vec![0, 1, u64::MAX],
+            };
+            let exact_bytes = serde_json::to_vec(&value).unwrap();
+            let expected: [u8; 32] = Sha256::digest(&exact_bytes).into();
+            assert_eq!(serialized_sha256(&value).unwrap(), expected);
+        }
+    }
+
+    #[test]
+    fn digest_writer_retains_bytes_across_empty_writes_and_explicit_flush() {
+        use std::io::Write as IoWrite;
+        let mut writer = JsonDigestWriter {
+            digest: Sha256::new(),
+            buffer: [0; 512],
+            used: 0,
+        };
+        writer.write_all(b"first").unwrap();
+        assert_eq!(writer.write(b"").unwrap(), 0);
+        writer.flush().unwrap();
+        writer.flush().unwrap();
+        writer.write_all(&[b'x'; 1025]).unwrap();
+        writer.drain();
+        let mut expected = b"first".to_vec();
+        expected.extend_from_slice(&[b'x'; 1025]);
+        assert_eq!(
+            <[u8; 32]>::from(writer.digest.finalize()),
+            <[u8; 32]>::from(Sha256::digest(expected))
+        );
+    }
 
     #[test]
     fn nested_objects_use_sorted_keys_without_reordering_arrays() {
@@ -300,5 +395,33 @@ mod canonical_digest_tests {
             .expect_err("refused serialization cannot produce a digest")
             .to_string()
             .contains("deliberate serialization refusal"));
+        assert!(serialized_sha256(&Refused)
+            .expect_err("refused streaming serialization cannot produce a digest")
+            .to_string()
+            .contains("deliberate serialization refusal"));
+    }
+
+    #[test]
+    fn partial_serialization_failure_never_returns_a_prefix_digest() {
+        use serde::ser::SerializeStruct;
+        struct PartiallyRefused;
+        impl Serialize for PartiallyRefused {
+            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+            where
+                S: Serializer,
+            {
+                let mut fields = serializer.serialize_struct("PartiallyRefused", 2)?;
+                fields.serialize_field("valid_prefix", &"x".repeat(1025))?;
+                Err(serde::ser::Error::custom("refusal after serialized prefix"))
+            }
+        }
+        for error in [
+            canonical_sha256(&PartiallyRefused).unwrap_err(),
+            serialized_sha256(&PartiallyRefused).unwrap_err(),
+        ] {
+            assert!(error
+                .to_string()
+                .contains("refusal after serialized prefix"));
+        }
     }
 }

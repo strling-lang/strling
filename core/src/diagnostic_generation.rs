@@ -246,6 +246,18 @@ pub fn generate_diagnostics(
     structural: &StructuralFacts,
     safety: &SafetyAnalysis,
 ) -> Result<DiagnosticGeneration, DiagnosticGenerationErrors> {
+    generate_diagnostics_with_correspondence(input, foundational, structural, safety)
+        .map(|(generation, _)| generation)
+}
+
+/// Retain freshly derived correspondence for the immediately following
+/// projection of the same immutable input. No prerequisite check is omitted.
+pub(crate) fn generate_diagnostics_with_correspondence<'a>(
+    input: &'a SemanticProgram,
+    foundational: &SemanticFacts,
+    structural: &StructuralFacts,
+    safety: &SafetyAnalysis,
+) -> Result<(DiagnosticGeneration, SafetyValidationContext<'a>), DiagnosticGenerationErrors> {
     enforce_resource_limits(&input.root).map_err(DiagnosticGenerationErrors::from_safety)?;
     input
         .validate()
@@ -332,10 +344,13 @@ pub fn generate_diagnostics(
         .collect();
     validate_diagnostic_order(&diagnostics).map_err(DiagnosticGenerationErrors::from_validation)?;
 
-    Ok(DiagnosticGeneration {
-        records,
-        program_identity: Some(foundational.program_identity()),
-    })
+    Ok((
+        DiagnosticGeneration {
+            records,
+            program_identity: Some(foundational.program_identity()),
+        },
+        correspondence,
+    ))
 }
 
 fn build_safety_record(

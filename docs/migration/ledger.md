@@ -6317,4 +6317,98 @@ engineering prerequisites, not measured benefit or certification. The exact
 seven-path commit, new clean source and fresh atomic product predictor precede
 eligible CLI proof/calibration and both authoritative campaigns. H08 is OPEN.
 
+The correspondence correction committed seven exact paths at clean
+`932dfd60ee5766c82f4f73fda223942c50f5e7ac`. Its one-use fresh native atomic
+run completed at 2026-10-10T06:07:32Z. Independent reconstruction SHA256
+`c707bea481d9e5810a8573127ba73fc4e356fcc35a41f1c35312caa9dc828dcf`
+binds three actual release builds, all nine windows and 576 raw wall/CPU
+observations, source identities, conditioning, isolation and immutable history.
+Wall medians are 28,176 / 28,229 / 27,718 / 27,990 / 28,269 / 28,263 / 27,983 /
+28,485 / 28,004 ns. Aggregate median 28,176 ns still exceeds the unchanged
+27,920 ns cap; MAD 172 ns / 62 basis points passes the unchanged 500-bp rule.
+CPU medians are 26,893 ns with quantized 15.625-ms accounting and one zero
+accounting batch, which is retained. There are no rejected batches. Acquisition
+exit 0 is not predictor acceptance. No valid unfavorable sample is removed,
+baseline activated, authoritative profile accepted or unchanged atomic retried.
+
+The next reversible product correction removes a second identical digest and
+reachable-node-set construction across immediately adjacent diagnostics and
+explanation. Diagnostic generation returns its fresh crate-private context to
+the pipeline; explanation accepts only that context's immutable program borrow.
+Every input, version, identity, coverage, kind, relationship, evidence,
+ordering, resource and canonical-output fingerprint check still runs. Public
+standalone calls still create fresh contexts; there is no cross-call/global
+cache, fact-derived digest or trust substitution. Four exact existing core paths
+are affected, with no task-scope expansion. Differential successful-output,
+stale-prerequisite/generation, malformed-safety and invalid-input regressions,
+repeated native correctness, direct dependents, six registered generated
+families and prerequisites precede a new clean SHA and eligible measurements.
+The focused four new tests pass. Three complete native Rust 1.75 library runs
+then pass 36/36 each, zero failed, ignored, measured or filtered (108 actual
+passes), completed 2026-10-10T06:34:12Z. Exact-source/raw-log/terminal review
+SHA256 is `dbd2b7fdf6093d4d65a46c8c2e6351bbfdafd85e2d3ed31140a969de6ee3f93e`;
+33 negative exact-source/generated-scope guards pass. Remaining dependent,
+generated and prerequisite results are pending. These are non-authoritative
+correctness proofs, not measured performance or certification. H08 is OPEN.
+
+The retained sample-free owner40896/WSL68040 ended with exit2 at
+2026-10-10T07:23:44Z during the registered adversarial generator's shard write,
+after twelve completed operations. The original failure and complete prefix
+are preserved in `h08-adversarial-write-atomic-diagnostic-932dfd60`, review
+SHA256 `b24c8f83121fa6e2a8fd35b47dc447801e99aca84162ed342ddf2b6b9ef062f7`.
+The exact error was Errno22 on one existing ASCII-character-set observation.
+A backed-up atomic read/open/same-byte-write probe succeeded without changing
+any observation bytes; a persistent host fault is not established. This is
+generator I/O failure evidence, not evidence of a compiler semantic defect.
+
+The narrow generator correction compares serialized UTF-8 bytes before writing
+unchanged shards or envelopes. Materially different evidence is still written;
+read/write failures still propagate. No engine execution, repeated observation,
+validation, fingerprint, zero-finding rule or trust boundary changes. Five new
+regressions fail against the old writer and pass against the correction. A
+premature complete39-test run has two failures and one error from stale source
+identity, preserved at `h08-adversarial-write-regressions-932dfd60`; it is not a
+passing full suite. Registered generation/check must precede three new full
+suite repetitions. The exact test-charter path is explicitly added to task
+scope; the generator and test paths were already authorized. Generated-artifact-
+sync maps the changed generator input only to enforced checked-in adversarial
+evidence, using its exact `--write` and `--check` commands. Twelve completed
+prefix operations will not be replayed; only the corrected generator, unrun
+checks and directly affected cheap regressions continue under new phase guards.
+No unchanged expensive-stage retry, performance acceptance or closure is claimed.
+H08 remains OPEN.
+
+The corrected retained owner65540/WSL25200 completed at
+2026-10-10T08:04:28Z with native/shell exit0 and the required completion marker.
+Independent review
+`1ec0aec7b3931446c827acd9e37352a7cfff84cc0c7b35390667b84be10ad429`
+reconstructs all17 recovery commands plus12 immutable completed prerequisites.
+Core495 tests across91 groups, interop22 across4 groups and nine tooling
+modules146 tests pass, alongside the retained native36x3=108 proof. Current
+formatted I/O regressions5PASS and complete adversarial39x3=117PASS have no
+skips or failed cases. All registered checked-in verifiers pass; only the
+adversarial provenance envelope changes, SHA256
+`4f2c174146e09b2390f0d667d076ded38542d4670c940101f00d17e07a19f13d`.
+All41 raw observation shards and original measured baseline bytes remain
+unchanged. LSP payload certification remains actual Full/Release work.
+
+Contracts26, architecture33 plus4 governance checks, generated/hygiene/format/
+static/integrity/attestation-contract/source-definition checks pass. Two actual
+separate security invocations each have55 checks:54PASS plus only the existing
+VSCE license waiver. Exact Jest30.5.2/types30.0.0/ts-jest29.4.14 and ten exact
+test-only JUnit bindings remain approved without runtime/general expansion.
+Completion/source/scope27, denominator4, canonical3, shard3 and JUnit7 negative
+guards pass. Two initial review-helper failures remain preserved, correcting
+only mistaken write-versus-check classification and digest reconstruction of
+sharded evidence; no product verifier or contract is weakened.
+
+This is completed dirty-source sample-free engineering, not performance
+qualification, authoritative certification, signing or trust promotion. The
+original I/O and premature stale-source suite failures remain failed; no
+completed expensive prerequisite or consumed performance source was replayed.
+Exact11path commit/clean new SHA/fresh atomic predictor, CLI36 proof, all54x9
+capped calibration, exactSHA prerequisites/readiness, both complete campaigns,
+fresh independent Releases, actual signing, isolated reviewed then immutable
+pinned verification and guarded closure remain required. H08 remains OPEN.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

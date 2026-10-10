@@ -604,6 +604,33 @@ pub fn explain_semantics(
     safety: &SafetyAnalysis,
     generation: &DiagnosticGeneration,
 ) -> Result<ExplanationDocument, ExplanationErrors> {
+    validate_semantic_input(input)?;
+    let correspondence =
+        SafetyValidationContext::new(input).map_err(ExplanationErrors::from_safety)?;
+    explain_validated_semantics(
+        &correspondence,
+        foundational,
+        structural,
+        safety,
+        generation,
+    )
+}
+
+/// Consume only the immutable program borrowed by the fresh correspondence
+/// context; callers cannot pair it with a different input. Every explanation
+/// prerequisite, evidence and serialization check still runs independently.
+pub(crate) fn explain_semantics_with_correspondence(
+    correspondence: &SafetyValidationContext<'_>,
+    foundational: &SemanticFacts,
+    structural: &StructuralFacts,
+    safety: &SafetyAnalysis,
+    generation: &DiagnosticGeneration,
+) -> Result<ExplanationDocument, ExplanationErrors> {
+    validate_semantic_input(correspondence.program())?;
+    explain_validated_semantics(correspondence, foundational, structural, safety, generation)
+}
+
+fn validate_semantic_input(input: &SemanticProgram) -> Result<(), ExplanationErrors> {
     input.validate().map_err(|errors| ExplanationErrors {
         errors: errors
             .errors
@@ -614,9 +641,17 @@ pub fn explain_semantics(
                 message: error.message,
             })
             .collect(),
-    })?;
-    let correspondence =
-        SafetyValidationContext::new(input).map_err(ExplanationErrors::from_safety)?;
+    })
+}
+
+fn explain_validated_semantics(
+    correspondence: &SafetyValidationContext<'_>,
+    foundational: &SemanticFacts,
+    structural: &StructuralFacts,
+    safety: &SafetyAnalysis,
+    generation: &DiagnosticGeneration,
+) -> Result<ExplanationDocument, ExplanationErrors> {
+    let input = correspondence.program();
     correspondence
         .validate_foundational(foundational)
         .map_err(ExplanationErrors::from_safety)?;

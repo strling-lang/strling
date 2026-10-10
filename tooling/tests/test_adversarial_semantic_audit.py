@@ -279,6 +279,106 @@ class AdversarialEvidenceTests(unittest.TestCase):
         ]
         self.assertEqual(len(paths), len(set(paths)))
 
+    def test_identical_serialized_evidence_never_rewrites_outputs(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "evidence.json"
+            audit.write_evidence(self.evidence, path)
+            before = {p: p.read_bytes() for p in path.parent.rglob("*.json")}
+            with (
+                mock.patch.object(
+                    Path, "write_bytes", side_effect=AssertionError("unnecessary write")
+                ),
+                mock.patch.object(
+                    Path, "write_text", side_effect=AssertionError("unnecessary write")
+                ),
+            ):
+                audit.write_evidence(self.evidence, path)
+            self.assertEqual(before, {p: p.read_bytes() for p in before})
+
+    def test_source_identity_only_refresh_writes_only_envelope(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "evidence.json"
+            audit.write_evidence(self.evidence, path)
+            before = {
+                p: p.read_bytes() for p in (path.parent / "observations").glob("*.json")
+            }
+            self.assertEqual(41, len(before))
+            candidate = copy.deepcopy(self.evidence)
+            candidate["source_sha"] = "f" * 40
+            writes = []
+            original = Path.write_bytes
+
+            def record_write(target, payload):
+                writes.append(target)
+                return original(target, payload)
+
+            with mock.patch.object(Path, "write_bytes", record_write):
+                audit.write_evidence(candidate, path)
+            self.assertEqual([path], writes)
+            self.assertEqual(before, {p: p.read_bytes() for p in before})
+            self.assertEqual(candidate, audit.load_evidence(path))
+
+    def test_changed_observation_writes_exact_shard_and_envelope(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "evidence.json"
+            audit.write_evidence(self.evidence, path)
+            candidate = copy.deepcopy(self.evidence)
+            candidate["rows"][0]["compile"]["stderr"] = (
+                "serialization-only test mutation"
+            )
+            writes = []
+            original = Path.write_bytes
+
+            def record_write(target, payload):
+                writes.append(target)
+                return original(target, payload)
+
+            with mock.patch.object(Path, "write_bytes", record_write):
+                audit.write_evidence(candidate, path)
+            self.assertEqual(
+                [
+                    path.parent
+                    / audit.observation_path(candidate["rows"][0]["case_id"]),
+                    path,
+                ],
+                writes,
+            )
+            self.assertEqual(candidate, audit.load_evidence(path))
+
+    def test_changed_evidence_io_failure_propagates_and_preserves_previous_bytes(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "evidence.json"
+            audit.write_evidence(self.evidence, path)
+            before = {p: p.read_bytes() for p in path.parent.rglob("*.json")}
+            candidate = copy.deepcopy(self.evidence)
+            candidate["rows"][0]["compile"]["stderr"] = (
+                "serialization-only test mutation"
+            )
+            with mock.patch.object(
+                Path, "write_bytes", side_effect=OSError(22, "Invalid argument")
+            ):
+                with self.assertRaises(OSError) as raised:
+                    audit.write_evidence(candidate, path)
+            self.assertEqual(22, raised.exception.errno)
+            self.assertEqual(before, {p: p.read_bytes() for p in before})
+
+    def test_existing_evidence_read_failure_is_not_treated_as_missing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "evidence.json"
+            audit.write_evidence(self.evidence, path)
+            with (
+                mock.patch.object(
+                    Path, "read_bytes", side_effect=PermissionError("unreadable")
+                ),
+                mock.patch.object(
+                    Path,
+                    "write_bytes",
+                    side_effect=AssertionError("write after unreadable output"),
+                ),
+            ):
+                with self.assertRaises(PermissionError):
+                    audit.write_evidence(self.evidence, path)
+
     def test_shard_tampering_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "evidence.json"

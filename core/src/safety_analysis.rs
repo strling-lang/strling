@@ -364,7 +364,7 @@ fn validation_context(
 }
 
 /// Fresh correspondence data tied to one immutable program borrow. Consumers
-/// may share its digest and reachable-node set within a single projection, but
+/// may share its digest and reachable-node set within adjacent projections, but
 /// every prerequisite and evidence check still runs against that exact input.
 pub(crate) struct SafetyValidationContext<'a> {
     input: &'a SemanticProgram,
@@ -380,6 +380,10 @@ impl<'a> SafetyValidationContext<'a> {
             identity,
             node_ids,
         })
+    }
+
+    pub(crate) fn program(&self) -> &'a SemanticProgram {
+        self.input
     }
 
     pub(crate) fn validate_foundational(

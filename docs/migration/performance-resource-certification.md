@@ -901,6 +901,74 @@ Exact seven-path clean freeze and a fresh source-bound atomic product predictor
 come next; CLI proof/calibration, both whole campaigns, signing, isolated trust,
 fresh independent Release and closure remain required. H08 remains OPEN.
 
+The clean `932dfd60ee5766c82f4f73fda223942c50f5e7ac` correspondence candidate's
+fresh native atomic acquisition completed 2026-10-10T06:07:32Z. All nine
+64-sample windows, three release builds, source identities, conditioning,
+isolation, raw wall/CPU observations and historical receipts reconstruct under
+review SHA256 `c707bea481d9e5810a8573127ba73fc4e356fcc35a41f1c35312caa9dc828dcf`.
+Median 28,176 ns exceeds the unchanged 27,920 ns Simply-tiny end-to-end cap;
+MAD 62 basis points passes 500 bp. CPU medians are 26,893 ns, but native
+15.625-ms accounting is quantized and one zero batch remains preserved.
+No rejected batch, sample exclusion, changed gate, baseline activation,
+authoritative success or unchanged-candidate retry is permitted or inferred.
+
+Current source inspection finds another repeated digest and node-set
+construction across adjacent diagnostics and explanation. The smallest next
+product correction retains the fresh context from diagnostics for explanation
+of only the same immutable borrowed program. All validation and fingerprint
+checks remain; standalone public calls retain fresh contexts. Differential
+outputs and negative evidence/input cases, repeated native tests, dependents,
+registered synchronization and cheap/security checks must pass before a new
+clean source and fresh proof. The four focused differential tests pass, followed
+by three complete native Rust1.75 library runs36/36 each,108actual passes with
+zero failed/ignored/measured/filtered. Raw-log/source/terminal reconstruction
+SHA256 is `dbd2b7fdf6093d4d65a46c8c2e6351bbfdafd85e2d3ed31140a969de6ee3f93e`;
+33 negative exact-source guards pass. Direct dependents, registered generators
+and prerequisites remain pending. Performance benefit is not yet established.
+H08 stays OPEN; both complete campaigns, fresh independent Releases, actual
+signing, isolated reviewed then immutable pinned verification and closure
+remain mandatory.
+
+The subsequent sample-free prerequisite owner40896/WSL68040 terminated exit2
+at 2026-10-10T07:23:44Z on an existing adversarial observation shard write,
+after twelve completed operations. All failed receipts, prefix logs and41 raw
+shard byte identities are preserved by review
+`b24c8f83121fa6e2a8fd35b47dc447801e99aca84162ed342ddf2b6b9ef062f7`.
+An atomic backed-up same-byte write succeeds; a persistent host cause remains
+unproven. The reversible generator correction avoids writing exact identical
+UTF-8 JSON outputs while retaining changed writes and fail-closed I/O errors.
+It changes no product semantics or certification property. Five pre-correction
+regressions fail and then pass; a complete39-test run rejects stale source
+identity with two failures/one error and remains failed evidence. Exact
+registered refresh/check, three repeated complete suites and unrun cheap/
+security checks must pass before independent review and new clean source.
+No completed expensive prerequisite is replayed, no historical sample is
+discarded, no baseline/gate changes, and no performance result is inferred.
+H08 remains OPEN.
+
+The corrected sample-free owner completed at 2026-10-10T08:04:28Z. Independent
+review `1ec0aec7b3931446c827acd9e37352a7cfff84cc0c7b35390667b84be10ad429`
+reconstructs all17 actual recovery commands and12 preserved prerequisites,
+without replaying their expensive prefix: core495, interop22 and tooling146
+pass, in addition to native36x3. Five current I/O tests and three complete
+39-test adversarial repetitions pass. Both fresh real security invocations
+have54PASS plus the sole VSCE license waiver; exact Jest30.5.2/types30.0.0/
+ts-jest29.4.14 and ten test-only JUnit approvals remain unchanged. Contracts26,
+architecture33 plus4 governance checks and all cheap prerequisites pass.
+Registered regeneration changes only the adversarial provenance envelope;
+all41 raw shards and original measured baseline bytes remain unchanged.
+
+Two review-only failures are preserved: write-versus-comparison contract
+classification and full-evidence-versus-sharded-index digest scope. Independent
+full205-row reconstruction, all41 shard identities and27 completion/source/
+scope,4 denominator,3 canonical,3 shard and7 JUnit negative guards pass; no
+registered verifier or acceptance property changes. These are dirty-source
+engineering proofs, not performance acceptance or authoritative certification.
+Exact11path clean freeze and a new source-bound atomic predictor come next.
+CLI proof, all54x9 capped calibration, both whole campaigns, fresh independent
+Releases, signing, isolated reviewed then pinned verification and closure
+remain required. H08 stays OPEN; no favorable-environment wait is authorized.
+
 ## Profile ownership
 
 -   Local validates the authored contract and fixture identities without timing

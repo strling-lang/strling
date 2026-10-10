@@ -946,6 +946,13 @@ def load_evidence(path: Path = EVIDENCE) -> dict:
     return evidence
 
 
+def _write_evidence_json(value: dict, path: Path) -> None:
+    serialized = (json.dumps(value, indent=2, ensure_ascii=True) + "\n").encode("utf-8")
+    if path.exists() and path.read_bytes() == serialized:
+        return
+    path.write_bytes(serialized)
+
+
 def write_evidence(evidence: dict, path: Path = EVIDENCE) -> None:
     index = {key: value for key, value in evidence.items() if key != "rows"}
     index["case_observations"] = []
@@ -956,16 +963,11 @@ def write_evidence(evidence: dict, path: Path = EVIDENCE) -> None:
     for case_id, rows in grouped.items():
         shard = {"case_id": case_id, "rows": rows}
         relative = observation_path(case_id)
-        (path.parent / relative).write_text(
-            json.dumps(shard, indent=2, ensure_ascii=True) + "\n",
-            encoding="utf-8",
-        )
+        _write_evidence_json(shard, path.parent / relative)
         index["case_observations"].append(
             {"case_id": case_id, "path": relative, "sha256": DIGEST(shard)}
         )
-    path.write_text(
-        json.dumps(index, indent=2, ensure_ascii=True) + "\n", encoding="utf-8"
-    )
+    _write_evidence_json(index, path)
 
 
 def source_identity() -> dict:

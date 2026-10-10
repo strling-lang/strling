@@ -6,10 +6,12 @@ use std::fmt;
 
 use crate::diagnostic::Diagnostic;
 use crate::diagnostic_generation::{
-    generate_diagnostics, DiagnosticGenerationErrorCode, DiagnosticGenerationErrors,
-    MAX_GENERATED_DIAGNOSTICS,
+    generate_diagnostics_with_correspondence, DiagnosticGenerationErrorCode,
+    DiagnosticGenerationErrors, MAX_GENERATED_DIAGNOSTICS,
 };
-use crate::explanation::{explain_semantics, ExplanationDocument, ExplanationErrors};
+use crate::explanation::{
+    explain_semantics_with_correspondence, ExplanationDocument, ExplanationErrors,
+};
 use crate::normalization::{normalize, NormalizationErrors};
 use crate::protocol::{
     AnalysisResult, CompileOutcome, CompileResult, CompilerIdentity, LengthBounds, LengthMaximum,
@@ -180,11 +182,11 @@ pub(crate) fn run_target_neutral_stages(
         .map_err(CompilerPipelineErrors::StructuralAnalysis)?;
     let safety = analyze_safety(&normalized, &foundational, &structural)
         .map_err(CompilerPipelineErrors::SafetyAnalysis)?;
-    let diagnostic_generation =
-        generate_diagnostics(&normalized, &foundational, &structural, &safety)
+    let (diagnostic_generation, correspondence) =
+        generate_diagnostics_with_correspondence(&normalized, &foundational, &structural, &safety)
             .map_err(CompilerPipelineErrors::DiagnosticGeneration)?;
-    let explanation = explain_semantics(
-        &normalized,
+    let explanation = explain_semantics_with_correspondence(
+        &correspondence,
         &foundational,
         &structural,
         &safety,
@@ -235,6 +237,8 @@ mod tests {
     use super::*;
     use crate::diagnostic::Severity;
     use crate::diagnostic_generation::SAFETY_UNBOUNDED_NULLABLE_REPETITION;
+    use crate::diagnostic_generation::{generate_diagnostics, DiagnosticGeneration};
+    use crate::explanation::explain_semantics;
     use crate::protocol::{CompileOutcome, SemanticResultStatus};
     use crate::semantic::Node;
 
@@ -255,6 +259,201 @@ mod tests {
             "root": root
         }))
         .expect("semantic program must deserialize")
+    }
+
+    #[test]
+    fn adjacent_projections_preserve_public_results_and_exact_input_borrow() {
+        for root in [
+            json!({"node_id":"node:literal","kind":"literal","text":"aβ"}),
+            json!({"node_id":"node:repeat","kind":"repeat","min":0,"max":null,
+                "mode":"greedy","body":{"node_id":"node:empty","kind":"empty"}}),
+            json!({"node_id":"node:capture","kind":"capture","capture_id":"capture:test",
+                "body":{"node_id":"node:body","kind":"literal","text":"abc"}}),
+        ] {
+            let semantic = program(root);
+            let foundational = analyze(&semantic).unwrap();
+            let structural = analyze_structure(&semantic, &foundational).unwrap();
+            let safety = analyze_safety(&semantic, &foundational, &structural).unwrap();
+            let expected_generation =
+                generate_diagnostics(&semantic, &foundational, &structural, &safety).unwrap();
+            let (generation, correspondence) = generate_diagnostics_with_correspondence(
+                &semantic,
+                &foundational,
+                &structural,
+                &safety,
+            )
+            .unwrap();
+            assert!(std::ptr::eq(correspondence.program(), &semantic));
+            assert_eq!(generation, expected_generation);
+            let expected = explain_semantics(
+                &semantic,
+                &foundational,
+                &structural,
+                &safety,
+                &expected_generation,
+            )
+            .unwrap();
+            let actual = explain_semantics_with_correspondence(
+                &correspondence,
+                &foundational,
+                &structural,
+                &safety,
+                &generation,
+            )
+            .unwrap();
+            assert_eq!(actual, expected);
+            assert_eq!(
+                serde_json::to_vec(&actual).unwrap(),
+                serde_json::to_vec(&expected).unwrap()
+            );
+            assert_eq!(
+                run_target_neutral_stages(&semantic).unwrap().explanation,
+                expected
+            );
+        }
+    }
+
+    #[test]
+    fn adjacent_projection_rejects_stale_prerequisites_and_generation_identically() {
+        let semantic = program(json!({"node_id":"node:literal","kind":"literal","text":"aβ"}));
+        let foundational = analyze(&semantic).unwrap();
+        let structural = analyze_structure(&semantic, &foundational).unwrap();
+        let safety = analyze_safety(&semantic, &foundational, &structural).unwrap();
+        let (generation, correspondence) = generate_diagnostics_with_correspondence(
+            &semantic,
+            &foundational,
+            &structural,
+            &safety,
+        )
+        .unwrap();
+        for (path, value) in [
+            ("/root/text", json!("bβ")),
+            ("/root/node_id", json!("node:changed")),
+            ("/case_matching", json!("insensitive")),
+            ("/specification_version", json!("1.0-draft.2")),
+        ] {
+            let mut changed = serde_json::to_value(&semantic).unwrap();
+            *changed.pointer_mut(path).unwrap() = value;
+            let other: SemanticProgram = serde_json::from_value(changed).unwrap();
+            let other_foundational = analyze(&other).unwrap();
+            let other_structural = analyze_structure(&other, &other_foundational).unwrap();
+            let other_safety =
+                analyze_safety(&other, &other_foundational, &other_structural).unwrap();
+            let other_generation = generate_diagnostics(
+                &other,
+                &other_foundational,
+                &other_structural,
+                &other_safety,
+            )
+            .unwrap();
+            for (facts, structure, diagnostics) in [
+                (&other_foundational, &structural, &generation),
+                (&foundational, &other_structural, &generation),
+                (&foundational, &structural, &other_generation),
+            ] {
+                assert_eq!(
+                    explain_semantics_with_correspondence(
+                        &correspondence,
+                        facts,
+                        structure,
+                        &safety,
+                        diagnostics
+                    )
+                    .unwrap_err(),
+                    explain_semantics(&semantic, facts, structure, &safety, diagnostics)
+                        .unwrap_err(),
+                );
+            }
+        }
+        let unbound = DiagnosticGeneration::default();
+        assert_eq!(
+            explain_semantics_with_correspondence(
+                &correspondence,
+                &foundational,
+                &structural,
+                &safety,
+                &unbound
+            )
+            .unwrap_err(),
+            explain_semantics(&semantic, &foundational, &structural, &safety, &unbound)
+                .unwrap_err(),
+        );
+    }
+
+    #[test]
+    fn adjacent_projection_preserves_malformed_safety_rejection() {
+        let semantic = program(
+            json!({"node_id":"node:repeat","kind":"repeat","min":0,"max":null,
+            "mode":"greedy","body":{"node_id":"node:empty","kind":"empty"}}),
+        );
+        let foundational = analyze(&semantic).unwrap();
+        let structural = analyze_structure(&semantic, &foundational).unwrap();
+        let safety = analyze_safety(&semantic, &foundational, &structural).unwrap();
+        let (generation, correspondence) = generate_diagnostics_with_correspondence(
+            &semantic,
+            &foundational,
+            &structural,
+            &safety,
+        )
+        .unwrap();
+        let mut corrupted = serde_json::to_value(&safety).unwrap();
+        corrupted["findings"][0]["primary_node_id"] = json!("node:unreachable");
+        let malformed: crate::safety_analysis::SafetyAnalysis =
+            serde_json::from_value(corrupted).unwrap();
+        assert_eq!(
+            explain_semantics_with_correspondence(
+                &correspondence,
+                &foundational,
+                &structural,
+                &malformed,
+                &generation
+            )
+            .unwrap_err(),
+            explain_semantics(
+                &semantic,
+                &foundational,
+                &structural,
+                &malformed,
+                &generation
+            )
+            .unwrap_err(),
+        );
+        assert_eq!(
+            generate_diagnostics_with_correspondence(
+                &semantic,
+                &foundational,
+                &structural,
+                &malformed
+            )
+            .err()
+            .unwrap(),
+            generate_diagnostics(&semantic, &foundational, &structural, &malformed).unwrap_err(),
+        );
+    }
+
+    #[test]
+    fn adjacent_projection_still_validates_its_borrowed_input() {
+        let semantic = program(json!({"node_id":"node:literal","kind":"literal","text":"aβ"}));
+        let foundational = analyze(&semantic).unwrap();
+        let structural = analyze_structure(&semantic, &foundational).unwrap();
+        let safety = analyze_safety(&semantic, &foundational, &structural).unwrap();
+        let generation =
+            generate_diagnostics(&semantic, &foundational, &structural, &safety).unwrap();
+        let invalid = program(json!({"node_id":"node:literal","kind":"literal","text":""}));
+        let correspondence =
+            crate::safety_analysis::SafetyValidationContext::new(&invalid).unwrap();
+        assert_eq!(
+            explain_semantics_with_correspondence(
+                &correspondence,
+                &foundational,
+                &structural,
+                &safety,
+                &generation
+            )
+            .unwrap_err(),
+            explain_semantics(&invalid, &foundational, &structural, &safety, &generation)
+                .unwrap_err(),
+        );
     }
 
     #[test]

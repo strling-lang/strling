@@ -6412,3 +6412,121 @@ fresh independent Releases, actual signing, isolated reviewed then immutable
 pinned verification and guarded closure remain required. H08 remains OPEN.
 
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.
+
+### October10 adjacent atomic result and CPU-clock work attribution
+
+Clean candidate209fc16b completed at08:56:21Z. Independent all-raw review
+SHA256e19598d50211433aab1d2222ecd826aa48a4f4a541802dd106b41899545383a9
+reconstructs nine windows,576 observations,batch1007,512 warmups, no rejected
+batches. Wall median26193ns is below unchanged27920ns cap; MAD104bp is below
+unchanged500bp. The diagnostic predictor remains FAILED because eleven
+GetProcessTimes zero deltas were retained as sentinel1; acquisition0 is not
+acceptance. Native terminal10de61717fc6e17579c07ac9116be8e9736b0f01a5b4c1b299d333c95908f4a7,
+Python terminal283f3262e47a784828eb70b19fc8f4775f376a7e6aaf5c2a7cc4a4a8603086aa,
+ledgerf50985ca9c1af05a8823d58ff60b8c9d3cc9fcd06fb900b019078237457ace26
+remain immutable. No sampled-source retry or relabeling is authorized.
+
+Clock-only diagnosticd5e21a70496db2b6d34a7dd2e7db8158dc2a0325e02e322030134714f57f4262
+contains128 actual work intervals and128 adjacent empty controls,64each1ms/26ms,
+zero STRling operations or host-setting changes. Sixty1ms work intervals have
+zero process time and positive process/thread cycles above the complete control
+maximum; no26ms probe has zero. All128 rows and11negativeguards pass independent
+integer reconstruction. This disproves the heuristic that zero process-time
+delta implies no CPU work; a specific scheduler cause for the eleven product
+deltas remains unproven. All original failures remain failed.
+
+Prospective optional internal Windows in-process cycle-endpoint audit records
+accepted/rejected work and immediate empty-control endpoints. Unknown mode,
+unsupported host/CLI child/RSS scope, API failure and reordered endpoints fail
+closed. Zero or control-dominated cycles fail a diagnostic work proof, never
+filtering valid timing. Cycles are never converted into time or used as a budget.
+Ordinary profile timing/output, GetProcessTimes evidence, all acquisition counts,
+50ms descheduling,500bp MAD,27920ns cap and all54 ceilings, conditioning,
+isolation/security/trust are unchanged. Fresh clean-source diagnostic proof is
+required; no old predictor is accepted retrospectively. Generated-artifact-sync
+maps the exact runner/existingcharter/three-record paths to zero registered
+families; original measured baseline is unchanged. Tests-first compilation
+failure315f26/0e1244, formatting sandbox denial7dcc35 and initial Windows-module
+reference failure49c30b are preserved diagnostics, not passing regressions.
+Corrected narrow six-test runner suiteb055e9 passes; complete repeated native,
+direct-dependent and cheap prerequisite checks remain required before freeze.
+No calibration, authoritative profile, trust promotion or closure is claimed.
+H08 remains OPEN; P20-T02 remains blocked until genuine final certification.
+
+The sample-free native controller55684 ended at09:30:55.510319Z. All actual
+native15x3=45 tests pass, including the seven new cycle-audit tests and eight
+retained placement/batching/launch tests. Worker target0 and all zero failed,
+ignored, measured or filtered denominators are retained. Four tooling modules
+73+7+13+11=104 tests pass. Original helper terminal
+`7ec465757318d2caa9574f3c03a437eed1f20e44002bcfd8051c9ab93cbb5c2c`
+remains FAILED: an `OK`-at-EOF assertion rejects the exact controlled-producer
+diagnostic intentionally printed by an existing unit test after its OK footer.
+This is a helper receipt-parser defect, not a product failure. Scheduled09:37
+compact query denial is not dead-process proof; scoped read-only query34d131
+succeeds with retained owner/children absent. Session77697 consumedonceb54d1e.
+
+Independent prefix review
+`cfde132f6af0b166aea0f7c20ca3eda35ccf5fedcf85a6449c73684ddf7dec26`
+reconstructs all source/raw/terminal pins, complete15 named native tests per
+run and exact104 success markers/footer/expected diagnostic. Twenty-five
+negative guards reject altered count, failures, skips, unexpected suffix or
+terminal promotion. Only the previously unexecuted registered Local contract
+runs afterward, one manifest check PASS at09:44:03.241531Z; contract byteSHA
+`1e5cffe7a47da01704e613800b90c20cb3709c1b08b9301565736be1797f34b2`,
+complete recovery terminal
+`d1f501386a724d5638baefc00e65031d504ffc5312ebfe092862468719fdcb5c`.
+No completed prefix replay, timing samples, Local37/PR79 or authoritative
+acceptance. Failed preflight30045d (65-character source pin) andf6e26b (review
+script exact-checkout import omission) remain preserved with original helpers;
+their separate corrections alter neither registered verifier nor test results.
+Generated-artifact-sync528fcc freshly maps all exact5 paths against35 registry
+families with zero matches. Remaining repository/static/generated/exact-runtime/
+repeated real security prerequisites, clean freeze, fresh diagnostics and both
+whole campaigns/signing/isolated verification/guarded closure remain required.
+H08 remains OPEN.
+
+Sample-free prerequisite preflight2029bd rejects the newly added evidence
+`result: in_progress`, which is not a task-record evidence enum. Only task status
+permits that value; pending evidence must be `not_run`. The prospective measured
+cycle-audit proof is corrected to `not_run`, with the actual completed native/
+tooling proof retained as a separate passed entry. Schema and historical
+committed evidence are unchanged. Original guard/shell are preserved, no
+prerequisite command executed, and full schema/scope checks must pass again.
+
+Retained sample-free nativePython1872/hiddenWSL39708 completed all12prerequisites
+at2026-10-10T10:22:11.960732Z. Scheduled10:29:37.544Z accepted; actualUTC
+10:30:01.6809446Z scoped ordinary-token read-only CIM confirms retained owners
+absent and both terminal0/complete, session32779 consumedonce0bec86. Native
+63627dc4c37d856e8d5ccb6a43d48d94d294e6ac8f404aa574f3af780595f8f9,
+shell53c289089e4ea04f3d9a9c642eb5c0f39422fbf6f847c73257346665caaf4683,
+eventsd909ef5b0f6aee20d4f05ddcda90aa7542f5cb524149943a486e88a938515101
+remain immutable. Independent review265e65ef655540bf1adcf08133d447c45b781d3518f61183f085dfa0ad7740a9
+checks exact12commands/source/raws,25negative completion/denominator/contract
+detail guards,26contracts,33architecture+4governance, exactruntime identities,
+generated32PASS/1transitional/2profile-enforced, hygiene/format/static/integrity30,
+attestation contract and source definitions. No executed LSP payload claim.
+Generated-artifact-sync maps exact5paths against all35families, none matched.
+
+Two separate actual security invocations each55checks54PASS plus only accepted
+WVR-SEC-VSCE-LICENSE-001 and zero failed/unavailable/incomplete. Identical raw
+488efd7b1e6802a57f7c7564913be90ee14665eb903a4468414f7775f147970f is
+not sample reuse: distinct10:20:19/10:21:07 START and10:21:00/10:21:44 PASS events
+bind both invocations. Exact Jest30.5.2/types30.0.0/ts-jest29.4.14 retained;
+ten exact test-only JUnit dispositions and7negative guards per scan pass.
+Original baseline12efe6ff... and all limits/counts/security/trust stay unchanged.
+
+Unsigned PowerShell launcheraa069f remains failed before execution, receipt
+10753071c2113a18b97287b8442c96c5c8a417d82e229ceb6e9905ded6fbf3b4.
+Separate native Python controller invokes hidden WSL directly under ordinary
+token; no script evaluation, execution-policy/security/power/privilege change.
+Independent reviewers17dd8a andbe4a71 remain failed with original helpers:
+canonical-JSON runtime identity is not file-byte identity, and contracts retain
+the previously declared root-CLI additive certification detail. V3 independently
+validates correct identity/strict known detail without any operation replay.
+Native45/tooling104/registered-contract1 completed prefix is not replayed.
+Dirty-source sample-free engineering only, no performance/profile/campaign,
+baseline activation/signature/trust/closure. Next guarded exact5clean freeze,
+fresh cycle-audited atomic/CLI36/all54x9capped calibration/exactSHAreadiness and
+both whole authoritative campaigns/fresh independent Releases/signing/isolated
+qualification/pin-onlypromotion/pinned verification/guardedclosure remain
+required. H08OPEN; P20-T02 remains blocked pending genuine final certification.

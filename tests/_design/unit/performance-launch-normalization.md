@@ -74,3 +74,26 @@ unchanged. Reuse of an authenticated baseline count must not reselect it.
 Tests must reject arbitrary precision targets and policy changes, prove native
 versus legacy and CLI selection, preserve all 54 prior caps, and require a
 fresh clean-source calibration. Fixed diagnostic success is not certification.
+
+## Supplementary native cycle audit
+
+The optional diagnostic-only `--cpu-cycle-audit process-cycle-endpoints-v1`
+records Windows QueryProcessCycleTime endpoints around every in-process batch
+and around an immediately preceding empty counter-read control. Cycle values
+are never time values and are never converted into nanoseconds. Ordinary
+profile invocation, wall-time intervals, GetProcessTimes evidence, batching,
+sample selection, descheduling, budgets, conditioning and isolation do not
+change. Unsupported hosts, unknown audit identities, CLI child-process work
+and peak-RSS work must reject this optional mode rather than claim coverage.
+
+Pure tests must reconstruct both deltas exactly, reject decreasing or reordered
+endpoints, retain zero CPU-time sentinel examples with positive independently
+measured cycles, and reject zero or control-dominated cycle work. Missing,
+truncated, mistyped or malformed audit data cannot pass an independent review.
+Every accepted and rejected batch must retain its cycle endpoints, including
+unfavorable values; no cycle value is a sample-filtering criterion.
+
+Native compilation and repeated complete runner unit suites precede a new
+clean-source nine-window proof. Earlier zero-time predictor failures stay
+failed and immutable. A prospective cycle-work proof supplements, rather than
+substitutes for, all existing performance acceptance and certification evidence.

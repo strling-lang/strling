@@ -39,6 +39,7 @@ const ROBUST_CLI_LAUNCH_SCHEDULE: &str = "half-complementary-adjacent-pairs-64-v
 const MAXIMUM_DESCHEDULING_NANOSECONDS: u64 = 50_000_000;
 const MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER: usize = 2;
 const MEMORY_WORKER_BINARY: &str = "strling-performance-memory-worker.exe";
+const CPU_CYCLE_AUDIT: &str = "process-cycle-endpoints-v1";
 
 #[derive(Debug)]
 struct Arguments {
@@ -52,6 +53,7 @@ struct Arguments {
     expected_logical_cpu: Option<usize>,
     kernel_bin: Option<PathBuf>,
     cli_launch_schedule: Option<String>,
+    cpu_cycle_audit: bool,
     ping: bool,
 }
 
@@ -99,6 +101,11 @@ fn run() -> RunResult<()> {
     }
     if arguments.warmups == 0 || arguments.samples == 0 {
         return Err("warmups and samples must be positive".to_owned());
+    }
+    if arguments.cpu_cycle_audit
+        && !cycle_audit_supported(cfg!(target_os = "windows"), &arguments.operation)
+    {
+        return Err("CPU cycle audit requires native Windows in-process timing work".to_owned());
     }
     if let Some(schedule) = arguments.cli_launch_schedule.as_deref() {
         if arguments.operation != "latency:cli-startup"
@@ -208,6 +215,8 @@ fn run() -> RunResult<()> {
     let mut rejected_batch_elapsed_samples = Vec::new();
     let mut rejected_process_cpu_batch_elapsed_samples = Vec::new();
     let mut rejected_process_cpu_utilization_basis_points = Vec::new();
+    let mut cpu_cycle_evidence = Vec::new();
+    let mut rejected_cpu_cycle_evidence = Vec::new();
     let maximum_sample_attempts = arguments
         .samples
         .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
@@ -224,11 +233,22 @@ fn run() -> RunResult<()> {
             )?;
         }
     }
-    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64, u64, u64, u64)> {
+    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64, u64, u64, u64, Option<CpuCycleEvidence>)> {
         let cpu_started = process_cpu_time_nanoseconds()?;
+        let cycle_started = if arguments.cpu_cycle_audit {
+            Some((process_cpu_cycles()?, process_cpu_cycles()?, process_cpu_cycles()?))
+        } else {
+            None
+        };
         let started = Instant::now();
         checksum ^= black_box(execute_batch(prepared, batch_iterations)?);
         let nanoseconds = started.elapsed().as_nanos().max(1);
+        let cycle_evidence = match cycle_started {
+            Some((control_started, control_ended, work_started)) => Some(CpuCycleEvidence::from_endpoints(
+                control_started, control_ended, work_started, process_cpu_cycles()?,
+            )?),
+            None => None,
+        };
         let cpu_nanoseconds = process_cpu_time_nanoseconds()?
             .saturating_sub(cpu_started)
             .max(1);
@@ -257,6 +277,7 @@ fn run() -> RunResult<()> {
             normalized_cpu,
             batch_cpu,
             utilization_basis_points,
+            cycle_evidence,
         ))
     };
     if let Some(control) = &control_operation {
@@ -299,6 +320,9 @@ fn run() -> RunResult<()> {
                 rejected_batch_elapsed_samples.push(sample.1);
                 rejected_process_cpu_batch_elapsed_samples.push(sample.3);
                 rejected_process_cpu_utilization_basis_points.push(sample.4);
+                if let Some(evidence) = sample.5 {
+                    rejected_cpu_cycle_evidence.push(evidence.as_json());
+                }
                 continue;
             }
             accepted_samples += 1;
@@ -308,6 +332,9 @@ fn run() -> RunResult<()> {
                 process_cpu_samples.push(sample.2);
                 process_cpu_batch_elapsed_samples.push(sample.3);
                 process_cpu_utilization_basis_points.push(sample.4);
+                if let Some(evidence) = sample.5 {
+                    cpu_cycle_evidence.push(evidence.as_json());
+                }
             }
         }
     }
@@ -358,6 +385,11 @@ fn run() -> RunResult<()> {
     if arguments.cli_launch_schedule.is_some() {
         result["cli_launch_schedule"] = json!(arguments.cli_launch_schedule);
         result["request_first"] = json!((0..64).map(robust_cli_request_first).collect::<Vec<_>>());
+    }
+    if arguments.cpu_cycle_audit {
+        result["cpu_cycle_audit"] = json!(CPU_CYCLE_AUDIT);
+        result["cpu_cycle_evidence"] = json!(cpu_cycle_evidence);
+        result["rejected_cpu_cycle_evidence"] = json!(rejected_cpu_cycle_evidence);
     }
     println!(
         "{}",
@@ -512,6 +544,73 @@ fn captures_timing_evidence(operation: &str) -> bool {
     operation != "memory:kernel-peak-rss"
 }
 
+fn cycle_audit_supported(native_windows: bool, operation: &str) -> bool {
+    native_windows && captures_timing_evidence(operation) && operation != "latency:cli-startup"
+}
+
+fn parse_cycle_audit(value: &str) -> RunResult<bool> {
+    if value == CPU_CYCLE_AUDIT {
+        Ok(true)
+    } else {
+        Err("unknown CPU cycle audit identity".to_owned())
+    }
+}
+
+#[derive(Debug)]
+struct CpuCycleEvidence {
+    control_started: u64,
+    control_ended: u64,
+    work_started: u64,
+    work_ended: u64,
+    control_cycles: u64,
+    work_cycles: u64,
+}
+
+impl CpuCycleEvidence {
+    fn from_endpoints(
+        control_started: u64,
+        control_ended: u64,
+        work_started: u64,
+        work_ended: u64,
+    ) -> RunResult<Self> {
+        if control_ended < control_started
+            || work_started < control_ended
+            || work_ended < work_started
+        {
+            return Err("CPU cycle audit endpoints decreased or were reordered".to_owned());
+        }
+        Ok(Self {
+            control_started,
+            control_ended,
+            work_started,
+            work_ended,
+            control_cycles: control_ended - control_started,
+            work_cycles: work_ended - work_started,
+        })
+    }
+
+    fn work_exceeds_counter_control(&self) -> bool {
+        self.work_cycles > self.control_cycles
+    }
+
+    fn as_json(&self) -> Value {
+        json!({"control_started": self.control_started, "control_ended": self.control_ended,
+            "work_started": self.work_started, "work_ended": self.work_ended,
+            "control_cycles": self.control_cycles, "work_cycles": self.work_cycles,
+            "work_exceeds_counter_control": self.work_exceeds_counter_control()})
+    }
+}
+
+#[cfg(target_os = "windows")]
+fn process_cpu_cycles() -> RunResult<u64> {
+    windows_placement::process_cpu_cycles()
+}
+
+#[cfg(not(target_os = "windows"))]
+fn process_cpu_cycles() -> RunResult<u64> {
+    Err("CPU cycle audit is unavailable on this platform".to_owned())
+}
+
 fn parse_arguments() -> RunResult<Arguments> {
     let values = env::args().skip(1).collect::<Vec<_>>();
     if values == ["--ping"] {
@@ -526,6 +625,7 @@ fn parse_arguments() -> RunResult<Arguments> {
             expected_logical_cpu: None,
             kernel_bin: None,
             cli_launch_schedule: None,
+            cpu_cycle_audit: false,
             ping: true,
         });
     }
@@ -539,6 +639,7 @@ fn parse_arguments() -> RunResult<Arguments> {
     let mut expected_logical_cpu = None;
     let mut kernel_bin = None;
     let mut cli_launch_schedule = None;
+    let mut cpu_cycle_audit = false;
     let mut index = 0;
     while index < values.len() {
         let flag = &values[index];
@@ -576,6 +677,7 @@ fn parse_arguments() -> RunResult<Arguments> {
             }
             "--kernel-bin" => kernel_bin = Some(PathBuf::from(value)),
             "--cli-launch-schedule" => cli_launch_schedule = Some(value.clone()),
+            "--cpu-cycle-audit" => cpu_cycle_audit = parse_cycle_audit(value)?,
             _ => return Err(format!("unknown argument {flag}")),
         }
         index += 2;
@@ -591,6 +693,7 @@ fn parse_arguments() -> RunResult<Arguments> {
         expected_logical_cpu,
         kernel_bin,
         cli_launch_schedule,
+        cpu_cycle_audit,
         ping: false,
     })
 }
@@ -814,6 +917,7 @@ mod windows_placement {
     #[link(name = "kernel32")]
     extern "system" {
         fn GetCurrentProcess() -> Handle;
+        fn QueryProcessCycleTime(process: Handle, cycles: *mut u64) -> i32;
         fn GetProcessTimes(
             process: Handle,
             creation_time: *mut FileTime,
@@ -911,6 +1015,14 @@ mod windows_placement {
         let kernel_ticks = (u64::from(kernel.high) << 32) | u64::from(kernel.low);
         let user_ticks = (u64::from(user.high) << 32) | u64::from(user.low);
         Ok(u128::from(kernel_ticks.saturating_add(user_ticks)) * 100)
+    }
+
+    pub fn process_cpu_cycles() -> RunResult<u64> {
+        let mut cycles = 0u64;
+        if unsafe { QueryProcessCycleTime(current_process(), &mut cycles) } == 0 {
+            return Err(last_error("QueryProcessCycleTime"));
+        }
+        Ok(cycles)
     }
 
     fn cpu_set_state(expected: usize, process: Handle) -> RunResult<(u32, u8, u8, u8, u64)> {
@@ -1922,5 +2034,84 @@ mod affinity_tests {
         ));
         assert!(!captures_timing_evidence("memory:kernel-peak-rss"));
         assert!(captures_timing_evidence("latency:end-to-end"));
+    }
+}
+
+#[cfg(test)]
+mod cycle_audit_tests {
+    use super::{cycle_audit_supported, parse_cycle_audit, CpuCycleEvidence, CPU_CYCLE_AUDIT};
+
+    #[test]
+    fn cycle_audit_identity_is_closed() {
+        assert!(parse_cycle_audit(CPU_CYCLE_AUDIT).unwrap());
+        for identity in ["", "true", "false", "off", "process-cycle-endpoints-v2"] {
+            assert!(parse_cycle_audit(identity).is_err());
+        }
+    }
+
+    #[cfg(target_os = "windows")]
+    #[test]
+    fn native_cycle_query_is_available_and_monotonic() {
+        let endpoints = [
+            super::process_cpu_cycles().unwrap(),
+            super::process_cpu_cycles().unwrap(),
+            super::process_cpu_cycles().unwrap(),
+            super::process_cpu_cycles().unwrap(),
+        ];
+        CpuCycleEvidence::from_endpoints(endpoints[0], endpoints[1], endpoints[2], endpoints[3])
+            .unwrap();
+    }
+
+    #[test]
+    fn cycle_endpoints_reconstruct_exact_deltas_without_time_conversion() {
+        let evidence = CpuCycleEvidence::from_endpoints(10, 12, 15, 1015).unwrap();
+        assert_eq!(evidence.control_cycles, 2);
+        assert_eq!(evidence.work_cycles, 1000);
+        assert!(evidence.work_exceeds_counter_control());
+        assert_eq!(evidence.as_json()["work_started"], 15);
+        assert_eq!(evidence.as_json()["work_ended"], 1015);
+    }
+
+    #[test]
+    fn decreasing_or_reordered_cycle_endpoints_fail_closed() {
+        for endpoints in [(20, 10, 30, 40), (10, 20, 30, 29), (10, 20, 19, 40)] {
+            assert!(CpuCycleEvidence::from_endpoints(
+                endpoints.0,
+                endpoints.1,
+                endpoints.2,
+                endpoints.3
+            )
+            .is_err());
+        }
+    }
+
+    #[test]
+    fn zero_or_control_dominated_work_is_preserved_and_not_accepted() {
+        for (control, work) in [(0, 0), (10, 0), (10, 9), (10, 10)] {
+            let evidence =
+                CpuCycleEvidence::from_endpoints(0, control, control, control + work).unwrap();
+            assert!(!evidence.work_exceeds_counter_control());
+            assert_eq!(evidence.as_json()["work_cycles"], work);
+        }
+        assert!(CpuCycleEvidence::from_endpoints(0, 10, 10, 21)
+            .unwrap()
+            .work_exceeds_counter_control());
+    }
+
+    #[test]
+    fn cycle_delta_can_prove_work_when_quantized_cpu_time_is_zero() {
+        let evidence = CpuCycleEvidence::from_endpoints(0, 10, 10, 1_000_010).unwrap();
+        let original_cpu_time_sentinel = 0u64.max(1);
+        assert_eq!(original_cpu_time_sentinel, 1);
+        assert!(evidence.work_exceeds_counter_control());
+    }
+
+    #[test]
+    fn optional_cycle_audit_rejects_non_windows_child_and_memory_work() {
+        assert!(cycle_audit_supported(true, "latency:end-to-end"));
+        assert!(cycle_audit_supported(true, "latency:kernel-request"));
+        assert!(!cycle_audit_supported(false, "latency:end-to-end"));
+        assert!(!cycle_audit_supported(true, "latency:cli-startup"));
+        assert!(!cycle_audit_supported(true, "memory:kernel-peak-rss"));
     }
 }

@@ -969,6 +969,97 @@ CLI proof, all54x9 capped calibration, both whole campaigns, fresh independent
 Releases, signing, isolated reviewed then pinned verification and closure
 remain required. H08 stays OPEN; no favorable-environment wait is authorized.
 
+## Supplementary CPU-cycle work attribution
+
+The clean adjacent-context candidate
+`209fc16b999c1dd7301f12b751904bb78431bd7b` completed its fresh native three-build,
+nine-window atomic acquisition at 2026-10-10T08:56:21Z. Independent review
+`e19598d50211433aab1d2222ecd826aa48a4f4a541802dd106b41899545383a9`
+reconstructs all 576 observations with batch 1007 and 512 warmups per window.
+Window medians are 26193, 25913, 26376, 26470, 26159, 26463, 25259, 26404 and
+25173ns; the aggregate median 26193ns passes the unchanged 27920ns prior cap,
+and 104bp MAD passes the unchanged 500bp stability gate. No batch was rejected.
+The diagnostic predictor nevertheless remains FAILED: eleven GetProcessTimes
+zero deltas, retained as the original one-nanosecond sentinel, fail its added
+per-batch nonzero-CPU heuristic. Acquisition exit0 is not predictor acceptance.
+This sampled source is not retried, and its original summary is not relabeled.
+
+A separate one-use clock-property diagnostic executes no STRling operations and
+changes no host settings. It retains 128 busy-work intervals and 128 adjacent
+empty controls, 64 each at 1ms and 26ms. Sixty 1ms work intervals report zero
+process time despite positive process and thread cycles; no 26ms probe reports
+zero. Minimum work process/thread cycles (2371586/2186292) exceed maximum empty
+control values (905432/22013). All samples remain visible, including controls
+and zero-time values. Raw receipt SHA256
+`d5e21a70496db2b6d34a7dd2e7db8158dc2a0325e02e322030134714f57f4262`
+and eleven negative diagnostic guards independently establish that zero
+GetProcessTimes delta is not a valid no-CPU-work predicate. The probe does not
+prove a particular scheduler cause for the eleven retained product deltas, or
+claim product performance qualification.
+
+The prospective optional internal runner mode
+`--cpu-cycle-audit process-cycle-endpoints-v1` supplements in-process Windows
+diagnostics with QueryProcessCycleTime endpoints and an immediate empty
+counter-read control for every accepted and rejected batch. Endpoint ordering,
+exact integer subtraction and complete denominator are independently checked;
+work must exceed its counter-read control before a diagnostic work proof can
+pass. Zero or control-dominated cycle evidence stays retained and fails that
+proof, never filtering an otherwise valid wall-time sample. API errors and
+unsupported hosts, child-process CLI work, or peak-RSS work fail closed.
+
+Cycles are not nanoseconds and are never converted into time or substituted
+for wall/CPU-time performance budgets. The ordinary profile invocation and
+output are unchanged when this optional mode is absent. In audit mode the
+cycle queries bracket, but do not enter, the original wall-timed product batch.
+Existing GetProcessTimes fields, 31.25ms selection target, 4096 maximum batch,
+512 warmups, 64 samples, nine windows, 1ms minimum, 50ms descheduling, 500bp MAD,
+prior ceilings, conditioning, isolation, authentication and security all stay
+unchanged. Earlier failures cannot be accepted under this new diagnostic mode;
+a fresh clean-source proof, CLI36 and all54x9 capped calibration are required.
+
+The runner, existing charter and three migration records match no registered
+generated family under registry SHA256
+`ef571beb4bffb12bba1ed064056b84b46961b0bc3d56db4326511f5e4e2a0c12`.
+No generated authority or command is invented; the original measured baseline
+remains byte-identical. Repeated native and direct-dependent regressions and
+cheap prerequisites precede a guarded exact-path commit/freeze. This is a
+measurement-property correction, not a loosened performance gate, baseline
+activation, authoritative profile result or trust promotion. H08 remains OPEN;
+both complete campaigns, independent Releases, signing and isolated reviewed
+then immutable pinned verification and formal closure remain required.
+
+The API's declared process-cycle meaning is documented by
+[Microsoft QueryProcessCycleTime](https://learn.microsoft.com/en-us/windows/win32/api/realtimeapiset/nf-realtimeapiset-queryprocesscycletime);
+the time API's FILETIME representation is documented separately by
+[Microsoft GetProcessTimes](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getprocesstimes).
+Representation alone is not an interval-resolution guarantee.
+
+The complete native engineering run finished at 2026-10-10T09:30:55Z. All
+15 runner tests pass in each of three actual Rust 1.75 `--all-targets` runs
+(45 passes; the memory-worker target has zero tests), with no failed, ignored,
+measured or filtered cases. Four directly dependent tooling modules pass
+73+7+13+11=104 tests with no errors or skips. The original helper still has a
+failed terminal: it incorrectly required unittest's `OK` footer at EOF, although
+the existing controlled-producer exception test intentionally prints its exact
+incomplete-diagnostic JSON afterward. No product or test expectation changes.
+Independent raw-prefix review
+`cfde132f6af0b166aea0f7c20ca3eda35ccf5fedcf85a6449c73684ddf7dec26`
+checks every raw-log/source/terminal pin, all native test names and complete
+denominators, and only that precise expected diagnostic suffix. Twenty-five
+negative completion, denominator and suffix guards reject altered results.
+
+Only the previously unexecuted sample-free Local performance contract runs in
+the separate recovery. Its single manifest check passes, receipt
+`1e5cffe7a47da01704e613800b90c20cb3709c1b08b9301565736be1797f34b2`;
+recovery terminal
+`d1f501386a724d5638baefc00e65031d504ffc5312ebfe092862468719fdcb5c`
+is complete at 2026-10-10T09:44:03Z. This is not Local37 or measured acceptance.
+No completed prefix was replayed. Earlier pre-execution malformed hash and
+review-script import-location guard failures are retained separately, with
+their original helpers unchanged. Remaining repository, static, generated,
+exact-runtime and repeated real security prerequisites precede the new clean
+freeze; no baseline activation, campaign acceptance, trust or closure is claimed.
+
 ## Profile ownership
 
 -   Local validates the authored contract and fixture identities without timing
@@ -1000,3 +1091,50 @@ cause-backed reversible product optimizations and compatible secure tooling
 corrections, with regression and generated-artifact verification. It does not
 authorize semantic, public-output, security, comparison-ceiling, evidence,
 license, isolation or trust weakening, nor publication.
+
+## Supplementary cycle-audit engineering prerequisite completion
+
+The ordinary-token native Python owner1872 and hidden WSL39708 completed the
+twelve planned sample-free prerequisites at 2026-10-10T10:22:11.960732Z.
+Native terminal byteSHA
+`63627dc4c37d856e8d5ccb6a43d48d94d294e6ac8f404aa574f3af780595f8f9`
+and shell terminal
+`53c289089e4ea04f3d9a9c642eb5c0f39422fbf6f847c73257346665caaf4683`
+are exit0 and required-complete. Independent reconstruction
+`265e65ef655540bf1adcf08133d447c45b781d3518f61183f085dfa0ad7740a9`
+binds every source/raw/event/terminal identity and25 negative completion,
+denominator and exact contract-detail guards. Contracts26, architecture33 plus
+four governance checks, exact runtimes, hygiene, formatting, static analysis,
+dependency integrity30, attestation contract and source definitions pass.
+Generated verification records32 passed families, one transitional lockfile
+family and two Full/Release-profile-enforced families; the latter are not
+executed or accepted here. All five changed paths match zero registered
+families; no generated output, original baseline or acceptance ceiling changes.
+
+Two separate real dependency-risk invocations each return54PASS plus only
+`WVR-SEC-VSCE-LICENSE-001`, with zero failed/unavailable/incomplete checks.
+Their raw bytes are identical, SHA256
+`488efd7b1e6802a57f7c7564913be90ee14665eb903a4468414f7775f147970f`;
+distinct START/PASS events establish execution, not reused evidence. Exact
+Jest30.5.2, @types/jest30.0.0 and ts-jest29.4.14 remain governed. Each scan
+retains all ten exact JUnit EPL-2.0 non-distributed-build-test bindings and
+passes seven negative expansion/version/scope guards. No runtime approval or
+waiver expansion occurs.
+
+The rejected unsigned Windows PowerShell launcher remains failed, receipt
+`10753071c2113a18b97287b8442c96c5c8a417d82e229ceb6e9905ded6fbf3b4`.
+The separate native Python controller neither evaluates that script nor changes
+execution policy, security or privilege settings. Independent review attempts
+17dd8a and be4a71 are preserved failures: they compared canonical JSON identity
+to file bytes and omitted the already declared root-CLI additive certification
+detail, respectively. Separate V3 corrects only those review assumptions and
+strictly reconstructs the exact known detail. No prerequisite operation or
+completed45native/104tooling/one-contract prefix is replayed. No product failure
+is inferred from these helper defects and no failed receipt is relabeled.
+
+This remains dirty-source engineering proof, not Local37, PR79, Full125,
+Release125, performance acceptance, signing, trust or closure. A guarded exact
+five-path clean source precedes fresh cycle-audited atomic evidence, CLI36 and
+all54x9 capped calibration, exact-source readiness and both whole authoritative
+campaigns with fresh independent Releases, signing, isolated reviewed-verifier
+qualification, pin-only promotion and immutable pinned verification. H08 OPEN.

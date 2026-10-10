@@ -6530,3 +6530,115 @@ fresh cycle-audited atomic/CLI36/all54x9capped calibration/exactSHAreadiness and
 both whole authoritative campaigns/fresh independent Releases/signing/isolated
 qualification/pin-onlypromotion/pinned verification/guardedclosure remain
 required. H08OPEN; P20-T02 remains blocked pending genuine final certification.
+
+### H08 retained calibration interruption — 2026-10-10
+
+Clean eddb3256 has independent nine-window cycle diagnostic403b1afa and
+CLI36 review97c236e7; neither is authoritative acceptance, and the original CPU
+nonzero heuristic remains unpassed. Fresh54x9 calibration stops incomplete at
+150/486 windows,138 raw acquisitions/8832 samples and302 ledger events.
+Both retained owners are absent; no terminal or exit code was recovered.
+Windows events establish a sandbox-service stop/restart13:58:10–13:58:13Z;
+infrastructure interruption is supported inference, requester unknown.
+Exclusive forensic reviewee801cc5 preserves all bytes and20 negative guards;
+prior baseline/manifest/evidence and history remain unchanged. Sampled eddb3256
+is consumed, not eligible for unchanged replay or partial-sample acceptance.
+
+Draft ordinary-token pinned-owner lifecycle correction has four pure tests
+passing twice; original sandbox fixture/path failures remain recorded. No
+security/job configuration or privilege change, real child proof, performance
+acquisition or profile execution occurred. Generated-artifact-sync finds zero
+matches across35 families for the six draft paths. Native proof, direct
+dependents, prerequisites, source freeze and both full authoritative campaigns
+remain required. Draft work is uncommitted; H08OPEN, continuationACTIVE.
+
+### H08 mandatory artifact gate — initial human instruction, 2026-10-10
+
+Before each Local/PR/Full/Release SHA freeze, check every registered generated
+family deterministically, regenerate stale families with registered commands,
+review diffs, repeat complete checks with zero stale/missing/unregistered outputs,
+test regenerated-family direct dependents, commit exact identity/output repairs,
+then freeze clean source. No unchecked family may be promoted as green.
+Current35-family registry has32 enforced plus actual Lua/LSP checks delegated
+to profiles and one transitional16-lockfile family with null commands/unverified
+determinism. Aggregate success alone is insufficient. The lockfile coverage gap
+requires governed per-manager deterministic tooling/provenance, not invented
+commands, baseline substitution or skipped acceptance. No new freeze or complete
+all-family check claimed; artifact gate red, H08OPEN, continuationACTIVE.
+
+The14:26:42.066Z revised human heartbeat supersedes the literal lockfile
+reproduction requirement above. Before each **new authoritative candidate**,
+check the complete registered inventory and require zero stale, missing,
+malformed or unregistered governed outputs. Regenerate only stale ordinary
+deterministic families through registered generators; review exact derived
+changes, repeat the complete check and prove changed-family direct dependents.
+Protected performance baselines/calibrations, historical evidence, unchanged
+dependency locks and network-authenticated security/license evidence retain
+their specific refresh governance. Integrity/presence checks cannot be described
+as deterministic lockfile reproduction or retirement of the recorded transition.
+Discovered unregistered governed outputs require registration and deterministic
+coverage before freeze. Once accepted for a frozen SHA, do not repeat the full
+inventory between profiles unless tracked source or governed generated state
+changes; such a change invalidates the candidate. Actual complete coverage and
+clean freeze remain pending; no prior failed result is relabeled.
+
+### H08 real owner-lifecycle proofs rejected — 2026-10-10
+
+Two distinct sample-free worker attempts33832/53076 reject the inherited-job
+guard before acquisition. Exclusive failed terminals661590f4/70392ff9 and both
+stderr traces remain preserved. Approved ordinary-token launcher17632 reports
+immediate job flags0x2800 and requests the already permitted detach flag; a
+separate read-only child64448 still reports ordinary token, job flags0x2000 and
+kill-on-close, byteSHA7ad96e48. Independent owner lifetime is **not proven**;
+do not adopt this launch route for calibration or bypass the remaining job
+constraints. Nine proof-claim negative guards pass; no performance sample,
+job/token/security change or service restart occurred. Unaffected sample-free
+artifact/prerequisite work may continue with ordinary tool-owned lifetime
+honestly recorded. Both full campaigns and closure remain uncompleted.
+
+### H08 sample-free artifact prescan and Lua projection — 2026-10-10
+
+Retained22604/68128 completes all14 planned operations at15:19:57Z, with
+native1bfebdc5 and shell8609808b exit0; session41690 consumed once87a6c4.
+Independent review9fd6a509 binds the exact six-path dirty snapshot, terminals,
+29 ledger events and raw hashes, with32 terminal/denominator/contract negative
+guards. Actual118 direct tests,26 contracts,33 architecture rules plus4
+governance checks,32 enforced generated families,30 integrity checks and two
+separately executed security scans pass. Each scan has54PASS plus only
+WVR-SEC-VSCE-LICENSE-001, zero failed/unavailable/incomplete; ten exact test-only
+JUnit bindings and seven expansion guards per scan, Jest30.5.2/types30.0.0/
+ts-jest29.4.14 retained. Identical risk bytes are distinct executions, not reused
+measurements. Protected16 locks match HEAD and existing integrity coverage;
+their transitional determinism status is not retired. Failed review-v1 helper
+7405d6 remains preserved; v2 corrects an unsupported old-helper field and regex,
+without replaying producer operations or reclassifying terminal authority.
+
+The missing disposable Lua output is canonically regenerated by9d30dd. Release
+policy still projects3.0.0 pending P20-T02; the earlier4.0.0-only path query was
+the wrong expected version, not valid absence evidence. Actual directory
+enumeration94be50 establishes no materialized numeric rockspec. Exact reviewed
+diff contains only version3.0.0-1 and tagv3.0.0 substitutions. Output814bytes,
+SHA3dc81e4bda75fcb2c523ff4f879db4ff84be90db03731980f83e5eb11bab314a;
+registered template check, exact canonical-byte verification and four focused
+tests twice pass671b08. Registered Lua binding dependent has5PASS/f5fcbe;
+optional transport probes are not claimed. Initial WSL sandbox denials592baf/
+8d076f happened before generator execution, preserved as environment denials.
+
+Complete pre-freeze gate remains unaccepted: existing Linux LSP payload names
+old71329624 source and must be canonically regenerated and verified at clean
+engineering source. Its registered verifier requires clean Git; the next
+reviewed exact-path engineering checkpoint is **not** an authoritative freeze.
+Repeat full inventory after regeneration and direct package dependents precede
+acceptance. No performance sample/profile/signing/trust promotion or closure
+occurred. H08OPEN, continuationACTIVE.
+
+Actual Git status7f7eea subsequently exposes the Lua rockspec as untracked:
+registered checked_in=false was not backed by an ignore rule. Correct only the
+root-anchored registered numeric-rockspec pattern in.gitignore, preserving the
+template and authored sources. The old six-path prescan stays source-bound;
+this extra correction requires clean-source complete gate before any freeze.
+Native pure-test sandbox path denialsab8dfe remain failures; four unchanged
+tests pass twice268b83 in the existing approved ordinary context. The schema
+review7814bb locale-default string mismatch is corrected by explicitUTF8
+comparisonab8dfe, preserving readiness/status/commit history. No detached-owner
+readiness or certification is inferred.

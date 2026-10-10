@@ -1138,3 +1138,143 @@ five-path clean source precedes fresh cycle-audited atomic evidence, CLI36 and
 all54x9 capped calibration, exact-source readiness and both whole authoritative
 campaigns with fresh independent Releases, signing, isolated reviewed-verifier
 qualification, pin-only promotion and immutable pinned verification. H08 OPEN.
+
+## Clean-source diagnostics and interrupted calibration
+
+At clean `eddb3256399f9530b82a47a6b5678c3114655eff`, independent cycle
+review `403b1afa54b348abd9843859043adff214a73d5903c1f45429dbc784068df1a7`
+reconstructs nine windows/576 samples. Wall26516ns respects unchanged27920ns;
+three quantized CPU-time sentinel observations remain unfavorable and retained.
+The original CPU nonzero heuristic does not pass; the supplementary cycle
+diagnostic cannot substitute for production acceptance. Independent CLI36 review
+`97c236e78d279f8cd826997cd16be450943a564f0c7e2ebfeb803e88b447db1f`
+reconstructs36 windows/2304 pairs, with semantic11240 and Simply10936 respecting
+unchanged12658/12333 ceilings. Neither proof is authoritative certification.
+
+The subsequent54x9 calibration is incomplete, not passed:150/486 observation
+windows,138 retained raw acquisitions/8832 raw samples and302 ledger events.
+The ledger ends13:57:26Z during repetition3; owner54268 and worker39892 were
+absent at the delivered14:04 heartbeat. No native or producer terminal exists,
+and session95234 could not be retrieved; its exit code is unknown. Windows
+event records129993/129994/129996 show the Codex sandbox service requested to
+stop13:58:10Z and running again13:58:13Z. Infrastructure interruption is a
+supported inference, not a proven compiler failure or known stop requester.
+Exclusive census `ee801cc5a8f4b1962541c35040a0cf4ac5e96d31edd30b9929e0872891acdf3a`
+pins every retained file and passes20 negative incomplete-claim guards. Original
+manifest, baseline and valid-evidence bytes remain unchanged; no authority
+archive or activation occurred. The sampled source is consumed; no unchanged
+replay, omitted unfavorable samples or fabricated terminal is permitted.
+
+A narrowly scoped ordinary-token owner lifecycle correction is being prepared.
+Default and approved launch-context probes both inherited kill-on-close jobs;
+the latter already permits explicit detachment. The draft launcher does not
+change job/token/security settings, rejects unapproved or resource-constrained
+contexts, pins script bytes and confines exclusive receipts to the checkout.
+Its worker must independently reject inherited job ownership before acquisition.
+Four sample-free unit tests pass twice under the ordinary host token; two earlier
+sandbox fixture/path-query failures remain failures, not product regressions.
+Generated-artifact-sync maps all six draft paths against35 registered families:
+zero matches, no generator run. Native atomic launch proof, direct dependents,
+cheap prerequisites, record validation and clean candidate freeze remain pending.
+No fresh calibration, authoritative profile, signing, trust promotion or closure
+was started. H08 remains OPEN and the continuation ACTIVE.
+
+## Initial generated-artifact gate instruction and revised authority
+
+The latest human instruction requires, before every Local/PR/Full/Release
+candidate freeze: deterministic checks of every registered family; registered
+regeneration of every stale family; diff review; a complete repeat check with
+zero stale/missing/unregistered outputs; direct dependents of regenerated
+families; exact identity/output correction commits; and only then a clean SHA.
+Historical baselines and authenticated evidence are not rewritten merely to
+obtain agreement. An unchecked family is never counted as passed.
+
+The current registry has35 families:32 enforced, two profile-enforced and one
+transitional lockfile family. The aggregate check delegates Lua/LSP without
+executing them, so its existing success alone cannot satisfy this stricter gate.
+Lua/LSP require their actual registered checks. Package-manager-lockfiles has16
+outputs, unverified determinism and null generator/verification commands. Its
+registered retirement condition requires package-manager-specific pinned
+serializers and offline inputs or trusted registry provenance, without using a
+lockfile as its own authoritative source. This is an unresolved coverage gap,
+not a stale-output diagnosis or waiver. No substitute check, dependency refresh,
+completed all-family claim or new certification freeze has occurred. The freeze
+gate remains red until governed coverage and every actual check are complete.
+
+The human14:26:42.066Z heartbeat refines this policy: the complete inventory
+gate precedes each **new authoritative candidate**, not every profile at the
+same frozen SHA. Zero stale, missing, malformed or unregistered governed outputs
+is mandatory. Only stale ordinary deterministic families may be regenerated
+through their registered canonical commands, followed by exact diff review,
+complete repeat checks and changed-family direct dependents. Performance
+baselines/calibrations, historical evidence, unchanged dependency lockfiles and
+network-authenticated security/license evidence may change only through their
+specific governed paths; no blanket refresh or imaginary lock reproduction.
+Any discovered governed registration gap requires deterministic coverage and
+an exact correction commit before a clean new freeze. Any later tracked-source
+or governed-generated change invalidates that candidate and requires the gate
+again. The original transitional lockfile status is preserved, not silently
+retired. Actual inventory execution remains pending, not certification.
+
+The real native lifecycle proofs subsequently fail closed twice, before any
+product acquisition. Immediate approved-parent detach permission is insufficient:
+a separately observed child remains in a kill-on-close job with flags0x2000.
+Failed proof terminals661590f4/70392ff9 and child context7ad96e48 are retained.
+The draft launcher is not eligible for calibration; no independent lifetime,
+completed remediation or host-failure immunity is claimed. No job/security/token
+settings or essential applications were changed. Continue unaffected sample-free
+checks without weakening this boundary or replaying the consumed calibration.
+
+## Completed sample-free prescan and remaining artifact gate
+
+The ordinary tool-owned prescan completes15:19:57Z at the pinned six-path dirty
+draft over eddb3256. Native terminal1bfebdc5 and shell8609808b both exit0;
+session41690 is consumed once87a6c4. Independent review9fd6a509 reconstructs
+14 actual commands,29 START/PASS/completion events, exact raw/source hashes and
+32 negative terminal/denominator/contract guards. Results:118 direct unit tests,
+26 contracts,33 architecture rules plus4 governance checks,32 actually enforced
+generated families,30 integrity checks, exact runtimes, hygiene/format/static,
+attestation contract and identity-only profile definitions pass. Two distinct
+real security invocations each have54PASS plus soleVSCE license waiver, zero
+failed/unavailable/incomplete, preserved Jest30.5.2/types30.0.0/ts-jest29.4.14 and
+ten exact test-only JUnit bindings with seven expansion guards per scan. Their
+deterministic JSON bytes agree, but separate event pairs establish separate
+execution. All16 registered locks retain exact HEAD bytes and integrity-root
+coverage; this is governed protected-state checking, not lock reproduction.
+Original review-v1 fails on an unsupported guard field; original helper/failure
+is retained, and v2 repairs the evidence-schema/regex defect without acquisition
+replay or authority promotion. The aggregate inventory takes707seconds; the
+14-command prescan spans about36minutes including strict source-guard overhead.
+Neither is a measured complete35-family regeneration or certification duration.
+
+The canonical missing Lua projection is3.0.0, not the future4.0.0 activation
+reserved to P20-T02. Actual directory enumeration proves absence; the earlier
+4.0.0-specific path probe is explicitly corrected rather than promoted. The
+registered generator materializes the814-byte disposable rockspec with only
+canonical version/tag substitutions, SHA3dc81e4bda75fcb2c523ff4f879db4ff84be90db03731980f83e5eb11bab314a.
+Registered template verification, exact-byte comparison, four generator tests
+twice and5 Lua binding tests pass. Default sandbox WSL access failures occurred
+before any generator ran; approved ordinary existing-runtime execution succeeds.
+No dependency-graph refresh, baseline/calibration activation or historical
+evidence rewrite occurred.
+
+LSP disposable payload still binds71329624 source, so its actual canonical
+assembly and registered clean-source verifier remain required. An exact-path
+engineering checkpoint may satisfy the verifier's clean-tree prerequisite; it
+does not freeze an authoritative candidate or satisfy the artifact gate. Repeat
+complete inventory and direct regenerated-family dependents after legitimate
+assembly are mandatory. Failed detached-owner proofs remain failed; nothing
+here establishes independent owner lifetime, CPU heuristic acceptance, new
+performance readiness, Local/PR/Full/Release completion, signing, trusted
+acceptance or closure. H08 OPEN; continuation ACTIVE.
+
+Actual Git status7f7eea then discovers that the registered disposable numeric
+Lua rockspec lacks a matching ignore rule. The exact root-anchored registered
+pattern is added to.gitignore; template/source visibility remains required.
+This correction is outside the six-path prescan snapshot, which is preserved
+and not relabeled as proof for the expanded draft or next engineering SHA.
+Native default-sandbox pure testsab8dfe fail on canonical-path permission;
+the same four tests pass twice268b83 under the existing approved ordinary
+context, not a privilege or settings change. A locale-default record comparison
+failure7814bb is corrected with explicitUTF8ab8dfe; historical readiness and
+record authority are unchanged. Complete post-correction gate remains pending.

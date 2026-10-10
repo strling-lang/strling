@@ -22,9 +22,8 @@ use crate::portability_planning::{
     RewriteAttemptDisposition, RewriteProofDisposition, UnresolvedPlanningReason,
 };
 use crate::safety_analysis::{
-    validate_analysis, validate_foundational_correspondence, validate_structural_correspondence,
     SafetyAnalysis, SafetyAnalysisErrors, SafetyFindingCategory, SafetyFindingCode,
-    SafetyProofStatus, SafetyUncertaintyCode, SafetyUncertaintyReason,
+    SafetyProofStatus, SafetyUncertaintyCode, SafetyUncertaintyReason, SafetyValidationContext,
 };
 use crate::semantic::{
     AssertionPolarity, CaseMatching, CharacterSetMember, LineTerminators, LookaroundDirection,
@@ -616,11 +615,17 @@ pub fn explain_semantics(
             })
             .collect(),
     })?;
-    validate_foundational_correspondence(input, foundational)
+    let correspondence =
+        SafetyValidationContext::new(input).map_err(ExplanationErrors::from_safety)?;
+    correspondence
+        .validate_foundational(foundational)
         .map_err(ExplanationErrors::from_safety)?;
-    validate_structural_correspondence(input, structural)
+    correspondence
+        .validate_structural(structural)
         .map_err(ExplanationErrors::from_safety)?;
-    validate_analysis(input, structural, safety).map_err(ExplanationErrors::from_safety)?;
+    correspondence
+        .validate_analysis(structural, safety)
+        .map_err(ExplanationErrors::from_safety)?;
     if generation.program_identity() != Some(foundational.program_identity()) {
         return Err(ExplanationErrors::single(
             ExplanationErrorCode::MismatchedDiagnosticEvidence,

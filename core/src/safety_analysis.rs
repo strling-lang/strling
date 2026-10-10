@@ -363,6 +363,59 @@ fn validation_context(
     Ok((identity, input.node_ids()))
 }
 
+/// Fresh correspondence data tied to one immutable program borrow. Consumers
+/// may share its digest and reachable-node set within a single projection, but
+/// every prerequisite and evidence check still runs against that exact input.
+pub(crate) struct SafetyValidationContext<'a> {
+    input: &'a SemanticProgram,
+    identity: SemanticProgramIdentity,
+    node_ids: BTreeSet<NodeId>,
+}
+
+impl<'a> SafetyValidationContext<'a> {
+    pub(crate) fn new(input: &'a SemanticProgram) -> Result<Self, SafetyAnalysisErrors> {
+        let (identity, node_ids) = validation_context(input)?;
+        Ok(Self {
+            input,
+            identity,
+            node_ids,
+        })
+    }
+
+    pub(crate) fn validate_foundational(
+        &self,
+        foundational: &SemanticFacts,
+    ) -> Result<(), SafetyAnalysisErrors> {
+        validate_foundational_correspondence_with_context(
+            self.input,
+            foundational,
+            self.identity,
+            &self.node_ids,
+        )
+    }
+
+    pub(crate) fn validate_structural(
+        &self,
+        structural: &StructuralFacts,
+    ) -> Result<(), SafetyAnalysisErrors> {
+        validate_structural_correspondence_with_context(
+            self.input,
+            structural,
+            self.identity,
+            &self.node_ids,
+        )
+    }
+
+    pub(crate) fn validate_analysis(
+        &self,
+        structural: &StructuralFacts,
+        analysis: &SafetyAnalysis,
+    ) -> Result<(), SafetyAnalysisErrors> {
+        validate_analysis_with_node_ids(self.input, structural, analysis, &self.node_ids)
+    }
+}
+
+#[cfg(test)]
 pub(crate) fn validate_foundational_correspondence(
     input: &SemanticProgram,
     foundational: &SemanticFacts,
@@ -428,6 +481,7 @@ fn validate_foundational_correspondence_with_context(
     Ok(())
 }
 
+#[cfg(test)]
 pub(crate) fn validate_structural_correspondence(
     input: &SemanticProgram,
     structural: &StructuralFacts,
@@ -609,6 +663,7 @@ fn validate_structural_node(
     Ok(())
 }
 
+#[cfg(test)]
 pub(crate) fn validate_analysis(
     input: &SemanticProgram,
     structural: &StructuralFacts,
@@ -946,6 +1001,14 @@ mod tests {
             errors.errors[0].code,
             SafetyAnalysisErrorCode::MissingStructuralFact
         );
+        let shared = SafetyValidationContext::new(&semantic)
+            .unwrap()
+            .validate_structural(&structural)
+            .unwrap_err();
+        assert_eq!(
+            shared,
+            validate_structural_correspondence(&semantic, &structural).unwrap_err()
+        );
     }
 
     #[test]
@@ -1007,6 +1070,13 @@ mod tests {
             errors.errors[0].code,
             SafetyAnalysisErrorCode::MalformedEvidenceReference
         );
+        assert_eq!(
+            SafetyValidationContext::new(&semantic)
+                .unwrap()
+                .validate_analysis(&structural, &analysis)
+                .unwrap_err(),
+            errors
+        );
     }
 
     #[test]
@@ -1038,5 +1108,90 @@ mod tests {
             errors.errors[0].code,
             SafetyAnalysisErrorCode::UncertaintyLimitExceeded
         );
+        assert_eq!(
+            SafetyValidationContext::new(&semantic)
+                .unwrap()
+                .validate_analysis(&structural, &invalid)
+                .unwrap_err(),
+            errors
+        );
+    }
+
+    #[test]
+    fn shared_context_preserves_all_successful_correspondence_checks() {
+        for root in [
+            json!({"node_id":"node:literal","kind":"literal","text":"aβ"}),
+            json!({"node_id":"node:repeat","kind":"repeat","min":0,"max":null,
+                "mode":"greedy","body":{"node_id":"node:empty","kind":"empty"}}),
+            json!({"node_id":"node:capture","kind":"capture","capture_id":"capture:test",
+                "body":{"node_id":"node:body","kind":"literal","text":"abc"}}),
+        ] {
+            let mut value = serde_json::to_value(literal_program()).unwrap();
+            value["root"] = root;
+            let semantic: SemanticProgram = serde_json::from_value(value).unwrap();
+            semantic.validate().unwrap();
+            let foundational = analyze(&semantic).unwrap();
+            let structural = analyze_structure(&semantic, &foundational).unwrap();
+            let safety = analyze_safety(&semantic, &foundational, &structural).unwrap();
+            let context = SafetyValidationContext::new(&semantic).unwrap();
+            assert_eq!(context.node_ids, semantic.node_ids());
+            assert_eq!(
+                context.identity,
+                semantic_program_identity(&semantic).unwrap()
+            );
+            assert_eq!(
+                context.validate_foundational(&foundational),
+                validate_foundational_correspondence(&semantic, &foundational)
+            );
+            assert_eq!(
+                context.validate_structural(&structural),
+                validate_structural_correspondence(&semantic, &structural)
+            );
+            assert_eq!(
+                context.validate_analysis(&structural, &safety),
+                validate_analysis(&semantic, &structural, &safety)
+            );
+            context.validate_foundational(&foundational).unwrap();
+            context.validate_structural(&structural).unwrap();
+            context.validate_analysis(&structural, &safety).unwrap();
+        }
+    }
+
+    #[test]
+    fn fresh_context_rejects_stale_facts_for_each_changed_program_identity() {
+        let original = literal_program();
+        let foundational = analyze(&original).unwrap();
+        let structural = analyze_structure(&original, &foundational).unwrap();
+        for (path, value) in [
+            ("/root/text", json!("bβ")),
+            ("/root/node_id", json!("node:changed")),
+            ("/case_matching", json!("insensitive")),
+            ("/specification_version", json!("1.0-draft.2")),
+        ] {
+            let mut changed = serde_json::to_value(&original).unwrap();
+            *changed.pointer_mut(path).unwrap() = value;
+            let semantic: SemanticProgram = serde_json::from_value(changed).unwrap();
+            semantic.validate().unwrap();
+            let context = SafetyValidationContext::new(&semantic).unwrap();
+            assert_ne!(context.identity, foundational.program_identity());
+            let foundational_error = context.validate_foundational(&foundational).unwrap_err();
+            let structural_error = context.validate_structural(&structural).unwrap_err();
+            assert_eq!(
+                foundational_error,
+                validate_foundational_correspondence(&semantic, &foundational).unwrap_err()
+            );
+            assert_eq!(
+                structural_error,
+                validate_structural_correspondence(&semantic, &structural).unwrap_err()
+            );
+            assert_eq!(
+                foundational_error.errors[0].code,
+                SafetyAnalysisErrorCode::MismatchedSemanticFacts
+            );
+            assert_eq!(
+                structural_error.errors[0].code,
+                SafetyAnalysisErrorCode::MismatchedStructuralFacts
+            );
+        }
     }
 }

@@ -6241,4 +6241,80 @@ queries found no Git owner; the zero-byte file was recoverably preserved under
 No index reset, data discard or process interruption occurred. Lock origin is
 unproved; the failed staging diagnostic and direct-query evidence are retained.
 
+The allocation correction subsequently committed at clean
+`eeb691a1d5ad394d38d041cff2aba1f64507b889` after 21 negative content/phase
+guards. A second empty Git lock and a staged-phase helper failure were
+preserved; neither reset the index nor bypassed the historical unstaged guard.
+The fresh-source native release build and nine 64-sample Simply-tiny windows
+completed acquisition at 2026-10-10T03:39:29Z. Independent reconstruction of all
+576 raw wall/CPU observations gives median 31,150 ns and MAD 42 basis points,
+with nonzero CPU accounting, but the unchanged 27,920 ns prior cap still fails.
+Review SHA256 is
+`b9e815591007a971b8db73a11a10a83ec8aec45b5c6cda3a2efd3cd52090152e`.
+No unfavorable observation was discarded, no baseline activated and no new
+authoritative profile passed. The failed atomic operation must not repeat at
+unchanged source.
+
+The next cause-backed correction shares fresh correspondence data within each
+diagnostic or explanation projection. Its crate-private context borrows one
+immutable program and computes its digest and reachable-node set once; all
+version, identity, coverage, kind, structural relationship, evidence, ordering,
+resource and diagnostic checks still run in their original order. There is no
+cross-call cache, fact-derived digest, skipped stage, changed output or wider
+security/performance allowance. The original individual validators remain as
+test-only differential controls. Only the two newly affected exact source paths
+are added to the task scope. Regression tests, repeated native correctness,
+direct dependents, registered generated synchronization and prerequisites are
+pending before a new clean source and fresh predictor. The focused safety suite
+now passes all six actual tests; three complete native Rust 1.75 library runs
+then pass 32/32 each, with zero failed, ignored or filtered tests (96 repeated
+passes). Independent raw-log/source/terminal reconstruction SHA256 is
+`44778eb30ff306f8042ffafff70156f9e0d004e907858e4be60cf29ba650355b`.
+Fourteen negative launch guards and nine exact-scope negative guards pass; the
+scope review preserves every other scope field and declaration. Direct
+dependents, registered generators and cheap/security prerequisites are still
+required. These are dirty-source non-authoritative correctness results, not
+performance or certification acceptance. H08 remains OPEN.
+
+The corrected-source prerequisite sequence terminated with exit 2 at
+2026-10-10T04:44:51Z in `contracts --check`: a newly appended evidence entry
+incorrectly used `status` instead of the task schema's required `result`.
+The original failed record, command log, native/shell terminal and ledger are
+preserved. Atomic reconstruction proves the sole field mistake; the exact
+one-field correction and seven schema-negative cases pass without changing the
+schema, scope, declarations, product source or historical receipts. Review
+SHA256 is `617f912fa21c40e84080b884ad8db2f8329bb8593eefdf5f44e966e8b8d90693`.
+Independent prefix reconstruction records five completed commands: exact runtime
+proof, core 491 PASS across 91 result groups, interop 22 PASS across four groups,
+146 direct tooling tests, and all 26 public snapshots regenerated unchanged.
+All Rust result groups have zero failed, ignored, measured or filtered tests.
+The completed prefix will not repeat. Only the failed contract verifier and the
+18 previously unrun generated/cheap/security commands remain in this sequence;
+their actual results are pending. No performance or certification acceptance
+is inferred. H08 remains OPEN.
+
+The one-use correspondence recovery completed at 2026-10-10T05:27:38Z,
+native/shell exit 0. Independent reconstruction SHA256
+`59401355c990ec1f7bb64f48de70298a3b301daa806dde71a7a7d78ca0a35859`
+confirms all 19 actual recovery commands and the five preserved prefix commands,
+without replaying the prefix. Both real security runs retain 55 checks each:
+54 PASS plus only the VSCE license waiver, zero failed/unavailable/incomplete,
+exact Jest30.5.2/@types-jest30.0.0/ts-jest29.4.14 and ten exact test-only JUnit
+bindings. All 33 architecture rules, generated checks, hygiene, format, static,
+integrity, attestation contract and source definition identity pass.
+Only registered adversarial provenance and its result fingerprint changed;
+all 41 raw observations, repeat count and other checked-in families are
+unchanged. Original measured baseline bytes remain intact; disposable LSP
+payload certification still requires actual Full/Release.
+
+An initial review-helper assertion confused the runtime verifier's canonical
+result digest with formatted file bytes. The failed helper and exit-1 receipt
+are preserved; independent unsigned-canonical-JSON reconstruction and three
+negative tests correct only that reviewer, not product or verifier authority.
+Twenty-two completion guards and seven exact JUnit guards pass. The schema-field
+failure remains historical failed evidence. This completes dirty-source
+engineering prerequisites, not measured benefit or certification. The exact
+seven-path commit, new clean source and fresh atomic product predictor precede
+eligible CLI proof/calibration and both authoritative campaigns. H08 is OPEN.
+
 BLOCKED — NO-GO FOR P20-T02 UNTIL THE NEW CAMPAIGN AND CLOSURE PASS.

@@ -835,6 +835,72 @@ recoverably preserved, not discarded, without resetting the index or
 interrupting a process. Original cause is unproved. This tooling recovery
 does not change source, performance policy, samples or certification authority.
 
+The allocation correction was frozen at clean
+`eeb691a1d5ad394d38d041cff2aba1f64507b889` with exact eight-path engineering
+proof. Its fresh-source native build and nine 64-sample Simply-tiny windows
+completed acquisition at 2026-10-10T03:39:29Z. All 576 raw wall/CPU observations
+independently reconstruct: median 31,150 ns, MAD 42 basis points, nonzero CPU
+accounting, but unchanged 27,920 ns prior effective cap FAIL. Review SHA256 is
+`b9e815591007a971b8db73a11a10a83ec8aec45b5c6cda3a2efd3cd52090152e`.
+Acquisition exit0 is not performance acceptance. All unfavorable data, old
+authority and baseline bytes remain intact; no full calibration or authoritative
+profile was rerun or accepted.
+
+Current retained stage attribution and source identify duplicate identity
+serialization/node-set allocation inside diagnostic generation and explanation.
+The next small product correction retains every check but shares a fresh,
+immutable, per-invocation correspondence context for adjacent validations.
+Private fields bind the digest and node set to a borrowed program; there is no
+cross-call cache or untrusted fact-derived identity. All version, digest,
+coverage, kind, relationship, evidence, canonical order, resource and diagnostic
+checks remain in original order. Differential controls and new stale-identity,
+coverage, malformed-evidence and resource tests are required, followed by
+repeated native correctness, direct dependents and exact registered generator
+verification. Focused safety validation passes six actual tests, followed by
+three complete native Rust 1.75 library runs at 32/32 each (96 repeated passes,
+zero failed, ignored or filtered tests). Independent source-bound raw-log review
+SHA256 is `44778eb30ff306f8042ffafff70156f9e0d004e907858e4be60cf29ba650355b`;
+14 launch negatives and nine exact-scope negatives pass. Direct dependents,
+registered generators and cheap/security prerequisites remain pending. None of
+these dirty-source correctness results are authoritative measurements.
+Performance benefit remains unproved until a newly frozen source
+passes fresh measurements against every unchanged cap. H08 remains OPEN.
+
+The first corrected-source prerequisite owner stopped at contract verification
+with exit 2 because its new task-record evidence used `status` where the
+unchanged governance schema requires `result`. The failed record and terminal
+are preserved; exact one-field correction and seven negative schema cases pass
+(review SHA256 `617f912fa21c40e84080b884ad8db2f8329bb8593eefdf5f44e966e8b8d90693`).
+Independent reconstruction proves the five completed commands, including core
+491 PASS, interop 22 PASS, 146 tooling tests and 26 unchanged contract snapshots.
+Only the failed verifier and previously unrun prerequisites continue, with no
+completed-prefix replay, product change, baseline activation or performance
+claim. H08 remains OPEN.
+
+The one-use correspondence recovery completed native/shell exit0 at
+2026-10-10T05:27:38Z. Independent review SHA256
+`59401355c990ec1f7bb64f48de70298a3b301daa806dde71a7a7d78ca0a35859`
+reconstructs all19 actual recovery commands plus the five retained prefix
+commands without replay. Both real55-check security runs retain54PASS plus
+only the exact VSCE license waiver and zero failed/unavailable/incomplete;
+Jest30.5.2/@types-jest30.0.0/ts-jest29.4.14 and ten exact non-distributed-test
+JUnit bindings remain intact. All33 architecture rules, generated, hygiene,
+format, static, integrity, attestation contract and definition identity pass.
+Only registered adversarial provenance/result fingerprint changed; all41 raw
+observations, repeat2, other checked-in families and original measured baseline
+bytes remain unchanged. LSP payload certification remains actual Full/Release
+work, not a skipped or waived prerequisite.
+
+The initial review helper's byte-digest versus canonical-result-digest assertion
+failed and is preserved with its original helper bytes. Independent canonical
+unsigned-JSON reconstruction plus three negative tests corrects that reviewer
+alone. Twenty-two completion guards and seven exact JUnit guards pass; no real
+producer, threshold or historical failure is changed. These are dirty-source
+engineering prerequisites, not measured performance or authoritative profiles.
+Exact seven-path clean freeze and a fresh source-bound atomic product predictor
+come next; CLI proof/calibration, both whole campaigns, signing, isolated trust,
+fresh independent Release and closure remain required. H08 remains OPEN.
+
 ## Profile ownership
 
 -   Local validates the authored contract and fixture identities without timing

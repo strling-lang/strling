@@ -13,9 +13,8 @@ use crate::diagnostic::{
     Severity, SeverityBasis,
 };
 use crate::safety_analysis::{
-    enforce_resource_limits, validate_analysis, validate_foundational_correspondence,
-    validate_structural_correspondence, SafetyAnalysis, SafetyAnalysisErrorCode,
-    SafetyAnalysisErrors, SafetyEvidence, SafetyFinding, SafetyFindingCode,
+    enforce_resource_limits, SafetyAnalysis, SafetyAnalysisErrorCode, SafetyAnalysisErrors,
+    SafetyEvidence, SafetyFinding, SafetyFindingCode, SafetyValidationContext,
     StructuralRelationshipKind, StructuralRelationshipRef, MAX_SAFETY_FINDINGS,
 };
 use crate::semantic::{Node, SemanticProgram};
@@ -251,9 +250,13 @@ pub fn generate_diagnostics(
     input
         .validate()
         .map_err(DiagnosticGenerationErrors::from_validation)?;
-    validate_foundational_correspondence(input, foundational)
+    let correspondence =
+        SafetyValidationContext::new(input).map_err(DiagnosticGenerationErrors::from_safety)?;
+    correspondence
+        .validate_foundational(foundational)
         .map_err(DiagnosticGenerationErrors::from_safety)?;
-    validate_structural_correspondence(input, structural)
+    correspondence
+        .validate_structural(structural)
         .map_err(DiagnosticGenerationErrors::from_safety)?;
 
     let canonical_safety = SafetyAnalysis::from_parts(
@@ -261,7 +264,8 @@ pub fn generate_diagnostics(
         safety.uncertainties().cloned().collect(),
     )
     .map_err(DiagnosticGenerationErrors::from_safety)?;
-    validate_analysis(input, structural, &canonical_safety)
+    correspondence
+        .validate_analysis(structural, &canonical_safety)
         .map_err(DiagnosticGenerationErrors::from_safety)?;
 
     let node_index = index_nodes(&input.root);

@@ -15,12 +15,14 @@ from tooling.certification import (
     profile_definition_fingerprint,
 )
 from tooling.local_certification_attestation import contract_result
+from tooling.profile_composition import resolve_profile
 from tooling.product_certification import (
     ProductCertificationError,
     aggregate_product_status,
     build_product_artifact,
     render_product_report,
     static_check,
+    validate_producer_manifest,
     validate_product_artifact,
 )
 from tooling.profile_source_identity import (
@@ -107,7 +109,7 @@ class ProductCertificationContractTests(unittest.TestCase):
     def test_manifest_exactly_covers_the_governed_full_profile(self) -> None:
         toolchain = cast(dict[str, Any], load_json(ROOT / "toolchain.json"))
         policy = cast(dict[str, Any], toolchain["policy"])
-        full = cast(dict[str, Any], cast(dict[str, Any], policy["profiles"])["full"])
+        full = cast(dict[str, Any], resolve_profile(policy, "full"))
         registry = cast(dict[str, dict[str, Any]], policy["operation_registry"])
         members = cast(list[dict[str, Any]], full["operations"])
         producers = cast(list[dict[str, Any]], self.manifest["producers"])
@@ -130,9 +132,7 @@ class ProductCertificationContractTests(unittest.TestCase):
             IDENTITY_SOURCE_REFERENCE,
             cast(dict[str, Any], self.manifest["source_profile"])["identity_source"],
         )
-        release = cast(
-            dict[str, Any], cast(dict[str, Any], policy["profiles"])["release"]
-        )
+        release = cast(dict[str, Any], resolve_profile(policy, "release"))
         self.assertEqual(members, release["operations"])
         self.assertEqual(
             profile_definition_fingerprint(release),
@@ -312,9 +312,7 @@ class ProductCertificationImplementationTests(unittest.TestCase):
         cls.toolchain = cast(dict[str, Any], load_json(ROOT / "toolchain.json"))
         cls.manifest = cast(dict[str, Any], load_json(MANIFEST_PATH))
         policy = cast(dict[str, Any], cls.toolchain["policy"])
-        cls.profile = cast(
-            dict[str, Any], cast(dict[str, Any], policy["profiles"])["full"]
-        )
+        cls.profile = cast(dict[str, Any], resolve_profile(policy, "full"))
         cls.registry = cast(dict[str, dict[str, Any]], policy["operation_registry"])
         cls.profile_artifact = cls._build_profile_artifact("full")
         cls.product_artifact = build_product_artifact(
@@ -330,10 +328,9 @@ class ProductCertificationImplementationTests(unittest.TestCase):
     def _build_profile_artifact(cls, profile_id: str) -> dict[str, object]:
         profile = cast(
             dict[str, Any],
-            cast(
-                dict[str, Any],
-                cast(dict[str, Any], cls.toolchain["policy"])["profiles"],
-            )[profile_id],
+            resolve_profile(
+                cast(dict[str, object], cls.toolchain["policy"]), profile_id
+            ),
         )
         results: list[dict[str, object]] = []
         producers = {
@@ -411,10 +408,10 @@ class ProductCertificationImplementationTests(unittest.TestCase):
             dict[str, Any], self.product_artifact["deterministic_evidence"]
         )
         coverage = cast(dict[str, Any], deterministic["coverage"])
-        self.assertEqual(125, coverage["expected_result_count"])
-        self.assertEqual(125, coverage["observed_result_count"])
-        self.assertEqual(33, coverage["expected_structured_producer_count"])
-        self.assertEqual(33, coverage["observed_structured_producer_count"])
+        self.assertEqual(126, coverage["expected_result_count"])
+        self.assertEqual(126, coverage["observed_result_count"])
+        self.assertEqual(34, coverage["expected_structured_producer_count"])
+        self.assertEqual(34, coverage["observed_structured_producer_count"])
         self.assertEqual(4, len(cast(list[object], deterministic["claims"])))
         self.assertEqual("passed", deterministic["aggregate"]["status"])
 
@@ -444,6 +441,14 @@ class ProductCertificationImplementationTests(unittest.TestCase):
             "certification-result-v1",
             evidence["product_certification_authority"]["schema_version"],
         )
+        self.assertEqual(
+            "certification.generated-artifact-integrity",
+            evidence["generated_integrity"]["operation_id"],
+        )
+        self.assertEqual(
+            "certification-result-v1",
+            evidence["generated_integrity"]["schema_version"],
+        )
 
         repeated = build_product_artifact(
             root=ROOT,
@@ -468,14 +473,14 @@ class ProductCertificationImplementationTests(unittest.TestCase):
         authority = cast(dict[str, Any], deterministic["authority"])
         source = cast(dict[str, Any], authority["source_profile"])
         self.assertEqual("release", source["profile_id"])
-        self.assertEqual(125, deterministic["coverage"]["observed_result_count"])
+        self.assertEqual(126, deterministic["coverage"]["observed_result_count"])
         self.assertEqual("passed", deterministic["aggregate"]["status"])
 
     def test_human_report_is_derived_only_from_the_machine_artifact(self) -> None:
         report = render_product_report(self.product_artifact)
         self.assertIn("# STRling Product Certification", report)
-        self.assertIn("125/125 results", report)
-        self.assertIn("33/33 structured producers", report)
+        self.assertIn("126/126 results", report)
+        self.assertIn("34/34 structured producers", report)
         self.assertIn("`structured.essential-five-contract`", report)
         self.assertNotIn("stdout", report.casefold())
         self.assertNotIn("test name", report.casefold())
@@ -499,16 +504,16 @@ class ProductCertificationImplementationTests(unittest.TestCase):
         self.assertEqual("certification.product-authority", result["operation_id"])
         self.assertEqual("passed", result["status"])
         details = cast(dict[str, Any], result["details"])
-        self.assertEqual(125, details["profile_result_count"])
-        self.assertEqual(33, details["structured_producer_count"])
+        self.assertEqual(126, details["profile_result_count"])
+        self.assertEqual(34, details["structured_producer_count"])
         self.assertEqual(0, details["prose_authority_inputs"])
         self.assertEqual(
             profile_definition_fingerprint(
                 cast(
                     dict[str, Any],
-                    cast(dict[str, Any], self.toolchain["policy"])["profiles"][
-                        "release"
-                    ],
+                    resolve_profile(
+                        cast(dict[str, object], self.toolchain["policy"]), "release"
+                    ),
                 )
             ),
             details["release_profile_definition_fingerprint"],
@@ -529,6 +534,21 @@ class ProductCertificationImplementationTests(unittest.TestCase):
         releasing = (ROOT / "docs/releasing.md").read_text(encoding="utf-8")
         self.assertIn("tooling/product_certification.py --run-profile", releasing)
         self.assertNotIn("historical audit authority", releasing.casefold())
+
+    def test_generated_integrity_producer_is_required_for_product_coverage(
+        self,
+    ) -> None:
+        manifest = copy.deepcopy(self.manifest)
+        manifest["producers"] = [
+            producer
+            for producer in manifest["producers"]
+            if producer["operation_id"] != "generated_integrity"
+        ]
+        with self.assertRaisesRegex(
+            ProductCertificationError, "producer manifest misses 'generated_integrity'"
+        ) as raised:
+            validate_producer_manifest(ROOT, manifest, self.toolchain)
+        self.assertEqual("missing-result", raised.exception.code)
 
     def test_duplicate_missing_and_unknown_results_are_rejected(self) -> None:
         duplicate = copy.deepcopy(self.product_artifact)

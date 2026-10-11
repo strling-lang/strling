@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib
 import json
 import re
 import sys
@@ -13,6 +14,10 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 
 from jsonschema import Draft202012Validator
+
+_profile_composition = importlib.import_module(
+    "tooling.profile_composition" if __package__ else "profile_composition"
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -140,7 +145,7 @@ def build_evidence() -> dict[str, Any]:
     operation = policy["structured_operation"]
     retired_operations = set(policy["retired_operation_ids"])
     operation_registry = toolchain["policy"]["operation_registry"]
-    profiles = toolchain["policy"]["profiles"]
+    profiles = _profile_composition.resolve_profiles(toolchain["policy"])
 
     if list(profiles) != policy["profile_ids"]:
         raise SemanticAuthorityError(

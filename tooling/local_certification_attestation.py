@@ -197,9 +197,12 @@ def load_trust_policy(trust_root: Path) -> dict[str, Any]:
 def validate_contract(repository_root: Path, trust_root: Path) -> dict[str, Any]:
     trust = load_trust_policy(trust_root)
     toolchain = _load_json(repository_root / "toolchain.json")
-    profiles = toolchain.get("policy", {}).get("profiles")
-    if not isinstance(profiles, dict):
-        raise AttestationError("toolchain profile registry is missing")
+    try:
+        profiles = _helper_module("profile_composition").resolve_profiles(
+            toolchain.get("policy", {})
+        )
+    except ValueError as error:
+        raise AttestationError("toolchain profile registry is malformed") from error
     for profile in trust["required_profiles"]:
         if profile not in profiles:
             raise AttestationError(
@@ -894,11 +897,14 @@ def _profile_claim(
         raise AttestationError(
             f"{expected_profile} profile is not terminally successful"
         )
-    definition = source_toolchain["policy"]["profiles"].get(expected_profile)
-    if not isinstance(definition, dict):
+    try:
+        definition = _helper_module("profile_composition").resolve_profile(
+            source_toolchain["policy"], expected_profile
+        )
+    except ValueError as error:
         raise AttestationError(
             f"source profile definition is missing: {expected_profile}"
-        )
+        ) from error
     if profile["definition_version"] != definition.get("definition_version"):
         raise AttestationError(f"{expected_profile} profile version mismatch")
     if profile["definition_fingerprint"] != profile_definition_fingerprint(definition):
@@ -1778,7 +1784,9 @@ def create_attestation(
     source_tree = _git(repository_root, "rev-parse", f"{source_sha}^{{tree}}")
     toolchain_bytes = _git_bytes(repository_root, source_sha, "toolchain.json")
     toolchain = json.loads(toolchain_bytes)
-    profiles = toolchain["policy"]["profiles"]
+    profiles = _helper_module("profile_composition").resolve_profiles(
+        toolchain["policy"]
+    )
     operations = toolchain["policy"]["operation_registry"]
     certifier = _certifier(trust, certifier_id)
     if sorted(certifier["authorized_profiles"]) != sorted(trust["required_profiles"]):
@@ -2069,7 +2077,9 @@ def verify_attestation(
 
     toolchain_bytes = _git_bytes(repository_root, source_sha, "toolchain.json")
     toolchain = json.loads(toolchain_bytes)
-    profiles = toolchain["policy"]["profiles"]
+    profiles = _helper_module("profile_composition").resolve_profiles(
+        toolchain["policy"]
+    )
     operations = toolchain["policy"]["operation_registry"]
     contract = payload["certification_contract"]
     expected_contract = {

@@ -60,6 +60,35 @@ scope:
         - governance/dependency-license-evidence.json
         - governance/formatting.json
         - governance/generated-artifacts.json
+        - governance/dependency-lock-verification.json
+        - governance/schemas/generated-artifact-registry.schema.json
+        - tooling/generated_artifacts.py
+        - tooling/certification.py
+        - tooling/dependency_lock_verification.py
+        - tooling/performance_artifact_integrity.py
+        - tooling/profile_composition.py
+        - tooling/profile_source_identity.py
+        - tooling/product_certification.py
+        - tooling/semantic_authority.py
+        - tooling/lua_rockspec.py
+        - bindings/lua/setup.sh
+        - bindings/lua/README.md
+        - tooling/lsp-server/README.md
+        - tooling/lsp-server/package_extension.py
+        - tooling/lsp-server/tests/test_package_builder.py
+        - tooling/tests/test_dependency_lock_verification.py
+        - tooling/tests/test_performance_artifact_integrity.py
+        - tooling/tests/test_generated_artifact_preparation.py
+        - tooling/tests/test_generated_artifact_snapshots.py
+        - tooling/tests/test_generated_artifact_output_guard.py
+        - tooling/tests/test_architecture_profile_composition.py
+        - tooling/tests/test_stdlib_guarantee_contracts.py
+        - tooling/tests/test_portability_matrix_architecture.py
+        - tooling/tests/test_generated_artifact_profile_gate.py
+        - tooling/tests/test_profile_certification.py
+        - tooling/tests/test_lua_rockspec.py
+        - tests/architecture/legacy-removal/1.0/evidence.json
+        - tests/architecture/legacy-removal/1.0/evidence.md
         - governance/local-certification-trust.json
         - governance/repository-hygiene.json
         - governance/security.md
@@ -115,6 +144,7 @@ scope:
         - tooling/public_contracts.py
         - tooling/structured_operation_execution.py
         - tooling/quality.py
+        - tooling/security.py
         - tooling/lsp-server/package-lock.json
         - tooling/lsp-server/package.json
         - tooling/tests/test_adversarial_semantic_audit.py
@@ -167,6 +197,7 @@ scope:
         - adversarial-semantic-observations
         - dependency-license-evidence
         - jvm-adapter-release-graph
+        - legacy-removal-inventory-evidence
         - package-manager-lockfiles
         - performance-resource-source-identities
         - profile-source-definitions
@@ -254,12 +285,12 @@ change_classification:
 required_verification:
     - name: Deterministic preflight
       command: Run exact clean-source Local and Pull Request profiles on the frozen candidate.
-      expected_result: Local 37/37, Pull Request 79/79, architecture 33/33, strict real-engine audit zero, and no failed, unavailable, incomplete, or unaccounted operation.
+      expected_result: Local 38/38, Pull Request 80/80, architecture 33/33, strict real-engine audit zero, and no failed, unavailable, incomplete, or unaccounted operation. The added shared artifact gate is required; historical 37/79 results are not reusable.
     - name: Full profile
-      command: Run one canonical Full 1.29.0 profile through the supported WSL controller and baseline-authenticated native Windows performance path after deterministic preflight.
+      command: After later owner idle-host confirmation, run one canonical Full 1.30.0 profile through the supported WSL controller and baseline-authenticated native Windows performance path after deterministic preflight.
       expected_result: All required deterministic, runtime, deep-quality, security, release-supply-chain, and governed performance/resource operations pass with only the accepted VSCE license waiver.
     - name: Release profile
-      command: After green Full, run the governed production launcher in a separate clean worktree for a no-reuse Release 1.29.0 profile at the same source SHA.
+      command: After green Full 1.30.0, run the governed production launcher in a separate clean worktree for a no-reuse Release 1.30.0 profile at the same source SHA.
       expected_result: Independent no-reuse Release evidence passes with zero failed, unavailable, or incomplete operations and only the accepted VSCE license waiver.
     - name: Final adversarial proof and waiver review
       command: Validate the final exact-engine artifact, current checked-in zero-finding ratchet, and active waiver registry.
@@ -935,6 +966,39 @@ checkpoints:
           - check: Registered disposable Lua output visibility defect corrected
             result: passed
             details: Actualgitstatus7f7eea exposes canonical3.0.0rockspec as untracked despite registeredchecked_infalse; aggregate/template success had not proved ignored output. Add only root-anchored registerednumeric pattern /bindings/lua/strling-[0-9]*.rockspec to.gitignore, preserve authoredtemplate/source visibility, no registry/authority change. This narrow new authorizedpath and resultingrecord additions are outside oldsixpathprescan; previousevidence stays bound to its prior draft, notnewsource certification. Sandboxnativeunitab8dfe fails path-resolution withWinError5; unchanged4puretests pass twice268b83 under existingapprovedordinary context, realdetachproof remainsfailed. Schema-review7814bb usedlocale-default decoding causingreadinessstringcomparison failure; explicitUTF8ab8dfe validatesunchangedreadiness/history/schema, no recordstatuspromotion. Completepostcorrection artifactgate/newsource prerequisites remainbeforefreeze.
+          - check: Complete clean-source registered artifact gate supersedes pending a64 checkpoint
+            result: passed
+            details: Independent receipt9976802a8544e8e9e64e29ed6fad5c33c91b8613b54472fee502a44378903015 reconstructs22actual sample-free operations45events at clean a64c5277a850cbf3e881b823c146fb8e78fe0e42. Complete35families cover32enforced plus actualLua and LSP generation/verification and protected16unchangedlocks, not deterministic lock reproduction or transition retirement. All168registered tracked outputs accounted for; zero stale missing malformed or unregistered outputs in closed governed sets, not universal discovery. Actual118direct tests23LSP tests4Lua tests26contracts33architecture plus4governance; fresh LSP payload21files plus manifest and24VSIX entries,10realfeatures3lifecycles. Two distinct security invocations each54PASS plus onlyWVR-SEC-VSCE-LICENSE-001, exactJest30.5.2/types30/ts-jest29.4.14 and10exact test-only JUnit bindings retained. This supersedes only prior pending statements for a64, not old authority or the subsequent changed source; no candidate freeze or profile/signing/trust/closure.
+          - check: Fresh a64 prospective CLI36 proof failed and source consumed
+            result: failed
+            details: Independent receipt80e8bd00c718c750ca3a9d02069b92ef14330dda66ee35ef0ddae46b3e28032f authenticates36windows2304pairs4608observations75events18CSV and exact fresh build920f50cf, all conditioning/isolation and unchanged caps. Nativebd5ad47a and workerf4b4a954 exit1 at17:20:39Z; session1986 consumed once966690. Identical-request repetition9/window33 ratio27398 exceeds unchanged11000null ceiling; request/control wall77.02295/28.11285ms, launch58.9828/8.14105ms and parent CPU46.875/15.625ms. Actual Semantic and Simply windows below12658/12333 cannot green-classify the failed null proof. All unfavorable observations and source retained; no unchanged replay or calibration allowed.
+          - check: Independent identical-child and explicit CreateProcess API-phase attribution
+            result: passed
+            details: Separate diagnostic receipts7248e45468bcc58f08d20ae3afe6ccaa283bb55ef74aa14ebdc9fad9b366e751 and5b5d970072e41b6aa071bd74e4c4e9777f83d27c57daf9a62702e3410114b0cd each reconstruct9windows576pairs1152observations without sample filtering. API review reconstructs4actual probe regressions77negative guards repeated twice and exact conditioning/isolation. Tail localized inside CreateProcessW predominantly parent kernel CPU, not pipe/attribute setup; exact OS subsystem and original standard-library transport equivalence unproven. All zero CPU-time and unfavorable observations retained. Original probe compile-format, child-CPU runtime-binding and reviewer registry-arity failures preserved; narrow corrected helpers guarded without completed producer replay. Diagnostic attribution is not performance acceptance, calibration authority or certification.
+          - check: Private product-image experiments and reversible standalone release recipe
+            result: passed
+            details: Thin-LTO v1 failed archive permission with terminal32d714f3448d49b47ff7e225a3b8ecc4bc8f9e212058db5c63b2c2b1cfd40ff3 and operationa036846433367180e0bf295b8058f94c1b7b035701677de4792970fe34a4ec1b preserved, zero performance samples and zero CLI tests. Ordinary-token narrow filesystem-context correction completes build and13CLI tests twice; independent reviewa5ed84a0ad504e847a01952cdbb6119470e4de074eb2f3a2a706ecdedf106d32/15guards repeated twice reconstructs unchanged PE policies but image grows224256bytes, so recipe rejected. Distinct default-LTO opt-level=s build terminal2583f73727c0d51a4c0ded1ddb831937013a6ec7b9c48539aa53af6996a3db00 completes19:00:34Z; session25991 consumed once9d4072. Independent reviewcff9d9a379dd0fabe7eb983aae31fb5577847b922734e896ca9b43f71f0b3872/20guards repeated twice reconstructs13CLI tests twice, zero failed/ignored, unchanged PE security/stack/section flags and3885568bytes versus5281280 control, a1395712byte reduction. Startup and workload latency unproven. Exact historical control preserved3f7f5d before canonical rebuild. Reversible core/internal release opt-level=s source correction leaves standalone runner profile, panic/overflow/dependency graph, all locks, measurements/caps/conditioning/waivers/trust unchanged. Canonical mapping identifies LSP payload and adversarial observations plus protected transitional locks; no invented lock generator. Changed source invalidates earlier gate; actual direct dependents, canonical affected output regeneration/check/diff, exact correction commit, complete new-source artifact gate and prospective proof/capped calibration required before any authoritative freeze. H08OPEN continuationACTIVE.
+    - name: Generated-artifact preparation and immutable early gate integration
+      status: in_progress
+      evidence:
+          - check: Shared check-only profile prefix and separately governed preparation
+            result: passed
+            details: Current Local1.16/38, PR1.22/80 and Full/Release1.30/126 definitions inherit one first generated_integrity member through shared composition. Preparation repairs only ordinary canonical projections before freeze with exact diff, idempotence, complete recheck and direct dependents. Complete integrity checks all35 families, including verification-only16-lock/20-manifest identities and current Lua/LSP payloads; protected performance, historical/authenticated, security/license, lock and trust authority cannot be auto-refreshed. All historical37/79/125/125 attempts retain their original definitions and failures.
+          - check: Focused sample-free regression and independent guard review
+            result: passed
+            details: WSL125 artifact/preparation/lock/native-registry tests,139 profile/composition/product tests,17 receipt/rendering tests,29 package-builder tests and two separate21-test snapshot/Lua runs pass without capability skips. Final provisioned seven-module direct-dependent batch passes167 tests with zero failures/errors/skips d1c6b3; real registered LSP build-check9538ed53 and both package dependents194581ee pass with37 tests. Overlapping runs are not summed. Static/governance/hygiene/documentation/current-source-definition/semantic/native30-lock-integrity checks pass. Independent review confirms all nine requested regression scenarios, complete bounded full-byte hashing without cache or skipped inputs, source/output/working-directory confinement, Git node/mode preservation, closed generated census, control-drift rejection, first/once gate and safe artifact/ledger/failure destinations that preserve original child facts. No performance producer or authority acceptance runs.
+          - check: Retained draft and fixture failures remain failed
+            result: failed
+            details: Earlier ignored-checkout census, duplicate-scope and optional Git-index-refresh draft failures remain retained. Native156-case cac93d, three package-fixture failures cd7ef6 and sandbox temporary-fixture denial c74a4d remain failed diagnostics. Fixtures now name the existing governed package.json rather than an unpackaged README.md; no closed payload contract or product assertion was relaxed. Corrected provisioned-runtime validation is distinct. Passing preparation20178/79c9a9 remains bound to the earlier draft, never final-source or certification acceptance.
+          - check: Final real merged-source complete inventory
+            result: passed
+            details: Retained session91085 consumed once62a0cd exit0; exact ./strling generate --check --complete --json completes all35 families PASS without repairs, failed/delegated coverage or protected-identity mutation. Raw receipt target/codex-tools/artifact-integration-validation/1791701575094979774-inventory.json SHA2563d8559be99cd26b969f5539fe5c80a6df8a9f95dc2bb9745af206b1a9e727a93 belongs to the precommit merged engineering tree over a64c5277, not a frozen candidate or certification result. Earlier draft receipts remain distinct.
+          - check: Clean engineering-SHA diagnostic prefix after checkpoint
+            result: not_run
+            details: The exact-path engineering checkpoint precedes the clean-SHA artifact-only diagnostic prefix. Its separate source-bound raw/result/protected-identity receipt is retained under target/codex-tools/artifact-integration-validation; do not relabel the precommit inventory as this proof. Prefix must remain authoritative=false and profile_complete=false, stop immediately after generated_integrity and never run runtime preflight or a later performance-sensitive member. No authoritative candidate freeze is required or authorized for this feature.
+          - check: Preserved human active-host hold
+            result: passed
+            details: This scoped engineering task creates zero authenticated performance samples and no authoritative H08 profile result. No performance readiness/calibration/benchmark acquisition, H08 campaign, signing, trust promotion, push or publication is started. H08 remains OPEN with continuation automation and campaign PAUSED until later explicit owner idle-host confirmation. Only an exact authorized-path engineering commit and clean tree complete this task; they do not establish certification authority or closure.
 commits:
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"
@@ -1041,4 +1105,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Newest human authority confirms the idle host and requires autonomous cause-backed remediation through actual H08 closure; no owner guidance or favorable environmental recovery wait remains. The consumed bd58294 campaign passed Local 37 and PR 79 but Full failed at CLI startup after 20 passes and the sole license waiver, leaving 103 operations unrun. Its exact evidence and all diagnostic counterexamples remain historical. The normalization correction, direct dependents, prospective live proofs, history-preserving capped calibration, clean freeze, complete first qualification campaign, signing, isolated reviewed-verifier qualification, exact pin-only promotion, second source-distinct campaign with fresh independent Release, pinned isolated verification and evidence-only closure remain required. No readiness or diagnostic result substitutes for certification, and P20-T02 remains blocked until genuine clean local closure. No push or publication is authorized.
+    rationale: Latest direct human task authorizes only generated-artifact pipeline integration, sample-free focused/static/governance/direct-dependent/complete-inventory and gate-prefix validation, exact engineering commit and clean tree. Host is actively used; no current idle authorization, performance readiness/calibration/sampling, authoritative candidate freeze or H08 campaign is allowed until later owner idle-host confirmation. H08 remains OPEN and continuation automation PAUSED. Shared new gate advances current profiles to Local38/PR80/Full126/Release126; historical bd58294 Local37/PR79 and failed Full125 evidence is preserved, not reused or reclassified. Future whole source-distinct qualification/promotion campaigns, independent Releases, signing, immutable trusted verification and closure remain required; neither artifact readiness nor diagnostic prefix is authoritative certification. No push or publication is authorized.

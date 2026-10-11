@@ -54,9 +54,11 @@ fingerprint.
 
 ## Membership and ordering
 
-Profile membership is declared only in the central profile definitions. A
-profile entry references a canonical operation and, for component operations,
-an ordered default target set. Duplicate operation entries, unknown operations,
+Profile membership is declared only in the central toolchain policy. The shared
+`policy.profile_prefix` is prepended once to every profile's declared operation
+array by the repository-owned profile composition module. A profile entry
+references a canonical operation and, for component operations, an ordered
+default target set. Duplicate operation entries, unknown operations,
 duplicate targets, targets outside the component inventory, or a network member
 forbidden by the profile are configuration errors.
 
@@ -66,7 +68,7 @@ member is required unless a future contract explicitly introduces and names a
 different requirement class. `not_applicable` is an explicit completed result,
 not an omitted member.
 
-The declared array order is the execution and artifact order. Filesystem,
+The resolved prefix-plus-array order is the execution and artifact order. Filesystem,
 mapping, set, locale, completion-time, and workflow-matrix ordering must not
 affect it.
 
@@ -81,6 +83,36 @@ their profile position regardless of component selection. Component selection
 cannot remove, replace, or reinterpret them. An unknown component or an
 incompatible profile/operation selection is a configuration error rather than
 a partial execution.
+
+The first shared member, `generated_integrity`, checks the complete governed
+generated-artifact inventory without regeneration. Stale, missing, malformed,
+or unregistered governed outputs fail before expensive builds, runtime preflight,
+deep quality, or performance. Check-mode mutation is a failure, never an
+automatic repair. Once a candidate is frozen, its Local, Pull Request, Full,
+and Release invocations only check integrity; no candidate output may be
+regenerated during certification.
+The complete checker orders static verifiers before its registered
+build-backed contract extractor. It retains every family check and content
+hash; bounded concurrent reads are not cached freshness evidence. Normal
+profiles compare the same frozen source and Git authority after preflight
+and every member, preserve failed child receipts, and reject unsafe receipt
+destinations. Lua and LSP build paths consume prepared state without repairing
+the candidate.
+
+Before freezing a candidate, `./strling generate --prepare --json` can repair
+ordinary deterministic families through their registered canonical generators.
+Preparation first inspects the complete inventory, blocks separately governed
+authority-bearing refreshes, confines each generator's exact output diff,
+repeats generation to prove idempotence, rechecks the complete inventory, and
+runs registered direct dependents. It neither commits nor freezes a candidate
+and cannot supply certification-result authority. Locks, baselines,
+calibrations, historical evidence, and authenticated security/license evidence
+retain their specific reviewed refresh or migration procedures.
+
+`./strling profile <name> --through generated_integrity --json` is an
+artifact-only diagnostic boundary, not a partial authoritative profile result.
+It cannot write a profile artifact, run runtime preflight, or execute any later
+member. The same resolved first member applies to all four profile identities.
 
 ## Result states and aggregation
 
@@ -266,7 +298,8 @@ status-derivation path.
 ## Profile evolution
 
 Future work adds a canonical operation to the registry, tests its result
-contract, and appends its ID to the appropriate ordered profiles. It does not
+contract, and composes its ID through a governed shared prefix or the
+appropriate ordered profile membership. It does not
 change the executor, aggregate precedence, artifact contract, component bypass
 rules, or stable profile meanings.
 

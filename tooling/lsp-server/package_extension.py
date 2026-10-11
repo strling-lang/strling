@@ -5,11 +5,13 @@ from __future__ import annotations
 
 import argparse
 import fnmatch
+import glob
 import hashlib
 import json
 import os
 import platform
 import shutil
+import stat
 import subprocess
 import sys
 import uuid
@@ -17,6 +19,9 @@ import zipfile
 from contextlib import contextmanager
 from pathlib import Path, PurePosixPath
 from typing import Any, Mapping, Sequence
+
+from jsonschema import Draft202012Validator
+from jsonschema.exceptions import SchemaError, ValidationError
 
 
 LSP_ROOT = Path(__file__).resolve().parent
@@ -388,7 +393,56 @@ def _input_fingerprints() -> dict[str, str]:
         / "tooling"
         / "island_boundaries.json",
     }
-    return {name: _file_fingerprint(path) for name, path in inputs.items()}
+    fingerprints = {name: _file_fingerprint(path) for name, path in inputs.items()}
+    # Payload freshness includes compiler and client sources, not merely the
+    # six runtime resources. The registry owns this complete input relationship.
+    registry = _load_json(REPOSITORY_ROOT / "governance/generated-artifacts.json")
+    families = [
+        family
+        for family in registry.get("artifacts", [])
+        if isinstance(family, dict) and family.get("id") == "lsp-extension-payload"
+    ]
+    if len(families) != 1:
+        raise PackageError("LSP payload must have exactly one registered family")
+    family = families[0]
+    try:
+        patterns = [
+            *family["authoritative_sources"],
+            *family["generator_inputs"],
+            *family["generator"]["implementation_paths"],
+        ]
+    except (KeyError, TypeError) as error:
+        raise PackageError("LSP payload registry inputs are malformed") from error
+    repository_paths = set(
+        _git(["ls-files", "--cached", "--others", "--exclude-standard", "-z"]).split(
+            "\0"
+        )
+    )
+    source_paths: set[str] = set()
+    for pattern in patterns:
+        if not isinstance(pattern, str) or "\\" in pattern:
+            raise PackageError("LSP payload registry input path is malformed")
+        pure = PurePosixPath(pattern)
+        if pure.is_absolute() or ".." in pure.parts:
+            raise PackageError("LSP payload registry input escapes the repository")
+        matches = [
+            Path(path)
+            for path in glob.glob(str(REPOSITORY_ROOT / pattern), recursive=True)
+            if Path(path).is_file()
+            and Path(path).relative_to(REPOSITORY_ROOT).as_posix() in repository_paths
+        ]
+        if not matches:
+            raise PackageError(f"LSP payload input is missing: {pattern}")
+        for path in matches:
+            relative = path.relative_to(REPOSITORY_ROOT).as_posix()
+            if path.is_symlink():
+                raise PackageError(f"LSP payload input is a symlink: {relative}")
+            source_paths.add(relative)
+    for relative in sorted(source_paths):
+        fingerprints[f"file:{relative}"] = _file_fingerprint(
+            _safe_repository_source(relative)
+        )
+    return fingerprints
 
 
 def _write_manifest(
@@ -439,9 +493,13 @@ def _matches_forbidden(path: str, patterns: Sequence[str]) -> bool:
 def validate_payload(
     root: Path, contract: Mapping[str, Any], target: Mapping[str, Any]
 ) -> dict[str, Any]:
+    if root.is_symlink():
+        raise PackageError(f"payload directory is a symlink: {root}")
     root = root.resolve()
     if not root.is_dir():
         raise PackageError(f"payload directory is missing: {root}")
+    if any(path.is_symlink() for path in root.rglob("*")):
+        raise PackageError("payload contains a symlink")
     files = sorted(path for path in root.rglob("*") if path.is_file())
     relative = {path.relative_to(root).as_posix() for path in files}
     required = _expanded_paths(contract, target)
@@ -468,6 +526,12 @@ def validate_payload(
         raise PackageError("payload path length exceeds contract limit")
 
     manifest = _load_json(root / MANIFEST_NAME)
+    try:
+        schema = _load_json(LSP_ROOT / "package_manifest.schema.json")
+        Draft202012Validator.check_schema(schema)
+        Draft202012Validator(schema).validate(manifest)
+    except (SchemaError, ValidationError) as error:
+        raise PackageError(f"payload manifest is malformed: {error.message}") from error
     if manifest.get("target") != target["id"]:
         raise PackageError("payload manifest target is incorrect")
     if manifest.get("contract_fingerprint") != contract["contract_fingerprint"]:
@@ -498,6 +562,36 @@ def validate_payload(
     if manifest.get("payload_fingerprint") != _fingerprint(payload_material):
         raise PackageError("payload fingerprint is incorrect")
     return manifest
+
+
+def check_payload(output: Path, requested_target: str) -> dict[str, Any]:
+    """Inspect existing payload integrity without assembling or certifying it."""
+    contract = load_contract()
+    target = resolve_target(contract, requested_target)
+    manifest = validate_payload(output, contract, target)
+    package = _load_json(LSP_ROOT / "package.json")
+    if manifest["rust_host"] != target["rust_host"]:
+        raise PackageError("payload manifest Rust host is stale")
+    if manifest["extension_version"] != package["version"]:
+        raise PackageError("payload manifest extension version is stale")
+    if manifest["inputs"] != _input_fingerprints():
+        raise PackageError("payload manifest input fingerprints are stale")
+    source_commit = _git(["rev-parse", "HEAD"])
+    source_timestamp = int(_git(["show", "-s", "--format=%ct", "HEAD"]))
+    if (
+        manifest["source_commit"] != source_commit
+        or manifest["source_commit_timestamp"] != source_timestamp
+    ):
+        raise PackageError("payload manifest source identity is stale")
+    return {
+        "operation": "check-payload",
+        "status": "passed",
+        "target": target["id"],
+        "source_commit": source_commit,
+        "payload_fingerprint": manifest["payload_fingerprint"],
+        "payload_files": len(manifest["entries"]) + 1,
+        "mutated_candidate": False,
+    }
 
 
 def _safe_output(output: Path) -> Path:
@@ -594,6 +688,50 @@ def _directory_bytes(root: Path) -> dict[str, bytes]:
         path.relative_to(root).as_posix(): path.read_bytes()
         for path in sorted(root.rglob("*"))
         if path.is_file()
+    }
+
+
+def _directory_state(root: Path) -> dict[str, tuple[bytes, int]]:
+    """Capture actual candidate modes for within-filesystem immutability."""
+    try:
+        return {
+            path.relative_to(root).as_posix(): (
+                path.read_bytes(),
+                stat.S_IMODE(path.stat().st_mode),
+            )
+            for path in sorted(root.rglob("*"))
+            if path.is_file()
+        }
+    except OSError as error:
+        raise PackageError(f"cannot inspect prepared payload state: {error}") from error
+
+
+def build_check(output: Path, requested_target: str) -> dict[str, Any]:
+    """Perform the real canonical build without replacing a prepared payload."""
+    prepared = check_payload(output, requested_target)
+    original = _directory_state(output)
+    try:
+        with _owned_temporary("build-check-") as root:
+            rebuilt = root / "dist"
+            assemble(rebuilt, prepared["target"])
+            result = check_payload(rebuilt, prepared["target"])
+            # The contract's portable manifest modes remain mandatory. Actual
+            # OS modes need not match across filesystems (for example DrvFS and
+            # native temporary storage), but prepared actual modes cannot change.
+            if (
+                _directory_bytes(output) != _directory_bytes(rebuilt)
+                or prepared["payload_fingerprint"] != result["payload_fingerprint"]
+            ):
+                raise PackageError("isolated build differs from the prepared payload")
+    finally:
+        if _directory_state(output) != original:
+            raise PackageError("prepared payload changed during the isolated build")
+    return {
+        **prepared,
+        "operation": "build-check",
+        "isolated_build": True,
+        "payload_reproducible": True,
+        "authoritative": False,
     }
 
 
@@ -826,10 +964,16 @@ def refresh_contract_fingerprint() -> dict[str, str]:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
-    for name in ("assemble", "package", "certify"):
+    for name in ("assemble", "package", "certify", "check-payload", "build-check"):
         command = subparsers.add_parser(name)
         command.add_argument("--target", default="auto")
     subparsers.choices["assemble"].add_argument(
+        "--output", type=Path, default=DEFAULT_OUTPUT
+    )
+    subparsers.choices["check-payload"].add_argument(
+        "--output", type=Path, default=DEFAULT_OUTPUT
+    )
+    subparsers.choices["build-check"].add_argument(
         "--output", type=Path, default=DEFAULT_OUTPUT
     )
     subparsers.choices["package"].add_argument("--output", type=Path, default=None)
@@ -842,6 +986,10 @@ def main(argv: Sequence[str] | None = None) -> int:
             result = refresh_contract_fingerprint()
         elif args.command == "assemble":
             result = assemble(args.output, args.target)
+        elif args.command == "check-payload":
+            result = check_payload(args.output, args.target)
+        elif args.command == "build-check":
+            result = build_check(args.output, args.target)
         elif args.command == "package":
             result = assemble(DEFAULT_OUTPUT, args.target)
             target = result["target"]

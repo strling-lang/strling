@@ -20,6 +20,22 @@ compatibility requests.
 -   a C toolchain compatible with the selected Lua ABI
 -   a compatible native STRling library chosen by the application
 
+## Prepare and build
+
+Before freezing a certification candidate, materialize the ordinary disposable
+rockspec through its registered canonical generator:
+
+```text
+python3 tooling/lua_rockspec.py materialize --version-from-source --output-dir bindings/lua
+```
+
+Then run `./setup.sh` from this directory. Setup checks the existing closed
+numeric rockspec set against the current product version and template before
+any LuaRocks action. Missing, stale, or extra outputs fail with preparation
+guidance; setup never generates or deletes a rockspec. `STRLING_VERSION` cannot
+override the governed product version. Review obsolete numeric projections
+explicitly rather than deleting them as an automatic build side effect.
+
 ## Use
 
 ```lua

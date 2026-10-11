@@ -31,6 +31,24 @@ POLICY_PATH = ROOT / "governance/security-policy.json"
 POLICY_SCHEMA_PATH = ROOT / "governance/schemas/security-policy.schema.json"
 ENGINE_NAME = "strling-repository-security"
 ENGINE_VERSION = "1.2.0"
+KNOWN_LOCK_NAMES = frozenset(
+    {
+        "package-lock.json",
+        "Cargo.lock",
+        "pubspec.lock",
+        "composer.lock",
+        "Gemfile.lock",
+        "go.sum",
+        "Package.resolved",
+        "packages.lock.json",
+        "requirements.lock.txt",
+        "gradle.lockfile",
+        "verification-metadata.xml",
+        "renv.lock",
+        "luarocks.lock",
+        "cpanfile.snapshot",
+    }
+)
 STATUSES = ("passed", "failed", "waived", "unavailable", "incomplete")
 BLOCKING_STATUSES = ("failed", "unavailable", "incomplete")
 EXIT_CODES = {
@@ -3954,25 +3972,9 @@ class SecurityEngine:
         name = Path(path).name
         names = self.policy.get("manifest_names", [])
         suffixes = self.policy.get("manifest_suffixes", [])
-        known_lock_names = {
-            "package-lock.json",
-            "Cargo.lock",
-            "pubspec.lock",
-            "composer.lock",
-            "Gemfile.lock",
-            "go.sum",
-            "Package.resolved",
-            "packages.lock.json",
-            "requirements.lock.txt",
-            "gradle.lockfile",
-            "verification-metadata.xml",
-            "renv.lock",
-            "luarocks.lock",
-            "cpanfile.snapshot",
-        }
         return (
             name in names
-            or name in known_lock_names
+            or name in KNOWN_LOCK_NAMES
             or (name.startswith("requirements") and name.endswith(".txt"))
             or any(name.endswith(suffix) for suffix in suffixes)
         )

@@ -6,25 +6,18 @@ set -e
 
 echo "Setting up STRling Lua binding dependencies..."
 
-# Ensure luarocks local paths are set up
-eval "$(luarocks path --bin)"
-
-# Use the release rockspec when available, otherwise generate a temporary
-# dev rockspec from the template for local development and CI setup.
-VERSION="${STRLING_VERSION:-dev}"
-ROCKSPEC="$(python3 ../../tooling/lua_rockspec.py name --version "$VERSION" --print-path-only)"
-
-if [ ! -f "$ROCKSPEC" ]; then
-    if [ -f "strling-template.rockspec" ]; then
-        echo "Generating temporary rockspec from template: $ROCKSPEC"
-        python3 ../../tooling/lua_rockspec.py materialize \
-            --version "$VERSION" --output-dir .
-        trap 'rm -f "$ROCKSPEC"' EXIT
-    else
-        echo "Error: neither $ROCKSPEC nor strling-template.rockspec exists."
-        exit 1
-    fi
+# The candidate-preparation phase owns rockspec materialization. Build/setup
+# consumes only the existing canonical current-product projection, including
+# during certification; STRLING_VERSION must not override its governed source.
+if ! ROCKSPEC="$(python3 ../../tooling/lua_rockspec.py check-generated \
+    --version-from-source --output-dir . --print-path-only)"; then
+    echo "Error: prepare the canonical Lua rockspec before building or freezing a candidate." >&2
+    echo "From the repository root: python3 tooling/lua_rockspec.py materialize --version-from-source --output-dir bindings/lua" >&2
+    exit 1
 fi
+
+# No dependency/build command is allowed before the read-only integrity check.
+eval "$(luarocks path --bin)"
 
 # Check if running as root
 if [ "$(id -u)" -eq 0 ]; then

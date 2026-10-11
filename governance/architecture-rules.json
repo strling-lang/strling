@@ -1229,13 +1229,14 @@
         },
         {
             "id": "architecture-hardgate-profile-coverage",
-            "description": "Every canonical profile and the product-certification producer graph must retain the architecture, contract, semantic-authority, generation, and documentation hardgates exactly once.",
+            "description": "Every canonical profile and the product-certification producer graph must retain the architecture, contract, semantic-authority, generated-artifact integrity, generation, and documentation hardgates exactly once.",
             "status": "enforced",
             "kind": "profile-operation-coverage",
             "configuration": {
                 "toolchain": "toolchain.json",
                 "producer_manifest": "tests/certification/product/1.0/producer-manifest.json",
                 "required_operations": [
+                    "generated_integrity",
                     "canonical_contracts_check",
                     "core_contracts_check",
                     "contracts_check",

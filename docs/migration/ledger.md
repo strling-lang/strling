@@ -6642,3 +6642,123 @@ tests pass twice268b83 in the existing approved ordinary context. The schema
 review7814bb locale-default string mismatch is corrected by explicitUTF8
 comparisonab8dfe, preserving readiness/status/commit history. No detached-owner
 readiness or certification is inferred.
+
+### H08 complete artifact gate and preserved CLI36 failure — 2026-10-10
+
+The pending a64 artifact gate is superseded by independent receipt9976802a:
+all22actual sample-free commands45events, complete35registered families,
+168tracked outputs and zero stale/missing/malformed/unregistered outputs in
+closed governed sets. Actual Lua/LSP assembly, verification and direct
+dependents complete; all16locks remain protected and unchanged, not reproduced.
+Two distinct real security scans each54PASS plus soleVSCE license waiver retain
+Jest30.5.2/types30/ts-jest29.4.14 and10exact test-only JUnit approvals. This is
+source-bound engineering readiness at a64c5277, not an authoritative freeze.
+
+Subsequent fresh CLI36 fails: review80e8bd00 authenticates36windows2304pairs/
+4608observations; identical-request r9/window33 ratio27398 exceeds11000.
+Wall77.02295/28.11285ms and launch58.9828/8.14105ms request/control distributions
+localize the imbalance to launch work. Real CLI workloads below their old caps
+cannot green-classify it. All observations and failed/consumed source remain;
+no unchanged stage or calibration replay. Separate API review5b5d9700 retains
+9windows576pairs1152observations,4actual regressions and77negative guards twice:
+the tail occurs inside CreateProcessW, mainly parent kernel CPU. Precise OS
+subsystem and original transport equivalence remain unproven. Corrected helper
+compile/runtime-binding/registry-arity failures are preserved, not product or
+certification PASS evidence.
+
+### H08 reversible release footprint correction — 2026-10-10
+
+Private thin-LTO v1 archive-permission failure32d714f3/a0368464 remains intact.
+Ordinary-token filesystem-context correction, no host privilege/security change,
+completes13CLI tests twice; independent reviewa5ed84a0 rejects recipe adoption
+because the image grows224256bytes. Distinct default-LTO opt-level=s image proof
+completes19:00:34Z, session25991 consumed once9d4072. Reviewcff9d9a3 and20guards
+twice reconstruct13CLI tests twice, unchanged PE/stack/section security flags and
+1395712fewer bytes (3885568versus5281280,26.43%). Faster startup or workload
+execution is not proven. Preserve the historical control byte-for-byte3f7f5d.
+
+Apply only standalone core release opt-level=s as a reversible product build
+correction; the independent in-process runner owns its unchanged release profile.
+Generated-artifact-sync30478b maps the source to LSP payload and adversarial
+observations plus protected transitional locks. No dependency graph, lock,
+baseline, estimator, sample count, cap, conditioning, waiver or trusted pin
+changes. Use canonical registered generators/checks and direct dependents;
+the source change invalidates the accepted a64 gate. Exact correction commit,
+complete new-source artifact gate and fresh performance proof/capped calibration
+remain before authoritative freeze and both campaigns, signing/verification and
+closure. H08OPEN; continuationACTIVE.
+
+### H08 generated-artifact pipeline integration, performance held — 2026-10-10
+
+New direct human authority limits work to candidate preparation and immutable
+early generated-artifact integrity. The host is actively used: all H08 campaigns,
+performance readiness/calibration/sampling and authoritative freeze are paused
+until later owner idle-host confirmation. Automation remains PAUSED; H08 OPEN.
+Historical idle authorization and autonomous terminal remediation do not apply
+to this scoped task. The previous source-prerequisite run completed exit0 at
+19:28:16Z: 12 actual PASS operations plus one expected stale-source rejection,
+495 core tests and sample-free direct dependents; no performance acceptance.
+
+The shared profile prefix adds one complete35-family immutable operation,
+advancing current definitions to Local1.16/38, PR1.22/80, Full1.30/126 and
+Release1.30/126. Historical 37/79/125/125 attempts remain unchanged and cannot
+be reused for these definitions. Read-only lock verification (16 locks/20
+manifest identities), actual materialized Lua and full-input LSP integrity
+close prior coverage gaps without granting refresh authority. Preparation is
+deny-by-default for baselines, historical/authenticated evidence and locks.
+Only ordinary canonical projections can be repaired before commit/freeze,
+with diff guards, repeated idempotence, full recheck and direct dependents.
+
+Initial draft complete check failed before family commands: an unanchored lock
+census incorrectly descended into an ignored retained verifier checkout.
+The failure is retained, not reclassified as PASS. Scope correction applies
+unanchored patterns only to tracked/nonignored current candidates while
+explicitly snapshotting ignored registered outputs; current source locks and
+closed generated sets remain fail-closed. No performance operation or sample
+was created, and no authoritative H08 profile began. Validation and exact
+engineering commit results follow separately; no new candidate is frozen.
+
+The next draft complete check (terminal `4fe52e`) rejects a duplicate
+`docs/toolchains.md` allowed-scope entry before contract extraction. Its
+repository-state guard also catches a concurrent status query refreshing the
+Git index. Both draft failures remain failures, not certification evidence.
+Remove only the duplicate scope entry; subsequent diagnostic Git reads disable
+optional index writes. Independent review also requires confined generator
+working directories and places PR runtime preflight after the successful shared
+artifact gate. These are fail-closed integration corrections, not waivers.
+
+Final integration review covers confined sources, inputs, outputs and working
+directories, full byte/mode/Git-authority snapshots, guarded result and failure
+destinations, and immutable real LSP build comparison. Eight bounded readers
+retain complete hashing without caching or skipped inputs. The existing native
+14-name lock census now protects root and nested locks; the verifier also rejects
+ancestor aliases and concurrent catalog/registry/schema drift. No lock is
+reproduced, approved silently, or granted automatic refresh authority.
+
+Focused WSL validation passes 125 artifact/preparation/lock/native-registry tests,
+139 profile/composition/product tests, 17 result-destination/rendering tests,
+29 package-builder tests and two separate 21-test snapshot/Lua runs. Initial
+native 156-case failures (`cac93d`), three package-fixture failures (`cd7ef6`),
+and sandbox-fixture failure (`c74a4d`) remain failed diagnostics. Package fixtures
+were corrected to reference the existing closed-payload `package.json`, not an
+unpackaged `README.md`; no contract, assertion, or product policy was relaxed.
+The passing preparation receipt `79c9a9` belongs to its earlier draft, not the
+final merged source. Static, governance, hygiene, documentation, source-definition,
+semantic-authority and native lock-integrity checks pass on the current source.
+The final provisioned direct-dependent batch passes 167 tests with zero failures,
+errors or skips (`d1c6b3`); registered LSP build-check and both package dependents
+pass, including 37 tests (`9538ed53` / `194581ee`). Overlapping runs are not summed.
+
+The real final merged-source complete inventory (`62a0cd`) passes all 35 families,
+with no repairs, no failed/delegated families and unchanged protected identities.
+Its raw receipt is
+`target/codex-tools/artifact-integration-validation/1791701575094979774-inventory.json`,
+SHA256 `3d8559be99cd26b969f5539fe5c80a6df8a9f95dc2bb9745af206b1a9e727a93`.
+This check belongs to the precommit engineering tree over `a64c5277`, not a frozen
+or certified candidate. The clean-engineering-SHA artifact-only diagnostic prefix
+is a separate postcommit check; its source-bound receipt is retained in the same
+directory, never relabeled from this inventory or an earlier preparation run.
+These receipts are sample-free engineering validation only, never H08 acceptance
+or a candidate freeze. H08 remains OPEN, with campaign and continuation PAUSED;
+this task creates zero authenticated performance samples and no authoritative
+H08 profile result.

@@ -34,6 +34,9 @@ _profile_source_identity = importlib.import_module(
 )
 load_profile_definition_bundle = _profile_source_identity.load_definition_bundle
 profile_source_identity = _profile_source_identity.profile_identity
+_profile_composition = importlib.import_module(
+    "tooling.profile_composition" if __package__ else "profile_composition"
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -174,9 +177,10 @@ def _certification_profile(
         )
     try:
         policy = cast(dict[str, Any], toolchain["policy"])
-        profiles = cast(dict[str, Any], policy["profiles"])
-        profile = cast(dict[str, Any], profiles[profile_id])
-    except (KeyError, TypeError) as exc:
+        profile = cast(
+            dict[str, Any], _profile_composition.resolve_profile(policy, profile_id)
+        )
+    except (KeyError, TypeError, _profile_composition.ProfileCompositionError) as exc:
         raise ProductCertificationError(
             "stale-profile",
             f"toolchain.json does not define the {profile_id!r} profile",

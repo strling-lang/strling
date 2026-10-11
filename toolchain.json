@@ -225,6 +225,20 @@
                 ],
                 "network": "offline"
             },
+            "generated_integrity": {
+                "kind": "repository",
+                "component": "repository",
+                "command": [
+                    "python3",
+                    "tooling/generated_artifacts.py",
+                    "--check",
+                    "--complete",
+                    "--json"
+                ],
+                "network": "offline",
+                "result_contract": "certification-result-v1",
+                "result_operation_id": "certification.generated-artifact-integrity"
+            },
             "documentation_integrity": {
                 "kind": "repository",
                 "component": "repository",
@@ -655,9 +669,10 @@
                 "network": "offline"
             }
         },
+        "profile_prefix": [{ "operation": "generated_integrity" }],
         "profiles": {
             "local": {
-                "definition_version": "1.15.0",
+                "definition_version": "1.16.0",
                 "purpose": "Fast deterministic developer feedback.",
                 "network_policy": "offline",
                 "operations": [
@@ -754,7 +769,7 @@
                 ]
             },
             "pull-request": {
-                "definition_version": "1.21.0",
+                "definition_version": "1.22.0",
                 "purpose": "Deterministic merge confidence.",
                 "network_policy": "offline",
                 "operations": [
@@ -923,7 +938,7 @@
                 ]
             },
             "full": {
-                "definition_version": "1.29.0",
+                "definition_version": "1.30.0",
                 "purpose": "Broad repository certification.",
                 "network_policy": "allowed",
                 "operations": [
@@ -1171,7 +1186,7 @@
                 ]
             },
             "release": {
-                "definition_version": "1.29.0",
+                "definition_version": "1.30.0",
                 "purpose": "Highest currently implemented pre-release envelope.",
                 "network_policy": "allowed",
                 "operations": [
@@ -2002,7 +2017,7 @@
             "build": [
                 "python3",
                 "package_extension.py",
-                "assemble",
+                "build-check",
                 "--target",
                 "auto"
             ],

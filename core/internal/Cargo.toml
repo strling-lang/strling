@@ -11,6 +11,11 @@ autoexamples = false
 
 [workspace]
 
+[profile.release]
+# Keep the standalone compiler/editor executable footprint bounded without
+# changing panic, overflow, dependency, or platform security policies.
+opt-level = "s"
+
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"

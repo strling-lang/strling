@@ -6,6 +6,7 @@ import ast
 import unittest
 
 from tooling.portability_matrix import MATRIX_PATH, ROOT, SUMMARY_PATH, load_json
+from tooling.profile_composition import resolve_profiles
 
 
 class PortabilityMatrixArchitectureTests(unittest.TestCase):
@@ -72,7 +73,7 @@ class PortabilityMatrixArchitectureTests(unittest.TestCase):
 
     def test_full_and_release_route_matrix_after_shared_certification(self) -> None:
         toolchain = load_json(ROOT / "toolchain.json")
-        profiles = toolchain["policy"]["profiles"]
+        profiles = resolve_profiles(toolchain["policy"])
         for profile_id in ("full", "release"):
             operations = [
                 item["operation"] for item in profiles[profile_id]["operations"]

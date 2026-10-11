@@ -6,6 +6,8 @@ import ast
 import copy
 import unittest
 
+from tooling.profile_composition import resolve_profiles
+
 from tooling.stdlib_guarantee_contracts import (
     ROOT,
     STDLIB_EXAMPLE_ROOT,
@@ -183,14 +185,14 @@ class StandardLibraryGuaranteeContractTests(unittest.TestCase):
     def test_canonical_quality_operation_owns_all_guarantee_checks(self) -> None:
         toolchain = load_json(ROOT / "toolchain.json")
         policy = toolchain["policy"]
+        profiles = resolve_profiles(policy)
         operation = policy["operation_registry"]["canonical_contracts_check"]
         self.assertEqual(
             ["python3", "tooling/contract_validation.py"], operation["command"]
         )
         for profile_name in ("local", "pull-request", "full", "release"):
             operations = {
-                member["operation"]
-                for member in policy["profiles"][profile_name]["operations"]
+                member["operation"] for member in profiles[profile_name]["operations"]
             }
             self.assertIn("canonical_contracts_check", operations)
 

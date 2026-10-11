@@ -12,6 +12,11 @@ from typing import Callable, Mapping, Sequence
 
 import yaml
 
+if __package__:
+    from .profile_composition import ProfileCompositionError, resolve_profiles
+else:
+    from profile_composition import ProfileCompositionError, resolve_profiles
+
 
 Match = Callable[[str, Sequence[str]], bool]
 Finding = tuple[str, str | None]
@@ -1141,11 +1146,26 @@ def profile_operation_coverage_findings(
     except (OSError, json.JSONDecodeError) as error:
         return [(f"cannot inspect architecture hardgate coverage: {error}", None)]
     policy = toolchain.get("policy", {}) if isinstance(toolchain, dict) else {}
+    if not isinstance(policy, dict):
+        return [
+            (
+                f"{toolchain_relative}: operation/profile registry is malformed: policy must be an object",
+                toolchain_relative,
+            )
+        ]
     operation_registry = (
         policy.get("operation_registry", {}) if isinstance(policy, dict) else {}
     )
-    profiles = policy.get("profiles", {}) if isinstance(policy, dict) else {}
-    if not isinstance(operation_registry, dict) or not isinstance(profiles, dict):
+    try:
+        profiles = resolve_profiles(policy)
+    except ProfileCompositionError as error:
+        return [
+            (
+                f"{toolchain_relative}: operation/profile registry is malformed: {error}",
+                toolchain_relative,
+            )
+        ]
+    if not isinstance(operation_registry, dict):
         return [
             (
                 f"{toolchain_relative}: operation/profile registry is malformed",

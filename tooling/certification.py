@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 from collections import Counter
 from datetime import datetime, timezone
@@ -109,9 +110,11 @@ def aggregate_profile_exit(statuses: Iterable[str]) -> int:
 def repository_state(root: Path) -> dict[str, object]:
     """Read committed identity and dirty state without mutating the repository."""
 
+    readonly_environment = {**os.environ, "GIT_OPTIONAL_LOCKS": "0"}
     commit = subprocess.run(
         ["git", "rev-parse", "HEAD"],
         cwd=root,
+        env=readonly_environment,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -130,6 +133,7 @@ def repository_state(root: Path) -> dict[str, object]:
     status = subprocess.run(
         ["git", "status", "--porcelain=v1", "--untracked-files=all"],
         cwd=root,
+        env=readonly_environment,
         text=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,

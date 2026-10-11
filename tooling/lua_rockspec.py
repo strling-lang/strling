@@ -95,8 +95,8 @@ def verify_rockspec(
         )
     expected = render_rockspec(template_path.read_text(encoding="utf-8"), version)
     try:
-        actual = path.read_text(encoding="utf-8")
-    except OSError as exc:
+        actual = path.read_bytes().decode("utf-8")
+    except (OSError, UnicodeError) as exc:
         raise RockspecError(f"cannot read {path}: {exc}") from exc
     if actual != expected:
         raise RockspecError(
@@ -104,10 +104,33 @@ def verify_rockspec(
         )
 
 
+def check_generated(
+    version: str, output_dir: Path, template_path: Path = TEMPLATE_PATH
+) -> Path:
+    """Check the existing closed generated set; never materialize missing output."""
+    render_rockspec(template_path.read_text(encoding="utf-8"), version)
+    if output_dir.is_symlink() or not output_dir.is_dir():
+        raise RockspecError(
+            f"generated rockspec directory is missing or unsafe: {output_dir}"
+        )
+    expected = output_dir / rockspec_name(version)
+    actual = sorted(output_dir.glob("strling-[0-9]*.rockspec"))
+    if actual != [expected]:
+        raise RockspecError(
+            "generated rockspec set differs from current source version; "
+            f"expected={[expected.name]}, actual={[path.name for path in actual]}"
+        )
+    if expected.is_symlink() or not expected.is_file():
+        raise RockspecError(f"generated rockspec is not a regular file: {expected}")
+    verify_rockspec(version, expected, template_path)
+    return expected.resolve()
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "operation", choices=("materialize", "verify", "check-template", "name")
+        "operation",
+        choices=("materialize", "verify", "check-template", "check-generated", "name"),
     )
     version = parser.add_mutually_exclusive_group()
     version.add_argument("--version")
@@ -134,11 +157,15 @@ def main(argv: Sequence[str] | None = None) -> int:
                 raise RockspecError("verify requires --path")
             verify_rockspec(version, args.path, args.template)
             output = args.path.resolve()
+        elif args.operation == "check-generated":
+            if args.output_dir is None:
+                raise RockspecError("check-generated requires --output-dir")
+            output = check_generated(version, args.output_dir, args.template)
         elif args.operation == "check-template":
             render_rockspec(args.template.read_text(encoding="utf-8"), version)
         else:
             output = Path(rockspec_name(version))
-    except (OSError, RockspecError, json.JSONDecodeError) as exc:
+    except (OSError, UnicodeError, RockspecError, json.JSONDecodeError) as exc:
         print(f"LUA_ROCKSPEC_RESULT status=failed reason={exc}", file=sys.stderr)
         return 1
 

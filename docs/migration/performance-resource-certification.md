@@ -1278,3 +1278,125 @@ the same four tests pass twice268b83 under the existing approved ordinary
 context, not a privilege or settings change. A locale-default record comparison
 failure7814bb is corrected with explicitUTF8ab8dfe; historical readiness and
 record authority are unchanged. Complete post-correction gate remains pending.
+
+## Complete artifact gate and subsequent launch attribution
+
+The preceding pending-gate statements are superseded only for clean engineering
+source `a64c5277a850cbf3e881b823c146fb8e78fe0e42`. Independent receipt
+`9976802a8544e8e9e64e29ed6fad5c33c91b8613b54472fee502a44378903015`
+reconstructs all 22 actual sample-free operations and 45 ledger events. The
+complete 35-family inventory covers 32 enforced families, actual Lua and LSP
+profile-enforced generation/verification, and protected unchanged lockfile
+governance. All 168 registered tracked outputs are accounted for, with zero
+stale, missing, malformed or unregistered outputs in the closed governed sets;
+this is not universal artifact discovery or deterministic lock reproduction.
+Fresh LSP assembly, real feature/lifecycle checks, direct dependents, exact
+runtimes and two distinct security scans complete. Each security scan retains
+54 PASS and only `WVR-SEC-VSCE-LICENSE-001`, the exact Jest 30.5.2 /
+`@types-jest` 30 / `ts-jest` 29.4.14 graph, and ten exact test-only JUnit
+approvals. This gate is not authoritative certification or a candidate freeze.
+
+The subsequent fresh 36-window prospective proof at that source fails and is
+permanently consumed. Independent receipt
+`80e8bd00c718c750ca3a9d02069b92ef14330dda66ee35ef0ddae46b3e28032f`
+authenticates all 2,304 pairs / 4,608 observations. Identical-request repetition
+9, window 33, has ratio 27,398 bp against the unchanged 11,000 bp null ceiling.
+Request/control median wall times are 77.02295 / 28.11285 ms; launch times are
+58.9828 / 8.14105 ms and parent launch CPU medians 46.875 / 15.625 ms. Actual
+Semantic and Simply request windows remain below their unchanged ceilings,
+but this does not turn the failed null proof green or permit calibration.
+
+Separate identical-child and explicit Windows API-phase diagnostics preserve
+all observations, including zero CPU-time observations and unfavorable tails.
+Independent API receipt
+`5b5d970072e41b6aa071bd74e4c4e9777f83d27c57daf9a62702e3410114b0cd`
+reconstructs nine windows, 576 pairs, 1,152 observations, four actual probe
+regressions and 77 negative guards. The tail is localized inside CreateProcessW,
+predominantly parent kernel CPU, rather than pipe or attribute setup. The exact
+OS subsystem and equivalence to the original standard-library transport remain
+unproven. No diagnostic substitutes for performance acceptance. The original
+probe compile-format failure, child-CPU runtime-binding failure, reviewer
+registry-arity failure and their corrected, guard-tested helpers are retained;
+no completed acquisition or failed expensive stage was replayed to repair them.
+
+## Reversible standalone release-image correction
+
+Two private build recipes test legitimate product footprint reduction without
+changing source semantics, panic/unwind, overflow, dependencies or PE security
+and stack settings. The initial thin-LTO archive-permission failure remains
+preserved (`32d714f3` / `a0368464`), with zero performance samples and no CLI
+tests. Narrow ordinary-token filesystem-context recovery completes the same
+failed build and only the two previously unrun correctness commands; it does
+not change host privileges or security settings. Independent receipt
+`a5ed84a0ad504e847a01952cdbb6119470e4de074eb2f3a2a706ecdedf106d32`
+reconstructs 13 CLI tests twice and unchanged PE policies. Thin-LTO increases
+the image from 5,281,280 to 5,505,536 bytes, so it is not adopted.
+
+The distinct default-LTO, `opt-level=s` private recipe completes its build and
+13 CLI tests twice, with zero failed or ignored cases. Independent receipt
+`cff9d9a379dd0fabe7eb983aae31fb5577847b922734e896ca9b43f71f0b3872`
+and 20 negative guards repeated twice reconstruct unchanged security/stack/
+section flags and a 3,885,568-byte image, 1,395,712 bytes (26.43%) smaller.
+That proves footprint reduction only, not faster startup or workload execution.
+The original authenticated 5,281,280-byte control is preserved byte-for-byte
+under `target/codex-tools/h08-preserved-a64c5277-release-control-v1` before any
+canonical rebuild can overwrite its mutable build location.
+
+The reversible source correction sets only the standalone core release
+`opt-level` to `s`. The independent in-process runner retains its own release
+profile; no measurement estimator, sample count, cap, conditioning, isolation,
+baseline, waiver or trust pin changes. Cargo dependencies and all lockfiles
+remain unchanged under their existing transitional/protected governance.
+Generated-artifact-sync maps this source to the LSP payload and adversarial
+observations, plus the protected lockfile family; use only their registered
+generation and verification paths. This source change invalidates the earlier
+artifact gate. Direct dependents, exact output review, an exact correction
+commit, complete new-source artifact gate, fresh prospective performance proof
+and capped calibration remain required before any authoritative candidate.
+H08 remains OPEN; both campaigns, signing, trusted verification and closure are
+still uncompleted. No diagnostic result is relabeled as authoritative evidence.
+
+## Generated-artifact integration hold — 2026-10-10
+
+The owner's subsequent scoped task supersedes prior idle-host authorization
+and autonomous campaign continuation. The host is actively used; H08 remains
+OPEN and the continuation is PAUSED pending later explicit idle-host approval.
+This task integrates candidate preparation and a check-only early artifact gate,
+not performance readiness, calibration, sampling, or authoritative certification.
+It creates zero authenticated performance samples and starts no H08 profile.
+
+The shared artifact gate changes current definitions to Local 1.16.0 (38),
+Pull Request 1.22.0 (80), Full 1.30.0 (126), and Release 1.30.0 (126).
+Historical 37/79/125/125 attempts and their failures remain intact; no old result
+or sample is promoted to these definitions. The lockfile family gains reviewed,
+read-only verification of 16 locks and 20 full manifest identities, not lock
+regeneration or a dependency-graph change. All performance baseline, calibration,
+historical/authenticated evidence, security, license, and trust authority remains
+unchanged. Engineering integration checks and diagnostic prefixes cannot close
+H08 or establish independent performance acceptance.
+
+The integration's pure performance-artifact checker invokes only the existing
+offline repository-contract validator. Negative regressions prohibit runner,
+conditioning, readiness, calibration and sampling calls. Protected baseline,
+manifest, synthetic historical evidence, locks, security/license policy and
+workflow trust pins remain byte-preserved. Ordinary preparation is separately
+guarded by canonical generators, exact output-only diff review, repeated
+idempotence, complete recheck and changed-family direct dependents.
+
+Focused artifact, lock, snapshot, profile, output-destination, Lua and package
+regressions pass; prior native and package-fixture failures remain preserved,
+not reclassified. The final provisioned direct-dependent batch passes 167 tests;
+the real registered LSP build-check and 37 package dependent tests also pass.
+Complete inventory receipt
+`1791701575094979774-inventory.json` (SHA256
+`3d8559be99cd26b969f5539fe5c80a6df8a9f95dc2bb9745af206b1a9e727a93`)
+records all 35 families PASS, no repairs and unchanged protected identities on
+the precommit engineering tree over `a64c5277`. It is not a candidate freeze.
+The clean-engineering-SHA artifact-only diagnostic prefix is checked separately
+after the checkpoint; exact raw receipts are retained under
+`target/codex-tools/artifact-integration-validation`, explicitly non-authoritative
+and source-bound. The exact-path integration commit is an engineering checkpoint,
+not a performance candidate freeze. This scoped task
+creates zero authenticated performance samples and no authoritative H08 profile
+result; H08 remains OPEN and its campaign/continuation PAUSED pending later owner
+idle-host confirmation.

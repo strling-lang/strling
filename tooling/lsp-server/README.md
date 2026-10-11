@@ -53,8 +53,21 @@ python tooling/lsp-server/package_extension.py assemble --target auto
 python tooling/lsp-server/package_extension.py package --target auto
 ```
 
-Equivalent repository commands are available through `./strling build lsp` and
-the Full/Release package-certification profile operation.
+The assembler is a candidate-preparation command, not an authoritative-profile
+mutation step. After preparation, `./strling build lsp` performs the same real
+canonical build in isolated owned temporary space, then compares every payload
+byte and its governed manifest modes with the prepared payload:
+
+```text
+python tooling/lsp-server/package_extension.py check-payload --target auto
+python tooling/lsp-server/package_extension.py build-check --target auto
+```
+
+Missing or stale prepared output fails before compilation. The build never
+replaces the prepared payload and verifies its actual bytes and filesystem modes
+remain unchanged. Portable package modes are governed by the manifest; this
+does not assert Unix permission enforcement on a filesystem that cannot preserve
+Unix permission bits.
 
 Certification requires a clean Git tree. It builds two independent payloads,
 compares every payload byte, compares normalized VSIX entries, launches both

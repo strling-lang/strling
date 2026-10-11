@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import fnmatch
 import json
 import os
 import re
@@ -32,6 +33,11 @@ from structured_operation_execution import (
     execution_context,
     recover_progress,
     validate_result_directory,
+)
+from profile_composition import (
+    ProfileCompositionError,
+    profile_prefix,
+    resolve_profile,
 )
 
 from typing import Callable, Iterable, Mapping, Sequence, TextIO, cast
@@ -145,6 +151,7 @@ class ProfileProgress:
         heartbeat_seconds: float = PROFILE_HEARTBEAT_SECONDS,
         wall_clock: Callable[[], str] = _local_timestamp,
         monotonic_clock: Callable[[], float] = time.monotonic,
+        destination_guard: Callable[[Path], None] | None = None,
     ) -> None:
         source_sha = source.get("commit")
         source_dirty = source.get("dirty")
@@ -160,6 +167,8 @@ class ProfileProgress:
         self.heartbeat_seconds = heartbeat_seconds
         self.wall_clock = wall_clock
         self.monotonic_clock = monotonic_clock
+        self.destination_guard = destination_guard
+        self._destination_error: str | None = None
         self._write_lock = threading.Lock()
         self._output_lock = threading.Lock()
         self._active: list[StageProgress] = []
@@ -167,6 +176,8 @@ class ProfileProgress:
         self._profile_started_monotonic: float | None = None
         self._profile_terminal = False
         try:
+            if self.destination_guard is not None:
+                self.destination_guard(ledger_path)
             ledger_path.parent.mkdir(parents=True, exist_ok=True)
             descriptor = os.open(
                 ledger_path,
@@ -184,6 +195,8 @@ class ProfileProgress:
             print(f"[{observed}] {message}", file=self.stream, flush=True)
 
     def _record(self, record: Mapping[str, object]) -> None:
+        if self._destination_error is not None:
+            raise ConfigurationError(self._destination_error)
         path = self.ledger_path
         if path is None:
             return
@@ -192,6 +205,15 @@ class ProfileProgress:
         ).encode("utf-8")
         try:
             with self._write_lock:
+                if self.destination_guard is not None:
+                    try:
+                        self.destination_guard(path)
+                    except ConfigurationError as error:
+                        # Retain the error for the main-thread boundary even
+                        # when a heartbeat observes an unsafe destination first.
+                        self._destination_error = str(error)
+                        self.ledger_path = None
+                        raise
                 descriptor = os.open(path, os.O_WRONLY | os.O_APPEND)
                 try:
                     written = os.write(descriptor, payload)
@@ -438,6 +460,37 @@ class OperationResult:
         return result
 
 
+def _fail_profile_receipt(result: OperationResult, error: ConfigurationError) -> None:
+    """Fail only the parent receipt claim, preserving every observed child fact."""
+
+    integrity = dict(result.execution_integrity or {})
+    child = None
+    for guard_name in ("profile_source_guard", "profile_receipt_guard"):
+        previous = integrity.get(guard_name)
+        if isinstance(previous, dict) and isinstance(
+            previous.get("observed_child"), dict
+        ):
+            child = dict(previous["observed_child"])
+            break
+    if child is None:
+        child = {
+            "status": result.status,
+            "exit_code": result.exit_code,
+            "reason": result.reason,
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+        }
+    child["structured_result"] = result.structured_result
+    integrity["profile_receipt_guard"] = {
+        "status": "failed",
+        "reason": str(error),
+        "observed_child": child,
+    }
+    result.execution_integrity = integrity
+    result.status = "failed"
+    result.reason = "certification receipt destination rejected: " + str(error)
+
+
 class Toolchain:
     """Validated view of the command and capability policy."""
 
@@ -575,7 +628,10 @@ class Toolchain:
             raise ConfigurationError(
                 f"unknown certification profile '{name}'; available profiles: {available}"
             )
-        return profile
+        try:
+            return resolve_profile(self.policy, name)
+        except ProfileCompositionError as error:
+            raise ConfigurationError(str(error)) from error
 
     def aggregate_profile(self, name: str) -> str:
         aliases = self.policy["aggregate_profiles"]
@@ -942,6 +998,39 @@ class Toolchain:
                     f"policy.operation_defaults.{operation} contains an unknown target"
                 )
 
+        try:
+            prefix = profile_prefix(policy)
+        except ProfileCompositionError as error:
+            raise ConfigurationError(str(error)) from error
+        integrity = registry.get("generated_integrity")
+        if integrity is not None:
+            expected_command = [
+                "python3",
+                "tooling/generated_artifacts.py",
+                "--check",
+                "--complete",
+                "--json",
+            ]
+            if (
+                not prefix
+                or prefix[0] != {"operation": "generated_integrity"}
+                or not isinstance(integrity, dict)
+                or integrity.get("command") != expected_command
+                or integrity.get("network") != "offline"
+                or integrity.get("result_contract") != "certification-result-v1"
+                or integrity.get("result_operation_id")
+                != "certification.generated-artifact-integrity"
+            ):
+                raise ConfigurationError(
+                    "generated_integrity requires a first, shared, immutable complete-check gate"
+                )
+        for member in prefix:
+            canonical = registry.get(member["operation"])
+            if not isinstance(canonical, dict) or canonical.get("kind") != "repository":
+                raise ConfigurationError(
+                    "policy.profile_prefix must reference repository operations"
+                )
+
         profile_memberships: dict[str, list[Mapping[str, object]]] = {}
         for profile_name in PROFILE_NAMES:
             definition = profiles[profile_name]
@@ -952,7 +1041,10 @@ class Toolchain:
             version = definition.get("definition_version")
             purpose = definition.get("purpose")
             network_policy = definition.get("network_policy")
-            members = definition.get("operations")
+            try:
+                members = resolve_profile(policy, profile_name).get("operations")
+            except ProfileCompositionError as error:
+                raise ConfigurationError(str(error)) from error
             if (
                 not isinstance(version, str)
                 or re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version) is None
@@ -1338,6 +1430,7 @@ def _probe_output(value: str | bytes | None) -> str:
 
 Executor = Callable[[Target, str, list[str]], Execution]
 HardgateExecutor = Callable[[str, list[str]], Execution]
+SourceSnapshotter = Callable[[], Mapping[str, str]]
 
 
 def host_command(command: Sequence[str]) -> list[str]:
@@ -1387,12 +1480,53 @@ class QualityRunner:
         executor: Executor | None = None,
         inspector: EnvironmentInspector | None = None,
         hardgate_executor: HardgateExecutor | None = None,
+        source_snapshotter: SourceSnapshotter | None = None,
     ) -> None:
         self.toolchain = toolchain
         self.executor = executor or self._execute
         self.inspector = inspector or EnvironmentInspector(toolchain)
         self.inspect_leaf_environment = inspector is not None or executor is None
         self.hardgate_executor = hardgate_executor or self._execute_hardgate
+        self.source_snapshotter = source_snapshotter
+
+    def _profile_source_snapshotter(self) -> SourceSnapshotter:
+        """Freeze governed source once; do not rerun artifact generators/checks."""
+
+        from generated_artifacts import (
+            RegistryError,
+            integrity_snapshot,
+            load_registry,
+            snapshot_repository,
+        )
+
+        try:
+            registry = load_registry(
+                self.toolchain.root / "governance/generated-artifacts.json",
+                self.toolchain.root
+                / "governance/schemas/generated-artifact-registry.schema.json",
+            )
+        except (OSError, RegistryError) as error:
+            raise ConfigurationError(
+                f"cannot establish frozen certification source: {error}"
+            ) from error
+
+        def snapshot() -> Mapping[str, str]:
+            return integrity_snapshot(
+                registry, self.toolchain.root, snapshot_repository
+            )
+
+        return snapshot
+
+    @staticmethod
+    def _source_drift(
+        frozen: Mapping[str, str], snapshotter: SourceSnapshotter
+    ) -> list[str]:
+        observed = dict(snapshotter())
+        return sorted(
+            path
+            for path in frozen.keys() | observed.keys()
+            if frozen.get(path) != observed.get(path)
+        )
 
     def run_leaf(self, operation: str, target: Target) -> OperationResult:
         capability = self.toolchain.capability(target, operation)
@@ -1517,12 +1651,88 @@ class QualityRunner:
         requested: str | None,
         *,
         progress: ProfileProgress | None = None,
+        preflight: Callable[[], None] | None = None,
     ) -> list[OperationResult]:
         stages = self._profile_stages(name, requested)
+        snapshotter = None
+        if stages and stages[0].operation == "generated_integrity":
+            snapshotter = self.source_snapshotter or self._profile_source_snapshotter()
+        if preflight is not None and (
+            not stages or stages[0].operation != "generated_integrity"
+        ):
+            # Historical profiles without the shared gate retain their eager
+            # environment preflight. Current profiles defer any build-capable
+            # preflight until immutable artifact integrity has succeeded.
+            preflight()
+            preflight = None
+        return self._run_profile_stages(
+            name,
+            stages,
+            progress=progress,
+            preflight=preflight,
+            source_snapshotter=snapshotter,
+        )
+
+    def run_profile_prefix(
+        self, name: str, requested: str | None, *, through: str
+    ) -> list[OperationResult]:
+        """Run only the artifact gate, as diagnostics rather than certification.
+
+        Restrict the boundary to the mandatory shared integrity operation. A
+        generic stage selector would permit partial expensive/profile evidence
+        to masquerade as a complete result or accidentally collect samples.
+        """
+
+        prefix = profile_prefix(self.toolchain.policy)
+        if through != "generated_integrity" or prefix != [
+            {"operation": "generated_integrity"}
+        ]:
+            raise ConfigurationError(
+                "--through requires the shared generated_integrity prefix"
+            )
+        stages = self._profile_stages(name, requested)
+        if not stages or stages[0].operation != through:
+            raise ConfigurationError("generated integrity must be the first stage")
+        return self._run_profile_stages(name, stages[:1])
+
+    def _run_profile_stages(
+        self,
+        name: str,
+        stages: Sequence[ProfileStage],
+        *,
+        progress: ProfileProgress | None = None,
+        preflight: Callable[[], None] | None = None,
+        source_snapshotter: SourceSnapshotter | None = None,
+    ) -> list[OperationResult]:
         results: list[OperationResult] = []
+        try:
+            frozen_source = dict(source_snapshotter()) if source_snapshotter else {}
+        except (OSError, ValueError, TypeError) as error:
+            raise ConfigurationError(
+                f"cannot establish frozen certification source: {error}"
+            ) from error
         if progress is not None:
             progress.profile_started(len(stages))
         for ordinal, stage in enumerate(stages, start=1):
+            if ordinal == 2 and preflight is not None:
+                # Stage 1 is the complete check-only artifact gate. A failed
+                # gate already broke the loop, so stale candidates cannot
+                # reach runtime compilation or any later operation.
+                preflight()
+                if source_snapshotter is not None:
+                    try:
+                        changed = self._source_drift(frozen_source, source_snapshotter)
+                    except (OSError, ValueError, TypeError) as error:
+                        raise ConfigurationError(
+                            "cannot verify frozen source after preflight; "
+                            f"stage {stage.operation} was not executed: {error}"
+                        ) from error
+                    if changed:
+                        raise ConfigurationError(
+                            "preflight changed frozen certification source; "
+                            f"stage {stage.operation} was not executed: "
+                            + ", ".join(changed)
+                        )
             timing = (
                 progress.stage_started(
                     ordinal=ordinal,
@@ -1543,13 +1753,56 @@ class QualityRunner:
                 else:
                     assert stage.target is not None
                     result = self.run_leaf(stage.operation, stage.target)
+                if source_snapshotter is not None:
+                    snapshot_error = None
+                    try:
+                        changed = self._source_drift(frozen_source, source_snapshotter)
+                    except (OSError, ValueError, TypeError) as error:
+                        changed = []
+                        snapshot_error = str(error)
+                    if changed or snapshot_error is not None:
+                        child = {
+                            "status": result.status,
+                            "exit_code": result.exit_code,
+                            "reason": result.reason,
+                            "stdout": result.stdout,
+                            "stderr": result.stderr,
+                        }
+                        # The child receipt and any authenticated artifact stay
+                        # untouched. Only this parent stage's integrity claim
+                        # fails; keep the observed child facts reconstructible.
+                        integrity = dict(result.execution_integrity or {})
+                        integrity["profile_source_guard"] = {
+                            "status": "failed",
+                            "changed_paths": changed,
+                            "snapshot_error": snapshot_error,
+                            "observed_child": child,
+                        }
+                        result.execution_integrity = integrity
+                        result.status = "failed"
+                        result.reason = (
+                            "frozen certification source changed: " + ", ".join(changed)
+                            if changed
+                            else "cannot verify frozen certification source: "
+                            + str(snapshot_error)
+                        )
             except BaseException:
                 if progress is not None and timing is not None:
                     progress.stage_terminal(timing, "failed")
                 raise
             results.append(result)
             if progress is not None and timing is not None:
-                progress.stage_terminal(timing, result.status)
+                try:
+                    progress.stage_terminal(timing, result.status)
+                except ConfigurationError as error:
+                    if (
+                        not stages
+                        or stages[0].operation != "generated_integrity"
+                        or progress.destination_guard is None
+                    ):
+                        raise
+                    _fail_profile_receipt(result, error)
+                    progress.close()
             if result.status in ("failed", "unavailable", "incomplete"):
                 break
         return results
@@ -1606,6 +1859,21 @@ class QualityRunner:
                         )
                     else:
                         status = str(parsed_status)
+                        if operation == "generated_integrity" and status not in (
+                            "passed",
+                            "failed",
+                        ):
+                            return OperationResult(
+                                operation=operation,
+                                component=component,
+                                status="incomplete",
+                                command=invocation,
+                                exit_code=execution.returncode,
+                                reason="generated integrity requires passed or failed; it cannot be waived",
+                                structured_result=parsed,
+                                stdout=execution.stdout,
+                                stderr=execution.stderr,
+                            )
                         reason = (
                             None
                             if status in ("passed", "waived")
@@ -1937,6 +2205,28 @@ def _parse_cli(
     )
 
 
+def _parse_profile_prefix(argv: Sequence[str]) -> tuple[list[str], str | None]:
+    """Separate the intentionally non-authoritative prefix diagnostic option."""
+
+    args = list(argv)
+    positions = [index for index, value in enumerate(args) if value == "--through"]
+    if not positions:
+        return args, None
+    if len(positions) != 1:
+        raise ConfigurationError("--through may be specified only once")
+    index = positions[0]
+    if index + 1 >= len(args) or args[index + 1] != "generated_integrity":
+        raise ConfigurationError("--through supports only generated_integrity")
+    if not args or args[0] != PROFILE_OPERATION:
+        raise ConfigurationError("--through is supported only for profile diagnostics")
+    if "--artifact" in args:
+        raise ConfigurationError(
+            "profile diagnostics cannot write certification artifacts"
+        )
+    del args[index : index + 2]
+    return args, "generated_integrity"
+
+
 def _overall_exit(results: Iterable[OperationResult], single: bool) -> int:
     failures = [
         result
@@ -2045,7 +2335,11 @@ def _render_human(
             print(f"  {component}: {', '.join(operations)}")
 
 
-def _render_profile_failure_details(results: Sequence[OperationResult]) -> None:
+def _render_profile_failure_details(
+    results: Sequence[OperationResult],
+    *,
+    destination_guard: Callable[[Path], None] | None = None,
+) -> None:
     """Expose bounded child output when an aggregate profile fails."""
 
     for result in results:
@@ -2062,15 +2356,24 @@ def _render_profile_failure_details(results: Sequence[OperationResult]) -> None:
             if len(content) > PROFILE_FAILURE_OUTPUT_LIMIT:
                 try:
                     output_directory = PROFILE_FAILURE_OUTPUT_ROOT / uuid.uuid4().hex
-                    output_directory.mkdir(parents=True, exist_ok=False)
                     output_path = output_directory / f"{label}.txt"
+                    if destination_guard is not None:
+                        destination_guard(output_path)
+                    output_directory.mkdir(parents=True, exist_ok=False)
+                    if destination_guard is not None:
+                        destination_guard(output_path)
                     retained = atomic_write_stream(output_path, content)
                     print(
                         f"\n{identity} full {label}: {output_path} "
                         f"(sha256={retained['sha256']}, bytes={retained['bytes']})",
                         file=stream,
                     )
-                except (OSError, StructuredExecutionError) as error:
+                except (OSError, StructuredExecutionError, ConfigurationError) as error:
+                    if (
+                        isinstance(error, ConfigurationError)
+                        and destination_guard is None
+                    ):
+                        raise
                     print(
                         f"\n{identity} full {label} preservation failed: {error}",
                         file=stream,
@@ -2096,6 +2399,10 @@ def _print_help() -> None:
     print(
         "       ./strling profile <local|pull-request|full|release> "
         "[component|all] [--json] [--artifact PATH]"
+    )
+    print(
+        "       ./strling profile <local|pull-request|full|release> "
+        "--through generated_integrity [--json]  (non-authoritative diagnostic)"
     )
     print("")
     print(
@@ -2144,30 +2451,165 @@ def _profile_progress_path(
     return resolved, relative.as_posix()
 
 
+def _profile_output_guard(root: Path) -> Callable[[Path], None]:
+    """Constrain receipts, never source, governed outputs, or Git authority."""
+
+    from generated_artifacts import RegistryError, load_registry
+
+    try:
+        registry = load_registry(
+            root / "governance/generated-artifacts.json",
+            root / "governance/schemas/generated-artifact-registry.schema.json",
+        )
+    except (OSError, RegistryError) as error:
+        raise ConfigurationError(
+            f"cannot guard certification receipt paths: {error}"
+        ) from error
+    governed = [
+        pattern for family in registry["artifacts"] for pattern in family["outputs"]
+    ]
+    governed.extend(registry.get("inventory", {}).get("governed_output_patterns", []))
+    repository = root.resolve()
+    readonly_environment = {**os.environ, "GIT_OPTIONAL_LOCKS": "0"}
+
+    def git(*arguments: str) -> subprocess.CompletedProcess[str]:
+        try:
+            return subprocess.run(
+                ["git", *arguments],
+                cwd=repository,
+                env=readonly_environment,
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+        except OSError as error:
+            raise ConfigurationError(
+                f"cannot guard certification receipt paths: {error}"
+            ) from error
+
+    def guard(path: Path) -> None:
+        absolute = Path(os.path.abspath(path))
+        try:
+            resolved = absolute.resolve()
+            if absolute.is_symlink() or resolved != absolute:
+                raise ConfigurationError(f"unsafe certification receipt alias: {path}")
+            for parent in absolute.parents:
+                if parent.exists() and not parent.is_dir():
+                    raise ConfigurationError(
+                        f"unsafe certification receipt parent: {path}"
+                    )
+            if absolute.exists() and (
+                not absolute.is_file() or absolute.stat().st_nlink != 1
+            ):
+                raise ConfigurationError(f"unsafe certification receipt file: {path}")
+        except (OSError, RuntimeError) as error:
+            raise ConfigurationError(
+                f"cannot resolve certification receipt path: {path}: {error}"
+            ) from error
+        authority_roots = [repository / ".git"]
+        for argument in ("--git-dir", "--git-common-dir"):
+            result = git("rev-parse", argument)
+            if result.returncode or not result.stdout.strip():
+                raise ConfigurationError(
+                    "cannot inspect Git authority for certification receipt"
+                )
+            authority_roots.append((repository / result.stdout.strip()).resolve())
+        if any(
+            resolved == authority or resolved.is_relative_to(authority)
+            for authority in authority_roots
+        ):
+            raise ConfigurationError(
+                f"certification receipt targets Git authority: {path}"
+            )
+        if not resolved.is_relative_to(repository):
+            return
+        relative = resolved.relative_to(repository).as_posix()
+        if any(fnmatch.fnmatch(relative, pattern) for pattern in governed):
+            raise ConfigurationError(
+                f"certification receipt targets governed output: {path}"
+            )
+        tracked = git("ls-files", "--error-unmatch", "--", relative)
+        if tracked.returncode == 0:
+            raise ConfigurationError(
+                f"certification receipt targets tracked source: {path}"
+            )
+        if tracked.returncode != 1:
+            raise ConfigurationError(
+                "cannot classify certification receipt against tracked source"
+            )
+        ignored = git("check-ignore", "--quiet", "--no-index", "--", relative)
+        if ignored.returncode != 0:
+            reason = (
+                "nonignored source"
+                if ignored.returncode == 1
+                else "unclassifiable source"
+            )
+            raise ConfigurationError(f"certification receipt targets {reason}: {path}")
+
+    return guard
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     progress: ProfileProgress | None = None
+    destination_guard: Callable[[Path], None] | None = None
     try:
+        parsed_argv, through = _parse_profile_prefix(argv)
         (
             operation,
             requested,
             json_output,
             requested_profile,
             artifact_output,
-        ) = _parse_cli(argv)
+        ) = _parse_cli(parsed_argv)
         if operation == "help":
             _print_help()
             return 0
         root = Path(__file__).resolve().parent.parent
         toolchain = Toolchain.load(root / "toolchain.json")
         runner = QualityRunner(toolchain)
+        if through is not None:
+            assert requested_profile is not None
+            results = runner.run_profile_prefix(
+                requested_profile, requested, through=through
+            )
+            exit_code = _profile_exit(results)
+            payload = {
+                "operation": "profile-prefix",
+                "profile": requested_profile,
+                "through": through,
+                "evidence_role": "diagnostic-only",
+                "authoritative": False,
+                "profile_complete": False,
+                "status": _profile_status(results),
+                "exit_code": exit_code,
+                "results": [result.as_dict() for result in results],
+            }
+            if json_output:
+                print(json.dumps(payload, sort_keys=True))
+            else:
+                print(
+                    f"Diagnostic {requested_profile} prefix through {through}: "
+                    f"{payload['status']} (not a certification profile result)"
+                )
+                _render_human("profile-prefix", results, [])
+            return exit_code
         selected_profile: str | None = None
+        profile_preflight: Callable[[], None] | None = None
         if operation in AGGREGATE_OPERATIONS:
             selected_profile = toolchain.aggregate_profile(operation)
         elif operation == PROFILE_OPERATION:
             assert requested_profile is not None
             selected_profile = requested_profile
-            _preflight_profile_environment(selected_profile)
+            prefix = profile_prefix(toolchain.policy)
+            if prefix and prefix[0]["operation"] == "generated_integrity":
+
+                def profile_preflight() -> None:
+                    _preflight_profile_environment(requested_profile)
+
+            else:
+                _preflight_profile_environment(selected_profile)
         if selected_profile is not None:
             source = repository_state(root)
             source_sha = source["commit"]
@@ -2178,6 +2620,12 @@ def main(argv: Sequence[str] | None = None) -> int:
                 source_sha=source_sha,
                 artifact_output=artifact_output,
             )
+            prefix = profile_prefix(toolchain.policy)
+            if prefix and prefix[0]["operation"] == "generated_integrity":
+                destination_guard = _profile_output_guard(root)
+                if artifact_output is not None:
+                    destination_guard(Path(artifact_output))
+                destination_guard(ledger_path)
             progress = ProfileProgress(
                 profile=selected_profile,
                 source=source,
@@ -2185,18 +2633,40 @@ def main(argv: Sequence[str] | None = None) -> int:
                 display_path=display_path,
                 stream=sys.stderr if json_output else sys.stdout,
                 heartbeat_enabled=selected_profile in ("local", "pull-request"),
+                **(
+                    {"destination_guard": destination_guard}
+                    if destination_guard is not None
+                    else {}
+                ),
             )
-            results = runner.run_profile(
-                selected_profile,
-                requested,
-                progress=progress,
-            )
+            if profile_preflight is None:
+                results = runner.run_profile(
+                    selected_profile,
+                    requested,
+                    progress=progress,
+                )
+            else:
+                results = runner.run_profile(
+                    selected_profile,
+                    requested,
+                    progress=progress,
+                    preflight=profile_preflight,
+                )
         elif operation == ENVIRONMENT_OPERATION:
             results = runner.run_environment(requested)
         else:
             results = runner.run_operation(operation, requested)
 
         if selected_profile is not None:
+            if destination_guard is not None:
+                assert progress is not None
+                try:
+                    progress.profile_terminal(_profile_status(results))
+                except ConfigurationError as error:
+                    if not results:
+                        raise
+                    _fail_profile_receipt(results[-1], error)
+                    progress.close()
             exit_code = _profile_exit(results)
             status = _profile_status(results)
             artifact = build_certification_artifact(
@@ -2209,15 +2679,23 @@ def main(argv: Sequence[str] | None = None) -> int:
                 exit_code=exit_code,
             )
             if artifact_output is not None:
+                if destination_guard is not None:
+                    destination_guard(Path(artifact_output))
                 write_certification_artifact(Path(artifact_output), artifact)
             assert progress is not None
-            progress.profile_terminal(status)
+            if destination_guard is None:
+                progress.profile_terminal(status)
             if json_output:
                 print(json.dumps(artifact, sort_keys=True))
             else:
                 print(render_certification_summary(artifact))
                 if exit_code:
-                    _render_profile_failure_details(results)
+                    if destination_guard is None:
+                        _render_profile_failure_details(results)
+                    else:
+                        _render_profile_failure_details(
+                            results, destination_guard=destination_guard
+                        )
             return exit_code
 
         exit_code = _overall_exit(results, len(results) == 1)
@@ -2236,12 +2714,20 @@ def main(argv: Sequence[str] | None = None) -> int:
         return exit_code
     except (CertificationError, ConfigurationError) as exc:
         if progress is not None:
-            progress.profile_terminal("failed")
+            try:
+                progress.profile_terminal("failed")
+            except ConfigurationError:
+                # An unsafe ledger may not receive even a failed terminal
+                # record. The original failure remains fatal and observable.
+                progress.close()
         print(f"Error: {exc}", file=sys.stderr)
         return 2
     except BaseException:
         if progress is not None:
-            progress.profile_terminal("failed")
+            try:
+                progress.profile_terminal("failed")
+            except ConfigurationError:
+                progress.close()
         raise
 
 

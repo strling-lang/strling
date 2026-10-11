@@ -11,6 +11,7 @@ from unittest import mock
 from jsonschema import ValidationError
 
 from tooling import adversarial_semantic_audit as audit
+from tooling.profile_composition import resolve_profiles
 
 
 class AdversarialCorpusTests(unittest.TestCase):
@@ -482,6 +483,7 @@ class AdversarialEvidenceTests(unittest.TestCase):
 
     def test_registered_zero_finding_check_is_in_mandatory_profiles(self):
         toolchain = audit.load_json(audit.ROOT / "toolchain.json")
+        profiles = resolve_profiles(toolchain["policy"])
         generated = audit.load_json(audit.ROOT / "governance/generated-artifacts.json")
         family = next(
             item
@@ -499,26 +501,18 @@ class AdversarialEvidenceTests(unittest.TestCase):
             family["verification"]["command"],
         )
         for profile in ("local", "pull-request"):
-            operations = {
-                step["operation"]
-                for step in toolchain["policy"]["profiles"][profile]["operations"]
-            }
+            operations = {step["operation"] for step in profiles[profile]["operations"]}
             self.assertIn("generate_check", operations)
         pull_request_operations = {
-            step["operation"]
-            for step in toolchain["policy"]["profiles"]["pull-request"]["operations"]
+            step["operation"] for step in profiles["pull-request"]["operations"]
         }
         local_operations = {
-            step["operation"]
-            for step in toolchain["policy"]["profiles"]["local"]["operations"]
+            step["operation"] for step in profiles["local"]["operations"]
         }
         self.assertIn("adversarial_real_engine_equivalence", pull_request_operations)
         self.assertNotIn("adversarial_real_engine_equivalence", local_operations)
         for profile in ("full", "release"):
-            operations = {
-                step["operation"]
-                for step in toolchain["policy"]["profiles"][profile]["operations"]
-            }
+            operations = {step["operation"] for step in profiles[profile]["operations"]}
             self.assertIn("adversarial_real_engine_equivalence", operations)
         self.assertEqual(
             [

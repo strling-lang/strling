@@ -145,9 +145,10 @@ declared repository.
 Before starting a Pull Request profile, export and validate the complete
 handoff. The preflight verifies both PCRE2 libraries, Node, CPython, the Maven
 repository's governed JVM artifacts, and an offline Maven compile. The profile
-entrypoint repeats this preflight before executing its first registered
-operation, so missing or mismatched inputs cannot surface only at the end of a
-long run.
+entrypoint repeats this preflight after the shared generated-artifact integrity
+gate passes and before the second registered operation. Stale generated state
+therefore fails before even the offline Maven compile, while missing or
+mismatched runtime inputs still fail before the remaining profile work.
 
 ```bash
 eval "$(python3 -m tooling.exact_runtime_provision --print-pull-request-env)"
@@ -213,7 +214,8 @@ The permanent root vocabulary is:
 ./strling typecheck [component|all]
 ./strling build [component|all]
 ./strling test [component|all]
-./strling generate [--check] [--json]
+./strling generate --check [--complete] [--json]
+./strling generate --prepare [--json]
 ./strling contracts [--check] [--json]
 ./strling governance [--json]
 ./strling check [component|all] [--json] [--artifact path]
@@ -226,6 +228,68 @@ canonical operation registry. Each entry identifies either a component
 capability or one repository-wide command, declares whether it may use the
 network, and, where applicable, names its structured result contract. Profile
 membership never reimplements an operation.
+
+### Candidate preparation and immutable generated-state gate
+
+Before freezing a candidate, use `./strling generate --prepare --json`. The
+complete registry inventory is checked first. Stale ordinary deterministic
+families alone may use their registered canonical generators. Preparation
+rejects undeclared output changes, source or Git-authority mutation, and changes
+to protected evidence or locks; it reports the exact changed paths. It repeats
+generation to prove byte/mode idempotence, rechecks the complete inventory, and
+runs each repaired family's declared direct dependents. Existing unrelated
+dirty work is preserved. Review the report and diff, commit authorized changes,
+then require a clean engineering SHA and a green complete check before freeze.
+
+`policy.profile_prefix` composes the shared `generated_integrity` operation
+first in Local, Pull Request, Full and Release. Its only command is the
+complete **check**, never preparation. It includes the registered disposable
+Lua rockspec and LSP payload: their early integrity commands are read-only and
+do not invoke their later deep package certification. An LSP payload binds the
+exact source SHA, timestamp and full registered input identities, so an
+engineering commit requires canonical assembly before that SHA can pass the
+gate. Certification never repairs a stale frozen candidate.
+
+The inventory declares all 35 required families independently of individual
+entries, their governed output patterns, and closed generated directories.
+This detects removed families, missing/malformed/stale outputs, undeclared
+generated siblings, and tracked/nonignored unmanaged locks. It is a closed
+governed census, not universal inference about every file. Ignored historical
+verifier/Release copies and dependency caches are not current candidates;
+the explicitly retained `tests/spec/**` archaeology remains non-current history.
+
+Performance baselines/calibrations, historical certification evidence,
+network-authenticated license evidence, and locks cannot be automatically
+regenerated. The lockfile family uses deterministic, read-only verification of
+16 reviewed lock identities, 20 complete manifest identities, the security
+policy identity, and native dependency integrity. Its separately reviewed
+catalog is input authority, not generated output or package-manager
+reproduction evidence. Even a non-graph manifest edit conservatively requires
+explicit catalog review. Intentional dependency changes still require the
+owning manager's governed refresh and review, never automatic rebaselining.
+Performance-artifact verification calls only the pure offline contract
+validator and creates no authenticated performance evidence.
+
+The complete check runs all static family verifiers before the registered
+build-backed contract extractor, preserving every family command and check.
+Snapshot reads retain every content/mode hash with at most eight pending
+reads, without caches or stat-only freshness shortcuts. Normal certification
+compares frozen source and Git authority after runtime preflight and every
+operation. Lua setup consumes the checked rockspec; LSP build reconstructs an
+isolated payload and checks byte/logical-mode equality without changing the
+prepared payload. Receipt destinations cannot overwrite source, governed
+outputs, or Git authority.
+
+For a sample-free diagnostic that stops at the gate, use:
+
+```text
+./strling profile local --through generated_integrity --json
+```
+
+The same diagnostic boundary works for the other explicit profiles. It is
+marked `profile-prefix`, non-authoritative and incomplete as a profile, and
+cannot write a certification artifact or progress ledger. No subsequent build,
+deep-quality, readiness, calibration or performance operation executes.
 
 Every profile emits flushed, timezone-aware progress before and after each
 registered result ID. When `--artifact` is supplied, the runner writes the same

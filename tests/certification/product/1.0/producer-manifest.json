@@ -74,6 +74,13 @@
     ],
     "producers": [
         {
+            "operation_id": "generated_integrity",
+            "evidence_area": "repository-quality",
+            "requirement": "required",
+            "result_contract": "certification-result-v1",
+            "structured_operation_id": "certification.generated-artifact-integrity"
+        },
+        {
             "operation_id": "security_dependency_integrity",
             "evidence_area": "security-provenance",
             "requirement": "required",

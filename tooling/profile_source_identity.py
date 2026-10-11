@@ -24,6 +24,9 @@ operation_registry_fingerprint = _certification.operation_registry_fingerprint
 profile_definition_fingerprint = _certification.profile_definition_fingerprint
 profile_registry_fingerprint = _certification.profile_registry_fingerprint
 repository_state = _certification.repository_state
+_profile_composition = importlib.import_module(
+    "tooling.profile_composition" if __package__ else "profile_composition"
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -211,7 +214,10 @@ def derive_definition_bundle(*, root: Path = ROOT) -> dict[str, object]:
     policy = toolchain.get("policy")
     if not isinstance(policy, dict):
         raise ProfileSourceIdentityError("toolchain.json has no policy object")
-    profiles = policy.get("profiles")
+    try:
+        profiles = _profile_composition.resolve_profiles(policy)
+    except _profile_composition.ProfileCompositionError as error:
+        raise ProfileSourceIdentityError(str(error)) from error
     operations = policy.get("operation_registry")
     if not isinstance(profiles, dict) or not isinstance(operations, dict):
         raise ProfileSourceIdentityError(

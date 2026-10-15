@@ -6,9 +6,11 @@ from __future__ import annotations
 import argparse
 import ast
 import json
+import os
 import re
 import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -232,10 +234,17 @@ def parse_name_status(data: bytes) -> list[Change]:
     return changes
 
 
-def git_output(root: Path, arguments: Sequence[str]) -> bytes:
+def git_output(
+    root: Path, arguments: Sequence[str], *, index_file: Path | None = None
+) -> bytes:
     completed = subprocess.run(
         ["git", *arguments],
         cwd=root,
+        env=(
+            {**os.environ, "GIT_INDEX_FILE": str(index_file)}
+            if index_file is not None
+            else None
+        ),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         check=False,
@@ -254,10 +263,37 @@ def collect_changes(root: Path, base: str, head: str) -> list[Change]:
     git_output(root, ["cat-file", "-e", f"{comparison_head}^{{commit}}"])
     git_output(root, ["merge-base", "--is-ancestor", base, comparison_head])
 
-    arguments = ["diff", "--name-status", "-z", "--find-renames", base]
+    # Porcelain diff refreshes the index to suppress stat-only false changes.
+    # Let Git refresh a private copy, never the candidate's authority node.
+    arguments = [
+        "-c",
+        "diff.autoRefreshIndex=true",
+        "-c",
+        "core.splitIndex=false",
+        "diff",
+        "--name-status",
+        "-z",
+        "--find-renames",
+        base,
+    ]
     if head != "working-tree":
         arguments.append(head)
-    data = git_output(root, arguments)
+    if head == "working-tree":
+        index_path = Path(
+            decode_git_path(
+                git_output(root, ["rev-parse", "--git-path", "index"]).strip()
+            )
+        )
+        if not index_path.is_absolute():
+            index_path = root / index_path
+        with tempfile.TemporaryDirectory(
+            prefix="strling-governance-diff-"
+        ) as directory:
+            private_index = Path(directory) / "index"
+            private_index.write_bytes(index_path.read_bytes())
+            data = git_output(root, arguments, index_file=private_index)
+    else:
+        data = git_output(root, arguments)
     changes = parse_name_status(data)
     if head == "working-tree":
         untracked = git_output(

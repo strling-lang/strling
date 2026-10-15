@@ -1,5 +1,44 @@
 # Architecture Migration Ledger
 
+## H08 read-only governance index isolation (engineering, not certification)
+
+Frozen `66e4288b0154648fac13cb35f670b06e4624e440` failed Local after 13 of
+38 operations: 12 PASS and one governance parent source-guard FAIL. The actual
+governance child exited zero; the parent correctly rejected `@git/index` node
+replacement. The failure remains consumed, not retried or reclassified. PR,
+Full and Release did not start; authenticated performance samples were zero.
+The early complete35-family integrity operation passed on that frozen source.
+Local artifact SHA256 `54ea6546171f8a06f062760605f9d38c444f692e86be7272b4135cb7335ddb8d`
+and terminal `37d3151a0979c1437a0c65015571108d6367fe05d37b1e93dafe6f8cc0286436`
+are preserved.
+
+Atomic governance reproduction `e795f6a22490ca98ac64bb57f49b46b8cc825d641af2b10b682e02ebec8cc4aa`
+captures identical index bytes, staged entries and debug views, but a replaced
+inode. Git trace identifies governance's porcelain diff refreshing the index;
+`GIT_OPTIONAL_LOCKS=0` did not prevent this. Disabling `diff.autoRefreshIndex`
+alone failed two native and WSL regressions by reporting stat-only files as
+modified; that draft is rejected. The correction lets Git perform its normal
+content-aware diff against a private byte-copy of the selected index, disabling
+split-index output only for that invocation. The real index, configuration,
+refs and all existing strict source/node/mode/byte guards remain unchanged.
+
+Seven focused real-Git tests pass natively and in WSL, covering repeated
+stat-only comparison, staged/unstaged/rename/delete/untracked changes, committed
+comparison, invalid ancestry, missing index, alternate index and split-index
+preservation. Two complete isolated WSL repetitions pass all 207 tests each,
+with zero failures, errors or skips. Initial workspace-local scratch made nine
+non-Git architecture fixtures discover the parent repository; that failed
+207-case run (196 PASS, nine FAIL, two skips) is preserved as `a22e6dca…`.
+All nine exact failures pass in outside-checkout scratch with unchanged product
+and assertions. Corrected validation terminal
+`8a63fef9e41f37edc8fe0457511d9993373b503373bd4fc10852f5d14cc64244`
+also records the real atomic governance PASS: all four checks and 33 architecture
+rules pass, with identical full source and index-authority fingerprints.
+No registered generated family matches these source paths; the next
+candidate still requires fresh complete35 preparation, direct prerequisites and
+all real campaigns. H08 remains OPEN; no performance, signing, trust promotion
+or closure is inferred from this engineering correction.
+
 ## H08 original-conditioner controller bootstrap (engineering, not certification)
 
 The one-use `71762cf2…` reference calibration failed: Simply-tiny request and

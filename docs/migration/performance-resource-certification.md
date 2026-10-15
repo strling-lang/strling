@@ -6,6 +6,36 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Read-only governance index isolation
+
+The frozen `66e4288b0154648fac13cb35f670b06e4624e440` Local attempt failed its
+parent source guard after 13/38 operations (12 PASS, one FAIL). Governance itself
+exited zero, but its porcelain Git diff replaced the real index node. Atomic
+diagnostic terminal `e795f6a22490ca98ac64bb57f49b46b8cc825d641af2b10b682e02ebec8cc4aa`
+retains before/after raw index, staged/debug views and Git trace: bytes and
+staged entries are identical, inode identity is not. This is a certification
+read-only-operation defect, not a product performance result or permission to
+ignore node replacement. The failed Local artifact and receipt remain consumed;
+no PR/Full/Release or authenticated performance sample followed it.
+
+The correction gives the normal content-aware diff a private byte-copy of the
+selected index, with invocation-local split-index output disabled. Git may
+refresh that disposable copy, never the real candidate authority. Disabling
+automatic refresh alone was rejected by tests because it falsely reported
+stat-only changes. Seven real-Git focused tests pass natively and in WSL.
+Two complete isolated WSL repetitions pass all 207 tests each without failures,
+errors or skips; real atomic governance passes all four checks and 33 architecture
+rules with unchanged canonical source/index fingerprints. Corrected validation
+terminal SHA256 is `8a63fef9e41f37edc8fe0457511d9993373b503373bd4fc10852f5d14cc64244`.
+The initial aggregate failure `a22e6dca…` remains retained: workspace-local
+scratch caused non-Git fixtures to discover the real parent repository. All nine
+failed tests pass outside that ancestry without product/assertion changes.
+Existing source,
+staging, ref, mode, byte and node-identity guards are not changed. All performance
+authority, samples, budgets, conditioning, security and verifier pins remain
+unchanged. A new clean artifact-gated source and complete campaigns are still
+required; H08 remains OPEN.
+
 ## Original-conditioner controller bootstrap
 
 The one-use fresh-reference attempt at `71762cf2…` terminated with

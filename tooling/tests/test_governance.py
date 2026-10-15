@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -9,6 +11,7 @@ from tooling.governance import (
     Change,
     Exemption,
     GovernanceError,
+    collect_changes,
     evaluate_architecture,
     load_json,
     load_yaml,
@@ -69,6 +72,157 @@ class PathMatchingTests(unittest.TestCase):
         )
         self.assertEqual(("tooling/architecture_fitness.py",), changes[0].paths)
         self.assertEqual(("old/name.py", "new/name.py"), changes[1].paths)
+
+
+class ReadOnlyChangeCollectionTests(unittest.TestCase):
+    def setUp(self) -> None:
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+        self.environment = {**os.environ, "GIT_OPTIONAL_LOCKS": "0"}
+        self.git("init", "--initial-branch=fixture")
+        self.git("config", "core.autocrlf", "false")
+        self.git("config", "diff.autoRefreshIndex", "true")
+        for name in ("stat-only", "staged", "unstaged", "deleted", "old-name"):
+            (self.root / name).write_text(f"original {name}\n", encoding="utf-8")
+        self.git("add", "--all")
+        self.commit("baseline")
+        self.base = self.git("rev-parse", "HEAD").decode().strip()
+
+    def git(self, *arguments: str) -> bytes:
+        return subprocess.run(
+            ["git", *arguments],
+            cwd=self.root,
+            env=self.environment,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True,
+        ).stdout
+
+    def commit(self, message: str) -> None:
+        self.git(
+            "-c",
+            "user.name=Governance fixture",
+            "-c",
+            "user.email=fixture@example.invalid",
+            "-c",
+            "commit.gpgsign=false",
+            "commit",
+            "-m",
+            message,
+        )
+
+    def index_identity(self) -> tuple[int, int, int, bytes]:
+        index = self.root / ".git/index"
+        metadata = index.lstat()
+        return metadata.st_mode, metadata.st_dev, metadata.st_ino, index.read_bytes()
+
+    def invalidate_cached_stat(self) -> None:
+        path = self.root / "stat-only"
+        metadata = path.stat()
+        os.utime(
+            path,
+            ns=(metadata.st_atime_ns, metadata.st_mtime_ns + 2_000_000_000),
+        )
+
+    def collect_read_only(self, head: str) -> list[Change]:
+        before = self.index_identity()
+        config = (self.root / ".git/config").read_bytes()
+        with mock.patch.dict(os.environ, self.environment):
+            changes = collect_changes(self.root, self.base, head)
+        self.assertEqual(before, self.index_identity())
+        self.assertEqual(config, (self.root / ".git/config").read_bytes())
+        self.assertEqual(b"true\n", self.git("config", "diff.autoRefreshIndex"))
+        return changes
+
+    def test_stat_only_drift_is_not_a_change_and_never_refreshes_index(self) -> None:
+        self.invalidate_cached_stat()
+        for _ in range(3):
+            self.assertEqual([], self.collect_read_only("working-tree"))
+
+    def test_working_tree_collection_retains_every_real_change_kind(self) -> None:
+        (self.root / "staged").write_text("changed staged\n", encoding="utf-8")
+        self.git("add", "staged")
+        (self.root / "unstaged").write_text("changed unstaged\n", encoding="utf-8")
+        (self.root / "deleted").unlink()
+        self.git("mv", "old-name", "new-name")
+        (self.root / "untracked").write_text("untracked\n", encoding="utf-8")
+        self.invalidate_cached_stat()
+        expected = {
+            Change("M", None, "staged"),
+            Change("M", None, "unstaged"),
+            Change("D", "deleted", None),
+            Change("R100", "old-name", "new-name"),
+            Change("A", None, "untracked"),
+        }
+        for _ in range(3):
+            self.assertEqual(expected, set(self.collect_read_only("working-tree")))
+
+    def test_commit_comparison_excludes_working_tree_and_preserves_index(self) -> None:
+        self.git("mv", "old-name", "new-name")
+        (self.root / "staged").write_text("committed change\n", encoding="utf-8")
+        (self.root / "deleted").unlink()
+        (self.root / "added").write_text("committed addition\n", encoding="utf-8")
+        self.git("add", "--all")
+        self.commit("changes")
+        (self.root / "unstaged").write_text("uncommitted\n", encoding="utf-8")
+        (self.root / "untracked").write_text("untracked\n", encoding="utf-8")
+        self.invalidate_cached_stat()
+        self.assertEqual(
+            {
+                Change("M", None, "staged"),
+                Change("D", "deleted", None),
+                Change("R100", "old-name", "new-name"),
+                Change("A", None, "added"),
+            },
+            set(self.collect_read_only("HEAD")),
+        )
+
+    def test_invalid_or_nonancestor_base_is_still_rejected(self) -> None:
+        with self.assertRaises(GovernanceError):
+            collect_changes(self.root, "missing-revision", "working-tree")
+        self.git("checkout", "--orphan", "unrelated")
+        self.git("add", "--all")
+        self.commit("unrelated root")
+        with self.assertRaises(GovernanceError):
+            collect_changes(self.root, self.base, "working-tree")
+
+    def test_split_index_authority_is_preserved(self) -> None:
+        self.git("update-index", "--split-index")
+        shared = {
+            path: (path.stat().st_ino, path.read_bytes())
+            for path in (self.root / ".git").glob("sharedindex.*")
+        }
+        self.assertTrue(shared)
+        self.invalidate_cached_stat()
+        self.assertEqual([], self.collect_read_only("working-tree"))
+        self.assertEqual(
+            shared,
+            {
+                path: (path.stat().st_ino, path.read_bytes())
+                for path in (self.root / ".git").glob("sharedindex.*")
+            },
+        )
+
+    def test_selected_alternate_index_is_copied_not_replaced_or_ignored(self) -> None:
+        alternate = self.root / ".git/alternate-index"
+        alternate.write_bytes((self.root / ".git/index").read_bytes())
+        self.environment["GIT_INDEX_FILE"] = str(alternate)
+        (self.root / "staged").write_text("alternate staged\n", encoding="utf-8")
+        self.git("add", "staged")
+        self.invalidate_cached_stat()
+        before = alternate.stat().st_ino, alternate.read_bytes()
+        self.assertEqual(
+            [Change("M", None, "staged")], self.collect_read_only("working-tree")
+        )
+        self.assertEqual(before, (alternate.stat().st_ino, alternate.read_bytes()))
+
+    def test_missing_index_is_not_silently_replaced_with_an_empty_index(self) -> None:
+        index = self.root / ".git/index"
+        index.rename(self.root / ".git/retained-index")
+        with self.assertRaises(OSError):
+            self.collect_read_only("working-tree")
+        self.assertFalse(index.exists())
 
 
 class ScopeValidationTests(unittest.TestCase):

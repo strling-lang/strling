@@ -11,7 +11,7 @@ import sys
 import tempfile
 import unittest
 from collections import Counter
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 from unittest.mock import patch
 
@@ -1238,8 +1238,14 @@ class LocalCertificationAttestationTests(unittest.TestCase):
 
     def test_expired_signed_waiver_is_rejected(self) -> None:
         self._add_scoped_waiver()
+        waiver = yaml.safe_load(
+            (
+                self.repository / "governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml"
+            ).read_text()
+        )
+        expiry = date.fromisoformat(waiver["retirement"]["expires_on"])
         with patch("tooling.security.date", wraps=date) as today:
-            today.today.return_value = date(2026, 10, 12)
+            today.today.return_value = expiry + timedelta(days=1)
             with self.assertRaisesRegex(AttestationError, "SEC-WAIVER-EXPIRED"):
                 self._verify()
 

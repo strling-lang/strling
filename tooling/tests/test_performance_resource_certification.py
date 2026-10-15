@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import ast
 import io
 import json
 import os
@@ -87,6 +88,7 @@ from tooling.performance_resource_certification import (
     sample_statistics,
     validate_baseline,
     validate_conditioning_cpu_migration,
+    validate_conditioner_source_transition,
     validate_evidence,
     validate_environment_rollover,
     validate_cli_launch_control_environment_rollover,
@@ -2663,6 +2665,134 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 expected_os_build="26200.9278",
             )
         self.assertEqual(raised.exception.code, "rollover-regression")
+
+    def test_conditioner_source_transition_is_exact_not_activation(self) -> None:
+        prior = load_json(BASELINE_PATH)["environment"]
+        observed = copy.deepcopy(prior)
+        old_source = subprocess.check_output(
+            [
+                "git",
+                "show",
+                "9d36da894c826cf2331d43fb413c3bb0b34db08e:tooling/performance_windows.py",
+            ]
+        )
+        new_source = (
+            BASELINE_PATH.parents[4] / "tooling/performance_windows.py"
+        ).read_bytes()
+        conditioning = observed["host_attestation"]["conditioning"]
+        conditioning["executable_sha256"] = file_fingerprint(
+            BASELINE_PATH.parents[4] / "tooling/performance_windows.py"
+        )
+        attestation = observed["host_attestation"]
+        attestation["attestation_fingerprint"] = document_fingerprint(
+            attestation, "attestation_fingerprint"
+        )
+        observed["host_attestation_fingerprint"] = attestation[
+            "attestation_fingerprint"
+        ]
+        preserved = copy.deepcopy((prior, observed))
+        report = validate_conditioner_source_transition(
+            prior, observed, prior_source=old_source, candidate_source=new_source
+        )
+        self.assertEqual("passed", report["status"])
+        self.assertFalse(report["activation_authorized"])
+        self.assertTrue(report["fresh_independent_reference_required"])
+        self.assertTrue(report["all_prior_effective_ceilings_required"])
+        self.assertFalse(environments_compatible(prior, observed))
+        self.assertEqual(preserved, (prior, observed))
+        for bad_source in (b"", old_source, new_source + b"\n"):
+            with self.assertRaises(PerformanceResourceError):
+                validate_conditioner_source_transition(
+                    prior,
+                    observed,
+                    prior_source=old_source,
+                    candidate_source=bad_source,
+                )
+        for field, value in (
+            ("os_version", "different"),
+            ("selected_logical_cpu", 20),
+            ("python_version", "different"),
+        ):
+            changed = copy.deepcopy(observed)
+            changed[field] = value
+            with self.assertRaises(PerformanceResourceError):
+                validate_conditioner_source_transition(
+                    prior, changed, prior_source=old_source, candidate_source=new_source
+                )
+        changed = copy.deepcopy(observed)
+        changed["host_attestation"]["conditioning"][
+            "maximum_selected_busy_basis_points"
+        ] += 1
+        attestation = changed["host_attestation"]
+        attestation["attestation_fingerprint"] = document_fingerprint(
+            attestation, "attestation_fingerprint"
+        )
+        changed["host_attestation_fingerprint"] = attestation["attestation_fingerprint"]
+        with self.assertRaisesRegex(
+            PerformanceResourceError, "source/policy/CPU binding changed"
+        ):
+            validate_conditioner_source_transition(
+                prior, changed, prior_source=old_source, candidate_source=new_source
+            )
+
+    def test_conditioner_source_edge_preserves_measurement_and_power_predicates(
+        self,
+    ) -> None:
+        path = "tooling/performance_windows.py"
+        old = ast.parse(
+            subprocess.check_output(
+                ["git", "show", "9d36da894c826cf2331d43fb413c3bb0b34db08e:" + path]
+            )
+        )
+        new = ast.parse((BASELINE_PATH.parents[4] / path).read_text(encoding="utf-8"))
+        reviewed = {
+            "validate_performance_power_policy",
+            "power_information",
+            "stable_platform_probe",
+        }
+        old_functions = {n.name: n for n in old.body if isinstance(n, ast.FunctionDef)}
+        new_functions = {n.name: n for n in new.body if isinstance(n, ast.FunctionDef)}
+        self.assertEqual(set(old_functions), set(new_functions))
+        self.assertEqual(
+            reviewed,
+            {
+                name
+                for name in old_functions
+                if ast.dump(old_functions[name]) != ast.dump(new_functions[name])
+            },
+        )
+        for module in (old, new):
+            module.body = [
+                node
+                for node in module.body
+                if not (isinstance(node, ast.FunctionDef) and node.name in reviewed)
+            ]
+        self.assertEqual(ast.dump(old), ast.dump(new))
+
+        def guards(function):
+            return [
+                ast.dump(node.test)
+                for node in ast.walk(function)
+                if isinstance(node, ast.If)
+            ]
+
+        self.assertEqual(
+            guards(old_functions["validate_performance_power_policy"]),
+            guards(new_functions["validate_performance_power_policy"]),
+        )
+
+        def assignments(function):
+            return [
+                node.targets[0].id
+                for node in function.body
+                if isinstance(node, ast.Assign)
+                and isinstance(node.targets[0], ast.Name)
+            ]
+
+        prior_order = assignments(old_functions["stable_platform_probe"])
+        current_order = assignments(new_functions["stable_platform_probe"])
+        self.assertGreater(prior_order.index("resource"), prior_order.index("power"))
+        self.assertLess(current_order.index("resource"), current_order.index("power"))
 
     def test_conditioning_cpu_migration_is_exact_and_same_build(self) -> None:
         history = (

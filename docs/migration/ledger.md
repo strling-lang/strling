@@ -1,5 +1,40 @@
 # Architecture Migration Ledger
 
+## H08 independent reference reproduced
+
+The pinned `9d36da89…` source export passes all 2,237 raw Git-blob checks. Its
+offline native rebuild exactly reproduces the archived runner, kernel and
+interop SHA-256 identities (receipt `2a05d1e8…`). Extraction/mapping permission
+failures and CRLF checkout-conversion audit failures remain preserved; corrections
+affect only private source import and scoped canonical build access, not guards,
+host policy or authority. No measurements were collected or reused.
+
+The broader regression suite produced 60 PASS and one stale-date test failure.
+The approved VSCE renewal made its hard-coded October 12 expiry test invalid.
+It now tests one day after the fixture's actual expiry. That exact case passes
+in WSL; the original failure and native synthetic-key setup error remain recorded.
+Production expiry enforcement and exact waiver scope are unchanged. This is not
+a completed H08 campaign or a replacement for fresh independent calibration.
+
+## H08 conditioner-source transition precondition
+
+At clean `ea50082c`, the source-held LSP repair, direct dependents, deterministic
+build check and all 35 artifact families passed (inventory `67e4e898…`, recovery
+terminal `cd760bb7…`). Exact runtime/Maven proof passed; native admission passed
+after a process-only Rustup PATH correction, preserving the failed missing-tool
+attempt. The remaining environment delta is the conditioner source hash and two
+derived attestation hashes, not OS, topology, toolchain or frequency.
+
+A pure precondition validator now pins only the reviewed `0996f40c…` to
+`49025fad…` source edge, exact v6/10-second/CPU1 controls and thresholds, and
+canonical attestations. AST proof preserves every non-admission function and
+power predicate. All 91 controller/comparison tests pass. This does not alter
+ordinary environment compatibility or activate/modify a baseline: fresh
+independent reference evidence and every prior effective ceiling remain required.
+Any new source requires a new complete artifact gate; the earlier 35-family PASS
+is not proof for this changed tree. H08 remains OPEN with both campaigns,
+independent Releases, signing and trusted verification outstanding.
+
 ## H08 narrow VSCE renewal approved
 
 On October 14, 2026, the owner explicitly renewed

@@ -521,6 +521,26 @@ There is no retry loop or partial preconditioning path: a qualification failure
 blocks timing, and an unstable coordinate remains a product/harness or
 Windows-environment investigation under the unchanged limits.
 
+A source-only conditioner change is not an OS rollover or the CPU migration
+below. The reviewed admission-order edge pins the archived source
+`0996f40c7f96f747a8dabf4018c57238cbbec6d3a2daa0ed4df413bd0fda908c`
+and corrected source
+`49025fad600bf6a4144f60c1319831af9fd1ffe129344d1ee413f4a29a7d8995`.
+`validate_conditioner_source_transition` checks those exact bytes, canonical
+attestations, unchanged v6/10-second policy and 500/100/1500 busy/interrupt/system
+limits, CPU 1 and every other governed environment coordinate. Its PASS is only
+a transition precondition: `activation_authorized` remains false, ordinary
+environment compatibility remains exact, and historical conditioning identities
+and measurements are not rewritten or reused as fresh evidence. Fresh independent
+reference evidence under every prior effective ceiling remains necessary.
+
+An independent source-AST regression confirms that only the power-guard
+diagnostics, phase parameter and supported-controls-before-power-probe ordering
+change. All other module statements, including measurement and conditioning
+functions, and the actual power predicates remain identical. This proof does not
+replace fresh performance qualification, authorize the experimental cycle method,
+or make the current baseline compatible with a different conditioner source.
+
 A reviewed same-build conditioner migration has a separate, narrower command.
 It is authorized only for the recorded Windows CPU 20 to reviewed quiet
 performance-core CPU 1 move and the conditioner v5/2-second to v6/10-second

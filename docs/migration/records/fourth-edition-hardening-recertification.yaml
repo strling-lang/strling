@@ -1108,6 +1108,39 @@ checkpoints:
           - check: Direct dependents and preserved scope failure
             result: passed
             details: All66architecture-composition/governance regression tests pass. First actual governance run rejects only the new CONTRIBUTING.md paragraph as outside declared paths;all architecture rules pass. Remove only that uncommitted paragraph,retaining the exact boundary contract in reviewed tooling docstrings and migration records;no allowed-path expansion or scope waiver. Actual governance revalidation now PASS,including all33architecture rules and scope/declarations/contracts/release-policy checks. Final119generated-artifact regressions also PASS with case-insensitive Windows alias rejection. This is an engineering correction;complete35and authoritative progression remain pending.
+    - name: Complete artifact recovery and exact runtime prerequisites
+      status: passed
+      evidence:
+          - check: Source-held ordinary payload repair and complete inventory
+            result: passed
+            details: Clean ea50082c recovery owner43919 completes canonical LSP repair,registered direct dependents,deterministic build-check and all35familiesPASS. Terminalcd760bb76f1609dbc546794a0778e0b0ed52919d43f9b2928c7ee485f0fb1c1f and inventory67e4e898e69a7e452566f32df86f95b21ab1fe6273a7862761741145fa086d6c retain actual results and unchanged protected identities. This gate belongs only to ea50082c and is invalidated by later tracked source changes,not relabeled as future candidate proof.
+          - check: Exact runtimes and native admission
+            result: passed
+            details: All4exact runtimes plus offline Maven identities PASS. Native admission v1 WinError2 missing PATH tools is preserved as498bee553c1fd2e8a37f2c69e4e39dbd1665733c423ce7cd6b24ffd70dcf1978. Absolute installed Rust1.75rustc/cargo identities PASS;process-only Rustup PATH correction yields native admission PASS b45c20d407a7981cac955cc9420515066dbad8e4e7c7e617af7cc1508c7ab57e. No host setting,privilege or power policy change. Admission is not conditioning/readiness/performance certification.
+    - name: Source-only conditioner transition precondition
+      status: in_progress
+      evidence:
+          - check: Reviewed source edge and independent source semantics
+            result: passed
+            details: Immutable baseline product-source9d36da894c826cf2331d43fb413c3bb0b34db08e yields exact old conditioner0996f40c;current source49025fad differs only diagnostics and existing controls-before-power admission ordering. AST proof retains all other module statements/functions and identical power predicates. Native environment differs only source hash and two derived attestation hashes. OS/CPU migration commands do not cover this edge and remain unchanged.
+          - check: Strict precondition guard without acceptance side effects
+            result: passed
+            details: New pure validator pins exact old/new bytes,canonical attestations,CPU1,v6/10000ms and exact500/100/1500limits;all other environment coordinates must match. PASS explicitly has activation_authorized:false,fresh independent reference and all prior effective ceilings required,and no historical measurement reuse. Existing environment compatibility remains false for this edge. Two focused tests and full91controller/comparison tests PASS;Ruff and performance-artifact contract PASS with no generated output changes. An initial assertion expected the older environment-drift message after strengthening policy rejection;updated to the correct stricter binding rejection,not a weakened guard.
+          - check: Remaining authoritative work
+            result: not_run
+            details: Transactional source-only migration acquisition/activation is not implemented or run by this checkpoint. Independent reference construction,retained one-use fresh evidence,all54coordinate prior-effective-ceiling proof,new artifact gate at any changed source,both38/80/126/126qualification/promotion campaigns,independent Releases,signing/trusted verification and formal closure remain required. No authenticated performance samples,baseline writes,authoritative candidate freeze or profile result created here.
+    - name: Independent reference reproduction and waiver-expiry fixture correction
+      status: passed
+      evidence:
+          - check: Immutable reference build identity
+            result: passed
+            details: Pinned9d36da894c826cf2331d43fb413c3bb0b34db08e reference exports2237regular files,no symlinks/submodules/new Git worktree. All four Rustlocks and dependency tables match the approved graph;canonical build-helper ASTs remain identical. Strict raw Gitblob audit passes before/after the independent offline native build. Rebuilt runner bundle504b74883267ba057cd2a6bf8bed1d4b51444e9594fc80ca3282b0b59b262ef8,kernel e6b1d76d78db10cf03e9f54487bba6db92853b016f5d317d4880e5ceacac2a2b and interop fa5bc5a67f90c9b8743121d72fadfa6f6754f6ef25acc1a004842be7c25553df exactly match archived reference identities. Terminal2a05d1e8cbe81738780b700ebd816ad578f180739f5a8d875f0e8a24a92619af;temporary canonical mapping removed,caller controller/conditioner/baseline hashes unchanged. Build-only diagnostic,not fresh calibration or certification eligibility.
+          - check: Preserved source-import and sandbox failures
+            result: failed
+            details: Initial extraction denied nested .agents before any build,receiptb9b8d156794eb301b60dfbd1cc231c3a39e6322c140ac0912fd3f408f2cac9ad. Scoped extraction only into private export succeeds without root agent configuration changes. Gitarchive honored pinned CRLF attributes for gradlew.bat/strling.ps1;strict audit rejected their working-tree bytes. Raw pinned Gitblobs restored only inside export,original archive32737efeb4b774b1abf90158ea9397322564887be649afef7aba4e94f4516650 and failure preserved,no guard loosened. First build preflight denied canonicalP mapping with zero Cargo steps,receipt93a37780b12db2ffe4fb428983f24eff8a118b23b6b337c213a967d083b26b27;scoped map/unmap proof then first actual compile succeeds. No repeated failed compilation,host policy change,authority write or performance sample.
+          - check: Signed-waiver expiry regression
+            result: passed
+            details: Original61-test dependency suite has60PASS1FAIL in1432.686seconds. Solefailure test_expired_signed_waiver_is_rejected hard-coded2026-10-12,which is not expired after explicit renewal through2026-11-13. Test now reads signed fixture expiry and adds exactly1day;production verifier/security unchanged. Native focused recovery fails synthetic ssh-keygen fixture creation(exit255),not verifier behavior;preserved. Exact failed case in original WSL environment PASS in46.905seconds. This is focused recovery,not relabeling the original61-test failure as a green aggregate.
 commits:
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"

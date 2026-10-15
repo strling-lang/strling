@@ -4385,6 +4385,94 @@ def validate_environment_rollover(
     }
 
 
+def validate_conditioner_source_transition(
+    prior_environment: Mapping[str, object],
+    candidate_environment: Mapping[str, object],
+    *,
+    prior_source: bytes,
+    candidate_source: bytes,
+) -> dict[str, Any]:
+    """Validate the reviewed admission-order source edge, not baseline activation.
+
+    Raw source/attestation identities remain distinct. This guard grants neither
+    environment compatibility nor permission to reuse or rewrite measurements.
+    A caller must still acquire independent reference evidence and enforce every
+    immediately prior effective ceiling before any authority can be activated.
+    """
+    expected = (
+        "0996f40c7f96f747a8dabf4018c57238cbbec6d3a2daa0ed4df413bd0fda908c",
+        "49025fad600bf6a4144f60c1319831af9fd1ffe129344d1ee413f4a29a7d8995",
+    )
+    if (
+        tuple(
+            hashlib.sha256(source).hexdigest()
+            for source in (prior_source, candidate_source)
+        )
+        != expected
+    ):
+        raise PerformanceResourceError(
+            "conditioner-source-edge",
+            "only the reviewed exact source pair is permitted",
+        )
+    for environment, source_hash in zip(
+        (prior_environment, candidate_environment), expected
+    ):
+        if environment.get("os") != "windows":
+            raise PerformanceResourceError(
+                "conditioner-source-platform", "native Windows required"
+            )
+        attestation = cast(Mapping[str, Any], environment["host_attestation"])
+        conditioning = cast(Mapping[str, Any], attestation["conditioning"])
+        if (
+            dict(conditioning)
+            != {
+                "executable_sha256": source_hash,
+                "implementation_path": "tooling/performance_windows.py",
+                "policy_id": "native-windows-supported-controls-quiescence-v6",
+                "observation_milliseconds": 10_000,
+                "maximum_selected_busy_basis_points": 500,
+                "maximum_selected_interrupt_basis_points": 100,
+                "maximum_system_busy_basis_points": 1500,
+            }
+            or environment.get("selected_logical_cpu") != 1
+        ):
+            raise PerformanceResourceError(
+                "conditioner-source-binding", "source/policy/CPU binding changed"
+            )
+        canonical = document_fingerprint(attestation, "attestation_fingerprint")
+        if (
+            attestation.get("attestation_fingerprint") != canonical
+            or environment.get("host_attestation_fingerprint") != canonical
+        ):
+            raise PerformanceResourceError(
+                "conditioner-source-attestation", "noncanonical attestation"
+            )
+    mismatches = environment_mismatches(
+        environment_identity(prior_environment),
+        environment_identity(candidate_environment),
+    )
+    if {row["coordinate"] for row in mismatches} != {
+        "host_attestation.conditioning.executable_sha256",
+        "host_attestation.attestation_fingerprint",
+        "host_attestation_fingerprint",
+    }:
+        raise PerformanceResourceError(
+            "conditioner-source-environment-drift",
+            "only the exact source hash and derived attestation hashes may differ",
+        )
+    return {
+        "status": "passed",
+        "contract": "reviewed-conditioner-admission-source-edge-v1",
+        "prior_source_sha256": expected[0],
+        "candidate_source_sha256": expected[1],
+        "environment_mismatches": mismatches,
+        "fresh_independent_reference_required": True,
+        "all_prior_effective_ceilings_required": True,
+        "historical_measurement_reuse_permitted": False,
+        "activation_authorized": False,
+    }
+
+
 def validate_conditioning_cpu_migration(
     prior_manifest: Mapping[str, object],
     prior_baseline: Mapping[str, object],

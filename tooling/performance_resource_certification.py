@@ -3194,8 +3194,22 @@ def _runner_samples(
     selected_logical_cpu: int,
     execution_resource: Mapping[str, object],
     cli_launch_schedule: str | None = None,
+    cli_cycle_contract: str | None = None,
     root: Path = ROOT,
 ) -> dict[str, Any]:
+    if cli_cycle_contract is not None:
+        from tooling.performance_comparison import NATIVE_CLI_CYCLE_CONTRACT
+
+        if (
+            cli_cycle_contract != NATIVE_CLI_CYCLE_CONTRACT
+            or operation_id != "latency:cli-startup"
+            or execution_resource.get("platform") != "windows"
+            or samples != 64
+            or batch_iterations != 1
+        ):
+            raise PerformanceResourceError(
+                "cli-cycle-contract", "incompatible native CLI cycle selection"
+            )
     command = [
         str(artifacts["runner"]),
         "--operation",
@@ -3217,6 +3231,8 @@ def _runner_samples(
         command.extend(
             ["--minimum-sample-nanoseconds", str(minimum_sample_nanoseconds)]
         )
+    if cli_cycle_contract is not None:
+        command.extend(["--cli-cycle-audit", cli_cycle_contract])
     if operation_id == "latency:cli-startup":
         command.extend(["--kernel-bin", str(artifacts["kernel"])])
     if cli_launch_schedule is not None:
@@ -3248,6 +3264,26 @@ def _runner_samples(
         result = json.loads(completed.stdout)
     except json.JSONDecodeError as error:
         raise PerformanceResourceError("runner-json", str(error)) from error
+    cycle_evidence: dict[str, object] = {}
+    if cli_cycle_contract is not None:
+        from tooling.performance_comparison import validate_cli_cycle_result
+
+        try:
+            cycle_evidence = validate_cli_cycle_result(result)
+        except ValueError as error:
+            raise PerformanceResourceError("cli-cycle-contract", str(error)) from error
+    elif any(
+        key in result
+        for key in (
+            "cli_cycle_contract",
+            "cli_request_cycle_evidence",
+            "cli_control_cycle_evidence",
+        )
+    ):
+        raise PerformanceResourceError(
+            "cli-cycle-contract",
+            "unsolicited cycle evidence cannot enter a time-only observation",
+        )
     observed_batch_iterations = result.get("batch_iterations")
     batch_elapsed_samples = result.get("batch_elapsed_samples", [])
     normalized_samples = result.get("samples", [])
@@ -3432,6 +3468,7 @@ def _runner_samples(
             f"runner launch-control CPU accounting changed for {operation_id}/{fixture_id}",
         )
     return {
+        **cycle_evidence,
         "samples": normalized,
         "batch_iterations": observed_batch_iterations,
         "batch_duration_samples": elapsed,

@@ -6,8 +6,11 @@ import struct
 import subprocess
 import sys
 import unittest
+from contextlib import ExitStack
 from pathlib import Path
+from unittest.mock import patch
 
+from tooling import performance_windows
 from tooling.performance_resource_certification import _windows_host_attestation
 from tooling.performance_windows import (
     CONDITIONING_VERSION,
@@ -220,6 +223,104 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
         changed["selected_processor_frequency"]["current_mhz"] = 2199
         with self.assertRaises(WindowsQualificationError):
             validate_performance_power_policy(changed)
+
+    def test_frequency_rejection_retains_values_and_phase_without_mutation(
+        self,
+    ) -> None:
+        power = {
+            "processor_settings": {
+                "minimum_processor_state_percent": 100,
+                "maximum_processor_state_percent": 100,
+                "processor_performance_boost_mode": 0,
+            },
+            "selected_processor_frequency": {
+                "processor_number": 1,
+                "maximum_mhz": 2200,
+                "current_mhz": 1466,
+                "mhz_limit": 2200,
+            },
+        }
+        original = copy.deepcopy(power)
+        with self.assertRaises(WindowsQualificationError) as caught:
+            validate_performance_power_policy(power, control_phase="synthetic-control")
+        for detail in (
+            "processor_number=1",
+            "current_mhz=1466",
+            "maximum_mhz=2200",
+            "mhz_limit=2200",
+            "control_phase='synthetic-control'",
+        ):
+            self.assertIn(detail, str(caught.exception))
+        self.assertEqual(power, original)
+        for field in ("current_mhz", "mhz_limit"):
+            for value in (None, "2200", 2199, 2201):
+                with self.subTest(field=field, value=value):
+                    changed = copy.deepcopy(power)
+                    changed["selected_processor_frequency"]["current_mhz"] = 2200
+                    changed["selected_processor_frequency"][field] = value
+                    with self.assertRaisesRegex(
+                        WindowsQualificationError, "power-policy-validation"
+                    ):
+                        validate_performance_power_policy(changed)
+
+    def test_probe_frequency_rejection_reports_phase_after_resource_controls(
+        self,
+    ) -> None:
+        power = {
+            "processor_settings": {
+                "minimum_processor_state_percent": 100,
+                "maximum_processor_state_percent": 100,
+                "processor_performance_boost_mode": 0,
+            },
+            "selected_processor_frequency": {
+                "processor_number": 1,
+                "maximum_mhz": 2200,
+                "current_mhz": 1466,
+                "mhz_limit": 2200,
+            },
+        }
+
+        def reject_power(*args: object, **kwargs: str) -> None:
+            self.assertEqual(resource_mock.call_count, 1)
+            validate_performance_power_policy(power, **kwargs)
+
+        with ExitStack() as stack:
+            for name, value in (
+                ("enumerate_cpu_sets", []),
+                ("selected_cpu_set", {}),
+                ("processor_group_counts", [2]),
+                ("firmware_identity", {}),
+                ("guest_indicators", []),
+            ):
+                stack.enter_context(
+                    patch.object(performance_windows, name, return_value=value)
+                )
+            power_mock = stack.enter_context(
+                patch.object(
+                    performance_windows, "power_information", side_effect=reject_power
+                )
+            )
+            resource_mock = stack.enter_context(
+                patch.object(performance_windows, "execution_resource")
+            )
+            with self.assertRaisesRegex(
+                WindowsQualificationError,
+                "stable-platform-probe:after-execution-resource",
+            ):
+                performance_windows.stable_platform_probe(1)
+            power_mock.assert_called_once_with(
+                2, 1, control_phase="stable-platform-probe:after-execution-resource"
+            )
+            resource_mock.assert_called_once_with(1)
+            power_mock.reset_mock()
+            resource_mock.side_effect = WindowsQualificationError(
+                "controls unavailable"
+            )
+            with self.assertRaisesRegex(
+                WindowsQualificationError, "controls unavailable"
+            ):
+                performance_windows.stable_platform_probe(1)
+            power_mock.assert_not_called()
 
     def test_process_power_policy_requires_explicit_high_qos(self) -> None:
         policy = {

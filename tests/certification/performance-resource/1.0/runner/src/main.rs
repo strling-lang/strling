@@ -5,6 +5,9 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::time::Instant;
+use std::{cell::RefCell, rc::Rc};
+
+mod cli_cycles;
 
 use serde_json::{json, Value};
 use strling_interop::execute_bytes;
@@ -34,7 +37,7 @@ use strling_kernel::validation::Validate;
 type RunResult<T> = Result<T, String>;
 type PreparedOperation = Box<dyn Fn() -> RunResult<usize>>;
 
-const RUNNER_VERSION: &str = "1.10.0";
+const RUNNER_VERSION: &str = "1.11.0";
 const ROBUST_CLI_LAUNCH_SCHEDULE: &str = "half-complementary-adjacent-pairs-64-v1";
 const MAXIMUM_DESCHEDULING_NANOSECONDS: u64 = 50_000_000;
 const MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER: usize = 2;
@@ -54,6 +57,7 @@ struct Arguments {
     kernel_bin: Option<PathBuf>,
     cli_launch_schedule: Option<String>,
     cpu_cycle_audit: bool,
+    cli_cycle_audit: bool,
     ping: bool,
 }
 
@@ -102,6 +106,13 @@ fn run() -> RunResult<()> {
     if arguments.warmups == 0 || arguments.samples == 0 {
         return Err("warmups and samples must be positive".to_owned());
     }
+    cli_cycles::validate_selection(
+        cfg!(target_os = "windows"),
+        &arguments.operation,
+        arguments.samples,
+        arguments.batch_iterations,
+        arguments.cli_cycle_audit,
+    )?;
     if arguments.cpu_cycle_audit
         && !cycle_audit_supported(cfg!(target_os = "windows"), &arguments.operation)
     {
@@ -159,13 +170,31 @@ fn run() -> RunResult<()> {
         );
     }
     let fixture = materialize_fixture(&arguments.fixture, &arguments.operation)?;
-    let operation = prepare_operation(
-        &arguments.operation,
-        &fixture,
-        arguments.kernel_bin.as_deref(),
-    )?;
+    let cli_cycle_sink = arguments
+        .cli_cycle_audit
+        .then(|| Rc::new(RefCell::new(cli_cycles::Snapshot::default())));
+    let operation = if arguments.cli_cycle_audit {
+        prepare_cli_operation_with_cycles(
+            &fixture,
+            arguments.kernel_bin.as_deref(),
+            cli_cycle_sink.clone(),
+        )?
+    } else {
+        prepare_operation(
+            &arguments.operation,
+            &fixture,
+            arguments.kernel_bin.as_deref(),
+        )?
+    };
     let control_operation = if arguments.operation == "latency:cli-startup" {
-        Some(prepare_cli_launch_control(arguments.kernel_bin.as_deref())?)
+        Some(if arguments.cli_cycle_audit {
+            prepare_cli_launch_control_with_cycles(
+                arguments.kernel_bin.as_deref(),
+                cli_cycle_sink.clone(),
+            )?
+        } else {
+            prepare_cli_launch_control(arguments.kernel_bin.as_deref())?
+        })
     } else {
         None
     };
@@ -217,6 +246,8 @@ fn run() -> RunResult<()> {
     let mut rejected_process_cpu_utilization_basis_points = Vec::new();
     let mut cpu_cycle_evidence = Vec::new();
     let mut rejected_cpu_cycle_evidence = Vec::new();
+    let mut cli_request_cycle_evidence = Vec::new();
+    let mut cli_control_cycle_evidence = Vec::new();
     let maximum_sample_attempts = arguments
         .samples
         .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
@@ -233,16 +264,26 @@ fn run() -> RunResult<()> {
             )?;
         }
     }
-    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64, u64, u64, u64, Option<CpuCycleEvidence>)> {
+    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64, u64, u64, u64, Option<CpuCycleEvidence>, Option<Value>)> {
         let cpu_started = process_cpu_time_nanoseconds()?;
         let cycle_started = if arguments.cpu_cycle_audit {
             Some((process_cpu_cycles()?, process_cpu_cycles()?, process_cpu_cycles()?))
         } else {
             None
         };
+        let cli_started = cli_cycle_sink
+            .as_ref()
+            .map(|sink| Ok::<_, String>((*sink.borrow(), process_cpu_cycles()?)))
+            .transpose()?;
         let started = Instant::now();
         checksum ^= black_box(execute_batch(prepared, batch_iterations)?);
         let nanoseconds = started.elapsed().as_nanos().max(1);
+        let cli_evidence = match (cli_started, &cli_cycle_sink) {
+            (Some((before, parent)), Some(sink)) => Some(before.evidence(
+                *sink.borrow(), divisor, parent, process_cpu_cycles()?,
+            )?),
+            _ => None,
+        };
         let cycle_evidence = match cycle_started {
             Some((control_started, control_ended, work_started)) => Some(CpuCycleEvidence::from_endpoints(
                 control_started, control_ended, work_started, process_cpu_cycles()?,
@@ -278,6 +319,7 @@ fn run() -> RunResult<()> {
             batch_cpu,
             utilization_basis_points,
             cycle_evidence,
+            cli_evidence,
         ))
     };
     if let Some(control) = &control_operation {
@@ -304,6 +346,12 @@ fn run() -> RunResult<()> {
             control_process_cpu_samples.push(control_sample.2);
             control_process_cpu_batch_elapsed_samples.push(control_sample.3);
             control_process_cpu_utilization_basis_points.push(control_sample.4);
+            if let (Some(request_cycles), Some(control_cycles)) = (request.6, control_sample.6) {
+                cli_request_cycle_evidence.push(request_cycles);
+                cli_control_cycle_evidence.push(control_cycles);
+            } else if arguments.cli_cycle_audit {
+                return Err("missing paired CLI cycle evidence".to_owned());
+            }
         }
     } else {
         let mut accepted_samples = 0usize;
@@ -390,6 +438,11 @@ fn run() -> RunResult<()> {
         result["cpu_cycle_audit"] = json!(CPU_CYCLE_AUDIT);
         result["cpu_cycle_evidence"] = json!(cpu_cycle_evidence);
         result["rejected_cpu_cycle_evidence"] = json!(rejected_cpu_cycle_evidence);
+    }
+    if arguments.cli_cycle_audit {
+        result["cli_cycle_contract"] = json!(cli_cycles::CONTRACT);
+        result["cli_request_cycle_evidence"] = json!(cli_request_cycle_evidence);
+        result["cli_control_cycle_evidence"] = json!(cli_control_cycle_evidence);
     }
     println!(
         "{}",
@@ -626,6 +679,7 @@ fn parse_arguments() -> RunResult<Arguments> {
             kernel_bin: None,
             cli_launch_schedule: None,
             cpu_cycle_audit: false,
+            cli_cycle_audit: false,
             ping: true,
         });
     }
@@ -640,6 +694,7 @@ fn parse_arguments() -> RunResult<Arguments> {
     let mut kernel_bin = None;
     let mut cli_launch_schedule = None;
     let mut cpu_cycle_audit = false;
+    let mut cli_cycle_audit = false;
     let mut index = 0;
     while index < values.len() {
         let flag = &values[index];
@@ -678,6 +733,12 @@ fn parse_arguments() -> RunResult<Arguments> {
             "--kernel-bin" => kernel_bin = Some(PathBuf::from(value)),
             "--cli-launch-schedule" => cli_launch_schedule = Some(value.clone()),
             "--cpu-cycle-audit" => cpu_cycle_audit = parse_cycle_audit(value)?,
+            "--cli-cycle-audit" => {
+                if value != cli_cycles::CONTRACT {
+                    return Err("unknown CLI cycle contract".to_owned());
+                }
+                cli_cycle_audit = true;
+            }
             _ => return Err(format!("unknown argument {flag}")),
         }
         index += 2;
@@ -694,6 +755,7 @@ fn parse_arguments() -> RunResult<Arguments> {
         kernel_bin,
         cli_launch_schedule,
         cpu_cycle_audit,
+        cli_cycle_audit,
         ping: false,
     })
 }
@@ -1742,6 +1804,14 @@ fn prepare_cli_operation(
     fixture: &MaterializedFixture,
     kernel_bin: Option<&Path>,
 ) -> RunResult<PreparedOperation> {
+    prepare_cli_operation_with_cycles(fixture, kernel_bin, None)
+}
+
+fn prepare_cli_operation_with_cycles(
+    fixture: &MaterializedFixture,
+    kernel_bin: Option<&Path>,
+    cycle_sink: Option<Rc<RefCell<cli_cycles::Snapshot>>>,
+) -> RunResult<PreparedOperation> {
     let executable = kernel_bin
         .ok_or_else(|| "latency:cli-startup requires --kernel-bin".to_owned())?
         .to_owned();
@@ -1793,6 +1863,11 @@ fn prepare_cli_operation(
             .stderr(Stdio::piped())
             .spawn()
             .map_err(|error| error.to_string())?;
+        let retained = if cycle_sink.is_some() {
+            Some(cli_cycles::RetainedChild::retain(&child)?)
+        } else {
+            None
+        };
         child
             .stdin
             .take()
@@ -1802,6 +1877,9 @@ fn prepare_cli_operation(
         let output = child
             .wait_with_output()
             .map_err(|error| error.to_string())?;
+        if let (Some(retained), Some(sink)) = (retained, &cycle_sink) {
+            sink.borrow_mut().observe(retained.read_and_close()?)?;
+        }
         if !output.status.success() {
             return Err(format!(
                 "CLI failed with {}: {}",
@@ -1825,6 +1903,41 @@ fn prepare_cli_launch_control(kernel_bin: Option<&Path>) -> RunResult<PreparedOp
             .stderr(Stdio::piped())
             .output()
             .map_err(|error| error.to_string())?;
+        if !output.status.success() {
+            return Err(format!(
+                "CLI launch control failed with {}: {}",
+                output.status,
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+        Ok(output.stdout.len())
+    }))
+}
+
+fn prepare_cli_launch_control_with_cycles(
+    kernel_bin: Option<&Path>,
+    cycle_sink: Option<Rc<RefCell<cli_cycles::Snapshot>>>,
+) -> RunResult<PreparedOperation> {
+    let executable = kernel_bin
+        .ok_or_else(|| "latency:cli-startup requires --kernel-bin".to_owned())?
+        .to_owned();
+    Ok(Box::new(move || {
+        let child = Command::new(&executable)
+            .arg("--help")
+            .stdin(Stdio::null())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .map_err(|error| error.to_string())?;
+        let retained = if cycle_sink.is_some() {
+            Some(cli_cycles::RetainedChild::retain(&child)?)
+        } else {
+            None
+        };
+        let output = child.wait_with_output().map_err(|error| error.to_string())?;
+        if let (Some(retained), Some(sink)) = (retained, &cycle_sink) {
+            sink.borrow_mut().observe(retained.read_and_close()?)?;
+        }
         if !output.status.success() {
             return Err(format!(
                 "CLI launch control failed with {}: {}",

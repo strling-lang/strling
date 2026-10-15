@@ -1,5 +1,46 @@
 # Architecture Migration Ledger
 
+## H08 machine-as-is offline comparison checkpoint
+
+H08 remains OPEN. A diagnostic-only variable-frequency comparison prototype and
+frequency-error diagnostics have 20 passing offline synthetic/mocked tests.
+The follow-up adds baseline-bound control anchors and independent request CPU
+gates; 22 offline tests now pass, superseding the earlier 20-test checkpoint.
+No live admission policy was relaxed, no baseline refreshed, no authenticated
+performance sample or authoritative profile created. The prototype still needs
+control-validity/attribution design, integrated schema/runner verification, fresh
+governed baselines and complete authoritative campaigns. VSCE exception renewal
+remains unapproved. Details: [performance-resource certification](performance-resource-certification.md#machine-as-is-comparison-engineering-checkpoint).
+
+The prospective empirical follow-up retained one workload-binding failure,
+2,304 CPU-time observations rejected for inadequate telemetry, and 2,304 fresh
+cycle-domain diagnostic observations with held-out envelope/negative-control
+checks passing. The latter is not policy adoption: no cross-frequency or actual
+source-distinct regression proof was obtained, and diagnostic budgets cannot
+replace prior hard caps. No authenticated samples, baseline replacement or
+authoritative certification result was produced; all 101 protected files remain
+unchanged. See the acquisition-results subsection of the linked record.
+
+The actual source-distinct follow-up preserves deadline/raw-wall-variance failures.
+A corrected native measurement window completes5760 diagnostic launches with
+independent holdout and actual request/concealment/order detection under unchanged
+caps. Runner1.11.0/controller integration adds explicit cycle-domain capture and
+legacy-baseline refusal, not silent profile-policy adoption. A smaller process-
+controls-before-frequency correction passes one atomic probe (1466MHz before,
+2200MHz accepted afterwards) with AST-identical power predicates. This resolves
+the observed sequencing obstacle without a ceiling or host-setting change; it
+does not prove a physical cause or certify H08. Current requirements reconstruct
+as38/80/126/126. The machine-as-is full-closure task is ACTIVE; prior pause records
+are historical, all authoritative work and valid VSCE approval remain pending.
+
+The current complete35 inventory terminates12PASS/1FAIL/22not_run. The failed
+lockfile family has matching16lock/20manifest identities and29native-integrity
+passes; its sole failure is the expired VSCE exception. Raw receipt5d6f8eef
+preserves the failure and unchanged check-time protected snapshots. Do not rerun
+the unchanged failed gate, regenerate locks, or freeze an authoritative candidate
+to bypass approval. Current source tests101Python/18Rust pass. The engineering
+checkpoint remains non-authoritative and H08 remains OPEN.
+
 ## Engineering governance foundation
 
 -   Status: Complete

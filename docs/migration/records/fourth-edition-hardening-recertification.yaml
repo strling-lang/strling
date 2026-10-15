@@ -111,6 +111,7 @@ scope:
         - tests/certification/performance-resource/1.0/runner/Cargo.toml
         - tests/certification/performance-resource/1.0/runner/src/memory_worker.rs
         - tests/certification/performance-resource/1.0/runner/src/main.rs
+        - tests/certification/performance-resource/1.0/runner/src/cli_cycles.rs
         - tests/certification/profile-source/1.0/definitions.json
         - tests/adapters/3.0/release-graph.json
         - tests/conformance/adversarial/1.0/evidence.json
@@ -136,6 +137,7 @@ scope:
         - tooling/local_certification_attestation.py
         - tooling/nonperformance_production_readiness.py
         - tooling/performance_resource_certification.py
+        - tooling/performance_comparison.py
         - tooling/retained_native_owner.py
         - tooling/tests/test_retained_native_owner.py
         - tests/_design/unit/retained-native-owner.md
@@ -167,6 +169,7 @@ scope:
         - tooling/tests/test_performance_resource_certification.py
         - tooling/tests/test_performance_resource_certification_architecture.py
         - tooling/tests/test_performance_windows.py
+        - tooling/tests/test_performance_comparison.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_production_certification.py
         - tooling/tests/test_public_contracts.py
@@ -999,6 +1002,82 @@ checkpoints:
           - check: Preserved human active-host hold
             result: passed
             details: This scoped engineering task creates zero authenticated performance samples and no authoritative H08 profile result. No performance readiness/calibration/benchmark acquisition, H08 campaign, signing, trust promotion, push or publication is started. H08 remains OPEN with continuation automation and campaign PAUSED until later explicit owner idle-host confirmation. Only an exact authorized-path engineering commit and clean tree complete this task; they do not establish certification authority or closure.
+    - name: Machine-as-is draft checkpoint preserved without authority promotion
+      status: in_progress
+      evidence:
+          - check: Verbatim earlier engineering draft
+            result: not_run
+            details: |
+                The following draft was introduced during this engineering run,
+                was not present at clean2b7c9fa6, and used an unsupported root key.
+                Its complete contents are preserved here as historical draft data,
+                not current acceptance authority; subsequent evidence supersedes status.
+                machine_as_is_offline_comparison_checkpoint:
+                    status: diagnostic_only_not_certification
+                    base_sha: 2b7c9fa6ccc806e1e897493eb067f3b8ecca0e6e
+                    implementation: tooling/performance_comparison.py
+                    offline_tests_passed: 22
+                    comparison_version: variable-frequency-paired-wall-cpu-v2
+                    attribution: baseline-bound control wall/CPU anchors plus independent request CPU gates
+                    empirical_followup:
+                        protocol_v1: consumed_workload_binding_failure_exit64_one_launch
+                        protocol_v2: invalid_cpu_time_telemetry_2304_launches_retained
+                        protocol_v3: diagnostic_cycle_holdout_and_synthetic_challenges_pass_2304_launches_retained
+                        adoption: not_authorized_by_diagnostic_result
+                        frequency_variability_proven: false
+                        prior_hard_caps: unchanged
+                        actual_source_challenges:
+                            v1: deadline_failure_3758_rows_preserved
+                            v2: all_detections_pass_but_raw_wall_variance_failure_preserved
+                            v3: native_window_5760_launches_holdout_and_actual_regression_concealment_order_pass
+                            authoritative: false
+                        runner_cycle_capture: explicit_opt_in_native_cli_process_tree_cycles_v1_runner1.11.0
+                        authoritative_method_adoption: not_performed
+                        admission_sequence_correction:
+                            change: establish_process_controls_before_identical_frequency_predicate
+                            predicates: AST_identical_to_2b7c9fa6
+                            atomic_result: PASS_1466MHz_before_controls_2200MHz_after
+                            hostwide_settings_changed: false
+                        current_task: ACTIVE_full_H08_completion_machine_as_is
+                    live_admission_changed: false
+                    authenticated_samples: 0
+                    authoritative_profiles: 0
+                    baseline_refresh: not_performed
+                    waiver_renewal: pending_approval
+                    remaining: control-validity attribution, governed integration, fresh baselines, full campaigns and trusted verification
+    - name: Machine-as-is measurement engineering and control-before-frequency correction
+      status: in_progress
+      evidence:
+          - check: Preserved failed diagnostic attempts
+            result: failed
+            details: Original admission receipt958bf78f remains unchanged. EnvelopeV1 wrong executable role exit64 and V2 quantized CPU-time telemetry failure retain all observations. Source challengeV1 preserves3758 rows and deadline failure; V2 preserves2304 fresh missing-scope rows and raw-wall MAD failure despite passing detection/holdout decisions. No failed result is reclassified; no authority-bearing artifact or waiver is regenerated.
+          - check: Source-distinct native measurement-window proof
+            result: passed
+            details: Prospective source/executable identities frozen before execution. Only fixed work constant differs between reference/regression wrappers; functional outputs match. Native-window V3 completes all5cohorts9repetitions64pairs,5760 launches in568.664seconds including builds. Holdout and actual request/concealment/order detection pass with prior1000bp cap unchanged; raw reference MADs256/329/309/299bp remain under500. Terminal44f706c3d55d37e3cd0cfa8d3ffb864f49de0bb9e4b0182151b21cb61593e34c. No cross-frequency, production-regression or certification claim.
+          - check: Explicit native cycle-domain integration
+            result: passed
+            details: Runner1.11.0 provides opt-in native-cli-process-tree-cycles-v1 with retained non-inheritable child handle, exact parent/child sum and launch-count checks, all64 pairs and explicit batch1. Controller preserves requested cycle evidence and rejects malformed or unsolicited units. Fresh baseline source/environment guards refuse time-domain baselines. Experimental comparison is not silently enabled in ordinary profiles. All18 Rust1.75.0 native unit tests and focused Python wire/boundary tests pass; first larger Python batch87PASS2sandbox-temp errors retains failure, two exact workspace-temp recoveries PASS. Ruff0.15.21 passes.
+          - check: Identical power predicate after process controls
+            result: passed
+            details: Establish process placement/HighQoS/unlimited quota before frequency validation. Power predicate AST remains identical to clean2b7c9fa6;12 synthetic/mocked tests pass. One atomic probe observes CPU1 current1466/max2200/limit2200 before controls and accepts2200/2200/2200 after with100/100/boost0, no hostwide settings change. Terminal580add3d37c51748bf5c186451185fa5955cbc0aa90189f7bf8567583bf40ff1. No physical thermal/firmware cause inferred.
+          - check: Full completion remains outstanding
+            result: not_run
+            details: Owner machine-as-is full-H08 authorization supersedes earlier wait/pause strategy. Current source requirements reconstruct Local38 PR80 Full126 Release126 with first generated integrity gate. No authenticated performance samples, fresh baseline, authoritative profiles, signing/trust promotion or closure produced here. VSCE renewal remains PENDING and unmodified. Exact runtime, complete35artifact gate, guarded fresh reference calibration where required, both source-distinct campaigns, independent Releases, signing/trusted verification and clean formalCLOSED remain required; no candidate frozen.
+    - name: Current engineering artifact gate and approval boundary
+      status: blocked
+      evidence:
+          - check: Complete-inventory fail-fast result
+            result: failed
+            details: Actual complete35 check terminates after12PASS and package-manager-lockfilesFAIL;22 families not_run, not passed. Approved16lock/20manifest identities match; native integrity29PASS and sole security.waiversFAIL SEC-WAIVER-EXPIRED2026-10-11. No stale lock or graph drift is established and no lock refresh is authorized. Receipt5d6f8eefb890e346ac1e7725be7d1221cf0d714b3fb1c9d986430be399ecf757,979.770seconds,protected_before/after unchanged. No unchanged failed inventory/prefix retry or authoritative freeze while approval remains pending.
+          - check: Superseded active-host readiness rationale retained
+            result: not_run
+            details: |
+                Historical October10 readiness rationale (superseded by current
+                machine-as-is full-H08 authorization, not erased):
+                Latest direct human task authorizes only generated-artifact pipeline integration, sample-free focused/static/governance/direct-dependent/complete-inventory and gate-prefix validation, exact engineering commit and clean tree. Host is actively used; no current idle authorization, performance readiness/calibration/sampling, authoritative candidate freeze or H08 campaign is allowed until later owner idle-host confirmation. H08 remains OPEN and continuation automation PAUSED. Shared new gate advances current profiles to Local38/PR80/Full126/Release126; historical bd58294 Local37/PR79 and failed Full125 evidence is preserved, not reused or reclassified. Future whole source-distinct qualification/promotion campaigns, independent Releases, signing, immutable trusted verification and closure remain required; neither artifact readiness nor diagnostic prefix is authoritative certification. No push or publication is authorized.
+          - check: Fresh source validation
+            result: passed
+            details: Current workspace-temp Python batch101PASS zero failures/errors; native Rust1.75 runner18PASS zero ignored/measured; pinned Ruff0.15.21 format/lintPASS; performance-artifact integrity and documentationPASS. Against old101 protected pins only explicitly authorized runner/src/main.rs source differs; all100 authority-bearing/other protected bytes remain unchanged. No exception, baseline, lock, historical evidence or workflow trust pins changed. Exact-path engineering checkpoint is not an authoritative candidate freeze or certification.
 commits:
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"
@@ -1105,4 +1184,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Latest direct human task authorizes only generated-artifact pipeline integration, sample-free focused/static/governance/direct-dependent/complete-inventory and gate-prefix validation, exact engineering commit and clean tree. Host is actively used; no current idle authorization, performance readiness/calibration/sampling, authoritative candidate freeze or H08 campaign is allowed until later owner idle-host confirmation. H08 remains OPEN and continuation automation PAUSED. Shared new gate advances current profiles to Local38/PR80/Full126/Release126; historical bd58294 Local37/PR79 and failed Full125 evidence is preserved, not reused or reclassified. Future whole source-distinct qualification/promotion campaigns, independent Releases, signing, immutable trusted verification and closure remain required; neither artifact readiness nor diagnostic prefix is authoritative certification. No push or publication is authorized.
+    rationale: Current machine-as-is full-H08 authorization is active and supersedes the preserved October10 pause. H08 remains OPEN. Corrected process-controls-before-frequency admission passes one atomic probe with unchanged predicates; native source-distinct5760-launch diagnostics and101Python/18Rustunit checks pass. Complete35 artifact check is not green:12PASS,lockfamilyFAIL solely expired unapproved VSCE exception,22not_run. Governance independently rejects the same expiry. No new baseline, authoritative profile, candidate freeze, signing, promotion or closure is claimed. VSCE renewal/remediation approval is a genuine prerequisite; no renewal or bypass is applied. After lawful resolution, complete all38/80/126/126 qualification/promotion campaign requirements, independent Releases, signing/trusted verification, guarded closure and clean finalSHA before publication handoff. No push or publication is authorized.

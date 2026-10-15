@@ -700,7 +700,9 @@ def selected_processor_frequency(
     }
 
 
-def validate_performance_power_policy(power: Mapping[str, object]) -> None:
+def validate_performance_power_policy(
+    power: Mapping[str, object], *, control_phase: str = "power-policy-validation"
+) -> None:
     settings = power.get("processor_settings")
     if settings != _REQUIRED_PROCESSOR_POWER_SETTINGS:
         raise WindowsQualificationError(
@@ -719,12 +721,19 @@ def validate_performance_power_policy(power: Mapping[str, object]) -> None:
         or frequency.get("mhz_limit") != maximum
     ):
         raise WindowsQualificationError(
-            "selected processor is not at its authenticated non-boosted frequency"
+            "selected processor is not at its authenticated non-boosted frequency: "
+            f"processor_number={frequency.get('processor_number')!r}, "
+            f"current_mhz={frequency.get('current_mhz')!r}, "
+            f"maximum_mhz={maximum!r}, mhz_limit={frequency.get('mhz_limit')!r}, "
+            f"control_phase={control_phase!r}"
         )
 
 
 def power_information(
-    logical_processor_count: int, selected_logical_cpu: int
+    logical_processor_count: int,
+    selected_logical_cpu: int,
+    *,
+    control_phase: str = "power-information",
 ) -> dict[str, object]:
     class SYSTEM_POWER_STATUS(ctypes.Structure):
         _fields_ = [
@@ -779,7 +788,7 @@ def power_information(
             logical_processor_count, selected_logical_cpu
         ),
     }
-    validate_performance_power_policy(power)
+    validate_performance_power_policy(power, control_phase=control_phase)
     return power
 
 
@@ -936,12 +945,16 @@ def stable_platform_probe(selected_logical_cpu: int) -> dict[str, object]:
         raise WindowsQualificationError(
             "firmware identifies a virtual guest: " + ", ".join(indicators)
         )
-    power = power_information(sum(groups), selected_logical_cpu)
+    resource = execution_resource(selected_logical_cpu)
+    power = power_information(
+        sum(groups),
+        selected_logical_cpu,
+        control_phase="stable-platform-probe:after-execution-resource",
+    )
     if power["source"] != "ac" or power["battery_saver"]:
         raise WindowsQualificationError(
             "governed Windows calibration requires AC power with battery saver disabled"
         )
-    resource = execution_resource(selected_logical_cpu)
     return {
         "os": os_identity(),
         "firmware": firmware,

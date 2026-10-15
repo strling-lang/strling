@@ -1400,3 +1400,195 @@ not a performance candidate freeze. This scoped task
 creates zero authenticated performance samples and no authoritative H08 profile
 result; H08 remains OPEN and its campaign/continuation PAUSED pending later owner
 idle-host confirmation.
+
+## Machine-as-is comparison engineering checkpoint
+
+The offline prototype `tooling/performance_comparison.py` separates dynamic
+current-frequency telemetry from stable power controls without MHz-based timing
+normalization. It requires a new comparison version, complete 64-pair evidence,
+compatible stable identity, relative and normalized-signal ceilings, both
+acquisition-order strata, and separately supplied raw wall-median/sample ceilings.
+The numeric ceilings in its unit tests are synthetic examples, not approved
+performance budgets. The evaluator does not authenticate acquisition, establish
+baseline authority, or replace the live controller's admission policy.
+
+Eight offline tests pass for bounded common-mode variation, absolute slowdown,
+product regression, asymmetric contention, order cancellation, slowed controls,
+complete evidence retention, missing/malformed frequency telemetry, and incompatible
+versions/identity. The existing diagnostic-only rejection patch has twelve passing
+synthetic/mocked tests; the native integration test was deliberately not executed.
+
+This is an implementation milestone, not certification or a qualified methodology.
+Control-only slowdown remains an attribution risk below absolute limits; matched
+reference/control-validity and CPU/wall evidence need further design and testing
+before admission can change. Fresh governed baselines, schema/runner/controller
+versioning, independent verification, and generated-artifact validation remain
+required. Historical failures and baselines retain their original meaning. No
+authenticated performance samples, profiles, host-setting changes, waiver renewal,
+candidate freeze, or signing were performed by this checkpoint. H08 remains OPEN.
+
+### Control-validity and CPU-attribution follow-up
+
+The diagnostic comparison version is now
+`variable-frequency-paired-wall-cpu-v2`. It additionally requires a separately
+baseline-bound attribution contract, complete positive request/control process-tree
+CPU observations, single-core CPU/wall consistency, bounded control wall and CPU
+observations, and request CPU median/sample ceilings independent of the control
+denominator. Every input remains in the result. Ten prototype tests now pass;
+together with the twelve diagnostic tests this is 22 offline tests, superseding
+the earlier 20-test checkpoint without changing its historical result.
+
+A constructed slowed-control case has a passing relative signal but fails its
+independent request CPU gate. Excess control wall/CPU drift, missing CPU evidence,
+baseline-fingerprint mixing, and incompatible versions also fail closed. These
+are synthetic proofs, not evidence that the synthetic budgets suit this host.
+CPU time itself is frequency-sensitive; the new checks do not prove a physical
+cause or guarantee frequency-invariant work attribution.
+
+Alternatives reviewed: removing frequency equality alone has no replacement
+assurance; scaling time by MHz assumes unsupported proportionality; ratio-only
+comparison can hide common-mode slowdown; raw-wall-only comparison confounds
+scheduling delay with product work. The implemented intersection keeps all wall,
+ratio, order, CPU and control-validity gates, at the cost of potentially rejecting
+a noisy or genuinely slower host. No failing observation may be dropped to avoid
+that cost. This offline path remains diagnostic-only, not live admission authority.
+
+Before empirical acquisition, freeze the source/runner/control identities, units,
+operation/fixture coordinates, alternating acquisition schedule, fixed five
+repetitions of 64 complete pairs per coordinate, and existing absolute service
+limits. Use one declared machine-as-is diagnostic acquisition, without changing
+host settings, warm-up searches, retries, sample removal, adaptive counts or
+acceptance based on its outcome. Retain CPU/wall/frequency/order and rejected-attempt
+evidence. Missing or inconsistent observations terminate that diagnostic; preserve
+the partial receipt. Do not invent a budget from the candidate it will judge.
+
+Fresh baseline procedure must use the final versioned controller/runner/schema
+and reviewed reference source, not import historical measurements into this
+contract. Derive uncertainty/control-validity envelopes using the governed
+calibration rule and independently retained reference repetitions, subject to
+unchanged absolute service limits and budget caps. Validate on source-distinct
+holdout evidence and deliberate product-work/delay/control perturbations. If
+those bounds cannot discriminate the required regression on this host, report
+that measurement limitation rather than widening them. Only then can reviewed
+admission changes, new authenticated calibration, baseline supersession, and full
+independent campaigns begin. No empirical acquisition was performed here.
+
+### Prospective machine-as-is acquisition results (diagnostic only)
+
+The earlier five-repetition proposal was corrected before acquisition to the
+current manifest's nine repetitions: nine reference and nine held-out repetitions,
+64 alternating pairs each, one worker, zero warmups, 180-second total deadline,
+two-second child timeout, no adaptive retry, filtering, refit or host-setting
+changes. Protocols and consumed attempts are under `target/codex-tools`:
+
+-   V1 retained one failed launch: an editor executable was incorrectly bound to
+    CLI arguments (exit 64). The V2 correction used the canonical kernel executable
+    path; V1 evidence remains unchanged.
+-   V2 retained all 2,304 launches in 64.777 seconds but returned
+    `INVALID_TELEMETRY`: child CPU readings were 0/15.625/31.25 ms, 117 child readings
+    were zero, and 1,302 parent-plus-child CPU readings exceeded wall time. No CPU
+    envelopes were fit. This demonstrates inadequate per-launch time telemetry
+    for this proposed contract, not a product regression or permission to discard
+    samples.
+-   V3 prospectively retained the coarse time fields and added raw parent and
+    retained-child `QueryProcessCycleTime` counters in their own cycle domain.
+    The API reports process-thread user/kernel cycles; these are not elapsed
+    nanoseconds, retired instructions, or a frequency-normalized work metric.
+    See [Microsoft's API contract](https://learn.microsoft.com/en-us/windows/win32/api/realtimeapiset/nf-realtimeapiset-queryprocesscycletime).
+    All 2,304 launches completed in 65.542 seconds. All nine holdout medians per
+    request/control wall/cycle coordinate fit the reference-only diagnostic
+    envelopes. Offline +41% request, control, common-mode and order-stratum
+    challenges were detected. These transformations are not source-distinct
+    empirical product-regression challenges.
+
+V3 relative MADs (basis points) were request wall 401, request cycles 305,
+control wall 428, control cycles 325. Diagnostic formula budgets were respectively
+2402/1825/2566/1950 basis points. They are **not adopted budgets**, do not replace
+prior hard ceilings, and cannot silently relax the existing prior-capped contract.
+All 36 before/after frequency observations in each completed acquisition reported
+2200/2200/2200 MHz. Thus these experiments do not establish variability across
+frequencies, its physical cause, or frequency-invariant comparison.
+
+All 101 protected files remained unchanged. Authenticated performance samples and
+authoritative profile results remain zero; actual diagnostic observations are
+not zero (4,608 completed launches plus the V1 failed launch are retained).
+No baseline, waiver, live admission policy, frozen candidate, signing or trusted
+verification authority changed. Before adoption, cycle-domain schemas and
+comparators must reject time/cycle baseline mixing, actual source-distinct
+regression challenges must pass, and fresh governed reference calibration must
+respect prior hard caps and independently approved absolute requirements.
+
+### Native-window challenge and admission-sequencing correction
+
+The full H08 objective is active again under the owner's machine-as-is
+authorization; earlier pauses remain historical, not current permission to wait
+for a favorable host. The current source still has no authoritative profile or
+new baseline result. Toolchain composition independently resolves to
+Local38/PR80/Full126/Release126, each beginning with generated integrity. Full and
+Release require 125 PASS plus the sole duly valid VSCE waiver, not the historical
+124/125 denominator. The VSCE renewal is still pending and was not applied.
+
+Actual source-distinct wrapper challenges use a pinned retained CLI and two native
+Rust sources differing only in a fixed-work constant (zero/20,000,000 opaque
+iterations). Functional stdout/stderr/status stay identical. V1 retained 3,758
+rows before its 360-second acquisition deadline; it remains NOT_VALIDATED.
+V2 acquired only the unfinished concealment/order scopes, preserving the prior
+302-row partial cohort separately. All detection and holdout decisions passed,
+but the overall result remained NOT_VALIDATED: outer-observer raw wall MADs
+595/516 basis points exceeded the declared 500 cap. No cap was raised.
+
+V3 corrects the measurement boundary to the canonical runner's native
+before-work/spawn/wait window, retaining outer Python observer timing separately.
+Its prospective 720-second resource bound changes no acceptance limit. All five
+cohorts completed nine repetitions of 64 pairs (5,760 launches) in 568.664 seconds
+including builds. Reference holdout, actual request-only work, actual common-mode
+concealment, and order-specific work detection all passed. Reference MADs were
+256/329/309/299 basis points for request wall/cycles and control wall/cycles;
+the prior 1000-basis-point cap remained unchanged. Concealed-slowdown normalized
+signals were 10032–10466 while independent work guards rejected the extra work.
+Terminal receipt: `target/codex-tools/h08-cycle-source-challenge-v3/terminal.json`,
+SHA256 `44f706c3d55d37e3cd0cfa8d3ffb864f49de0bb9e4b0182151b21cb61593e34c`.
+This is harness-source sensitivity evidence, not production certification,
+cross-frequency validation, or permission to refit a baseline from a candidate.
+
+Runner1.11.0 adds explicit `native-cli-process-tree-cycles-v1` capture: retained
+non-inheritable child handle, parent/child counters, checked exact sums and launch
+counts, native Windows only, all64 pairs, explicit batch1. The controller preserves
+the wire evidence only when requested and rejects malformed/unsolicited cycle
+data. Separate time/cycle comparison types and source/environment-bound fresh
+baseline guards reject old time-domain baselines. This capture capability remains
+opt-in: ordinary profile measurement policy and existing hard budgets are not
+silently switched to the experimental comparison method. All18 native runner unit
+tests pass with Rust1.75.0 pinned. Pinned Ruff0.15.21 formatting/lint pass. The first
+larger Python batch had87 passes and2 sandbox-temp errors; those two exact tests
+pass using workspace-local scratch. Historical failures remain recorded.
+
+The smallest admission correction establishes process placement, HighQoS and
+unlimited-quota controls before applying the identical power/frequency predicate.
+All predicate ASTs remain identical to clean2b7c9fa6. Twelve synthetic/mocked tests
+prove the new ordering, early failure when controls cannot be established, and
+unchanged rejection values. Exactly one corrected atomic probe observed CPU1
+1466/2200/2200 MHz before controls and accepted2200/2200/2200 afterwards, with
+100/100/boost0 and unlimited quota; no host-wide setting changed. Receipt
+`target/codex-tools/h08-post-placement-probe-v1/terminal.json`, SHA256
+`580add3d37c51748bf5c186451185fa5955cbc0aa90189f7bf8567583bf40ff1`.
+This establishes a passing corrected sequence, not a thermal/firmware diagnosis
+or an authoritative runtime/baseline/campaign result. The original failed admission
+receipt remains immutable. Source-bound prerequisites, fresh governed calibration
+where required, two required campaigns, signing/trusted verification and formal
+closure remain outstanding. H08 remains OPEN.
+
+The subsequent complete artifact check stopped fail-fast after twelve families
+passed: `package-manager-lockfiles` failed solely because native security integrity
+rejected the expired VSCE waiver. All16 lock and20 manifest identities matched;
+native integrity was29 PASS plus `security.waivers` FAIL (`SEC-WAIVER-EXPIRED`,
+expiry2026-10-11). The remaining22 families were not run, not passed. Raw receipt
+`target/codex-tools/artifact-integration-validation/1792034031929204515-inventory.json`
+SHA256 `5d6f8eefb890e346ac1e7725be7d1221cf0d714b3fb1c9d986430be399ecf757`
+retains979.770seconds and unchanged protected-before/after snapshots. No lock
+regeneration, prefix retry, authoritative freeze or campaign follows that failure.
+Fresh source validation has101 passing Python tests and18 passing native Rust
+tests. Of the earlier101 protected pins, only the explicitly authorized runner
+source changed during integration; all100 others remain unchanged. The source
+engineering checkpoint is not certification; the expired exception still needs
+the separate pending approval or an approved compliant remediation.

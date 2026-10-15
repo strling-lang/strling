@@ -1,5 +1,28 @@
 # Architecture Migration Ledger
 
+## H08 narrow VSCE renewal approved
+
+On October 14, 2026, the owner explicitly renewed
+`WVR-SEC-VSCE-LICENSE-001` through November 13, 2026, for the same ten pinned
+development-only dependencies, with all other checks enforced. Only expiry and
+review context change; dependency manifests, locks, exact package/version/license
+bindings and runtime scope remain unchanged. Historical expiry failures are
+preserved. Atomic lock verification now passes all 16 locks, 20 manifests and
+30 native integrity checks; all 13 waiver regression tests pass. The registered
+legacy-removal evidence check also passes without regeneration. H08 remains OPEN;
+the complete artifact gate, clean candidate prerequisites, authoritative campaigns,
+signing and independent trusted verification are not replaced by this renewal.
+
+The owner subsequently approved required dependency-metadata advisory queries.
+The real governed WSL scan reports 54 PASS and only the renewed VSCE license
+waiver, with zero failed/unavailable/incomplete checks. The native unavailable
+scan remains preserved. The new complete artifact attempt stops after five
+passing families on changing external `refs/codex/turn-diffs` bookkeeping refs;
+protected identities remain unchanged. Receipt SHA256
+`28ee6e8ccc61137a27d364e8fff9dff460a948712d013eb9a1aba666c998f0ce`
+is a failed diagnostic, not complete artifact or certification proof. Its precise
+guard boundary must be resolved and regression-tested before a new attempt.
+
 ## H08 machine-as-is offline comparison checkpoint
 
 H08 remains OPEN. A diagnostic-only variable-frequency comparison prototype and

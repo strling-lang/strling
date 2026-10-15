@@ -1078,6 +1078,24 @@ checkpoints:
           - check: Fresh source validation
             result: passed
             details: Current workspace-temp Python batch101PASS zero failures/errors; native Rust1.75 runner18PASS zero ignored/measured; pinned Ruff0.15.21 format/lintPASS; performance-artifact integrity and documentationPASS. Against old101 protected pins only explicitly authorized runner/src/main.rs source differs; all100 authority-bearing/other protected bytes remain unchanged. No exception, baseline, lock, historical evidence or workflow trust pins changed. Exact-path engineering checkpoint is not an authoritative candidate freeze or certification.
+    - name: Explicit narrow VSCE renewal approval
+      status: passed
+      evidence:
+          - check: Owner approval and unchanged dependency identities
+            result: passed
+            details: On2026-10-14 the owner explicitly approved WVR-SEC-VSCE-LICENSE-001 through2026-11-13 for the same ten pinned development-only dependencies with all other checks enforced. Only review context and expiry change; package/version/license/path bindings remain exact and no runtime or general waiver is introduced. LSP manifest bbca65f1186e8c50fbc99bd824a2821adb9843459ea9db57d2f276f5c4106a9d and lock37d04485ee991730630E1D303E56B7299C93E0D985E5630AFFA4B802A89FD3E8 remain unchanged. Historical expired/unapproved attempts remain failed and preserved.
+          - check: Atomic blocked-gate revalidation
+            result: passed
+            details: Reviewed dependency lock verification now passes16locks20manifests and all30native dependency-integrity checks, zero failed/unavailable/incomplete. All13 SecurityWaiverCertificationTests pass including expiry rejection, exact scope containment and unrelated-finding enforcement. No authenticated performance samples or authoritative profile result is claimed. Complete35 artifact integrity and subsequent exact-source prerequisites remain pending.
+    - name: Renewed real advisory proof and artifact guard diagnosis
+      status: blocked
+      evidence:
+          - check: Explicit dependency metadata query approval and real risk scan
+            result: passed
+            details: Owner explicitly approved required dependency names/version queries to configured advisory services. Governed existing WSL scanners produce54PASS plus only WVR-SEC-VSCE-LICENSE-001,zero failed/unavailable/incomplete; receipt target/codex-tools/h08-vsce-renewed-risk-wsl-v1.json. Prior native scan unavailable for missing scanners/network and rejected preapproval WSL launch remain preserved and are not green-classified.
+          - check: Complete artifact check source guard
+            result: failed
+            details: Receipt28ee6e8ccc61137a27d364e8fff9dff460a948712d013eb9a1aba666c998f0ce stops after5familyPASS because external refs/codex/turn-diffs captures/checkpoints changed. Protected identities unchanged; no product output mutation reported. This is not complete35PASS or a frozen candidate. Inspect and regression-test the precise Git authority versus external application bookkeeping boundary before retry; no unchanged expensive retry or blanket ignore is authorized by this result.
 commits:
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"
@@ -1184,4 +1202,4 @@ commits:
 readiness:
     status: BLOCKED
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: Current machine-as-is full-H08 authorization is active and supersedes the preserved October10 pause. H08 remains OPEN. Corrected process-controls-before-frequency admission passes one atomic probe with unchanged predicates; native source-distinct5760-launch diagnostics and101Python/18Rustunit checks pass. Complete35 artifact check is not green:12PASS,lockfamilyFAIL solely expired unapproved VSCE exception,22not_run. Governance independently rejects the same expiry. No new baseline, authoritative profile, candidate freeze, signing, promotion or closure is claimed. VSCE renewal/remediation approval is a genuine prerequisite; no renewal or bypass is applied. After lawful resolution, complete all38/80/126/126 qualification/promotion campaign requirements, independent Releases, signing/trusted verification, guarded closure and clean finalSHA before publication handoff. No push or publication is authorized.
+    rationale: Full-H08 authorization remains active and H08 remains OPEN. Owner explicitly approved the same ten pinned development-only VSCE bindings through2026-11-13 and required dependency metadata queries. Atomic lock verification passes16locks20manifests30native checks,13waiver regressions pass,and actual risk scan gives54PASS plus sole approved waiver,zero failed/unavailable/incomplete. Historical expiry and native unavailable attempts remain preserved. Complete35 inventory instead stops after5PASS on external application turn-diff reference changes; this boundary requires principled correction and regression proof before retry. Exact-runtime prerequisites, clean candidate freeze, required38/80/126/126 qualification/promotion campaigns, independent Releases, signing/trusted verification and guarded formal closure remain outstanding. No authenticated performance samples or authoritative profile result is claimed by this renewal. No push or publication is authorized.

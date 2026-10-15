@@ -2457,6 +2457,64 @@ def _windows_host_attestation(
     return attestation
 
 
+def _prepared_windows_platform_probe(selected_logical_cpu: int) -> dict[str, object]:
+    """Establish process-local controls before invoking the attested probe.
+
+    The conditioner still performs every original power, resource and firmware
+    check. Preparation belongs to its caller, not to a rewritten attested source.
+    """
+    performance_windows.execution_resource(selected_logical_cpu)
+    return performance_windows.stable_platform_probe(selected_logical_cpu)
+
+
+def _windows_conditioner_entrypoint(
+    *,
+    selected_logical_cpu: int,
+    expected_host_attestation: str,
+    expected_conditioner_sha256: str,
+    root: Path = ROOT,
+) -> int:
+    """Prepare this child process, then run the unmodified canonical conditioner."""
+    implementation = root / WINDOWS_ENVIRONMENT_PATH.relative_to(ROOT)
+    if (
+        platform.system().lower() != "windows"
+        or selected_logical_cpu not in GOVERNED_WINDOWS_LOGICAL_CPUS
+        or re.fullmatch(r"[0-9a-f]{64}", expected_host_attestation) is None
+        or re.fullmatch(r"[0-9a-f]{64}", expected_conditioner_sha256) is None
+        or not implementation.is_file()
+        or implementation.resolve() != Path(performance_windows.__file__).resolve()
+        or file_fingerprint(implementation) != expected_conditioner_sha256
+    ):
+        raise PerformanceResourceError(
+            "conditioning-bootstrap-identity", "canonical attested conditioner required"
+        )
+    try:
+        performance_windows.execution_resource(selected_logical_cpu)
+    except performance_windows.WindowsQualificationError as error:
+        raise PerformanceResourceError(
+            "conditioning-bootstrap-controls", str(error)
+        ) from error
+    if file_fingerprint(implementation) != expected_conditioner_sha256:
+        raise PerformanceResourceError(
+            "conditioning-bootstrap-identity", "conditioner changed during preparation"
+        )
+    exit_code = performance_windows.main(
+        [
+            "condition",
+            "--selected-logical-cpu",
+            str(selected_logical_cpu),
+            "--expected-host-attestation",
+            expected_host_attestation,
+            "--json",
+        ]
+    )
+    if file_fingerprint(implementation) != expected_conditioner_sha256:
+        raise PerformanceResourceError(
+            "conditioning-bootstrap-identity", "conditioner changed during observation"
+        )
+    return exit_code
+
+
 def _load_host_attestation(
     *,
     require_root_owned: bool = True,
@@ -2473,7 +2531,7 @@ def _load_host_attestation(
             probe = (
                 dict(windows_probe)
                 if windows_probe is not None
-                else performance_windows.stable_platform_probe(selected_logical_cpu)
+                else _prepared_windows_platform_probe(selected_logical_cpu)
             )
         except performance_windows.WindowsQualificationError as error:
             raise PerformanceResourceError("host-attestation", str(error)) from error
@@ -2678,12 +2736,15 @@ def _windows_conditioning_snapshot(
         )
     command = [
         sys.executable,
-        str(implementation),
-        "condition",
+        "-m",
+        "tooling.performance_resource_certification",
+        "condition-windows",
         "--selected-logical-cpu",
         str(environment["selected_logical_cpu"]),
         "--expected-host-attestation",
         cast(str, environment["host_attestation_fingerprint"]),
+        "--expected-conditioner-sha256",
+        cast(str, conditioning["executable_sha256"]),
         "--json",
     ]
     try:
@@ -3018,7 +3079,7 @@ def _windows_live_environment(
     *, selected_logical_cpu: int, root: Path = ROOT
 ) -> dict[str, object]:
     try:
-        probe = performance_windows.stable_platform_probe(selected_logical_cpu)
+        probe = _prepared_windows_platform_probe(selected_logical_cpu)
     except performance_windows.WindowsQualificationError as error:
         raise PerformanceResourceError("environment-unavailable", str(error)) from error
     execution_resource = cast(dict[str, Any], probe["execution_resource"])
@@ -8317,6 +8378,21 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if _should_delegate_windows_full(values):
             return _delegate_windows_full(values)
+        if values and values[0] == "condition-windows":
+            parser = argparse.ArgumentParser(
+                description="Prepare process-local controls and invoke the attested conditioner"
+            )
+            parser.add_argument("condition-windows")
+            parser.add_argument("--selected-logical-cpu", type=int, required=True)
+            parser.add_argument("--expected-host-attestation", required=True)
+            parser.add_argument("--expected-conditioner-sha256", required=True)
+            parser.add_argument("--json", action="store_true")
+            arguments = parser.parse_args(values)
+            return _windows_conditioner_entrypoint(
+                selected_logical_cpu=arguments.selected_logical_cpu,
+                expected_host_attestation=arguments.expected_host_attestation,
+                expected_conditioner_sha256=arguments.expected_conditioner_sha256,
+            )
         if values and values[0] == "rebind-artifacts":
             parser = argparse.ArgumentParser(
                 description="Revalidate current artifacts against the active baseline"

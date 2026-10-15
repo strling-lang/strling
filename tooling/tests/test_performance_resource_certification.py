@@ -2678,13 +2678,17 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 "9d36da894c826cf2331d43fb413c3bb0b34db08e:tooling/performance_windows.py",
             ]
         )
-        new_source = (
-            BASELINE_PATH.parents[4] / "tooling/performance_windows.py"
-        ).read_bytes()
-        conditioning = observed["host_attestation"]["conditioning"]
-        conditioning["executable_sha256"] = file_fingerprint(
-            BASELINE_PATH.parents[4] / "tooling/performance_windows.py"
+        new_source = subprocess.check_output(
+            [
+                "git",
+                "show",
+                "71762cf2b17f883723cbe2832221c545036be1dc:tooling/performance_windows.py",
+            ]
         )
+        conditioning = observed["host_attestation"]["conditioning"]
+        conditioning["executable_sha256"] = performance.hashlib.sha256(
+            new_source
+        ).hexdigest()
         attestation = observed["host_attestation"]
         attestation["attestation_fingerprint"] = document_fingerprint(
             attestation, "attestation_fingerprint"
@@ -2746,7 +2750,11 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 ["git", "show", "9d36da894c826cf2331d43fb413c3bb0b34db08e:" + path]
             )
         )
-        new = ast.parse((BASELINE_PATH.parents[4] / path).read_text(encoding="utf-8"))
+        new = ast.parse(
+            subprocess.check_output(
+                ["git", "show", "71762cf2b17f883723cbe2832221c545036be1dc:" + path]
+            )
+        )
         reviewed = {
             "validate_performance_power_policy",
             "power_information",

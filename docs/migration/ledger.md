@@ -1,5 +1,39 @@
 # Architecture Migration Ledger
 
+## H08 original-conditioner controller bootstrap (engineering, not certification)
+
+The one-use `71762cf2…` reference calibration failed: Simply-tiny request and
+end-to-end medians exceeded the unchanged 3,833/27,920 ns effective ceilings.
+All measurements and conditioning rejections remain retained; no baseline was
+activated. Reconstruction `3d9380ae…` identifies the complete governed
+28,836 request/resource-sample denominator, separately retaining CLI controls.
+Neither coarse CPU-time telemetry nor the later read-only sibling probe proves
+the slowdown's physical cause. There is no unchanged-source retry.
+
+The controller now prepares supported process-local controls before invoking
+the original conditioner. Its bytes are restored exactly to attested
+`0996f40c…`; every original power/placement/conditioning predicate still executes.
+The new child command verifies the canonical module and expected file hash
+before/after preparation and after observation and propagates the original
+report/exit status. No baseline identity, policy, budget, trust pin, waiver scope
+or historical evidence is rewritten. Native admission-only proof `fe4385a9…`
+passes, followed by strict environment reconstruction `eb8f6999…` with zero
+differing fields against unchanged original authority. This supersedes the
+unnecessary conditioner-source migration strategy, not its failed result.
+
+Seventeen focused Windows tests and two complete native 115-test repetitions
+pass (230 repeated passes); all nine direct artifact/architecture tests pass.
+Initial aggregate tests encountered sandbox temporary-directory permission
+errors; workspace-local fixture recovery then exposed a test-only scope error,
+now corrected and retained. The new record's unsupported pending-result enum
+was also rejected and corrected without changing its schema. The atomic
+governance recheck passes all scope/contracts/architecture checks; the real
+conditioning-child proof `af91257a…` passes the original v6/10-second policy and
+original conditioner hash, with zero product samples. The complete artifact
+gate, a clean new candidate
+and all real qualification/promotion campaigns remain required. H08 is OPEN;
+these corrections and admission checks are not performance certification.
+
 ## H08 fresh-reference transaction implementation (not activation)
 
 The explicit `migrate-conditioner-source` operation separates clean producer

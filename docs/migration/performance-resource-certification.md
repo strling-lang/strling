@@ -6,6 +6,50 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Original-conditioner controller bootstrap
+
+The one-use fresh-reference attempt at `71762cf2…` terminated with
+`warmup-regression`; it is not accepted calibration. All 54 coordinates and nine
+repetitions remain retained: 28,800 latency request samples, 36 resource samples,
+the additional paired CLI control samples, and 132 rejected pre-acquisition
+conditioning observations. Simply-tiny request/end-to-end medians were
+3,886/31,738 ns against preserved effective ceilings of 3,833/27,920 ns. The
+baseline, manifest and synthetic-evidence bytes were not published or changed.
+Independent reconstruction `3d9380ae…` preserves the failed attempt and corrects
+the reviewer's initial ceiling-rounding/count assumptions, not the measurements.
+Quantized CPU readings and a later sibling-occupancy probe do not establish the
+physical cause of those regressions.
+
+The preceding source-only migration strategy is superseded by a narrower
+controller correction. The attested conditioner is restored byte-for-byte to
+the original `0996f40c…` source, with its original admission predicates and
+measurement functions. The controller establishes the same supported
+process-local controls before calling that unmodified probe. Its fresh
+`condition-windows` child entrypoint authenticates the canonical implementation
+path and expected file hash before preparation, after preparation and after
+observation; it invokes the original `main` and preserves its exit status and
+complete report. A preparation failure cannot reach the probe. This changes no
+host-wide power/security/privilege setting and does not normalize any identity,
+rewrite historical attestation, substitute verifier code, or admit a different
+conditioner hash as compatible.
+
+Admission-only proof `fe4385a9…` observes the original 1,466 MHz pre-control state
+and 2,200 MHz accepted state after supported process preparation. Strict live
+environment reconstruction `eb8f6999…` then reports zero differing fields and
+passes the existing exact comparator against the unchanged original baseline.
+These are dirty-source engineering proofs with zero new product samples, not
+candidate qualification or authoritative profiles. The historical migration
+validator and failed acquisition remain preserved and are not relabeled PASS.
+Seventeen focused bootstrap tests, two complete native 115-test repetitions and
+nine direct artifact/architecture tests pass. Initial sandbox fixture, test-only
+scope and record-enum failures remain preserved. The atomic governance recheck
+passes all scope/contracts/architecture checks. A real fresh conditioning child
+also passes the original v6/10-second policy (`af91257a…`), with the original
+conditioner hash and no product samples. A new artifact-clean candidate with
+fresh authoritative evidence remains required.
+H08 remains OPEN, including both required campaigns, fresh independent Releases,
+signing and isolated trusted verification.
+
 ## Starting evidence
 
 ### Reviewed conditioner-source migration preparation

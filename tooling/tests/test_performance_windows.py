@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import struct
 import subprocess
@@ -11,6 +12,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from tooling import performance_windows
+from tooling import performance_resource_certification as controller
 from tooling.performance_resource_certification import _windows_host_attestation
 from tooling.performance_windows import (
     CONDITIONING_VERSION,
@@ -224,7 +226,7 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
         with self.assertRaises(WindowsQualificationError):
             validate_performance_power_policy(changed)
 
-    def test_frequency_rejection_retains_values_and_phase_without_mutation(
+    def test_attested_frequency_guard_rejects_values_without_mutation(
         self,
     ) -> None:
         power = {
@@ -242,15 +244,8 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
         }
         original = copy.deepcopy(power)
         with self.assertRaises(WindowsQualificationError) as caught:
-            validate_performance_power_policy(power, control_phase="synthetic-control")
-        for detail in (
-            "processor_number=1",
-            "current_mhz=1466",
-            "maximum_mhz=2200",
-            "mhz_limit=2200",
-            "control_phase='synthetic-control'",
-        ):
-            self.assertIn(detail, str(caught.exception))
+            validate_performance_power_policy(power)
+        self.assertIn("authenticated non-boosted frequency", str(caught.exception))
         self.assertEqual(power, original)
         for field in ("current_mhz", "mhz_limit"):
             for value in (None, "2200", 2199, 2201):
@@ -259,11 +254,11 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
                     changed["selected_processor_frequency"]["current_mhz"] = 2200
                     changed["selected_processor_frequency"][field] = value
                     with self.assertRaisesRegex(
-                        WindowsQualificationError, "power-policy-validation"
+                        WindowsQualificationError, "authenticated non-boosted frequency"
                     ):
                         validate_performance_power_policy(changed)
 
-    def test_probe_frequency_rejection_reports_phase_after_resource_controls(
+    def test_controller_prepares_controls_before_unmodified_probe_guard(
         self,
     ) -> None:
         power = {
@@ -305,12 +300,10 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(
                 WindowsQualificationError,
-                "stable-platform-probe:after-execution-resource",
+                "authenticated non-boosted frequency",
             ):
-                performance_windows.stable_platform_probe(1)
-            power_mock.assert_called_once_with(
-                2, 1, control_phase="stable-platform-probe:after-execution-resource"
-            )
+                controller._prepared_windows_platform_probe(1)
+            power_mock.assert_called_once_with(2, 1)
             resource_mock.assert_called_once_with(1)
             power_mock.reset_mock()
             resource_mock.side_effect = WindowsQualificationError(
@@ -319,8 +312,174 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
             with self.assertRaisesRegex(
                 WindowsQualificationError, "controls unavailable"
             ):
-                performance_windows.stable_platform_probe(1)
+                controller._prepared_windows_platform_probe(1)
             power_mock.assert_not_called()
+
+    def test_live_conditioner_is_exact_original_attested_source(self) -> None:
+        source = ROOT / "tooling/performance_windows.py"
+        self.assertEqual(
+            "0996f40c7f96f747a8dabf4018c57238cbbec6d3a2daa0ed4df413bd0fda908c",
+            hashlib.sha256(source.read_bytes()).hexdigest(),
+        )
+        self.assertEqual(
+            subprocess.check_output(
+                [
+                    "git",
+                    "show",
+                    "9d36da894c826cf2331d43fb413c3bb0b34db08e:tooling/performance_windows.py",
+                ],
+                cwd=ROOT,
+            ),
+            source.read_bytes(),
+        )
+
+    def test_conditioner_child_preparation_preserves_exit_and_authority(self) -> None:
+        arguments = {
+            "selected_logical_cpu": 1,
+            "expected_host_attestation": "a" * 64,
+            "expected_conditioner_sha256": hashlib.sha256(
+                (ROOT / "tooling/performance_windows.py").read_bytes()
+            ).hexdigest(),
+        }
+        authority = {
+            name: (controller.BASELINE_PATH.parent / name).read_bytes()
+            for name in ("baseline.json", "manifest.json", "valid-evidence.json")
+        }
+        for exit_code in (0, 2):
+            calls = []
+            with (
+                self.subTest(exit_code=exit_code),
+                patch.object(controller.platform, "system", return_value="Windows"),
+                patch.object(
+                    performance_windows,
+                    "execution_resource",
+                    side_effect=lambda cpu: calls.append(("resource", cpu)),
+                ),
+                patch.object(
+                    performance_windows,
+                    "main",
+                    side_effect=lambda argv: (
+                        calls.append(("condition", argv)) or exit_code
+                    ),
+                ),
+            ):
+                self.assertEqual(
+                    exit_code, controller._windows_conditioner_entrypoint(**arguments)
+                )
+            self.assertEqual("resource", calls[0][0])
+            self.assertEqual(
+                (
+                    "condition",
+                    [
+                        "condition",
+                        "--selected-logical-cpu",
+                        "1",
+                        "--expected-host-attestation",
+                        "a" * 64,
+                        "--json",
+                    ],
+                ),
+                calls[1],
+            )
+        for name, payload in authority.items():
+            self.assertEqual(
+                payload, (controller.BASELINE_PATH.parent / name).read_bytes()
+            )
+
+    def test_conditioner_child_identity_controls_and_drift_fail_closed(self) -> None:
+        expected = hashlib.sha256(
+            (ROOT / "tooling/performance_windows.py").read_bytes()
+        ).hexdigest()
+        good = dict(
+            selected_logical_cpu=1,
+            expected_host_attestation="a" * 64,
+            expected_conditioner_sha256=expected,
+        )
+        for field, bad in (
+            ("selected_logical_cpu", 2),
+            ("expected_host_attestation", "malformed"),
+            ("expected_conditioner_sha256", "0" * 64),
+        ):
+            with (
+                self.subTest(field=field),
+                patch.object(controller.platform, "system", return_value="Windows"),
+                patch.object(performance_windows, "execution_resource") as controls,
+                patch.object(performance_windows, "main") as main,
+                self.assertRaisesRegex(
+                    controller.PerformanceResourceError, "canonical attested"
+                ),
+            ):
+                controller._windows_conditioner_entrypoint(**{**good, field: bad})
+            controls.assert_not_called()
+            main.assert_not_called()
+        with (
+            patch.object(controller.platform, "system", return_value="Windows"),
+            patch.object(
+                performance_windows,
+                "execution_resource",
+                side_effect=WindowsQualificationError("controls unavailable"),
+            ),
+            patch.object(performance_windows, "main") as main,
+            self.assertRaisesRegex(
+                controller.PerformanceResourceError, "controls unavailable"
+            ),
+        ):
+            controller._windows_conditioner_entrypoint(**good)
+        main.assert_not_called()
+
+        with (
+            patch.object(controller.platform, "system", return_value="Windows"),
+            patch.object(
+                controller,
+                "file_fingerprint",
+                side_effect=[expected, expected, "0" * 64],
+            ),
+            patch.object(performance_windows, "execution_resource"),
+            patch.object(performance_windows, "main", return_value=0),
+            self.assertRaisesRegex(
+                controller.PerformanceResourceError, "changed during observation"
+            ),
+        ):
+            controller._windows_conditioner_entrypoint(**good)
+
+        with (
+            patch.object(controller.platform, "system", return_value="Windows"),
+            patch.object(
+                controller, "file_fingerprint", side_effect=[expected, "0" * 64]
+            ),
+            patch.object(performance_windows, "execution_resource"),
+            patch.object(performance_windows, "main") as main,
+            self.assertRaisesRegex(
+                controller.PerformanceResourceError, "changed during preparation"
+            ),
+        ):
+            controller._windows_conditioner_entrypoint(**good)
+        main.assert_not_called()
+
+    def test_conditioner_child_cli_keeps_original_status(self) -> None:
+        with patch.object(
+            controller, "_windows_conditioner_entrypoint", return_value=2
+        ) as entrypoint:
+            self.assertEqual(
+                2,
+                controller.main(
+                    [
+                        "condition-windows",
+                        "--selected-logical-cpu",
+                        "1",
+                        "--expected-host-attestation",
+                        "a" * 64,
+                        "--expected-conditioner-sha256",
+                        "b" * 64,
+                        "--json",
+                    ]
+                ),
+            )
+        entrypoint.assert_called_once_with(
+            selected_logical_cpu=1,
+            expected_host_attestation="a" * 64,
+            expected_conditioner_sha256="b" * 64,
+        )
 
     def test_process_power_policy_requires_explicit_high_qos(self) -> None:
         policy = {

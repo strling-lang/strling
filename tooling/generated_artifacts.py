@@ -684,6 +684,57 @@ def git_authority_digest(path: Path, *, allow_directory: bool = False) -> str:
     return hashlib.sha256(identity + b"\0" + payload).hexdigest()
 
 
+def git_reference_snapshot(directory: Path, prefix: str) -> dict[str, str]:
+    """Protect repository refs, excluding only external UI turn-diff receipts.
+
+    These two application-owned namespaces are not source, release or verifier
+    authority. Keep node validation even there; symbolic refs elsewhere must not
+    alias them. HEAD resolution, index, packed refs and configuration remain
+    independently protected by integrity_snapshot.
+    """
+    bookkeeping = (
+        "refs/codex/turn-diffs/captures",
+        "refs/codex/turn-diffs/checkpoints",
+    )
+    containers = {"refs/codex", "refs/codex/turn-diffs"}
+    state = {}
+    head = directory / "HEAD"
+    if head.is_file():
+        git_authority_digest(head)
+        payload = head.read_bytes()
+        if payload.startswith(b"ref:"):
+            target = payload[4:].strip().decode("ascii", errors="replace").casefold()
+            if any(
+                target == namespace or target.startswith(namespace + "/")
+                for namespace in bookkeeping
+            ):
+                raise RegistryError("Git authority cannot alias UI bookkeeping refs")
+    for path in (directory / "refs").rglob("*"):
+        relative = path.relative_to(directory).as_posix()
+        digest = git_authority_digest(path, allow_directory=True)
+        external = any(
+            relative == namespace or relative.startswith(namespace + "/")
+            for namespace in bookkeeping
+        )
+        if path.is_file():
+            payload = path.read_bytes()
+            if payload.startswith(b"ref:"):
+                target = (
+                    payload[4:].strip().decode("ascii", errors="replace").casefold()
+                )
+                if any(
+                    target == namespace or target.startswith(namespace + "/")
+                    for namespace in bookkeeping
+                ):
+                    raise RegistryError(
+                        "Git authority cannot alias UI bookkeeping refs"
+                    )
+        if external or (relative in containers and path.is_dir()):
+            continue
+        state[f"{prefix}/{relative}"] = digest
+    return state
+
+
 def integrity_snapshot(
     registry: Mapping[str, object], root: Path, snapshotter: Snapshotter
 ) -> dict[str, str]:
@@ -760,10 +811,7 @@ def integrity_snapshot(
                 state[f"@git/{name}"] = git_authority_digest(
                     path, allow_directory=name == "refs"
                 )
-        for path in (git_dir / "refs").rglob("*"):
-            state[f"@git/{path.relative_to(git_dir).as_posix()}"] = (
-                git_authority_digest(path, allow_directory=True)
-            )
+        state.update(git_reference_snapshot(git_dir, "@git"))
         if common_dir != git_dir:
             state["@git/common/directory"] = git_authority_digest(
                 common_dir, allow_directory=True
@@ -774,10 +822,7 @@ def integrity_snapshot(
                     state[f"@git/common/{name}"] = git_authority_digest(
                         path, allow_directory=name == "refs"
                     )
-            for path in (common_dir / "refs").rglob("*"):
-                state[f"@git/common/{path.relative_to(common_dir).as_posix()}"] = (
-                    git_authority_digest(path, allow_directory=True)
-                )
+            state.update(git_reference_snapshot(common_dir, "@git/common"))
     return state
 
 

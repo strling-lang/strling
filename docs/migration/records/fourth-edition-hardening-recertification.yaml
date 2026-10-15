@@ -1096,6 +1096,18 @@ checkpoints:
           - check: Complete artifact check source guard
             result: failed
             details: Receipt28ee6e8ccc61137a27d364e8fff9dff460a948712d013eb9a1aba666c998f0ce stops after5familyPASS because external refs/codex/turn-diffs captures/checkpoints changed. Protected identities unchanged; no product output mutation reported. This is not complete35PASS or a frozen candidate. Inspect and regression-test the precise Git authority versus external application bookkeeping boundary before retry; no unchanged expensive retry or blanket ignore is authorized by this result.
+    - name: Artifact Git authority boundary correction
+      status: in_progress
+      evidence:
+          - check: External application metadata versus certification authority
+            result: passed
+            details: Failed receipt28ee6e8ccc61137a27d364e8fff9dff460a948712d013eb9a1aba666c998f0ce identifies only external refs/codex/turn-diffs capture/checkpoint changes with protected source/output identities unchanged. These are application receipts,not source/release/verifier authority; interpreting their concurrent creation as generator mutation checks the wrong property. The correction excludes only those two exact namespaces and their directory containers,not general Codex refs. All nodes remain regular/unaliased; HEAD and symbolic repository refs cannot target the excluded namespaces. HEAD/resolved commit,index,config,packed refs,all other refs and linked common authority remain protected. Output destination guards still prohibit writes anywhere in Git metadata.
+          - check: Focused and full generated regression proof
+            result: passed
+            details: Four focused boundary regressions include in-flight external receipt creation/change PASS,ordinary and adjacent reference mutation rejection,symbolic alias rejection and filesystem alias rejection. All119generated-artifact regression tests pass twice in WSL;65native preparation tests pass with5platform-specific skips. Ruff format/lint and Gitdiffcheck pass. No registry family or authority-bearing generated output changes. Complete35artifact recheck and source-bound direct dependents remain pending;this checkpoint is not certification.
+          - check: Direct dependents and preserved scope failure
+            result: passed
+            details: All66architecture-composition/governance regression tests pass. First actual governance run rejects only the new CONTRIBUTING.md paragraph as outside declared paths;all architecture rules pass. Remove only that uncommitted paragraph,retaining the exact boundary contract in reviewed tooling docstrings and migration records;no allowed-path expansion or scope waiver. Actual governance revalidation now PASS,including all33architecture rules and scope/declarations/contracts/release-policy checks. Final119generated-artifact regressions also PASS with case-insensitive Windows alias rejection. This is an engineering correction;complete35and authoritative progression remain pending.
 commits:
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"

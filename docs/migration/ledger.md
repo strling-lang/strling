@@ -23,6 +23,15 @@ protected identities remain unchanged. Receipt SHA256
 is a failed diagnostic, not complete artifact or certification proof. Its precise
 guard boundary must be resolved and regression-tested before a new attempt.
 
+The source correction distinguishes exactly the application's turn-diff capture
+and checkpoint refs from repository authority. It retains regular-node/alias
+checks there and rejects repository symbolic refs into those namespaces; all
+other refs, HEAD/resolved commit, index, configuration, packed refs and common
+worktree authority remain guarded. The output guard still prohibits Git writes.
+All 119 generated-artifact tests pass twice, including in-flight external-ref
+updates and retained ordinary-ref mutation failures. This is a certification
+guard correction, not an artifact-inventory or H08 profile PASS.
+
 ## H08 machine-as-is offline comparison checkpoint
 
 H08 remains OPEN. A diagnostic-only variable-frequency comparison prototype and

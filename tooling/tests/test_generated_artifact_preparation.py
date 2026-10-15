@@ -610,6 +610,92 @@ class GeneratedArtifactPreparationTests(unittest.TestCase):
                 self.assertEqual([authority], report["repairs"][0]["unexpected_paths"])
                 self.assertNotIn(DEPENDENT, self.calls)
 
+    def test_external_turn_diff_receipts_do_not_change_source_authority(self) -> None:
+        subprocess.run(["git", "init", "--quiet"], cwd=self.root, check=True)
+        before = generated.integrity_snapshot(self.registry, self.root, self.snapshot)
+        for namespace in ("captures", "checkpoints"):
+            receipt = self.root / ".git/refs/codex/turn-diffs" / namespace / "fixture"
+            receipt.parent.mkdir(parents=True, exist_ok=True)
+            receipt.write_text("1" * 40 + "\n", encoding="ascii")
+        after = generated.integrity_snapshot(self.registry, self.root, self.snapshot)
+        self.assertEqual(before, after)
+        receipt.write_text("2" * 40 + "\n", encoding="ascii")
+        self.assertEqual(
+            after, generated.integrity_snapshot(self.registry, self.root, self.snapshot)
+        )
+
+        def execute(command, cwd):
+            receipt.write_text("3" * 40 + "\n", encoding="ascii")
+            return self.execute(command, cwd)
+
+        results = generated.run_registry(
+            self.registry,
+            self.root,
+            check=True,
+            complete=True,
+            executor=execute,
+            snapshotter=self.snapshot,
+        )
+        self.assertEqual(["passed"], [result.status for result in results])
+
+    def test_other_refs_including_adjacent_codex_refs_remain_protected(self) -> None:
+        directory = self.root / ".git"
+        directory.mkdir()
+        for relative in (
+            "refs/heads/main",
+            "refs/tags/release",
+            "refs/remotes/origin/main",
+            "refs/replace/fixture",
+            "refs/notes/commits",
+            "refs/codex/other",
+            "refs/codex/turn-diffs/other",
+            "refs/codex/turn-diffs/captures-other",
+        ):
+            with self.subTest(relative=relative):
+                path = directory / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("1" * 40 + "\n", encoding="ascii")
+                before = generated.git_reference_snapshot(directory, "@git")
+                path.write_text("2" * 40 + "\n", encoding="ascii")
+                after = generated.git_reference_snapshot(directory, "@git")
+                self.assertNotEqual(
+                    before[f"@git/{relative}"], after[f"@git/{relative}"]
+                )
+
+    def test_authority_cannot_symbolically_alias_external_turn_diff_refs(self) -> None:
+        directory = self.root / ".git"
+        directory.mkdir()
+        for relative in ("HEAD", "refs/heads/main", "refs/tags/release"):
+            with self.subTest(relative=relative):
+                path = directory / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                for target in (
+                    "refs/codex/turn-diffs/captures/fixture",
+                    "refs/CODEX/turn-diffs/CAPTURES/fixture",
+                ):
+                    path.write_text("ref: " + target + "\n", encoding="ascii")
+                    with self.assertRaisesRegex(
+                        generated.RegistryError, "cannot alias"
+                    ):
+                        generated.git_reference_snapshot(directory, "@git")
+                path.unlink()
+
+    def test_external_bookkeeping_nodes_still_reject_alias_resolution(self) -> None:
+        directory = self.root / ".git"
+        receipt = directory / "refs/codex/turn-diffs/checkpoints/fixture"
+        receipt.parent.mkdir(parents=True)
+        receipt.write_text("1" * 40 + "\n", encoding="ascii")
+        native_resolve = Path.resolve
+
+        def resolve(path, *arguments, **keywords):
+            if path == receipt:
+                return self.root.parent / "aliased-receipt"
+            return native_resolve(path, *arguments, **keywords)
+
+        with patch.object(Path, "resolve", resolve):
+            with self.assertRaisesRegex(generated.RegistryError, "regular node"):
+                generated.git_reference_snapshot(directory, "@git")
+
     def test_real_fixture_git_index_staging_is_detected_by_integrity_snapshot(
         self,
     ) -> None:

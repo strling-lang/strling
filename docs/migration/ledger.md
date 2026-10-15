@@ -1,5 +1,31 @@
 # Architecture Migration Ledger
 
+## H08 fresh-reference transaction implementation (not activation)
+
+The explicit `migrate-conditioner-source` operation separates clean producer
+identity from the pinned independent product reference. It retains one-use
+requests, raw subprocess outcomes, coordinate observations and terminal failures;
+requires all 54 coordinates, nine repetitions, 64 samples and 512 warmups;
+and caps activation by every prior effective relative/absolute ceiling. Typed
+provenance binds both sources, conditioner hashes, reference tree and observation
+log. Publication preserves old authority bytes and rolls back only its own
+changes, never concurrent edits. Ordinary artifact preparation cannot invoke it.
+
+Seven focused fixture-only tests pass, including source/binary/runtime tampering,
+success/failure retention, consumed-source rejection and rollback. The preceding
+98-test controller/comparison run passes, including provenance rejection and the corrected transient
+derived-budget construction order. The read-only real reference check rejects Cargo hard-linked outputs
+before sampling. That failure is retained. Four byte-identical atomic copies
+then detach only private Cargo outputs from cache links; the bundle is already
+independent. Two guard tests pass twice, and all 2,237 source files, archived
+artifact hashes, bundled children and runtime closure verify. Recovery receipt
+`048d0e61…` changes no authority bytes and does not remove the alias guard.
+The registered performance
+artifact verifier passes without regenerating authority. No new calibration,
+authenticated performance samples, candidate freeze or authoritative profile
+result is claimed. H08 remains OPEN and the approved complete campaign remains
+outstanding.
+
 ## H08 independent reference reproduced
 
 The pinned `9d36da89…` source export passes all 2,237 raw Git-blob checks. Its

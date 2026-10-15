@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+from contextlib import ExitStack
 import ast
 import io
 import json
@@ -15,6 +16,7 @@ from typing import Any, cast
 from unittest.mock import Mock, patch
 
 from jsonschema import Draft202012Validator
+from tooling import performance_resource_certification as performance
 
 from tooling.performance_resource_certification import (
     CLI_LAUNCH_COMPARISON_MODEL,
@@ -3172,6 +3174,432 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 "Synthetic complete calibration corpus for controlled contract tests."
             ),
         )
+
+
+class ConditionerSourceTransactionTests(unittest.TestCase):
+    def test_provenance_cannot_relabel_product_source_policy_or_conditioner(
+        self,
+    ) -> None:
+        manifest = load_json(performance.MANIFEST_PATH)
+        baseline = load_json(performance.BASELINE_PATH)
+        provenance = {
+            "contract": "independent-reference-conditioner-source-v1",
+            "producer_source_commit": "a" * 40,
+            "reference_source_commit": baseline["source_commit"],
+            "producer_controller_sha256": "b" * 64,
+            "prior_conditioner_sha256": "0996f40c7f96f747a8dabf4018c57238cbbec6d3a2daa0ed4df413bd0fda908c",
+            "conditioner_sha256": "49025fad600bf6a4144f60c1319831af9fd1ffe129344d1ee413f4a29a7d8995",
+            "prior_baseline_fingerprint": baseline["prior_baseline_fingerprint"],
+            "reference_tree_git_sha": "c" * 40,
+            "reference_source_fingerprint": "d" * 64,
+            "observation_log_sha256": "e" * 64,
+            "coordinate_count": 54,
+            "baseline_repetitions": 9,
+            "sample_iterations": 64,
+            "warmup_iterations": 512,
+            "prior_effective_ceilings_preserved": True,
+        }
+        # A schema-shaped claim alone cannot relabel the historical conditioner.
+        baseline["calibration_provenance"] = provenance
+        performance.validate_schema(baseline, label="baseline")
+        with self.assertRaisesRegex(PerformanceResourceError, "binding changed"):
+            performance.validate_baseline(baseline, manifest=manifest)
+        baseline["environment"]["host_attestation"]["conditioning"][
+            "executable_sha256"
+        ] = provenance["conditioner_sha256"]
+        for field, value in (
+            ("producer_source_commit", baseline["source_commit"]),
+            ("prior_baseline_fingerprint", "f" * 64),
+            ("reference_source_commit", "f" * 40),
+            ("coordinate_count", 53),
+            ("sample_iterations", 63),
+            ("warmup_iterations", 128),
+            ("baseline_repetitions", 8),
+        ):
+            changed = copy.deepcopy(baseline)
+            changed["calibration_provenance"][field] = value
+            with self.subTest(field=field), self.assertRaises(PerformanceResourceError):
+                performance.validate_baseline(changed, manifest=manifest)
+
+    def test_transaction_retains_success_failure_and_consumed_source(self) -> None:
+        for failure in (None, "sampling", "reference-drift"):
+            with (
+                self.subTest(failure=failure),
+                tempfile.TemporaryDirectory() as directory,
+                ExitStack() as stack,
+            ):
+                root = Path(directory).resolve()
+                originals = {}
+                for canonical in (
+                    performance.MANIFEST_PATH,
+                    performance.BASELINE_PATH,
+                    performance.VALID_EVIDENCE_PATH,
+                    performance.FIXTURE_MANIFEST_PATH,
+                    performance.WINDOWS_ENVIRONMENT_PATH,
+                ):
+                    destination = root / canonical.relative_to(performance.ROOT)
+                    destination.parent.mkdir(parents=True, exist_ok=True)
+                    destination.write_bytes(canonical.read_bytes())
+                    originals[destination] = destination.read_bytes()
+                controller = root / "tooling/performance_resource_certification.py"
+                controller.write_bytes(b"fixture controller")
+                manifest = load_json(performance.MANIFEST_PATH)
+                baseline = load_json(performance.BASELINE_PATH)
+                reference = {
+                    "reference_source_commit": baseline["source_commit"],
+                    "reference_tree_git_sha": "b" * 40,
+                    "reference_source_fingerprint": "c" * 64,
+                    "artifact_fingerprints": baseline["artifact_fingerprints"],
+                }
+                for name in (
+                    "validate_manifest",
+                    "validate_baseline",
+                    "validate_evidence",
+                    "_enforce_governed_cpu_affinity",
+                ):
+                    stack.enter_context(patch.object(performance, name))
+                stack.enter_context(
+                    patch.object(
+                        performance, "_git_identity", return_value=("a" * 40, False)
+                    )
+                )
+                stack.enter_context(
+                    patch.object(performance, "live_environment", return_value={})
+                )
+                stack.enter_context(
+                    patch.object(
+                        performance,
+                        "validate_conditioner_source_transition",
+                        return_value={
+                            "prior_source_sha256": "d" * 64,
+                            "candidate_source_sha256": "e" * 64,
+                        },
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        performance.subprocess,
+                        "check_output",
+                        return_value=b"prior source",
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        performance,
+                        "_verified_reference_inputs",
+                        side_effect=[
+                            reference,
+                            {**reference, "reference_tree_git_sha": "f" * 40},
+                            reference,
+                        ]
+                        if failure == "reference-drift"
+                        else None,
+                        return_value=reference,
+                    )
+                )
+                stack.enter_context(
+                    patch.object(
+                        performance,
+                        "_preserve_warmup_migration_thresholds",
+                        return_value=[{}] * 54,
+                    )
+                )
+                sampler = stack.enter_context(
+                    patch.object(
+                        performance,
+                        "calibrate_baseline",
+                        side_effect=RuntimeError("retained sampling failure")
+                        if failure == "sampling"
+                        else None,
+                        return_value=(copy.deepcopy(manifest), copy.deepcopy(baseline)),
+                    )
+                )
+                arguments = {
+                    "confirm_reviewed_source_transition": True,
+                    "expected_producer_source": "a" * 40,
+                    "reference_root": root / "target/reference",
+                    "rationale": "Reviewed source-distinct reference fixture transaction",
+                    "root": root,
+                }
+                if failure:
+                    with self.assertRaises((RuntimeError, PerformanceResourceError)):
+                        performance._migrate_conditioner_source_command(**arguments)
+                    for path, data in originals.items():
+                        self.assertEqual(data, path.read_bytes())
+                else:
+                    result = performance._migrate_conditioner_source_command(
+                        **arguments
+                    )
+                    self.assertEqual("passed", result["status"])
+                    self.assertFalse(result["certification_eligible"])
+                    self.assertEqual(
+                        baseline["source_commit"],
+                        sampler.call_args.kwargs["source_commit"],
+                    )
+                    self.assertNotEqual(
+                        "a" * 40, sampler.call_args.kwargs["source_commit"]
+                    )
+                retained = root / "target/performance-calibration" / ("a" * 40)
+                terminal = load_json(retained / "terminal.json")
+                self.assertEqual("failed" if failure else "passed", terminal["status"])
+                self.assertTrue((retained / "request.json").is_file())
+                self.assertTrue((retained / "observations.jsonl").is_file())
+                with self.assertRaises(PerformanceResourceError):
+                    performance._migrate_conditioner_source_command(**arguments)
+                self.assertEqual(1, sampler.call_count)
+                calibration_manifest = sampler.call_args.args[0]
+                expected_manifest = copy.deepcopy(manifest)
+                expected_manifest["measurement_policy"]["relative_budget_formula"] = (
+                    performance.DERIVED_RELATIVE_BUDGET_FORMULA
+                )
+                expected_manifest["manifest_fingerprint"] = (
+                    performance.document_fingerprint(
+                        expected_manifest, "manifest_fingerprint"
+                    )
+                )
+                self.assertEqual(expected_manifest, calibration_manifest)
+
+    def test_reference_export_rejects_source_binary_and_runtime_drift(self) -> None:
+        import hashlib
+
+        for mutation in (None, "source", "missing", "extra", "binary", "child", "dll"):
+            with (
+                self.subTest(mutation=mutation),
+                tempfile.TemporaryDirectory() as directory,
+            ):
+                root = Path(directory).resolve()
+                reference = root / "target/reference"
+                reference.mkdir(parents=True)
+                source = reference / "source.rs"
+                source.write_bytes(b"immutable reference\n")
+                blob = hashlib.sha1(
+                    b"blob 20\0immutable reference\n", usedforsecurity=False
+                ).hexdigest()
+                listing = f"100644 blob {blob}\tsource.rs\0".encode()
+                release = reference / "core/internal/target/release"
+                release.mkdir(parents=True)
+                binaries = {
+                    name: release / (name + ".exe")
+                    for name in ("runner", "kernel", "interop", "worker")
+                }
+                for name, path in binaries.items():
+                    path.write_bytes(name.encode())
+
+                def identity(path):
+                    return {
+                        "path": path.relative_to(reference).as_posix(),
+                        "sha256": performance.file_fingerprint(path),
+                        "bytes": path.stat().st_size,
+                    }
+
+                bundle = release / "bundle.json"
+                bundle.write_text(
+                    json.dumps(
+                        {
+                            "artifacts": [
+                                {"role": role, **identity(binaries[name])}
+                                for role, name in (
+                                    ("measurement-runner", "runner"),
+                                    ("peak-rss-worker", "worker"),
+                                )
+                            ]
+                        }
+                    ),
+                    encoding="utf-8",
+                )
+                baseline = {
+                    "source_commit": "9d36da894c826cf2331d43fb413c3bb0b34db08e",
+                    "artifact_fingerprints": {
+                        "runner": identity(bundle),
+                        "kernel": identity(binaries["kernel"]),
+                        "interop": identity(binaries["interop"]),
+                    },
+                }
+                if mutation == "source":
+                    source.write_bytes(b"changed")
+                elif mutation == "missing":
+                    source.unlink()
+                elif mutation == "extra":
+                    (reference / "unexpected.rs").write_bytes(b"extra")
+                elif mutation == "binary":
+                    binaries["kernel"].write_bytes(b"different")
+                elif mutation == "child":
+                    binaries["worker"].write_bytes(b"different")
+                elif mutation == "dll":
+                    (release / "injected.dll").write_bytes(b"extra")
+                with (
+                    patch.object(
+                        performance.subprocess, "check_output", return_value=listing
+                    ),
+                    patch.object(performance, "_capture", return_value="a" * 40),
+                    patch.object(
+                        performance,
+                        "_release_artifacts",
+                        return_value={
+                            key: binaries[key]
+                            for key in ("runner", "kernel", "interop")
+                        },
+                    ),
+                    patch.object(
+                        performance,
+                        "_memory_worker_artifact",
+                        return_value=binaries["worker"],
+                    ),
+                ):
+                    if mutation is None:
+                        result = performance._verified_reference_inputs(
+                            reference, baseline, root=root
+                        )
+                        self.assertEqual(1, result["reference_file_count"])
+                        self.assertEqual(
+                            baseline["artifact_fingerprints"],
+                            result["artifact_fingerprints"],
+                        )
+                    else:
+                        with self.assertRaises(PerformanceResourceError):
+                            performance._verified_reference_inputs(
+                                reference, baseline, root=root
+                            )
+
+    def test_raw_process_retention_and_scope_restoration(self) -> None:
+        events = []
+        result = subprocess.CompletedProcess(
+            ["fixture"], 0, "unvalidated raw JSON", "diagnostic"
+        )
+        with patch.object(performance.subprocess, "run", return_value=result):
+            with performance._retain_measurement_processes(events.append):
+                self.assertIs(result, performance._measurement_process_run(["fixture"]))
+            self.assertIs(result, performance._measurement_process_run(["fixture"]))
+        self.assertEqual(2, len(events))
+        self.assertEqual("unvalidated raw JSON", events[-1]["stdout"])
+        failure = subprocess.CalledProcessError(
+            7, ["fixture"], output=b"partial samples", stderr=b"failure"
+        )
+        with patch.object(performance.subprocess, "run", side_effect=failure):
+            with performance._retain_measurement_processes(events.append):
+                with self.assertRaises(subprocess.CalledProcessError) as raised:
+                    performance._measurement_process_run(["fixture"])
+        self.assertIs(failure, raised.exception)
+        self.assertEqual("base64", events[-1]["stdout"]["encoding"])
+        self.assertEqual(7, events[-1]["returncode"])
+
+    def test_dirty_wrong_source_or_missing_confirmation_never_samples(self) -> None:
+        with patch.object(performance, "calibrate_baseline") as sampler:
+            for confirmed, identity, expected in (
+                (False, ("a" * 40, False), "a" * 40),
+                (True, ("a" * 40, True), "a" * 40),
+                (True, ("a" * 40, False), "b" * 40),
+            ):
+                with patch.object(performance, "_git_identity", return_value=identity):
+                    with self.assertRaises(PerformanceResourceError):
+                        performance._migrate_conditioner_source_command(
+                            confirm_reviewed_source_transition=confirmed,
+                            expected_producer_source=expected,
+                            reference_root=Path("unused"),
+                            rationale="Reviewed independent reference calibration",
+                        )
+            sampler.assert_not_called()
+
+    def test_publication_rolls_back_exact_bytes_without_overwriting_concurrent_work(
+        self,
+    ) -> None:
+        for concurrent in (False, True):
+            with (
+                self.subTest(concurrent=concurrent),
+                tempfile.TemporaryDirectory() as directory,
+            ):
+                root = Path(directory).resolve()
+                parent = root / "tests/certification/performance-resource/1.0"
+                parent.mkdir(parents=True)
+                paths = {
+                    name: parent / name
+                    for name in (
+                        "manifest.json",
+                        "baseline.json",
+                        "valid-evidence.json",
+                    )
+                }
+                old = {name: b'{ "original": true }\n' for name in paths}
+                for name, path in paths.items():
+                    path.write_bytes(old[name])
+                candidates = {name: {"new": True} for name in paths}
+                real_write = performance._write_json
+                count = 0
+
+                def write(path, value, *, root):
+                    nonlocal count
+                    count += 1
+                    real_write(path, value, root=root)
+                    if count == 2:
+                        if concurrent:
+                            paths["manifest.json"].write_bytes(b"concurrent owner\n")
+                        raise OSError("controlled publication failure")
+
+                with patch.object(performance, "_write_json", side_effect=write):
+                    with self.assertRaises((OSError, PerformanceResourceError)):
+                        performance._publish_reference_authority(
+                            paths, old, candidates, root=root
+                        )
+                for name, path in paths.items():
+                    expected = (
+                        b"concurrent owner\n"
+                        if concurrent and name == "manifest.json"
+                        else old[name]
+                    )
+                    self.assertEqual(expected, path.read_bytes())
+
+    def test_prior_effective_ceiling_caps_every_coordinate_and_policy_is_immutable(
+        self,
+    ) -> None:
+        prior_manifest = load_json(MANIFEST_PATH)
+        prior_baseline = load_json(BASELINE_PATH)
+        manifest, baseline = (
+            copy.deepcopy(prior_manifest),
+            copy.deepcopy(prior_baseline),
+        )
+        reports = performance._preserve_warmup_migration_thresholds(
+            prior_manifest,
+            prior_baseline,
+            manifest,
+            baseline,
+            preserve_prior_effective_ceilings=True,
+        )
+        self.assertEqual(54, len(reports))
+        for old, new in zip(prior_baseline["measurements"], baseline["measurements"]):
+            statistics = old.get("relative_statistics", old["statistics"])
+            effective = min(
+                old["budget"]["absolute_ceiling"],
+                statistics["median"]
+                * (10000 + old["budget"]["relative_regression_basis_points"])
+                // 10000,
+            )
+            self.assertLessEqual(new["budget"]["absolute_ceiling"], effective)
+            self.assertLessEqual(
+                new["budget"]["relative_regression_basis_points"],
+                old["budget"]["relative_regression_basis_points"],
+            )
+        changed = copy.deepcopy(prior_manifest)
+        changed["measurement_policy"]["baseline_repetitions"] -= 1
+        with self.assertRaisesRegex(
+            PerformanceResourceError, "cannot change measurement"
+        ):
+            performance._preserve_warmup_migration_thresholds(
+                prior_manifest,
+                prior_baseline,
+                changed,
+                copy.deepcopy(prior_baseline),
+                preserve_prior_effective_ceilings=True,
+            )
+        changed = copy.deepcopy(prior_baseline)
+        changed["measurements"].pop()
+        with self.assertRaises(PerformanceResourceError):
+            performance._preserve_warmup_migration_thresholds(
+                prior_manifest,
+                prior_baseline,
+                copy.deepcopy(prior_manifest),
+                changed,
+                preserve_prior_effective_ceilings=True,
+            )
 
 
 if __name__ == "__main__":

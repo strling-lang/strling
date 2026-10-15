@@ -8,6 +8,30 @@ public APIs, support tiers, or regex-engine performance promises.
 
 ## Starting evidence
 
+### Reviewed conditioner-source migration preparation
+
+`migrate-conditioner-source` is a separate, explicit governed refresh operation,
+not part of automatic generated-artifact preparation or immutable certification.
+It requires the exact clean producer SHA, reviewed source-transition confirmation,
+reviewable rationale and a private raw export of the pinned original reference
+`9d36da894c826cf2331d43fb413c3bb0b34db08e`. Every source blob and archived binary
+identity, including bundled child executables and adjacent runtime closure, must
+verify before acquisition and again before publication. Aliases are rejected.
+
+The unchanged 54-coordinate, nine-repetition, 64-sample, 512-warmup policy uses
+the independently reproduced reference binaries, never candidate binaries or
+historical measurement reuse. Every old effective ceiling caps the new authority.
+The optional typed `calibration_provenance` distinguishes producer controller
+source from measured reference source and binds the retained observation log.
+One source gets one retained attempt. Raw child failures remain inspectable;
+publication failures restore only exact bytes written by this transaction.
+Implementation and synthetic tests do not activate this migration or qualify a
+candidate. Initial read-only admission rejected Cargo hardlinks. Subsequent
+byte-identical private-file materialization preserves all archived hashes and
+passes the complete source/binary/runtime closure validator (`048d0e61…`), with
+the original failure retained and no alias exception. No measurements have been
+collected by this preparation.
+
 At the clean task anchor `f4f9cc03cc1277d99a65470ef911e9bfbdee78eb`,
 the repository has three performance tests. Each is embedded in one of the
 PCRE2, ECMAScript, or Python `re` runtime-certification suites. They use 16

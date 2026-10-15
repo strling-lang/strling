@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import copy
 import csv
 import hashlib
@@ -21,6 +22,7 @@ import sys
 import tempfile
 import time
 from contextlib import contextmanager
+from contextvars import ContextVar
 from pathlib import Path
 from typing import Any, Callable, Iterator, Mapping, Sequence, cast
 
@@ -77,6 +79,9 @@ CAPPED_RELATIVE_BUDGET_FORMULA = (
 HOST_ATTESTATION_ENV = "STRLING_PERFORMANCE_HOST_ATTESTATION"
 ALLOWED_CLOCKSOURCES = {"tsc", "hyperv_clocksource_tsc_page"}
 WINDOWS_ENVIRONMENT_PATH = ROOT / "tooling/performance_windows.py"
+_MEASUREMENT_PROCESS_RECORDER: ContextVar[Callable[[dict[str, Any]], None] | None] = (
+    ContextVar("measurement_process_recorder", default=None)
+)
 EXIT_CODES = {"passed": 0, "failed": 1, "unavailable": 2, "incomplete": 3}
 WINDOWS_EXTERNAL_WORKLOAD_PROCESS_NAMES = {
     "behavioral_realization",
@@ -1268,6 +1273,34 @@ def validate_baseline(
     fixtures: Mapping[str, object] | None = None,
 ) -> None:
     validate_schema(baseline, label="baseline")
+    provenance = baseline.get("calibration_provenance")
+    if provenance is not None:
+        provenance = cast(Mapping[str, Any], provenance)
+        if (
+            baseline["baseline_state"] != "active"
+            or provenance["reference_source_commit"] != baseline["source_commit"]
+            or provenance["producer_source_commit"] == baseline["source_commit"]
+            or provenance["prior_baseline_fingerprint"]
+            != baseline.get("prior_baseline_fingerprint")
+            or provenance["conditioner_sha256"]
+            != baseline["environment"]["host_attestation"]["conditioning"][
+                "executable_sha256"
+            ]
+            or any(
+                provenance[field] != manifest["measurement_policy"][field]
+                for field in (
+                    "baseline_repetitions",
+                    "sample_iterations",
+                    "warmup_iterations",
+                )
+            )
+            or provenance["coordinate_count"]
+            != len(performance_measurement_keys(manifest))
+        ):
+            raise PerformanceResourceError(
+                "reference-calibration-provenance",
+                "independent producer/reference/policy binding changed",
+            )
     if baseline["manifest_fingerprint"] != manifest["manifest_fingerprint"]:
         raise PerformanceResourceError(
             "stale-manifest", "baseline manifest fingerprint changed"
@@ -2574,6 +2607,62 @@ def _decode_windows_conditioning_report(
     return report
 
 
+@contextmanager
+def _retain_measurement_processes(
+    recorder: Callable[[dict[str, Any]], None],
+) -> Iterator[None]:
+    token = _MEASUREMENT_PROCESS_RECORDER.set(recorder)
+    try:
+        yield
+    finally:
+        _MEASUREMENT_PROCESS_RECORDER.reset(token)
+
+
+def _measurement_process_run(
+    command: Sequence[str], **options: Any
+) -> subprocess.CompletedProcess[str]:
+    """Retain complete raw child results, including rejected/partial attempts."""
+    recorder = _MEASUREMENT_PROCESS_RECORDER.get()
+
+    def stream(value: object) -> object:
+        if isinstance(value, bytes):
+            return {
+                "encoding": "base64",
+                "data": base64.b64encode(value).decode("ascii"),
+            }
+        return value
+
+    if recorder is not None:
+        recorder({"event": "measurement-process-start", "command": list(command)})
+    try:
+        result = subprocess.run(command, **options)
+    except BaseException as error:
+        if recorder is not None:
+            recorder(
+                {
+                    "event": "measurement-process-failed",
+                    "command": list(command),
+                    "error": repr(error),
+                    "returncode": getattr(error, "returncode", None),
+                    "stdout": stream(getattr(error, "stdout", None)),
+                    "stderr": stream(getattr(error, "stderr", None)),
+                    "undecodable_bytes": stream(getattr(error, "object", None)),
+                }
+            )
+        raise
+    if recorder is not None:
+        recorder(
+            {
+                "event": "measurement-process-result",
+                "command": list(command),
+                "returncode": result.returncode,
+                "stdout": stream(result.stdout),
+                "stderr": stream(result.stderr),
+            }
+        )
+    return result
+
+
 def _windows_conditioning_snapshot(
     environment: Mapping[str, object], *, root: Path = ROOT
 ) -> dict[str, Any]:
@@ -2598,7 +2687,7 @@ def _windows_conditioning_snapshot(
         "--json",
     ]
     try:
-        completed = subprocess.run(
+        completed = _measurement_process_run(
             command,
             cwd=root,
             check=False,
@@ -3246,7 +3335,7 @@ def _runner_samples(
             )
         command.extend(["--cli-launch-schedule", cli_launch_schedule])
     try:
-        completed = subprocess.run(
+        completed = _measurement_process_run(
             command,
             cwd=root,
             check=True,
@@ -3552,7 +3641,7 @@ def _memory_sample(
             str(selected_logical_cpu),
         ]
         try:
-            completed = subprocess.run(
+            completed = _measurement_process_run(
                 command,
                 cwd=root,
                 check=True,
@@ -6637,9 +6726,20 @@ def _preserve_warmup_migration_thresholds(
     *,
     selected_logical_cpu_migration: tuple[int, int] | None = None,
     launch_normalization_migration: bool = False,
+    preserve_prior_effective_ceilings: bool = False,
 ) -> list[dict[str, object]]:
     """Require the recalibrated measurements to pass every prior hard ceiling."""
 
+    if preserve_prior_effective_ceilings and (
+        selected_logical_cpu_migration is not None
+        or launch_normalization_migration
+        or _rollover_contract_projection(prior_manifest)
+        != _rollover_contract_projection(candidate_manifest)
+    ):
+        raise PerformanceResourceError(
+            "conditioner-source-contract-drift",
+            "source-only migration cannot change measurement, sampling or conditioning policy",
+        )
     if launch_normalization_migration and candidate_manifest["measurement_policy"][
         "relative_budget_formula"
     ] not in {DERIVED_RELATIVE_BUDGET_FORMULA, CAPPED_RELATIVE_BUDGET_FORMULA}:
@@ -6816,7 +6916,7 @@ def _preserve_warmup_migration_thresholds(
         )
         prior_relative = prior["budget"]["relative_regression_basis_points"]
         prior_absolute = prior["budget"]["absolute_ceiling"]
-        if launch_normalization_migration:
+        if launch_normalization_migration or preserve_prior_effective_ceilings:
             prior_statistics = (
                 prior["relative_statistics"]
                 if operation_comparison_model(operation) == CLI_LAUNCH_COMPARISON_MODEL
@@ -6837,7 +6937,7 @@ def _preserve_warmup_migration_thresholds(
             "rationale": (
                 "Fresh governed repetition medians derive the candidate budget; "
                 "the immediately prior effective ceilings cap any relaxation."
-                if launch_normalization_migration
+                if launch_normalization_migration or preserve_prior_effective_ceilings
                 else "Five governed repetition medians derive the candidate budget; "
                 "the immediately prior hard ceilings cap any relaxation."
             ),
@@ -7192,6 +7292,481 @@ def _warmup_migration_manifest(
         DERIVED_RELATIVE_BUDGET_FORMULA
     )
     return cast(int, prior_warmups), target_warmups, candidate_manifest
+
+
+def _verified_reference_inputs(
+    reference_root: Path, prior_baseline: Mapping[str, Any], *, root: Path = ROOT
+) -> dict[str, Any]:
+    """Bind a private raw source export and binaries to the archived reference."""
+    reference = "9d36da894c826cf2331d43fb413c3bb0b34db08e"
+    lexical = reference_root.absolute()
+    if (
+        prior_baseline["source_commit"] != reference
+        or lexical.resolve() != lexical
+        or not lexical.is_relative_to((root / "target").resolve())
+        or (lexical / ".git").exists()
+    ):
+        raise PerformanceResourceError(
+            "reference-source-boundary", "pinned private source export required"
+        )
+    listing = subprocess.check_output(
+        _git_invocation(root, "ls-tree", "-r", "-z", "--full-tree", reference), cwd=root
+    )
+    sources: dict[str, str] = {}
+    for row in listing.split(b"\0"):
+        if not row:
+            continue
+        header, name = row.split(b"\t", 1)
+        mode, kind, expected = header.split()
+        relative = name.decode("utf-8")
+        path = lexical / relative
+        if (
+            mode not in (b"100644", b"100755")
+            or kind != b"blob"
+            or Path(relative).is_absolute()
+            or ".." in Path(relative).parts
+            or any(":" in part for part in Path(relative).parts)
+            or not path.is_file()
+            or path.is_symlink()
+            or path.resolve() != path
+            or path.stat().st_nlink != 1
+        ):
+            raise PerformanceResourceError(
+                "reference-source-node", "unsafe/missing reference node: " + relative
+            )
+        payload = path.read_bytes()
+        blob = hashlib.sha1(
+            b"blob " + str(len(payload)).encode() + b"\0" + payload,
+            usedforsecurity=False,
+        ).hexdigest()
+        if blob != expected.decode("ascii"):
+            raise PerformanceResourceError(
+                "reference-source-drift", "raw reference Git blob changed: " + relative
+            )
+        sources[relative] = hashlib.sha256(payload).hexdigest()
+    cache_roots = {
+        "core/internal/target",
+        "bindings/interop/target",
+        "tests/certification/performance-resource/1.0/runner/target",
+    }
+    for directory, subdirectories, files in os.walk(lexical, followlinks=False):
+        parent = Path(directory)
+        for name in list(subdirectories):
+            path = parent / name
+            relative = path.relative_to(lexical).as_posix()
+            if path.is_symlink() or path.resolve() != path:
+                raise PerformanceResourceError(
+                    "reference-source-node", "aliased reference directory"
+                )
+            if relative in cache_roots:
+                subdirectories.remove(name)
+        for name in files:
+            if (parent / name).relative_to(lexical).as_posix() not in sources:
+                raise PerformanceResourceError(
+                    "reference-extra-source", "unregistered reference source file"
+                )
+    observed = {}
+    for name, definition in prior_baseline["artifact_fingerprints"].items():
+        path = lexical / definition["path"]
+        if path.resolve() != path or not path.is_file() or path.stat().st_nlink != 1:
+            raise PerformanceResourceError(
+                "reference-artifact-node", "unsafe reference artifact"
+            )
+        observed[name] = {
+            "path": definition["path"],
+            "sha256": file_fingerprint(path),
+            "bytes": path.stat().st_size,
+        }
+    if observed != prior_baseline["artifact_fingerprints"]:
+        raise PerformanceResourceError(
+            "reference-artifact-identity",
+            "independent reference must exactly reproduce archived binaries",
+        )
+    bundle = load_json(lexical / observed["runner"]["path"])
+    expected_roles = {
+        "measurement-runner": _release_artifacts(lexical)["runner"],
+        "peak-rss-worker": _memory_worker_artifact(lexical),
+    }
+    if {row["role"] for row in bundle["artifacts"]} != set(expected_roles) or len(
+        bundle["artifacts"]
+    ) != 2:
+        raise PerformanceResourceError(
+            "reference-runner-bundle", "runner bundle denominator changed"
+        )
+    for definition in bundle["artifacts"]:
+        path = cast(Path, expected_roles[definition["role"]])
+        if (
+            path.resolve() != path
+            or path.is_symlink()
+            or path.stat().st_nlink != 1
+            or path.relative_to(lexical).as_posix() != definition["path"]
+            or file_fingerprint(path) != definition["sha256"]
+            or path.stat().st_size != definition["bytes"]
+        ):
+            raise PerformanceResourceError(
+                "reference-runner-bundle", "runner child identity changed"
+            )
+    runtime_paths = {cast(Path, path) for path in _release_artifacts(lexical).values()}
+    runtime_paths.add(_memory_worker_artifact(lexical))
+    for directory in {path.parent for path in runtime_paths}:
+        if any(
+            path.suffix.lower() in {".dll", ".exe"} and path not in runtime_paths
+            for path in directory.iterdir()
+        ):
+            raise PerformanceResourceError(
+                "reference-runtime-closure",
+                "unexpected executable/DLL beside reference artifacts",
+            )
+    return {
+        "reference_source_commit": reference,
+        "reference_tree_git_sha": _capture(
+            _git_invocation(root, "rev-parse", reference + "^{tree}"), root=root
+        ),
+        "reference_source_fingerprint": fingerprint(sources),
+        "reference_file_count": len(sources),
+        "artifact_fingerprints": observed,
+    }
+
+
+def _publish_reference_authority(
+    paths: Mapping[str, Path],
+    prior_bytes: Mapping[str, bytes],
+    candidates: Mapping[str, Mapping[str, object]],
+    *,
+    root: Path = ROOT,
+) -> None:
+    """Publish governed files; restore only our own new bytes on failure."""
+    expected_names = {"manifest.json", "baseline.json", "valid-evidence.json"}
+    parent = (root / BASELINE_PATH.relative_to(ROOT)).parent.resolve()
+    if (
+        set(paths) != expected_names
+        or set(candidates) != expected_names
+        or set(prior_bytes) != expected_names
+    ):
+        raise PerformanceResourceError(
+            "reference-publication-boundary", "authority denominator changed"
+        )
+    for name, path in paths.items():
+        if (
+            path.absolute() != path.resolve()
+            or path.parent != parent
+            or path.name != name
+            or path.stat().st_nlink != 1
+        ):
+            raise PerformanceResourceError(
+                "reference-publication-boundary", "unsafe authority destination"
+            )
+        if path.read_bytes() != prior_bytes[name]:
+            raise PerformanceResourceError(
+                "reference-publication-drift", "authority changed before publication"
+            )
+    proposed = {
+        name: (
+            (json.dumps(value, ensure_ascii=False, separators=(",", ":")) + "\n")
+            if name == "baseline.json"
+            else serialized_json(value)
+        ).encode("utf-8")
+        for name, value in candidates.items()
+    }
+    try:
+        for name, path in paths.items():
+            if path.read_bytes() != prior_bytes[name]:
+                raise PerformanceResourceError(
+                    "reference-publication-drift", "concurrent authority change"
+                )
+            _write_json(path, candidates[name], root=root)
+            if path.read_bytes() != proposed[name]:
+                raise PerformanceResourceError(
+                    "reference-publication-bytes", "published bytes differ"
+                )
+        if any(paths[name].read_bytes() != data for name, data in proposed.items()):
+            raise PerformanceResourceError(
+                "reference-publication-drift", "authority changed during publication"
+            )
+    except BaseException:
+        conflicts = []
+        for name, path in paths.items():
+            current = path.read_bytes()
+            if current == prior_bytes[name]:
+                continue
+            if current != proposed[name]:
+                conflicts.append(name)
+                continue
+            with tempfile.NamedTemporaryFile(
+                dir=parent, prefix=".reference-rollback-", delete=False
+            ) as stream:
+                stream.write(prior_bytes[name])
+                stream.flush()
+                os.fsync(stream.fileno())
+                temporary = Path(stream.name)
+            os.replace(temporary, path)
+        if conflicts:
+            raise PerformanceResourceError(
+                "reference-publication-concurrent-change",
+                "preserved concurrent changes: " + ",".join(conflicts),
+            )
+        raise
+
+
+def _migrate_conditioner_source_command(
+    *,
+    confirm_reviewed_source_transition: bool,
+    expected_producer_source: str,
+    reference_root: Path,
+    rationale: str,
+    root: Path = ROOT,
+) -> dict[str, Any]:
+    """Acquire fresh independent-reference data; never fit the candidate program."""
+    if not confirm_reviewed_source_transition or len(rationale.strip()) < 20:
+        raise PerformanceResourceError(
+            "conditioner-source-confirmation",
+            "reviewed source transition and rationale required",
+        )
+    commit, dirty = _git_identity(root)
+    if dirty or commit != expected_producer_source:
+        raise PerformanceResourceError(
+            "conditioner-source-producer", "exact clean producer source required"
+        )
+    paths = {
+        name: root / BASELINE_PATH.relative_to(ROOT).parent / name
+        for name in ("manifest.json", "baseline.json", "valid-evidence.json")
+    }
+    prior_bytes = {name: path.read_bytes() for name, path in paths.items()}
+    prior_manifest, prior_baseline, prior_evidence = (
+        load_json(paths[name]) for name in paths
+    )
+    fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
+    validate_manifest(prior_manifest, root=root, fixtures=fixtures)
+    validate_baseline(prior_baseline, manifest=prior_manifest, fixtures=fixtures)
+    validate_evidence(prior_evidence, manifest=prior_manifest)
+    policy = prior_manifest["measurement_policy"]
+    if (
+        policy["warmup_iterations"],
+        policy["sample_iterations"],
+        policy["baseline_repetitions"],
+        len(performance_measurement_keys(prior_manifest)),
+    ) != (512, 64, 9, 54):
+        raise PerformanceResourceError(
+            "conditioner-source-denominator",
+            "reviewed complete calibration denominator required",
+        )
+    reference_root = reference_root.absolute()
+    reference = _verified_reference_inputs(reference_root, prior_baseline, root=root)
+    if commit == reference["reference_source_commit"]:
+        raise PerformanceResourceError(
+            "conditioner-source-independent-reference",
+            "producer and reference must be source-distinct",
+        )
+    prior_source = subprocess.check_output(
+        _git_invocation(
+            root,
+            "show",
+            reference["reference_source_commit"] + ":tooling/performance_windows.py",
+        ),
+        cwd=root,
+    )
+    candidate_source = (root / WINDOWS_ENVIRONMENT_PATH.relative_to(ROOT)).read_bytes()
+    _enforce_governed_cpu_affinity(prior_manifest)
+    environment = live_environment(
+        selected_logical_cpu=policy["selected_logical_cpu"], root=root
+    )
+    transition = validate_conditioner_source_transition(
+        prior_baseline["environment"],
+        environment,
+        prior_source=prior_source,
+        candidate_source=candidate_source,
+    )
+    history = (
+        root
+        / PERFORMANCE_HISTORY_PATH.relative_to(ROOT)
+        / prior_baseline["baseline_fingerprint"]
+    )
+    if history.exists():
+        raise PerformanceResourceError(
+            "conditioner-source-history-exists",
+            "prior authority history already exists",
+        )
+    retained = root / "target/performance-calibration" / commit
+    try:
+        retained.mkdir(parents=True, exist_ok=False)
+    except FileExistsError as error:
+        raise PerformanceResourceError(
+            "conditioner-source-consumed", "producer already attempted calibration"
+        ) from error
+    request = {
+        "artifact_kind": "strling-independent-reference-conditioner-source-calibration-v1",
+        "source_commit": commit,
+        "reference": reference,
+        "transition": transition,
+        "rationale": rationale,
+        "measurement_policy": policy,
+        "prior_artifacts": {
+            name: hashlib.sha256(data).hexdigest() for name, data in prior_bytes.items()
+        },
+        "authoritative_profile": False,
+        "candidate_frozen": False,
+    }
+    _write_calibration_diagnostic(retained / "request.json", request, root=root)
+    log = retained / "observations.jsonl"
+
+    def record(event: dict[str, Any]) -> None:
+        with log.open("a", encoding="utf-8", newline="\n") as stream:
+            stream.write(
+                json.dumps(
+                    {
+                        "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                        **event,
+                    },
+                    sort_keys=True,
+                )
+                + "\n"
+            )
+            stream.flush()
+            os.fsync(stream.fileno())
+
+    try:
+        record({"event": "calibration-start", "environment": environment})
+        # Fresh data initially has no prior-baseline link. Derive its budgets in
+        # memory, then apply the prior effective caps before any authority write.
+        calibration_manifest = copy.deepcopy(prior_manifest)
+        calibration_manifest["measurement_policy"]["relative_budget_formula"] = (
+            DERIVED_RELATIVE_BUDGET_FORMULA
+        )
+        calibration_manifest["manifest_fingerprint"] = document_fingerprint(
+            calibration_manifest, "manifest_fingerprint"
+        )
+        with _retain_measurement_processes(record):
+            candidate_manifest, candidate_baseline = calibrate_baseline(
+                calibration_manifest,
+                fixtures,
+                artifacts=_release_artifacts(reference_root),
+                artifact_fingerprints=reference["artifact_fingerprints"],
+                environment=environment,
+                source_commit=reference["reference_source_commit"],
+                rationale=rationale,
+                observation_recorder=record,
+                root=root,
+            )
+        _write_calibration_diagnostic(
+            retained / "candidate-baseline.json", candidate_baseline, root=root
+        )
+        candidate_manifest["measurement_policy"]["relative_budget_formula"] = policy[
+            "relative_budget_formula"
+        ]
+        comparisons = _preserve_warmup_migration_thresholds(
+            prior_manifest,
+            prior_baseline,
+            candidate_manifest,
+            candidate_baseline,
+            preserve_prior_effective_ceilings=True,
+        )
+        if (
+            _verified_reference_inputs(reference_root, prior_baseline, root=root)
+            != reference
+        ):
+            raise PerformanceResourceError(
+                "conditioner-source-reference-drift",
+                "reference changed during calibration",
+            )
+        provenance = {
+            "contract": "independent-reference-conditioner-source-v1",
+            "producer_source_commit": commit,
+            "reference_source_commit": reference["reference_source_commit"],
+            "producer_controller_sha256": file_fingerprint(
+                root / "tooling/performance_resource_certification.py"
+            ),
+            "prior_conditioner_sha256": transition["prior_source_sha256"],
+            "conditioner_sha256": transition["candidate_source_sha256"],
+            "prior_baseline_fingerprint": prior_baseline["baseline_fingerprint"],
+            "reference_tree_git_sha": reference["reference_tree_git_sha"],
+            "reference_source_fingerprint": reference["reference_source_fingerprint"],
+            "observation_log_sha256": file_fingerprint(log),
+            "coordinate_count": len(comparisons),
+            "baseline_repetitions": policy["baseline_repetitions"],
+            "sample_iterations": policy["sample_iterations"],
+            "warmup_iterations": policy["warmup_iterations"],
+            "prior_effective_ceilings_preserved": True,
+        }
+        candidate_baseline["calibration_provenance"] = provenance
+        candidate_baseline["update_command"] = (
+            "python -m tooling.performance_resource_certification migrate-conditioner-source "
+            "--confirm-reviewed-source-transition --expected-producer-source "
+            + commit
+            + " --reference-root "
+            + str(reference_root.relative_to(root))
+            + " --rationale <reviewed-rationale>"
+        )
+        candidate_baseline["baseline_fingerprint"] = document_fingerprint(
+            candidate_baseline, "baseline_fingerprint"
+        )
+        candidate_evidence = copy.deepcopy(prior_evidence)
+        candidate_evidence["manifest_fingerprint"] = candidate_manifest[
+            "manifest_fingerprint"
+        ]
+        validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
+        validate_baseline(
+            candidate_baseline, manifest=candidate_manifest, fixtures=fixtures
+        )
+        validate_evidence(candidate_evidence, manifest=candidate_manifest)
+        current_commit, current_dirty = _git_identity(root)
+        if (
+            current_commit != commit
+            or current_dirty
+            or any(
+                paths[name].read_bytes() != data for name, data in prior_bytes.items()
+            )
+        ):
+            raise PerformanceResourceError(
+                "conditioner-source-drift",
+                "source or authority changed during calibration",
+            )
+        _write_calibration_diagnostic(
+            retained / "accepted-baseline.json", candidate_baseline, root=root
+        )
+        history.mkdir(parents=True, exist_ok=False)
+        for name, data in prior_bytes.items():
+            with (history / name).open("xb") as stream:
+                stream.write(data)
+        _publish_reference_authority(
+            paths,
+            prior_bytes,
+            {
+                "manifest.json": candidate_manifest,
+                "baseline.json": candidate_baseline,
+                "valid-evidence.json": candidate_evidence,
+            },
+            root=root,
+        )
+        result = {
+            "status": "passed",
+            "source_commit": commit,
+            "calibration_provenance": provenance,
+            "baseline_fingerprint": candidate_baseline["baseline_fingerprint"],
+            "history_path": history.relative_to(root).as_posix(),
+            "comparisons": comparisons,
+            "authoritative_profile": False,
+            "certification_eligible": False,
+        }
+        _write_calibration_diagnostic(retained / "terminal.json", result, root=root)
+        return result
+    except BaseException as error:
+        _write_calibration_diagnostic(
+            retained / "terminal.json",
+            {
+                "status": "failed",
+                "source_commit": commit,
+                "code": getattr(error, "code", type(error).__name__),
+                "reason": str(error),
+                "authority_unchanged": all(
+                    paths[name].read_bytes() == data
+                    for name, data in prior_bytes.items()
+                ),
+                "retained_attempt": retained.relative_to(root).as_posix(),
+                "authoritative_profile": False,
+            },
+            root=root,
+        )
+        raise
 
 
 def _migrate_stationary_warmups_command(
@@ -7843,6 +8418,26 @@ def main(argv: list[str] | None = None) -> int:
             arguments = parser.parse_args(values)
             result = _migrate_stationary_warmups_command(
                 confirm_stationary_warmups=arguments.confirm_stationary_warmups,
+                rationale=arguments.rationale,
+            )
+            status = cast(str, result["status"])
+        elif values and values[0] == "migrate-conditioner-source":
+            parser = argparse.ArgumentParser(
+                description="Fresh independent-reference calibration under prior effective ceilings"
+            )
+            parser.add_argument("migrate-conditioner-source")
+            parser.add_argument(
+                "--confirm-reviewed-source-transition", action="store_true"
+            )
+            parser.add_argument("--expected-producer-source", required=True)
+            parser.add_argument("--reference-root", type=Path, required=True)
+            parser.add_argument("--rationale", required=True)
+            parser.add_argument("--json", action="store_true")
+            arguments = parser.parse_args(values)
+            result = _migrate_conditioner_source_command(
+                confirm_reviewed_source_transition=arguments.confirm_reviewed_source_transition,
+                expected_producer_source=arguments.expected_producer_source,
+                reference_root=arguments.reference_root,
                 rationale=arguments.rationale,
             )
             status = cast(str, result["status"])

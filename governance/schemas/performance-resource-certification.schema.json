@@ -2049,6 +2049,52 @@
                 "environment_fingerprint": { "$ref": "#/$defs/sha256" }
             }
         },
+        "referenceCalibrationProvenance": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "contract",
+                "producer_source_commit",
+                "reference_source_commit",
+                "producer_controller_sha256",
+                "prior_conditioner_sha256",
+                "conditioner_sha256",
+                "prior_baseline_fingerprint",
+                "reference_tree_git_sha",
+                "reference_source_fingerprint",
+                "observation_log_sha256",
+                "coordinate_count",
+                "baseline_repetitions",
+                "sample_iterations",
+                "warmup_iterations",
+                "prior_effective_ceilings_preserved"
+            ],
+            "properties": {
+                "contract": {
+                    "const": "independent-reference-conditioner-source-v1"
+                },
+                "producer_source_commit": { "$ref": "#/$defs/gitSha" },
+                "reference_source_commit": {
+                    "const": "9d36da894c826cf2331d43fb413c3bb0b34db08e"
+                },
+                "producer_controller_sha256": { "$ref": "#/$defs/sha256" },
+                "prior_conditioner_sha256": {
+                    "const": "0996f40c7f96f747a8dabf4018c57238cbbec6d3a2daa0ed4df413bd0fda908c"
+                },
+                "conditioner_sha256": {
+                    "const": "49025fad600bf6a4144f60c1319831af9fd1ffe129344d1ee413f4a29a7d8995"
+                },
+                "prior_baseline_fingerprint": { "$ref": "#/$defs/sha256" },
+                "reference_tree_git_sha": { "$ref": "#/$defs/gitSha" },
+                "reference_source_fingerprint": { "$ref": "#/$defs/sha256" },
+                "observation_log_sha256": { "$ref": "#/$defs/sha256" },
+                "coordinate_count": { "const": 54 },
+                "baseline_repetitions": { "const": 9 },
+                "sample_iterations": { "const": 64 },
+                "warmup_iterations": { "const": 512 },
+                "prior_effective_ceilings_preserved": { "const": true }
+            }
+        },
         "baseline": {
             "type": "object",
             "additionalProperties": false,
@@ -2074,6 +2120,9 @@
                 "baseline_state": { "enum": ["planned", "active"] },
                 "manifest_fingerprint": { "$ref": "#/$defs/sha256" },
                 "prior_baseline_fingerprint": { "$ref": "#/$defs/sha256" },
+                "calibration_provenance": {
+                    "$ref": "#/$defs/referenceCalibrationProvenance"
+                },
                 "fixture_manifest_fingerprint": { "$ref": "#/$defs/sha256" },
                 "source_commit": { "$ref": "#/$defs/gitSha" },
                 "environment": { "$ref": "#/$defs/environment" },

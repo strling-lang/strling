@@ -2244,10 +2244,63 @@ class ProfileFailureRenderingTests(unittest.TestCase):
 
 
 class ProfileEnvironmentPreflightTests(unittest.TestCase):
+    def test_script_mode_preflight_preserves_canonical_package_context(self) -> None:
+        script = r"""
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1]).resolve()
+sys.path = [str(root / "tooling"), *[
+    entry for entry in sys.path
+    if Path(entry or Path.cwd()).resolve() not in (root, root / "tooling")
+]]
+assert "tooling" not in sys.modules
+import quality
+assert not quality.__package__
+calls = []
+
+def canonical_validator(command, **arguments):
+    assert command == [sys.executable, "-B", "-m", "tooling.exact_runtime_provision", "--check-pull-request", "--json"]
+    assert arguments == {"cwd": root, "capture_output": True, "text": True, "check": False}
+    calls.append(command)
+    return subprocess.CompletedProcess(command, 0, stdout='{"status":"passed"}', stderr="")
+
+quality.subprocess.run = canonical_validator
+quality._preflight_profile_environment("pull-request")
+assert len(calls) == 1
+assert "tooling" not in sys.modules
+assert root not in [Path(entry or Path.cwd()).resolve() for entry in sys.path]
+print(json.dumps({"status": "passed", "script_context": True, "root_path_injected": False}))
+"""
+        with TemporaryDirectory() as directory:
+            completed = subprocess.run(
+                [sys.executable, "-B", "-c", script, str(TOOLING_DIR.parent)],
+                cwd=directory,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+        self.assertEqual(0, completed.returncode, completed.stderr)
+        self.assertEqual(
+            {
+                "status": "passed",
+                "script_context": True,
+                "root_path_injected": False,
+            },
+            json.loads(completed.stdout),
+        )
+
     def test_pull_request_preflight_fails_before_profile_execution(self) -> None:
         with patch(
-            "exact_runtime_provision.verify_pull_request_environment",
-            side_effect=ValueError("STRLING_MAVEN_REPOSITORY is not configured"),
+            "quality.subprocess.run",
+            return_value=subprocess.CompletedProcess(
+                [],
+                2,
+                stdout="",
+                stderr="STRLING_MAVEN_REPOSITORY is not configured",
+            ),
         ):
             with self.assertRaisesRegex(
                 ConfigurationError,
@@ -2255,11 +2308,66 @@ class ProfileEnvironmentPreflightTests(unittest.TestCase):
             ):
                 _preflight_profile_environment("pull-request")
 
-    def test_local_profile_does_not_receive_exact_runtime_preflight(self) -> None:
+    def test_pull_request_preflight_uses_canonical_readonly_module(self) -> None:
         with patch(
-            "exact_runtime_provision.verify_pull_request_environment"
-        ) as preflight:
-            _preflight_profile_environment("local")
+            "quality.subprocess.run",
+            return_value=subprocess.CompletedProcess(
+                [], 0, stdout='{"status":"passed"}', stderr=""
+            ),
+        ) as validate:
+            self.assertIsNone(_preflight_profile_environment("pull-request"))
+        validate.assert_called_once_with(
+            [
+                sys.executable,
+                "-B",
+                "-m",
+                "tooling.exact_runtime_provision",
+                "--check-pull-request",
+                "--json",
+            ],
+            cwd=TOOLING_DIR.parent,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+    def test_validator_process_start_failure_is_not_a_pass(self) -> None:
+        with patch(
+            "quality.subprocess.run", side_effect=OSError("validator unavailable")
+        ):
+            with self.assertRaisesRegex(ConfigurationError, "validator unavailable"):
+                _preflight_profile_environment("pull-request")
+
+    def test_success_looking_stdout_cannot_override_validator_failure(self) -> None:
+        with patch(
+            "quality.subprocess.run",
+            return_value=subprocess.CompletedProcess(
+                [],
+                2,
+                stdout='{"status":"passed"}',
+                stderr="PCRE2 fingerprint mismatch",
+            ),
+        ):
+            with self.assertRaisesRegex(
+                ConfigurationError, "PCRE2 fingerprint mismatch"
+            ):
+                _preflight_profile_environment("pull-request")
+
+    def test_validator_failure_without_output_keeps_exit_status(self) -> None:
+        with patch(
+            "quality.subprocess.run",
+            return_value=subprocess.CompletedProcess([], 69, stdout="", stderr=""),
+        ):
+            with self.assertRaisesRegex(
+                ConfigurationError, "validator exited with status 69"
+            ):
+                _preflight_profile_environment("pull-request")
+
+    def test_local_profile_does_not_receive_exact_runtime_preflight(self) -> None:
+        with patch("quality.subprocess.run") as preflight:
+            for profile in ("local", "full", "release"):
+                with self.subTest(profile=profile):
+                    _preflight_profile_environment(profile)
         preflight.assert_not_called()
 
 

@@ -6,6 +6,41 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Pull Request bootstrap failure after complete artifact integrity
+
+Source `404020cf7c6396ed4ab8967c0cf16993bca0c7a1` genuinely passed Local38.
+Its PR80 artifact-integrity gate passed, then the direct-script environment
+preflight failed importing `tooling` before the other 79 operations. CLI exit2
+is not a completed PR profile; this source remains consumed, with failed receipt
+and raw evidence preserved. Full/Release and authenticated performance never
+started. The preceding deep-quality and candidate-index defects did not recur.
+
+An unchanged-source atomic package-mode control passed the real four runtime
+and offline Maven checks, isolating a certification import-context defect.
+The narrow correction invokes the canonical read-only validator as a module
+from its owning checkout, without changing validation, inherited environment,
+runtime identity, provisioning or import paths. The fresh-script regression is
+red before correction on both platforms; focused tests pass 28 times, and four
+actual post-correction script/module preflights pass with unchanged source/Git
+snapshots. These are engineering diagnostics, not a performance or profile
+result. Exact receipt identities are in the
+[migration ledger](ledger.md#h08-pull-request-environment-bootstrap-correction-engineering).
+
+Broader validation, a clean new artifact-gated candidate and both complete
+qualification/promotion campaigns remain pending. No baseline, calibration,
+performance threshold, sample count, lock, security/license evidence or trust
+pin changes; this correction creates zero authenticated performance samples.
+H08 remains OPEN, with real signing and isolated immutable verification still
+required after the complete campaigns.
+
+The subsequent twelve-module regression suite passes 293/293 twice, with zero
+failures, errors or skips and no source/index drift. Actual governance, lint,
+hygiene and repository formatting pass; an independent post-run source/Git
+audit is unchanged. All 102 protected artifact hashes remain identical. These
+complete the broader engineering checks mentioned above, not certification.
+Fresh complete36 preparation and source-bound prerequisites still precede any
+new candidate freeze. No authenticated performance samples are created.
+
 ## Deep-quality inventory coverage before a new candidate
 
 The `8349bb65…` Local attempt is consumed: 15/38 operations executed, 14 PASS

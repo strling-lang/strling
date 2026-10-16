@@ -125,6 +125,7 @@ scope:
         - tests/_design/unit/test_adversarial_evidence_writes.md
         - tests/_design/unit/test_jvm_dependency_alignment.md
         - tests/_design/unit/test_deep_quality_source_identities.md
+        - tests/_design/unit/test_profile_environment_preflight.md
         - toolchain.json
         - tooling/adversarial_semantic_audit.py
         - tooling/architecture_fitness.py
@@ -1180,6 +1181,21 @@ checkpoints:
           - check: Signed-waiver expiry regression
             result: passed
             details: Original61-test dependency suite has60PASS1FAIL in1432.686seconds. Solefailure test_expired_signed_waiver_is_rejected hard-coded2026-10-12,which is not expired after explicit renewal through2026-11-13. Test now reads signed fixture expiry and adds exactly1day;production verifier/security unchanged. Native focused recovery fails synthetic ssh-keygen fixture creation(exit255),not verifier behavior;preserved. Exact failed case in original WSL environment PASS in46.905seconds. This is focused recovery,not relabeling the original61-test failure as a green aggregate.
+    - name: Pull Request environment bootstrap correction after consumed candidate
+      status: in_progress
+      evidence:
+          - check: Actual Local result and preserved PR configuration failure
+            result: passed
+            details: Source404020cf7c6396ed4ab8967c0cf16993bca0c7a1 completes realLocal38PASS. PR generated_integrity ordinal1of80PASS,then direct-script exact-environment preflight raises No module named tooling;CLIexit2,noPRprofileJSON,79operationsunexecuted. Terminalf3b65c0e68981facd5466cc9fce125872b73b794ca0c9ee9af5a097761b3b4c7 and failure457c7ca270caf6bd8eb0e50eb4b49ca81a159ee3399bb77d91bb9e61c2c951e4 retained;source consumed,no replay. This entry validates truthful failure classification,not PR certification. NoFull/Release/signing/trust/performance acquisition started.
+          - check: Isolated bootstrap root cause and focused correction
+            result: passed
+            details: Atomic94b1f4603214188f78d48eae04078960d2381277a7803ed743720bba0ee5283b reproduces fresh-script import failure while actual canonical package validator passes unchanged four-runtime/offline-Maven checks. Quality now invokes same interpreter -B -m tooling.exact_runtime_provision --check-pull-request --json at owning root,inheriting environment;no path injection or validator predicate change. Fresh-script regression red Native+WSL before fix;7focused tests twiceNative+twiceWSL yield28PASS. Four actual post-fix script/module checks PASS,8raw stream hashes independently verified,and whole source/Git unchanged;terminalccb44201e665b0c4346762cfd63b23ac0ecbf4716f3f952f87792fe53d51220c. Dirty engineering only,not authoritative profiles.
+          - check: Remaining validation and certification
+            result: not_run
+            details: No registered family source/input matches this correction;no authority-bearing output regenerated. Broader repeated regressions,governance/static/direct checks,new exact-path commit,complete36 artifact preparation and fresh cheap preflight predictor before a clean new candidate remain pending. Both38/80/126/126 campaigns,fresh independent Releases,actual signing/isolated verification,pin-only promotion and guarded closure remain required. No baselines,locks,security/license scope,performance budgets/counts or verifier pins change;zero authenticated performance samples created. H08 remainsOPEN.
+          - check: Repeated broader regressions and actual static validation
+            result: passed
+            details: Twelve quality/exact-runtime/profile/artifact/architecture/governance modules pass293tests twice,zero failures/errors/skips. Terminal076c309db7506f7df92cb1035b5666207946bc361c639c48ae8cbe6ecba99517 and all4raw streams independently verify. Actual governance passes4controls and33architecture rules;repository lint,hygiene2265files/0findings and full formatting PASS. Independent post-run audit retains source fingerprint3cdc7ad16ce7465753b8203ed4fd4e12c06bb5177d7d2e90844341bfea815856 and indexc98667ca87e8a23a090163a2ad2a8c898d5176c642da0985f44fa817292e19b9,changed_paths empty. All102protected artifact hashes match retained preparation. Earlier pending checkpoint is superseded for these engineering checks only;exact-path commit,new clean source complete36/preflight-inclusive prerequisites and both full campaigns remain pending. No performance samples,authoritative profiles,signing or trust promotion.
 commits:
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"

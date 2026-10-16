@@ -1,5 +1,54 @@
 # Architecture Migration Ledger
 
+## H08 Pull Request environment bootstrap correction (engineering)
+
+Frozen `404020cf7c6396ed4ab8967c0cf16993bca0c7a1` completed real Local
+38/38 PASS. PR passed generated integrity at ordinal 1/80, then its exact
+environment preflight failed with `No module named 'tooling'`: CLI exit 2,
+no PR profile artifact, and 79 operations unexecuted. Terminal SHA256
+`f3b65c0e68981facd5466cc9fce125872b73b794ca0c9ee9af5a097761b3b4c7`
+and failure proof `457c7ca270caf6bd8eb0e50eb4b49ca81a159ee3399bb77d91bb9e61c2c951e4`
+are preserved; this source is consumed and must not be replayed. Full, Release,
+authenticated performance acquisition, signing and trust qualification did not
+start. The Local result does not qualify the complete campaign or a successor.
+
+Atomic receipt `94b1f4603214188f78d48eae04078960d2381277a7803ed743720bba0ee5283b`
+reproduces the script-mode import failure while the canonical package-mode
+validator passes the same four real runtime and offline Maven checks on the
+unchanged source. This is a certification bootstrap defect, not missing runtime
+provisioning or a product/performance failure. The runner now delegates to the
+same interpreter's `-B -m tooling.exact_runtime_provision --check-pull-request
+--json` at its owning root, inheriting its environment without import-path
+injection. Existing validator identities, checks and failure guidance remain.
+
+The fresh-script regression fails natively and in WSL before the correction.
+Seven focused tests pass twice on each platform (28 PASS). Repeated actual
+script/package preflights all pass (four calls), with eight raw stream hashes
+independently verified and complete source/Git snapshots unchanged. Terminal
+SHA256 is `ccb44201e665b0c4346762cfd63b23ac0ecbf4716f3f952f87792fe53d51220c`.
+These are dirty-source engineering proofs, not authoritative profile results.
+The registry maps no generated source/input family to this correction; the
+complete 36-family gate remains mandatory for a new clean candidate. Broader
+regressions, static checks, a new commit/candidate and both full campaigns remain
+pending. No performance authority, locks, security/license evidence, budgets,
+samples or verifier pins are changed. H08 remains OPEN.
+
+Subsequent broader validation passes all 293 tests twice across the twelve
+quality, exact-runtime, profile, artifact and architecture/governance modules,
+with zero failures, errors or skips. Terminal SHA256
+`076c309db7506f7df92cb1035b5666207946bc361c639c48ae8cbe6ecba99517`
+and all four raw regression stream hashes independently verify. Actual
+governance (four controls and 33 architecture rules), repository lint, hygiene
+(2265 tracked files, zero findings) and complete formatting checks pass.
+Independent post-run audit retains source fingerprint
+`3cdc7ad16ce7465753b8203ed4fd4e12c06bb5177d7d2e90844341bfea815856`
+and index digest `c98667ca87e8a23a090163a2ad2a8c898d5176c642da0985f44fa817292e19b9`,
+with no changed path; all 102 protected artifact hashes also remain unchanged.
+The preceding pending statements describe their earlier checkpoint, not these
+completed engineering checks. Exact-path commit, fresh complete36 preparation,
+new-source prerequisites including the actual fresh-script preflight predictor,
+new candidate freeze and both complete campaigns remain outstanding.
+
 ## H08 deep-quality source-identity inventory correction (engineering)
 
 Frozen `8349bb6593c93487c85f378fa5dc5fa51d6493cf` Local stopped after

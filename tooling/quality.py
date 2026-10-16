@@ -16,7 +16,6 @@ import time
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
-from importlib import import_module
 from pathlib import Path
 from certification import (
     CertificationError,
@@ -2415,14 +2414,29 @@ def _preflight_profile_environment(profile: str) -> None:
     if profile != "pull-request":
         return
     try:
-        module_name = (
-            "tooling.exact_runtime_provision"
-            if __package__
-            else "exact_runtime_provision"
+        # Package-only validator dependencies also need their canonical context
+        # when this runner was launched directly as a script.
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "-B",
+                "-m",
+                "tooling.exact_runtime_provision",
+                "--check-pull-request",
+                "--json",
+            ],
+            cwd=Path(__file__).resolve().parents[1],
+            capture_output=True,
+            text=True,
+            check=False,
         )
-        exact_runtime_provision = import_module(module_name)
-        exact_runtime_provision.verify_pull_request_environment()
-    except (ImportError, OSError, ValueError) as error:
+        if completed.returncode != 0:
+            raise ValueError(
+                completed.stderr.strip()
+                or completed.stdout.strip()
+                or f"validator exited with status {completed.returncode}"
+            )
+    except (OSError, ValueError) as error:
         raise ConfigurationError(
             "pull-request exact-environment preflight failed: "
             f"{error}. Prepare the environment with "

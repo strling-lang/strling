@@ -1,5 +1,59 @@
 # Architecture Migration Ledger
 
+## H08 readiness regression expectations follow the composed profiles
+
+The one-use non-authoritative unit diagnostic on clean
+`5aad57ea5613978a0ab2394bb281f00bcffff520` stops at its first failure after
+139 tests and 163.803 seconds. The readiness regression expects Local37 while
+the canonical shared integrity prefix correctly resolves Local38. Terminal
+SHA256 `d9dd5f1fd021eca0dfd051b5117edde8cc2fb89fda6d290131383ece2a34b390` and raw
+stderr `ee9ce985fdb29340108e5c43918395319f930409e3bb12dc189b480cee0e18c4`
+are preserved. Source/Git, all 102 protected hashes and all 444 prior operation
+receipt files remain unchanged; zero authenticated samples or profiles start.
+This is an atomic diagnostic failure, not another authoritative PR attempt or
+a complete unit-suite result.
+
+The exact readiness-test Git blob `6675ac31a468000e770129306d6669a989e5b797`
+and toolchain blob `c30210db970c366f8e1de611959c2c22c8258378` are identical in
+consumed C32 and source5aad. Narrow module reproduction on both Native and WSL
+finds six failing subcases across three of eight methods: old totals
+37/79/125/125, old Local remainder35, and a blanket generation expectation.
+Production already correctly yields 38/80/126/126, remainder36 and one
+`generate --prepare --json` phase before independent readiness. This establishes
+authored certification-test drift, not a compiler or performance defect; no
+contract, acceptance rule or producer implementation needs weakening.
+
+The charter is updated before the correction. Exact denominators increase to
+match current authority, and tests additionally require shared integrity first,
+selected exactly once and never deferred; only the existing one/two/three
+performance producers may be deferred. Missing or reordered integrity results
+must fail readiness. Independent setup must select exactly one canonical
+preparation immediately before readiness, after setup, with no blanket or
+partial-check substitute. Initial nine-test runs pass on Native and WSL.
+The earlier 299-test engineering suite omitted this direct-dependent module;
+the next repeated suite and source-bound pre-freeze predictor will include it.
+Registry mapping finds no affected generated family: these are independent
+authored regression expectations, not outputs to regenerate. Repeated direct
+validation, static checks, exact-path commit and a fresh full unit predictor
+remain pending before any new candidate freeze. H08 remains OPEN.
+
+Subsequent repeated validation includes both readiness and independent
+production composition across fourteen modules: 338/338 tests pass twice,
+zero failures, errors or skips. Governance passes four controls and 33
+architecture rules; lint, hygiene (2268 tracked files, zero findings) and full
+formatting pass. Terminal SHA256
+`311a705849fb34e7059751e035f1f40541f1f24acfc62975a2b0f8a97d5d9854`, request
+`db1196bbda22a85a97d8c8c46e1a00654feae165e77c19580ac4afbd5cab4813` and driver
+binding `94c0429744964e87906292b60fa00732286719dcfc1adb09272bce30895244cc`
+independently verify, including all twelve raw streams, six child receipts and
+exact commands. Source fingerprint
+`5665e5a8c218463093898bd424da84f79e39a8f4bc68a7b1a1a5c8e52f432910`, index
+`a5ee47fb7c4ceaae40d05fa5f3922c0b8a8b5fecdec1eb40b867ac43b6d222c0` and all
+102 protected hashes remain unchanged before this evidence-only record update.
+This supersedes the earlier direct/static pending state only. The clean
+correction commit, whole-unit predictor and fresh candidate gates/campaigns
+remain pending. No authoritative profile or performance sample is produced.
+
 ## H08 consumed PR test failure and JSON diagnostic retention
 
 Candidate `c32df0e9e8d95d38bf6e4696a331852ba9175395` completes actual Local

@@ -1234,7 +1234,24 @@ checkpoints:
           - check: Read-only failed PR measurement and terminal reconstruction
             result: passed
             details: Every actual retained PR row reconstructs72PASS+sole73test@repositoryFAIL ofexpected80,7notreached,canonical8typedcounts andexactfailed stage/wholeterminal. Canonical authenticated-sample counter overall retainedstructuredrows totals0;notinferred fromfreeze. Terminal/execution/artifact/rawloghashes matchbeforeandafter;first rawlogJSONequalsartifact. Progressledger740ee872a762716ae2cd8f7312f2510238c4f7b14b6b4f5f45b72b1db5a45432. Auditofconsumedfailure,not successfulcertification,qualification,trustpromotion ornewacquisition. Underlyingindividualteststillunknown;H08OPENgoalACTIVE.
+    - name: Authored readiness regressions follow canonical shared composition
+      status: in_progress
+      evidence:
+          - check: Atomic first-failure evidence and unchanged source identity
+            result: failed
+            details: Non-authoritative failfast unit diagnostic on clean5aad57ea5613978a0ab2394bb281f00bcffff520 stops after139tests/163.803seconds at readiness membership Local38!=old37. Terminald9dd5f1fd021eca0dfd051b5117edde8cc2fb89fda6d290131383ece2a34b390,stderree9ce985fdb29340108e5c43918395319f930409e3bb12dc189b480cee0e18c4 preserved. Source/Git/protected102/prior444operationreceipts unchanged;zero authsamples/profiles. Testblob6675ac31a468000e770129306d6669a989e5b797 andtoolchainblobc30210db970c366f8e1de611959c2c22c8258378 identical atC32and5aad. Notwhole-suitePASS orreplayedPR;owner94988/exec71752terminal.
+          - check: Narrow root cause and stronger current-authority regressions
+            result: passed
+            details: Nativea31f5f andWSL739e69 each8tests reproduce6subcasefailures across3methods;old37/79/125/125 totals,35remaining andblanketgenerate expectation lagcorrect38/80/126/126,36remaining andcanonicalprepare. Charterbeforecorrection;exactdenominators increased,sharedintegrity first/selectedonce/notdeferred asserted,onlysame1/2/3performanceproducer IDs deferred,missing/reorderedintegrity rejected,canonicalprepareonce immediatelybeforereadiness/aftersetup required. Initial9tests PASS Native1f88a8/WSLc063cd. Authoredtestdrift,notproduct/performance failure;no productioncode or acceptancepolicy change,zero generatedfamilymatches/noauthorityrefresh.
+          - check: Repeated complete direct suite and pre-freeze unit predictor
+            result: not_run
+            details: Prior299-test engineering suite omitted thisreadinessdirectdependent. Repeated suite andsource-bound cheapprerequisite predictor nowmustinclude it alongwithindependent production composition. Static/source-preserving validation,exact5-path correctioncommit,fresh whole repository unit predictor andnewcomplete36 gate stillpending beforeanynewcandidatefreeze. All two-campaign/independentRelease/signing/immutablequalification/promotion/pinnedverify/closure requirements unchanged. H08OPENgoalACTIVE;neverreuse consumedC32oratomicdiagnostics asauthoritative result.
+          - check: Completed repeated direct and static validation
+            result: passed
+            details: Subsequent14modules include readiness+independentproduction;338tests twice,zero failures/errors/skips. Governance4controls/33architecture rules,lint,hygiene2268trackedfiles/0findings andfullformatPASS. Terminal311a705849fb34e7059751e035f1f40541f1f24acfc62975a2b0f8a97d5d9854,requestdb1196bbda22a85a97d8c8c46e1a00654feae165e77c19580ac4afbd5cab4813,binding94c0429744964e87906292b60fa00732286719dcfc1adb09272bce30895244cc independentlyverify with12streams/6childreceipts/exactcommands/currentwhole-source+index+102protectedhashes unchanged. Pre-record-update sourcefingerprint5665e5a8c218463093898bd424da84f79e39a8f4bc68a7b1a1a5c8e52f432910,indexa5ee47fb7c4ceaae40d05fa5f3922c0b8a8b5fecdec1eb40b867ac43b6d222c0. Earlierdirect/static pending superseded only;exactcommit,wholeunitpredictor,newsource36/prereqs/Nativeadmission/campaigns/signing/trust/closure stillpending. Zero authenticatedsamples/profiles.
 commits:
+    - sha: 5aad57ea5613978a0ab2394bb281f00bcffff520
+      subject: "fix(certification): retain JSON profile failure diagnostics"
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"
     - sha: 932dfd60ee5766c82f4f73fda223942c50f5e7ac

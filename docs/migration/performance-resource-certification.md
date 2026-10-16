@@ -6,6 +6,37 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Authored readiness expectations are not a performance regression
+
+The source5aad fail-fast unit diagnostic identifies stale readiness assertions,
+not failed product measurement: the test expects Local37 while canonical
+composition correctly yields Local38. Narrow eight-test Native and WSL runs
+reproduce six subcase failures covering old profile totals, a missing-result
+remainder and the old blanket generator. Exact source/test/toolchain and failed
+receipt identities are retained in the [ledger](ledger.md).
+
+The correction raises regression denominators to 38/80/126/126 and the Local
+remainder to36. New assertions keep the shared integrity gate first and selected
+once, defer only the same one/two/three performance producers, reject omitted or
+reordered integrity results and require canonical preparation exactly once
+before independent readiness. Nine focused tests initially pass on each host.
+No production, measurement, sample, baseline, threshold, conditioning, security,
+license or trust rule changes; no generated authority is refreshed. The actual
+diagnostic creates zero authenticated samples or profiles, does not complete the
+whole unit denominator, and cannot stand in for later Full/Release evidence.
+Repeated direct checks now include the previously omitted readiness module.
+Further validation, correction commit and a new source-specific campaign remain
+pending; H08 remains OPEN.
+
+The expanded fourteen-module suite subsequently passes 338 tests twice with
+zero failures, errors or skips. Actual governance, lint, hygiene and formatting
+pass; independent reconstruction verifies twelve streams, six child receipts,
+the exact driver binding, unchanged source/index and all 102 protected hashes.
+Terminal `311a705849fb34e7059751e035f1f40541f1f24acfc62975a2b0f8a97d5d9854`
+and exact identities are retained in the ledger. These are engineering results,
+not an authoritative readiness/profile or performance result. Whole-unit
+prediction, fresh candidate gates and both real campaigns remain required.
+
 ## Consumed PR test failure retains its diagnostic boundary
 
 Source `c32df0e9e8d95d38bf6e4696a331852ba9175395` completes independently

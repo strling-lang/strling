@@ -44,10 +44,10 @@ class CertificationReadinessTests(unittest.TestCase):
 
     def test_exact_governed_membership_only_performance_is_deferred(self) -> None:
         for profile, total, deferred in (
-            ("local", 37, 1),
-            ("pull-request", 79, 2),
-            ("full", 125, 3),
-            ("release", 125, 3),
+            ("local", 38, 1),
+            ("pull-request", 80, 2),
+            ("full", 126, 3),
+            ("release", 126, 3),
         ):
             with self.subTest(profile=profile):
                 plan = selection(self.runner, profile)
@@ -57,6 +57,17 @@ class CertificationReadinessTests(unittest.TestCase):
                 self.assertEqual(len(plan["governed_result_ids"]), total)
                 self.assertEqual(len(plan["deferred_operations"]), deferred)
                 self.assertEqual(len(plan["selected_result_ids"]), total - deferred)
+                integrity = "generated_integrity@repository"
+                for key in ("governed_result_ids", "selected_result_ids"):
+                    self.assertEqual(integrity, plan[key][0])
+                    self.assertEqual(1, plan[key].count(integrity))
+                self.assertEqual(
+                    [
+                        f"performance_resource_{name}_certification@repository"
+                        for name in ("local", "pull_request", "full")[:deferred]
+                    ],
+                    [item["result_id"] for item in plan["deferred_operations"]],
+                )
                 self.assertEqual(
                     plan["selected_result_ids"],
                     [
@@ -124,8 +135,32 @@ class CertificationReadinessTests(unittest.TestCase):
             artifact["deterministic_evidence"]["readiness_status"], "failed"
         )
         self.assertEqual(
-            len(artifact["deterministic_evidence"]["unexecuted_result_ids"]), 35
+            len(artifact["deterministic_evidence"]["unexecuted_result_ids"]), 36
         )
+        self.assertEqual(
+            selection(self.runner, "local")["selected_result_ids"][1:],
+            artifact["deterministic_evidence"]["unexecuted_result_ids"],
+        )
+
+    def test_missing_or_reordered_integrity_results_are_never_ready(self) -> None:
+        for profile in ("local", "pull-request", "full", "release"):
+            results = self.results(profile)
+            for name, changed in (
+                ("missing", results[1:]),
+                ("reordered", [results[1], results[0], *results[2:]]),
+            ):
+                with self.subTest(profile=profile, mutation=name):
+                    artifact = readiness_artifact(
+                        runner=self.runner,
+                        profile=profile,
+                        results=changed,
+                        source=SOURCE,
+                    )
+                    self.assertEqual(
+                        "failed", artifact["deterministic_evidence"]["readiness_status"]
+                    )
+                    self.assertFalse(artifact["authoritative"])
+                    self.assertFalse(artifact["closure_authorized"])
 
     def test_fail_fast_and_no_performance_producer_called(self) -> None:
         with patch.object(self.runner, "run_repository_operation") as execute:
@@ -220,7 +255,20 @@ class CertificationReadinessTests(unittest.TestCase):
             self.assertEqual(create.call_args.kwargs["source_sha"], SOURCE["commit"])
             commands = [call.args[0] for call in run.call_args_list]
             self.assertIn(["./strling", "setup", "all"], commands)
-            self.assertIn(["./strling", "generate"], commands)
+            preparation = ["./strling", "generate", "--prepare", "--json"]
+            self.assertEqual(
+                [preparation],
+                [
+                    command
+                    for command in commands
+                    if command[:2] == ["./strling", "generate"]
+                ],
+            )
+            self.assertGreater(
+                commands.index(preparation),
+                commands.index(["./strling", "setup", "all"]),
+            )
+            self.assertEqual(len(commands) - 2, commands.index(preparation))
             self.assertIn("tooling.certification_readiness", commands[-1])
             self.assertFalse(
                 any(

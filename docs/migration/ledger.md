@@ -1,5 +1,67 @@
 # Architecture Migration Ledger
 
+## H08 independent candidate preparation integration (engineering)
+
+Before freezing `549940a4d971dadca8e01cedbfd2d123ab86fd25`, source inspection
+found both independent production and sample-free readiness setup still calling
+blanket `./strling generate`, then a partial artifact check. The registered
+lockfile family is verification-only and has no generator. Atomic command
+selection returns `no canonical generator; specific governed refresh required`
+with every executor forbidden and zero generator calls. Proof SHA256
+`5970e3f53db783d7d92abb99a0d6262fa05693fc8279e3ab5c8f404533f8a356`
+preserves the exact commands and result. This is a pre-certification tooling
+defect, not an attempted Release failure, compiler failure or performance result.
+
+The retained source549 preparation was not interrupted. It completes initial
+35 PASS plus one stale ordinary LSP manifest, canonical repair of that single
+ignored manifest, idempotence, final 36/36 PASS, 37 direct-dependent tests and
+isolated reproduction of 22 payload files. All 102 protected hashes remain
+unchanged; all 36 exact verification commands, both dependent commands, raw
+report/summary and helper identities independently verify. Owner terminal SHA256
+is `008e9ecc3ee187ee26814ec23ca0c6f005c516da0ee433df1bbff5957b7203fd`, nested
+receipt `644786d20f32198f4e7c31e5fb9c0108f6cf171282d2be14bdbcba9193b79c1a`, and
+independent audit `786e76ef528270e3972e555fc6029b5306e31d580e586de5243265425d1937b0`.
+The canonical command took 3542.918 seconds. A PowerShell audit array-flattening
+error is retained separately; corrected indexed command comparisons pass without
+rerunning generation. These results qualify only engineering source549, not its
+successor; no candidate was frozen and no authoritative profile/sample started.
+
+Both independent setup paths now share `generate --prepare --json` before their
+immutable profile boundary. The existing governed preparation checks the complete
+inventory, blocks protected refresh, constrains ordinary canonical repair,
+checks its diff/idempotence, rechecks every family and runs direct dependents.
+The profile command and its early check-only integrity operation are unchanged.
+No blanket generator, partial-check substitute or automatic authority-bearing
+refresh remains in those setup paths.
+
+The test charter precedes regression code. Before implementation, five focused
+cases yield three expected failures and two passes on each platform. After the
+correction all five pass twice natively and twice in WSL (20 PASS), including
+unsafe/missing/duplicate/reordered preparation rejection and fresh command-list
+isolation. Narrow Ruff, Prettier and whitespace checks pass. The registry maps no
+generated family to these source changes, so no governed output is refreshed.
+Broader regressions/static checks, an exact-path commit, a new clean-source
+complete36 gate and fresh prerequisites remain pending before any freeze. Both
+whole campaigns, independent Releases, signing, immutable qualification/pinned
+verification and guarded closure remain required. H08 remains OPEN; this
+correction creates zero authenticated performance samples.
+
+Subsequent validation passes 323 tests twice across thirteen production,
+quality, runtime, profile, artifact and architecture/governance modules, with
+zero failures, errors or skips. Terminal SHA256
+`fcda3971eda6e82e6c21b1376be086557a05108d0ec98516f60f61bcc3d35075`
+and all four raw streams independently verify. Actual governance passes its
+four controls and 33 architecture rules; repository lint, hygiene (2266 tracked
+files, zero findings) and formatting pass. Independent post-run audit retains
+source fingerprint `e9f8b591491000e95c69311d3b9faba55d8880d68bc51c78e95e5f5dedcf69c2`
+and index digest `3f8de9510e7017a0b73a1472e78c41e3e5b52d586cac3fccaa550e137b083965`
+without changed paths; all 102 protected hashes remain unchanged. Earlier
+pending statements are superseded for those engineering checks only. The next
+source-bound prerequisite plan adds the focused independent-setup predictor to
+the prior thirteen stages (fourteen planned, none claimed complete here).
+Exact-path commit, new-source artifact gate/admission, authoritative campaigns,
+signing and trusted verification remain pending; no freeze or closure claim.
+
 ## H08 Pull Request environment bootstrap correction (engineering)
 
 Frozen `404020cf7c6396ed4ab8967c0cf16993bca0c7a1` completed real Local

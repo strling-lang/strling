@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import unittest
 import json
+import ast
+import inspect
 from collections.abc import Iterator
 from contextlib import contextmanager
 from hashlib import sha256
@@ -11,6 +13,8 @@ from subprocess import CompletedProcess
 from unittest.mock import patch
 from uuid import uuid4
 
+from tooling import nonperformance_production_readiness as independent_readiness
+from tooling import production_certification as production
 from tooling.production_certification import (
     build_certification_environment,
     capture,
@@ -66,6 +70,96 @@ class ProductionCertificationTests(unittest.TestCase):
         self.assertEqual("release", command[2])
         self.assertNotIn("all", command)
         self.assertEqual("--artifact", command[3])
+        self.assertNotIn("generate", command)
+        self.assertNotIn("--prepare", command)
+
+    def test_generated_preparation_command_is_canonical_and_independent(self) -> None:
+        constructor = getattr(
+            production, "generated_artifact_preparation_command", None
+        )
+        self.assertTrue(callable(constructor), "shared governed preparation is missing")
+        expected = ["./strling", "generate", "--prepare", "--json"]
+        first = constructor()
+        self.assertEqual(expected, first)
+        first.append("unrelated")
+        self.assertEqual(expected, constructor())
+
+    def _assert_shared_preparation_source(
+        self, source: str, qualifier: str | None = None
+    ) -> None:
+        tree = ast.parse(source)
+        shared = []
+        legacy = []
+        profiles = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                function = node.func
+                if (
+                    qualifier is None
+                    and isinstance(function, ast.Name)
+                    and function.id == "generated_artifact_preparation_command"
+                ) or (
+                    qualifier is not None
+                    and isinstance(function, ast.Attribute)
+                    and isinstance(function.value, ast.Name)
+                    and function.value.id == qualifier
+                    and function.attr == "generated_artifact_preparation_command"
+                ):
+                    shared.append(node.lineno)
+                if (
+                    isinstance(function, ast.Name)
+                    and function.id == "release_profile_command"
+                ):
+                    profiles.append(node.lineno)
+            if isinstance(node, ast.List):
+                prefix = [
+                    item.value if isinstance(item, ast.Constant) else None
+                    for item in node.elts[:3]
+                ]
+                if prefix[:2] == ["./strling", "generate"]:
+                    legacy.append(node.lineno)
+                if prefix == ["python3", "-m", "tooling.certification_readiness"]:
+                    profiles.append(node.lineno)
+        self.assertEqual(
+            1, len(shared), "one shared governed preparation call required"
+        )
+        self.assertEqual(
+            [], legacy, "blanket generation or partial check is prohibited"
+        )
+        self.assertTrue(profiles, "actual immutable profile boundary must remain")
+        self.assertLess(
+            shared[0], min(profiles), "preparation must precede the profile"
+        )
+
+    def test_independent_release_uses_shared_preparation_before_profile(self) -> None:
+        self._assert_shared_preparation_source(inspect.getsource(production.main))
+
+    def test_independent_readiness_uses_shared_preparation_before_profile(self) -> None:
+        self._assert_shared_preparation_source(
+            inspect.getsource(independent_readiness.main), "production"
+        )
+
+    def test_preparation_source_contract_rejects_unsafe_or_reordered_plans(
+        self,
+    ) -> None:
+        good = (
+            "def main():\n"
+            "    generated_artifact_preparation_command()\n"
+            "    release_profile_command(None)\n"
+        )
+        self._assert_shared_preparation_source(good)
+        for bad in (
+            "def main():\n    release_profile_command(None)\n",
+            good.replace(
+                "    release_profile_command(None)",
+                "    generated_artifact_preparation_command()\n    release_profile_command(None)",
+            ),
+            good + "    command = ['./strling', 'generate']\n",
+            good + "    command = ['./strling', 'generate', '--check', '--json']\n",
+            "def main():\n    release_profile_command(None)\n    generated_artifact_preparation_command()\n",
+        ):
+            with self.subTest(source=bad), self.assertRaises(AssertionError):
+                self._assert_shared_preparation_source(bad)
 
     def test_report_is_derived_from_structured_evidence(self) -> None:
         artifact = {

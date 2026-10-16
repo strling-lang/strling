@@ -78,8 +78,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "--locked",
                 ],
             ),
-            (worktree, ["./strling", "generate"]),
-            (worktree, ["./strling", "generate", "--check", "--json"]),
+            (worktree, production.generated_artifact_preparation_command()),
         )
         for directory, command in stages:
             production.run_capacity_checked(

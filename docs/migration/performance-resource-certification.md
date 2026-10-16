@@ -6,6 +6,42 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Independent source construction uses governed preparation
+
+An atomic pre-freeze command-selection proof at source `549940a4…` finds both
+independent setup paths still selecting blanket generation and a partial check.
+The verification-only lockfile family correctly refuses generation, with no
+executor called. No Release or performance stage was attempted; this identifies
+a certification preparation defect before expensive authoritative evidence.
+
+The two independent paths now share the complete governed `generate --prepare
+--json` phase during source construction, before immutable profile execution.
+Only ordinary deterministic outputs can be canonically repaired; protected
+performance, historical, dependency-lock and authenticated security/license
+artifacts retain their separate refresh policy. Complete recheck, diff and
+idempotence guards, and direct dependents remain enforced. Profile membership,
+the early check-only gate, no-reuse construction, every performance ceiling and
+sample denominator, conditioning and trust policy are unchanged.
+
+Five focused regressions are red before implementation (three failures, two
+passes on each platform) and all pass twice Native plus twice WSL afterward:
+20 PASS, zero actual profile or authenticated sample execution. Source549's
+retained complete36 preparation separately passes after one ordinary manifest
+repair, with 37 direct tests, 22-file isolated reproduction and all 102 protected
+hashes unchanged. Its 3542.918-second command and exact receipts are in the
+[migration ledger](ledger.md#h08-independent-candidate-preparation-integration-engineering).
+That engineering gate cannot be reused for the pending corrected source. Broader
+validation, a clean new commit/gate/prerequisites and both complete campaigns
+remain pending. H08 remains OPEN, not qualified or certified.
+
+The subsequent thirteen-module engineering suite passes 323/323 twice, without
+failures, errors, skips or source/index drift. Actual governance, lint, hygiene
+and formatting pass; independent raw-receipt/source audits and all 102 protected
+hash comparisons pass. These supersede the earlier broader-check pending
+statement, not the pending new-source gate or actual campaigns. The next
+prerequisite plan has fourteen stages, adding the focused independent-setup
+predictor without changing any authoritative profile or performance denominator.
+
 ## Pull Request bootstrap failure after complete artifact integrity
 
 Source `404020cf7c6396ed4ab8967c0cf16993bca0c7a1` genuinely passed Local38.

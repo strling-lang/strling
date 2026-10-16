@@ -221,6 +221,12 @@ def run_live(
         )
 
 
+def generated_artifact_preparation_command() -> list[str]:
+    """Prepare ordinary projections completely before immutable profile execution."""
+
+    return ["./strling", "generate", "--prepare", "--json"]
+
+
 def release_profile_command(profile_artifact: Path) -> list[str]:
     """Select the complete governed Release profile membership.
 
@@ -887,13 +893,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             env=certification_environment,
         )
         run_capacity_checked(
-            ["./strling", "generate"],
-            cwd=worktree,
-            contract=capacity_contract,
-            env=certification_environment,
-        )
-        run_capacity_checked(
-            ["./strling", "generate", "--check", "--json"],
+            generated_artifact_preparation_command(),
             cwd=worktree,
             contract=capacity_contract,
             env=certification_environment,

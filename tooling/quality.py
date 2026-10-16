@@ -2338,6 +2338,7 @@ def _render_profile_failure_details(
     results: Sequence[OperationResult],
     *,
     destination_guard: Callable[[Path], None] | None = None,
+    diagnostic_stream: TextIO | None = None,
 ) -> None:
     """Expose bounded child output when an aggregate profile fails."""
 
@@ -2352,6 +2353,8 @@ def _render_profile_failure_details(
         ):
             if not content:
                 continue
+            if diagnostic_stream is not None:
+                stream = diagnostic_stream
             if len(content) > PROFILE_FAILURE_OUTPUT_LIMIT:
                 try:
                     output_directory = PROFILE_FAILURE_OUTPUT_ROOT / uuid.uuid4().hex
@@ -2389,7 +2392,10 @@ def _render_profile_failure_details(
             escaped = (
                 annotation.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
             )
-            print(f"::error title={identity}::{escaped}")
+            print(
+                f"::error title={identity}::{escaped}",
+                file=diagnostic_stream if diagnostic_stream is not None else sys.stdout,
+            )
 
 
 def _print_help() -> None:
@@ -2701,6 +2707,12 @@ def main(argv: Sequence[str] | None = None) -> int:
                 progress.profile_terminal(status)
             if json_output:
                 print(json.dumps(artifact, sort_keys=True))
+                if exit_code:
+                    _render_profile_failure_details(
+                        results,
+                        destination_guard=destination_guard,
+                        diagnostic_stream=sys.stderr,
+                    )
             else:
                 print(render_certification_summary(artifact))
                 if exit_code:

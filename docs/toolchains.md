@@ -380,6 +380,14 @@ operation blocks the profile exit status; a waived result remains distinct
 from passed. Direct leaf invocations retain their existing diagnostic
 semantics.
 
+Failed profiles expose their captured child diagnostics in both human and JSON
+mode. With `--json`, stdout remains exactly one certification artifact; child
+stdout/stderr and workflow error annotations go to stderr. Long diagnostic
+streams are retained before console truncation, with their path, SHA256 and byte
+length reported. These supplementary observations do not change deterministic
+evidence, result classification or exit status. Receipt destination guards still
+apply to diagnostic files, and preservation errors cannot turn a failure green.
+
 Existing setup, bootstrap, clean, audit, cache, lockfile, list, and
 environment behavior remains supported. Component identities follow the
 existing binding names and also include `repository` and `lsp`. The

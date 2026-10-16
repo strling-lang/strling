@@ -1,5 +1,58 @@
 # Architecture Migration Ledger
 
+## H08 consumed PR test failure and JSON diagnostic retention
+
+Candidate `c32df0e9e8d95d38bf6e4696a331852ba9175395` completes actual Local
+38/38 PASS, independently audited, then fails PR at `test@repository`, ordinal
+73/80: 72 PASS, one FAIL and seven operations not reached. Its unchanged source
+is consumed and will not be replayed. The terminal SHA256 is
+`6503fdcf76d6600d171c812ba9d1af0d1fdaffb87871e1e9a756b276a4582af2`, PR artifact
+`d0f2fda27f81dde724f46a8ac90fad05711190fbc604b2c9042d1b646fc779b9`, and execution
+`69e8532694b0b7ab5aec083b86d9910f815583e008076250e4bc18d628701729`. All remain
+preserved. The unit command exits one; the individual failing test is not yet
+known. No Full, Release, signing or qualification result is inferred.
+
+Source inspection proves the JSON profile branch discards unstructured child
+stdout/stderr: serialization deliberately excludes those streams, and only the
+human branch invokes the existing failure renderer. This is a certification
+diagnostic defect, not yet the root cause of the underlying unit failure. The
+runner now reuses its bounded, hash-identified failure renderer in JSON mode,
+routing both diagnostics and workflow annotations to stderr. Stdout remains
+one unchanged certification artifact; status, exit, source guards, membership,
+security, performance and trust policy are unchanged.
+
+The charter precedes tests. Ordinary-user Native and WSL focused regressions
+first show one failed assertion, three expected missing-parameter errors and
+five passes each; after correction all nine pass on each platform. A preceding
+sandbox-constrained Native invocation also fails temporary-directory access
+and is retained as a diagnostic, not product evidence. Registry mapping finds
+zero affected families across the seven exact correction paths; no authority
+artifact is refreshed. Repeated focused/direct-dependent checks, atomic
+fail-fast unit reproduction with full raw streams, remaining remediation,
+static verification and an exact-path commit remain pending. The reproduction
+will be non-authoritative, not a replayed profile or replacement PR result.
+H08 remains OPEN and the autonomous completion goal remains ACTIVE.
+
+Subsequent direct-dependent validation passes 299 tests twice across twelve
+modules, with zero failures, errors or skips. Governance passes four controls
+and 33 architecture rules; repository lint, hygiene and formatting pass. Terminal
+SHA256 `ad04bf77c8cc1c50dd8083cb0b9b0311a2ff46e9dfac10d956f3ecc5d882d152` and request
+`e55f94f566c7e742ca0a7fd6bb8eefba9c002dc923ac8f780263869f0fb6fdb1`, all twelve raw
+streams and six child receipts independently verify. The pre-update source
+fingerprint is `24fe14aeb0aa36f50626a080d0afbf4dd125180c9a52eb556eaeb4460c8559f3`;
+index digest `2928ee1b4b561b4d61ff80d3e818b7a5ea3fea12bfde0770640267011258130b`
+and all 102 protected hashes remain unchanged. These supersede the earlier
+engineering-check pending statements only; the underlying atomic unit
+diagnosis, correction and all new candidate/campaign work remain pending.
+
+A separate read-only reconstruction of every retained PR operation confirms
+zero authenticated measurement samples, exact 72 PASS/one FAIL counts, the
+failed stage and whole-profile terminal, and unchanged terminal/artifact/log
+hashes. Progress ledger SHA256 is
+`740ee872a762716ae2cd8f7312f2510238c4f7b14b6b4f5f45b72b1db5a45432`. This is
+evidence about the consumed failed attempt, not a successful profile, new
+sample acquisition, qualification or inference from the old freeze request.
+
 ## H08 independent candidate preparation integration (engineering)
 
 Before freezing `549940a4d971dadca8e01cedbfd2d123ab86fd25`, source inspection

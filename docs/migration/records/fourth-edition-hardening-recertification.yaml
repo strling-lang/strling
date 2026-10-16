@@ -127,6 +127,7 @@ scope:
         - tests/_design/unit/test_deep_quality_source_identities.md
         - tests/_design/unit/test_profile_environment_preflight.md
         - tests/_design/unit/test_independent_generated_preparation.md
+        - tests/_design/unit/test_profile_failure_diagnostics.md
         - toolchain.json
         - tooling/adversarial_semantic_audit.py
         - tooling/architecture_fitness.py
@@ -1215,6 +1216,24 @@ checkpoints:
           - check: Completed broader and static engineering validation
             result: passed
             details: All323tests pass twice across13production/quality/runtime/profile/artifact/architecture/governance modules,zero failures/errors/skips. Terminalfcda3971eda6e82e6c21b1376be086557a05108d0ec98516f60f61bcc3d35075 and4rawstreams independently verify. Actual governance4controls/33architecture rules,lint,hygiene2266files/0findings andformattingPASS. Independent post-run sourcefingerprinte9f8b591491000e95c69311d3b9faba55d8880d68bc51c78e95e5f5dedcf69c2,index3f8de9510e7017a0b73a1472e78c41e3e5b52d586cac3fccaa550e137b083965 unchanged;all102protectedhashes unchanged. Earlierpendingchecks superseded forengineeringonly. Nextsource prerequisiteplan adds focusedindependentsetuppredictor toprior13stages,14planned/notexecuted,withoutalteringauthoritative38/80/126/126or3332sampledenominators. Exactcommit/newSHA/complete36/admission/campaigns/signing/trust/closure stillpending;no authsamples/profile/freeze.
+    - name: Consumed PR unit failure and JSON diagnostic preservation
+      status: in_progress
+      evidence:
+          - check: Actual failed source retained without replay
+            result: failed
+            details: Source c32df0e9e8d95d38bf6e4696a331852ba9175395 completes independently audited Local38 PASS then PR stops at test@repository ordinal73 of80;72PASS,1FAIL,7not reached. Terminal6503fdcf76d6600d171c812ba9d1af0d1fdaffb87871e1e9a756b276a4582af2,artifactd0f2fda27f81dde724f46a8ac90fad05711190fbc604b2c9042d1b646fc779b9,execution69e8532694b0b7ab5aec083b86d9910f815583e008076250e4bc18d628701729 preserved. Owner412 and observer23731 terminal. Individual failing unit unknown because JSON mode discarded unstructured output. No unchanged profile replay or Full/Release/signing/qualification. H08 OPEN,goal ACTIVE.
+          - check: Narrow JSON diagnostic correction and initial regressions
+            result: passed
+            details: Charter first. Ordinary-user Native and WSL nine focused fixtures each show one failed diagnostic assertion,three missing-parameter errors,five passes before implementation;all nine pass on each afterward. Earlier sandbox-only Native temporary-directory errors retained separately. JSON branch now invokes existing bounded/raw-retaining failure renderer with both child streams and GitHub annotations on stderr;stdout artifact,evidence,exit,status,source guards and membership unchanged. Registry maps zero families to seven exact paths;no governed output refreshed. No new profile or performance acquisition from these fixtures.
+          - check: Atomic diagnosis and remaining authoritative progression
+            result: not_run
+            details: Repeated focused/direct regressions,non-authoritative fail-fast reproduction of only repository unittest operation with complete raw streams,underlying correction,static checks and exact-path commit pending. New clean source complete36 and fresh prerequisites precede any new authoritative candidate. Both actual38/80/126/126 campaigns,fresh independent Releases,signing,isolated immutable qualification,pin-only promotion,pinned verification and guarded formal closure still mandatory. No changed baseline,ceilings,sample counts,conditioning,locks,security/license scope or trust requirements.
+          - check: Completed direct regressions and static source-preservation audit
+            result: passed
+            details: Subsequent twelve-module suite passes299tests twice without failures,errors or skips. Governance4controls/33architecture rules,repository lint,hygiene and formatting PASS. Terminalad04bf77c8cc1c50dd8083cb0b9b0311a2ff46e9dfac10d956f3ecc5d882d152,requeste55f94f566c7e742ca0a7fd6bb8eefba9c002dc923ac8f780263869f0fb6fdb1,12rawstreams,6childreceipts andexactcommands independentlyverify. Sourcefingerprint24fe14aeb0aa36f50626a080d0afbf4dd125180c9a52eb556eaeb4460c8559f3,index2928ee1b4b561b4d61ff80d3e818b7a5ea3fea12bfde0770640267011258130b and102protectedhashes unchanged beforethese evidence-only record updates. Earlier engineering-check pending superseded onlyfor completedchecks;atomicunderlying diagnosis,exactcommit,newcandidate andcampaigns remainpending. Zero authenticatedsamples/profiles fromvalidation.
+          - check: Read-only failed PR measurement and terminal reconstruction
+            result: passed
+            details: Every actual retained PR row reconstructs72PASS+sole73test@repositoryFAIL ofexpected80,7notreached,canonical8typedcounts andexactfailed stage/wholeterminal. Canonical authenticated-sample counter overall retainedstructuredrows totals0;notinferred fromfreeze. Terminal/execution/artifact/rawloghashes matchbeforeandafter;first rawlogJSONequalsartifact. Progressledger740ee872a762716ae2cd8f7312f2510238c4f7b14b6b4f5f45b72b1db5a45432. Auditofconsumedfailure,not successfulcertification,qualification,trustpromotion ornewacquisition. Underlyingindividualteststillunknown;H08OPENgoalACTIVE.
 commits:
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b
       subject: "perf(core): reuse adjacent projection context"

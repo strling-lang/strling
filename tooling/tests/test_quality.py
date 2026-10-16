@@ -2012,6 +2012,11 @@ class QualityRoutingTests(unittest.TestCase):
             self.assertNotIn("Certification Local", stdout.getvalue())
             self.assertIn("Certification Local Started", stderr.getvalue())
             self.assertIn("Certification Local Failed [FAILED", stderr.getvalue())
+            self.assertIn("lint@alpha stdout:\ncaptured stdout\n", stderr.getvalue())
+            self.assertIn("lint@alpha stderr:\ncaptured stderr\n", stderr.getvalue())
+            self.assertEqual(payload, json.loads(artifact.read_text(encoding="utf-8")))
+            self.assertNotIn("captured stdout", stdout.getvalue())
+            self.assertNotIn("captured stderr", stdout.getvalue())
             ledger = artifact.with_suffix(".progress.jsonl")
             records = [
                 json.loads(line)
@@ -2104,6 +2109,104 @@ class QualityRoutingTests(unittest.TestCase):
 
 
 class ProfileFailureRenderingTests(unittest.TestCase):
+    def test_json_diagnostics_preserve_full_streams_only_on_stderr(self) -> None:
+        content = "decisive early finding: \u03bb\n" + "x" * 20_000
+        result = OperationResult(
+            "test",
+            "repository",
+            "failed",
+            ["fixture"],
+            7,
+            "fixture failure",
+            stdout=content,
+            stderr=content + "\nlast detail",
+        )
+        stdout, stderr = StringIO(), StringIO()
+        before = result.as_dict()
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            with (
+                patch("quality.PROFILE_FAILURE_OUTPUT_ROOT", root),
+                redirect_stdout(stdout),
+                redirect_stderr(stderr),
+            ):
+                _render_profile_failure_details([result], diagnostic_stream=stderr)
+            retained = sorted(root.glob("*/*.txt"))
+            self.assertEqual(2, len(retained))
+            for path in retained:
+                expected = result.stdout if path.name == "stdout.txt" else result.stderr
+                self.assertEqual(expected.encode("utf-8"), path.read_bytes())
+                self.assertIn(str(path), stderr.getvalue())
+                self.assertIn(
+                    f"bytes={len(expected.encode('utf-8'))}", stderr.getvalue()
+                )
+            self.assertIn("sha256=", stderr.getvalue())
+            self.assertIn("...[earlier output truncated]...", stderr.getvalue())
+            self.assertNotIn("decisive early finding", stderr.getvalue())
+        self.assertEqual("", stdout.getvalue())
+        self.assertEqual(before, result.as_dict())
+        self.assertEqual(content, result.stdout)
+
+    def test_json_diagnostics_route_github_annotation_off_stdout(self) -> None:
+        result = OperationResult(
+            "test",
+            "repository",
+            "failed",
+            ["fixture"],
+            1,
+            "fixture failure",
+            stdout="first line\nsecond % line\n",
+            stderr="traceback\n",
+        )
+        stdout, stderr = StringIO(), StringIO()
+        with (
+            patch.dict("os.environ", {"GITHUB_ACTIONS": "true"}),
+            redirect_stdout(stdout),
+            redirect_stderr(stderr),
+        ):
+            _render_profile_failure_details([result], diagnostic_stream=stderr)
+        self.assertEqual("", stdout.getvalue())
+        self.assertIn("::error title=test@repository::", stderr.getvalue())
+        self.assertIn("first line%0Asecond %25 line%0A", stderr.getvalue())
+        self.assertIn("stderr:%0Atraceback%0A", stderr.getvalue())
+
+    def test_json_diagnostic_guard_preserves_failure_without_writing(self) -> None:
+        result = OperationResult(
+            "test",
+            "repository",
+            "failed",
+            ["fixture"],
+            1,
+            "fixture failure",
+            stderr="early finding\n" + "x" * 20_000,
+        )
+        stdout, stderr = StringIO(), StringIO()
+        with (
+            TemporaryDirectory() as directory,
+            patch("quality.PROFILE_FAILURE_OUTPUT_ROOT", Path(directory)),
+            patch("quality.atomic_write_stream") as preserve,
+            redirect_stdout(stdout),
+            redirect_stderr(stderr),
+        ):
+
+            def reject(_path: Path) -> None:
+                raise ConfigurationError("protected destination")
+
+            _render_profile_failure_details(
+                [result],
+                destination_guard=reject,
+                diagnostic_stream=stderr,
+            )
+            preserve.assert_not_called()
+            self.assertEqual([], list(Path(directory).iterdir()))
+        self.assertEqual("", stdout.getvalue())
+        self.assertIn("preservation failed: protected destination", stderr.getvalue())
+        self.assertIn("...[earlier output truncated]...", stderr.getvalue())
+        self.assertEqual(
+            ("failed", 1, "fixture failure"),
+            (result.status, result.exit_code, result.reason),
+        )
+
     def test_long_failed_output_is_retained_before_console_truncation(self) -> None:
         content = "decisive early finding: \u03bb\n" + "x" * 20_000
         result = OperationResult(

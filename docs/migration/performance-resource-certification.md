@@ -6,6 +6,35 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Consumed PR test failure retains its diagnostic boundary
+
+Source `c32df0e9e8d95d38bf6e4696a331852ba9175395` completes independently
+audited Local38, then PR stops at operation73/80, `test@repository`: 72 PASS,
+one FAIL, seven not reached. The preserved terminal, artifact and execution
+identities are in the [migration ledger](ledger.md). This is not Full/Release,
+signing, trust qualification or closure, and the failed source is not replayable.
+
+The profile's JSON branch demonstrably drops unstructured child diagnostics.
+It now uses the existing guarded failure renderer on stderr, preserving long
+raw streams before bounded console output while leaving stdout as one unchanged
+artifact. The actual underlying test failure still needs atomic diagnosis;
+the diagnostic correction must not be misreported as resolving that failure.
+Nine focused fixtures pass on Native and WSL after reproducing the discarded
+output. No measurement, threshold, baseline, conditioning, security or trust
+contract changes; further engineering validation and a new candidate remain
+pending. The old freeze's zero-sample field describes pre-profile admission,
+not a retroactive PR sample-count claim. H08 remains OPEN.
+
+Subsequent engineering validation passes 299 tests twice and all four static
+checks, with independently verified twelve streams, six child receipts,
+unchanged whole source/index and all 102 protected hashes. The terminal
+`ad04bf77c8cc1c50dd8083cb0b9b0311a2ff46e9dfac10d956f3ecc5d882d152` and details
+are retained in the ledger. Independent read-only reconstruction now confirms
+the consumed PR itself contains zero authenticated measurement samples; no
+sample count is inferred from its freeze. These checks create no authoritative
+profile or performance evidence. Underlying unit diagnosis, the clean
+correction commit and new candidate progression remain pending.
+
 ## Independent source construction uses governed preparation
 
 An atomic pre-freeze command-selection proof at source `549940a4…` finds both

@@ -1,5 +1,64 @@
 # Architecture Migration Ledger
 
+## H08 synthetic atomic fixtures are confined to temporary roots
+
+On clean source `e35932f2fa472b35160159874e636652ea93b04f`, independent
+discovery finds 1492 tests and no import errors. The complete canonical unit
+command returns zero: 1492 run, one existing native-Windows-only integration
+skipped, no failures/errors. Its base terminal SHA256 is
+`72e9e99120c7b9dd48b52a3d62b7eda808b10a85b1763ed403990266843b20e3`; raw stderr
+is `31e565e706871d4abf80be57367a5d35a8b2073d999d47211f28976d48043bed`.
+This is not 1492 PASS, an authoritative profile or a complete H08 campaign.
+
+The independent post-run receipt protection fails, correctly blocking the
+predictor: companion SHA256
+`2409868019a09f922ac8b0f9b25e314d7f0e6703ae751e7759420a2fda47cab9` remains
+FAILED. The inventory grows 598 to601 with three new synthetic atomic results;
+no prior file changes or disappears. Source inspection identifies exactly two
+quality fixtures using `Toolchain(data, Path.cwd())`: their passed/failed and
+stale-success cases allocate the real repository's certification directory.
+All three added receipts use `certification.fixture`, producer
+`certification_fixture@alpha`, fixed synthetic fingerprints, empty checks and
+zero sample consumption. Independent schema/fingerprint/counter validation
+confirms zero authenticated performance samples. Preserve those receipts and
+the failed guard; do not whitelist the leak or relabel this predictor green.
+
+The charter precedes an interception regression. It blocks real-root directory
+creation before any additional receipt can be written and reproduces both
+leaking methods on Native and WSL. The correction changes only the test
+fixtures to owned temporary toolchains and a fixed synthetic source identity.
+All prior invocation, stream, failed-process and stale-success rejection
+assertions remain, with new directory/source containment and cleanup checks.
+Three focused tests pass on each platform after correction. The original real
+runner and receipt guard are unchanged; no performance, security, trust,
+denominator or acceptance-policy relaxation occurs.
+
+Registry mapping across all36 families finds no affected generated output.
+Repeated direct validation must now hold the entire receipt inventory unchanged
+as well as source/Git and all102 protected hashes. Static checks, an exact-path
+commit and a fresh whole-unit predictor remain pending before artifact
+preparation and any candidate freeze. H08 remains OPEN and the goal ACTIVE.
+
+Subsequent strict validation passes 339 tests twice across fourteen modules,
+zero failures/errors/skips, with no new real certification receipt. The entire
+601-file retained receipt inventory remains byte-identical before and after
+every stage, including the three preserved leaked fixtures. Governance passes
+four controls and 33 architecture rules; lint, hygiene and formatting pass.
+Independent audit verifies twelve streams, six child receipts, exact commands
+and both terminal layers: base SHA256
+`ecf631cda1ec0d72bb80fe2ea4da02c9b2a225ed9e0d2338baca687c53e39095`, companion
+`83de18a42603ffbfe734649485c52ffb6931c10d451b600548e22bcd5c5e062d`, request
+`9ed2b832cf526e260772e3141beb2be7506eadd9af4df47692880e45f4ff48da`, binding
+`b26da32ab98b69482635b520f22877044365ba7a02e48f5389e4b003cd62eac8`.
+Whole-source fingerprint
+`22d1538419d2f3aab39b4159deb1214874d84e43f9760425b710b6efa52681a4`, index
+`137a5b473ac3063b70645e6edeefb1b8a41fc848fbf32efc2aa11ba921a743c6` and all
+102 protected hashes remain unchanged before this evidence-only update.
+These results supersede the direct/static pending state, not the failed
+e359 whole-predictor guard. Exact-path commit and a fresh source-bound complete
+unit predictor remain pending; no authoritative profile or performance sample
+is created by this validation.
+
 ## H08 readiness regression expectations follow the composed profiles
 
 The one-use non-authoritative unit diagnostic on clean

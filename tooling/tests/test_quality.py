@@ -202,6 +202,56 @@ def policy(
 
 
 class QualityRoutingTests(unittest.TestCase):
+    def _atomic_fixture_toolchain(self, data: dict[str, object]) -> Toolchain:
+        temporary = TemporaryDirectory(prefix="strling-atomic-quality-fixture-")
+        self.addCleanup(temporary.cleanup)
+        self._atomic_fixture_root = Path(temporary.name).resolve()
+        source = patch(
+            "quality.repository_state",
+            return_value={"commit": "a" * 40, "dirty": False},
+        )
+        source.start()
+        self.addCleanup(source.stop)
+        return Toolchain(data, self._atomic_fixture_root)
+
+    def test_atomic_fixtures_never_allocate_real_certification_results(self) -> None:
+        real_directory = (
+            TOOLING_DIR.parent / "target/certification-operation-results"
+        ).resolve()
+        original_mkdir = Path.mkdir
+        allocated: set[Path] = set()
+
+        def confined_mkdir(path: Path, *args: object, **kwargs: object) -> None:
+            self.assertFalse(
+                path.resolve().is_relative_to(real_directory),
+                "unit fixture tried to allocate real certification authority",
+            )
+            if path.parent.name == "certification-operation-results":
+                allocated.add(path.resolve())
+            original_mkdir(path, *args, **kwargs)
+
+        for name in (
+            "test_atomic_structured_operation_binds_exact_invocation",
+            "test_atomic_structured_operation_rejects_stale_success_after_failure",
+        ):
+            with self.subTest(fixture=name):
+                outcome = unittest.TestResult()
+                case = QualityRoutingTests(name)
+                before = set(allocated)
+                with patch.object(Path, "mkdir", new=confined_mkdir):
+                    case.run(outcome)
+                self.assertTrue(
+                    outcome.wasSuccessful(), str(outcome.failures + outcome.errors)
+                )
+                self.assertFalse(case._atomic_fixture_root.exists())
+                self.assertTrue(
+                    all(
+                        path.is_relative_to(case._atomic_fixture_root)
+                        for path in allocated - before
+                    )
+                )
+        self.assertEqual(3, len(allocated))
+
     def test_repository_python_hardgates_use_the_active_windows_runtime(self) -> None:
         with patch("quality.sys.platform", "win32"):
             command = host_command(["python3", "tooling/governance.py"])
@@ -1295,6 +1345,7 @@ class QualityRoutingTests(unittest.TestCase):
 
     def test_atomic_structured_operation_binds_exact_invocation(self) -> None:
         data = policy()
+        toolchain = self._atomic_fixture_toolchain(data)
         definition = {
             "kind": "repository",
             "component": "alpha",
@@ -1316,6 +1367,8 @@ class QualityRoutingTests(unittest.TestCase):
                 return invocation[invocation.index(name) + 1]
 
             directory = Path(value("--execution-directory"))
+            self.assertTrue(directory.is_relative_to(toolchain.root))
+            self.assertEqual("a" * 40, value("--expected-source-sha"))
             context = execution_context(
                 producer_id=value("--producer-id"),
                 operation_id="certification.fixture",
@@ -1356,7 +1409,7 @@ class QualityRoutingTests(unittest.TestCase):
             )
 
         result = QualityRunner(
-            Toolchain(data, Path.cwd()), hardgate_executor=execute
+            toolchain, hardgate_executor=execute
         ).run_repository_operation(
             "certification_fixture",
             definition,
@@ -1385,7 +1438,7 @@ class QualityRoutingTests(unittest.TestCase):
 
         terminal_status = "failed"
         failed = QualityRunner(
-            Toolchain(data, Path.cwd()), hardgate_executor=execute
+            toolchain, hardgate_executor=execute
         ).run_repository_operation(
             "certification_fixture",
             definition,
@@ -1399,6 +1452,7 @@ class QualityRoutingTests(unittest.TestCase):
         self,
     ) -> None:
         data = policy()
+        toolchain = self._atomic_fixture_toolchain(data)
         definition = {
             "kind": "repository",
             "component": "alpha",
@@ -1419,6 +1473,8 @@ class QualityRoutingTests(unittest.TestCase):
                 return invocation[invocation.index(name) + 1]
 
             directory = Path(value("--execution-directory"))
+            self.assertTrue(directory.is_relative_to(toolchain.root))
+            self.assertEqual("a" * 40, value("--expected-source-sha"))
             context = execution_context(
                 producer_id=value("--producer-id"),
                 operation_id="certification.fixture",
@@ -1455,7 +1511,7 @@ class QualityRoutingTests(unittest.TestCase):
             return Execution(1, stdout="stale-success", stderr="child failed")
 
         result = QualityRunner(
-            Toolchain(data, Path.cwd()), hardgate_executor=execute
+            toolchain, hardgate_executor=execute
         ).run_repository_operation(
             "certification_fixture",
             definition,

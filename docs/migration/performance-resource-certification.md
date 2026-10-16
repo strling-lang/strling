@@ -6,6 +6,37 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Unit-fixture receipts cannot enter the real certification namespace
+
+The e359 complete unit predictor executes1492 tests with no failures/errors and
+one existing native-Windows-only skip, but its post-run receipt guard fails:
+three synthetic `certification.fixture` results were added to the real results
+directory by two quality test methods. All598 prior receipt hashes remain
+unchanged. Independent schema/counter validation confirms zero authenticated
+samples in the three additions. Full identities are in the [ledger](ledger.md).
+The failed guard and all added fixture receipts remain preserved, not accepted
+as authoritative evidence or silently discarded.
+
+An interception regression reproduces the real-root allocation before it can
+write another receipt. The narrow correction confines those fixtures to owned
+temporary toolchain roots with fixed synthetic source identity, retaining all
+success/failure/stale-success transport checks. The three focused tests pass on
+Native and WSL. Production transport, receipt protection, measurement policy,
+baselines, conditioning, sample denominators, security and trust are unchanged.
+Repeated source/receipt-preserving direct validation and a new-source whole-unit
+predictor remain pending. No candidate has been frozen; H08 remains OPEN.
+
+The strict fourteen-module follow-up passes 339 tests twice and all four
+static checks. Independent audit confirms unchanged source/index, all102
+protected hashes, all601 retained receipts, twelve raw streams, six child
+receipts and both base/companion terminals. Base
+`ecf631cda1ec0d72bb80fe2ea4da02c9b2a225ed9e0d2338baca687c53e39095` and exact
+identities are retained in the ledger. This proves the narrow isolation
+correction without relaxing the receipt guard. It creates zero authenticated
+samples or profiles and does not turn the older failed predictor green.
+The correction commit, new-source whole-unit predictor and candidate gates
+remain pending.
+
 ## Authored readiness expectations are not a performance regression
 
 The source5aad fail-fast unit diagnostic identifies stale readiness assertions,

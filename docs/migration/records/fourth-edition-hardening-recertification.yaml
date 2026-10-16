@@ -128,6 +128,7 @@ scope:
         - tests/_design/unit/test_profile_environment_preflight.md
         - tests/_design/unit/test_independent_generated_preparation.md
         - tests/_design/unit/test_profile_failure_diagnostics.md
+        - tests/_design/unit/test_atomic_quality_fixture_isolation.md
         - toolchain.json
         - tooling/adversarial_semantic_audit.py
         - tooling/architecture_fitness.py
@@ -1249,7 +1250,24 @@ checkpoints:
           - check: Completed repeated direct and static validation
             result: passed
             details: Subsequent14modules include readiness+independentproduction;338tests twice,zero failures/errors/skips. Governance4controls/33architecture rules,lint,hygiene2268trackedfiles/0findings andfullformatPASS. Terminal311a705849fb34e7059751e035f1f40541f1f24acfc62975a2b0f8a97d5d9854,requestdb1196bbda22a85a97d8c8c46e1a00654feae165e77c19580ac4afbd5cab4813,binding94c0429744964e87906292b60fa00732286719dcfc1adb09272bce30895244cc independentlyverify with12streams/6childreceipts/exactcommands/currentwhole-source+index+102protectedhashes unchanged. Pre-record-update sourcefingerprint5665e5a8c218463093898bd424da84f79e39a8f4bc68a7b1a1a5c8e52f432910,indexa5ee47fb7c4ceaae40d05fa5f3922c0b8a8b5fecdec1eb40b867ac43b6d222c0. Earlierdirect/static pending superseded only;exactcommit,wholeunitpredictor,newsource36/prereqs/Nativeadmission/campaigns/signing/trust/closure stillpending. Zero authenticatedsamples/profiles.
+    - name: Synthetic atomic transport fixtures use owned temporary roots
+      status: in_progress
+      evidence:
+          - check: Actual complete unit command and failed post-run receipt guard
+            result: failed
+            details: Cleane35932f2fa472b35160159874e636652ea93b04f census1492/errors0;canonicalunitcommandexit0 runs1492tests/no failures/errors/one existingnativeWindows-onlyskip,not1492PASSorprofile. Baseterminal72e9e99120c7b9dd48b52a3d62b7eda808b10a85b1763ed403990266843b20e3;stderr31e565e706871d4abf80be57367a5d35a8b2073d999d47211f28976d48043bed. Companion2409868019a09f922ac8b0f9b25e314d7f0e6703ae751e7759420a2fda47cab9FAILEDretainedinventory598to601. All598oldhashes unchanged;three addedsyntheticcertification.fixture/alphaproducer results fromtwoqualitytests usingrealPath.cwd. Independent schema/fingerprint/zerocounter validation0b11b9proves0authsamples,notpermissiontogreenguard. Preservefailedattemptandall3receipts. Owner98070/40652terminal,notpoll/retryunchanged.
+          - check: Interception reproduction and narrow fixture isolation
+            result: passed
+            details: Charterfirst;Native321e3b/WSLe31904 regressionfailsbothnestedatomicfixturemethods before real-rootmkdir,creatingnoadditionalreceipts. Correctonlytestfixtures toownedTemporaryDirectorytoolchains andfixedsyntheticsource;retainallpassed/failed/stalesuccess/invocation/streamchecks,addcontainment+cleanupassertions. Threefocusedtests PASS Nativea62e8c/WSL96a62d. Productiontransport/receiptguardunchanged;no performancecontract,baseline,budget,sample,conditioning,security/license/trust or authoritychange. Currentregistry36zero source/inputmatches forfiveplannedpaths,nogeneratedrefresh.
+          - check: Repeated receipt-preserving validation and fresh source predictor
+            result: not_run
+            details: Repeatfocused/directsuitewithstrictwhole source/Git/protected102andretainedreceiptinventoryequality;staticchecks,exact5pathcommit,andfreshwhole-unitcensus/predictorstillpending. Do notrelaxguardorclassifyoldpostguardgreen. Newsourcecomplete36/prerequisites/nativeconditioning/sourceboundhelpersandbothwholeauthoritativecampaigns/signing/isolatedimmutablequalification/promotion/pinnedverification/guardedclosure remainmandatory. H08OPENgoalACTIVE.
+          - check: Completed strict receipt-preserving direct and static validation
+            result: passed
+            details: Subsequent14modules pass339tests twice/no failures/errors/skips. Governance4controls/33rules,lint,hygiene/fullformatPASS. All601retainedreceiptbytes unchangedbeforeandaftereverystage,including3oldsyntheticfixtures;no allowanceornewreceipt. Independent auditd8c53averifies12streams/6childreceipts/exactcommands/binding+bothterminals,currentwhole-source22d1538419d2f3aab39b4159deb1214874d84e43f9760425b710b6efa52681a4/index137a5b473ac3063b70645e6edeefb1b8a41fc848fbf32efc2aa11ba921a743c6 andprotected102unchanged beforeevidence-onlyrecordupdate. Baseecf631cda1ec0d72bb80fe2ea4da02c9b2a225ed9e0d2338baca687c53e39095,companion83de18a42603ffbfe734649485c52ffb6931c10d451b600548e22bcd5c5e062d,request9ed2b832cf526e260772e3141beb2be7506eadd9af4df47692880e45f4ff48da,bindingb26da32ab98b69482635b520f22877044365ba7a02e48f5389e4b003cd62eac8. Zeroauthsamples/profiles. Supersedes direct/staticpendingonly;olde359postguardstaysFAILED. Exactcommit/freshsourcecompleteunitpredictor andallcandidate/campaign/trust/closureworkpending.
 commits:
+    - sha: e35932f2fa472b35160159874e636652ea93b04f
+      subject: "test(certification): align readiness with shared integrity"
     - sha: 5aad57ea5613978a0ab2394bb281f00bcffff520
       subject: "fix(certification): retain JSON profile failure diagnostics"
     - sha: 209fc16b999c1dd7301f12b751904bb78431bd7b

@@ -6,6 +6,36 @@ Authority: this document records engineering measurement and certification
 design. It does not define STRling semantics, target behavior, diagnostics,
 public APIs, support tiers, or regex-engine performance promises.
 
+## Deep-quality inventory coverage before a new candidate
+
+The `8349bb65…` Local attempt is consumed: 15/38 operations executed, 14 PASS
+and one deep-quality `stale-source` FAIL; PR/Full/Release and authenticated
+performance acquisition never started. Governance passed, so the prior index
+replacement failure did not recur. The complete35 result was genuine for its
+declared set but did not cover the omitted deep-quality identity projections;
+it is not a complete36 result or successful Local certification.
+
+The new registered family checks the manifest and synthetic fixture before
+build-backed artifact verification. Its explicit governed refresh renews six
+source/test hashes and dependent fingerprints while preserving every quality
+definition, budget, partition and denominator. Ordinary automatic preparation
+remains prohibited for this mixed authority/identity family. Missing,
+malformed, noncanonical, stale or unregistered outputs fail closed; live and
+historical evidence cannot be refreshed. Exactly two files are delegated to
+the canonical serializer, whose byte check replaces competing formatting.
+
+Final native focused tests pass 23/23; two isolated WSL repetitions each pass
+236/236 with source/index guards intact. Regression receipt `ca9ad545…` and
+governed projection/direct-dependent receipt `d38a7f5d…` are detailed in the
+[migration ledger](ledger.md#h08-deep-quality-source-identity-inventory-correction-engineering).
+The direct Local deep-quality result is dirty-source engineering evidence,
+not an authoritative H08 profile. Both affected audit projections reproduce
+unchanged and all raw hashes verify independently. Failed drafts and the
+consumed Local result remain retained. No performance baseline, measurement,
+conditioning, security, lock or trust authority changed and no authenticated
+performance sample was created by this correction. Fresh complete36 preparation
+and all actual campaigns at a new clean SHA remain required. H08 is OPEN.
+
 ## Read-only governance index isolation
 
 The frozen `66e4288b0154648fac13cb35f670b06e4624e440` Local attempt failed its

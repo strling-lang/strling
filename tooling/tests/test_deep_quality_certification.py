@@ -360,6 +360,40 @@ class DeepQualityCertificationContractTests(unittest.TestCase):
         validate_manifest(refreshed)
         validate_evidence(fixture, manifest=refreshed)
 
+    def test_identity_refresh_never_rewrites_live_or_historical_evidence(self) -> None:
+        for kind in ("live", "historical", None):
+            fixture = copy.deepcopy(self.fixture)
+            fixture["evidence_kind"] = kind
+            original = copy.deepcopy(fixture)
+            with self.subTest(kind=kind):
+                with self.assertRaises(DeepQualityError) as raised:
+                    refresh_source_identities(self.manifest, fixture)
+                self.assertEqual("fixture-kind", raised.exception.code)
+                self.assertEqual(original, fixture)
+
+    def test_identity_refresh_preserves_all_nonidentity_quality_authority(self) -> None:
+        refreshed, fixture = refresh_source_identities(self.manifest, self.fixture)
+        original = copy.deepcopy(self.manifest)
+        comparable = copy.deepcopy(refreshed)
+        for value in (original, comparable):
+            value.pop("manifest_fingerprint")
+            for row in value["property_suites"]:
+                for source in row["sources"]:
+                    source.pop("sha256")
+            for row in value["fuzz_targets"]:
+                row.pop("source_sha256")
+                row.pop("corpus_seed_sha256", None)
+            for row in value["mutants"]:
+                row.pop("source_sha256")
+                for source in row["test_sources"]:
+                    source.pop("sha256")
+        self.assertEqual(original, comparable)
+        original_fixture = copy.deepcopy(self.fixture)
+        for value in (original_fixture, fixture):
+            value.pop("evidence_fingerprint")
+            value["deterministic_evidence"].pop("manifest_fingerprint")
+        self.assertEqual(original_fixture, fixture)
+
     def test_every_controlled_mutation_fails_closed(self) -> None:
         self.assertEqual(len(self.mutations), 12)
         self.assertEqual(

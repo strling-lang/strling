@@ -239,6 +239,15 @@
     ],
     "generated_paths": [
         {
+            "paths": [
+                "tests/certification/deep-quality/1.0/manifest.json",
+                "tests/certification/deep-quality/1.0/fixtures/valid-evidence.json"
+            ],
+            "owner": "Deep-quality governed source-identity projection",
+            "text_normalization": "serializer_owned",
+            "rationale": "The canonical identity-only refresher owns serialization and derived hashes; authored quality definitions and synthetic checks remain unchanged. This independent census prevents omission from the generated-artifact registry."
+        },
+        {
             "paths": ["tests/spec/**"],
             "owner": "Explicit non-normative migration-history fixture set",
             "text_normalization": "serializer_owned",

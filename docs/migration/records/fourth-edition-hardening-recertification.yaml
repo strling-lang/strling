@@ -85,6 +85,7 @@ scope:
         - tooling/tests/test_stdlib_guarantee_contracts.py
         - tooling/tests/test_portability_matrix_architecture.py
         - tooling/tests/test_generated_artifact_profile_gate.py
+        - tooling/tests/test_deep_quality_artifact_family.py
         - tooling/tests/test_profile_certification.py
         - tooling/tests/test_lua_rockspec.py
         - tests/architecture/legacy-removal/1.0/evidence.json
@@ -123,6 +124,7 @@ scope:
         - tests/_design/unit/test_certification_readiness.md
         - tests/_design/unit/test_adversarial_evidence_writes.md
         - tests/_design/unit/test_jvm_dependency_alignment.md
+        - tests/_design/unit/test_deep_quality_source_identities.md
         - toolchain.json
         - tooling/adversarial_semantic_audit.py
         - tooling/architecture_fitness.py
@@ -198,6 +200,7 @@ scope:
         - .github/workflows/dependency-review.yml
     permitted_generated_changes:
         - adversarial-semantic-observations
+        - deep-quality-source-identities
         - dependency-license-evidence
         - jvm-adapter-release-graph
         - legacy-removal-inventory-evidence
@@ -314,6 +317,18 @@ invariant_inventory:
       current_observed_state: The interrupted Full at be811599 passed 123 operations, retained only WVR-SEC-VSCE-LICENSE-001, made performance unavailable solely on the Windows 26200.9445 versus 26200.9457 identity mismatch, and proved zero authenticated samples and zero coordinates started in structured invocation d070493b417242ab8b28becefba4b56f. The immutable .9445 baseline is archived at history/dffac2d05330d2e2cd19edc3d9427bc95b12bb93e5b3cc7b16450e20841a98d0. Native qualification found only OS-build and attestation-fingerprint drift. Clean calibration source 36d13f24bcf0c182cb926b2f669c7650747fdd64 passed all 54 old-contract comparisons after source-bound artifact validation, error-only binary-size containment, and exact validated-profile snapshot reuse. Active baseline a0f0ab5f3da117efaa6fd907e5696bb865ecba8376ddbd82f714d8adbf32a7cd now authenticates environment 07046a769a2618588399efd80156976d88f6fcb38886160c542d6757c836e14f and manifest 962897b9c1e5f2a908ab58adcc49473176ca46a86b1edae95f2cda37957070e0. A clean post-adoption native qualification reproduces the active environment. The authoritative Local at 03ab81b passed 36 of 37 operations and made only deep_quality_local_certification@repository incomplete because five intentional rollover source changes retained their be811599 deep-quality hashes; no Pull Request or Full profile started and no authenticated Full sample was consumed. Canonical refresh and isolated Local, Pull Request, and Full deep-quality proofs are green, but tracked authority changed, so the next authoritative campaign must restart Local, then Pull Request, then Full; Release remains separate and forbidden until Full is inspected. The authoritative Local 37/37 and Pull Request 79/79 at df7ff737 then reached Full, which traversed all 125 operations and recorded 121 passed, two failed, one waived, and one unavailable without starting a coordinate or authenticating a sample. Both failures were repository defects and are now corrected. The Perl build regenerates its own generated Makefile from Makefile.PL before invoking make, and the C adapter no longer recursively globs Cargo build trees to declare its interop dependencies, which returns the governed deep-quality sanitizer cases from roughly nineteen minutes each to about seventy-five seconds each inside the unchanged 3600-second budget. The performance unavailability was the designed fail-closed native conditioning result and needed no repository change. Tracked files changed again, so the next authoritative campaign must restart Local, then Pull Request, then Full.
       expected_ratchet: The exact hardened source baseline is immutable evidence for P20-T02; any later semantic-core change requires a new certification event.
 checkpoints:
+    - name: Deep-quality source-identity inventory coverage
+      status: in_progress
+      evidence:
+          - check: Consumed Local8349 stale-source failure
+            result: failed
+            details: Frozen8349bb6593c93487c85f378fa5dc5fa51d6493cf Local executed15of38 operations with14PASS and1deep-quality manifest stale-sourceFAIL for core/src/safety_analysis.rs;23operations notexecuted. Governance actualPASS proves the prior index defect did not recur. PR/Full/Release neverstarted and authenticated performance samples zero. Failed profile520081ec395b95b57500e6bb17988b7810ab75d4f255bdd86a35196c74f8f4b7 and terminalfce954f67418eac2fd0b1cfd00a44601c0cb44745abb24ed6e1845b15326f711 preserved and consumed; no unchanged-profile replay or failure reclassification. Historical complete35 proof covers only its declared set, not the newly complete36 inventory.
+          - check: Governed identity-only repair and complete inventory registration
+            result: passed
+            details: Atomic7b2593baeddb8f9b0d064de0ae7331dbd4dc725964fb6519a186b460d27e9a12 identifies6stale source/test hashes across safety_analysis.rs, product_certification.py and its test. New36th deep-quality-source-identities family and independent hygiene census cover manifest and synthetic fixture; static check precedes build-backed verification. Automatic preparation remains blocked because authored quality definitions share the manifest. Explicit canonical refresh changes only6hashes and3dependent fingerprint fields, producing manifest1d804c36ca8e04ced3b995119ce8d11948a3ffc873c5e8b9da6c34532718ed8d and synthetic6c1fc5030ce9156290e595e964a99e7b42bc9e73c8310f75983c98547bdee4ee. All nonidentity definitions, partitions, budgets, mutants, counts and fixture fields unchanged. Live/historical evidence refused. Canonical byte verification owns exactly2outputs and resolves measured Prettier conflict without removing integrity checks. Original performance5file hashes, locks, security, waiver scope and trust pins unchanged.
+          - check: Repeated final regressions and specific governed projection checks
+            result: passed
+            details: Native23focusedPASS; final isolatedWSL236testsPASS twice,472actual passes, zero failures/errors/skips and complete source/index authority unchanged. Regression terminalca9ad545703e5244d86aca492c9a98ed58056887c632a0755c8569ce0995e37b preserves both raw streams and hashes. Projection terminald38a7f5d40c6ac751fb6869b41abf113096022101b6684475768509189fd2e38 records10actual executions with no source/Git mutation, byte-idempotent canonical generation, exact registered checks and directLocal1of1PASS; semantic-authority and legacy-removal outputs reproduce unchanged. Every raw hash independently verified764335. Earlier failed registration/self-input, synthetic stale-fixture and test-only schema-key/error-text drafts remain retained; earlier146test repetitions are historical, not final-source236proof. All current results are dirty-source engineering evidence with zero authenticated performance samples and zero new H08 profiles/freezes/signing/trust promotion. Final read-only static receipts are retained separately under target/codex-tools/h08-deep-quality-static-validation-8349-v1; new clean source still needs complete36 preparation, fresh prerequisites/admission, actual38/80/126/126 campaigns, independent Releases, signing, isolated qualification/promotion and guarded closure. H08 OPEN.
     - name: Read-only governance index isolation
       status: passed
       evidence:

@@ -1,5 +1,54 @@
 # Architecture Migration Ledger
 
+## H08 deep-quality source-identity inventory correction (engineering)
+
+Frozen `8349bb6593c93487c85f378fa5dc5fa51d6493cf` Local stopped after
+15/38 operations: 14 PASS and one deep-quality manifest FAIL, with 23 operations
+not executed. The exact reason was `stale-source` for
+`core/src/safety_analysis.rs`. Governance passed under the actual source guard;
+the preceding index defect did not recur. PR, Full and Release did not start,
+and authenticated performance samples were zero. Failed profile SHA256
+`520081ec395b95b57500e6bb17988b7810ab75d4f255bdd86a35196c74f8f4b7`
+and terminal `fce954f67418eac2fd0b1cfd00a44601c0cb44745abb24ed6e1845b15326f711`
+remain consumed and preserved, not retried or reclassified.
+
+Atomic proof `7b2593baeddb8f9b0d064de0ae7331dbd4dc725964fb6519a186b460d27e9a12`
+finds six stale source/test identities across safety analysis, product
+certification and its tests. The manifest and synthetic fixture were absent
+from both the 35-family registry and independent hygiene census. They now form
+the 36th family, `deep-quality-source-identities`, checked first in the static
+phase. Because the manifest retains authored quality definitions, ordinary
+preparation must block automatic regeneration; only the explicit existing
+identity-refresh procedure may update its derived fields.
+
+Canonical refresh changes those six hashes and the dependent manifest/fixture
+fingerprints only. All quality definitions, partitions, mutations, budgets,
+denominators and nonidentity fixture fields remain unchanged. Live or historical
+evidence is refused. The registered serializer owns exactly the two outputs;
+check mode now also rejects noncanonical bytes, resolving the measured conflict
+with competing Prettier formatting without dropping integrity verification.
+
+Native focused validation passes all 23 tests. Two final isolated WSL
+repetitions each pass all 236 artifact, deep-quality, formatting, audit and
+governance tests, with zero failures, errors or skips and unchanged source/index
+authority. Regression terminal SHA256 is
+`ca9ad545703e5244d86aca492c9a98ed58056887c632a0755c8569ce0995e37b`.
+Governed projection terminal
+`d38a7f5d40c6ac751fb6869b41abf113096022101b6684475768509189fd2e38`
+records ten actual executions: canonical refresh/idempotence/check for the
+three affected families and the direct Local deep-quality check (1/1 PASS).
+Both audit projections reproduce unchanged; every held source/Git byte remains
+unchanged. These are dirty-source engineering proofs, not H08 profile results.
+All raw hashes were independently verified. Earlier failed registration,
+fixture and test-only drafts remain retained; none is relabeled PASS.
+
+Performance authority, dependency locks, security evidence, trust pins and
+waiver scope are unchanged. This correction creates no authenticated
+performance sample, new authoritative profile or candidate freeze. A new clean
+engineering commit still requires fresh complete36 preparation, source-bound
+prerequisites/admission and all real qualification/promotion campaigns before
+closure. H08 remains OPEN.
+
 ## H08 read-only governance index isolation (engineering, not certification)
 
 Frozen `66e4288b0154648fac13cb35f670b06e4624e440` failed Local after 13 of

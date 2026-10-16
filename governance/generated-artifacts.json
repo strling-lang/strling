@@ -2,6 +2,7 @@
     "registry_version": 1,
     "inventory": {
         "required_families": [
+            "deep-quality-source-identities",
             "public-contract-snapshots",
             "interop-c-header",
             "adapter-migration-baseline",
@@ -39,6 +40,8 @@
             "adversarial-semantic-observations"
         ],
         "governed_output_patterns": [
+            "tests/certification/deep-quality/1.0/manifest.json",
+            "tests/certification/deep-quality/1.0/fixtures/valid-evidence.json",
             "governance/contracts/snapshots/c-public-api.json",
             "governance/contracts/snapshots/cpp-public-api.json",
             "governance/contracts/snapshots/csharp-public-api.json",
@@ -195,6 +198,89 @@
         ]
     },
     "artifacts": [
+        {
+            "id": "deep-quality-source-identities",
+            "category": "version-synchronized-metadata",
+            "description": "Identity-only renewal of declared deep-quality source and seed hashes plus dependent manifest and explicitly synthetic fixture fingerprints. Authored property, fuzz, sanitizer and mutation definitions, budgets, partitions and denominators remain governed authority; live and historical evidence are never refreshed.",
+            "authoritative_sources": [
+                "governance/schemas/deep-quality-certification.schema.json",
+                "tooling/deep_quality_certification.py",
+                "tooling/tests/test_deep_quality_certification.py",
+                "core/src/*.rs",
+                "core/tests/*.rs",
+                "bindings/interop/tests/property.rs",
+                "bindings/interop/fuzz/fuzz_targets/*.rs",
+                "bindings/interop/fuzz/corpus/deep-*/canonical.*",
+                "bindings/interop/fuzz/Cargo.toml",
+                "tooling/product_certification.py",
+                "tooling/tests/test_product_certification.py"
+            ],
+            "generator_inputs": [
+                "governance/schemas/deep-quality-certification.schema.json",
+                "core/src/*.rs",
+                "core/tests/*.rs",
+                "bindings/interop/tests/property.rs",
+                "bindings/interop/fuzz/fuzz_targets/*.rs",
+                "bindings/interop/fuzz/corpus/deep-*/canonical.*",
+                "bindings/interop/fuzz/Cargo.toml",
+                "tooling/product_certification.py",
+                "tooling/tests/test_product_certification.py",
+                "tooling/tests/test_deep_quality_certification.py",
+                "tooling/deep_quality_certification.py"
+            ],
+            "generator": {
+                "implementation_paths": [
+                    "tooling/deep_quality_certification.py"
+                ],
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.deep_quality_certification",
+                    "--refresh-source-identities",
+                    "--json"
+                ],
+                "working_directory": "."
+            },
+            "outputs": [
+                "tests/certification/deep-quality/1.0/manifest.json",
+                "tests/certification/deep-quality/1.0/fixtures/valid-evidence.json"
+            ],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "operational-projection",
+            "verification": {
+                "method": "command-check",
+                "phase": "static",
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.deep_quality_certification",
+                    "--check",
+                    "--json"
+                ]
+            },
+            "preparation": {
+                "automatic_regeneration": "governed-refresh",
+                "direct_dependents": [
+                    [
+                        "python3",
+                        "-m",
+                        "unittest",
+                        "tooling.tests.test_deep_quality_certification",
+                        "-q"
+                    ],
+                    [
+                        "python3",
+                        "-m",
+                        "tooling.deep_quality_certification",
+                        "--profile",
+                        "local",
+                        "--json"
+                    ]
+                ]
+            },
+            "enforcement": "enforced"
+        },
         {
             "id": "public-contract-snapshots",
             "category": "compatibility-snapshot",

@@ -166,6 +166,10 @@ def refresh_source_identities(
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Renew governed source hashes without changing quality denominators."""
 
+    if fixture.get("evidence_kind") != "synthetic-contract-fixture":
+        raise DeepQualityError(
+            "fixture-kind", "identity refresh requires the synthetic contract fixture"
+        )
     refreshed = copy.deepcopy(dict(manifest))
 
     def renew(source: dict[str, Any]) -> None:
@@ -1149,8 +1153,23 @@ def main(argv: list[str] | None = None) -> int:
         return exit_code
     validate_manifest(manifest)
     fixture_count = 0
+    if args.check and not FIXTURE_PATH.is_file():
+        raise DeepQualityError("missing-fixture", "missing synthetic contract fixture")
     if FIXTURE_PATH.exists():
-        validate_evidence(load_json(FIXTURE_PATH), manifest=manifest)
+        fixture = load_json(FIXTURE_PATH)
+        if fixture.get("evidence_kind") != "synthetic-contract-fixture":
+            raise DeepQualityError(
+                "fixture-kind", "contract check requires the synthetic contract fixture"
+            )
+        validate_evidence(fixture, manifest=manifest)
+        if args.check:
+            for path, value in ((MANIFEST_PATH, manifest), (FIXTURE_PATH, fixture)):
+                canonical = json.dumps(value, indent=4, ensure_ascii=False) + "\n"
+                if path.read_bytes() != canonical.encode("utf-8"):
+                    raise DeepQualityError(
+                        "noncanonical-serialization",
+                        f"generated output is not canonically serialized: {path}",
+                    )
         fixture_count = 1
     result = {
         "status": "passed",

@@ -7295,3 +7295,66 @@ These receipts are sample-free engineering validation only, never H08 acceptance
 or a candidate freeze. H08 remains OPEN, with campaign and continuation PAUSED;
 this task creates zero authenticated performance samples and no authoritative
 H08 profile result.
+
+### H08 preparation/compiler-context correction — 2026-10-17
+
+The subsequently resumed campaign at clean
+`b9ce9a11541f4af20421c2018a15d205823e749c` actually passes Local38 and PR80.
+Independent receipt audit
+`2b68fd335fd179050e8ef7a657fffe368ed9d51d0b4c98c948d53db9063a63d6`
+binds both complete denominators, all eight canonical statuses, execution
+intervals and raw logs. These are historical results for that source, not
+certification of a later candidate.
+
+Mandatory sample-free Full readiness then fails at `build@lsp`, ordinal84 of123:
+82 PASS, the sole VSCE waiver, one FAIL and39 not reached. Its artifact is
+`3e5b6ced329fde2c1283f2b2d8a47b7c8e304be88001188586bf8d7240fdf814`;
+owner terminal
+`6297dfababc754dde85e4e25dc43d632193317dc5dfd25c33c5231f7b3b80798`
+preserves exit1. Actual Full and Release never start. All601 retained
+operation/calibration receipt bytes remain identical to the pre-freeze unit
+binding: zero new authenticated performance samples, not a Full profile result.
+
+Two exact atomic production-context build checks retain exit2. Operand-only
+observation identifies different native binaries and their derived manifest;
+registered source inputs and the other19 payload files agree. Preparation used
+Ubuntu-distributed Rust1.75.0; certification used rustup Rust1.75.0. Actual compiler
+hashes differ despite the same release/commit. Restoring only the preparation
+PATH makes the unchanged atomic build check pass, preserving all production,
+no-reuse and security values. Comparison
+`318f7a60f2d2d2414575203a4cc50520522aec657942710938a8548570a01c8b`
+and PATH-control terminal
+`f955794d089743bea9cca3d0fdc8e9cc6f035d49a54b4e9bd104cb02a673c069`
+are non-authoritative causal diagnostics, not passing readiness or performance.
+
+The narrow correction is in the certification operator: preparation and its
+direct dependents must use the existing production certification environment,
+with actual selected-tool identities bound before freeze. The shared ignored
+operator helper `h08-preparation-context-v1.py` passes six guards twice on Native
+and twice on WSL; equal version strings cannot conceal different compiler bytes.
+Repository-native independent Release preparation already uses this environment.
+No product behavior, byte-equivalence contract, baseline, conditioning, lock,
+security/license scope, workflow pin or trust boundary changes. Do not switch
+certification to the diagnostic control PATH merely to obtain a pass.
+
+B9 is consumed and retired as the active candidate. No payload repair or new
+freeze has occurred at this checkpoint. Fresh source-bound unit/prerequisite
+proofs, complete36 canonical preparation in the production context, registered
+LSP dependents and repeated real immutable build checks precede a new clean
+candidate. Both actual38/80/126/126 campaigns, fresh independent Releases,
+signing, isolated qualification, pin-only promotion, pinned verification and
+guarded final closure remain required. H08 OPEN; goal and continuation ACTIVE.
+
+Subsequent operator engineering validation passes six context tests twice,
+135 preparation/profile/native-production direct tests twice and37 real package
+fixtures. Governance, repository lint, hygiene (2269 tracked files, zero findings)
+and full formatting pass. Independent audit
+`005cac49a5020fd7a236c3bf1b7e25d9d78a8164fe2e9e84609651aafb876a36`
+reconstructs18 raw streams, nine child receipts, exact commands/counts/intervals,
+the before-record-update source/Git snapshot, unchanged compiler provenance,
+protected102 identities and all601 retained receipts. Base terminal
+`33b06e7a83980778e88d7910bd0094dc8b1918c995750bc85da987e016690342`
+and binding `7a60a6ed6d1ef5a4f92a2915cf2163384896ae08014b641b0d79016bce1fbf9f`
+remain sample-free engineering evidence. No payload regeneration, candidate
+freeze or authoritative campaign is implied; source-bound pre-freeze and full
+campaign requirements above remain pending.

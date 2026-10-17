@@ -1902,3 +1902,77 @@ tests. Of the earlier101 protected pins, only the explicitly authorized runner
 source changed during integration; all100 others remain unchanged. The source
 engineering checkpoint is not certification; the expired exception still needs
 the separate pending approval or an approved compliant remediation.
+
+### Preparation/compiler-context attribution — 2026-10-17
+
+Later owner renewal and resumed work supersede the preceding pending/paused
+checkpoint only where supported by subsequent evidence. Clean B9
+`b9ce9a11541f4af20421c2018a15d205823e749c` completes actual Local38 and PR80;
+independent data audit
+`2b68fd335fd179050e8ef7a657fffe368ed9d51d0b4c98c948d53db9063a63d6`
+binds their complete all-PASS results. Its sample-free Full readiness fails at
+`build@lsp`, ordinal84/123, with82 PASS, one approved VSCE waiver, one FAIL and39
+unexecuted selected operations. Full/Release sampling, signing and qualification
+do not start. Failed owner terminal
+`6297dfababc754dde85e4e25dc43d632193317dc5dfd25c33c5231f7b3b80798`
+and readiness artifact
+`3e5b6ced329fde2c1283f2b2d8a47b7c8e304be88001188586bf8d7240fdf814`
+remain immutable and consumed.
+
+The exact atomic failure is `isolated build differs from the prepared payload`.
+Production-context reproduction retains exit2
+(`00fab3e4fc5b078669162b85f34cd71d523e188fb94e90668a3310561a4f6cef`).
+An observer returns both canonical comparison operands unmodified and finds
+only the two native binaries and derived manifest differ; all registered source
+inputs and19 other files agree. Its comparison receipt is
+`318f7a60f2d2d2414575203a4cc50520522aec657942710938a8548570a01c8b`.
+Preparation resolves `/usr/bin/rustc`, Ubuntu's source-tarball Rust1.75.0
+(`30f44b1c46d23f193558f3b7e31f2ac1cead33c076f72d9dc6efcb2800d2d327`);
+the frozen profile resolves rustup's official1.75.0 compiler
+(`7cd1c64771117a00efd8eb5113e2aed512545441c23436f6923e5deb8c97016c`).
+Identical release/commit/LLVM version strings do not establish identical builds.
+
+The single-variable PATH control retains every production/no-reuse/security
+value and passes the same atomic check against the untouched prepared payload.
+Terminal `f955794d089743bea9cca3d0fdc8e9cc6f035d49a54b4e9bd104cb02a673c069`
+and context `0eb882cdc199dc184fbdd453162820c7837e336c03dc24fcd991d959c2cbbe13`
+establish an operator preparation-context defect, not a product/performance
+regression, invalid equivalence requirement or permission to adopt the control
+PATH for certification. The exact601 retained operation/calibration hashes are
+unchanged from the pre-freeze unit binding through all three diagnostics;
+protected102 identities and all22 prepared payload files also remain unchanged.
+Zero authenticated performance samples were created.
+
+Use the existing `build_certification_environment` consistently for future
+qualification preparation and direct dependents. The shared operator context
+helper `dc9f8d0db5dc3d6b8281e587e85c240a66df69fe049cf8ef13233977308936e1`
+passes six provenance/equality/security guards twice on Native and twice on WSL,
+including rejection of equal-version/different-compiler bytes. Existing native
+independent Release preparation already uses that environment; no product or
+certification-contract correction is justified. Byte-for-byte payload comparison,
+all performance budgets/samples/conditioning and every authority boundary remain
+unchanged. No lock, baseline, historical evidence, waiver scope or trusted pin is
+refreshed by this correction.
+
+This retires B9 without replaying its unchanged failed expensive stage. The
+next engineering source still needs fresh unit/prerequisite proofs, complete36
+registered canonical preparation in the production context, registered LSP
+dependents and repeated real immutable build checks before freeze. No payload
+has been regenerated or new candidate frozen at this checkpoint. Both complete
+authoritative38/80/126/126 campaigns, fresh independent Releases, actual signing,
+isolated qualification, exact pin-only promotion, pinned verification and guarded
+formal closure remain outstanding. H08 OPEN; goal and continuation ACTIVE.
+
+Completed operator validation subsequently passes six context tests twice,
+135 direct preparation/profile/production-composition tests twice,37 package
+fixtures and governance/lint/hygiene/full-format checks. The source/Git snapshot,
+102 protected identities,601 receipt bytes and selected compiler provenance are
+unchanged throughout all nine stages. Independent audit
+`005cac49a5020fd7a236c3bf1b7e25d9d78a8164fe2e9e84609651aafb876a36`
+binds18 raw streams and nine child receipts to request
+`006f3b53604460015cd17304f8dacb67e7298ba5bc235ace72e4a2c90a3af77d`,
+binding `7a60a6ed6d1ef5a4f92a2915cf2163384896ae08014b641b0d79016bce1fbf9f`
+and terminal `33b06e7a83980778e88d7910bd0094dc8b1918c995750bc85da987e016690342`.
+Those snapshots precede this evidence-only record update; they are not a new
+clean-SHA preparation, payload repair, frozen candidate, performance result or
+authority to reuse the consumed failed attempt.

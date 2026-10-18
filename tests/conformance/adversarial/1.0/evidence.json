@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "authority": "empirical/adversarial-conformance-evidence",
-  "source_sha": "a64c5277a850cbf3e881b823c146fb8e78fe0e42",
+  "source_sha": "ac931f72300d98c8511932966c0eed185badfa33",
   "source_files": {
     "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
     "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
@@ -38,9 +38,9 @@
     "core/src/safety_analysis/repetition.rs": "4eb975a7733d57afa30f5d541d19764197345401d6844bcf72aa1fb850107c03",
     "core/src/safety_analysis.rs": "fb9ad0477a478830efa940e240ae1f73519619776a57458797c3f075a37eb8f7",
     "core/src/semantic/mod.rs": "5ee874a56d217f7dbef35fa127132291d535bb369dc4ad223d948cb56f7758c1",
-    "core/src/semantic_analysis/capture.rs": "763bb655f8760d48d651da5eed8e2670d6987e5bd2ca9d16b4c08b20c3551078",
-    "core/src/semantic_analysis/consumption.rs": "12f33ae8f6d8f5686f300d6f11a70457e2c4d7d8acd03e24c97d66c15bac05cb",
-    "core/src/semantic_analysis.rs": "6105e73fe72800568b9bfe53018a541ae8bfe1e21dc5ef35b7e0a914dd0b328d",
+    "core/src/semantic_analysis/capture.rs": "ff3995cbef19dccbd8cd3f4df61cd4a7586b9b9e666494468d3b668db1455440",
+    "core/src/semantic_analysis/consumption.rs": "32df45c0c49414039211ddbc4945c7013df12dbbc2034c106dbc63470e2ea895",
+    "core/src/semantic_analysis.rs": "526618f59c0a0deb2597ce8ec51b9a61b34170f9bf31e7412b0f140d05acd269",
     "core/src/semantic_compatibility.rs": "f3e70421f5b9a6d63fef1f4e3b742fac8bb43e4cd4730223fe6fc50e63ea7e13",
     "core/src/semantic_conversion.rs": "5775e4ea0aa2e2a5b6fca506284aa687a482b163c565dabca8538cc61b8f29c7",
     "core/src/semantic_frontend.rs": "688852364856a0ec6275ddf5c7a8304596377f35b2ae27d4c37e1d204b89f598",
@@ -53,13 +53,13 @@
     "core/src/target/profile.rs": "e913e7e6ef3985272e5255fd89df1c1655d51d19f7c46015c3d123f265b59f65",
     "core/src/target_lowering.rs": "21c5f321daef4758c152decd8ed71860b4a9038719cba2ad4d19ef93666bd168",
     "core/src/target_serialization.rs": "d5c40a8586c650645b6456613c04272c6ab969147bcaea42b20c610ce549612c",
-    "core/src/validation/mod.rs": "97d55eda03ed3496cfcdcd84e9a41f29290e71999a9c623d0e05253c6a59051a",
+    "core/src/validation/mod.rs": "d11dfeead6760900767bcaf5d69ab5b11921b0d064759249102dddd5498ddc99",
     "tooling/adversarial_semantic_audit.py": "c416a023b7a5285f9b458575a25fc39d3a3c46a882d8c6e3477a10f9f2ff1822",
     "tooling/node_regexp_harness.mjs": "96a85b99480b2a898590a847b06f8bb49255fef34a1c5b435226be785b03bcd9",
     "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
     "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
   },
-  "executed_at": "2026-10-10T19:20:17.787108+00:00",
+  "executed_at": "2026-10-18T02:01:47.065086+00:00",
   "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
   "repeat_runs": 2,
   "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
@@ -394,7 +394,7 @@
     }
   ],
   "findings": [],
-  "result_sha256": "28d8a43d4fe6a39b10a284d1d013952f90f324a9c2f69c528ce95f10079798b5",
+  "result_sha256": "d9b0d26899ad5b1fc7658e0c349e13635c970370be5bcc31ed7c0ef7860e4a07",
   "case_observations": [
     {
       "case_id": "wildcard-excluding-lines",

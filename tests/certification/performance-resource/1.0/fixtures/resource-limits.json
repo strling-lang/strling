@@ -215,7 +215,7 @@
             "test_sources": [
                 {
                     "path": "core/tests/semantic_analysis.rs",
-                    "sha256": "0e2aa9f74a479c8564160cbf6f2640d2e8f36b75220e02bb179b01009875053d"
+                    "sha256": "615acac81ca2765bda8c4c3c42c9703fc2202ceec7b85e227206848091237be4"
                 },
                 {
                     "path": "core/tests/structural_analysis.rs",
@@ -476,5 +476,5 @@
         }
     ],
     "declaration_count": 56,
-    "inventory_fingerprint": "1ec9917fdd77e05fcd2dedf43b1af5a6f9ce44e197596422ea7f01f122282d19"
+    "inventory_fingerprint": "b4acead805901e0156d6b2b6a9dbb113b8751967dc643466e58cf15aaea8a01a"
 }

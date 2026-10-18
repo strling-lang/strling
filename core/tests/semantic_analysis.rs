@@ -59,6 +59,46 @@ fn fact_iteration_is_deterministic_identity_order() {
 }
 
 #[test]
+fn returned_facts_own_their_identities_after_the_input_is_dropped() {
+    let root = json!({
+        "node_id": "node:owned.root",
+        "kind": "sequence",
+        "items": [
+            {
+                "node_id": "node:owned.capture",
+                "kind": "capture",
+                "capture_id": "capture:owned",
+                "name": "owned",
+                "body": {"node_id": "node:owned.body", "kind": "literal", "text": "λ"}
+            },
+            {
+                "node_id": "node:owned.reference",
+                "kind": "backreference",
+                "capture_id": "capture:owned"
+            }
+        ]
+    });
+    let facts = {
+        let temporary_input = program(root.clone());
+        analyze(&temporary_input).expect("scoped canonical input must analyze")
+    };
+    let capture = facts.capture_definitions().next().unwrap().1;
+    assert_eq!(capture.capture_id.as_str(), "capture:owned");
+    assert_eq!(capture.name.as_deref(), Some("owned"));
+    let reference = NodeId::try_from("node:owned.reference").unwrap();
+    assert_eq!(
+        facts.backreference(&reference).unwrap().capture_id,
+        capture.capture_id
+    );
+    let independently_reconstructed = program(root);
+    assert_eq!(
+        facts,
+        analyze(&independently_reconstructed)
+            .expect("identical input must retain exact owned facts")
+    );
+}
+
+#[test]
 fn duplicate_and_missing_identity_states_do_not_enter_the_fact_store() {
     let duplicate = program(json!({
         "node_id": "node:root",

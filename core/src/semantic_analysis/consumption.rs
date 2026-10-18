@@ -39,14 +39,14 @@ pub(super) struct ConsumptionFacts {
 
 pub(super) fn analyze_consumption(
     input: &SemanticProgram,
-) -> Result<BTreeMap<NodeId, ConsumptionFacts>, SemanticAnalysisErrors> {
+) -> Result<BTreeMap<&NodeId, ConsumptionFacts>, SemanticAnalysisErrors> {
     ConsumptionAnalyzer::new(&input.root).analyze(&input.root, "$.root")
 }
 
 struct ConsumptionAnalyzer<'a> {
-    captures: BTreeMap<CaptureId, &'a Node>,
-    facts: BTreeMap<NodeId, ConsumptionFacts>,
-    visiting: BTreeSet<NodeId>,
+    captures: BTreeMap<&'a CaptureId, &'a Node>,
+    facts: BTreeMap<&'a NodeId, ConsumptionFacts>,
+    visiting: BTreeSet<&'a NodeId>,
 }
 
 impl<'a> ConsumptionAnalyzer<'a> {
@@ -58,7 +58,7 @@ impl<'a> ConsumptionAnalyzer<'a> {
                 Node::Capture {
                     capture_id, body, ..
                 } => {
-                    captures.insert(capture_id.clone(), body.as_ref());
+                    captures.insert(capture_id, body.as_ref());
                     pending.push(body);
                 }
                 Node::Sequence { items, .. } => pending.extend(items.iter().rev()),
@@ -85,7 +85,7 @@ impl<'a> ConsumptionAnalyzer<'a> {
         mut self,
         root: &'a Node,
         path: &str,
-    ) -> Result<BTreeMap<NodeId, ConsumptionFacts>, SemanticAnalysisErrors> {
+    ) -> Result<BTreeMap<&'a NodeId, ConsumptionFacts>, SemanticAnalysisErrors> {
         self.node(root, path)?;
         Ok(self.facts)
     }
@@ -98,7 +98,7 @@ impl<'a> ConsumptionAnalyzer<'a> {
         if let Some(facts) = self.facts.get(node.node_id()) {
             return Ok(*facts);
         }
-        if !self.visiting.insert(node.node_id().clone()) {
+        if !self.visiting.insert(node.node_id()) {
             return Ok(ConsumptionFacts::conservative_reference_cycle());
         }
 
@@ -150,7 +150,7 @@ impl<'a> ConsumptionAnalyzer<'a> {
         };
 
         self.visiting.remove(node.node_id());
-        self.facts.insert(node.node_id().clone(), facts);
+        self.facts.insert(node.node_id(), facts);
         Ok(facts)
     }
 }

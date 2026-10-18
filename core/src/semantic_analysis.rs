@@ -221,8 +221,10 @@ pub fn analyze(input: &SemanticProgram) -> Result<SemanticFacts, SemanticAnalysi
     let mut node_facts = BTreeMap::new();
     let mut pending = vec![&input.root];
     while let Some(node) = pending.pop() {
-        let node_id = node.node_id().clone();
-        let capture = capture_analysis.node_facts.get(&node_id).ok_or_else(|| {
+        // Private indexes borrow immutable input identities. Only the final
+        // independently owned fact store needs to clone each node key.
+        let node_id = node.node_id();
+        let capture = capture_analysis.node_facts.get(node_id).ok_or_else(|| {
             SemanticAnalysisErrors::single(SemanticAnalysisError::new(
                 SemanticAnalysisErrorCode::AnalysisInvariant,
                 "$.root",
@@ -232,7 +234,7 @@ pub fn analyze(input: &SemanticProgram) -> Result<SemanticFacts, SemanticAnalysi
         if node_facts
             .insert(
                 node_id.clone(),
-                match consumption_facts.get(&node_id) {
+                match consumption_facts.get(node_id) {
                     Some(consumption) => NodeFacts {
                         kind: node_kind(node),
                         nullability: consumption.nullability,

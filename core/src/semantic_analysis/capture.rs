@@ -31,15 +31,15 @@ pub(super) struct NodeCaptureFacts {
     pub backreference: Option<BackreferenceResolution>,
 }
 
-pub(super) struct CaptureAnalysis {
-    pub node_facts: BTreeMap<NodeId, NodeCaptureFacts>,
+pub(super) struct CaptureAnalysis<'a> {
+    pub node_facts: BTreeMap<&'a NodeId, NodeCaptureFacts>,
     pub definitions: BTreeMap<CaptureId, CaptureDefinition>,
     pub backreferences: BTreeMap<NodeId, BackreferenceResolution>,
 }
 
 pub(super) fn analyze_captures(
     input: &SemanticProgram,
-) -> Result<CaptureAnalysis, SemanticAnalysisErrors> {
+) -> Result<CaptureAnalysis<'_>, SemanticAnalysisErrors> {
     let definitions = collect_definitions(&input.root)?;
     let mut analysis = CaptureAnalysis {
         node_facts: BTreeMap::new(),
@@ -111,10 +111,10 @@ fn collect_definitions(
     Ok(definitions)
 }
 
-fn visit(
-    node: &Node,
+fn visit<'a>(
+    node: &'a Node,
     path: &str,
-    analysis: &mut CaptureAnalysis,
+    analysis: &mut CaptureAnalysis<'a>,
 ) -> Result<NodeCaptureFacts, SemanticAnalysisErrors> {
     let mut facts = match node {
         Node::Sequence { items, .. } => {
@@ -213,11 +213,7 @@ fn visit(
         capture: own_capture,
         backreference: own_backreference,
     };
-    if analysis
-        .node_facts
-        .insert(node.node_id().clone(), stored)
-        .is_some()
-    {
+    if analysis.node_facts.insert(node.node_id(), stored).is_some() {
         return Err(SemanticAnalysisErrors::single(SemanticAnalysisError::new(
             SemanticAnalysisErrorCode::InvalidIdentity,
             format!("{path}.node_id"),

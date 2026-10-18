@@ -7358,3 +7358,150 @@ and binding `7a60a6ed6d1ef5a4f92a2915cf2163384896ae08014b641b0d79016bce1fbf9f`
 remain sample-free engineering evidence. No payload regeneration, candidate
 freeze or authoritative campaign is implied; source-bound pre-freeze and full
 campaign requirements above remain pending.
+
+## H08 AC consumed Full and bounded digest engineering — 2026-10-18
+
+Qualification source `ac931f72300d98c8511932966c0eed185badfa33` completed
+actual Local 38 and PR 80, then sample-free Full readiness 123 (122 PASS plus the
+sole approved VSCE waiver). Actual Full 1.30.0 stopped at operation 23 of 126:
+21 PASS, one waiver, one semantic-common latency FAIL, and103 not reached.
+The median 35,159 ns exceeded unchanged relative27,838 ns and absolute31,481 ns
+ceilings. All 64 authenticated samples were accepted, with64 attempts and zero
+rejected batches; the other eight build/environment/conditioning/isolation
+checks passed. Profile `c0b88a1576b2a240cb4b5b361e93d83a57564eccfa16e023105f2bf2a6bb1427`
+and producer `4f9c57effc314abfa79d9d2d70d5b664` remain consumed and preserved.
+AC will not be replayed unchanged. Its Release and trust progression never began.
+
+Bounded non-authoritative attribution identifies genuine product cost in the
+streaming identity writer. The exact semantic-common input normalizes twelve
+authored items to nine nodes and 3,225 serialized bytes; an earlier thirteen-node
+description was incorrect, not a fixture change. All seven rounds, including
+unfavorable drift, are retained. Comparison terminal
+`2fe493dd9680dfc7227749b4e4be29d81de41643bec9aaa3be1fef2e76ec459a`
+records current streaming-digest medians 34,686 ns wall/32,424 ns CPU versus a
+512-byte bounded fast path 16,036 ns wall/15,258 ns CPU. This is cost attribution,
+not an authoritative performance PASS or evidence that the criterion is invalid.
+
+The product correction adds only the inline `Write::write_all` fast path,
+retaining bounded storage, exact Serde bytes and SHA-256, validation, and
+serialization errors. Three boundary/byte/semantic-identity regressions join
+six existing tests. All nine pass twice each on Native Windows and WSL;
+the native pinned formatter check passes. Guarded all-core/static dependents
+and isolated-output native product compilation remain in progress. No new
+candidate has been committed or frozen at this checkpoint.
+
+Generated-artifact-sync maps six families. Performance/deep-quality identities,
+shared-engine observations and stdlib runtime evidence check green unchanged.
+Adversarial identity checking correctly fails stale source identity; use its
+specific governed refresh. LSP uses canonical production-context preparation
+and registered dependents. Full 36-family deterministic preparation/check,
+idempotence, exact diff review and source-bound prerequisites still precede
+the next freeze. No blanket authority refresh, baseline/threshold/sample or
+conditioning/isolation change, lockgraph update, waiver expansion or verifier
+promotion is authorized by these diagnostics. Zero new authenticated samples
+and zero new authoritative profile results were created during this engineering.
+Both complete 38/80/126/126 source-distinct campaigns, independent Releases,
+actual signing/qualification/promotion/pinned verification and clean formal
+closure remain required. H08 OPEN; autonomous completion remains ACTIVE.
+
+Subsequent actual native compilation passes using the pinned Rust 1.75 and
+canonical source remapping, with separate ignored output. Terminal
+`5bc53f605975c93d05764e2fb93a82d439ca9fcb746229e11e0894506bb0ecdd`
+binds executable `dddcd767e61fe544203c2b15a39407ff9b3d51f5aa7cbabb1e39c2622db649c0`
+and all 642 held hashes unchanged. Independent audit also confirms the five
+consumed AC binary/bundle identities are unchanged and the temporary build
+drive is released. No authenticated samples, profile, freeze or promotion.
+All-core/static dependents remain active; the actual corrected-product atomic
+timing check is prepared and guard-tested, but has not executed.
+
+The complete core/static plan subsequently passes: 91 Rust harness summaries
+contain 498 passed, zero failed/ignored/measured tests; Clippy, formatting,
+core contracts and governance also pass. Core terminal
+`c9314c4877d7af606f9502a68aea5f0e2496a899f9df40b6d20d211f74ace4b0`
+preserves all 642 held hashes. Actual corrected-product atomic diagnosis then
+retains every round and all 650 held hashes; raw
+`176aae466c420995890500d7b9efd095746bde7363c04405211a3e35b841eff4`
+reports 27,907 ns API median, versus the unchanged 27,838 ns relative ceiling.
+The improvement is marginal, not a performance PASS or a basis for freezing.
+Further bounded-copy controls precede any additional product correction.
+All prior data are retained; no new authenticated samples or profiles.
+
+### Borrowed semantic indexes — 2026-10-18 engineering checkpoint
+
+The narrow private-index borrowing correction preserves owned public facts and
+removes 36 temporary identity clones from the common fixture. Final source passes
+two 59-test focused runs on each host, plus 499 core tests across 91 harnesses,
+Clippy, formatting and contracts. Exact-source core terminal
+`d159b486f52c82b239bd33d64fca47c5a76675eab47f64aac1f13283f11d66a1`
+and separate native product build preserve all 642 held hashes.
+One subsequent unauthenticated atomic API predictor retains every round and all
+722 held hashes: wall median 23,062 ns, CPU median 22,888 ns, worst retained wall
+round 25,947 ns. Unchanged relative/absolute ceilings remain 27,838/31,481 ns.
+Raw `a24dd32be72fc1b3a22d577fbf0f63861b7e34fe6104e59a0c9c9927d27e760e`
+is not passing performance certification.
+
+The 900-second initial inventory wrapper timeout is retained as an operator
+failure with no inventory result; its 642 protected hashes are unchanged and
+the failed whole check was not replayed. Six separate registered checks find
+three stale families: LSP payload, performance test-source identity and adversarial
+evidence. Deep-quality, shared-engine and stdlib checks pass unchanged. Governed
+synchronization, full 36-family integrity and source-bound prerequisites remain
+before an exact-path commit and new candidate freeze. No authenticated samples,
+authoritative profile results, signing, trust promotion or closure are produced.
+At this checkpoint H08 remains OPEN and autonomous completion ACTIVE.
+
+Governed performance identity renewal subsequently completes all six stages.
+Only the intentional test-source hash and six dependent fingerprint fields
+change; measured values, ceilings, budgets and 718 other protected hashes do not.
+Repeated canonical generation is byte-identical; focused identity tests pass
+twice and both artifact-integrity unit tests pass. Terminal
+`499be4fb2c54907ab9df96cbf4a52f619898de87c7990be7cdf7fd64c2a07e29`
+is identity-only evidence, not recalibration or certification. Adversarial and
+LSP synchronization and complete 36-family integrity remain pending.
+
+Actual governed adversarial refresh and idempotence then pass, including
+39 direct regressions. Each run covers 41 cases, 205 target-profile compiles
+and 1,531 runtime executions with zero findings; existing semantic observations
+and raw shards remain identical. Only source/provenance metadata changes.
+Terminal `03afc6e9598c80ddbcbe080a212577cdff30fe1e4b699857668143f60844cca2`
+preserves 785 other protected hashes. LSP preparation, complete integrity and
+the clean new authoritative campaigns remain pending; H08 is not certified.
+
+### Integrated generated-state preparation — 2026-10-18 03:33 UTC
+
+The retained preparation and independent raw-receipt audit pass. Initial
+35-fresh/one-stale becomes all 36 registered families passed; only the ordinary
+LSP core binaries and manifest change. Canonical generation is byte-idempotent,
+37 direct tests pass, and two actual independent build checks reproduce the same
+22-file payload. All 808 protected hashes and original payload backups remain
+unchanged. Terminal
+`d3c40bdd574172bc835d8d95821f7903a7a2f4525b0722a29398cb23a43903ca`;
+independent audit
+`28562427eb87041800f7548ccaac84cb0a869552cfe9ef977aa52b9bd01d3200`.
+Preparation takes about 59.45 minutes including checks and dependents.
+
+This supersedes only pending ordinary synchronization and complete integrity.
+The initial operator timeout remains preserved, not green-classified or replayed
+unchanged. Zero new authenticated samples or authoritative profiles are produced.
+Prerequisites, exact-path commit, fresh clean-source admission and both complete
+38/80/126/126 campaigns with independent Releases, signing and trusted immutable
+verification remain before guarded formal closure. H08 OPEN; continuation ACTIVE.
+
+### Sample-free prerequisites complete — 2026-10-18 05:38 UTC
+
+All 18 source-bound engineering stages and their independent receipt audit pass.
+The artifact-only diagnostic prefix validates all 36 registered families without
+mutation or profile authority. WSL discovers 1,493 tooling cases: 1,492 passed,
+one explicit native-only skip; that exact case then passes natively, one of one
+with no skip and a successful CPU-20 metadata probe. This is not the governed
+CPU-1 baseline admission or performance qualification. Security risk has 54
+passed checks and only the approved ten-dependency VSCE license waiver.
+
+Terminal `f60331f52c1cbdc81b3255c2b1c5ecb1ee26aa37b70c190c9115de31febcb536`;
+audit `d0f685f453d7e232b8ff1da888fb49001f622d5ab0fc4aa2b09037d44b1cebf9`;
+native unit `8dc05f7b7d269f96088182b2d3537d692daa8fc8b76f8903c914314b2ab0d714`.
+All 2,310 source/Git/generated entries, 808 protected hashes and 603 retained
+operation/calibration JSON receipts remain unchanged. Zero new authenticated
+samples or authoritative profiles. This supersedes working-tree prerequisite
+pending status only; clean-source preparation, freeze, both campaigns and formal
+trusted closure remain outstanding. H08 OPEN; continuation ACTIVE.

@@ -189,6 +189,22 @@ impl JsonDigestWriter {
 }
 
 impl Write for JsonDigestWriter {
+    #[inline]
+    fn write_all(&mut self, bytes: &[u8]) -> io::Result<()> {
+        // Serde emits many small fragments. Keep those on a bounded, single
+        // copy path rather than entering Write::write_all's retry loop and
+        // the general buffer-boundary loop for every punctuation byte.
+        let available = self.buffer.len() - self.used;
+        if bytes.len() <= available {
+            self.buffer[self.used..self.used + bytes.len()].copy_from_slice(bytes);
+            self.used += bytes.len();
+            Ok(())
+        } else {
+            // This writer always consumes the full slice or returns an error.
+            self.write(bytes).map(|_| ())
+        }
+    }
+
     fn write(&mut self, mut bytes: &[u8]) -> io::Result<usize> {
         let length = bytes.len();
         while !bytes.is_empty() {
@@ -312,6 +328,80 @@ mod canonical_digest_tests {
             <[u8; 32]>::from(writer.digest.finalize()),
             <[u8; 32]>::from(Sha256::digest(expected))
         );
+    }
+
+    #[test]
+    fn mixed_writes_and_flushes_preserve_arbitrary_bytes_at_every_boundary() {
+        use std::io::Write as IoWrite;
+        let bytes: Vec<u8> = (0..12_289).map(|index| (index % 256) as u8).collect();
+        let chunks = [0, 1, 63, 64, 65, 255, 256, 257, 511, 512, 513, 1024, 4096];
+        let mut writer = JsonDigestWriter {
+            digest: Sha256::new(),
+            buffer: [0; 512],
+            used: 0,
+        };
+        let mut offset = 0;
+        let mut step = 0;
+        while offset < bytes.len() {
+            let end = (offset + chunks[step % chunks.len()]).min(bytes.len());
+            if step % 2 == 0 {
+                writer.write_all(&bytes[offset..end]).unwrap();
+            } else {
+                assert_eq!(writer.write(&bytes[offset..end]).unwrap(), end - offset);
+            }
+            assert!(writer.used <= writer.buffer.len());
+            if step % 5 == 0 {
+                writer.flush().unwrap();
+                writer.flush().unwrap();
+            }
+            offset = end;
+            step += 1;
+        }
+        writer.drain();
+        assert_eq!(
+            <[u8; 32]>::from(writer.digest.finalize()),
+            <[u8; 32]>::from(Sha256::digest(bytes))
+        );
+    }
+
+    #[test]
+    fn exactly_full_buffer_followed_by_empty_and_large_writes_loses_no_bytes() {
+        use std::io::Write as IoWrite;
+        let mut writer = JsonDigestWriter {
+            digest: Sha256::new(),
+            buffer: [0; 512],
+            used: 0,
+        };
+        let mut bytes = Vec::new();
+        for length in [512, 0, 1, 511, 0, 512, 0, 1025, 4096, 0] {
+            let chunk: Vec<u8> = (0..length).map(|index| (index % 251) as u8).collect();
+            writer.write_all(&chunk).unwrap();
+            assert!(writer.used <= writer.buffer.len());
+            bytes.extend_from_slice(&chunk);
+        }
+        writer.flush().unwrap();
+        writer.write_all(b"").unwrap();
+        writer.drain();
+        assert_eq!(
+            <[u8; 32]>::from(writer.digest.finalize()),
+            <[u8; 32]>::from(Sha256::digest(bytes))
+        );
+    }
+
+    #[test]
+    fn typed_semantic_identity_preserves_the_exact_contract_byte_stream() {
+        let semantic: crate::semantic::SemanticProgram = serde_json::from_str(include_str!(
+            "../../../spec/contracts/1.0/examples/semantic-ir/semantic-all-nodes.json"
+        ))
+        .expect("specification-authored semantic fixture");
+        let exact = serde_json::to_vec(&semantic).unwrap();
+        let expected: [u8; 32] = Sha256::digest(&exact).into();
+        for _ in 0..16 {
+            assert_eq!(serialized_sha256(&semantic).unwrap(), expected);
+            let facts = crate::semantic_analysis::analyze(&semantic).unwrap();
+            assert_eq!(facts.len(), semantic.node_ids().len());
+            assert_eq!(serde_json::to_vec(&semantic).unwrap(), exact);
+        }
     }
 
     #[test]

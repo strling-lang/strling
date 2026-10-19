@@ -2139,3 +2139,90 @@ preserves the same source and prior receipts. Security risk has 54 passed checks
 and the sole approved ten-dependency license waiver. No authenticated performance
 sample or authoritative profile is created. A clean new source and fresh governed
 admission/campaign evidence remain mandatory; H08 is OPEN, not performance green.
+
+## Consumed ECMAScript coordinate and scalar allocation remedy — 2026-10-19
+
+Actual D4 Local 38 and PR 80 pass, followed by fresh sample-free readiness.
+Full stops at 23/126 with 21 PASS, the sole waiver and one FAIL; 103 operations
+are unreached. Its ECMAScript semantic-common coordinate retains 64 accepted
+samples, no rejected batches, median 43,843 ns against unchanged relative
+39,592/absolute 43,192 ns ceilings. All 1,475 authenticated samples from 25
+coordinates remain immutable. Profile
+`b05846eebe89af31f26b97ec23974f790c142d6022616271808945ed9f1e0180`
+is consumed, not retried unchanged. Prior semantic-analysis now passes at
+23,033 ns; no Release, signature or qualification follows this failed Full.
+
+The narrow serializer remedy removes plain-scalar temporary allocations using
+a four-byte borrowed UTF-8 buffer and static fixed escapes. Exhaustive scalar
+and resource-boundary tests, repeated focused tests, 22 direct tests, 502 core
+tests, Clippy, formatting and contracts pass for the exact uncommitted source.
+Paired atomic terminal
+`42c48fe55989eb2e21aeca63f5665dec37728e805ac242b2601d1d2cb1035fcb`
+and independent audit
+`d447a8602e0cf91b547d018348c71ef09fb09f6d38d16a5cb1bb0e56e4ee3a60`
+retain every seven-by-8,192-call wall/CPU round and all 161 held hashes, with
+identical TargetArtifact. Serialization medians improve from 17,427 to 13,844 ns
+wall and 17,166 to 13,351 ns CPU; lowering stays stable. Both combined cohorts
+have unfavorable late-round increases, retained without exclusion. The result
+is attribution, not a stable 51% improvement or passing performance evidence.
+
+Earlier path-selection and whole-library metadata guards failed before timing
+and remain retained. Exact pinned dependency audit verifies all compiled objects,
+ten build/profile fields and generated inputs; only known build-path metadata
+differs. Neither metadata nor any certification acceptance rule is changed.
+The completed runner build and baseline diagnostic executable are reused, not
+rebuilt. New engineering creates zero authenticated samples or profile results.
+
+Four affected artifact families pass unchanged; LSP and adversarial provenance
+are stale. Their canonical ordinary/governed repair, complete 36-family checks,
+direct dependents, fresh clean source and both complete campaigns remain before
+signing, trusted verification and formal closure. H08 remains OPEN.
+
+Governed adversarial refresh then passes real repeated observations, deterministic
+regeneration, both checks and 39 direct regressions. Terminal
+`9089b7b4fbe88899bfc9b59fd480ed598ff411f582ca449932ed6e7657539a11`
+preserves 2,375 hashes; independent reconstruction confirms unchanged raw shards,
+semantic results, exact runtime identities and counts (41 cases, 205 profile
+compiles, 1,531 runtime executions). Only serializer provenance and dependent
+metadata change. This is not performance evidence or an H08 profile result.
+LSP preparation, complete integrity and subsequent campaigns remain pending.
+
+The subsequent canonical preparation passes the complete 36-family recheck,
+byte-idempotent ordinary LSP repair, 37 direct tests and two actual independent
+immutable build checks for the same 22-file payload. Only the kernel binary and
+package manifest change; all 2,445 protected hashes and 22 original payload
+backups remain intact. Terminal
+`b42c067d793c43a5270911093454c170db09c9da8fdb9006a5dc2bc13bf5c6b4`
+and independent raw-receipt audit
+`68c7aa562a33fa819dc63a2a9cad4be0f3681ae68f4620d2931a2ab2db3ec844`
+confirm the original compiler context and exact delta without rerunning work.
+This supersedes LSP/full-inventory preparation pending status only. No
+performance measurement, conditioning, calibration, authenticated sample or
+authoritative profile is produced; no performance acceptance rule changes.
+Fresh source-bound prerequisites, clean-source admission and both whole
+certification campaigns remain required. H08 is OPEN, not performance green.
+
+### Completed sample-free predictors after interruption — 2026-10-19 05:30 UTC
+
+A WSL boot change interrupts the original prerequisite unit stage; 17 guarded
+predecessors and 760 partial test lines remain preserved, with unknown exit and
+no completed unit/terminal receipt. Independent audit
+`d809e8c4bfc80415da9ff3431bfe279d9dec84fc17734999453e6c9858262381`
+verifies the completed evidence and actual immutable 36-family prefix. Only
+the unfinished unit operation is completed separately, with fresh discovery:
+1,493 cases, 1,492 successful and the sole exact Windows-only skip. Unit terminal
+`2fadf36550e35e4d96bebf64edcfdcd92d97b870d1be083fc26d8ca67f46dabd`
+does not alter the original attempt's incomplete disposition.
+
+The exact native case then passes one of one with zero skips and successful
+CPU-20 metadata probe; terminal
+`584bea283ea392598111bf4fc828affd4ffbe538a8d6c66cf6f4a7280a6ec458`.
+Final independently joined proof
+`d61b629786842c80995893cfe7299d2bdae8b658c7ec27dfc3831894823974ac`
+verifies the same dirty source, compiler context, 2,310 source/generated/Git
+entries, 2,460 protected hashes, original 72 files and all 605 prior measurement
+receipts. It completes the sample-free prerequisite predictors, not CPU-1
+conditioning/admission, calibration, performance acquisition or certification.
+Zero authenticated performance samples and zero authoritative profiles are
+created. Baselines, ceilings, distributions, isolation and trust remain unchanged.
+Fresh clean-source preparation and both whole campaigns remain mandatory.

@@ -1810,3 +1810,121 @@ also preserves source and retained receipts. These results produce zero new
 authenticated performance samples and zero authoritative profiles. They supersede
 only the pending working-tree prerequisites, not clean-source preparation,
 candidate freeze, actual campaigns, signing, pinned verification or formal closure.
+
+## ECMAScript allocation correction — 2026-10-19 engineering checkpoint
+
+Candidate `d4e38a0ee1838afd08ef95d28ffecb6705459240` completed actual Local 38
+and PR 80, then fresh sample-free Full readiness. Full stopped at operation
+23/126: 21 PASS, the sole VSCE license waiver, one FAIL and 103 unreached.
+ECMAScript lower/serialize semantic-common latency was 43,843 ns versus unchanged
+39,592 ns relative and 43,192 ns absolute ceilings. All 25 completed coordinates
+and 1,475 authenticated samples remain preserved (1,411 request/resource and 64
+paired CLI controls). The earlier semantic-analysis coordinate now passes at
+23,033 ns. D4 is consumed and will not be replayed unchanged.
+
+Failed Full profile `b05846eebe89af31f26b97ec23974f790c142d6022616271808945ed9f1e0180`
+and independent failed-attempt audit
+`eb52a32eb4b335903704ef616206925f2065b38ad0feee06177a5bedcf95af88`
+remain failed evidence, not qualification authority. No Release or signing followed.
+
+The serializer now borrows plain scalar UTF-8 from a reusable four-byte buffer
+and fixed short escapes from static strings. Exact spellings, owned output,
+validation, limits and errors are unchanged. Four focused tests pass twice,
+including every 1,112,064 valid Unicode scalar and the exact 16 MiB boundary;
+22 direct tests and 502 core tests across 91 harnesses pass, together with Clippy,
+formatting and contracts. Component terminal
+`674825b919e243e678c9adaa7a38b291c9fdaf0fde4af90b36b1d04bbe7b2631`
+binds the uncommitted source, not a new frozen candidate.
+
+Independent atomic audit
+`d447a8602e0cf91b547d018348c71ef09fb09f6d38d16a5cb1bb0e56e4ee3a60`
+reconstructs both seven-round wall/CPU cohorts, exact commands, equal complete
+TargetArtifact and all 161 held hashes. Serialization median wall/CPU improves
+from 17,427/17,166 to 13,844/13,351 ns; lowering stays stable. Both combined
+distributions retain unfavorable late-round increases. Their different medians
+are not a stable 51% speedup or performance PASS. Two earlier operator guard
+failures are preserved; the corrected diagnostic audits exact dependency code
+and inputs without rewriting metadata, rebuilding the completed runner or
+weakening any certification rule.
+
+Six registered checks then preserve all 2,353 held hashes. Deep-quality,
+shared-engine, stdlib and performance identities pass unchanged. Only LSP input
+fingerprints and adversarial source identity are stale. Terminal
+`da4542dbf06d664418e7fd1beda592e7510a1d0de4f2b934ecababfd2cb70a89`
+preserves both failures; governed adversarial execution and canonical ordinary
+LSP repair, complete 36-family integrity and direct dependents remain pending.
+No baseline, calibration, lockfile or network-evidence refresh is indicated.
+
+This engineering adds zero authenticated samples and zero authoritative profile
+results. Both fresh qualification/promotion campaigns, independent Releases,
+signing, immutable verification and guarded clean formal closure remain pending.
+H08 is OPEN; autonomous continuation remains ACTIVE.
+
+The specific governed adversarial refresh subsequently passes all six stages:
+governance, real repeated canonical observations, check, a second byte-idempotent
+real generation, recheck and 39 direct regressions. Terminal
+`9089b7b4fbe88899bfc9b59fd480ed598ff411f582ca449932ed6e7657539a11`
+preserves 2,375 other hashes. Independent reconstruction verifies all 12 streams,
+the original index backup and unchanged raw shards. Each governed run covers
+41 cases, 95 subjects, 205 target-profile compiles and 1,531 runtime executions,
+with zero findings. Semantic material, runtime identities and denominators do
+not change; only the serializer source identity and provenance metadata change.
+This supersedes adversarial pending status only. LSP ordinary preparation,
+complete 36-family integrity and prerequisites remain before a new candidate;
+zero authenticated performance samples or authoritative profiles are produced.
+
+### Canonical preparation independently audited — 2026-10-19 02:10 UTC
+
+The actual ordinary preparation completes at 02:03:20 UTC. Its initial 35 fresh
+families and one stale LSP family become all 36 registered families passed.
+Only the kernel payload and derived package manifest change; the editor-core
+binary remains identical. Canonical repair is byte-idempotent, all 37 registered
+direct tests pass, and two real independent immutable builds reproduce the same
+22-file payload. The original 22 payload backups and all 2,445 held file hashes
+remain unchanged in the original production compiler context.
+
+Terminal `b42c067d793c43a5270911093454c170db09c9da8fdb9006a5dc2bc13bf5c6b4`
+and independent data-only audit
+`68c7aa562a33fa819dc63a2a9cad4be0f3681ae68f4620d2931a2ab2db3ec844`
+bind the actual commands, complete inventory, raw results and exact two-file
+diff. No preparation or build was rerun to produce that audit. This supersedes
+only ordinary LSP/full-inventory preparation pending status. It is dirty-source,
+sample-free engineering evidence: zero new authenticated samples, authoritative
+profiles, candidate freezes, signatures or trust promotions. Source-bound
+prerequisites and fresh clean-source campaign admission remain required.
+
+### Sample-free prerequisites and preserved interruption — 2026-10-19 05:30 UTC
+
+A WSL boot change interrupts the first prerequisite owner's unit stage after
+17 guarded operations. That attempt retains 760 completed test lines but no
+suite summary, child completion or terminal receipt; its exit is unknown and
+it remains incomplete. Independent audit
+`d809e8c4bfc80415da9ff3431bfe279d9dec84fc17734999453e6c9858262381`
+verifies the completed predecessors, actual immutable 36-family prefix, 2,452
+protected hashes and 605 measurement receipts. No completed predecessor is
+replayed, and no original terminal is fabricated.
+
+A separate unit-only completion performs fresh discovery and the complete
+1,493-case suite: 1,492 execute successfully and only the exact Windows-only
+integration is skipped. Terminal
+`2fadf36550e35e4d96bebf64edcfdcd92d97b870d1be083fc26d8ca67f46dabd`
+and independent audit
+`ef4fa875946cc8e557aafd5c01c88d3708fc957de7a3a9f6d245e4c938da43cf`
+preserve the interrupted namespace and all prior authority. That exact native
+case then passes one of one with zero skips and successful CPU-20 metadata
+probe; terminal
+`584bea283ea392598111bf4fc828affd4ffbe538a8d6c66cf6f4a7280a6ec458`
+and independent native audit
+`e0e42aeaf04ec7a46b95a7220d6dca490c58a28e962e667c4ab944094346a5ad`
+remain non-authoritative platform-unit evidence, not CPU-1 baseline admission.
+
+Final joined audit
+`d61b629786842c80995893cfe7299d2bdae8b658c7ec27dfc3831894823974ac`
+verifies 18 unique prerequisite operations from 19 guarded executions (one
+repeated discovery), 1,493 distinct complementary unit cases, all 72 original
+interrupted files, 2,310 source/generated/Git entries, 2,460 protected hashes and
+the unchanged 605-receipt measurement inventory. The compiler context is
+unchanged. These are pre-annotation dirty-source proofs, not a frozen candidate.
+Zero authenticated performance samples or authoritative profiles are created.
+Only prerequisite pending status is superseded; fresh clean-source preparation,
+admission, both whole campaigns and signed/trusted formal closure remain required.

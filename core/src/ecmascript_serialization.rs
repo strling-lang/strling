@@ -5,6 +5,7 @@
 //! does not evaluate capabilities, plan or apply rewrites, execute JavaScript,
 //! or consult ambient state.
 
+use std::borrow::Cow;
 use std::collections::{BTreeMap, BTreeSet};
 use std::convert::TryFrom;
 use std::error::Error;
@@ -481,8 +482,12 @@ fn emit_node(emitter: &mut PatternEmitter, node: &EcmascriptNode) -> Result<(), 
             emitter.push(")", &node.provenance)?;
         }
         EcmascriptOperation::Literal(text) => {
+            let mut scalar_buffer = [0; 4];
             for character in text.chars() {
-                emitter.push(&escape_pattern_character(character), &node.provenance)?;
+                emitter.push(
+                    &escape_pattern_character(character, &mut scalar_buffer),
+                    &node.provenance,
+                )?;
             }
         }
         EcmascriptOperation::Wildcard(EcmascriptWildcard::NativeExclude) => {
@@ -834,18 +839,20 @@ fn validate_ascii_identifier(value: &str) -> Result<(), &'static str> {
     Ok(())
 }
 
-fn escape_pattern_character(character: char) -> String {
+fn escape_pattern_character(character: char, scalar_buffer: &mut [u8; 4]) -> Cow<'_, str> {
     match character {
         '\\' | '^' | '$' | '.' | '|' | '?' | '*' | '+' | '(' | ')' | '[' | ']' | '{' | '}'
-        | '/' => format!(r"\{character}"),
-        '\t' => r"\t".to_owned(),
-        '\n' => r"\n".to_owned(),
-        '\r' => r"\r".to_owned(),
-        '\u{000c}' => r"\f".to_owned(),
-        '\u{000b}' => r"\v".to_owned(),
-        ' ' | '#' => code_point_escape(character),
-        value if value.is_control() || value.is_whitespace() => code_point_escape(value),
-        value => value.to_string(),
+        | '/' => Cow::Owned(format!(r"\{character}")),
+        '\t' => Cow::Borrowed(r"\t"),
+        '\n' => Cow::Borrowed(r"\n"),
+        '\r' => Cow::Borrowed(r"\r"),
+        '\u{000c}' => Cow::Borrowed(r"\f"),
+        '\u{000b}' => Cow::Borrowed(r"\v"),
+        ' ' | '#' => Cow::Owned(code_point_escape(character)),
+        value if value.is_control() || value.is_whitespace() => {
+            Cow::Owned(code_point_escape(value))
+        }
+        value => Cow::Borrowed(value.encode_utf8(scalar_buffer)),
     }
 }
 
@@ -928,14 +935,21 @@ fn failure(plan: &EcmascriptLoweringPlan, problem: EmitProblem) -> EcmascriptSer
 
 #[cfg(test)]
 mod tests {
-    use super::{escape_class_character, escape_pattern_character, quantifier};
+    use std::borrow::Cow;
+
+    use super::{
+        escape_class_character, escape_pattern_character, quantifier,
+        EcmascriptSerializationErrorCode, PatternEmitter, MAX_ECMASCRIPT_PATTERN_BYTES,
+    };
+    use crate::ecmascript_lowering::EcmascriptProvenance;
 
     #[test]
     fn primitive_spellings_are_canonical() {
-        assert_eq!(escape_pattern_character('.'), r"\.");
-        assert_eq!(escape_pattern_character(' '), r"\x20");
-        assert_eq!(escape_pattern_character('é'), "é");
-        assert_eq!(escape_pattern_character('😀'), "😀");
+        let mut scalar_buffer = [0; 4];
+        assert_eq!(escape_pattern_character('.', &mut scalar_buffer), r"\.");
+        assert_eq!(escape_pattern_character(' ', &mut scalar_buffer), r"\x20");
+        assert_eq!(escape_pattern_character('é', &mut scalar_buffer), "é");
+        assert_eq!(escape_pattern_character('😀', &mut scalar_buffer), "😀");
         assert_eq!(escape_class_character('-'), r"\x2d");
         assert_eq!(escape_class_character('\u{2028}'), r"\u2028");
         assert_eq!(quantifier(0, None), "*");
@@ -944,5 +958,92 @@ mod tests {
         assert_eq!(quantifier(2, Some(2)), "{2}");
         assert_eq!(quantifier(2, None), "{2,}");
         assert_eq!(quantifier(2, Some(4)), "{2,4}");
+    }
+
+    #[test]
+    fn literal_spelling_matches_the_reference_for_every_unicode_scalar() {
+        let mut scalar_buffer = [0; 4];
+        for character in (0..=0x10ffff).filter_map(char::from_u32) {
+            let expected = match character {
+                '\\' | '^' | '$' | '.' | '|' | '?' | '*' | '+' | '(' | ')' | '[' | ']' | '{'
+                | '}' | '/' => format!(r"\{character}"),
+                '\t' => r"\t".to_owned(),
+                '\n' => r"\n".to_owned(),
+                '\r' => r"\r".to_owned(),
+                '\u{000c}' => r"\f".to_owned(),
+                '\u{000b}' => r"\v".to_owned(),
+                value
+                    if value == ' '
+                        || value == '#'
+                        || value.is_control()
+                        || value.is_whitespace() =>
+                {
+                    let scalar = u32::from(value);
+                    match scalar {
+                        0..=0xff => format!(r"\x{scalar:02x}"),
+                        0x100..=0xffff => format!(r"\u{scalar:04x}"),
+                        _ => format!(r"\u{{{scalar:x}}}"),
+                    }
+                }
+                value => value.to_string(),
+            };
+            assert_eq!(
+                escape_pattern_character(character, &mut scalar_buffer),
+                expected,
+                "scalar U+{:04X}",
+                u32::from(character)
+            );
+        }
+    }
+
+    #[test]
+    fn literal_scalars_and_fixed_escapes_borrow_without_retaining_the_buffer() {
+        let mut scalar_buffer = [0; 4];
+        let provenance = EcmascriptProvenance {
+            semantic_node_ids: Vec::new(),
+            source_spans: Vec::new(),
+            applied_rewrite: None,
+        };
+        let mut emitter = PatternEmitter::default();
+        for character in "Az09-_:é😀\t\n\r\u{000c}\u{000b}".chars() {
+            let escaped = escape_pattern_character(character, &mut scalar_buffer);
+            assert!(matches!(escaped, Cow::Borrowed(_)));
+            emitter.push(&escaped, &provenance).unwrap();
+        }
+        scalar_buffer.fill(0);
+        assert_eq!(emitter.text, "Az09-_:é😀\\t\\n\\r\\f\\v");
+    }
+
+    #[test]
+    fn borrowed_scalar_push_preserves_the_exact_utf8_output_limit() {
+        let provenance = EcmascriptProvenance {
+            semantic_node_ids: Vec::new(),
+            source_spans: Vec::new(),
+            applied_rewrite: None,
+        };
+        let mut emitter = PatternEmitter {
+            text: "x".repeat(MAX_ECMASCRIPT_PATTERN_BYTES - 4),
+            ..PatternEmitter::default()
+        };
+        let mut scalar_buffer = [0; 4];
+        emitter
+            .push(
+                &escape_pattern_character('😀', &mut scalar_buffer),
+                &provenance,
+            )
+            .unwrap();
+        assert_eq!(emitter.text.len(), MAX_ECMASCRIPT_PATTERN_BYTES);
+        let failure = emitter
+            .push(
+                &escape_pattern_character('a', &mut scalar_buffer),
+                &provenance,
+            )
+            .unwrap_err();
+        assert_eq!(
+            failure.code,
+            EcmascriptSerializationErrorCode::ResourceLimitExceeded
+        );
+        assert_eq!(emitter.text.len(), MAX_ECMASCRIPT_PATTERN_BYTES);
+        assert!(emitter.text.ends_with('😀'));
     }
 }

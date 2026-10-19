@@ -7505,3 +7505,78 @@ operation/calibration JSON receipts remain unchanged. Zero new authenticated
 samples or authoritative profiles. This supersedes working-tree prerequisite
 pending status only; clean-source preparation, freeze, both campaigns and formal
 trusted closure remain outstanding. H08 OPEN; continuation ACTIVE.
+
+### Consumed ECMAScript latency and borrowed scalar output — 2026-10-19
+
+D4 `d4e38a0ee1838afd08ef95d28ffecb6705459240` passes actual Local 38/PR 80
+and fresh sample-free readiness, then consumes Full at 23/126: 21 PASS, sole
+waiver, one FAIL, 103 unreached. ECMAScript semantic-common median 43,843 ns
+exceeds unchanged 39,592/43,192 ns ceilings. All 1,475 authenticated samples
+remain preserved; failed profile
+`b05846eebe89af31f26b97ec23974f790c142d6022616271808945ed9f1e0180`
+cannot be replayed unchanged. No Release, signing or trust promotion follows.
+
+Borrowed four-byte scalar UTF-8 and static short escapes remove temporary
+serializer allocations without changing output, validation or limits. Four
+focused tests pass twice, 22 direct tests and 502 core tests pass; Clippy,
+formatting and contracts pass. Atomic independent audit
+`d447a8602e0cf91b547d018348c71ef09fb09f6d38d16a5cb1bb0e56e4ee3a60`
+retains all rounds, equal complete output and 161 protected hashes. Serialization
+wall median improves about 21%; variable combined tails are not certification.
+Operator failures and dependency metadata remain preserved, not rewritten.
+
+Six registered checks preserve 2,353 hashes; deep-quality, shared-engine,
+stdlib and performance identities pass unchanged. LSP input fingerprints and
+adversarial source identity are stale; terminal
+`da4542dbf06d664418e7fd1beda592e7510a1d0de4f2b934ecababfd2cb70a89`
+retains both failures. Narrow governed/ordinary repair, complete 36-family gate,
+direct dependents, prerequisites and clean new candidate remain pending.
+Engineering creates zero new authenticated samples or authoritative profiles.
+Both complete campaigns and guarded signed/trusted closure remain mandatory;
+H08 OPEN and continuation ACTIVE.
+
+Governed adversarial refresh subsequently passes all six stages, with 39 direct
+tests and byte-idempotent repeated real-engine execution. Terminal
+`9089b7b4fbe88899bfc9b59fd480ed598ff411f582ca449932ed6e7657539a11`
+preserves 2,375 hashes; independent reconstruction verifies all raw streams,
+unchanged observation shards and the 41-case/205-compile/1,531-execution counts.
+Only serializer source provenance and dependent metadata change. This supersedes
+adversarial pending status, not LSP/full36/prerequisite/campaign requirements.
+Zero new authenticated performance samples or authoritative profiles; H08 OPEN.
+
+Canonical ordinary preparation subsequently finishes at 2026-10-19 02:03 UTC:
+initial 35 fresh/one stale becomes all 36 registered families passed. Only the
+kernel payload and manifest change; canonical repair is byte-idempotent, 37
+direct tests and two actual independent immutable builds pass for the same
+22-file payload. All 2,445 held hashes and 22 original backups are preserved.
+Terminal `b42c067d793c43a5270911093454c170db09c9da8fdb9006a5dc2bc13bf5c6b4`
+and independent data-only audit
+`68c7aa562a33fa819dc63a2a9cad4be0f3681ae68f4620d2931a2ab2db3ec844`
+verify raw receipts, registered commands, exact diff and original compiler
+context without replaying work. This supersedes only LSP/full-inventory
+preparation pending status, not prerequisites, clean-source admission or either
+whole campaign. Zero new authenticated samples or authoritative profiles;
+no candidate freeze, signing, trust promotion or closure. H08 OPEN/ACTIVE.
+
+The first prerequisite run is externally interrupted by a WSL boot change after
+17 guarded stages; its unit log has 760 completed lines, no complete summary
+or child/terminal receipt, and unknown exit. Independent interruption audit
+`d809e8c4bfc80415da9ff3431bfe279d9dec84fc17734999453e6c9858262381`
+preserves all completed predecessors and partial evidence. Only the unfinished
+unit operation is executed separately: 1,493 discovered, 1,492 successful and
+one exact Windows-only skip. Actual unit terminal
+`2fadf36550e35e4d96bebf64edcfdcd92d97b870d1be083fc26d8ca67f46dabd`
+is not substituted for the interrupted owner's missing terminal.
+
+The complementary native case passes one of one, zero skips, successful CPU-20
+metadata probe; native terminal
+`584bea283ea392598111bf4fc828affd4ffbe538a8d6c66cf6f4a7280a6ec458`.
+Final independent joined audit
+`d61b629786842c80995893cfe7299d2bdae8b658c7ec27dfc3831894823974ac`
+proves 18 unique prerequisite operations/19 guarded executions (duplicate
+discovery only), 1,493 distinct unit cases, unchanged original 72 files, 2,310
+source/generated/Git entries, 2,460 protected hashes and 605 measurement receipts.
+Zero new authenticated samples or authoritative profiles; no CPU-1 admission,
+freeze, signing or trust promotion. This supersedes working-tree prerequisite
+pending status only. Clean-source preparation, both actual campaigns and formal
+closure remain required; H08 OPEN/ACTIVE.

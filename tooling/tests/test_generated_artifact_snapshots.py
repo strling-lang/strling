@@ -239,6 +239,191 @@ class BoundedArtifactSnapshotTests(unittest.TestCase):
             generated._snapshot_entries(self.paths, reader)
         self.assertIsInstance(failure.exception.__cause__, PermissionError)
 
+    def reference_fixture(self) -> Path:
+        directory = self.root / "git-authority"
+        directory.mkdir()
+        (directory / "HEAD").write_bytes(b"ref: refs/heads/main\n")
+        for relative in (
+            "refs/heads/main",
+            "refs/tags/release",
+            "refs/remotes/origin/main",
+            "refs/replace/fixture",
+            "refs/notes/commits",
+            "refs/codex/other",
+            "refs/codex/turn-diffs/other",
+            "refs/codex/turn-diffs/captures-other/fixture",
+            "refs/codex/turn-diffs/captures/fixture",
+            "refs/codex/turn-diffs/checkpoints/fixture",
+        ):
+            path = directory / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"1" * 40 + b"\n")
+        return directory
+
+    def test_reference_parallel_reads_preserve_exact_digests_census_and_order(
+        self,
+    ) -> None:
+        directory = self.reference_fixture()
+        nodes = list((directory / "refs").rglob("*"))
+        expected = {}
+        for path in nodes:
+            relative = path.relative_to(directory).as_posix()
+            if relative in {"refs/codex", "refs/codex/turn-diffs"}:
+                continue
+            if any(
+                relative == namespace or relative.startswith(namespace + "/")
+                for namespace in (
+                    "refs/codex/turn-diffs/captures",
+                    "refs/codex/turn-diffs/checkpoints",
+                )
+            ):
+                continue
+            expected[f"@git/{relative}"] = generated.git_authority_digest(
+                path, allow_directory=True
+            )
+        native = generated.git_authority_digest
+        reads = []
+        mutex = threading.Lock()
+
+        def digest(path, **kwargs):
+            with mutex:
+                reads.append(path)
+            return native(path, **kwargs)
+
+        with patch.object(generated, "git_authority_digest", side_effect=digest):
+            for _ in range(2):
+                actual = generated.git_reference_snapshot(directory, "@git")
+                self.assertEqual(expected, actual)
+                self.assertEqual(list(expected), list(actual))
+        self.assertCountEqual([directory / "HEAD", *nodes] * 2, reads)
+
+    def test_reference_census_is_lazy_and_uses_same_bounded_reader(self) -> None:
+        directory = self.reference_fixture()
+        native = generated._snapshot_entries
+        calls = []
+
+        def entries(inputs, reader, **kwargs):
+            self.assertNotIsInstance(inputs, (list, tuple))
+            self.assertIs(iter(inputs), inputs)
+            calls.append(kwargs)
+            return native(inputs, reader, **kwargs)
+
+        with patch.object(generated, "_snapshot_entries", side_effect=entries):
+            generated.git_reference_snapshot(directory, "@git")
+        self.assertEqual([{"wrap_os_errors": False}], calls)
+
+    def test_reference_nodes_including_excluded_receipts_use_eight_real_workers(
+        self,
+    ) -> None:
+        directory = self.reference_fixture()
+        barrier = threading.Barrier(8)
+        mutex = threading.Lock()
+        native = generated.git_authority_digest
+        started = 0
+        active = 0
+        maximum = 0
+
+        def digest(path, **kwargs):
+            nonlocal started, active, maximum
+            if path == directory / "HEAD":
+                return native(path, **kwargs)
+            with mutex:
+                started += 1
+                ordinal = started
+                active += 1
+                maximum = max(maximum, active)
+            try:
+                if ordinal <= 8:
+                    barrier.wait(timeout=5)
+                return native(path, **kwargs)
+            finally:
+                with mutex:
+                    active -= 1
+
+        with patch.object(generated, "git_authority_digest", side_effect=digest):
+            generated.git_reference_snapshot(directory, "@git")
+        self.assertEqual(len(list((directory / "refs").rglob("*"))), started)
+        self.assertEqual(8, maximum)
+        self.assertEqual(0, active)
+
+    def test_reference_head_alias_fails_before_any_parallel_work(self) -> None:
+        directory = self.reference_fixture()
+        (directory / "HEAD").write_bytes(
+            b"ref: refs/codex/turn-diffs/captures/fixture\n"
+        )
+        with (
+            patch.object(generated, "_snapshot_entries") as readers,
+            self.assertRaisesRegex(generated.RegistryError, "cannot alias"),
+        ):
+            generated.git_reference_snapshot(directory, "@git")
+        readers.assert_not_called()
+
+    def test_reference_raw_read_failure_preserves_original_exception(self) -> None:
+        directory = self.reference_fixture()
+        path = directory / "refs/heads/main"
+        native = Path.read_bytes
+        for error in (PermissionError("exact permission"), OSError(5, "exact I/O")):
+            calls = 0
+
+            def read(candidate):
+                nonlocal calls
+                if candidate == path:
+                    calls += 1
+                    if calls == 2:
+                        raise error
+                return native(candidate)
+
+            with (
+                self.subTest(error=error),
+                patch.object(Path, "read_bytes", read),
+                self.assertRaises(type(error)) as failure,
+            ):
+                generated.git_reference_snapshot(directory, "@git")
+            self.assertIs(error, failure.exception)
+            self.assertIsNone(failure.exception.__cause__)
+
+    def test_ordered_reader_keeps_first_input_error_and_joins_all_started_work(
+        self,
+    ) -> None:
+        first = PermissionError("first census item")
+        second = OSError(5, "second census item")
+        later_failed = threading.Event()
+        completed = []
+        mutex = threading.Lock()
+
+        def reader(index):
+            try:
+                if index == 0:
+                    if not later_failed.wait(timeout=5):
+                        raise AssertionError("second worker never started")
+                    raise first
+                if index == 1:
+                    later_failed.set()
+                    raise second
+                return str(index), "exact"
+            finally:
+                with mutex:
+                    completed.append(index)
+
+        with self.assertRaises(PermissionError) as failure:
+            generated._snapshot_entries(range(29), reader, wrap_os_errors=False)
+        self.assertIs(first, failure.exception)
+        self.assertCountEqual(range(8), completed)
+
+    def test_reference_same_size_same_mtime_edit_is_reread_without_cache(self) -> None:
+        directory = self.reference_fixture()
+        path = directory / "refs/heads/main"
+        before = generated.git_reference_snapshot(directory, "@git")
+        metadata = path.stat()
+        path.write_bytes(b"2" * 40 + b"\n")
+        os.utime(path, ns=(metadata.st_atime_ns, metadata.st_mtime_ns))
+        after = generated.git_reference_snapshot(directory, "@git")
+        self.assertNotEqual(
+            before["@git/refs/heads/main"], after["@git/refs/heads/main"]
+        )
+        for key in set(before) - {"@git/refs/heads/main"}:
+            self.assertEqual(before[key], after[key])
+
     def test_complete_cli_snapshot_filesystem_error_is_machine_readable_failure(
         self,
     ) -> None:

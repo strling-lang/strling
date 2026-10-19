@@ -7700,3 +7700,97 @@ source-bound helpers. Both whole source-distinct 38/80/126/126 campaigns,
 independent fresh Releases, actual signing and isolated immutable qualification
 then pinned verification remain mandatory before guarded formal closure.
 H08 remains OPEN; autonomous continuation remains ACTIVE.
+
+### Certification feedback-time optimization — 2026-10-19
+
+The human explicitly prioritizes earlier actionable failure and faster complete
+certification, with every feature, check, workload, threshold, independent fresh
+execution and evidence safeguard retained. Reconstructed historical timings are
+a baseline, not a controlled speedup: consumed 6f Local took 6,750.184 monotonic
+seconds; generated integrity plus generation checks took 3,024.557 seconds
+(44.81%). Its first profile start to typed PR failure took 10,749 UTC seconds.
+Complete successful qualification/promotion/Release/signing/closure duration is
+still unmeasured; no numeric end-to-end saving or estimate is claimed.
+
+Clean engineering parent `72817d00` completed canonical 36-family preparation:
+35 initially fresh plus one ordinary stale LSP manifest became 36 passing
+families. Independent audit
+`426371cd5b063412c0eb4eac8613600c777f347ffd4692fb8ce266c302d4c43b`
+reconstructs 37 direct tests and two fresh immutable 22-file builds. Only the
+manifest's source commit, timestamp and fingerprint changed; payload fingerprint
+`sha256:f184cb79bb1dcbd8606f1e8a508ef128136729a08d51e05e17a4453a583559ca`
+remained identical. These are preparation proofs, not a frozen candidate or
+authoritative profile. The subsequent scheduling change invalidates prospective
+728 qualification and requires a new clean-source gate.
+
+Three fresh full 2,310-entry snapshot diagnostics took 32.043, 34.736 and
+27.908 monotonic seconds. Directional profiling identified serial Git-reference
+validation as a dominant cost; overlapping thread/profile times are not summed.
+The narrow correction schedules the same lazy reference census through the
+existing bounded eight-reader mechanism. Every node, including both excluded UI
+namespaces, retains fresh metadata/content, alias and symbolic-reference checks.
+HEAD precedes parallel work; results and node failures retain census order;
+workers join before return. Original raw Git read errors remain raw, while
+other snapshot callers keep their existing wrapped errors. No pruning, cached
+acceptance, identity normalization or guard boundary is introduced or removed.
+
+Fixed three-pair alternating comparisons use the same 344 physical fixture nodes
+and modes, including both UI namespaces, with fresh reads each execution.
+Successful validation retains exact nine-entry authority output and full node
+coverage. A separate late-census alias fault measures typed actionable rejection.
+All six success and six rejection executions, including the unfavorable 8.091s
+bounded rejection, remain retained. Median monotonic validation time changes
+26.817715s to 5.014217s (81.30% lower); median rejection time changes 31.303731s
+to 5.359125s (82.88% lower). Parent CPU medians change 1.376910s to 0.729905s
+and 1.421673s to 0.711116s respectively. UTC intervals remain separately recorded.
+The entire diagnostic, including fixture and preservation overhead, took
+1,168.821482 monotonic seconds / 1,231.024795 UTC seconds, not the duration of
+a certification campaign.
+
+Comparison terminal
+`36c426a0fb620c4cf8ceb3f5f47d68437bd1dcaa4d8e804bbb8f9624741e6b58`
+and independent data-only report
+`0ea6fe42145ada7491cd1b5c9fd46a8b7765ade7633c7ebe487769f265a2dce2`
+bind all 12 rows, 22 raw input files, exact fixture identities/restoration,
+2,310 fresh source/generated/Git entries and 3,157 held hashes including all
+605 historical measurement receipts. The auditor imports no candidate helper or
+verifier and reruns no benchmark. These are unconditioned atomic engineering
+measurements, not governed performance acceptance or full-path speedups.
+The original measured Python bytes are retained; subsequent canonical Ruff
+formatting preserves both complete Python ASTs exactly.
+
+The seven added regressions cover full census/digest/order equivalence, lazy
+bounded scheduling, eight real workers, HEAD rejection before parallel work,
+original error identity, joined first-error handling and uncached rereads.
+Focused 86-case WSL validation has zero skips; Native has five existing
+platform-specific skips covered by WSL. Broader source-bound direct/static
+validation, exact-path commit, complete 36-family preparation/direct dependents,
+fresh prerequisites/whole unit/CPU-1 admission and both complete source-distinct
+38/80/126/126 campaigns remain mandatory. Each campaign needs fresh independent
+no-reuse Release, actual signing, isolated reviewed qualification before pin-only
+promotion, immutable pinned verification and guarded formal closure.
+All failed/consumed evidence and statistical, security, license, architecture,
+conditioning, isolation and trust requirements remain unchanged.
+H08 remains OPEN; autonomous continuation remains ACTIVE.
+
+### Scheduling correction validation completed — 2026-10-19
+
+Independent report
+`286e522c14ebf365b32df9c560af884f44801d4688d14059691d3e7bdfa67902`
+reconstructs all six guarded stages and 12 original streams: 129 complete direct
+cases twice in WSL with zero skips, four governance controls and 33 architecture
+rules, lint, hygiene over 2,270 tracked files and both repository formatters.
+Original terminal
+`6f1e84442cf7cadec670f60c60eb5bd0916dbd2acf80e70b31cc419310cfb484`
+is successful. All 33 original namespace files, 3,186 original held hashes,
+3,220 audit-held hashes, 605 measurement receipts and the complete 2,310-entry
+current source/generated/Git identity remain intact. No check is rerun to audit.
+
+This supersedes only broader correction validation pending status above.
+These final evidence-only annotations follow the audited source; the two
+formatted Python files are unchanged. Final record schema/format checks and the
+exact five-path engineering commit still precede fresh clean-source 36-family
+preparation, direct dependents and all required prerequisites/admission.
+Neither the completed engineering validation nor the measured atomic savings
+complete an authoritative profile, performance gate, independent Release,
+signature, trust qualification or closure. H08 remains OPEN and ACTIVE.

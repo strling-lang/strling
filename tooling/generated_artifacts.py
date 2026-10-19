@@ -16,7 +16,7 @@ from collections import deque
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path, PureWindowsPath
-from typing import Callable, Mapping, Sequence, TypeVar
+from typing import Callable, Iterable, Mapping, Sequence, TypeVar
 
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError, ValidationError
@@ -343,10 +343,11 @@ def confined_working_directory(root: Path, declared: object, artifact_id: str) -
 
 
 def _snapshot_entries(
-    inputs: Sequence[SnapshotInput],
+    inputs: Iterable[SnapshotInput],
     reader: Callable[[SnapshotInput], tuple[str, str] | None],
     *,
     workers: int = SNAPSHOT_READ_WORKERS,
+    wrap_os_errors: bool = True,
 ) -> dict[str, str]:
     """Read every census item with a fixed bound, retaining original path order."""
     if not 1 <= workers <= SNAPSHOT_READ_WORKERS:
@@ -365,6 +366,8 @@ def _snapshot_entries(
             try:
                 result = pending.popleft().result()
             except OSError as error:
+                if not wrap_os_errors:
+                    raise
                 raise RegistryError(
                     f"cannot read repository snapshot: {error}"
                 ) from error
@@ -698,7 +701,6 @@ def git_reference_snapshot(directory: Path, prefix: str) -> dict[str, str]:
         "refs/codex/turn-diffs/checkpoints",
     )
     containers = {"refs/codex", "refs/codex/turn-diffs"}
-    state = {}
     head = directory / "HEAD"
     if head.is_file():
         git_authority_digest(head)
@@ -710,7 +712,8 @@ def git_reference_snapshot(directory: Path, prefix: str) -> dict[str, str]:
                 for namespace in bookkeeping
             ):
                 raise RegistryError("Git authority cannot alias UI bookkeeping refs")
-    for path in (directory / "refs").rglob("*"):
+
+    def read_reference(path: Path) -> tuple[str, str] | None:
         relative = path.relative_to(directory).as_posix()
         external = any(
             relative == namespace or relative.startswith(namespace + "/")
@@ -739,12 +742,18 @@ def git_reference_snapshot(directory: Path, prefix: str) -> dict[str, str]:
             try:
                 path.lstat()
             except FileNotFoundError:
-                continue
+                return None
             raise
         if external or (relative in containers and path.is_dir()):
-            continue
-        state[f"{prefix}/{relative}"] = digest
-    return state
+            return None
+        return f"{prefix}/{relative}", digest
+
+    # The lazy census and ordered results/errors are unchanged. Validate every
+    # node, including excluded UI receipts, with at most eight in-flight reads.
+    # No node identity or content is cached across this or later boundaries.
+    return _snapshot_entries(
+        (directory / "refs").rglob("*"), read_reference, wrap_os_errors=False
+    )
 
 
 def integrity_snapshot(

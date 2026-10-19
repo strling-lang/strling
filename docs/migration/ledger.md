@@ -7580,3 +7580,123 @@ Zero new authenticated samples or authoritative profiles; no CPU-1 admission,
 freeze, signing or trust promotion. This supersedes working-tree prerequisite
 pending status only. Clean-source preparation, both actual campaigns and formal
 closure remain required; H08 OPEN/ACTIVE.
+
+### Qualification stop and UI receipt disappearance — 2026-10-19
+
+Clean `6f2e7c751ee1069105277c38ebe5cffd2bbed329` completed fresh
+36-family preparation, 17 prerequisites, complementary 1,493 unit cases and
+strict original CPU-1 admission before freeze. Actual Local passes all 38
+operations and its controller guards. PR executes 12/80: 11 PASS, one FAIL,
+68 unreached. `generate_check@repository` exits 2 while inspecting an
+application-owned `.git/refs/codex/turn-diffs/captures` receipt. Terminal
+`0fa2683beab4fa53f21469430fb158677f4acc54f3a80aba981342be8159f308`
+and failed PR artifact
+`e7a37936dafbf9ec1f67461fdec03d22a80ed1fe97ac068e0db776e8f66b38d9`
+remain immutable; this candidate is consumed and is not replayed unchanged.
+
+Atomic fixtures reproduce disappearance at lstat, digest read and symbolic-ref
+read for both already-excluded UI namespaces, on Native Windows and WSL.
+The correction tolerates only FileNotFoundError followed by a second lstat
+confirming absence in those exact namespaces. Real/adjacent refs, present or
+replaced nodes, aliases, permission errors and other I/O failures remain fatal.
+No source-authority scope, profile membership or certification contract changes.
+The original diagnostic omitted its underlying OS exception; this limitation
+is retained, and the failed PR is not reclassified as passing.
+
+All five affected generated-artifact modules pass twice: 122 tests each WSL
+run with zero skips; Native runs have zero failures/errors and 12 existing
+filesystem-capability skips covered by WSL. Ruff 0.15.21 format/check passes.
+Independent receipt reconstruction validates both actual artifacts, commands,
+ordered intervals, streams and all 605 retained measurement hashes. A later
+WSL boot changes mount-device metadata: all 16 original Git-node digests are
+reconstructed from identical bytes, inode and mode using the uniquely matching
+original device 84. Raw cross-boot hashes are not called equal, and production
+node-identity guards are not relaxed. The only source changes at that audit
+are the two intended tooling/test paths; these record annotations follow it.
+
+This supersedes only diagnosis and focused correction pending status. Exact-path
+commit, complete 36-family new-source gate, fresh prerequisites/admission and
+both whole 38/80/126/126 campaigns remain required, with independent Releases,
+actual signing, isolated immutable qualification/pinned verification and guarded
+formal closure. Correction tests produce no new authoritative profile, sample,
+signature or trust evidence. H08 remains OPEN; continuation remains ACTIVE.
+
+### Engineering validator index guard — 2026-10-19
+
+The first dirty-source validation executes all 122 direct cases successfully
+but fails its strict source/Git postguard; terminal
+`1fb3879c3c7cea19b5ddc37cd3a5ea6fca3b2375bdd66394fb748dd4709a6928`
+is retained as FAILED, not accepted validation. No later static check runs.
+The five held source bytes remain unchanged; independent postmortem attribution
+isolates the index node, while the other 15 Git identities reconstruct exactly.
+The original validator did not retain its after-snapshot, so that diagnostic
+limitation is preserved rather than inventing a missing original observation.
+
+An atomic disposable existing Git fixture reproduces the operator's exact
+`git --no-optional-locks diff --name-only --` replacing the index:
+Git trace records `do_write_index` on the fixture authority index. The existing
+canonical governance private-index collector reports the same real change and
+preserves the source index's bytes, inode, device and mode; writes occur only
+in its disposable private copy. This is an operator-helper defect, not evidence
+of a product regression. The failed helper and its six receipts remain immutable.
+
+A new ignored helper uses that existing canonical collector and a read-only
+cached plumbing comparison, retains full source/generated/Git node guards,
+and records exact after-snapshots before accepting any stage. New helper guard
+tests and actual source-bound static validation remain pending at this annotation.
+No threshold, baseline, profile, sample, security, license or trust contract
+changes. The consumed 6f campaign is not replayed; H08 remains OPEN/ACTIVE.
+
+### Engineering record parse correction — 2026-10-19
+
+Corrected operator v2 passes all 122 direct cases without skips and its strict
+whole-source/generated/Git and held-receipt guards. Its later governance command
+exits 2 because the previous operator annotation indented the root `commits`
+key by two spaces. Terminal
+`f6b88e564afba5bd76091bdd2d6bae6f4143d9b9421e346ff00ac093343b77ad`
+remains FAILED; lint, hygiene and formatting were not reached. The exact raw
+parser error and all eleven v2 output files are preserved.
+
+Canonical parser reproduction fails on the same bytes. An in-memory control
+changes only that key's root indentation and passes the unchanged task-record
+schema with the same 54 commits and 37 prior checkpoints. This annotation defect
+is not a product or certification-contract defect. The real-file correction
+restores the root key and adds this truthful checkpoint; no historical claim
+is changed. Registry mapping again finds no affected generated family.
+
+The corrected private-index operator's 28 Native/WSL guard cases remain helper
+tests, not certification evidence. A fresh static-only continuation must now
+validate the exact updated records through governance, lint, hygiene and full
+format checking, retaining both failed validators and the earlier guarded unit
+proof. Independent reconstruction, exact-path commit, fresh clean-source gates
+and both whole authoritative campaigns remain required. H08 stays OPEN/ACTIVE;
+no new profile, authenticated sample, signature, trust or closure is claimed.
+
+### Completed receipt-correction engineering proof — 2026-10-19
+
+Independent audit
+`d974d93e422d796ec9347f01e3c1fb6f91245538e47a58c85e069b3eb2b0b115`
+reconstructs the real 122-case guarded direct run and all four later static
+commands from ten exact raw streams, their original child/guard receipts and
+ordered intervals. Governance passes four controls and 33 architecture rules;
+lint has zero findings, hygiene covers 2,270 tracked files with zero findings,
+and both full repository formatters pass. Static terminal
+`431e737e24f19039466c270131dab8c801169666d7aaf67e6c56cf7e07aa2578`
+is successful; earlier v1/v2 validation failures stay FAILED.
+
+All 645 held hashes, including the original 605 measurement receipts, remain
+unchanged. The independent current 2,310-entry source/generated/Git snapshot
+equals the original v3 snapshot exactly, including all 16 Git node identities;
+the later WSL boot happens to retain device 84. No production guard is
+normalized. Only the three documented migration-record annotations separate
+the guarded v2 unit source from the v3 static source. These are dirty-source
+engineering proofs, not exact-candidate profile or performance evidence.
+
+This checkpoint supersedes only correction engineering validation pending
+status. Final evidence-only record schema/format checks and exact five-path
+commit precede fresh clean-source complete 36-family preparation/recheck/direct
+dependents, prerequisites, complete unit discovery, native CPU-1 admission and
+source-bound helpers. Both whole source-distinct 38/80/126/126 campaigns,
+independent fresh Releases, actual signing and isolated immutable qualification
+then pinned verification remain mandatory before guarded formal closure.
+H08 remains OPEN; autonomous continuation remains ACTIVE.

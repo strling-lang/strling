@@ -690,7 +690,8 @@ def git_reference_snapshot(directory: Path, prefix: str) -> dict[str, str]:
     These two application-owned namespaces are not source, release or verifier
     authority. Keep node validation even there; symbolic refs elsewhere must not
     alias them. HEAD resolution, index, packed refs and configuration remain
-    independently protected by integrity_snapshot.
+    independently protected by integrity_snapshot. Only confirmed disappearance
+    of an already-excluded UI node is harmless; other read failures stay fatal.
     """
     bookkeeping = (
         "refs/codex/turn-diffs/captures",
@@ -711,24 +712,35 @@ def git_reference_snapshot(directory: Path, prefix: str) -> dict[str, str]:
                 raise RegistryError("Git authority cannot alias UI bookkeeping refs")
     for path in (directory / "refs").rglob("*"):
         relative = path.relative_to(directory).as_posix()
-        digest = git_authority_digest(path, allow_directory=True)
         external = any(
             relative == namespace or relative.startswith(namespace + "/")
             for namespace in bookkeeping
         )
-        if path.is_file():
-            payload = path.read_bytes()
-            if payload.startswith(b"ref:"):
-                target = (
-                    payload[4:].strip().decode("ascii", errors="replace").casefold()
-                )
-                if any(
-                    target == namespace or target.startswith(namespace + "/")
-                    for namespace in bookkeeping
-                ):
-                    raise RegistryError(
-                        "Git authority cannot alias UI bookkeeping refs"
+        try:
+            digest = git_authority_digest(path, allow_directory=True)
+            if path.is_file():
+                payload = path.read_bytes()
+                if payload.startswith(b"ref:"):
+                    target = (
+                        payload[4:].strip().decode("ascii", errors="replace").casefold()
                     )
+                    if any(
+                        target == namespace or target.startswith(namespace + "/")
+                        for namespace in bookkeeping
+                    ):
+                        raise RegistryError(
+                            "Git authority cannot alias UI bookkeeping refs"
+                        )
+        except (RegistryError, OSError) as exc:
+            cause = exc.__cause__ if isinstance(exc, RegistryError) else exc
+            if not external or not isinstance(cause, FileNotFoundError):
+                raise
+            # Do not hide a replacement, alias, permission error, or real ref.
+            try:
+                path.lstat()
+            except FileNotFoundError:
+                continue
+            raise
         if external or (relative in containers and path.is_dir()):
             continue
         state[f"{prefix}/{relative}"] = digest

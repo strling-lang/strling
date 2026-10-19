@@ -638,6 +638,130 @@ class GeneratedArtifactPreparationTests(unittest.TestCase):
         )
         self.assertEqual(["passed"], [result.status for result in results])
 
+    def test_external_receipt_disappearance_during_each_read_is_not_authority(
+        self,
+    ) -> None:
+        directory = self.root / ".git"
+        native_lstat = Path.lstat
+        native_read = Path.read_bytes
+        for namespace in ("captures", "checkpoints"):
+            for phase in ("lstat", "digest-read", "alias-read"):
+                with self.subTest(namespace=namespace, phase=phase):
+                    receipt = (
+                        directory / "refs/codex/turn-diffs" / namespace / "fixture"
+                    )
+                    receipt.parent.mkdir(parents=True, exist_ok=True)
+                    receipt.write_text("1" * 40 + "\n", encoding="ascii")
+                    reads = 0
+                    removed = False
+
+                    def lstat(path, *args, **kwargs):
+                        nonlocal removed
+                        if path == receipt and phase == "lstat" and not removed:
+                            receipt.unlink()
+                            removed = True
+                        return native_lstat(path, *args, **kwargs)
+
+                    def read(path):
+                        nonlocal reads, removed
+                        if path == receipt:
+                            reads += 1
+                            if (phase == "digest-read" and reads == 1) or (
+                                phase == "alias-read" and reads == 2
+                            ):
+                                receipt.unlink()
+                                removed = True
+                        return native_read(path)
+
+                    with (
+                        patch.object(Path, "lstat", lstat),
+                        patch.object(Path, "read_bytes", read),
+                    ):
+                        result = generated.git_reference_snapshot(directory, "@git")
+                    self.assertTrue(removed)
+                    self.assertEqual({}, result)
+
+    def test_disappearing_authoritative_and_adjacent_refs_still_fail_closed(
+        self,
+    ) -> None:
+        directory = self.root / ".git"
+        native_lstat = Path.lstat
+        for relative in (
+            "refs/heads/main",
+            "refs/tags/release",
+            "refs/remotes/origin/main",
+            "refs/replace/fixture",
+            "refs/notes/commits",
+            "refs/codex/other",
+            "refs/codex/turn-diffs/other",
+            "refs/codex/turn-diffs/captures-other/fixture",
+        ):
+            with self.subTest(relative=relative):
+                path = directory / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text("1" * 40 + "\n", encoding="ascii")
+                removed = False
+
+                def lstat(candidate, *args, **kwargs):
+                    nonlocal removed
+                    if candidate == path and not removed:
+                        path.unlink()
+                        removed = True
+                    return native_lstat(candidate, *args, **kwargs)
+
+                with (
+                    patch.object(Path, "lstat", lstat),
+                    self.assertRaises(generated.RegistryError),
+                ):
+                    generated.git_reference_snapshot(directory, "@git")
+                self.assertTrue(removed)
+
+    def test_external_receipt_errors_or_still_present_nodes_fail_closed(self) -> None:
+        directory = self.root / ".git"
+        receipt = directory / "refs/codex/turn-diffs/captures/fixture"
+        receipt.parent.mkdir(parents=True)
+        receipt.write_text("1" * 40 + "\n", encoding="ascii")
+        original = receipt.read_bytes()
+        native_lstat = Path.lstat
+        native_read = Path.read_bytes
+        for phase in ("lstat", "digest-read", "alias-read"):
+            for error in (
+                FileNotFoundError("still-present fixture"),
+                PermissionError("fixture permission denial"),
+                OSError(5, "fixture I/O error"),
+                NotADirectoryError("fixture parent changed"),
+            ):
+                with self.subTest(phase=phase, error=type(error).__name__):
+                    reads = 0
+                    raised = False
+
+                    def lstat(path, *args, **kwargs):
+                        nonlocal raised
+                        if path == receipt and phase == "lstat" and not raised:
+                            raised = True
+                            raise error
+                        return native_lstat(path, *args, **kwargs)
+
+                    def read(path):
+                        nonlocal reads, raised
+                        if path == receipt:
+                            reads += 1
+                            if (phase == "digest-read" and reads == 1) or (
+                                phase == "alias-read" and reads == 2
+                            ):
+                                raised = True
+                                raise error
+                        return native_read(path)
+
+                    with (
+                        patch.object(Path, "lstat", lstat),
+                        patch.object(Path, "read_bytes", read),
+                        self.assertRaises((generated.RegistryError, OSError)),
+                    ):
+                        generated.git_reference_snapshot(directory, "@git")
+                    self.assertTrue(raised)
+                    self.assertEqual(original, receipt.read_bytes())
+
     def test_other_refs_including_adjacent_codex_refs_remain_protected(self) -> None:
         directory = self.root / ".git"
         directory.mkdir()

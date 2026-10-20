@@ -15,7 +15,9 @@ from tooling.exact_runtime_provision import (
     pull_request_environment,
     runtime_environment,
     verify_maven_repository,
+    verify_maven_repository_inputs,
     verify_pull_request_environment,
+    verify_pull_request_inputs,
     write_environment,
 )
 from tooling.exact_runtime_toolchains import ExactRuntimeToolchainError, load_manifest
@@ -94,9 +96,15 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
 
     @mock.patch.dict("tooling.exact_runtime_provision.os.environ", {}, clear=True)
     def test_pull_request_handoff_adds_maven_and_java_to_exact_runtimes(self) -> None:
-        environment = pull_request_environment(load_manifest())
+        # A cleared environment has no Windows home variables. This unit
+        # fixture supplies its own home rather than depending on the host.
+        with mock.patch(
+            "tooling.exact_runtime_provision.Path.home",
+            return_value=Path("/fixture/home"),
+        ):
+            environment = pull_request_environment(load_manifest())
         self.assertEqual(
-            str(Path.home() / ".m2" / "repository"),
+            str(Path("/fixture/home") / ".m2" / "repository"),
             environment["STRLING_MAVEN_REPOSITORY"],
         )
         self.assertEqual("/opt/temurin-11.0.32+9", environment["JAVA_HOME"])
@@ -110,12 +118,18 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
             repository, graph, metadata = self.maven_fixture(Path(directory))
             completed = mock.Mock(returncode=0, stdout="", stderr="")
             run = mock.Mock(return_value=completed)
-            result = verify_maven_repository(
-                repository,
-                release_graph_path=graph,
-                verification_metadata_path=metadata,
-                run=run,
-            )
+            # The actual offline probe is separately exercised on Linux. This
+            # synthetic unit already injects its runner and must not require a
+            # Maven installation on the host to test command construction.
+            with mock.patch(
+                "tooling.exact_runtime_provision.shutil.which", return_value="mvn"
+            ):
+                result = verify_maven_repository(
+                    repository,
+                    release_graph_path=graph,
+                    verification_metadata_path=metadata,
+                    run=run,
+                )
         self.assertEqual(4, len(result["verified_artifacts"]))
         command = run.call_args.args[0]
         self.assertIn("-o", command)
@@ -136,6 +150,7 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
                     verification_metadata_path=metadata,
                     run=mock.Mock(),
                 )
+
             bad.unlink()
             with self.assertRaisesRegex(
                 ExactRuntimeProvisionError, "repository is missing"
@@ -146,6 +161,150 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
                     verification_metadata_path=metadata,
                     run=mock.Mock(),
                 )
+
+    def test_early_maven_inputs_verify_every_artifact_without_execution_or_write(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repository, graph, metadata = self.maven_fixture(root)
+            before = {
+                p.relative_to(root): p.read_bytes()
+                for p in root.rglob("*")
+                if p.is_file()
+            }
+            with (
+                mock.patch(
+                    "tooling.exact_runtime_provision.shutil.which", return_value="mvn"
+                ),
+                mock.patch(
+                    "tooling.exact_runtime_provision.subprocess.run",
+                    side_effect=AssertionError("read-only inputs executed a child"),
+                ),
+            ):
+                result = verify_maven_repository_inputs(
+                    repository,
+                    release_graph_path=graph,
+                    verification_metadata_path=metadata,
+                )
+            self.assertEqual(4, len(result["verified_artifacts"]))
+            self.assertNotIn("offline_probe", result)
+            self.assertEqual(
+                before,
+                {
+                    p.relative_to(root): p.read_bytes()
+                    for p in root.rglob("*")
+                    if p.is_file()
+                },
+            )
+
+    def test_early_maven_inputs_never_reuse_a_prior_valid_hash(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository, graph, metadata = self.maven_fixture(Path(directory))
+            with mock.patch(
+                "tooling.exact_runtime_provision.shutil.which", return_value="mvn"
+            ):
+                verify_maven_repository_inputs(
+                    repository,
+                    release_graph_path=graph,
+                    verification_metadata_path=metadata,
+                )
+                jar = repository / "net/java/dev/jna/jna/5.19.1/jna-5.19.1.jar"
+                data = jar.read_bytes()
+                jar.write_bytes(b"!" + data[1:])
+                with self.assertRaisesRegex(
+                    ExactRuntimeProvisionError, "artifact SHA-256 differs"
+                ):
+                    verify_maven_repository_inputs(
+                        repository,
+                        release_graph_path=graph,
+                        verification_metadata_path=metadata,
+                    )
+
+    def test_early_inputs_keep_exact_runtime_and_maven_failures_blocking(self) -> None:
+        with (
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_configured_runtimes",
+                side_effect=ExactRuntimeToolchainError("missing exact runtime"),
+            ),
+            self.assertRaisesRegex(ExactRuntimeToolchainError, "missing exact runtime"),
+        ):
+            verify_pull_request_inputs(load_manifest())
+        with (
+            mock.patch.dict(
+                "tooling.exact_runtime_provision.os.environ", {}, clear=True
+            ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_configured_runtimes",
+                return_value={"status": "passed"},
+            ),
+            self.assertRaisesRegex(ExactRuntimeProvisionError, "not configured"),
+        ):
+            verify_pull_request_inputs(load_manifest())
+
+    def test_early_inputs_cannot_substitute_the_build_capable_preflight(self) -> None:
+        with (
+            mock.patch.dict(
+                "tooling.exact_runtime_provision.os.environ",
+                {"STRLING_MAVEN_REPOSITORY": "/declared/repository"},
+                clear=True,
+            ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_configured_runtimes",
+                return_value={"status": "passed"},
+            ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_maven_repository_inputs",
+                return_value={"verified_artifacts": {"exact": "hash"}},
+            ) as inputs,
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_maven_repository",
+                side_effect=AssertionError("early check attempted a build"),
+            ),
+        ):
+            result = verify_pull_request_inputs(load_manifest())
+        inputs.assert_called_once_with(Path("/declared/repository"))
+        self.assertEqual(
+            "read-only-input-preflight-not-certification", result["evidence_role"]
+        )
+        self.assertNotIn("offline_probe", result["maven_repository"])
+
+    def test_input_cli_has_explicit_non_certification_role_and_no_full_probe(
+        self,
+    ) -> None:
+        result = {
+            "status": "passed",
+            "evidence_role": "read-only-input-preflight-not-certification",
+        }
+        stdout = io.StringIO()
+        with (
+            mock.patch(
+                "sys.argv", ["provision", "--check-pull-request-inputs", "--json"]
+            ),
+            mock.patch("sys.stdout", stdout),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_pull_request_inputs",
+                return_value=result,
+            ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_pull_request_environment",
+                side_effect=AssertionError("full preflight ran"),
+            ),
+        ):
+            self.assertEqual(0, main())
+        self.assertEqual(result, json.loads(stdout.getvalue()))
+
+    def test_input_and_full_preflight_cli_modes_are_not_interchangeable(self) -> None:
+        with (
+            mock.patch(
+                "sys.argv",
+                ["provision", "--check-pull-request-inputs", "--check-pull-request"],
+            ),
+            mock.patch("sys.stderr", io.StringIO()),
+            self.assertRaises(SystemExit) as raised,
+        ):
+            main()
+        self.assertEqual(2, raised.exception.code)
 
     def test_pull_request_preflight_fails_closed_on_missing_or_wrong_pcre2(
         self,

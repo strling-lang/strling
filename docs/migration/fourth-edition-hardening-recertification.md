@@ -2142,3 +2142,115 @@ preparation, direct dependents and all required prerequisites/admission.
 Neither the completed engineering validation nor the measured atomic savings
 complete an authoritative profile, performance gate, independent Release,
 signature, trust qualification or closure. H08 remains OPEN and ACTIVE.
+
+### Lossless early-input feedback after consumed qualification — 2026-10-20 (UTC)
+
+Frozen source `8a941b5572c4bf9bcf9c6a38a000c0e0ad6a1ce7` completed actual
+Local 38/38 PASS, then consumed PR failed outside the operation list: generated
+integrity passed, but the required exact-environment preflight found
+`STRLING_CPYTHON_311_BINARY` missing. PR therefore has one completed PASS and
+79 unreached operations, not a completed 80-operation result. No PR artifact,
+Full, Release, new authenticated sample, signature or trust result was created.
+Terminal `68ba205ac13699fc7f508e52edc1b2a87d972a4c83284b61096fcc00ba4988af`
+and independent raw audit
+`fd4f8384116a1cc3e217e123d14455ea46c1fcc744803a0a6eb725071c6a6a34`
+retain that failure permanently. The failed source must never be replayed
+unchanged. Its owner retired only through an acknowledged live handoff; exact
+source originals and every failed helper/test receipt remain preserved.
+
+The independently reconstructed Local duration was 5,527.765440 monotonic
+seconds / 5,949.419902 UTC seconds, with 877.098604 user and 910.651900 system
+child CPU seconds. PR took 1,070.327264 monotonic / 1,153.728106 UTC seconds,
+with 139.577011 user and 109.246879 system child CPU seconds. Actionable failure
+was observed 6,959.405269 monotonic seconds after owner start, or 7,255.332656
+UTC seconds after the Local child started; the later mandatory postguard
+terminal is recorded separately. Dominant Local stage observations were core
+tests 1,327.634s, generated integrity 1,177.636s and generation checks 979.787s.
+PR spent 1,036.205s on generated integrity before this missing-input failure.
+These are actual failed-path observations, not controlled whole-path gains.
+
+The orchestration handoff retained the compiler/build context but omitted the
+six exact-runtime, Java and Maven environment exports used by the earlier
+successful preflight. A controlled atomic diagnostic proved the unchanged
+validator rejects the missing CPython key in 0.339062s and passes with the
+complete canonical handoff in 3.843886s, including the original offline Maven
+compile probe. This establishes a certification integration defect, not a
+product runtime regression. Future source-bound requests must explicitly bind
+all compiler/build settings and the complete canonical runtime handoff.
+
+The correction adds a read-only early input validator. It freshly verifies
+exact runtimes, every governed Maven artifact hash, the prepared bridge and
+Maven availability without compiling. The complete immutable generated prefix
+still executes, followed by the original full build-capable preflight with a
+fresh input verification and offline compile probe. A source-drift guard also
+fences the early hook. No profile membership, check, threshold, workload,
+sample, independence, conditioning, security, license or trust guarantee is
+removed. Two existing synthetic tests now inject their home and Maven lookup
+instead of depending on the Windows host; real Linux compile evidence remains
+separate. All rejected guard/test attempts remain failed and immutable.
+
+Fixed three-pair alternating atomic comparisons retain all 15 executions,
+including unfavorable timings: six complete old/new validator executions,
+six exact missing-key rejections and three additional read-only input checks.
+Every complete result is identical and every full offline compile is retained.
+Full-validator medians were 3.145990s original and 3.126697s current; missing-key
+medians were 0.378668s and 0.385647s. The additional input check costs 0.668581s
+median on passing inputs. Baseline source uses an explicit immutable-source
+compile loader, so these unconditioned atomic numbers do not establish causal
+throughput gains. Earlier scheduling avoids discovering configuration defects
+after expensive work; the historical 1,036.205s is an opportunity, not a paired
+measured saving. Successful end-to-end certification duration and its gain
+remain unmeasured; no numeric estimate is claimed.
+
+Independent report
+`7a1256152216c0e194b769d005aa8dbcf38250751f1e218ae04e771e43a150cf`
+reconstructs comparison report
+`696d680699b9c7026a19765c125333183aa4a260a32a1064bb1f2190f3fcecfb`
+and seven actual regression runs: 49 Native cases, two 49-case WSL rounds,
+and two expanded 143-case rounds on each platform. WSL has zero skips. Seven
+Native fixture-symlink skip events affect six methods; all 143 actual case
+identities match and every affected method passes in WSL. The data-only audit
+replays no test or workload and imports no candidate product, generator or
+verifier code. It preserves all 2,310 source/generated/Git entries, 3,801 held
+files and 605 historical measurement receipts, with only the five explicitly
+recorded engineering source differences and no identity normalization.
+
+These are dirty-source engineering and atomic proofs, not a new frozen
+candidate or certification acceptance. Final source-bound governance, lint,
+hygiene, complete format/schema checks and the exact eight-path engineering
+commit precede fresh clean-source complete 36-family canonical preparation,
+recheck, direct dependents, actual complete unit discovery, exact-runtime and
+security prerequisites, original CPU-1 admission and fresh helper guards.
+Both whole source-distinct 38/80/126/126 campaigns, fresh independent no-reuse
+Release each, actual signing, isolated reviewed qualification before pin-only
+promotion, immutable pinned verification and guarded formal closure remain
+mandatory. H08 stays OPEN; autonomous continuation stays ACTIVE.
+
+Actual pre-commit validation subsequently completed all five unchanged commands:
+record schema, repository lint, hygiene, complete format checking and governance.
+Static terminal
+`adb1af2f6f72e3698bf0b66cbed13f1902497fa44ed546ab3d2688e9aa13e363`
+retains 1,072.469534 monotonic / 1,072.576138 UTC seconds. The children took
+353.637674s; all sixty mandatory fresh guard phases took 717.976615s.
+These costs are reported, not removed or extrapolated into certification gains.
+Lint retained 53 managed suppressions and five waivers; hygiene checked 2,270
+tracked files; governance passed four controls and all 33 architecture rules.
+
+Independent raw audit
+`caf1877f72df5d2db3cccaa0b1a4b14d01f5789a5863c83488ab4991f60cc3a9`
+reconstructs every command, all ten streams, all sixty ordered guard intervals,
+the complete 29 declared controls (23 compiler/build plus six runtime handoff
+exports), all 2,310 source/generated/Git entries, 3,832 held files and all
+605 historical measurement receipts. It replays no check, profile or workload
+and imports no candidate product, generator or verifier code. The original
+static source and these three pre-annotation records remain byte-preserved;
+the five tested code/test files are unchanged by the final annotations.
+
+This supersedes final static validation pending status only. The exact
+eight-path local engineering commit, final annotation schema/format validation
+and fresh clean-source preparation do not certify a release. All 36 registered
+families, every direct dependent and prerequisite, both whole source-distinct
+campaigns and their fresh independent no-reuse Releases, actual signing and
+immutable trusted verification remain mandatory. No actionable failure
+occurred in this static run; total successful certification time and its
+improvement remain unmeasured. H08 remains OPEN and ACTIVE.

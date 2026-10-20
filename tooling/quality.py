@@ -1651,6 +1651,7 @@ class QualityRunner:
         *,
         progress: ProfileProgress | None = None,
         preflight: Callable[[], None] | None = None,
+        input_preflight: Callable[[], None] | None = None,
     ) -> list[OperationResult]:
         stages = self._profile_stages(name, requested)
         snapshotter = None
@@ -1669,6 +1670,7 @@ class QualityRunner:
             stages,
             progress=progress,
             preflight=preflight,
+            input_preflight=input_preflight,
             source_snapshotter=snapshotter,
         )
 
@@ -1701,6 +1703,7 @@ class QualityRunner:
         *,
         progress: ProfileProgress | None = None,
         preflight: Callable[[], None] | None = None,
+        input_preflight: Callable[[], None] | None = None,
         source_snapshotter: SourceSnapshotter | None = None,
     ) -> list[OperationResult]:
         results: list[OperationResult] = []
@@ -1712,6 +1715,23 @@ class QualityRunner:
             ) from error
         if progress is not None:
             progress.profile_started(len(stages))
+        if input_preflight is not None:
+            # This hook can only inspect inputs. Build-capable preparation stays
+            # behind the unchanged complete integrity gate and is not reused.
+            input_preflight()
+            if source_snapshotter is not None:
+                try:
+                    changed = self._source_drift(frozen_source, source_snapshotter)
+                except (OSError, ValueError, TypeError) as error:
+                    raise ConfigurationError(
+                        "cannot verify frozen source after input preflight; "
+                        "no certification stage was executed: " + str(error)
+                    ) from error
+                if changed:
+                    raise ConfigurationError(
+                        "input preflight changed frozen certification source; "
+                        "no certification stage was executed: " + ", ".join(changed)
+                    )
         for ordinal, stage in enumerate(stages, start=1):
             if ordinal == 2 and preflight is not None:
                 # Stage 1 is the complete check-only artifact gate. A failed
@@ -2416,7 +2436,12 @@ def _print_help() -> None:
     )
 
 
-def _preflight_profile_environment(profile: str) -> None:
+def _validate_profile_environment(
+    profile: str,
+    *,
+    check_flag: str = "--check-pull-request",
+    failure_kind: str = "exact-environment",
+) -> None:
     if profile != "pull-request":
         return
     try:
@@ -2428,7 +2453,7 @@ def _preflight_profile_environment(profile: str) -> None:
                 "-B",
                 "-m",
                 "tooling.exact_runtime_provision",
-                "--check-pull-request",
+                check_flag,
                 "--json",
             ],
             cwd=Path(__file__).resolve().parents[1],
@@ -2444,12 +2469,28 @@ def _preflight_profile_environment(profile: str) -> None:
             )
     except (OSError, ValueError) as error:
         raise ConfigurationError(
-            "pull-request exact-environment preflight failed: "
+            f"pull-request {failure_kind} preflight failed: "
             f"{error}. Prepare the environment with "
             'eval "$(python3 -m tooling.exact_runtime_provision '
             '--print-pull-request-env)" and rerun '
             "python3 -m tooling.exact_runtime_provision --check-pull-request"
         ) from error
+
+
+def _preflight_profile_environment(profile: str) -> None:
+    """Keep the complete build-capable preflight after generated integrity."""
+
+    _validate_profile_environment(profile)
+
+
+def _preflight_profile_inputs(profile: str) -> None:
+    """Reject missing or corrupt inputs before expensive read-only validation."""
+
+    _validate_profile_environment(
+        profile,
+        check_flag="--check-pull-request-inputs",
+        failure_kind="exact-input",
+    )
 
 
 def _profile_progress_path(
@@ -2617,6 +2658,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             return exit_code
         selected_profile: str | None = None
         profile_preflight: Callable[[], None] | None = None
+        profile_input_preflight: Callable[[], None] | None = None
         if operation in AGGREGATE_OPERATIONS:
             selected_profile = toolchain.aggregate_profile(operation)
         elif operation == PROFILE_OPERATION:
@@ -2627,6 +2669,11 @@ def main(argv: Sequence[str] | None = None) -> int:
 
                 def profile_preflight() -> None:
                     _preflight_profile_environment(requested_profile)
+
+                if requested_profile == "pull-request":
+
+                    def profile_input_preflight() -> None:
+                        _preflight_profile_inputs(requested_profile)
 
             else:
                 _preflight_profile_environment(selected_profile)
@@ -2664,6 +2711,14 @@ def main(argv: Sequence[str] | None = None) -> int:
                     selected_profile,
                     requested,
                     progress=progress,
+                )
+            elif profile_input_preflight is not None:
+                results = runner.run_profile(
+                    selected_profile,
+                    requested,
+                    progress=progress,
+                    preflight=profile_preflight,
+                    input_preflight=profile_input_preflight,
                 )
             else:
                 results = runner.run_profile(

@@ -33,6 +33,7 @@ from quality import (  # noqa: E402
     _profile_status,
     _parse_cli,
     _preflight_profile_environment,
+    _preflight_profile_inputs,
     _render_profile_failure_details,
     host_command,
     main as quality_main,
@@ -2403,6 +2404,60 @@ class ProfileFailureRenderingTests(unittest.TestCase):
 
 
 class ProfileEnvironmentPreflightTests(unittest.TestCase):
+    def test_input_preflight_uses_only_explicit_read_only_validator_mode(self) -> None:
+        with patch(
+            "quality.subprocess.run",
+            return_value=subprocess.CompletedProcess(
+                [], 0, stdout='{"status":"passed"}', stderr=""
+            ),
+        ) as validate:
+            self.assertIsNone(_preflight_profile_inputs("pull-request"))
+        validate.assert_called_once_with(
+            [
+                sys.executable,
+                "-B",
+                "-m",
+                "tooling.exact_runtime_provision",
+                "--check-pull-request-inputs",
+                "--json",
+            ],
+            cwd=TOOLING_DIR.parent,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+    def test_input_preflight_failure_cannot_be_green_from_stdout(self) -> None:
+        for outcome in (
+            subprocess.CompletedProcess(
+                [], 2, stdout='{"status":"passed"}', stderr="missing runtime"
+            ),
+            OSError("validator unavailable"),
+        ):
+            with (
+                self.subTest(outcome=outcome),
+                patch(
+                    "quality.subprocess.run",
+                    **(
+                        {"side_effect": outcome}
+                        if isinstance(outcome, OSError)
+                        else {"return_value": outcome}
+                    ),
+                ),
+                self.assertRaisesRegex(
+                    ConfigurationError, "exact-input preflight failed"
+                ),
+            ):
+                _preflight_profile_inputs("pull-request")
+
+    def test_input_preflight_keeps_other_profile_runtime_contracts_unchanged(
+        self,
+    ) -> None:
+        with patch("quality.subprocess.run") as validate:
+            for profile in ("local", "full", "release"):
+                _preflight_profile_inputs(profile)
+        validate.assert_not_called()
+
     def test_script_mode_preflight_preserves_canonical_package_context(self) -> None:
         script = r"""
 import json

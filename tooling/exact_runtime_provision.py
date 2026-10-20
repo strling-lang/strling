@@ -117,14 +117,13 @@ def _maven_jar(repository: Path, coordinate: str) -> Path:
     )
 
 
-def verify_maven_repository(
+def verify_maven_repository_inputs(
     repository: Path,
     *,
     release_graph_path: Path = JVM_RELEASE_GRAPH,
     verification_metadata_path: Path = GRADLE_VERIFICATION_METADATA,
-    run: Any = subprocess.run,
 ) -> dict[str, Any]:
-    """Verify the declared offline Maven cache against existing JVM authority."""
+    """Read and verify every declared Maven input without compiling or writing."""
 
     repository = repository.resolve()
     if not repository.is_dir():
@@ -176,6 +175,31 @@ def verify_maven_repository(
         raise ExactRuntimeProvisionError(
             "Maven repository is missing prepared com.strling:strling-jvm:3.0.0"
         )
+    if shutil.which("mvn") is None:
+        raise ExactRuntimeProvisionError("mvn is unavailable")
+    return {
+        "path": str(repository),
+        "release_graph_fingerprint": graph.get("fingerprint"),
+        "verified_artifacts": verified,
+        "prepared_bridge": "com.strling:strling-jvm:3.0.0",
+    }
+
+
+def verify_maven_repository(
+    repository: Path,
+    *,
+    release_graph_path: Path = JVM_RELEASE_GRAPH,
+    verification_metadata_path: Path = GRADLE_VERIFICATION_METADATA,
+    run: Any = subprocess.run,
+) -> dict[str, Any]:
+    """Verify all inputs afresh and retain the original offline compile probe."""
+
+    inputs = verify_maven_repository_inputs(
+        repository,
+        release_graph_path=release_graph_path,
+        verification_metadata_path=verification_metadata_path,
+    )
+    repository = Path(inputs["path"])
     maven = shutil.which("mvn")
     if maven is None:
         raise ExactRuntimeProvisionError("mvn is unavailable")
@@ -210,12 +234,23 @@ def verify_maven_repository(
         raise ExactRuntimeProvisionError(
             "offline Maven repository probe failed: " + diagnostics
         )
+    return {**inputs, "offline_probe": command}
+
+
+def verify_pull_request_inputs(
+    manifest: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Detect unavailable exact inputs early; never replace the full preflight."""
+
+    exact = verify_configured_runtimes(manifest or load_manifest())
+    repository = os.environ.get("STRLING_MAVEN_REPOSITORY")
+    if not repository:
+        raise ExactRuntimeProvisionError("STRLING_MAVEN_REPOSITORY is not configured")
     return {
-        "path": str(repository),
-        "release_graph_fingerprint": graph.get("fingerprint"),
-        "verified_artifacts": verified,
-        "prepared_bridge": "com.strling:strling-jvm:3.0.0",
-        "offline_probe": command,
+        "status": "passed",
+        "evidence_role": "read-only-input-preflight-not-certification",
+        "exact_runtimes": exact,
+        "maven_repository": verify_maven_repository_inputs(Path(repository)),
     }
 
 
@@ -391,7 +426,9 @@ def main() -> int:
     parser.add_argument("--github-env", type=Path)
     parser.add_argument("--print-env", action="store_true")
     parser.add_argument("--print-pull-request-env", action="store_true")
-    parser.add_argument("--check-pull-request", action="store_true")
+    checks = parser.add_mutually_exclusive_group()
+    checks.add_argument("--check-pull-request", action="store_true")
+    checks.add_argument("--check-pull-request-inputs", action="store_true")
     parser.add_argument("--json", action="store_true")
     parser.add_argument(
         "--execute-adversarial",
@@ -409,6 +446,17 @@ def main() -> int:
     if args.print_pull_request_env:
         for name, value in sorted(pull_request_environment(manifest).items()):
             print(f"export {name}={shlex.quote(value)}")
+        return 0
+    if args.check_pull_request_inputs:
+        try:
+            result = verify_pull_request_inputs(manifest)
+        except (ExactRuntimeProvisionError, ExactRuntimeToolchainError) as error:
+            print(f"Pull Request exact inputs: FAILED: {error}", file=sys.stderr)
+            return 2
+        if args.json:
+            print(json.dumps(result, sort_keys=True))
+        else:
+            print("Pull Request exact inputs: PASSED (not full preflight)")
         return 0
     if args.check_pull_request:
         try:

@@ -226,6 +226,10 @@ class GeneratedArtifactProfileGateTests(unittest.TestCase):
                         ),
                     ),
                     patch(
+                        "quality._preflight_profile_inputs",
+                        side_effect=lambda profile: calls.append(f"inputs:{profile}"),
+                    ),
+                    patch(
                         "quality.build_certification_artifact",
                         return_value={"synthetic_fixture_only": True},
                     ),
@@ -235,11 +239,100 @@ class GeneratedArtifactProfileGateTests(unittest.TestCase):
                     code = quality_main(["profile", "pull-request", "--json"])
                 self.assertEqual(1, code)
                 self.assertEqual(
-                    ["integrity", "preflight:pull-request", "component"]
+                    [
+                        "inputs:pull-request",
+                        "integrity",
+                        "preflight:pull-request",
+                        "component",
+                    ]
                     if status == "passed"
-                    else ["integrity"],
+                    else ["inputs:pull-request", "integrity"],
                     calls,
                 )
+
+    def test_missing_inputs_fail_before_integrity_or_any_build(self) -> None:
+        calls: list[str] = []
+        runner = QualityRunner(
+            Toolchain(gated_policy(), ROOT),
+            executor=lambda *_args: self.fail("component executed"),
+            hardgate_executor=lambda *_args: self.fail("expensive integrity executed"),
+            source_snapshotter=lambda: {},
+        )
+
+        def missing() -> None:
+            calls.append("inputs")
+            raise ConfigurationError("missing exact input")
+
+        with self.assertRaisesRegex(ConfigurationError, "missing exact input"):
+            runner.run_profile(
+                "pull-request",
+                None,
+                input_preflight=missing,
+                preflight=lambda: self.fail("build-capable preflight executed"),
+            )
+        self.assertEqual(["inputs"], calls)
+
+    def test_early_input_check_does_not_reuse_or_omit_a_single_profile_stage(
+        self,
+    ) -> None:
+        calls: list[str] = []
+        runner = QualityRunner(
+            Toolchain(gated_policy(), ROOT),
+            executor=lambda *_args: calls.append("component") or Execution(1),
+            hardgate_executor=lambda *_args: (
+                calls.append("integrity") or execution("passed")
+            ),
+            source_snapshotter=lambda: {},
+        )
+        results = runner.run_profile(
+            "pull-request",
+            None,
+            input_preflight=lambda: calls.append("inputs"),
+            preflight=lambda: calls.append("full-preflight"),
+        )
+        self.assertEqual(["inputs", "integrity", "full-preflight", "component"], calls)
+        self.assertEqual([GATE, "lint"], [r.operation for r in results])
+        self.assertEqual(["passed", "failed"], [r.status for r in results])
+
+    def test_even_read_only_input_hook_is_guarded_against_source_mutation(self) -> None:
+        state = {"candidate.txt": "frozen"}
+        runner = QualityRunner(
+            Toolchain(gated_policy(), ROOT),
+            executor=lambda *_args: self.fail("component executed"),
+            hardgate_executor=lambda *_args: self.fail("integrity executed"),
+            source_snapshotter=lambda: dict(state),
+        )
+        with self.assertRaisesRegex(
+            ConfigurationError, "input preflight changed frozen"
+        ):
+            runner.run_profile(
+                "pull-request",
+                None,
+                input_preflight=lambda: state.update({"candidate.txt": "changed"}),
+            )
+
+    def test_unavailable_snapshot_after_input_hook_never_reaches_integrity(
+        self,
+    ) -> None:
+        captures = 0
+
+        def snapshot() -> dict[str, str]:
+            nonlocal captures
+            captures += 1
+            if captures == 2:
+                raise OSError("input-boundary snapshot unavailable")
+            return {}
+
+        runner = QualityRunner(
+            Toolchain(gated_policy(), ROOT),
+            executor=lambda *_args: self.fail("component executed"),
+            hardgate_executor=lambda *_args: self.fail("integrity executed"),
+            source_snapshotter=snapshot,
+        )
+        with self.assertRaisesRegex(
+            ConfigurationError, "input-boundary snapshot unavailable"
+        ):
+            runner.run_profile("pull-request", None, input_preflight=lambda: None)
 
     def test_failed_deferred_preflight_never_starts_later_stage(self) -> None:
         runner = QualityRunner(

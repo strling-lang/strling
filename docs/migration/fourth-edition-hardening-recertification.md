@@ -2658,3 +2658,65 @@ readiness remain required. Both whole source-distinct campaigns, fresh
 independent no-reuse Releases, actual signing, reviewed immutable qualification
 before pin-only promotion, pinned trusted verification and guarded clean formal
 CLOSED remain uncompleted. H08 remains OPEN; continuation remains ACTIVE.
+
+### Interrupted clean-source preparation and durable launch proof — 2026-10-21 (UTC)
+
+The exact five-path engineering commit a6c2f8ea352409bb36543c61becfcaaddc188115
+(tree d321f51bd64e2d2862c211ed17ea3f1c219eed2c) is clean but was never
+frozen or sampled. Its actual canonical preparation command was
+`./strling generate --prepare --json`. Three full before-fences completed;
+the child started at 12:05:34.490060 UTC. The last saved heartbeat is
+12:06:33.141869 UTC. No owner or child terminal exists, both output streams
+are empty, and the old exact owner/child identities no longer exist after
+the WSL boot changed. Completed family count and child exit are unknown.
+The attempt remains interrupted/incomplete and immutable, never PASS.
+
+Windows Update events record a Codex update starting at 12:06:43.6423631 UTC
+and succeeding at 12:06:46.9408568 UTC. The old CLI path was removed.
+This temporal evidence supports an app-update/launcher-lifetime interruption
+inference; it does not establish the exact terminating action or a product
+failure. No app, power, security or privilege setting was changed and no
+update was recreated as a test. The first compact reader's nested child
+identity parsing error is preserved; a corrected read-only query establishes
+the changed boot and absent exact processes without treating denial as death.
+
+Read-only interruption reconstruction
+db1ac489e3e95f3962dd2afaf19867491059c6f8efa3483bff8253f88530791c
+checks all 2,310 source/generated/Git nodes, 4,735 held files, 607 historical
+receipts, all three saved before source/staged/HEAD/H-flag/census/control
+observations, all 193 output paths and the unchanged 22-file/eight-directory
+payload. Raw index and manifest bytes are unchanged. It creates no original
+owner terminal, no child exit and no preparation acceptance. After exact
+Native/WSL ownership, old-boot, single-link, token, empty Git-process inventory
+and exclusive-read checks, only the retired owner's 389-byte lease is moved
+recoverably to
+target/codex-tools/h08-a6-retired-owned-lease-quarantine-v1/index.lock.retired-owned.bin.
+Receipt 24e7cf284add2a7f221cd320606b82df2401b5a66d6f8d35d278537e97abb45b
+preserves the index bytes; nothing is deleted or any live owner interrupted.
+
+A source-distinct hidden Native supervisor is scoped only to exact-pinned,
+unfrozen ordinary preparation and bounded synthetic fixtures. It captures real
+WSL OS exits and full streams, never interrupts a child, rejects generic
+commands/verifiers/private paths and requires separate real preparation-owner
+acceptance. All 14 guards pass on each platform without skips. Independent raw
+proof 13a057b40f7ccc332d2037de7d971778f5d1f1e7ffb04d954927546835eb50fc
+reconstructs two fixtures after the actual launching command/parent exits:
+one preserves exit 0, the other intentionally preserves exit 17. Synthetic
+child walls are 8.000299s and 8.000369s; Native supervisor walls are 11.242160s
+and 11.225134s. No cross-platform wall-clock ordering is used. This proves
+only the bounded parent-lifetime case, not survival across every app update,
+governed performance, a profile/signature/trust result or certification savings.
+
+Only three synchronized records now change; the tested two Python pins remain
+unchanged. The fresh registry has no authoritative-source or generator-input
+match for those paths; no authority-bearing output is regenerated. Record
+schema/format and an exact-path new source commit precede the complete new
+clean-source 36-family canonical ordinary preparation/check/recheck and all
+changed direct dependents. The interrupted expensive attempt is not replayed
+unchanged. All fresh runtime/compiler/security/contracts/readiness controls,
+original CPU1/capacity floor and all 29 controls remain required. Both whole
+source-distinct Q/P 38/80/126/126 campaigns, fresh same-SHA independent no-reuse
+Release each, signing, reviewed immutable qualification before pin-only
+promotion, pinned trusted verification and guarded final clean formal CLOSED
+remain mandatory. H08 remains OPEN; continuation remains ACTIVE. No successful
+end-to-end certification speedup has been established.

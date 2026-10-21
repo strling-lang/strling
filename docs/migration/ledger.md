@@ -8086,3 +8086,29 @@ commit precede the new clean source's complete 36-family gate and fresh
 prerequisites. Both whole source-distinct campaigns, independent no-reuse
 Releases, signing, immutable trusted verification and guarded formal CLOSED
 remain mandatory. H08 OPEN; continuation ACTIVE.
+
+### H08 preparation interruption and durable launch proof — 2026-10-21 (UTC)
+
+Clean engineering commit a6c2f8ea is not frozen or certified. Its canonical
+36-family preparation lost its old WSL boot after three complete pre-fences;
+no child/owner terminal or family result was saved. The last heartbeat precedes
+a recorded Codex update by seconds, supporting a launcher-lifetime inference,
+not a proven product failure or exact terminating action. The attempt remains
+interrupted/incomplete, with unknown exit and immutable empty streams.
+
+Diagnostic db1ac489 confirms all 2,310 source/Git/generated nodes, 4,735 held
+files, 607 receipts, three full pre-fences, 193 output paths and unchanged
+22-file/eight-directory payload. Only the exact retired 389-byte lease is moved
+to recoverable h08-a6-retired-owned-lease-quarantine-v1; receipt 24e7cf28
+preserves the index, with nothing deleted and no live owner interrupted.
+
+All 14 guards per platform pass for the source-distinct hidden Native
+engineering supervisor. Independent synthetic proof 13a057b4 confirms survival
+of the completed launch command/parent and preserves both real exit 0 and
+intentional exit 17. It is neither an app-update guarantee nor a measured
+certification speedup, profile, signature or trust result. Three record-only
+annotations require fresh schema/format, exact-path commit and a new complete
+36-family gate; no unchanged expensive attempt is replayed. Every Q/P profile,
+fresh independent no-reuse Release, threshold/sample/control, signing,
+immutable reviewed/pinned verification and guarded formal CLOSED requirement
+remains intact. H08 OPEN; continuation ACTIVE.

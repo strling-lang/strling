@@ -7906,3 +7906,47 @@ campaigns and their fresh independent no-reuse Releases, actual signing and
 immutable trusted verification remain mandatory. No actionable failure
 occurred in this static run; total successful certification time and its
 improvement remain unmeasured. H08 remains OPEN and ACTIVE.
+
+### H08 fresh-source bootstrap correction — 2026-10-21 (UTC)
+
+H08 remains OPEN and continuation ACTIVE. Consumed 3d9bdad3 retains actual
+Local 38 PASS, PR 80 PASS and guarded primary Full 125 PASS plus the sole VSCE
+waiver; its original wrapper failure is immutable. Independent readiness
+failed before profiles or sampling because Lua setup preceded ordinary
+rockspec preparation. The failed source is preserved. Guarded retirement
+preceded the shared-launcher correction and two real 49-case rounds per
+platform, with complete complementary POSIX fixture coverage in WSL.
+These are engineering proofs, not new candidate or Release authority.
+Both fresh qualification/promotion campaigns, independent no-reuse Releases,
+signing, trusted verification and formal closure remain mandatory; no
+whole-path speedup is claimed. See the detailed bootstrap correction in
+[fourth-edition hardening recertification](fourth-edition-hardening-recertification.md).
+
+The subsequent 191-case affected-subsystem run exposed one empty-root fixture
+dependency, now narrowly corrected with stronger bootstrap-order assertions.
+The failed run is preserved. Corrected Native and WSL runs have identical
+191-case identities; all 14 Native skip events across 13 methods are covered
+by genuine zero-skip WSL execution. Proof
+daa2c540a2afc75a2edd894a7795cacc9c0a285a250022b5c138b99ffb00299e remains an
+engineering result, not certification or a timing gain.
+
+The fresh five-command static run now passes, with all sixty source/context/
+compiler/retained-evidence/payload guard intervals intact. Terminal
+0fb45c64ceea503facefeae56b4e3b5fb1c9b73a6e6cc9af42345ae671ecc095 and independent raw
+audit 6846118cd85fc4dc0db88cd30f76dd37a8f2867f68fbcb99d288145adadd34fb bind all five
+commands, ten streams, 2,310 source/Git entries, 4,238 retained files, 607
+receipts, 22 payload files and all 29 controls. The earlier static operator
+failed before any command on a stale, retired physical-index identity; its
+failure remains immutable. A separate read-only three-round bridge proves the
+new dirty-engineering index starts with all staged entries and flags exactly
+matching HEAD. The fresh operator retains strict physical bytes/mode/inode
+guards; this is not frozen-candidate identity normalization.
+
+The run took 1,270.205738 monotonic seconds: 409.250722s in commands,
+725.942219s in sixty guards and 135.012797s elsewhere. Hashing and private-index
+checks are measured lossless scheduling targets, not an established speedup.
+Final record-only schema/format validation, the exact seven-path engineering
+commit, complete 36-family preparation/recheck and fresh prerequisites still
+precede a new freeze. Old 3d9 partial results remain historical; new whole
+qualification/promotion campaigns, independent Releases, signing, trusted
+verification and formal closure are still required. H08 remains OPEN and ACTIVE.

@@ -213,6 +213,7 @@ class CertificationReadinessTests(unittest.TestCase):
             )
 
     def test_independent_release_has_fresh_setup_and_development_receipt(self) -> None:
+        bootstrap_commands = independent.production.generated_setup_bootstrap_commands()
         with TemporaryDirectory() as temporary:
             root = Path(temporary)
             output = root / "evidence"
@@ -241,6 +242,11 @@ class CertificationReadinessTests(unittest.TestCase):
                     "materialize_governed_production_inputs",
                     return_value=[],
                 ),
+                patch.object(
+                    independent.production,
+                    "generated_setup_bootstrap_commands",
+                    return_value=bootstrap_commands,
+                ) as bootstrap,
                 patch.object(independent.production, "run_capacity_checked") as run,
                 patch.object(
                     independent.production,
@@ -252,8 +258,18 @@ class CertificationReadinessTests(unittest.TestCase):
                     independent.main(["--artifact-directory", str(output)]), 0
                 )
             create.assert_called_once()
+            bootstrap.assert_called_once_with()
             self.assertEqual(create.call_args.kwargs["source_sha"], SOURCE["commit"])
             commands = [call.args[0] for call in run.call_args_list]
+            self.assertEqual(bootstrap_commands, commands[1:3])
+            self.assertLess(
+                commands.index(bootstrap_commands[-1]),
+                commands.index(["npm", "ci", "--no-audit", "--no-fund"]),
+            )
+            self.assertLess(
+                commands.index(bootstrap_commands[-1]),
+                commands.index(["./strling", "setup", "all"]),
+            )
             self.assertIn(["./strling", "setup", "all"], commands)
             preparation = ["./strling", "generate", "--prepare", "--json"]
             self.assertEqual(

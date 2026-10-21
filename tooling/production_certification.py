@@ -227,6 +227,67 @@ def generated_artifact_preparation_command() -> list[str]:
     return ["./strling", "generate", "--prepare", "--json"]
 
 
+def generated_setup_bootstrap_commands(
+    registry_path: Path | None = None,
+) -> list[list[str]]:
+    """Prepare the ordinary Lua input consumed by check-only binding setup.
+
+    This prerequisite does not replace complete registered preparation after
+    setup, and cannot refresh locks, baselines or authenticated evidence.
+    """
+
+    path = registry_path or ROOT / "governance/generated-artifacts.json"
+    try:
+        artifacts = load_json(path)["artifacts"]
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        raise ProductionCertificationError(
+            f"setup bootstrap registry is unavailable: {path}"
+        ) from error
+    if not isinstance(artifacts, list) or any(
+        not isinstance(artifact, dict) for artifact in artifacts
+    ):
+        raise ProductionCertificationError("setup bootstrap registry is malformed")
+    matches = [
+        artifact
+        for artifact in artifacts
+        if artifact.get("id") == "lua-release-rockspec"
+    ]
+    if len(matches) != 1:
+        raise ProductionCertificationError("one registered Lua setup input is required")
+    artifact = matches[0]
+    generator = artifact.get("generator")
+    verification = artifact.get("verification")
+    preparation = artifact.get("preparation")
+    if (
+        not isinstance(generator, dict)
+        or not isinstance(verification, dict)
+        or not isinstance(preparation, dict)
+        or artifact.get("checked_in") is not False
+        or artifact.get("authority") != "operational-projection"
+        or artifact.get("determinism") != "verified"
+        or artifact.get("enforcement") != "profile-enforced"
+        or preparation.get("automatic_regeneration") != "canonical"
+        or generator.get("working_directory") != "."
+        or generator.get("implementation_paths") != ["tooling/lua_rockspec.py"]
+        or artifact.get("outputs") != ["bindings/lua/strling-[0-9]*.rockspec"]
+        or verification.get("method") != "command-check"
+    ):
+        raise ProductionCertificationError(
+            "setup bootstrap must be the registered ordinary Lua projection"
+        )
+    commands = [generator.get("command"), verification.get("integrity_command")]
+    if any(
+        not isinstance(command, list)
+        or not command
+        or any(not isinstance(part, str) or not part for part in command)
+        for command in commands
+    ):
+        raise ProductionCertificationError(
+            "setup bootstrap requires canonical generation and integrity commands"
+        )
+    return [list(command) for command in commands]
+
+
 def release_profile_command(profile_artifact: Path) -> list[str]:
     """Select the complete governed Release profile membership.
 
@@ -861,6 +922,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             env=certification_environment,
         )
         environment["exact_runtime_toolchains"] = json.loads(exact_runtime_result)
+        for command in generated_setup_bootstrap_commands():
+            run_capacity_checked(
+                command,
+                cwd=worktree,
+                contract=capacity_contract,
+                env=certification_environment,
+            )
         run_capacity_checked(
             ["npm", "ci", "--no-audit", "--no-fund"],
             cwd=worktree,

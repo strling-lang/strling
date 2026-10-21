@@ -2254,3 +2254,132 @@ campaigns and their fresh independent no-reuse Releases, actual signing and
 immutable trusted verification remain mandatory. No actionable failure
 occurred in this static run; total successful certification time and its
 improvement remain unmeasured. H08 remains OPEN and ACTIVE.
+
+### Fresh-source Lua bootstrap dependency ordering — 2026-10-21 (UTC)
+
+Consumed source 3d9bdad30739a59fc0d51567dd808d7248cf9519 completed actual
+Local 38/38, PR 80/80 and the canonical Full child: 125 PASS plus only
+WVR-SEC-VSCE-LICENSE-001 across 126 operations, with zero failed, unavailable
+or incomplete. Guarded acceptance
+ba6981922fc8df7219113eb72686b30a870845d5f24ae5e26dc25161b59445f8 binds independent
+source/container and raw performance reconstruction of all 54 coordinates and
+3,332 values under unchanged ceilings and sample counts. The original Full
+wrapper failure 476c34c90d94f5e6d7eb257699180b055408b6714294a28f8abf910a6924c3b9
+remains FAILED: it compared the registry base command with the complete
+canonical atomic invocation. Later acceptance checks every exact argument and
+the original raw container; it neither relabels nor replays the failed attempt.
+
+Fresh independent sample-free readiness subsequently failed during setup,
+before any readiness profile, Release profile or new performance sampling.
+Receipt cf73fa0a17fd6d316ee8597ebf4b9aebf3ac65e31e982543b4cd391f74005e18 and terminal
+200bcabe4b54e831484f72e95197254ba60529104ba2698ba254f8f962c32a21 preserve that failure.
+The independent source under nonperformance-readiness run
+64a49e0e65a1473eaf98943c15342a69 remains untouched and must not be reused.
+Setup reported 17 successful bindings and one Lua failure: the generated
+numeric rockspec set was empty. Both governed launchers placed ordinary
+preparation after setup, although Lua correctly requires its canonical
+current-version rockspec before any LuaRocks action.
+
+The failed child took 386.111204 monotonic / 422.978251 UTC seconds, including
+88.095142 user and 43.641489 system CPU seconds. A read-only atomic check
+reproduced the exact missing-output rejection in 0.179136 seconds against
+identical source bytes; diagnostic
+609c56de20f669332e297116df51bf42dc6c3142107860f568c9b4e0a7720c7e retains the pins.
+These are different workloads, not a measured speedup or a whole-path estimate.
+
+The correction shares the registered ordinary Lua generator and its exact
+integrity check between both governed entrypoints before installers and setup.
+Malformed, protected, noncanonical and redirected definitions fail closed.
+Complete 36-family preparation remains after setup and before the immutable
+profile; Lua setup remains check-only. No lock, baseline, authenticated
+evidence, waiver, threshold, workload, sample count or profile is weakened.
+
+Live retirement terminal
+3882f70206d5533b7d05c42709e5858949ceb1b1b78f5473d81da046b9ae6e46 and release
+fd7f9fc34cb95e212665834852972cca620c6aa2f78a4b36f263f520c8c0e753 preceded every
+tracked edit. Twelve fresh guard phases retained 4,206 held files, 2,310 source
+entries, 22 payload files, 607 receipts and all 29 execution controls. The
+consumed source is retired, never eligible for unchanged authoritative replay;
+its good partial results cannot certify the corrected new candidate.
+
+Two actual 49-case rounds per platform pass: Native has 47 PASS plus two
+explicitly POSIX-only fixture skips each round; WSL has 49 PASS and zero skips.
+All case identities match and both skipped Native methods genuinely pass WSL.
+Proofs c695906aefd5d711767366f3de141b647add2a0ec6f3691ff5c5bdd9c5d98240 and
+20a7529217f0f0483f589aec4f294ad68613022dcd98d06115efa9077464bdf8 retain the runs.
+An initial sandbox-denied Native fixture run remains failed; its already
+tool-truncated output is explicitly incomplete, not full raw verification
+proof. Scoped test access did not change security or privilege settings.
+
+The first affected-subsystem run reported 191 cases and one failed isolated
+readiness fixture; failure
+dc7607936afd03a2a038508930e93c243e785129b05e4ffd4470338e18fc8aa7 is preserved.
+That fixture replaced the repository with an empty temporary root without
+injecting the new registered bootstrap plan. Its narrow correction in
+tooling/tests/test_certification_readiness.py supplies the real registered
+commands and asserts both precede npm/setup. The previously failing case
+genuinely passes on Native and WSL. The complete corrected 191-case selection
+then passes on both platforms: Native reports 14 skip events affecting 13
+methods, all of which genuinely pass in the zero-skip WSL run. All 191 actual
+case identities match. Proof
+daa2c540a2afc75a2edd894a7795cacc9c0a285a250022b5c138b99ffb00299e retains every
+case and skip row. This seventh direct-dependent test path adds no product
+behavior, omitted check or broader waiver.
+
+These dirty-source engineering proofs do not establish a certified SHA or
+end-to-end gain. Broader/static/record-schema/full-format checks, exact-path
+commit, complete registered check/preparation/recheck and affected dependents,
+all fresh prerequisites and exact-candidate guards precede the next clean
+freeze. Both source-distinct 38/80/126/126 campaigns, fresh independent no-reuse
+Release each, signing, isolated reviewed qualification before pin-only
+promotion, immutable pinned verification and guarded formal closure remain
+mandatory. Successful total certification duration and gain remain unmeasured.
+H08 stays OPEN and autonomous continuation stays ACTIVE.
+
+### Source-bound bootstrap validation and index epoch — 2026-10-21 (UTC)
+
+The first seven-path static operator failed its Git-identity guard before
+executing any static command. Terminal
+c64c0ba495a6ff745b853d2614922c9d55bc33a16c0ac5bce9425d8a6c3f6d14 remains FAILED.
+Read-only diagnosis found only the physical index node differed from the
+already retired frozen source. The writer and replacement time are unknown.
+Independent bridge ce88aeb423b5e03fc8960b2f29664fd40b283b96578e92fabfde2c8b25e0c8eb
+reconstructed all 2,270 staged entries and flags against the unchanged HEAD
+tree, and retained three complete private-index observations with all 2,310
+source/Git entries unchanged. This establishes a new dirty-engineering starting
+epoch after genuine retirement; it does not normalize a frozen identity,
+modify the real index, change a baseline, or excuse later mutation. The new
+operator archives the actual index and requires its exact bytes, mode, device
+and inode at every source fence. All failed sources and receipts remain intact.
+
+The fresh static operator completed schema, repository lint, hygiene, complete
+repository format checking and governance. Terminal
+0fb45c64ceea503facefeae56b4e3b5fb1c9b73a6e6cc9af42345ae671ecc095 retains all five
+actual results and all sixty mandatory guard intervals. Independent raw audit
+6846118cd85fc4dc0db88cd30f76dd37a8f2867f68fbcb99d288145adadd34fb reconstructs every
+command and ten whole streams, validates both fence boundaries, and freshly
+checks all 2,310 source/Git entries, 4,238 retained files, 607 receipt paths,
+22 payload files and the complete 29 execution controls. Twelve negative
+guards pass on each platform with zero skips. No profile, workload or sample
+was replayed; no candidate verifier was imported. The four tested code/test
+files remain unchanged by these final record-only annotations, whose schema
+and format still require final validation.
+
+Actual static elapsed time was 1,270.205738 monotonic seconds: the five commands
+sum to 409.250722s and sixty measured guard intervals to 725.942219s, leaving
+135.012797s in other orchestration, census and receipt work. Guard attribution
+is 249.500888s exact-source/private-index checking, 263.586139s whole-source
+hashing, 185.549818s retained-file hashing, 20.979797s payload census, 6.300730s
+compiler checks and 0.024847s physical context. These observations identify
+lossless scheduling targets; they are not equivalent-workload before/after
+results or a measured total-certification gain. No fence has been removed,
+reused or weakened.
+
+The registry maps none of the seven changed paths to an authoritative source
+or generator input. Lua's existing registered commands and authority are
+unchanged. Complete 36-family check/preparation/recheck and changed-family
+dependents remain mandatory before a new clean candidate freeze. Old 3d9
+results cannot certify that candidate. Both whole source-distinct campaigns,
+fresh independent no-reuse Release each, signing, isolated reviewed verifier
+qualification before pin-only promotion, pinned verification and guarded
+formal closure remain uncompleted requirements. H08 remains OPEN and ACTIVE.

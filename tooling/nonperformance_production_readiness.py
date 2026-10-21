@@ -64,6 +64,10 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "--json",
                 ],
             ),
+            *(
+                (worktree, command)
+                for command in production.generated_setup_bootstrap_commands()
+            ),
             (worktree, ["npm", "ci", "--no-audit", "--no-fund"]),
             (worktree / "tooling/lsp-server", ["npm", "ci", "--no-audit", "--no-fund"]),
             (worktree, ["./strling", "setup", "all"]),

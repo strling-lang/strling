@@ -84,6 +84,187 @@ class ProductionCertificationTests(unittest.TestCase):
         first.append("unrelated")
         self.assertEqual(expected, constructor())
 
+    def _lua_bootstrap_registry(self) -> dict:
+        registry = json.loads(
+            (production.ROOT / "governance/generated-artifacts.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        return {
+            "artifacts": [
+                artifact
+                for artifact in registry["artifacts"]
+                if artifact["id"] == "lua-release-rockspec"
+            ]
+        }
+
+    def _bootstrap_commands(self, registry: object) -> list[list[str]]:
+        with self.temporary_directory() as directory:
+            path = directory / "registry.json"
+            path.write_text(json.dumps(registry), encoding="utf-8")
+            return production.generated_setup_bootstrap_commands(path)
+
+    def test_setup_bootstrap_uses_registered_lua_generator_and_integrity_check(
+        self,
+    ) -> None:
+        registry = self._lua_bootstrap_registry()
+        artifact = registry["artifacts"][0]
+        self.assertEqual(
+            [
+                artifact["generator"]["command"],
+                artifact["verification"]["integrity_command"],
+            ],
+            production.generated_setup_bootstrap_commands(),
+        )
+        self.assertEqual(
+            ["python3", "tooling/lua_rockspec.py", "materialize"],
+            production.generated_setup_bootstrap_commands()[0][:3],
+        )
+        self.assertEqual(
+            ["python3", "tooling/lua_rockspec.py", "check-generated"],
+            production.generated_setup_bootstrap_commands()[1][:3],
+        )
+
+    def test_setup_bootstrap_commands_are_fresh_not_shared_mutable_lists(self) -> None:
+        expected = production.generated_setup_bootstrap_commands()
+        first = production.generated_setup_bootstrap_commands()
+        first[0].append("unrelated")
+        first[1].clear()
+        self.assertEqual(expected, production.generated_setup_bootstrap_commands())
+
+    def test_setup_bootstrap_rejects_missing_duplicate_or_malformed_registry(
+        self,
+    ) -> None:
+        artifact = self._lua_bootstrap_registry()["artifacts"][0]
+        for value in (
+            {},
+            None,
+            {"artifacts": None},
+            {"artifacts": [None]},
+            {"artifacts": []},
+            {"artifacts": [artifact, artifact]},
+        ):
+            with (
+                self.subTest(value=value),
+                self.assertRaises(production.ProductionCertificationError),
+            ):
+                self._bootstrap_commands(value)
+
+    def test_setup_bootstrap_cannot_refresh_protected_or_noncanonical_artifacts(
+        self,
+    ) -> None:
+        for key, value in (
+            ("checked_in", True),
+            ("authority", "certification-evidence"),
+            ("authority", "compatibility-baseline"),
+            ("determinism", "unverified"),
+            ("enforcement", "verification-only"),
+            ("outputs", ["outside/lockfile"]),
+            ("generator", None),
+            ("verification", None),
+            ("preparation", {"automatic_regeneration": "governed-refresh"}),
+        ):
+            registry = self._lua_bootstrap_registry()
+            registry["artifacts"][0][key] = value
+            with (
+                self.subTest(key=key, value=value),
+                self.assertRaises(production.ProductionCertificationError),
+            ):
+                self._bootstrap_commands(registry)
+
+    def test_setup_bootstrap_rejects_unsafe_directory_or_implementation(self) -> None:
+        for key, value in (
+            ("working_directory", "../outside"),
+            ("implementation_paths", ["tooling/unrelated.py"]),
+            ("command", None),
+            ("command", []),
+            ("command", ["python3", False]),
+        ):
+            registry = self._lua_bootstrap_registry()
+            registry["artifacts"][0]["generator"][key] = value
+            with (
+                self.subTest(key=key, value=value),
+                self.assertRaises(production.ProductionCertificationError),
+            ):
+                self._bootstrap_commands(registry)
+
+    def test_setup_bootstrap_requires_complete_read_only_integrity_check(self) -> None:
+        for key, value in (
+            ("method", "not-enforced"),
+            ("integrity_command", None),
+            ("integrity_command", []),
+            ("integrity_command", ["python3", ""]),
+        ):
+            registry = self._lua_bootstrap_registry()
+            registry["artifacts"][0]["verification"][key] = value
+            with (
+                self.subTest(key=key, value=value),
+                self.assertRaises(production.ProductionCertificationError),
+            ):
+                self._bootstrap_commands(registry)
+
+    def _assert_setup_bootstrap_source(
+        self, source: str, qualifier: str | None = None
+    ) -> None:
+        tree = ast.parse(source)
+        bootstraps = []
+        installers = []
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                function = node.func
+                if (
+                    qualifier is None
+                    and isinstance(function, ast.Name)
+                    and function.id == "generated_setup_bootstrap_commands"
+                ) or (
+                    qualifier is not None
+                    and isinstance(function, ast.Attribute)
+                    and isinstance(function.value, ast.Name)
+                    and function.value.id == qualifier
+                    and function.attr == "generated_setup_bootstrap_commands"
+                ):
+                    bootstraps.append(node.lineno)
+            if isinstance(node, ast.List):
+                prefix = [
+                    item.value if isinstance(item, ast.Constant) else None
+                    for item in node.elts[:3]
+                ]
+                if prefix == ["./strling", "setup", "all"] or prefix[:2] == [
+                    "npm",
+                    "ci",
+                ]:
+                    installers.append(node.lineno)
+        self.assertEqual(1, len(bootstraps), "one shared setup bootstrap required")
+        self.assertTrue(installers, "actual independent setup must remain")
+        self.assertLess(
+            bootstraps[0], min(installers), "bootstrap must precede every installer"
+        )
+
+    def test_independent_release_bootstraps_before_setup_and_installs(self) -> None:
+        self._assert_setup_bootstrap_source(inspect.getsource(production.main))
+        self._assert_shared_preparation_source(inspect.getsource(production.main))
+
+    def test_independent_readiness_bootstraps_before_setup_and_installs(self) -> None:
+        self._assert_setup_bootstrap_source(
+            inspect.getsource(independent_readiness.main), "production"
+        )
+        self._assert_shared_preparation_source(
+            inspect.getsource(independent_readiness.main), "production"
+        )
+
+    def test_setup_bootstrap_source_contract_rejects_omitted_or_late_preparation(
+        self,
+    ) -> None:
+        for qualifier in ("", "production."):
+            boot = f"    {qualifier}generated_setup_bootstrap_commands()\n"
+            setup = "    command = ['./strling', 'setup', 'all']\n"
+            npm = "    command = ['npm', 'ci', '--no-audit']\n"
+            name = "production" if qualifier else None
+            self._assert_setup_bootstrap_source("def main():\n" + boot + setup, name)
+            for body in (setup, setup + boot, npm + boot + setup, boot + boot + setup):
+                with self.subTest(body=body), self.assertRaises(AssertionError):
+                    self._assert_setup_bootstrap_source("def main():\n" + body, name)
+
     def _assert_shared_preparation_source(
         self, source: str, qualifier: str | None = None
     ) -> None:

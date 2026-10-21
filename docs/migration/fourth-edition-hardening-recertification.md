@@ -2383,3 +2383,278 @@ results cannot certify that candidate. Both whole source-distinct campaigns,
 fresh independent no-reuse Release each, signing, isolated reviewed verifier
 qualification before pin-only promotion, pinned verification and guarded
 formal closure remain uncompleted requirements. H08 remains OPEN and ACTIVE.
+
+### Complete ordinary preparation and lossless metadata reads — 2026-10-21 (UTC)
+
+Engineering commit 0883b11a3cf5769fe40172cefcce2968c776fac0 completed the prior
+bootstrap correction and its exact seven-path commit. Its actual canonical
+ordinary preparation finished all 36 families: initially 35 passed and only the
+LSP package manifest's source identity was stale; the registered ordinary
+generator repaired exactly that manifest, repeated generation was idempotent,
+and the full final inventory passed 36/36. Both registered direct dependents
+passed: 37 actual package tests and a fresh isolated reproducible 22-file build.
+No protected lock, performance authority, authenticated security/license
+evidence or payload implementation was regenerated.
+
+Outer wrapper b1560044b2a593f49ca1a5c233f2245389bb8125be1ff8320f612224146fba60
+remains FAILED. On Python 3.12 its trailing-recursive Path.glob census omitted
+the ignored payload files, so a correct canonical manifest delta could not
+match the wrapper's incomplete source map. Native Python 3.13 has different
+trailing-recursive glob behavior; no platform result was normalized.
+Independent raw reconstruction ab39c1b54e4d23111c6d035bbae672e593d7eb8528bccdd81e9f32a1bd4f1a81
+replayed no command or profile. It validates the original child, all 36 final
+results, both direct dependents, the exact three provenance-field transition,
+all 87 input fingerprints and 21 unchanged payload entries, and two fresh
+fences covering 2,310 source/generated/Git entries, 4,279 held files, 22 physical
+payload files, eight directories, 607 receipts and all 29 controls. The first
+reconstruction's Native guard failure and the second reconstruction's retired
+producer-boot assertion failure remain immutable. The successful third audit
+uses its own exact birth/boot and requires every original Git node identity;
+it neither inherits retired live authority nor normalizes a frozen source.
+
+The next engineering change removes redundant regular-file metadata probes,
+not snapshot coverage. Each tracked regular file still has a fresh type probe,
+one complete byte read and a fresh final physical-mode probe. Links,
+nonregular replacements, missing paths, alias checks, Git-node identities,
+ordered eight-worker reads, repeated boundaries and all full payload/output
+censuses remain intact. Explicit absence handling matches the actual public
+pathlib behavior on Native 3.13 and WSL 3.12 across their error tables; transient
+permission and I/O failures are never retried into success.
+
+Eight new registered regression methods pass in two 26-case rounds per
+platform. Native has 24 passes plus two explicitly POSIX-only skips each round;
+WSL has 26 passes with zero skips. The 163-case directly affected subsystem
+passes on both platforms. Native's 12 fixture-symlink skip events affect 11
+methods, all of which genuinely pass on WSL. Raw cross-platform proof
+7e485cb3307bf98a35086273d72c322b53fdd8ac31d76ff51b99035697c02ff8 verifies identical
+actual case identities and complete logs. These are disposable-fixture
+engineering results, not authoritative profiles or performance samples.
+
+Actual-production timing report
+32c4a8ef6a5fd2dc01bf0ddc2f8d6a4018c57ade913e7053d2fbf8c5602c1783 and independent
+raw reconstruction 22a551ef66d69a7ce62bb761d63dbd8db34db2161f2d84cfc9ac83f6e2d3e0f0
+retain all three alternating equivalent-workload pairs. Original full-snapshot
+times were 17.009235, 16.875666 and 16.131743 seconds; the actual hardened reader
+took 14.178184, 14.143380 and 14.031713 seconds. Median cost fell from 16.875666
+to 14.143380 seconds, a 2.732286-second / 16.190684% reduction; every pair
+improved. All six ordered 2,310-entry maps match exactly on the same explicit
+two-path dirty engineering source. Separate instrumented censuses retain
+2,483 complete reads and 55,623,897 bytes each: only 4,540 redundant follow-stat
+calls disappear. Both actual fences preserve 4,336 held files, 607 historical
+receipts and all 29 controls. Instrumented overlapping costs are not summed
+or used as paired timings. An earlier 11.162577% prototype diagnostic remains
+separate; it is not substituted for this error-preserving production version.
+
+This is a measured unconditioned single-operation engineering gain, not an
+actionable-failure latency result, governed performance acceptance, forecast
+or successful total-certification gain. The two code/test changes invalidate
+the earlier ordinary gate for any new candidate. The registry maps none of
+these two paths or the three synchronized migration records to authoritative
+sources or generator inputs. Whole unit discovery, fresh static/schema/full
+format validation, exact-path commit, a new clean source's complete 36-family
+canonical ordinary preparation/recheck/dependents, exact runtimes, security,
+contracts, readiness and source/helper guards remain prerequisites. Both whole
+source-distinct 38/80/126/126 campaigns, fresh independent no-reuse Release
+each, actual signing, isolated immutable reviewed qualification before pin-only
+promotion, pinned verification and guarded formal closure remain mandatory.
+H08 remains OPEN; autonomous continuation remains ACTIVE.
+
+### Whole-unit post-run index failure and owned-lock diagnosis — 2026-10-21 (UTC)
+
+The first whole-unit controller failed before starting a child because its
+retired engineering index frame no longer matched. Terminal
+b1cdd23fa14c2a5caec1d693c4f3861182928f1e3f55b24f0768f0963ef42058 remains FAILED.
+It retained no failure-instant after-map; its writer and replacement time remain
+unknown. A fresh unfrozen, unsampled engineering controller then required three
+complete 2,310-entry source/Git observations, 4,367 held files, all 607 receipts
+and 29 controls, and all 2,270 staged modes/objects and ordinary H flags against
+HEAD before running the exact complete machine-declared unit command.
+
+That actual child exited zero: 1,533 tests in 3,096.059 unittest seconds with
+one skip. Its retained child wall time was 3,104.480454 monotonic seconds,
+user CPU 965.312436s and system CPU 100.462636s. Nevertheless, controller
+3b5098e6f27d16feb07d21f9f5a3a12490ca9d9c39cd4dcd741f36fe5bd0fe0f remains
+FAILED: the saved complete after-map differs only at @git/index. No passing
+whole-unit controller, authoritative profile, performance sample, signature or
+trust result is inferred from the child exit.
+
+The later atomic archive and its recorded WSL mode/device/inode reconstruct
+the exact failed index-node digest. Independent parsing finds all 2,270 paths,
+object IDs, modes and flags, plus the TREE extension, unchanged; 2,265 entries
+differ only in cached ctime/device/inode metadata. This diagnoses a Git
+stat-cache refresh, not a staged-content correction. The historical writer and
+exact command are still unattributed. It does not authorize ignoring index
+bytes/physical identity, normalizing the failed run, or modifying its receipts.
+
+Actual copied-index diagnostic
+526b567beb10315485affd9944d73281f83d16815de9c1f7b495a89ee5b186c8 and terminal
+9fc5343c86e2ac40bac95ceba7c128e32ee573591e971990dc6698cfd772bb9b retain three
+fixed alternating unlocked/owned-lock pairs. Every unlocked Git status exactly
+reproduces the observed changed index bytes; every locked status returns the
+same complete five-path output while preserving the copy's bytes and recorded
+physical identity. All three explicit copied-index writers fail closed with
+exit 128 and the existing-lock diagnostic. The real root index and source
+remain unchanged, and every owned copied-index lock is released. Ten helper
+guards pass on each platform with zero skips. Independent raw proof
+52abda5673dcd7b937376f592446faf410eb48503717b397827240c2b9982f50 reconstructs
+all six actual copies/streams, the complete staged/HEAD/flag datasets, the
+failed-node digest, three retained pre-frames and the original unit summary;
+eight reader guards pass on each platform. Native reconstruction claims no
+additional live POSIX mode fence.
+
+This is atomic diagnostic/isolation evidence only. The 324.198598-second
+diagnostic and 3,104.480454-second unit run are different workloads, not a
+speedup comparison. No successful certification or actionable-failure-latency
+gain has been measured. A fresh source-bound controller must first qualify an
+exclusively created, exactly owned conventional Git index lock around immutable
+work, preserve every original source/index/evidence/control check, reject
+foreign or replaced locks without deleting them, and release only its own lock
+after the real child terminates. Actual root-lock dependents and a fresh
+whole-unit controller remain pending; the expensive failed controller is not
+replayed unchanged.
+
+The three migration annotations preserve both failures and the pending gates.
+The two tested production/test files are unchanged by these annotations. The
+36-family registry maps none of the five changed paths to authoritative
+sources or generator inputs; no generated family is regenerated here. Fresh
+record schema/format, complete static checks, exact-path commit, a clean new
+candidate's full ordinary generated gate and all readiness/security/runtime
+predecessors remain required. Both source-distinct whole campaigns and fresh
+independent no-reuse Releases, signing, reviewed qualification before pin-only
+promotion, pinned trusted verification and guarded formal closure are still
+uncompleted. H08 remains OPEN; continuation remains ACTIVE.
+
+The first owned-lock controller stopped in 0.325955 seconds before any source
+fence or unit child because a foreign index.lock already existed. Terminal
+10537c3bfb749afec9ac8c602137c697167147e4a00a93dbb1f75d392f329fc7 remains
+FAILED; it acquired and removed no lock. The existing file was empty, regular,
+single-linked and unaliased, dated 08:04:44 UTC. Read-only Windows and WSL Git
+process inventories found no owner; exclusive read access succeeded, and the
+original unit's WSL boot was retired. The exact orphan file was then moved,
+not deleted, to target/codex-tools/h08-orphan-index-lock-quarantine-v1/
+index.lock.orphan.bin. Recovery is available; its empty SHA-256 is unchanged,
+and the real index retains its prior dcca08f0 hash. No live owner was stopped
+and no index bytes were restored or normalized. A fresh namespace must still
+prove owned root-lock readiness and every original unit/integrity requirement.
+
+### Owned-index whole-unit acceptance — 2026-10-21 (UTC)
+
+The next controller still failed before a unit child: terminal
+0b499bca44c082680c6acadd88e633db313b76f1493580ef2c7d267cd52738ec preserves
+the stale starting-frame failure after 21.475323 seconds. Its owned lock was
+released correctly. The helper incorrectly required a previous diagnostic's
+live physical index identity across genuine retirement, record annotations and
+orphan recovery. It did not retain the actual initial map before comparison;
+that original evidence gap and unknown writer/time remain explicit.
+
+A source-distinct V5 helper captures and archives its own complete actual
+starting index bytes, physical tuple and 17-node Git map under an exclusively
+owned lock before comparison. Only the two independently reconstructed exact
+cache byte images are eligible at this fresh unfrozen, unsampled engineering
+start. All other 16 Git nodes must match. No physical or byte change is accepted
+after binding, and no held, frozen or sampled source is rebound. Twenty-two
+helper guards pass on each platform without skips.
+
+Actual V5 terminal
+670e78ff8b5207d7cd68bf2af53ce516a7cf26da99266c6807d34180684d4750 passes.
+The exact machine-declared whole-unit child exits zero: 1,533 tests in
+3,005.194 unittest seconds, zero failures/errors and one retained skip.
+Child wall time is 3,010.515395 monotonic seconds, user CPU 973.599642s and
+system CPU 98.199255s; the full engineering controller takes 3,442.706986s.
+Root status/stage/flag reads pass under its actual owned index lock. Three
+complete before observations and the complete after observation match all
+2,310 source/generated/Git nodes, 4,471 held files, 607 historical receipts,
+29 execution controls, 193 registered output paths and all 2,270 staged
+mode/object/H-flag entries against HEAD. The lock has no recorded fault and
+only its exact owned identity is released, after the real child terminates.
+
+Independent raw reconstruction
+4a0e1dcda66ff41865a5a70406811fe04cee6c01692d9cc4398733958ec8f084 verifies
+the captured raw index and recorded WSL tuple, all four complete maps and
+staged/HEAD/flag datasets, root-read and child streams, exact lease token and
+release ordering, all 4,470 nonreleased held-file hashes and all 607 historical
+receipts. Twelve reader guards pass on each platform without skips. The
+deliberately released own lock is not recreated; Native raw reconstruction is
+not an additional live POSIX-metadata observation. The 29 control definitions
+and retained execution-fence counts reconstruct, but no separately archived
+per-control environment trace is claimed. All four earlier failed controllers
+remain FAILED and immutable.
+
+This supersedes only pending owned-root-lock/whole-unit engineering validation
+for the exact tested source overlay. It is not an authoritative profile,
+performance qualification, signature or trust result. Different source epochs,
+helper fences and uncontrolled unit timings do not establish end-to-end savings
+or a controlled whole-unit speedup. The two tested Python files are unchanged.
+Only these three synchronized record annotations now change; fresh schema,
+format and complete static checks, exact-path commit, the new clean candidate's
+full 36-family preparation/recheck/dependents and every campaign predecessor
+remain required. Both source-distinct whole campaigns, fresh independent
+no-reuse Releases, signing, reviewed qualification before pin-only promotion,
+pinned trusted verification and guarded clean formal CLOSED remain mandatory.
+H08 remains OPEN; continuation remains ACTIVE.
+
+### Complete static engineering acceptance and retained index epochs — 2026-10-21 (UTC)
+
+The next static helper correctly refused a second foreign index lock before
+any command or guard interval. Terminal
+aafb6eae84d873fe3bba10c22de0a703dd9456e3b5e052a97617535bd92ee068 remains
+FAILED (0.614292s, zero commands). The empty, regular, single-linked lock was
+dated 11:08:23.8272534 UTC. Current Windows/WSL Git inventories were empty
+without denied queries; exclusive read access succeeded. The first recovery
+preflight falsely compared a relative path with its absolute resolved path
+and remains FAILED before any move or index write. Its source-distinct
+correction retained every ownership/identity check and moved only the exact
+zero-byte orphan into recoverable
+target/codex-tools/h08-orphan-index-lock-quarantine-v3/index.lock.orphan.bin.
+Receipt 7f58c706 preserves unchanged real-index bytes; nothing was deleted,
+no live owner interrupted, and the historical creator remains unknown.
+
+Source-distinct static controller
+a5a014c775d131f7304b2a742f18d4bbd5a7d9716b5a6bd992149f7542c018cf
+passes all five actual canonical commands: 46-checkpoint schema, repository
+lint, hygiene, full format check and governance. Terminal
+6c2a5c2b82e115deb8bcf2c7c95ba5b428822548bc5441210fc14810228aa9e5 records
+all 60 original before/after guard phases plus three initial observations,
+no lease fault and owned-lock release only after actual children terminate.
+Sixteen controller guards pass on each platform without skips.
+
+Its first raw reader remains FAILED because a current post-retirement index
+comparison no longer equals the held-run bytes. Atomic diagnosis
+68d6433bcf6a22718c81c86fe83e5b17474c34e1513829ecd5a506f508799dcd retains both
+complete images: historical dcca08f0 versus current f4379f11. All 2,270 paths,
+modes, object IDs, flags and extensions match; only the independently known
+ctime/device/inode cache fields differ. The writer and replacement time remain
+unknown. The static owner was genuinely retired and its lock released before
+this comparison; no held, frozen or sampled identity is rebound, and the two
+raw images are never called equal.
+
+Source-distinct independent reconstruction
+64aa45d5611b05d24ceb5c73422b30973524f4648d4d2282ad597ba9bb1584fb passes
+with 13 reader guards per platform, zero skips. It verifies all five actual
+commands and complete streams/child-parent chains, all 60 intervals, all 13
+complete 2,310-node source maps and 2,270-entry staged/HEAD/H-flag datasets,
+all 13 complete 193-path governed censuses, all ten actual 29-control and
+compiler traces, all 607 historical receipts and 4,542 nonindex/nonreleased
+initial held hashes. The historical index archive and distinct exact current
+cache image are separately verified. The own released lock is not recreated.
+Retained payload observations cover 22 files and eight directories; Native
+raw reconstruction creates no additional POSIX-mode proof.
+
+Actual static controller wall time is 1,028.338244s. Command walls are
+0.562153s schema, 4.559341s lint, 15.952327s hygiene, 30.241503s format and
+233.928104s governance. The 60 recorded guard phases total 507.207462s:
+256.644461s complete source, 172.373080s held hashes, 53.512205s exact-source
+private-index checks, 17.225802s payload, 7.193066s compiler and 0.258847s
+physical context. Remaining controller time includes the added initial
+observations, receipts, bookkeeping and uninstrumented work. This is measured
+engineering attribution, not a controlled before/after certification gain.
+No unfavorable run is discarded and no check, workload or threshold removed.
+
+This supersedes pending static engineering validation for its exact five-path
+overlay only. The final annotations change only three migration records;
+the two tested Python pins remain unchanged. Record schema/format, exact-path
+commit and a new clean candidate's complete 36-family ordinary gate and fresh
+readiness remain required. Both whole source-distinct campaigns, fresh
+independent no-reuse Releases, actual signing, reviewed immutable qualification
+before pin-only promotion, pinned trusted verification and guarded clean formal
+CLOSED remain uncompleted. H08 remains OPEN; continuation remains ACTIVE.

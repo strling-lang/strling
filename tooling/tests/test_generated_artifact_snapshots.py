@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import errno
 import hashlib
 import json
 import os
@@ -202,6 +203,213 @@ class BoundedArtifactSnapshotTests(unittest.TestCase):
                 generated._snapshot_entries(
                     paths, lambda path: (path, "unused"), workers=invalid
                 )
+
+    def test_regular_fast_path_keeps_every_full_read_and_fresh_final_mode(self) -> None:
+        native_stat = os.stat
+        native_read = Path.read_bytes
+        metadata_calls = []
+        byte_reads = []
+
+        def metadata(*args, **kwargs):
+            metadata_calls.append(kwargs.get("follow_symlinks", True))
+            return native_stat(*args, **kwargs)
+
+        def read(path):
+            byte_reads.append(path)
+            return native_read(path)
+
+        expected = self.sequential_reference(["binary.bin"])["binary.bin"]
+        with patch.object(os, "stat", metadata), patch.object(Path, "read_bytes", read):
+            for _ in range(2):
+                self.assertEqual(
+                    ("binary.bin", expected),
+                    generated._snapshot_tracked_path(self.root, "binary.bin"),
+                )
+        self.assertEqual([False] * 4, metadata_calls)
+        self.assertEqual([self.root / "binary.bin"] * 2, byte_reads)
+
+    def test_regular_fast_path_uses_post_read_mode_not_initial_metadata(self) -> None:
+        native = Path.lstat
+        calls = 0
+
+        def metadata(path):
+            nonlocal calls
+            calls += 1
+            values = list(native(path))
+            values[0] = stat.S_IFREG | (0o640 if calls == 1 else 0o444)
+            return os.stat_result(values)
+
+        with patch.object(Path, "lstat", metadata):
+            actual = generated._snapshot_tracked_path(self.root, "binary.bin")
+        self.assertEqual(2, calls)
+        expected = hashlib.sha256(
+            b"292\0" + (self.root / "binary.bin").read_bytes()
+        ).hexdigest()
+        self.assertEqual(("binary.bin", expected), actual)
+
+    def test_metadata_absence_policy_matches_public_pathlib_on_every_os_error(
+        self,
+    ) -> None:
+        errors = [OSError(code, "fixture metadata") for code in errno.errorcode]
+        for code in (21, 123, 1921, 999999):
+            error = OSError("fixture Windows metadata")
+            error.winerror = code
+            errors.append(error)
+        errors.extend([OSError("unspecified I/O"), ValueError("non-encodable path")])
+        path = self.root / "binary.bin"
+        for error in errors:
+            with self.subTest(
+                error=repr(error), winerror=getattr(error, "winerror", None)
+            ):
+                expected = []
+                for method in ("is_symlink", "exists"):
+                    with (
+                        patch.object(Path, "lstat", side_effect=error),
+                        patch.object(Path, "stat", side_effect=error),
+                    ):
+                        try:
+                            expected.append(("returned", getattr(path, method)()))
+                        except (OSError, ValueError) as seen:
+                            expected.append(("raised", seen))
+                self.assertEqual(expected[0], expected[1])
+                with patch.object(Path, "lstat", side_effect=error):
+                    try:
+                        actual = generated._snapshot_metadata(path)
+                    except (OSError, ValueError) as seen:
+                        outcome = ("raised", seen)
+                    else:
+                        self.assertIsNone(actual)
+                        outcome = ("returned", False)
+                self.assertEqual(expected[0], outcome)
+
+    def test_initial_transient_permission_or_io_error_is_never_retried(self) -> None:
+        native = Path.lstat
+        for error in (PermissionError(13, "initial denied"), OSError(5, "initial I/O")):
+            calls = 0
+
+            def metadata(path):
+                nonlocal calls
+                calls += 1
+                if calls == 1:
+                    raise error
+                return native(path)
+
+            with (
+                self.subTest(error=error),
+                patch.object(Path, "lstat", metadata),
+                self.assertRaises(type(error)) as seen,
+            ):
+                generated._snapshot_tracked_path(self.root, "binary.bin")
+            self.assertIs(error, seen.exception)
+            self.assertEqual(1, calls)
+
+    def test_final_transient_permission_or_io_error_is_never_retried(self) -> None:
+        native = Path.lstat
+        for error in (PermissionError(13, "final denied"), OSError(5, "final I/O")):
+            calls = 0
+
+            def metadata(path):
+                nonlocal calls
+                calls += 1
+                if calls == 2:
+                    raise error
+                return native(path)
+
+            with (
+                self.subTest(error=error),
+                patch.object(Path, "lstat", metadata),
+                self.assertRaises(type(error)) as seen,
+            ):
+                generated._snapshot_tracked_path(self.root, "binary.bin")
+            self.assertIs(error, seen.exception)
+            self.assertEqual(2, calls)
+
+    def test_regular_read_disappearance_and_directory_replacement_match_reference(
+        self,
+    ) -> None:
+        for replacement in ("missing", "directory"):
+            fingerprints = []
+            for reader in ("reference", "fast"):
+                directory = self.root / f"{replacement}-{reader}"
+                directory.mkdir()
+                path = directory / "file"
+                path.write_bytes(b"complete original bytes")
+                native = Path.read_bytes
+
+                def read(candidate):
+                    payload = native(candidate)
+                    if candidate == path:
+                        candidate.unlink()
+                        if replacement == "directory":
+                            candidate.mkdir()
+                    return payload
+
+                with patch.object(Path, "read_bytes", read):
+                    if reader == "reference":
+                        original_root = self.root
+                        self.root = directory
+                        try:
+                            fingerprints.append(
+                                self.sequential_reference(["file"])["file"]
+                            )
+                        finally:
+                            self.root = original_root
+                    else:
+                        fingerprints.append(
+                            generated._snapshot_tracked_path(directory, "file")[1]
+                        )
+            self.assertEqual(fingerprints[0], fingerprints[1])
+
+    @unittest.skipIf(os.name == "nt", "real POSIX symlink and mode semantics")
+    def test_real_tracked_links_keep_target_string_and_dangling_zero_mode(self) -> None:
+        (self.root / "directory").mkdir()
+        (self.root / "file-link").symlink_to("binary.bin")
+        (self.root / "directory-link").symlink_to("directory")
+        (self.root / "dangling-link").symlink_to("does-not-exist")
+        (self.root / "loop-link").symlink_to("loop-link")
+        for name in ("file-link", "directory-link", "dangling-link", "loop-link"):
+            with self.subTest(name=name):
+                self.assertEqual(
+                    (name, self.sequential_reference([name])[name]),
+                    generated._snapshot_tracked_path(self.root, name),
+                )
+
+    @unittest.skipIf(os.name == "nt", "real POSIX symlink and mode transitions")
+    def test_regular_read_link_replacements_keep_original_final_mode_policy(
+        self,
+    ) -> None:
+        for dangling in (False, True):
+            fingerprints = []
+            for reader in ("reference", "fast"):
+                directory = self.root / f"link-{dangling}-{reader}"
+                directory.mkdir()
+                path = directory / "file"
+                path.write_bytes(b"original bytes")
+                (directory / "target").write_bytes(b"different target bytes")
+                native = Path.read_bytes
+
+                def read(candidate):
+                    payload = native(candidate)
+                    if candidate == path:
+                        candidate.unlink()
+                        candidate.symlink_to("absent" if dangling else "target")
+                    return payload
+
+                with patch.object(Path, "read_bytes", read):
+                    if reader == "reference":
+                        original_root = self.root
+                        self.root = directory
+                        try:
+                            fingerprints.append(
+                                self.sequential_reference(["file"])["file"]
+                            )
+                        finally:
+                            self.root = original_root
+                    else:
+                        fingerprints.append(
+                            generated._snapshot_tracked_path(directory, "file")[1]
+                        )
+            self.assertEqual(fingerprints[0], fingerprints[1])
 
     def test_real_worker_parallelism_remains_bounded_and_output_ordered(self) -> None:
         barrier = threading.Barrier(8)

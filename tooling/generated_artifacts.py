@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import errno
 import fnmatch
 import glob
 import hashlib
@@ -382,17 +383,49 @@ def _snapshot_entries(
     return snapshot
 
 
+def _snapshot_metadata(path: Path) -> os.stat_result | None:
+    """Match pathlib's absence policy without retrying real metadata failures."""
+    try:
+        return path.lstat()
+    except ValueError:
+        return None
+    except OSError as error:
+        if error.errno in {
+            errno.ENOENT,
+            errno.ENOTDIR,
+            errno.EBADF,
+            errno.ELOOP,
+        } or getattr(error, "winerror", None) in {21, 123, 1921}:
+            return None
+        raise
+
+
 def _snapshot_tracked_path(root: Path, relative: str) -> tuple[str, str]:
     path = root / relative
-    if path.is_symlink():
-        payload = os.readlink(path).encode("utf-8", errors="surrogateescape")
-    elif path.is_file():
+    initial = _snapshot_metadata(path)
+    # Classify once, then reread all bytes and the final physical mode. Links
+    # and nonregular replacements retain the original follow/absence behavior.
+    if initial is not None and stat.S_ISREG(initial.st_mode):
         payload = path.read_bytes()
+        final = _snapshot_metadata(path)
+        if final is None:
+            mode = 0
+        elif stat.S_ISREG(final.st_mode):
+            mode = stat.S_IMODE(final.st_mode)
+        else:
+            mode = stat.S_IMODE(path.lstat().st_mode) if path.exists() else 0
     else:
-        payload = b"<missing>"
-    mode = stat.S_IMODE(path.lstat().st_mode) if path.exists() else 0
-    digest = hashlib.sha256(str(mode).encode("ascii") + b"\0" + payload).hexdigest()
-    return relative, digest
+        if path.is_symlink():
+            payload = os.readlink(path).encode("utf-8", errors="surrogateescape")
+        elif path.is_file():
+            payload = path.read_bytes()
+        else:
+            payload = b"<missing>"
+        mode = stat.S_IMODE(path.lstat().st_mode) if path.exists() else 0
+    return (
+        relative,
+        hashlib.sha256(str(mode).encode("ascii") + b"\0" + payload).hexdigest(),
+    )
 
 
 def _snapshot_governed_path(root: Path, path: Path) -> tuple[str, str] | None:

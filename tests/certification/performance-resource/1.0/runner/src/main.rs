@@ -8,6 +8,7 @@ use std::time::Instant;
 use std::{cell::RefCell, rc::Rc};
 
 mod cli_cycles;
+mod phase_timeline;
 
 use serde_json::{json, Value};
 use strling_interop::execute_bytes;
@@ -58,6 +59,7 @@ struct Arguments {
     cli_launch_schedule: Option<String>,
     cpu_cycle_audit: bool,
     cli_cycle_audit: bool,
+    diagnostic_phase_log: Option<PathBuf>,
     ping: bool,
 }
 
@@ -103,6 +105,20 @@ fn run() -> RunResult<()> {
         );
         return Ok(());
     }
+    if cfg!(target_os = "windows") && arguments.expected_logical_cpu.is_none() {
+        return Err("expected Windows logical CPU is absent".to_owned());
+    }
+    let mut phase_timeline = if let Some(path) = &arguments.diagnostic_phase_log {
+        phase_timeline::validate_selection(
+            &arguments.operation,
+            arguments.warmups,
+            arguments.samples,
+            arguments.batch_iterations,
+        )?;
+        Some(phase_timeline::Timeline::open(path).map_err(|error| error.to_string())?)
+    } else {
+        None
+    };
     if arguments.warmups == 0 || arguments.samples == 0 {
         return Err("warmups and samples must be positive".to_owned());
     }
@@ -219,6 +235,7 @@ fn run() -> RunResult<()> {
     if batch_iterations == 0 || batch_iterations > arguments.maximum_batch_iterations {
         return Err("batch iterations are outside the governed range".to_owned());
     }
+    phase_timeline::close(&mut phase_timeline, "preparation")?;
     for _ in 0..arguments.warmups {
         black_box(execute_batch(&operation, batch_iterations)?);
         observe_execution_processor(
@@ -226,6 +243,7 @@ fn run() -> RunResult<()> {
             &mut observed_logical_processors,
         )?;
     }
+    phase_timeline::close(&mut phase_timeline, "primary-warmups")?;
     let evidence_capacity = if captures_timing_evidence(&arguments.operation) {
         arguments.samples
     } else {
@@ -255,6 +273,7 @@ fn run() -> RunResult<()> {
     let mut sample_attempts = 0usize;
     let mut checksum = 0usize;
     let divisor = u64::try_from(batch_iterations).map_err(|_| "batch overflow")?;
+    phase_timeline::close(&mut phase_timeline, "sample-setup")?;
     if let Some(control) = &control_operation {
         for _ in 0..arguments.warmups {
             black_box(execute_batch(control, batch_iterations)?);
@@ -264,6 +283,7 @@ fn run() -> RunResult<()> {
             )?;
         }
     }
+    phase_timeline::close(&mut phase_timeline, "control-warmups")?;
     let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64, u64, u64, u64, Option<CpuCycleEvidence>, Option<Value>)> {
         let cpu_started = process_cpu_time_nanoseconds()?;
         let cycle_started = if arguments.cpu_cycle_audit {
@@ -386,8 +406,10 @@ fn run() -> RunResult<()> {
             }
         }
     }
+    phase_timeline::close(&mut phase_timeline, "measurement")?;
     verify_execution_resource(&execution_resource, arguments.expected_logical_cpu)?;
     let peak_working_set_bytes = peak_working_set_bytes()?;
+    phase_timeline::close(&mut phase_timeline, "post-measurement")?;
     let mut result = json!({
         "runner_version": RUNNER_VERSION,
         "operation_id": arguments.operation,
@@ -448,6 +470,15 @@ fn run() -> RunResult<()> {
         "{}",
         serde_json::to_string(&result).map_err(|error| error.to_string())?
     );
+    if phase_timeline.is_some() {
+        std::io::stdout()
+            .flush()
+            .map_err(|error| error.to_string())?;
+    }
+    phase_timeline::close(&mut phase_timeline, "serialization")?;
+    if let Some(timeline) = &mut phase_timeline {
+        timeline.finish().map_err(|error| error.to_string())?;
+    }
     Ok(())
 }
 
@@ -680,6 +711,7 @@ fn parse_arguments() -> RunResult<Arguments> {
             cli_launch_schedule: None,
             cpu_cycle_audit: false,
             cli_cycle_audit: false,
+            diagnostic_phase_log: None,
             ping: true,
         });
     }
@@ -695,6 +727,7 @@ fn parse_arguments() -> RunResult<Arguments> {
     let mut cli_launch_schedule = None;
     let mut cpu_cycle_audit = false;
     let mut cli_cycle_audit = false;
+    let mut diagnostic_phase_log = None;
     let mut index = 0;
     while index < values.len() {
         let flag = &values[index];
@@ -733,6 +766,12 @@ fn parse_arguments() -> RunResult<Arguments> {
             "--kernel-bin" => kernel_bin = Some(PathBuf::from(value)),
             "--cli-launch-schedule" => cli_launch_schedule = Some(value.clone()),
             "--cpu-cycle-audit" => cpu_cycle_audit = parse_cycle_audit(value)?,
+            "--diagnostic-phase-log" => {
+                if diagnostic_phase_log.is_some() {
+                    return Err("duplicate diagnostic phase log".to_owned());
+                }
+                diagnostic_phase_log = Some(PathBuf::from(value));
+            }
             "--cli-cycle-audit" => {
                 if value != cli_cycles::CONTRACT {
                     return Err("unknown CLI cycle contract".to_owned());
@@ -756,6 +795,7 @@ fn parse_arguments() -> RunResult<Arguments> {
         cli_launch_schedule,
         cpu_cycle_audit,
         cli_cycle_audit,
+        diagnostic_phase_log,
         ping: false,
     })
 }

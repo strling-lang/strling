@@ -3224,3 +3224,69 @@ integrity and Ruff checks pass. Live v6/controller/verifier and all four
 performance outputs remain unchanged. Checkpoint55 records remaining empirical
 reference, conditioning, trust, fresh preparation and complete Q/P campaigns.
 H08 OPEN; continuation ACTIVE; no formal closure or new speedup claim.
+
+### Runner-body phase attribution and early missing-CPU rejection
+
+Checkpoint56 follows clean unfrozen e6cffb220a94cb91e55b74c6e39f47aaa9dc2060.
+The diagnostic-only `--diagnostic-phase-log` requires fixed-batch latency with
+512 warmups and64 samples. Exclusive JSONL records seven contiguous body phases,
+preserves incomplete prefixes on failure and never overwrites an earlier file.
+Its monotonic origin is after argument parsing. Journal I/O belongs to the next
+phase; final sync/destruction/exit belong to the independently enclosing parent
+interval. A completion marker alone is not a successful child exit, monitor
+authentication, performance admission or reference qualification.
+
+The original timed closure and result JSON are unchanged. Disabled instrumentation
+does no diagnostic clock reading or I/O. Full primary/control warmups and every
+accepted/rejected attempt are still executed. No CPU-time subtraction, cycle
+conversion, favorable selection, threshold change or evidence reuse is introduced.
+
+Two failed functional attempts remain under `target/codex-tools/h08-phase-functional-v*`.
+V1 omitted thin LTO while linking retained bitcode libraries; immutable terminal
+bb6d7a643b44af72b9b8769880ddd35c75a58d93747ea55dbf498296578302d0 records
+the4.0815032s link failure before any workload. V2's matching thin-LTO link
+succeeded20.1269411s, then omitted CPU selection was rejected only after work.
+Terminal eb11219de3fda609285b47f756aaf26509ad0694a8c46ae511aa513fb22cc560
+retains that2.8491979s invalid diagnostic run with unavailable raw samples.
+It cannot be relabeled a pre-sample failure, qualifying measurement or passing run.
+
+Red regression dbbfc4 demonstrates the late-check gap. The correction rejects a
+missing Windows CPU before fixture preparation, warmups or samples; the original
+post-work placement verification remains. Source-changed functionalv3 terminal
+14d96e6bca63434c5d44776da5b7faf947ed1bc7a63e145e540d00a07b794436 records
+the successful19.9960425s diagnostic link, early negative case, explicitCPU1
+disabled/enabled512/64 runs, collision rejection and incomplete-log retention.
+Every result/stream/process identity is retained. Reused libraries plus opt-level0
+thin LTO are functional validation, not a fresh optimized certification build.
+
+The enabled trace records1.819366s runner body,1.6017007s primary warmups and
+0.2065807s measurement. Those single functional-build observations demonstrate
+attribution only, not production costs, a baseline, measured overhead or a speedup.
+Prospective counterbalanced optimized-build overhead measurement remains necessary.
+
+After whitespace-only formatting of the stdout flush chain, final source-bound
+direct proof dfff0c6e67ffe004723026a963aaae7c0f9ae0001f898746bb1be73b6e63f3fd
+compiles the full runner unit binary in15.2933848s and passes all26 tests; it also
+passes14Native/14WSL phase/boundary/architecture tests without skips. Earlier
+standalone phase tests passed8/8. Test timings are not campaign speedups. The new
+module is rustfmt-clean; pre-existing main closure/child-call layout differences
+remain, so the whole-main formatter check is not called passing. Ruff and charter
+formatting pass. Registry mapping finds no affected generated family; integrated
+performance-artifact integrity passes, with no authority-bearing regeneration.
+
+All55 prior checkpoints, readiness and failures remain historical. This trace is
+not the independent reference acquisition protocol: all12 conditioning obligations,
+all54 coordinates, actual continuous monitors, nine fresh reference-only repetitions,
+source-distinct holdout and work/delay/common-mode/order challenges remain open.
+Live v6, ceilings, counts, security, sole license waiver and isolation are unchanged.
+Fresh final-source preparation and both whole qualification/pin-promotion campaigns,
+signing, immutable trusted verification and guarded clean formal closure remain.
+H08 OPEN; continuation ACTIVE; no new equivalent-workload improvement claimed.
+
+Checkpoint56 independent reader v1 failed with receipt
+ca23be20ef4cdee544ee30cd98e825d370bed88223ae06768ffe0efc199fb05b because it
+assumed CRLF in the functional source reconstruction. The actual file has zero
+CRLF and2270 LF; reversing exactly the stdout-chain formatting with those bytes
+produces6ee6ddf14a067189006497581d8bbdd49e03f1bb6f212cb235b07c85496a86ab,
+the original functionalv3 source pin. The v2 reader preserves actual UTF-8 bytes.
+This is a reader correction, not an evidence rewrite or execution retry.

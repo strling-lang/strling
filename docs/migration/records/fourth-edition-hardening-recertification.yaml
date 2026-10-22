@@ -117,6 +117,8 @@ scope:
         - tests/certification/performance-resource/1.0/runner/src/memory_worker.rs
         - tests/certification/performance-resource/1.0/runner/src/main.rs
         - tests/certification/performance-resource/1.0/runner/src/cli_cycles.rs
+        - tests/certification/performance-resource/1.0/runner/src/phase_timeline.rs
+        - tests/_design/unit/performance-phase-timeline.md
         - tests/certification/profile-source/1.0/definitions.json
         - tests/adapters/3.0/release-graph.json
         - tests/conformance/adversarial/1.0/evidence.json
@@ -186,6 +188,7 @@ scope:
         - tooling/tests/test_performance_windows.py
         - tooling/tests/test_performance_whole_interval.py
         - tooling/tests/test_performance_reference_binding.py
+        - tooling/tests/test_performance_phase_timeline.py
         - tooling/tests/test_performance_comparison.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_production_certification.py
@@ -1706,7 +1709,30 @@ checkpoints:
           - check: Empirical qualification and certification remain open
             result: not_run
             details: "This preflight cannot mint an independently qualified reference. Existing control/sameCPU/sibling observations cannot be recast as source-distinct reference and holdout; no self-baseline or passing-threshold fit. Prospective actual-reference/raw continuous-coverage acquisition, all12 conditioning obligations/all54 coordinates and source-distinct work/delay/common-mode challenges remain. Livev6/controller/trusted verifier/four performance outputs and caps512warmups64samples9references unchanged. Freshcomplete36/runtime19prerequisites before final freeze, wholeQ/P38/80/126/independent noReuse126 campaigns, fresh mandatory performance, signing/attestation/reviewed-then-pinned immutable verification and guarded clean formal CLOSED remain. H08 OPEN; continuation ACTIVE."
+    - name: Diagnostic runner phase attribution and early placement precondition
+      status: in_progress
+      evidence:
+          - check: Previous reference-binding correction committed clean
+            result: passed
+            details: "e6cffb220a94cb91e55b74c6e39f47aaa9dc2060 is the clean unfrozen parent. Checkpoint55 guard proof remains historical and does not qualify empirical references. This checkpoint adds an opt-in separate journal for seven runner-body phases, from post-argument-parse through serialization; independent parent launch/exit coverage remains necessary. Journal overhead is included, never subtracted, and is not yet empirically qualified. Disabled path adds no clock or I/O. Original result shape, measurement closure, workloads, rejection arithmetic, counts and caps are preserved."
+          - check: Diagnostic link and late placement failures preserved
+            result: failed
+            details: "Functionalv1 terminalbb6d7a643b44af72b9b8769880ddd35c75a58d93747ea55dbf498296578302d0 failed non-LTO linking against retained thin-LTO libraries in4.0815032s, before workload. Newv2 matching thin-LTO link succeeded20.1269411s, but disabled run omitted expected-logical-cpu and failed post-work validation after2.8491979s; terminaleb11219de3fda609285b47f756aaf26509ad0694a8c46ae511aa513fb22cc560 retained. That run executed work, returned no raw samples, is invalid/unavailable diagnostic evidence, and is not called a pre-sample failure or reused as authority. No admission attempt occurred."
+          - check: Fail-early source correction and functional journal proof
+            result: passed
+            details: "Tests-first dbbfc4 exposes missing early Windows CPU guard. Narrow correction rejects absent expected CPU before journal/fixture/warmups/samples and retains post-work resource verification. Source-changedv3 terminal14d96e6bca63434c5d44776da5b7faf947ed1bc7a63e145e540d00a07b794436 passes corrected build19.9960425s, early missingCPU rejection, explicitCPU1 disabled/enabled512warmup64sample functional runs, exclusive collision rejection and incomplete-prefix retention. New processes and journals; no failed admission/sample attempt retried. Retained libraries and opt-level0/thin-LTO runner are diagnostic only, not a fresh certification build or benchmark comparison. All raw outputs and child PID/birth identities retained."
+          - check: Source-bound direct dependents and non-authoritative phase data
+            result: passed
+            details: "Eight standalone Rust phase-unit tests initially pass. Final whole runner unit compilation15.2933848s and26PASS0failed0ignored0filtered; four phase boundaries plus three original runner-boundary and seven architecture tests pass14Native14WSL0skip. Terminaldfff0c6e67ffe004723026a963aaae7c0f9ae0001f898746bb1be73b6e63f3fd binds final main ec47c1efa459dd17c829312bb0cd125f889d0ac1ef6778c66569b8daa154e385, module5177b84aff86857e18bdc80303924fb1faf83ca0b1b004362a7f5cac65e3017e and test93f793e658928215983a42c1d5d39e14f1df90e82a093c165a69c4ab0773e212. Functionalv3 main differs only in subsequent stdout-chain whitespace, independently reconstructible; final source compiled in unit proof. Enabled functional journal spans1.819366s, including1.6017007s primary warmups and0.2065807s measurement; these single opt-level0 observations are not production attribution, equivalent speedup or reference qualification."
+          - check: Scope integrity and unfinished empirical obligations
+            result: not_run
+            details: "Seven scoped paths match no registered generated family; no generation. Integrated performance-artifact gate passes before native work. Changed phase module is rustfmt-clean; whole-main rustfmt still reports pre-existing closure/child-call layout differences, not misreported as a clean formatter run. Ruff and charter formatting pass. Independent checkpoint/schema/history/scope verification and exact-path commit follow. Prospective optimized counterbalanced instrumentation overhead, actual continuous monitoring/reference-only9/source-distinct holdout9 and work/delay/common-mode/order sensitivity across all12obligations/all54coordinates remain unqualified. Livev6/controller/trusted verifier/baseline/manifest/evidence/limits unchanged. Freshcomplete36/runtime19prerequisites on final candidate, wholeQ/P38/80/126/independentnoReuse126 campaigns,125PASS+soleVSCElicensewaiver, freshperformance/signing/immutable reviewed-then-pinned verification/guarded clean formalCLOSED remain mandatory. No end-to-end or new equivalent-workload speedup claimed. H08OPEN; continuationACTIVE."
+          - check: Independent reader line-ending correction retains failed receipt
+            result: passed
+            details: "Initial checkpoint reader ca23be20ef4cdee544ee30cd98e825d370bed88223ae06768ffe0efc199fb05b incorrectly assumed CRLF while reconstructing the pre-format functional source. Actual bytes have0CRLF/2270LF; reversing only the known stdout-chain whitespace reproduces exact original6ee6ddf14a067189006497581d8bbdd49e03f1bb6f212cb235b07c85496a86ab. Source-distinct v2 preserves actual UTF-8 bytes without inventing line endings. No test, build, product measurement or failed admission repeated; receipt preserved."
 commits:
+    - sha: e6cffb220a94cb91e55b74c6e39f47aaa9dc2060
+      subject: "feat(performance): bind diagnostic reference provenance"
     - sha: 181fe3758192a341713743810b4ba907c7feccd6
       subject: "feat(performance): retain whole-workload diagnostic intervals"
     - sha: 6bd5a4e660452b9ec78f1d4cb30532d5dcab25dd

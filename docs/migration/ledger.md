@@ -8357,3 +8357,37 @@ whole qualification/pin-promotion campaigns and guarded formal closure remain.
 Live v6, performance ceilings, sample counts, trust and security are unchanged.
 This is a cheap rejection mechanism, not a measured certification speedup or
 qualified alternative. H08 OPEN; continuation ACTIVE.
+
+### H08 diagnostic runner phases and early placement rejection — 2026-10-22 (UTC)
+
+Reference binding is committed clean at e6cffb22, still unfrozen. Checkpoint56
+adds an explicit non-authoritative phase sidecar for preparation, all primary
+warmups, sample setup, control warmups, measurement including rejected attempts,
+post-measurement validation and serialization. It begins after argument parsing;
+independent parent launch/exit coverage and overhead qualification remain required.
+Ordinary output, measured operations, counts, ceilings and live v6 are unchanged.
+
+Failed functionalv1 link bb6d7a64 and functionalv2 late missing-CPU rejection
+eb11219d remain immutable. The latter executed work and returned no samples;
+it is invalid diagnostic evidence, not a pre-sample failure or authority.
+Tests-first dbbfc4 drives early Windows CPU validation before any workload while
+retaining the post-work check. Corrected functionalv3 14d96e6b passes early
+rejection, explicit-CPU disabled/enabled cases, immutable collision and partial
+journal retention. These reused-library opt-level0 builds are functional only.
+
+Final source-bound proof dfff0c6e passes all26 Rust runner unit tests and
+14Native/14WSL focused/direct dependents, zero skips. Registered artifact integrity
+passes; seven paths match no generated family and no generator runs. Changed
+module formatting passes; existing unrelated main.rs formatting differences
+remain explicitly recorded. No certification runtime improvement is claimed.
+
+Actual independent reference/holdout acquisition, continuous monitoring and
+challenge sensitivity across all12 obligations/all54 coordinates remain open,
+as do fresh final-source preparation, both full certification campaigns and
+guarded closure. No qualification, pin promotion or certification attempt made.
+H08 OPEN; continuation ACTIVE.
+
+Checkpoint56 reader addendum: initial ca23be20 incorrectly reconstructed the
+functional source with CRLF. Actual source is LF; reversing only the known
+stdout-chain whitespace reproduces the exact tested hash6ee6ddf1. The corrected
+reader preserves actual bytes. Failed receipt remains; no execution is repeated.

@@ -8391,3 +8391,34 @@ Checkpoint56 reader addendum: initial ca23be20 incorrectly reconstructed the
 functional source with CRLF. Actual source is LF; reversing only the known
 stdout-chain whitespace reproduces the exact tested hash6ee6ddf1. The corrected
 reader preserves actual bytes. Failed receipt remains; no execution is repeated.
+
+### H08 phase overhead and live counter observation — 2026-10-22 (UTC)
+
+Clean unfrozen dd58982c's fixed36-process phase study completes in289.1693495s.
+Independent0879f893 reconstructs18 journals,2304 accepted attempts, zero rejected,
+2280 source nodes and24 retained library files. All observations remain. Analysis
+paired parent-ratio median is1.0038948272 with a1.4327478413 first-pair outlier;
+large-parse paired sample-median ratio is1.0354943733. No negligible overhead,
+equivalence, qualification or speedup is established. Build227.5763428s accounts
+for78.7000224percent of this diagnostic, not the complete certification path.
+Warmups dominate the traced body; all512/64 counts remain unchanged.
+
+New diagnostic-only counter journaling captures actual per-CPU and owned-process
+observations, including raw query brackets and observer CPU. Native functional
+attempt8807587c fails closed when idle and kernel counters decrease together on
+CPUs5,11,15 by15.625–31.25ms over roughly114ms. The partial journal, child
+identity and failure remain immutable; owned child and owner retire, lease releases.
+No physical cause or invalidity of original v6 CPU1 admission is established.
+
+Separate fixed51-snapshot counter-only diagnosticdecf1f0f completes5.0096253s
+without reproducing the decreases. All raw native/system/idle-cycle observations
+remain; no normalization, clamping, filtered sample or qualification. A separate
+API correction handles documented undefined live-process exit time using actual
+handle signal state. Focused497de1b3 passes89Native/88WSL plus1Native-covered
+skip and real process-exit checks; it does not rerun the failed counter workload.
+
+Checkpoint57 is in progress. Six scoped paths, no generated family matches and
+no generation; integrated artifact gate passes. Livev6/caps/counts/trust/security
+unchanged. Counter cause, actual all12/all54 monitoring and independent reference
+qualification, fresh final-source prerequisites, both whole campaigns and guarded
+formal closure remain. H08 OPEN; ACTIVE.

@@ -3290,3 +3290,71 @@ CRLF and2270 LF; reversing exactly the stdout-chain formatting with those bytes
 produces6ee6ddf14a067189006497581d8bbdd49e03f1bb6f212cb235b07c85496a86ab,
 the original functionalv3 source pin. The v2 reader preserves actual UTF-8 bytes.
 This is a reader correction, not an evidence rewrite or execution retry.
+
+## Phase cost reconstruction and actual process observation
+
+The clean dd58982c optimized diagnostic study ended at21:49:18.486059Z. Its
+terminal34b8fc4c4f92b0e49492c2dc85a7527041a2c91c1c5b70c1854caed2c84faae3
+retains all36 runs. Independent reader report
+0879f893846ac474fb3a0a28768902e546bdee691011890f833255719494f1d8 reconstructs
+18 phase journals and all2304 accepted attempts, zero rejected, against2280 source
+nodes and24 library files. Twelve reader guards pass on both Native and WSL.
+Retained optimized libraries are diagnostic-only, not fresh certification evidence.
+
+All nine paired observations per coordinate remain. Analysis/common/batch76 has
+paired parent-wall ratio median1.0038948272024926 and range0.989777001434224
+to1.432747841262348; sample-median ratio median0.9988127720730666 and
+range0.98417469177452to1.0052222619975153. Parse/large/batch1 has parent ratio
+median0.9958993620033689, range0.9611043010561974to1.0509895302292558;
+sample ratio median1.0354943732748247, range0.9338281304317597to1.0415692150270428.
+These do not establish negligible instrumentation overhead or equivalence.
+The first analysis pair's launch-to-first-query span556.5648ms versus13.0683ms
+suggests parent-side attribution, not physical cause. FILETIME process lifetime
+uses another clock domain; neither that nor any parent delay may be subtracted.
+
+The build took227.5763428s of289.1693495s, or78.70002238947528percent of this
+diagnostic study. Enabled primary-warmup phase medians are0.9527027s/1.6174628s;
+measurement phases0.1605828s/0.2262666s. All512 warmups,64 samples and rejected
+attempt obligations remain. These are component attribution, not a comparable
+before/after build speedup or a complete certification critical-path claim.
+
+The actual-counter journal is a separate unqualified acquisition component. It
+records pre-launch system state, raw bracketed snapshots on every CPU while an
+owned child runs, observer CPU, and post-exit state. It borrows an exact handle
+and never launches, terminates, pins or changes processes or machine settings.
+The bounded proof caller owns its children, deadline and cleanup. Query brackets,
+long gaps, all unfavorable data and malformed snapshots remain in exclusive logs.
+These cumulative samples are not event-level or continuous control-state proof.
+
+Functional terminal8807587c32a578775aa9f66b1cae695794150f19d6afcfb07631e15a61889915
+failed closed: raw idle and kernel times decreased together on CPUs5/15 by156250
+and CPU11 by312500 in100ns units, across roughly114ms. All partial rows remain.
+Only owned child38556/birth134371812820935515 was terminated; it and owner45652
+retired and the lease released. Initial88Native/87WSL plus1Native-covered skip
+do not turn this functional failure into success. No product samples were taken.
+
+The different-workload counter-only investigation
+decf1f0f42f8948d1d2c57d9398b51a0e4d00c1cf09d11fc55780c34fa37f66f collected
+51 fixed100ms snapshots in5.0096253s. Native per-CPU, bracketed GetSystemTimes
+and raw QueryIdleProcessorCycleTime values are retained in
+1ae3ea3cd7c7522cc15244615a27b89c263b7b2d4d2b73ed54aaeaa1565ce415. No decrease
+recurred in this bounded no-child cohort. The transient's cause remains unresolved;
+no threshold, interval, sample or original10second CPU1 failure is relaxed.
+
+Tests-first failures8a0948/d9a16d/fcd22c and sandbox-write failured91aa6 remain
+recorded. Sticky invalid acquisition blocks a later complete journal. The
+[GetProcessTimes contract](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getprocesstimes)
+leaves exit time undefined while a process runs. The corrected reader records
+native signaled-handle state before interpreting exit time and binds GetProcessId.
+Focused terminal497de1b3d44de1e52fbe5079be12616360e0e5203f5f25dcd6c77f209e2496cf
+passes89Native/88WSL plus1Native-covered skip, including14 new tests, and real
+running/exited process checks. It does not retry or qualify the failed whole-process
+counter workload. Counter monotonicity and observer overhead are not qualified.
+
+Six exact paths match no registered generated family. Integrated artifact
+integrity passes, no generator runs, and all56 checkpoints/readiness/protected
+authorities remain. Reference-only/holdout acquisition and all12/all54 conditioning
+obligations remain open; existing baseline samples and pre-coordinate snapshots
+are not whole-process reference data. Fresh final-source preparation, qualification
+then pin-promotion campaigns, signing, immutable trust and guarded clean formal
+closure remain. H08 OPEN; continuation ACTIVE; no new certified runtime gain.

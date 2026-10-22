@@ -119,6 +119,8 @@ scope:
         - tests/certification/performance-resource/1.0/runner/src/cli_cycles.rs
         - tests/certification/performance-resource/1.0/runner/src/phase_timeline.rs
         - tests/_design/unit/performance-phase-timeline.md
+        - tests/_design/unit/performance-process-observation.md
+        - tooling/performance_process_observation.py
         - tests/certification/profile-source/1.0/definitions.json
         - tests/adapters/3.0/release-graph.json
         - tests/conformance/adversarial/1.0/evidence.json
@@ -189,6 +191,7 @@ scope:
         - tooling/tests/test_performance_whole_interval.py
         - tooling/tests/test_performance_reference_binding.py
         - tooling/tests/test_performance_phase_timeline.py
+        - tooling/tests/test_performance_process_observation.py
         - tooling/tests/test_performance_comparison.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_production_certification.py
@@ -1730,7 +1733,30 @@ checkpoints:
           - check: Independent reader line-ending correction retains failed receipt
             result: passed
             details: "Initial checkpoint reader ca23be20ef4cdee544ee30cd98e825d370bed88223ae06768ffe0efc199fb05b incorrectly assumed CRLF while reconstructing the pre-format functional source. Actual bytes have0CRLF/2270LF; reversing only the known stdout-chain whitespace reproduces exact original6ee6ddf14a067189006497581d8bbdd49e03f1bb6f212cb235b07c85496a86ab. Source-distinct v2 preserves actual UTF-8 bytes without inventing line endings. No test, build, product measurement or failed admission repeated; receipt preserved."
+    - name: Phase overhead reconstruction and raw process counter observation
+      status: in_progress
+      evidence:
+          - check: Completed fixed phase study independently reconstructed
+            result: passed
+            details: "Clean unfrozen parent dd58982c70c857ad8f5bac9c5f151009c28cfc1f. Terminal34b8fc4c4f92b0e49492c2dc85a7527041a2c91c1c5b70c1854caed2c84faae3 completes36 processes/18 journals in289.1693495s, all2304 accepted attempts and zero rejected. Independent report0879f893846ac474fb3a0a28768902e546bdee691011890f833255719494f1d8 reconstructs2280 source nodes,24 library files and2478 read hashes; reader12Native/12WSL guards pass. All raw results, negative comparisons and source/library fences retained. Retained-library optimized runner build227.5763428s is78.70002238947528percent of this diagnostic study, not a fresh whole certification build or an equivalent speedup comparison."
+          - check: Instrumentation equivalence remains unproven
+            result: not_run
+            details: "Nine fixed on/off pairs per coordinate retain all data. Analysis/common/batch76 paired parent-ratio median1.0038948272024926, range0.989777001434224to1.432747841262348; sample ratio median0.9988127720730666, range0.98417469177452to1.0052222619975153. Parse/large/batch1 parent ratio median0.9958993620033689, range0.9611043010561974to1.0509895302292558; sample ratio median1.0354943732748247, range0.9338281304317597to1.0415692150270428. No negligible-overhead or equivalence claim. Enabled primary-warmup phase medians0.9527027/1.6174628s and measurement0.1605828/0.2262666s; all512 warmups and64 samples remain mandatory. First analysis launch-to-first-query span556.5648ms versus13.0683ms suggests parent-side attribution, not physical cause or permission to subtract; raw FILETIME lifetime is a distinct clock domain."
+          - check: Diagnostic acquisition guards and process-exit contract correction
+            result: passed
+            details: "New exclusive raw JSON-lines journal records pre-launch, running and post-exit cumulative counters on every CPU, observer CPU and stable borrowed child PID/birth, preserving raw query brackets, long gaps, wraps and malformed offending snapshots. It never changes placement, priority, services, settings, admission, sample acceptance or thresholds. Tests-first missing-module8a0948, sandbox-write failured91aa6, caught-invalid-snapshot redd9a16d and live-exit-field redfcd22c are retained. Sticky failure blocks a later complete receipt. Microsoft GetProcessTimes leaves live exit time undefined; native signaled-handle state now governs interpretation, with GetProcessId handle binding. Final focused proof497de1b3d44de1e52fbe5079be12616360e0e5203f5f25dcd6c77f209e2496cf passes89Native and88WSL plus1Native-covered skip, including14 new tests, and a real running/exited child with expected nonzero7. This specifically does not repeat or qualify failed Nt counter acquisition."
+          - check: Real short-interval counter acquisition failed closed
+            result: failed
+            details: "Functional terminal8807587c32a578775aa9f66b1cae695794150f19d6afcfb07631e15a61889915 retains the whole-process diagnostic failure after raw idle/kernel counters decreased together: CPU5 and15 minus156250, CPU11 minus312500 in100ns units, across roughly114ms. All offending values and successful prefix remain. Owned child38556/birth134371812820935515 was terminated and retired, owner45652 retired and lease released; no unrelated process touched. Initial source direct tests88Native/87WSL plus1Native-covered skip passed but cannot relabel real acquisition. No product or certification samples. Physical/accounting cause remains unresolved; no clamping, subtraction, favorable filtering, wider sampling period or unchanged-attempt retry. Live v6 unchanged; this does not disprove the original10second CPU1 admission failure."
+          - check: Bounded counter-only isolation retained without qualification
+            result: passed
+            details: "New different-workload raw investigationdecf1f0f42f8948d1d2c57d9398b51a0e4d00c1cf09d11fc55780c34fa37f66f captures all51 predeclared100ms snapshots in5.0096253s. Raw1ae3ea3cd7c7522cc15244615a27b89c263b7b2d4d2b73ed54aaeaa1565ce415 compares every native CPU with bracketed GetSystemTimes and QueryIdleProcessorCycleTime. No negative deltas reproduced in this bounded no-child cohort. This neither repairs nor cancels the earlier failure; no cycle-to-time conversion, measured-performance gate, idle wait loop or qualifying sample. Event-level cause and suitable all-work monitoring remain open."
+          - check: Unchanged authority and unfinished qualification
+            result: not_run
+            details: "Six paths map to no registered generated family; integrated artifact integrity72dae4 passes with zero authenticated samples and no generation. All56 historical checkpoints/readiness and protected source/artifact bytes preserved; schema/scope/append-only validation and exact-path commit follow. Actual all12-obligation/all54-coordinate continuous monitoring, independent reference9/source-distinct holdout9 and work/delay/common-mode/order qualification remain. Existing baseline has samples and pre-coordinate snapshots, not launch-through-exit timelines, and cannot be relabeled as new reference evidence. Final-source complete36/runtime19 prerequisites, wholeQ/P38/80/126/independentnoReuse126 campaigns125PASS+soleVSCEwaiver, freshperformance/signing/reviewedqualification thenpin-onlypromotion/immutable trust/guardedcleanformalCLOSED remain. No new or whole-certification speedup established. H08OPEN; continuationACTIVE."
 commits:
+    - sha: dd58982c70c857ad8f5bac9c5f151009c28cfc1f
+      subject: "feat(performance): trace diagnostic runner phases"
     - sha: e6cffb220a94cb91e55b74c6e39f47aaa9dc2060
       subject: "feat(performance): bind diagnostic reference provenance"
     - sha: 181fe3758192a341713743810b4ba907c7feccd6

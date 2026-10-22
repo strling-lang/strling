@@ -8210,3 +8210,31 @@ remain. Both source-distinct38/80/126/independentRelease126 campaigns, governed
 admission/reference qualification, signing, immutable reviewed/pinned acceptance
 and guarded final clean formal CLOSED remain. No controlled end-to-end gain;
 H08OPEN, continuationACTIVE.
+
+### H08 preparation acceptance and bounded session continuity — 2026-10-22 (UTC)
+
+Unfrozen2a99027f completes actual36 preparation/directdependents; all finalPASS,
+terminal10ee9429/3535.303709119s. Independent v3 report95b9777d reconstructs
+complete fences in242.400590334s after preserving earlier reader failures.
+Only ordinary LSP provenance changes; no authority-bearing regeneration.
+
+Fresh19 prerequisite attempt fails before any stage in19.269413253s,
+terminalef0a6cca, with normal owned-lease release. Exact16-node attribution
+16034e67 proves device84to133 across WSL boots, unchanged bytes/modes/inodes
+and commit. No normalization, favorable-boot selection or failed-attempt retry.
+
+Bounded session helperd204c86e retains every stage's physical guards and
+owns only lifecycle. It starts before fresh preparation binding, never changes
+host settings or kills children, expires atfourhours without extension and
+must exit before performance isolation. Earlier overbroad cleanup guard remains
+17PASS/1FAIL on both platforms; corrected18+18 pass0skip. Independenta951aac3
+proves three separate handoffs, actualnormal0/36.428431765s, abort1/5.472684393s,
+expiry2/120.151636025s. These are lifecycle-only diagnostics; actual full
+preparation/audit/prerequisite integration remains pending.
+
+Three record paths/no36family match/no generation. Fresh52checkpoint validation,
+exact-path commit/clean complete36/runtime/prerequisites and both wholeQ/P
+38/80/126/independentnoReuseRelease126/freshperformance/signing/immutable reviewed
+then pin-only promotion/pinned acceptance/guarded cleanformalCLOSED remain.
+Originalv6/29controls/607history/caps/samples/security/isolation remain unchanged.
+No controlled whole-certification speedup is claimed. H08 OPEN; ACTIVE.

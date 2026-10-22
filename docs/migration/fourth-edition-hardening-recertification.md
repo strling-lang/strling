@@ -2909,3 +2909,58 @@ v6conditioning, caps, samples and every security/license/evidence control stay
 intact. Both whole Q/P38/80/126/126 campaigns, fresh independent no-reuse Releases,
 admission/reference qualification, signing, immutable reviewed then pinned
 verification and guarded final clean formal CLOSED remain. H08OPEN; ACTIVE.
+
+### Accepted preparation and bounded WSL handoff correction — 2026-10-22 UTC
+
+Clean unfrozen 2a99027f completes the full36 preparation: all final families
+PASS, all direct dependents run, terminal10ee9429, actual3535.303709119s.
+The canonical operation itself takes2764.664298546s. Its sole logical delta is
+the ordinary LSP manifest's three provenance fields;87inputs/21entries and all
+other payload bytes remain exact. The initial early offline predictor passes.
+Independent raw reader v1 fails its hash-domain guard before execution; v2
+fails current physical Git admission and remains failed. Corrected v3 retains
+the original checks and reconstructs all source, history, control, payload and
+Git fences in242.400590334s, report95b9777d, terminal85c2fd0d. Content-mode and
+physical-node hash domains are not equated; the22 rebuilt LSP nodes' historical
+physical tuples are not falsely reconstructed from their replacement nodes.
+
+The fresh19-stage prerequisite attempt then stops at its new early identity
+check in19.269413253s, terminalef0a6cca. No stage, profile or sample executes.
+The exact owned lease releases; Native and WSL owners retire normally.
+Diagnostic16034e67 reconstructs every one of16 physical Git failures: the
+device component changes84to133 across WSL boots while bytes, modes, inode
+numbers and commit remain exact. This explains this captured failure, not the
+earlier v2 failure whose per-node observations were absent. No cross-boot hash
+normalization, favorable-boot selection, failed-attempt acceptance or unchanged
+attempt retry is authorized.
+
+A fixed75-second continuity prototype retains exact selected identities across
+two separate invocations; independentdeec4eec accepts only that diagnostic.
+The bounded sample-free lifecycle helper now holds WSL across released-owner
+handoffs, owns no source/index lease, launches no workload, and changes no host
+setting. It must start before the new preparation's physical binding, while
+each real stage keeps every original complete identity and preservation gate.
+Its maximum engineering lifetime is four hours, with no extension or automatic
+restart; a matching owned stop requires released stage ownership. Actual holder
+exit must be confirmed before performance admission or isolated measurements.
+Qualification is fixed at120seconds. A first guard rejected cleanup of the
+helper's own unpublished receipt; the exact failed source and both17PASS/1FAIL
+receipts remain. Source-distinct d204c86e narrows that guard solely to its own
+atomic-publication temporary and passes18Native+18WSL guards with zero skips.
+Independent raw reconstructiona951aac3 verifies three separate handoff probes,
+normalexit0/36.428431765s/0.0808496CPU-seconds, explicitabortexit1/5.472684393s,
+and automaticexpiryexit2/120.151636025s. All owners retired; no process killed.
+These prove lifecycle behavior, not execution or acceptance of the actual
+three-stage preparation/audit/prerequisite pipeline.
+
+The three synchronized records match no generated family. No protected output
+is refreshed. New52checkpoint schema/format, exact-path commit, clean source
+binding and complete36 preparation under continuous WSL remain required.
+Original v6conditioner0996f40c, baselines, all29controls,607historical attempts,
+512warmups/64samples/nine references, all caps, security and isolation remain.
+The active-accounting alternative is still unqualified. Both source-distinct
+38/80/126/126 campaigns, fresh independent same-SHA no-reuse Releases, any
+governed54coordinate reference qualification, signing, immutable reviewed then
+pin-only promoted/pinned verification and guarded clean formal CLOSED remain.
+No controlled end-to-end or equivalent-workload runtime gain is claimed from
+these different-duration diagnostic operations. H08 OPEN; continuation ACTIVE.

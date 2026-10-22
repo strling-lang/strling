@@ -2859,3 +2859,53 @@ no authoritative candidate is frozen. Full Q/P38/80/126/126 campaigns, fresh
 independent no-reuse Release each, rigorous governed admission/reference
 qualification, signing, immutable reviewed then pinned verification and guarded
 clean formal CLOSED remain uncompleted. H08OPEN; continuationACTIVE.
+
+### Offline Kotlin input restoration and early preparation predictor — 2026-10-22 UTC
+
+The clean, unfrozen, unsampled db883d94 whole preparation remains FAILED.
+Terminal e33139b3 ends at04:41:44.595743Z with actual childexit1 after
+2337.178279602s; the Native supervisor confirms that exit and the exact owned
+lease was released. No retained owner was interrupted or retired PID queried.
+Initial36 had35PASS plus stale LSP provenance. Its canonical ordinary assembly
+was idempotent and changed only source_commit, source_commit_timestamp and
+manifest_fingerprint; all87inputs/21entries stayed exact. Final36 had35PASS
+plus Kotlin public-contract offline plugin2.0.20 resolution failure.
+Neither the repair nor later diagnostics retrospectively accept this gate.
+
+Only the failed Kotlin classes command was reproduced under the retained29
+controls:8.106847585s failure, plus a distinct8.146917271s info-level failure.
+The selected cache retained the implementation JAR and binary descriptors but
+lacked the raw marker POM and module metadata. Canonical Gradle input restoration
+with explicit strict dependency verification completed in17.233092246s, without
+changing source, versions, lockfiles, verification metadata, security policy,
+baselines or any historical receipt. Independent data-only proof5f6cbebe matches
+the restored marker POM2723a8a9/module6813cca4 and retained JAR8129f62c to existing
+governed hashes. An auxiliary downloaded implementation POM is not promoted to
+verification authority. The reason initialPASS became finalFAIL is not proven;
+cache cleanup is not asserted or changed. This is a demonstrated build-input
+availability failure, not an API or product behavior regression.
+
+All three predeclared fresh offline builds pass, retaining13.134253146,
+10.117535074 and10.041870595s and all outcomes in a2d0aeb3. The actual targeted
+Kotlin source-and-binary API check passes without snapshot regeneration.
+The LSP family's exact two registered direct dependents also pass:37 pytest
+cases and an isolated reproducible22file build, payloadf184cb79, with no candidate
+mutation. Terminal96713259 retains those results. They are source-bound
+diagnostics/direct dependents, not a full inventory, profile or trust result.
+
+A prepared ignored early offline Kotlin input prefixe98792f8 passes14 guards
+on each platform, no skips. It checks source before/after, original controls,
+the exact offline classes command and real exit, and cannot claim a registered
+family, whole gate, profile, sample or closure. Its next exact-source helper
+must integrate and guard-test it before execution. It adds failure prediction;
+all actual36 checks, rechecks and direct dependents remain required. No speedup
+is inferred by comparing the non-equivalent whole failed stage and atomic build.
+
+The generated-artifact skill maps no family to these three record annotations.
+No generator or authority-bearing refresh is needed for them. Fresh51checkpoint
+schema/format, exact-path review/commit and the new clean source's complete36
+gate and runtime/security/contracts/readiness/helpers remain required. Existing
+v6conditioning, caps, samples and every security/license/evidence control stay
+intact. Both whole Q/P38/80/126/126 campaigns, fresh independent no-reuse Releases,
+admission/reference qualification, signing, immutable reviewed then pinned
+verification and guarded final clean formal CLOSED remain. H08OPEN; ACTIVE.

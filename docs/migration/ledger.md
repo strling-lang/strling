@@ -8183,3 +8183,30 @@ prerequisites before any clean authoritative freeze. Both whole38/80/126/126
 source-distinct campaigns, fresh no-reuse independent Releases, governed
 admission/reference qualification, signing, reviewed-then-pinned immutable
 verification and guarded final clean formal CLOSED remain. H08OPEN; ACTIVE.
+
+### H08 Kotlin offline input repair and preparation prefix — 2026-10-22 (UTC)
+
+Unfrozen db883d94 preparation is FAILED/e33139b3, never retrospectively green.
+Initial36=35PASS+staleLSP; canonical repair changes only three provenance fields,
+87inputs/21entries unchanged. Final36=35PASS+Kotlin offline plugin2.0.20 lookup
+failure. Real childexit1/2337.178279602s and supervisor exit1 are retained; the
+exact lease is released and all owners retired without interruption.
+
+Atomic failure reproduces8.106847585s, distinct info diagnostic8.146917271s.
+Canonical strict-verification cache restoration17.233092246s changes no source,
+lock, verification policy or baseline. Independent5f6cbebe verifies markerPOM,
+module and JAR against existing governed hashes. Why initialPASS became finalFAIL
+is unproven; no cache-cleanup or host-setting change and no new waiver.
+Three fixed fresh offline builds pass; targeted Kotlin binaryAPI and exact LSP
+direct dependents pass37pytestcases/isolated22file reproducible build.
+Receiptsa2d0aeb3/96713259 preserve all outcomes, not whole-gate authority.
+
+Prepared early offline input prefixe98792f8 passes14Native+14WSLguards0skip.
+It cannot replace actual36checks/rechecks/directdependents or assert profile,
+sample, signing or trust. Fresh-source integration/guards are still required.
+Only three record paths change/no generated-family match; new51checkpoint
+validation, exact-path commit, clean complete36 gate and fresh prerequisites
+remain. Both source-distinct38/80/126/independentRelease126 campaigns, governed
+admission/reference qualification, signing, immutable reviewed/pinned acceptance
+and guarded final clean formal CLOSED remain. No controlled end-to-end gain;
+H08OPEN, continuationACTIVE.

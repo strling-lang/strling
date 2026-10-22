@@ -185,6 +185,7 @@ scope:
         - tooling/tests/test_performance_resource_certification_architecture.py
         - tooling/tests/test_performance_windows.py
         - tooling/tests/test_performance_whole_interval.py
+        - tooling/tests/test_performance_reference_binding.py
         - tooling/tests/test_performance_comparison.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_production_certification.py
@@ -1687,7 +1688,27 @@ checkpoints:
           - check: Retained pre-commit reader failure and explicit UTF-8 correction
             result: failed
             details: "Initial validator225409412aeb99a86f431cebb6c52c63ed6019c625ba6bcb89acbff16dd6c48e fails historical comparison because implicit nativecp1252 decoding corrupts UTF-8 prose. Independent byte-decoded comparison confirms all53 prior checkpoints unchanged. New source-distinct v2 uses explicit UTF-8 with lossless roundtrip guard before schema/history checks; corrected final checkpoint follows. Failed receipt and original historical rationale remain immutable. This is tooling-reader repair, not evidence regeneration or history modification."
+    - name: Independent reference binding and whole-interval coverage preflight
+      status: in_progress
+      evidence:
+          - check: Previous diagnostic correction committed clean and unfrozen
+            result: passed
+            details: "181fe3758192a341713743810b4ba907c7feccd6/tree794d9bc20af08228f304be6dc1ea342cf9732929 verified clean on dev, empty staging and no owner lease. Checkpoint54 remains historical. No candidate freeze, authoritative profile, sample or admission retry. Delivered heartbeat2026-10-22T21:00:47.438Z honored independently of previous completion. Next nominal tick21:15:47.438Z."
+          - check: Pure source-bound reference and continuous coverage preflight
+            result: passed
+            details: "Diagnostic-only bound_whole_product_reference_diagnostic verifies exact externally supplied byte digest, method/environment/recipe and reference/holdout source/artifact/acquisition pins. Requires nine complete repetitions per cohort, candidate/reference/holdout distinct sources, distinct acquisition/receipt/process identities, all accepted/rejected attempts and gap-free launch-through-exit interval union. Strict JSON duplicate keys, shape and recipe types fail closed. Retains unfavorable timings without thresholds, learning, normalization, CPU subtraction or admission. Hash agreement and declared coverage are not authentication, actual monitoring or independent empirical qualification; raw acquisition/trust verification remains required. Only serial latency shape is supported, not all54 coordinates."
+          - check: Tests-first and adversarial development failures retained
+            result: passed
+            details: "Initial missing-function9a5ede retained. First31Native31WSL proofb597c9c96fde14240c9a9a39133854b659e6e6ff54648642857e3d84b19f33e3 covers initial source only. Redf20a60 demonstrates Python bool/int recipe equality; exact-type correction32Native32WSL proofa9d84b40b249fe13344509286008b64e5bfbd860cfdcd200f2aed0e9d7b72799 retained. Reda268f2 demonstrates repackaging the same process with new receipt labels; PID/birth uniqueness correction is separate. No failed receipt overwritten or empirical attempt repeated."
+          - check: Corrected diagnostic guards and direct dependent proof
+            result: passed
+            details: "Final17focused plus16whole-interval tests:33Native/33WSL PASS, zero skips. Terminal5d6d9b8b99733313b0188a719a5570e214b570c8257e5e4868174a9752305e28 binds module3b18498235e135ff65423f913b3b17fd6a76339d6b7e802c475c909d7cacf1b7 and test1a992da5e42153934d362fb6ed57f52b7642c9e73e0bd728e5a6fc77db6170d5; ten previous function ASTs unchanged. Native0.3490418s and WSL3.7221036s are diagnostic test wall times, not equivalent-workload performance gains. Registered performance-artifact integrity, Ruff format/lint pass; five changed paths match no registered family, no generation."
+          - check: Empirical qualification and certification remain open
+            result: not_run
+            details: "This preflight cannot mint an independently qualified reference. Existing control/sameCPU/sibling observations cannot be recast as source-distinct reference and holdout; no self-baseline or passing-threshold fit. Prospective actual-reference/raw continuous-coverage acquisition, all12 conditioning obligations/all54 coordinates and source-distinct work/delay/common-mode challenges remain. Livev6/controller/trusted verifier/four performance outputs and caps512warmups64samples9references unchanged. Freshcomplete36/runtime19prerequisites before final freeze, wholeQ/P38/80/126/independent noReuse126 campaigns, fresh mandatory performance, signing/attestation/reviewed-then-pinned immutable verification and guarded clean formal CLOSED remain. H08 OPEN; continuation ACTIVE."
 commits:
+    - sha: 181fe3758192a341713743810b4ba907c7feccd6
+      subject: "feat(performance): retain whole-workload diagnostic intervals"
     - sha: 6bd5a4e660452b9ec78f1d4cb30532d5dcab25dd
       subject: "perf(certification): separate build and measurement placement"
     - sha: 2808264e80f81ce82b16af5080b4c728d5b0850a

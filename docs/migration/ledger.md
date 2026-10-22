@@ -8332,3 +8332,28 @@ comparison because implicit nativecp1252 decoding corrupts UTF-8 prose. Direct
 byte-decoded comparison confirms all53 historical checkpoints unchanged.
 Explicit UTF-8 validation adds a lossless roundtrip guard; the first failed
 receipt remains immutable. This is a reader correction, not evidence rewriting.
+
+### H08 independent reference binding preflight — 2026-10-22 (UTC)
+
+Previous whole-interval correction181fe375 is clean and unfrozen. The new pure
+diagnostic preflight binds externally supplied reference bytes, method,
+environment, recipe, source/artifact and acquisition identities before expensive
+acquisition. It requires nine reference-only and nine source-distinct holdout
+repetitions, distinct process identities, complete attempts and continuous
+launch-through-exit coverage. No threshold is derived or applied. Hash agreement
+and interval claims do not prove monitoring, authentication or qualification.
+
+Tests-first9a5ede and adversarial failuresf20a60/a268f2 remain retained. They
+exposed missing implementation, bool/int recipe aliasing and repackaged process
+reuse respectively. Corrected17focused plus16direct-dependent tests pass on
+both Native and WSL (33/33 each, zero skips); immutable terminal5d6d9b8b binds
+the exact source. All ten earlier function bodies remain unchanged. Registered
+artifact integrity and formatting/lint pass; no generated family matches and
+no generator runs. No product acquisition or consumed-attempt retry occurs.
+
+Checkpoint55 is in progress. Independent empirical reference/holdout acquisition,
+all12 conditioning obligations/all54 coordinates, fresh final-source preparation,
+whole qualification/pin-promotion campaigns and guarded formal closure remain.
+Live v6, performance ceilings, sample counts, trust and security are unchanged.
+This is a cheap rejection mechanism, not a measured certification speedup or
+qualified alternative. H08 OPEN; continuation ACTIVE.

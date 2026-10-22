@@ -3182,3 +3182,45 @@ byte-decoded comparison proves all53 historical checkpoints unchanged. The
 source-distinct v2 reader uses explicit UTF-8 and requires a lossless byte
 roundtrip before schema/history checks. No historical record or failed receipt
 is rewritten to repair the reader.
+
+### Independent reference identity and continuous coverage preflight
+
+The whole-interval correction is committed at181fe3758192a341713743810b4ba907c7feccd6,
+clean and unfrozen. Checkpoint55 adds a pure diagnostic rejection path before
+new expensive acquisition. It accepts only exact externally pinned reference
+bytes and separately expected method, environment, workload recipe, cohort
+source, runner and acquisition identities. Candidate, reference-only and holdout
+sources must differ. Every cohort contains all nine ordered repetitions with
+distinct receipts and PID/birth pairs. All accepted and rejected attempts remain
+in each reconstructed whole interval; unfavorable durations are not filtered.
+Continuous interval union must cover launch through exit, not just spot probes.
+
+This checks structure and byte binding, not whether a reference is independently
+qualified or a monitor actually ran. Expected pins must come from an independent
+review boundary, and the pinned raw acquisitions still require independent
+verification. No envelope can declare itself qualified, set thresholds or grant
+admission. The earlier same-source interference experiment cannot become a
+reference/holdout calibration through this helper. The supported shape is serial
+latency only; subprocess/nonlatency/all54-coordinate coverage is still open.
+
+Initial missing-function failure9a5ede is retained. The first31Native/31WSL proof
+b597c9c9 is superseded only for corrected source. Adversarial failuref20a60 showed
+that Python equality aliases JSON true to integer1; the strict-type correction
+has32Native/32WSL proofa9d84b40. Failurea268f2 then showed that new receipt labels
+could repackage one process; explicit PID/birth uniqueness rejects that case.
+Final17focused plus16whole-interval direct-dependent tests pass33Native/33WSL,
+zero skips, bound by immutable terminal
+5d6d9b8b99733313b0188a719a5570e214b570c8257e5e4868174a9752305e28.
+All ten previous diagnostic function bodies are unchanged. Reproduction is
+`python -B -m unittest tooling.tests.test_performance_reference_binding
+tooling.tests.test_performance_whole_interval -v`; ignored one-use proof helpers
+and raw receipts remain under `target/codex-tools/h08-reference-binding-proof-v*`.
+
+Native0.3490418s and WSL3.7221036s are test execution timings only, not controlled
+before/after certification gains. No product measurements, sample retries or
+authority-bearing generation occurred. The generated-artifact skill resolves
+no affected family among the five changed paths; registered performance-artifact
+integrity and Ruff checks pass. Live v6/controller/verifier and all four
+performance outputs remain unchanged. Checkpoint55 records remaining empirical
+reference, conditioning, trust, fresh preparation and complete Q/P campaigns.
+H08 OPEN; continuation ACTIVE; no formal closure or new speedup claim.

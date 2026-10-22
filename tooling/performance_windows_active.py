@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import ctypes
 import hashlib
+import json
 import re
 import time
 from typing import Any, Mapping
@@ -189,6 +190,189 @@ def whole_product_interval_diagnostic(
 
 def _validated_durations(values: list[object]) -> list[int]:
     return [_active_integer(value, minimum=1) for value in values]
+
+
+def _closed_reference(value: object, fields: set[str]) -> None:
+    if not isinstance(value, Mapping) or set(value) != fields:
+        raise WindowsQualificationError("closed reference shape required")
+
+
+def _reference_hash(value: object, length: int = 64) -> None:
+    if (
+        not isinstance(value, str)
+        or re.fullmatch(r"[0-9a-f]{%d}" % length, value) is None
+    ):
+        raise WindowsQualificationError("invalid reference digest")
+
+
+def _unique_reference_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise WindowsQualificationError("duplicate reference JSON key")
+        result[key] = value
+    return result
+
+
+def _whole_interval_coverage(windows: object, begin: int, end: int) -> None:
+    if type(windows) is not list or not 1 <= len(windows) <= 4096:
+        raise WindowsQualificationError("bounded continuous coverage required")
+    cursor, prior_begin = begin, -1
+    for window in windows:
+        _closed_reference(window, {"begin_ns", "end_ns"})
+        start = _active_integer(window["begin_ns"])
+        stop = _active_integer(window["end_ns"])
+        if start < prior_begin or start > cursor or stop <= start:
+            raise WindowsQualificationError("whole interval coverage gap/order changed")
+        prior_begin = start
+        cursor = max(cursor, stop)
+    if cursor < end:
+        raise WindowsQualificationError("whole interval exit is not covered")
+
+
+def bound_whole_product_reference_diagnostic(
+    reference_bytes: bytes,
+    expected_sha256: str,
+    expected: Mapping[str, Any],
+    candidate_source_sha: str,
+) -> dict[str, object]:
+    """Reject circular or partial serial-latency references before acquisition.
+
+    The caller supplies pins from an independent review boundary, never from
+    this envelope. Hash agreement proves byte identity, NOT qualification,
+    provenance, signatures, actual monitoring, reference quality or immunity
+    to environmental confounding. In particular, source-distinct commits alone
+    do not prove an independently acquired holdout. External acquisition and
+    trust verification remain necessary. No live caller uses this preflight.
+
+    Preserve all nine reference-only and nine holdout repetitions, including
+    unfavorable intervals and rejected attempts. Union coverage must enclose
+    launch through exit; before/after spot probes are insufficient. Coverage
+    timestamps remain claims until the independently pinned raw acquisition
+    is verified. No thresholds are learned, normalized or applied here; even
+    structurally bound synthetic inputs cannot grant admission authority.
+    """
+    _reference_hash(expected_sha256)
+    _reference_hash(candidate_source_sha, 40)
+    if (
+        type(reference_bytes) is not bytes
+        or not 0 < len(reference_bytes) <= 2 * 1024 * 1024
+        or hashlib.sha256(reference_bytes).hexdigest() != expected_sha256
+    ):
+        raise WindowsQualificationError("independently pinned reference bytes required")
+    try:
+        envelope = json.loads(
+            reference_bytes.decode("utf-8"), object_pairs_hook=_unique_reference_object
+        )
+    except (ValueError, UnicodeError, RecursionError) as error:
+        raise WindowsQualificationError("invalid reference JSON") from error
+    fields = {"method_sha256", "environment_sha256", "recipe", "cohorts"}
+    _closed_reference(expected, fields)
+    _closed_reference(envelope, fields | {"role"})
+    if envelope["role"] != "unqualified-whole-product-reference":
+        raise WindowsQualificationError("reference cannot assert qualification")
+    for field in ("method_sha256", "environment_sha256"):
+        _reference_hash(expected[field])
+        if envelope[field] != expected[field]:
+            raise WindowsQualificationError("reference context pin mismatch")
+    if envelope["recipe"] != expected["recipe"]:
+        raise WindowsQualificationError("independent reference recipe mismatch")
+    _closed_reference(
+        expected["recipe"],
+        {
+            "operation_id",
+            "fixture_id",
+            "batch_iterations",
+            "warmup_iterations",
+            "sample_iterations",
+            "maximum_sample_attempts",
+            "selected_logical_cpu",
+        },
+    )
+    _closed_reference(envelope["recipe"], set(expected["recipe"]))
+    if any(
+        type(envelope["recipe"][key]) is not type(value)
+        for key, value in expected["recipe"].items()
+    ):
+        raise WindowsQualificationError("reference recipe types changed")
+    for cohorts in (expected["cohorts"], envelope["cohorts"]):
+        if type(cohorts) is not list or len(cohorts) != 2:
+            raise WindowsQualificationError(
+                "reference and independent holdout required"
+            )
+    source_ids = {candidate_source_sha}
+    acquisitions: set[str] = set()
+    receipts: set[str] = set()
+    processes: set[tuple[int, str]] = set()
+    results = []
+    for index, role in enumerate(("reference-only", "source-distinct-holdout")):
+        pins, cohort = expected["cohorts"][index], envelope["cohorts"][index]
+        cohort_fields = {"role", "source_sha", "runner_sha256", "acquisition_sha256"}
+        _closed_reference(pins, cohort_fields)
+        _closed_reference(cohort, cohort_fields | {"observations"})
+        if pins["role"] != role or any(cohort[k] != pins[k] for k in cohort_fields):
+            raise WindowsQualificationError("independent cohort pin/order mismatch")
+        _reference_hash(pins["source_sha"], 40)
+        _reference_hash(pins["runner_sha256"])
+        _reference_hash(pins["acquisition_sha256"])
+        if (
+            pins["source_sha"] in source_ids
+            or pins["acquisition_sha256"] in acquisitions
+        ):
+            raise WindowsQualificationError(
+                "candidate fit or reference acquisition reuse"
+            )
+        source_ids.add(pins["source_sha"])
+        acquisitions.add(pins["acquisition_sha256"])
+        observations = cohort["observations"]
+        if type(observations) is not list or len(observations) != 9:
+            raise WindowsQualificationError("all nine reference repetitions required")
+        workload = {
+            **expected["recipe"],
+            "source_sha": pins["source_sha"],
+            "runner_sha256": pins["runner_sha256"],
+        }
+        for repetition, observation in enumerate(observations):
+            _closed_reference(
+                observation, {"repetition", "receipt_sha256", "proof", "coverage"}
+            )
+            if _active_integer(observation["repetition"]) != repetition:
+                raise WindowsQualificationError("reference repetition order changed")
+            receipt = observation["receipt_sha256"]
+            _reference_hash(receipt)
+            if receipt in receipts:
+                raise WindowsQualificationError("reference observation reused")
+            receipts.add(receipt)
+            proof = observation["proof"]
+            result = whole_product_interval_diagnostic(proof, workload)
+            child = proof["child_before"]
+            identity = (child["pid"], child["birth"])
+            if identity in processes:
+                raise WindowsQualificationError("reference product process reused")
+            processes.add(identity)
+            _whole_interval_coverage(
+                observation["coverage"],
+                proof["action_begin_ns"],
+                proof["action_end_ns"],
+            )
+            results.append(
+                {
+                    **result,
+                    "cohort": role,
+                    "repetition": repetition,
+                    "receipt_sha256": receipt,
+                }
+            )
+    return {
+        "role": "unqualified-whole-product-reference",
+        "status": "diagnostic-bound",
+        "baseline_admission": False,
+        "certification_eligible": False,
+        "performance_qualification": False,
+        "reference_sha256": expected_sha256,
+        "observations": results,
+        "attempts": sum(row["attempts"] for row in results),
+    }
 
 
 def active_quiescence_rates(

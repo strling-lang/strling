@@ -8422,3 +8422,35 @@ no generation; integrated artifact gate passes. Livev6/caps/counts/trust/securit
 unchanged. Counter cause, actual all12/all54 monitoring and independent reference
 qualification, fresh final-source prerequisites, both whole campaigns and guarded
 formal closure remain. H08 OPEN; ACTIVE.
+
+### H08 incremental build artifact failure and critical path — 2026-10-22 (UTC)
+
+Clean unfrozen178e447e's postcommit raw study completes27 workers/409 snapshots
+in38.054202s, independently reconstructed against2282 tracked file hashes.
+The earlier negative-counter failure remains unresolved; no admission, continuous
+control-state guarantee or performance qualification follows from nonreproduction.
+
+Tests-first7d370d proves eight false-success cases in the performance build helper:
+Cargo success could outweigh missing required artifacts. The correction verifies
+each stage's expected outputs before launching the next build and rechecks all
+files before bundling. Allthree original commands, flags, timeouts and positive
+outputs remain; missing files now fail before measurement placement.
+
+Failed proof6b659abd remains: a copied-globals test harness bypassed mocks and
+cannot establish its intended zero-Cargo-attempt claim. Corrected7754e0e6 binds
+the original function to the actual module namespace; parent tests reproduce
+8failures/11 and final direct suites pass159Native/158WSL plus1Native-covered skip.
+No Cargo/rustc process or P mapping remains. Scoped registered artifact verification
+passes; allfour authority-bearing performance artifacts remain byte-identical.
+
+Fixed nine-pair synthetic failure-feedback fixture2dbb6622 records return-boundary
+medians0.628187s before versus0.2081515s after, with all42 fixture children retained.
+Before falsely passed after3commands; after fails at1. These are Python fixture
+timings, not Cargo or certification speedups. Data-only4eb0e102 reconstructs allsix
+retained37-unit build traces: round01 kernel338.16s → interop116.35s → runner222.44s
+is an actual dependency chain, not an assumed parallelization opportunity.
+
+Checkpoint58 is in progress. Six scoped paths; no generation or performance samples.
+Actual admission/reference qualification, final36/runtime19 prerequisites, both
+complete campaigns and signed immutable verification/guarded closure remain open.
+H08 OPEN; continuation ACTIVE.

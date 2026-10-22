@@ -2059,14 +2059,32 @@ def _build_release_artifacts(root: Path = ROOT) -> tuple[str, dict[str, object]]
             "--lib",
         ],
     ]
+    command_artifact_roles = (("runner", "memory_worker"), ("kernel",), ("interop",))
     steps: list[dict[str, object]] = []
     statuses: list[str] = []
     try:
         with _canonical_build_root(root) as build_root:
-            for command in commands:
+            for command, roles in zip(commands, command_artifact_roles):
                 status, details = _run_command(
                     command, root=build_root, timeout_seconds=1800
                 )
+                if status == "passed":
+                    produced = {
+                        **_release_artifacts(root),
+                        "memory_worker": _memory_worker_artifact(root),
+                    }
+                    missing_outputs = [
+                        str(produced[role])
+                        for role in roles
+                        if not cast(Path, produced[role]).is_file()
+                    ]
+                    if missing_outputs:
+                        status = "failed"
+                        details = {
+                            **details,
+                            "code": "missing-release-artifacts",
+                            "missing_artifacts": missing_outputs,
+                        }
                 statuses.append(status)
                 steps.append({"status": status, **details})
                 if status != "passed":
@@ -2111,7 +2129,8 @@ def _build_release_artifacts(root: Path = ROOT) -> tuple[str, dict[str, object]]
                 else None
             ),
         }
-    return aggregate_status(statuses or ["unavailable"]), {
+    status = aggregate_status(statuses or ["unavailable"])
+    return "failed" if status == "passed" and missing else status, {
         "steps": steps,
         "missing_artifacts": missing,
     }

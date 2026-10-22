@@ -120,6 +120,7 @@ scope:
         - tests/certification/performance-resource/1.0/runner/src/phase_timeline.rs
         - tests/_design/unit/performance-phase-timeline.md
         - tests/_design/unit/performance-process-observation.md
+        - tests/_design/unit/performance-build-artifacts.md
         - tooling/performance_process_observation.py
         - tests/certification/profile-source/1.0/definitions.json
         - tests/adapters/3.0/release-graph.json
@@ -186,6 +187,7 @@ scope:
         - tooling/tests/test_profile_source_identity.py
         - tooling/tests/test_performance_resource_certification.py
         - tooling/tests/test_performance_build_scheduling.py
+        - tooling/tests/test_performance_build_artifacts.py
         - tooling/tests/test_performance_resource_certification_architecture.py
         - tooling/tests/test_performance_windows.py
         - tooling/tests/test_performance_whole_interval.py
@@ -1754,7 +1756,30 @@ checkpoints:
           - check: Unchanged authority and unfinished qualification
             result: not_run
             details: "Six paths map to no registered generated family; integrated artifact integrity72dae4 passes with zero authenticated samples and no generation. All56 historical checkpoints/readiness and protected source/artifact bytes preserved; schema/scope/append-only validation and exact-path commit follow. Actual all12-obligation/all54-coordinate continuous monitoring, independent reference9/source-distinct holdout9 and work/delay/common-mode/order qualification remain. Existing baseline has samples and pre-coordinate snapshots, not launch-through-exit timelines, and cannot be relabeled as new reference evidence. Final-source complete36/runtime19 prerequisites, wholeQ/P38/80/126/independentnoReuse126 campaigns125PASS+soleVSCEwaiver, freshperformance/signing/reviewedqualification thenpin-onlypromotion/immutable trust/guardedcleanformalCLOSED remain. No new or whole-certification speedup established. H08OPEN; continuationACTIVE."
+    - name: Fail-closed incremental build artifacts and retained critical path
+      status: in_progress
+      evidence:
+          - check: Prior raw-counter study remains unqualified
+            result: passed
+            details: "Clean unfrozen parent178e447ee99715130e01368a8d683661b8d608e0 tree412762f45345af69e507f64f4eab98504329cab8. Prior postcommit terminal3cfd40af00d722b5d8fba28c9275be66c1fb008503871062dd183b617d776589 completes27 owned workers/409 raw snapshots in38.054202s. Independentcbe870fb8f6b025bbc3a2ba882b718d20f84d2f239a9a38af34ed8f6abe89df7 reconstructs allnine sleep/compute/alternate repetitions and2282 tracked hashes; maximum poll gap114.6817ms. Zero negative deltas in this cohort does not repair failed8807587c or establish continuous control-state monitoring, physical cause or admission equivalence. Both owner31856 and lastchild30708 retired. No counter survey repeated."
+          - check: Required build artifacts previously produced false success
+            result: failed
+            details: "Tests-first7d370d exposes8 failures among11 focused cases: successful Cargo statuses with missing required files were aggregated as passed; missing outputs could reach measurement placement. Test cleanup/positive receipts and failed/unavailable command cases already pass. Root cause is the build helper's final aggregation ignoring missing files and delaying all artifact checks until allthree builds. Source correction retains exact Cargo commands/order/flags/timeouts, validates each stage's required outputs immediately, retains return_code0 with failed artifact receipt, and rechecks every file before bundling. No artifact or check is omitted from successful execution."
+          - check: Proof harness failure preserved and corrected
+            result: failed
+            details: "Initial proof6b659abdcf9c0794d7412976d211016b52f4de1861c6bc65e4c14798ddfee831 fails11 cleanup assertions because copied module globals bypassed test mocks. Its zero-build-intent field does not establish zero Cargo command attempts; no successful build or product samples are established. Exact helper30b06cc98c5954e539b0507593f9a9ff057eda765f932a463554ff9c0f95d574 and all streams retained. bb05ac confirms P drive absent and no Cargo/rustc process. Corrected v2 binds the retained function to actual module globals and asserts that binding before tests. No certification attempt retried."
+          - check: Source-bound correction and direct dependents
+            result: passed
+            details: "Corrected terminal7754e0e60f140f0ebf4d29fbefb466209f780b00612718056a8650bf6f7cf9ea completes87.7949278s and binds controller9ef8d93e29cd132ff234aaa163c6e22db849c480150805ed22ba5b6035e63306. Retained-parent test reconstruction gives exactly8 expected failures/11; corrected direct suite159NativePASS and158WSLPASS plus1Native-covered skip includes new11, build scheduling, performance contract/architecture, artifact integrity and Windows environment tests. Protected v6/trust/toolchain/registry and allfour performance artifact bytes equal parent. Scoped registered performance-resource-source-identities generator-input match; exact verification passes, current outputs need no regeneration. Ruff format/lint pass."
+          - check: Fixed synthetic feedback timings and retained actual build profile
+            result: passed
+            details: "One-use2dbb66221e1fa7fa28498a3b4384ca8d3f06febf1d1e4999005cffd57f21679a retains allnine counterbalanced missing-memory-worker before/after fixture pairs plus positive identical-output cases,42 actual Python fixture processes,9.6502393s total. Missing-output return-boundary medians628187000ns before and208151500ns after; prior status falsely passed, corrected status failed and stops after1 rather than3 commands. This is a synthetic failure-feedback fixture with75ms child work, not actual Cargo or certification speedup. Data-only4eb0e1028f291a1f3b2b1f79578440074c092e11eea9675599cd2722086c118a reconstructs allsix retained37-unit Cargo traces. Available-placement round01 critical tail: kernel338.16s, interop116.35s, runner222.44s, linked by actual unlocked-unit edges. No extra build run or new wall-time improvement inferred."
+          - check: Remaining qualification and closure obligations
+            result: not_run
+            details: "Six scoped paths; generated verification only, no authority renewal or calibration. Previous57 checkpoints/readiness and historical failures retained; checkpoint58 schema/scope/exact-path commit verification follows. This deterministic build correction does not resolve original CPU1 admission or short-interval counter validity, qualify reference/holdout9+9 across all12 obligations/all54 coordinates, or establish phase-journal overhead equivalence. Final-source complete36/runtime19 prerequisites, wholeQ/P38/80/126/independentnoReuse126 campaigns125PASS+soleVSCEwaiver, freshperformance/signing/reviewedqualification thenpin-onlypromotion/immutable verification/guardedcleanformalCLOSED remain. H08OPEN; continuationACTIVE."
 commits:
+    - sha: 178e447ee99715130e01368a8d683661b8d608e0
+      subject: "feat(performance): capture raw process counter observations"
     - sha: dd58982c70c857ad8f5bac9c5f151009c28cfc1f
       subject: "feat(performance): trace diagnostic runner phases"
     - sha: e6cffb220a94cb91e55b74c6e39f47aaa9dc2060

@@ -3358,3 +3358,56 @@ obligations remain open; existing baseline samples and pre-coordinate snapshots
 are not whole-process reference data. Fresh final-source preparation, qualification
 then pin-promotion campaigns, signing, immutable trust and guarded clean formal
 closure remain. H08 OPEN; continuation ACTIVE; no new certified runtime gain.
+
+### Incremental build-output verification — 2026-10-22 UTC
+
+Clean engineering parent178e447ee99715130e01368a8d683661b8d608e0 has no active
+certification owner. Its27-worker counter follow-up completes409 raw observations
+in38.054202s; independentcbe870fb reconstructs2282 tracked hashes and all prescribed
+sleep/compute/alternate repetitions. It does not reproduce the earlier negative
+counter deltas and does not repair, retry or supersede failed8807587c. Physical
+cause, continuous control-state observation and admission equivalence remain open.
+
+Read-only reconstruction of allsix retained37-unit Cargo traces identifies the
+kernel → interop → runner chain. Available-placement round01 spends338.16s,
+116.35s and222.44s respectively on these dependent units. They are not three
+independent jobs that can simply be scheduled concurrently. Report4eb0e102 retains
+all units and actual unlocked-unit edges; no new build or speedup is claimed.
+
+Inspection finds a separate deterministic correctness defect in
+`_build_release_artifacts`: allthree successful Cargo exits plus a missing required
+artifact return aggregate status `passed`, allowing the caller to reach placement.
+Tests-first7d370d reproduces8 failures among11 cases. The narrow correction checks
+the outputs of each command immediately and fails before another build when they
+are absent. It preserves the command's return_code0 alongside the failed artifact
+receipt, retains all missing paths, and rechecks all outputs before bundle creation.
+Original commands/order/flags/timeouts/canonical mapping cleanup and successful
+bundle bytes remain. Failed or unavailable commands still win over existing files.
+
+The initial retained-parent proof harness copied module globals, unintentionally
+bypassing mocks and causing11 cleanup failures. Immutable6b659abd preserves that
+failure; its stated zero-build intent is not proof of zero command attempts.
+No successful build or performance samples are established. Follow-upbb05ac confirms
+no P mapping or Cargo/rustc process remains. Corrected proof7754e0e6 binds and checks
+the original function's globals before execution, reconstructs exactly8 expected
+parent failures and passes159Native/158WSL with1Native-covered skip. The latter
+suites include artifact, scheduling, full performance-contract and Windows checks.
+Controller9ef8d93e and test/charter hashes are bound in the terminal receipt.
+
+For reproducible early-feedback comparison, fixed protocol2dbb6622 executes allnine
+counterbalanced missing-memory-worker pairs and two successful controls using42
+short-lived Python fixture children. Both versions receive the same prescribed
+output omission; the former returns false success after3commands, the corrected
+version fails after1. Return-boundary medians are0.628187s and0.2081515s, respectively.
+These are synthetic failure-path timings, not actual Cargo throughput, equivalent
+successful certification wall time or performance qualification. All raw timings,
+including unfavorable values, remain in the receipt; no outcome is filtered.
+
+The generated-artifact registry maps the controller edit as a generator input for
+`performance-resource-source-identities`. Its exact verification passes. Allfour
+performance artifact bytes remain unchanged; no identity refresh, baseline
+recalibration or historical evidence rewrite is required. Six exact source/record
+paths form checkpoint58; prior57 checkpoints and readiness remain preserved.
+Final-source complete36/runtime19 prerequisites, independent reference/holdout and
+all12/all54 challenges, both whole qualification/pin-promotion campaigns, signing,
+immutable verification and guarded clean formal closure remain. H08 OPEN; ACTIVE.

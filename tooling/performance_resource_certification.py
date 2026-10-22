@@ -3076,6 +3076,108 @@ def _enforce_governed_cpu_affinity(manifest: Mapping[str, object]) -> list[int]:
     return effective
 
 
+def _preflight_governed_cpu_affinity(
+    manifest: Mapping[str, object], *, root: Path = ROOT
+) -> list[int]:
+    """Fail early in an isolated child without serializing subsequent builds.
+
+    The probe exercises the same native placement controls as measurement,
+    including Windows CPU sets and HighQoS. It is not evidence of the parent's
+    placement: that must be enforced again after every successful build.
+    """
+    policy = cast(Mapping[str, object], manifest["measurement_policy"])
+    selected = policy.get("selected_logical_cpu")
+    if (
+        policy.get("cpu_affinity_policy") != "single-fixed-logical-cpu"
+        or type(selected) is not int
+        or selected < 0
+    ):
+        raise PerformanceResourceError("affinity-policy", "invalid fixed CPU policy")
+    program = (
+        "import json, sys; "
+        "from tooling.performance_resource_certification import "
+        "_enforce_governed_cpu_affinity; "
+        "print(json.dumps({'effective_cpu_affinity': "
+        "_enforce_governed_cpu_affinity(json.loads(sys.argv[1]))}))"
+    )
+    try:
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "-B",
+                "-c",
+                program,
+                json.dumps({"measurement_policy": dict(policy)}, sort_keys=True),
+            ],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            check=False,
+            timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise PerformanceResourceError("affinity-preflight", str(error)) from error
+    if completed.returncode != 0:
+        raise PerformanceResourceError(
+            "affinity-preflight",
+            f"isolated placement probe exited {completed.returncode}: "
+            f"{completed.stderr[-4096:]}",
+        )
+    try:
+        report = json.loads(completed.stdout)
+    except (ValueError, TypeError) as error:
+        raise PerformanceResourceError(
+            "affinity-preflight", "invalid isolated placement probe output"
+        ) from error
+    if (
+        not isinstance(report, dict)
+        or set(report) != {"effective_cpu_affinity"}
+        or not isinstance(report["effective_cpu_affinity"], list)
+        or len(report["effective_cpu_affinity"]) != 1
+        or type(report["effective_cpu_affinity"][0]) is not int
+        or report["effective_cpu_affinity"] != [selected]
+    ):
+        raise PerformanceResourceError(
+            "affinity-preflight",
+            "isolated placement probe did not select the fixed CPU",
+        )
+    return [selected]
+
+
+def _build_and_enforce_measurement_affinity(
+    manifest: Mapping[str, object], *, root: Path = ROOT
+) -> tuple[str, dict[str, object]]:
+    """Build with inherited placement, then gate all measurement on actual pinning."""
+    if platform.system().lower() == "windows":
+        # Preserve the old build's own-process HighQoS, without its CPU pin.
+        try:
+            performance_windows.enforce_current_process_power_policy()
+        except performance_windows.WindowsQualificationError as error:
+            return "unavailable", {"code": "build-power-policy", "reason": str(error)}
+    status, details = _build_release_artifacts(root)
+    if status != "passed":
+        return status, details
+    try:
+        affinity = _enforce_governed_cpu_affinity(manifest)
+    except PerformanceResourceError as error:
+        return "unavailable", {
+            **details,
+            "measurement_affinity": {
+                "status": "unavailable",
+                "code": error.code,
+                "reason": str(error),
+            },
+        }
+    return status, {
+        **details,
+        "measurement_affinity": {
+            "status": "passed",
+            "effective_cpu_affinity": affinity,
+            "scope": "measurement-parent-after-build",
+        },
+    }
+
+
 def _windows_live_environment(
     *, selected_logical_cpu: int, root: Path = ROOT
 ) -> dict[str, object]:
@@ -5504,7 +5606,7 @@ def certify(
             )
         baseline = load_json(baseline_path)
         try:
-            effective_cpu_affinity = _enforce_governed_cpu_affinity(manifest)
+            preflight_affinity = _preflight_governed_cpu_affinity(manifest, root=root)
         except PerformanceResourceError as error:
             checks.append(
                 {
@@ -5516,20 +5618,35 @@ def certify(
             return _certification_evidence(
                 profile=profile, commit=commit, checks=checks, manifest=manifest
             )
-        checks.append(
-            {
-                "id": "environment:single-fixed-logical-cpu",
-                "status": "passed",
-                "details": {
-                    "selected_logical_cpu": manifest["measurement_policy"][
-                        "selected_logical_cpu"
-                    ],
-                    "effective_cpu_affinity": effective_cpu_affinity,
-                    "effective_cpuset": _format_cpu_set(effective_cpu_affinity),
-                },
-            }
+        build_status, build_details = _build_and_enforce_measurement_affinity(
+            manifest, root=root
         )
-        build_status, build_details = _build_release_artifacts(root)
+        build_details["placement_preflight"] = {
+            "scope": "isolated-pre-build-probe-not-measurement-parent",
+            "effective_cpu_affinity": preflight_affinity,
+        }
+        if build_status == "passed":
+            effective_cpu_affinity = cast(
+                list[int],
+                cast(Mapping[str, object], build_details["measurement_affinity"])[
+                    "effective_cpu_affinity"
+                ],
+            )
+            # Preserve the attested successful-check order and exact receipt
+            # shape, but issue this PASS only after actual parent enforcement.
+            checks.append(
+                {
+                    "id": "environment:single-fixed-logical-cpu",
+                    "status": "passed",
+                    "details": {
+                        "selected_logical_cpu": manifest["measurement_policy"][
+                            "selected_logical_cpu"
+                        ],
+                        "effective_cpu_affinity": effective_cpu_affinity,
+                        "effective_cpuset": _format_cpu_set(effective_cpu_affinity),
+                    },
+                }
+            )
         checks.append(
             {
                 "id": "build:release-performance-artifacts",
@@ -6202,8 +6319,10 @@ def _migrate_cli_launch_control_command(
             "launch-control-already-active", "CLI launch control is already active"
         )
 
-    _enforce_governed_cpu_affinity(prior_manifest)
-    build_status, build_details = _build_release_artifacts(root)
+    _preflight_governed_cpu_affinity(prior_manifest, root=root)
+    build_status, build_details = _build_and_enforce_measurement_affinity(
+        prior_manifest, root=root
+    )
     if build_status != "passed":
         raise PerformanceResourceError(
             "release-build", json.dumps(build_details, sort_keys=True)
@@ -7201,8 +7320,10 @@ def _migrate_cli_normalization_command(
             os.fsync(stream.fileno())
 
     try:
-        _enforce_governed_cpu_affinity(prior_manifest)
-        build_status, build_details = _build_release_artifacts(root)
+        _preflight_governed_cpu_affinity(prior_manifest, root=root)
+        build_status, build_details = _build_and_enforce_measurement_affinity(
+            prior_manifest, root=root
+        )
         if build_status != "passed":
             raise PerformanceResourceError(
                 "release-build", json.dumps(build_details, sort_keys=True)
@@ -7877,8 +7998,10 @@ def _migrate_stationary_warmups_command(
             f"refusing to overwrite immutable prior authority {history.relative_to(root)}",
         )
 
-    _enforce_governed_cpu_affinity(prior_manifest)
-    build_status, build_details = _build_release_artifacts(root)
+    _preflight_governed_cpu_affinity(prior_manifest, root=root)
+    build_status, build_details = _build_and_enforce_measurement_affinity(
+        prior_manifest, root=root
+    )
     if build_status != "passed":
         raise PerformanceResourceError(
             "release-build", json.dumps(build_details, sort_keys=True)
@@ -8057,9 +8180,11 @@ def _migrate_conditioning_cpu_command(
         candidate_manifest, "manifest_fingerprint"
     )
     validate_manifest(candidate_manifest, root=root, fixtures=fixtures)
-    _enforce_governed_cpu_affinity(candidate_manifest)
+    _preflight_governed_cpu_affinity(candidate_manifest, root=root)
 
-    build_status, build_details = _build_release_artifacts(root)
+    build_status, build_details = _build_and_enforce_measurement_affinity(
+        candidate_manifest, root=root
+    )
     if build_status != "passed":
         raise PerformanceResourceError(
             "release-build", json.dumps(build_details, sort_keys=True)
@@ -8195,8 +8320,10 @@ def _baseline_command(
             "baseline-prior",
             "capped baseline calibration requires --rollover-from prior authority",
         )
-    _enforce_governed_cpu_affinity(manifest)
-    build_status, build_details = _build_release_artifacts(root)
+    _preflight_governed_cpu_affinity(manifest, root=root)
+    build_status, build_details = _build_and_enforce_measurement_affinity(
+        manifest, root=root
+    )
     if build_status != "passed":
         raise PerformanceResourceError(
             "release-build", json.dumps(build_details, sort_keys=True)
@@ -8351,8 +8478,10 @@ def _qualification_command(*, root: Path = ROOT) -> dict[str, Any]:
     manifest = load_json(root / MANIFEST_PATH.relative_to(ROOT))
     fixtures = load_json(root / FIXTURE_MANIFEST_PATH.relative_to(ROOT))
     validate_manifest(manifest, root=root, fixtures=fixtures)
-    affinity = _enforce_governed_cpu_affinity(manifest)
-    build_status, build_details = _build_release_artifacts(root)
+    _preflight_governed_cpu_affinity(manifest, root=root)
+    build_status, build_details = _build_and_enforce_measurement_affinity(
+        manifest, root=root
+    )
     if build_status != "passed":
         raise PerformanceResourceError(
             "release-build", json.dumps(build_details, sort_keys=True)
@@ -8365,7 +8494,9 @@ def _qualification_command(*, root: Path = ROOT) -> dict[str, Any]:
     return {
         "status": "passed",
         "source_commit": commit,
-        "effective_cpu_affinity": affinity,
+        "effective_cpu_affinity": cast(
+            Mapping[str, object], build_details["measurement_affinity"]
+        )["effective_cpu_affinity"],
         "environment": environment,
         "environment_fingerprint": environment_fingerprint(environment),
         "artifact_fingerprints": build_details["artifacts"],

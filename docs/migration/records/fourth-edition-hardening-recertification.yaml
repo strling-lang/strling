@@ -181,6 +181,7 @@ scope:
         - tooling/tests/test_pcre2_lowering_architecture.py
         - tooling/tests/test_profile_source_identity.py
         - tooling/tests/test_performance_resource_certification.py
+        - tooling/tests/test_performance_build_scheduling.py
         - tooling/tests/test_performance_resource_certification_architecture.py
         - tooling/tests/test_performance_windows.py
         - tooling/tests/test_performance_comparison.py
@@ -1637,7 +1638,36 @@ checkpoints:
           - check: Fresh source integration and all formal certification still required
             result: not_run
             details: "Onlythree synchronizedrecordpaths change/no36familymatch/no generator. New52checkpoint schema-format/exactpathcommit/clean sourcebinding and actual full36preparation-independent-audit-19prerequisite integration pending. Originalv6conditioner0996f40c/baselinec8a5edf0/manifest634ddb38/all29controls607history/512warmups64samples9references/caps/coverage/security/license/conditioning/isolation/provenance retained; activeaccounting alternative unqualified. BothwholeQ/P38/80/126/independentnoReuseRelease126, anygoverned54coordinatefreshreference migration, signing, immutable reviewedqualificationbeforepin-onlypromotion, pinnedtrust, guardedclosurecommit/finalindependentverify/cleanformalCLOSED mandatory. Diagnosticelapsedvalues do not establish equivalentworkload or wholecertificationgain. H08OPEN/continuationACTIVE."
+    - name: Measured lossless build placement and fail-closed measurement boundary
+      status: in_progress
+      evidence:
+          - check: Prior source prerequisite acceptance and retained conditioning failures
+            result: passed
+            details: "Unfrozen2808264e complete36preparation/19prerequisites1565cases independently acceptedc438d2712b8bdcc26d0c7f0ce548673588559eaca8eb1bf32bec26a910434531; no authoritative profiles/samples. OriginalCPU1admission remains failed. Balanced27epoch capacity hypothesis still rejects40of81windows,20active/9idle-before/11idle-after. Productdiagnostic9repetitions576accepted0rejected has all medians below27838ns but7of27counterwindows reject. No admission or alternative conditioning qualification; all unfavorable observations preserved."
+          - check: Six fresh equivalent runner-bundle builds independently reconstructed
+            result: passed
+            details: "Predeclared fixed/available/available/fixed/fixed/available; identical commands/flags/source/emptytarget/ownprocessHighQoS, fulltargets retained without reuse/retry. Fixed719.7213333/729.0581927/729.6541089s; available685.1639674/687.0520881/686.4892054s. Median729.0581927to686.4892054s=5.838901164027753percent diagnostic component reduction only. Terminalf05fecec8c282b0d5ffbc867affbd10baf91f063828bfdbf2369d959f24ce446 actualexit0/releasedlease/nochildren. Independentauditce6918f06524b667a100d01142ec528dfbb45831c8f308d292c0024d2921b94b/20guards reconstructs691receipts,12identicalexecutables,37unitsperbuild,2313source/6884retainedfiles. Serializedkernel/interop/runnerchain remains; unfavorable unitspans retained. DiagnosticDroot, not canonicalP/standalonekernel/interop/wholecertification gain."
+          - check: Narrow source correction and direct-dependent proof
+            result: passed
+            details: "All7buildcallers use bounded exact-runtime isolated placement probe before expensivebuild; unchanged inheritedCPUplacement/WindowsownprocessHighQoS duringbuild, originalparentaffinityCPUsetsHighQoS enforcedafterbuild beforeenvironment/conditioning/samples. Probe/build/power/postpin failures failclosed. No-buildconditionermigration directpin unchanged. Initial4regressioncases36eea1 retain3fail1boundaryerror; corrected13PASS plus133existingdirectdependents and39comparison/integratedgatePASS. Nativeactualmockbuildplacementc42fe4da00533c8743d692e4d1b4687da09abf0c29a82e074a3d0022a83cbe81 confirms32CPUspreservedthroughprobe/build andCPU1after; probe0.6981537s, nocompile/conditioning/samples. Windowsconditioner0996f40c/baselinec8a5edf0/manifest634ddb38 unchanged."
+          - check: Fresh corrected-source preparation and formal certification
+            result: not_run
+            details: "RegisteredperformanceartifactintegrityPASS withoutregeneration; controlleronly generatorinputmatch operationalprojection performance-resource-source-identities. Fouroutputsunchanged. New53checkpoint crossplatform/finalvalidation/exactpathcommit thenfreshcomplete36/runtime/prerequisites required beforecleanfreeze; no oldsourceauthority transfers. Alternativeconditioning unqualified; bothwholeQ/P38/80/126/independentnoReuse126with125PASS+soleVSCElicensewaiver, fresh54coordinatereference ifrequired, signing, reviewedqualificationbeforepin-onlypromotion/pinnedimmutabletrust, guardedcleanformalCLOSED remain. No actualperformanceceiling/sample/coverage/security/license/isolation/evidence change. H08OPEN/continuationACTIVE."
+          - check: Attestation receipt compatibility correction after initial direct-dependent proof
+            result: passed
+            details: "Initial185Native/184WSL+1Windows-onlyskip PASS, withNativecoveringthatcase. Downstreamconsumer exact-shape drift andprematureparentPASS caughtby2redguardsca2750; rejectedsourceoverlay8bd64192d67290edaf4c799277af3379c2a3ca9fec3dec68ee14af1b161a9849 retained. Producer-onlycorrection preservesoriginalexactplacementreceipt/order, emitsPASSonlyafteractualparentpin andretainsisolatedprobeinbuilddetails. Trustedverifierunchanged; corrected15focusedPASS. Finalcomplete dependents/records/commitpending. Earliercheckpoint/readinessrationale remains historical; checkpoint53 andthisaddendum describe currentengineering, notformalclosure."
+          - check: Native final suite preserves isolated runtime dependency failure
+            result: failed
+            details: "Exact corrected-source Native239 terminal4b68a7 exits1 after3768.771s:238PASS/1FAIL/0skip. Isolated-script verification cannot import jsonschema; paired read-only probes prove nativePython3.13.5 imports it only from user-site excluded correctly by -I. Failuref42a9578964c68b6c6abcc9015a87db497914d09b9a5b1f5f55240b1eb6794ba preserved; no trustedverifier, isolation, package or hostsetting change. Not a consumed performance sample or authoritative profile; failed suite is not relabeled PASS."
+          - check: Targeted corrected-source WSL predictor with isolated preflight
+            result: passed
+            details: "ExistingWSLPython3.12.3 isolated imports available. One-usehelperbfa1dd7642a6cbfb03b2ea94d3a0baf4570badbae41ad82a83575f640af328a5 preflights actualverifier -I -B --help in0.318845937s before expensivefixtures; then98PASS/0skip/57.507s covering15schedulingguards/controller/failedplatform-neutralisolatedcase. Terminalb052226329479a6053ded55d70cecf8e8b8f1f2dbba4c4390c5e67c7662030f0 andrawstderr ee54783183596ac9278696c2bd4d9c28ab37c64c3715d515974739a9bf7fed65 bind unchangedfour sourcepins. Native238plusWSLcase is diagnostic crossplatformcoverage, notone allpassingNative run. No privatecertifier access; syntheticfixtures only. No fullsuite/build/admission rerun or certificationgainclaim."
+          - check: Current correction handoff and retained closure obligations
+            result: not_run
+            details: "Finalregressionwording above superseded by explicit nativefailure and targetedWSLsuccess, not erased. Exact6path recordvalidation/authorizedcommit/cleanSHA follow; newsource remainsunfrozen. Freshcomplete36/runtime/prerequisites beforefreeze and bothwholeQ/P38/80/126/independentnoReuse126, qualifiedconditioning/freshperformance/signing/immutableverification/guardedclosure remain. H08OPEN/continuationACTIVE; originalcaps/counts/history/security/license/isolation unchanged."
 commits:
+    - sha: 2808264e80f81ce82b16af5080b4c728d5b0850a
+      subject: "docs(certification): record bounded verification session continuity"
     - sha: 2a99027fa00da9ee989706febde79d82b09043a7
       subject: "docs(certification): preserve verified offline build input repair"
     - sha: db883d94e31e61a1902497ff1696c4ae49ae7788

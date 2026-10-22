@@ -2964,3 +2964,128 @@ governed54coordinate reference qualification, signing, immutable reviewed then
 pin-only promoted/pinned verification and guarded clean formal CLOSED remain.
 No controlled end-to-end or equivalent-workload runtime gain is claimed from
 these different-duration diagnostic operations. H08 OPEN; continuation ACTIVE.
+
+### Build placement critical path and fail-closed correction — 2026-10-22 UTC
+
+The subsequent clean2808264e source completed the36-family preparation and
+19-stage prerequisite chain with1565 cases; independent completion receipt
+c438d2712b8bdcc26d0c7f0ce548673588559eaca8eb1bf32bec26a910434531 retains
+normal owner retirement and all prior failures. No authoritative profile or
+sample has been consumed on this source. Its original CPU1 admission is still
+failed, not retried. A predeclared27-epoch capacity experiment rejects40of81
+counter windows (20 active,9 idle-before,11 idle-after); its hypothesis remains
+unqualified. The separate9-repetition product diagnostic has576 accepted and
+zero rejected samples, with all medians below the original27838ns ceiling, but
+7of27 surrounding counter windows reject. Neither diagnostic is admission,
+reference qualification or a passing certification measurement.
+
+The product diagnostic spends692.5786704of900.5055189s in a fresh runner build.
+That diagnostic already built before pinning; its duration must not be blamed
+on the production controller's pre-build pin. Inspection separately establishes
+that all seven production build entry points pin the parent before Cargo.
+Six prospective full runner-bundle builds use identical source, flags, empty
+target path and own-process HighQoS, in fixed/available/available/fixed/fixed/
+available order. Every complete target is retained without reuse or retry.
+Fixed times are719.7213333,729.0581927,729.6541089s; available times are
+685.1639674,687.0520881,686.4892054s. Medians729.0581927to686.4892054s establish
+a5.838901164027753percent build-component reduction, not a drastic or total
+certification improvement. The build experiment used the diagnostic D root,
+not canonical P-drive preparation or separate kernel/interop builds.
+
+Terminalf05fecec8c282b0d5ffbc867affbd10baf91f063828bfdbf2369d959f24ce446
+exits0 with no retained children and released lease. Independent data-only audit
+ce6918f06524b667a100d01142ec528dfbb45831c8f308d292c0024d2921b94b passes20
+mutation guards, then reconstructs all six builds/691 receipts, source2313 and
+6884 retained files. Every runner hash is08676957f2cddbe4a557d54cdc877721b6927339d7c109e120d70ff372263226;
+every memory-worker hash is e0990d914560e93d70bd807436c99e15f2ec4ab9474c50fef3986dc4b1d465e4.
+All six Cargo traces contain the same37 units. Rounded wall-time spans identify
+the serialized kernel-to-interop-to-runner chain with parallel facade and worker
+branches. Some kernel/interop spans are worse under available placement; none
+are discarded or mislabeled CPU-service attribution. No workload, public route,
+codegen flag, thin-LTO obligation or artifact requirement is removed.
+
+The narrow correction first exercises the original placement controls in a
+short-lived exact-runtime child with a30second timeout and data-only arguments.
+Failure stops before build. Parent placement remains inherited during unchanged
+offline locked Release builds; Windows own-process HighQoS is preserved. The
+original parent affinity/CPU-set/HighQoS enforcement then runs after successful
+build and before environment acquisition, conditioning or samples. Post-build
+failure remains unavailable. Receipts distinguish isolated preflight from actual
+measurement-parent placement; the no-build conditioner migration retains its
+existing direct pin. No live conditioner, trusted verifier, gate or threshold
+changes, and no host power configuration is modified.
+
+The initial four regression cases retain3 failures and1 boundary-sentinel error
+(36eea1). Corrected13 focused tests pass, including all seven callers and malformed,
+wrong-CPU, boolean, timeout, missing-runtime, build, power and post-pin failures.
+The133 existing controller/architecture/integrity/Windows dependents and39
+comparison/integrated-gate cases pass. Actual native lifecycle proofc42fe4da
+uses a mock build only: all32 CPUs persist through probe and mock build, CPU1
+is enforced afterward, and source/control bytes remain exact. Its isolated
+probe takes0.6981537s; this single observation is diagnostic overhead, not an
+authoritative net campaign speedup. Cross-platform/final source validation and
+the exact-path correction commit remain pending at this checkpoint.
+
+The generated-artifact skill identifies only the controller's generator-input
+match to enforced operational projection performance-resource-source-identities.
+Registered integrity passes without any refresh of its four outputs. Baseline,
+manifest, resource limits and valid-evidence fixture remain unchanged. The new
+source must pass fresh integrated preparation/runtime/prerequisites before freeze;
+no earlier success transfers to it. Both source-distinct38/80/126/independent
+no-reuse126 campaigns, qualified conditioning across all54 coordinates, fresh
+reference obligations, signing, reviewed-then-pinned immutable verification and
+guarded clean final closure remain. H08 OPEN; continuation ACTIVE.
+
+#### Attestation compatibility correction and retained development failure
+
+Initial combined185Native and184WSL plus1Windows-only skip pass; the native
+suite covers that skipped platform-only case. Downstream attestation inspection
+then finds the proposed preflight-scope field would violate an exact receipt
+shape and prematurely label parent pinning passed. Two new guards fail
+(ca2750); exact rejected overlay is retained as
+8bd64192d67290edaf4c799277af3379c2a3ca9fec3dec68ee14af1b161a9849.
+The producer-only correction issues the exact original placement receipt only
+after parent enforcement, preserves the successful check order, and retains
+preflight diagnostics separately in build details. No trusted verifier changes.
+All15 focused guards pass; final complete dependents and the exact-path commit
+remain pending. This addendum supersedes earlier pending cross-platform wording,
+not the historical observations or failed overlay.
+
+Reproducible inputs and raw results remain under
+`target/codex-tools/h08-build-placement-2808264e-v1.py` and its sibling directory;
+the independent data-only reader is `h08-build-placement-independent-v1.py`.
+Completion `h08-build-placement-complete-20261022T184601Z.json` binds request,
+producer, raw terminal, audit and every unfiltered time. Native lifecycle helper
+and receipt are `h08-build-scheduling-placement-proof-v1.py` and `.json`; its
+probe/build-gate bodies are unchanged by the receipt-only correction.
+
+#### Final regressions and diagnostic runtime failure
+
+Native combined239 completes in3768.771s with238PASS,1FAIL and0skip
+(terminal4b68a7). Failure transcription
+`h08-build-scheduling-native-final-failure-20261022T195641Z.json`,
+SHA f42a9578964c68b6c6abcc9015a87db497914d09b9a5b1f5f55240b1eb6794ba,
+retains the isolated-verifier import failure. Read-only paired import probes
+establish that native Python3.13.5 sees jsonschema only in user-site; `-I`
+correctly excludes it. This is a diagnostic-runtime dependency defect, not
+evidence to weaken isolation or change trusted verification. No package or
+host configuration was changed; the failed native suite remains failed.
+
+The already configured WSL Python3.12.3 imports dependencies under isolation.
+One-use `h08-build-scheduling-wsl-predictor-v1.py` first runs the real verifier
+script with `-I -B --help`, then only the15 scheduling regressions, controller
+suite and failed platform-neutral isolated-verifier case. Preflight passes in
+0.318845937s; all98 targeted cases pass0skip in57.507s. Request and terminal
+bind unchanged producer, both test sources and trusted-verifier bytes.
+Terminalb052226329479a6053ded55d70cecf8e8b8f1f2dbba4c4390c5e67c7662030f0
+and raw unit stderr ee54783183596ac9278696c2bd4d9c28ab37c64c3715d515974739a9bf7fed65
+retain the evidence. Diagnostic tests use synthetic fixture signing only;
+neither run accesses the private certifier or supplies certification authority.
+
+This addendum supersedes pending final regression wording, not any failure or
+historical result. Native238 cases and the WSL case supply cross-platform
+engineering coverage, not a single all-passing native run. No equivalent total
+workload speedup is inferred from these differently scoped suites. Fresh
+clean-source complete preparation/runtime/prerequisites, governed conditioning,
+both authoritative campaigns, signing and immutable verification remain before
+guarded closure. The six-path correction commit is not a certification freeze.

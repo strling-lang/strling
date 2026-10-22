@@ -1207,6 +1207,13 @@ class PerformanceResourceCertificationContractTests(unittest.TestCase):
                 return_value=("f" * 40, False),
             ),
             patch(
+                "tooling.performance_resource_certification._preflight_governed_cpu_affinity",
+                return_value=[20],
+            ),
+            patch(
+                "tooling.performance_windows.enforce_current_process_power_policy",
+            ),
+            patch(
                 "tooling.performance_resource_certification._enforce_governed_cpu_affinity",
                 return_value=[20],
             ),
@@ -3263,6 +3270,7 @@ class ConditionerSourceTransactionTests(unittest.TestCase):
                     "validate_manifest",
                     "validate_baseline",
                     "validate_evidence",
+                    "_preflight_governed_cpu_affinity",
                     "_enforce_governed_cpu_affinity",
                 ):
                     stack.enter_context(patch.object(performance, name))

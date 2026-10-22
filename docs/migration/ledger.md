@@ -8238,3 +8238,59 @@ exact-path commit/clean complete36/runtime/prerequisites and both wholeQ/P
 then pin-only promotion/pinned acceptance/guarded cleanformalCLOSED remain.
 Originalv6/29controls/607history/caps/samples/security/isolation remain unchanged.
 No controlled whole-certification speedup is claimed. H08 OPEN; ACTIVE.
+
+### H08 lossless build placement correction — 2026-10-22 (UTC)
+
+Unfrozen2808264e completed36 preparation and19 prerequisites/1565 cases;
+independent completionc438d271 retains all earlier failures. No authoritative
+profile or sample was consumed. Original CPU1 admission remains failed. The
+balanced capacity experiment remains unqualified:40of81 windows reject,
+including20 active and20 idle. Nine product-diagnostic medians are below the
+existing semantic-analysis ceiling, but7of27 counter windows reject; this is
+not admission or a replacement conditioning policy.
+
+Six fresh runner-bundle builds in fixed/available/available/fixed/fixed/available
+order retain every result. Independentauditce6918f0 reconstructs691 receipts,
+all12 identical executable hashes,37 Cargo units per build, source2313 and6884
+retained files. Median719/729/730s fixed versus685/687/686s available gives exact
+729.0581927to686.4892054s, a5.838901164percent component reduction. Kernel and
+interop spans do not uniformly improve; the serialized kernel/interop/runner
+chain remains. This is not standalone-kernel/interop or whole-certification gain.
+
+The controller now checks placement in a bounded isolated child, builds with
+inherited CPU placement and unchanged Windows own-process HighQoS, then enforces
+the original measurement placement before environment/conditioning/sampling.
+All seven build entry points retain exact commands, flags, artifact checks and
+fail-closed boundaries. Initial regression36eea1 fails3/errors1 as expected;
+corrected13 focused tests and133 direct dependents pass, plus39 comparison/gate
+tests. Actual native mock-build lifecyclec42fe4da preserves32 CPUs through the
+probe/build and enforces CPU1 afterward; probe0.6981537s, no compile or samples.
+Registered performance-artifact integrity passes without regeneration.
+
+New53checkpoint records the substantive correction, not formal certification.
+Cross-platform/final record validation, exact-path commit and fresh complete
+preparation/prerequisites remain; no candidate is frozen. Conditioner0996f40c,
+baselinec8a5edf0, manifest634ddb38, all caps/samples/security/license/history
+remain exact. Both whole38/80/126/independentnoReuse126 source-distinct campaigns,
+governed conditioning/reference qualification, signing, reviewed/pinned immutable
+verification and guarded clean formal CLOSED remain. H08 OPEN; ACTIVE.
+
+Build-placement checkpoint53 addendum: initial combined185Native/184WSL plus
+1Windows-only skip pass, with that case covered by Native. Downstream exact
+attestation-shape inspection adds two red guards ca2750; rejected overlay
+8bd64192 remains immutable. Corrected producer preserves unchanged trusted
+receipt shape/order and emits placement PASS only after actual parent pinning.
+All15 focused guards pass; final complete dependents/commit remain pending.
+For clarity,719/729/730 and685/687/686s above summarize the three individual
+times per mode; the medians are exactly729.0581927 and686.4892054s.
+
+Final source-bound regression addendum: native combined239 ends238PASS/1FAIL,
+0skip in3768.771s (terminal4b68a7, retained failuref42a9578). The failing
+isolated-verifier case finds native jsonschema only in user-site, correctly
+excluded by Python isolation. No verifier/isolation change or package install.
+Existing WSL isolated preflight passes in0.318845937s, then targeted98 tests
+pass0skip in57.507s, including that case and all15 scheduling regressions;
+terminalb0522263 and rawstderr ee547831 preserve the exact source pins.
+The native failed suite is not relabeled passed. This is diagnostic coverage,
+not Full, Release, signing, or trusted verification. Six-path correction record
+validation and commit follow; clean-source preparation remains before freeze.

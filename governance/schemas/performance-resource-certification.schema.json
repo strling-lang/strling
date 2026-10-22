@@ -1308,6 +1308,196 @@
                 "snapshot_fingerprint": { "$ref": "#/$defs/sha256" }
             }
         },
+        "rawPerformanceCounters": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "idle",
+                "kernel",
+                "user",
+                "dpc",
+                "interrupt",
+                "interrupt_count"
+            ],
+            "properties": {
+                "idle": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "kernel": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "user": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "dpc": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "interrupt": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "interrupt_count": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "activeProcessorFrame": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["query_begin_ns", "query_end_ns", "rows"],
+            "properties": {
+                "query_begin_ns": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "query_end_ns": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "rows": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/$defs/rawPerformanceCounters"
+                    }
+                }
+            }
+        },
+        "activeActorFrame": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "query_begin_ns",
+                "query_end_ns",
+                "creation_filetime_100ns",
+                "kernel_100ns",
+                "user_100ns",
+                "processor"
+            ],
+            "properties": {
+                "query_begin_ns": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "query_end_ns": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "creation_filetime_100ns": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]{0,19})$"
+                },
+                "kernel_100ns": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]{0,19})$"
+                },
+                "user_100ns": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]{0,19})$"
+                },
+                "processor": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "activeWorkAffinity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "processor_group",
+                "effective_logical_processors",
+                "process_affinity_mask",
+                "system_affinity_mask"
+            ],
+            "properties": {
+                "processor_group": { "const": 0 },
+                "effective_logical_processors": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "items": { "type": "integer", "minimum": 0 }
+                },
+                "process_affinity_mask": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-f]{16}$"
+                },
+                "system_affinity_mask": {
+                    "type": "string",
+                    "pattern": "^0x[0-9a-f]{16}$"
+                }
+            }
+        },
+        "activeWorkProof": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "kind",
+                "work_iterations",
+                "minimum_blocks",
+                "additional_guard_100ns",
+                "block_count",
+                "work_digest",
+                "priority_class",
+                "processor_before",
+                "processor_after",
+                "actor_before",
+                "actor_after",
+                "affinity_before",
+                "affinity_after",
+                "priority_class_after"
+            ],
+            "properties": {
+                "kind": {
+                    "const": "nested-user-accounted-isolation-v1"
+                },
+                "work_iterations": {
+                    "const": 10000
+                },
+                "minimum_blocks": {
+                    "const": 64
+                },
+                "additional_guard_100ns": {
+                    "const": 312500
+                },
+                "block_count": {
+                    "type": "integer",
+                    "minimum": 64
+                },
+                "work_digest": {
+                    "const": "a6d7774ae6101ffa801a306b3c327b20a9c9f995983e05d604a1b20a69bf358b"
+                },
+                "priority_class": {
+                    "const": 32
+                },
+                "processor_before": {
+                    "$ref": "#/$defs/activeProcessorFrame"
+                },
+                "processor_after": {
+                    "$ref": "#/$defs/activeProcessorFrame"
+                },
+                "actor_before": {
+                    "$ref": "#/$defs/activeActorFrame"
+                },
+                "actor_after": {
+                    "$ref": "#/$defs/activeActorFrame"
+                },
+                "affinity_before": {
+                    "$ref": "#/$defs/activeWorkAffinity"
+                },
+                "affinity_after": {
+                    "$ref": "#/$defs/activeWorkAffinity"
+                },
+                "priority_class_after": {
+                    "const": 32
+                }
+            }
+        },
         "quiescenceObservation": {
             "type": "object",
             "additionalProperties": false,

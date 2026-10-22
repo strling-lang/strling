@@ -26,9 +26,10 @@ from contextvars import ContextVar
 from pathlib import Path
 from typing import Any, Callable, Iterator, Mapping, Sequence, cast
 
-from jsonschema import Draft202012Validator
-
 from tooling import performance_windows
+from tooling.json_type_dispatch import (
+    BuiltinDraft202012Validator as Draft202012Validator,
+)
 from tooling.structured_operation_execution import (
     StructuredExecutionError,
     atomic_write_artifact,

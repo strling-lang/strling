@@ -9,9 +9,10 @@ import sys
 import unittest
 from contextlib import ExitStack
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from tooling import performance_windows
+from tooling import performance_windows_active
 from tooling import performance_resource_certification as controller
 from tooling.performance_resource_certification import _windows_host_attestation
 from tooling.performance_windows import (
@@ -621,6 +622,553 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
         self.assertFalse(attestation["reservation"]["exclusive"])
         self.assertFalse(attestation["reservation"]["unrelated_workloads_excluded"])
         self.assertTrue(attestation["reservation"]["quiescence_required"])
+
+
+class ActiveWorkAccountingTests(unittest.TestCase):
+    def window(self) -> dict[str, object]:
+        empty = _counter(idle=0, kernel=0, user=0)
+        idle = _counter(idle=100_000_000, kernel=100_000_000, user=0)
+        after = [copy.deepcopy(idle) for _ in range(32)]
+        after[1] = _counter(idle=0, kernel=3_125_000, user=96_875_000, dpc=500_000)
+        return {
+            "kind": performance_windows_active.ACTIVE_WORK_KIND,
+            "work_iterations": 10_000,
+            "minimum_blocks": 64,
+            "additional_guard_100ns": 312_500,
+            "block_count": 64,
+            "work_digest": performance_windows_active.ACTIVE_WORK_DIGEST,
+            "priority_class": 32,
+            "priority_class_after": 32,
+            "affinity_before": {
+                "processor_group": 0,
+                "effective_logical_processors": [1],
+                "process_affinity_mask": "0x0000000000000002",
+                "system_affinity_mask": "0x00000000ffffffff",
+            },
+            "affinity_after": {
+                "processor_group": 0,
+                "effective_logical_processors": [1],
+                "process_affinity_mask": "0x0000000000000002",
+                "system_affinity_mask": "0x00000000ffffffff",
+            },
+            "processor_before": {
+                "query_begin_ns": 0,
+                "query_end_ns": 10,
+                "rows": [copy.deepcopy(empty) for _ in range(32)],
+            },
+            "actor_before": {
+                "query_begin_ns": 20,
+                "query_end_ns": 30,
+                "creation_filetime_100ns": "134371087783213433",
+                "kernel_100ns": "0",
+                "user_100ns": "0",
+                "processor": 1,
+            },
+            "actor_after": {
+                "query_begin_ns": 10_000_000_030,
+                "query_end_ns": 10_000_000_040,
+                "creation_filetime_100ns": "134371087783213433",
+                "kernel_100ns": "1000000",
+                "user_100ns": "96875000",
+                "processor": 1,
+            },
+            "processor_after": {
+                "query_begin_ns": 10_000_000_050,
+                "query_end_ns": 10_000_000_060,
+                "rows": after,
+            },
+        }
+
+    def rates(self, proof=None):
+        return performance_windows_active.active_quiescence_rates(
+            self.window() if proof is None else proof, 1, 32
+        )
+
+    def test_same_ceilings_and_no_kernel_or_system_credit(self):
+        proof = self.window()
+        rates = self.rates(proof)
+        self.assertEqual(rates["selected_busy_basis_points"], 344)
+        self.assertEqual(rates["selected_interrupt_basis_points"], 50)
+        self.assertEqual(rates["system_busy_basis_points"], 313)
+        proof["actor_after"]["kernel_100ns"] = "3000000"
+        self.assertEqual(rates, self.rates(proof))
+        self.assertEqual(evaluate_quiescence(rates), [])
+
+    def test_exact_selected_boundary_and_one_accounted_unit_over(self):
+        proof = self.window()
+        proof["actor_after"]["user_100ns"] = "95312500"
+        self.assertEqual(self.rates(proof)["selected_busy_basis_points"], 500)
+        proof["actor_after"]["user_100ns"] = "95312499"
+        self.assertEqual(self.rates(proof)["selected_busy_basis_points"], 501)
+
+    def test_interrupt_boundary_never_rounds_into_pass(self):
+        proof = self.window()
+        proof["processor_after"]["rows"][1]["dpc"] = 1_000_001
+        self.assertEqual(self.rates(proof)["selected_interrupt_basis_points"], 101)
+        self.assertIn(
+            "selected_interrupt_basis_points>100",
+            evaluate_quiescence(self.rates(proof)),
+        )
+
+    def test_whole_host_limit_includes_the_complete_actor(self):
+        proof = self.window()
+        for cpu in range(2, 7):
+            proof["processor_after"]["rows"][cpu] = _counter(
+                idle=0, kernel=100_000_000, user=0
+            )
+        self.assertIn(
+            "system_busy_basis_points>1500", evaluate_quiescence(self.rates(proof))
+        )
+
+    def test_high_foreground_interference_is_retained_and_rejected(self):
+        proof = self.window()
+        proof["actor_after"]["user_100ns"] = "90000000"
+        self.assertEqual(self.rates(proof)["selected_busy_basis_points"], 1032)
+        self.assertIn(
+            "selected_busy_basis_points>500", evaluate_quiescence(self.rates(proof))
+        )
+
+    def test_actor_user_or_kernel_overclaim_is_not_clamped(self):
+        for field, value in (("user_100ns", "96875001"), ("kernel_100ns", "3125001")):
+            proof = self.window()
+            proof["actor_after"][field] = value
+            with (
+                self.subTest(field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+
+    def test_actor_cpu_birth_and_regressed_accounting_fail_closed(self):
+        for field, value in (
+            ("processor", 20),
+            ("creation_filetime_100ns", "134371087783213434"),
+            ("kernel_100ns", "0"),
+        ):
+            proof = self.window()
+            if field == "kernel_100ns":
+                proof["actor_before"]["kernel_100ns"] = "1"
+            proof["actor_after"][field] = value
+            with (
+                self.subTest(field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+
+    def test_affinity_and_priority_cannot_change_during_work(self):
+        for field, value in (
+            ("processor_group", 1),
+            ("effective_logical_processors", [0, 1]),
+            ("effective_logical_processors", [True]),
+            ("process_affinity_mask", "0x0000000000000003"),
+            ("system_affinity_mask", "0x0000000000000000"),
+        ):
+            proof = self.window()
+            proof["affinity_after"][field] = value
+            with (
+                self.subTest(field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+        proof = self.window()
+        proof["priority_class_after"] = 64
+        with self.assertRaises(WindowsQualificationError):
+            self.rates(proof)
+
+    def test_every_nesting_boundary_and_short_window_fail_closed(self):
+        for frame, field, value in (
+            ("processor_before", "query_begin_ns", 11),
+            ("processor_before", "query_end_ns", 21),
+            ("actor_before", "query_begin_ns", 31),
+            ("actor_after", "query_begin_ns", 10_000_000_029),
+            ("actor_after", "query_end_ns", 10_000_000_051),
+            ("processor_after", "query_end_ns", 10_000_000_049),
+        ):
+            proof = self.window()
+            proof[frame][field] = value
+            with (
+                self.subTest(frame=frame, field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+
+    def test_raw_cpu_denominator_fields_types_and_regressions(self):
+        variants = []
+        proof = self.window()
+        proof["processor_after"]["rows"].pop()
+        variants.append(proof)
+        for field, value in (("user", True), ("kernel", 100_000_000.0), ("idle", -1)):
+            proof = self.window()
+            proof["processor_after"]["rows"][0][field] = value
+            variants.append(proof)
+        proof = self.window()
+        proof["processor_before"]["rows"][0]["user"] = 1
+        variants.append(proof)
+        proof = self.window()
+        del proof["processor_after"]["rows"][0]["interrupt_count"]
+        variants.append(proof)
+        for proof in variants:
+            with (
+                self.subTest(proof=proof),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+
+    def test_recipe_coverage_unknown_keys_and_priority_fail_closed(self):
+        for field, value in (
+            ("kind", "idle-v6"),
+            ("block_count", 63),
+            ("minimum_blocks", True),
+            ("work_iterations", 9999),
+            ("additional_guard_100ns", 0),
+            ("priority_class", 64),
+            ("work_digest", "0" * 64),
+            ("unregistered", 0),
+        ):
+            proof = self.window()
+            proof[field] = value
+            with (
+                self.subTest(field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+
+    def test_FILETIME_strings_are_exact_and_no_clock_grid_is_inferred(self):
+        proof = self.window()
+        proof["actor_after"]["user_100ns"] = "96000001"
+        self.assertEqual(self.rates(proof)["selected_busy_basis_points"], 432)
+        for value in (
+            96_875_000,
+            96_875_000.0,
+            "096875000",
+            "９６８７５０００",
+            str(2**64),
+            "1" * 5000,
+        ):
+            proof = self.window()
+            proof["actor_after"]["user_100ns"] = value
+            with (
+                self.subTest(value=value),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+
+    def test_native_counter_widths_and_processor_group_fail_closed(self):
+        for selected, count in ((1, True), (64, 64), (1, 65), (2**63 - 1, 32)):
+            with (
+                self.subTest(selected=selected, count=count),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                performance_windows_active.active_quiescence_rates(
+                    self.window(), selected, count
+                )
+        for field, value in (("user", 2**63), ("interrupt_count", 2**32)):
+            proof = self.window()
+            proof["processor_after"]["rows"][0][field] = value
+            with (
+                self.subTest(field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+        proof = self.window()
+        proof["processor_after"]["rows"][0] = _counter(
+            idle=100_000_000, kernel=99_000_000, user=2_000_000
+        )
+        with self.assertRaises(WindowsQualificationError):
+            self.rates(proof)
+
+    def test_inflated_or_short_CPU_denominators_cannot_hide_interference(self):
+        for kernel in (90_000_000, 110_000_000):
+            proof = self.window()
+            proof["processor_after"]["rows"][0] = _counter(
+                idle=kernel, kernel=kernel, user=0
+            )
+            with (
+                self.subTest(kernel=kernel),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                self.rates(proof)
+
+    def test_accounted_interference_fraction_exhaustive_boundary_model(self):
+        # Inclusion theorem over accounted units; not a physical error-bound
+        # or an empirical claim about the precision of Windows CPU counters.
+        for nonactor in range(21):
+            for actor_kernel in range(21):
+                actor_user = 100 - nonactor - actor_kernel
+                self.assertGreaterEqual(100 - actor_user, nonactor)
+                self.assertEqual(100 - actor_user, nonactor + actor_kernel)
+
+    def test_fixed_work_known_answer(self):
+        self.assertEqual(
+            hashlib.pbkdf2_hmac(
+                "sha256",
+                b"strling-active-work-v1",
+                b"cpu1-accounted-isolation",
+                10_000,
+                32,
+            ).hex(),
+            performance_windows_active.ACTIVE_WORK_DIGEST,
+        )
+
+    def test_strict_schema_accepts_raw_proof_and_rejects_unregistered_fields(self):
+        proof = self.window()
+        controller.validate_definition(
+            proof, definition="activeWorkProof", label="synthetic active proof"
+        )
+        for mutate in ("unknown", "numeric-birth", "missing-counter"):
+            changed = copy.deepcopy(proof)
+            if mutate == "unknown":
+                changed["foreign"] = True
+            elif mutate == "numeric-birth":
+                changed["actor_before"]["creation_filetime_100ns"] = 134371087783213433
+            else:
+                del changed["processor_after"]["rows"][0]["idle"]
+            with (
+                self.subTest(mutate=mutate),
+                self.assertRaises(controller.PerformanceResourceError),
+            ):
+                controller.validate_definition(
+                    changed,
+                    definition="activeWorkProof",
+                    label="invalid synthetic active proof",
+                )
+
+    def observation(self):
+        proof = self.window()
+        return {
+            "role": "unqualified-active-work-diagnostic",
+            "status": "diagnostic-complete",
+            "baseline_admission": False,
+            "certification_eligible": False,
+            "performance_qualification": False,
+            "profiles": 0,
+            "new_samples": 0,
+            "candidate_rates": self.rates(proof),
+            "candidate_limit_exceedances": [],
+            "active_work": proof,
+        }
+
+    def test_diagnostic_reconstructs_instead_of_trusting_claimed_green(self):
+        observation = self.observation()
+        performance_windows_active.validate_diagnostic_observation(observation, 1, 32)
+        for field, value in (
+            ("selected_busy_basis_points", 0),
+            ("selected_interrupt_basis_points", 0),
+            ("selected_interrupt_count_delta", False),
+        ):
+            changed = copy.deepcopy(observation)
+            changed["candidate_rates"][field] = value
+            with (
+                self.subTest(field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                performance_windows_active.validate_diagnostic_observation(
+                    changed, 1, 32
+                )
+        changed = copy.deepcopy(observation)
+        changed["active_work"]["actor_after"]["user_100ns"] = "90000000"
+        with self.assertRaises(WindowsQualificationError):
+            performance_windows_active.validate_diagnostic_observation(changed, 1, 32)
+
+    def test_diagnostic_cannot_assert_authority_or_hide_exceeded_limits(self):
+        for field, value in (
+            ("status", "passed"),
+            ("baseline_admission", True),
+            ("certification_eligible", True),
+            ("performance_qualification", True),
+            ("profiles", False),
+            ("new_samples", 1),
+            ("candidate_limit_exceedances", ["ignored"]),
+        ):
+            changed = self.observation()
+            changed[field] = value
+            with (
+                self.subTest(field=field),
+                self.assertRaises(WindowsQualificationError),
+            ):
+                performance_windows_active.validate_diagnostic_observation(
+                    changed, 1, 32
+                )
+
+    def test_old_idle_snapshot_schema_cannot_carry_an_active_proof(self):
+        baseline = json.loads(
+            (
+                ROOT / "tests/certification/performance-resource/1.0/baseline.json"
+            ).read_bytes()
+        )
+        snapshot = copy.deepcopy(baseline["conditioning_repetitions"][0])
+        controller.validate_definition(
+            snapshot,
+            definition="conditioningSnapshot",
+            label="retained historical snapshot",
+        )
+        snapshot["quiescence_observation"]["active_work"] = self.window()
+        with self.assertRaises(controller.PerformanceResourceError):
+            controller.validate_definition(
+                snapshot, definition="conditioningSnapshot", label="invalid relabel"
+            )
+        snapshot["policy_id"] = "native-windows-active-user-accounting-v7"
+        with self.assertRaises(controller.PerformanceResourceError):
+            controller.validate_definition(
+                snapshot,
+                definition="conditioningSnapshot",
+                label="unqualified v7 snapshot",
+            )
+        del snapshot["quiescence_observation"]["active_work"]
+        with self.assertRaises(controller.PerformanceResourceError):
+            controller.validate_definition(
+                snapshot,
+                definition="conditioningSnapshot",
+                label="v7 missing raw proof",
+            )
+
+    def test_acquisition_preserves_all_blocks_and_calls_only_own_apis(self):
+        proof = self.window()
+        kernel32 = Mock()
+        kernel32.GetPriorityClass.return_value = 32
+        with (
+            patch.object(
+                performance_windows_active, "_kernel32", return_value=kernel32
+            ),
+            patch.object(
+                performance_windows_active, "_current_process_handle", return_value=1
+            ),
+            patch.object(
+                performance_windows_active,
+                "process_affinity",
+                return_value=proof["affinity_before"],
+            ),
+            patch.object(
+                performance_windows_active,
+                "_active_processor_snapshot",
+                side_effect=[
+                    proof["processor_before"],
+                    proof["processor_after"],
+                ],
+            ),
+            patch.object(
+                performance_windows_active,
+                "_active_actor_snapshot",
+                side_effect=[
+                    proof["actor_before"],
+                    proof["actor_after"],
+                ],
+            ),
+            patch.object(
+                performance_windows_active.time,
+                "perf_counter_ns",
+                side_effect=[
+                    0,
+                    *([20_000_000_000] * 65),
+                ],
+            ),
+            patch.object(
+                performance_windows_active.hashlib,
+                "pbkdf2_hmac",
+                return_value=bytes.fromhex(
+                    performance_windows_active.ACTIVE_WORK_DIGEST
+                ),
+            ) as work,
+        ):
+            rates, observed = performance_windows_active.active_work_observation(1, 32)
+        self.assertEqual(observed["block_count"], 64)
+        self.assertEqual(work.call_count, 64)
+        self.assertEqual(self.rates(proof), rates)
+
+    def test_unavailable_or_non_normal_priority_is_not_work_admission(self):
+        for value in (0, 64):
+            kernel32 = Mock()
+            kernel32.GetPriorityClass.return_value = value
+            with (
+                patch.object(
+                    performance_windows_active, "_kernel32", return_value=kernel32
+                ),
+                patch.object(
+                    performance_windows_active,
+                    "_current_process_handle",
+                    return_value=1,
+                ),
+                patch.object(
+                    performance_windows_active, "_active_processor_snapshot"
+                ) as capture,
+                self.assertRaises(WindowsQualificationError),
+            ):
+                performance_windows_active.active_work_observation(1, 32)
+            capture.assert_not_called()
+
+    def test_failed_acquisition_preserves_exact_partial_raw_observations(self):
+        proof = self.window()
+        kernel32 = Mock()
+        kernel32.GetPriorityClass.return_value = 32
+        with (
+            patch.object(
+                performance_windows_active, "_kernel32", return_value=kernel32
+            ),
+            patch.object(
+                performance_windows_active, "_current_process_handle", return_value=1
+            ),
+            patch.object(
+                performance_windows_active,
+                "process_affinity",
+                return_value=proof["affinity_before"],
+            ),
+            patch.object(
+                performance_windows_active,
+                "_active_processor_snapshot",
+                return_value=proof["processor_before"],
+            ),
+            patch.object(
+                performance_windows_active,
+                "_active_actor_snapshot",
+                return_value=proof["actor_before"],
+            ),
+            patch.object(
+                performance_windows_active.time, "perf_counter_ns", return_value=0
+            ),
+            patch.object(
+                performance_windows_active.hashlib,
+                "pbkdf2_hmac",
+                return_value=b"invalid answer",
+            ),
+            self.assertRaises(WindowsQualificationError) as caught,
+        ):
+            performance_windows_active.active_work_observation(1, 32)
+        raw = caught.exception.active_work_proof
+        self.assertEqual(raw["processor_before"], proof["processor_before"])
+        self.assertEqual(raw["actor_before"], proof["actor_before"])
+        self.assertEqual(raw["work_digest"], b"invalid answer".hex())
+        self.assertEqual(raw["block_count"], 0)
+        self.assertNotIn("actor_after", raw)
+
+    def test_own_thread_query_error_is_reported_without_an_undefined_fallback(self):
+        kernel32 = Mock()
+        kernel32.GetThreadTimes.return_value = 0
+        with (
+            patch.object(
+                performance_windows_active, "_kernel32", return_value=kernel32
+            ),
+            patch.object(
+                performance_windows_active,
+                "_raise_last_error",
+                side_effect=WindowsQualificationError(
+                    "intentional current-thread query failure"
+                ),
+            ) as failed,
+            self.assertRaises(WindowsQualificationError),
+        ):
+            performance_windows_active._active_actor_snapshot()
+        failed.assert_called_once_with("GetThreadTimes(current admission actor)")
+
+    def test_unavailable_diagnostic_retains_partial_data_never_green(self):
+        error = WindowsQualificationError("intentional synthetic acquisition error")
+        error.active_work_proof = {"block_count": 0, "complete": False}
+        with patch.object(
+            performance_windows_active, "active_work_observation", side_effect=error
+        ):
+            document = performance_windows_active.diagnostic_observation(1, 32)
+        self.assertEqual(document["status"], "diagnostic-unavailable")
+        self.assertEqual(document["active_work"], error.active_work_proof)
+        self.assertIs(document["baseline_admission"], False)
+        self.assertIs(document["certification_eligible"], False)
 
 
 if __name__ == "__main__":

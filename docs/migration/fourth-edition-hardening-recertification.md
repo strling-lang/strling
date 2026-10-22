@@ -2807,3 +2807,55 @@ signing, reviewed immutable qualification before pin-only promotion, pinned
 trusted acceptance and guarded clean formal CLOSED remain uncompleted.
 H08 remains OPEN; continuation remains ACTIVE. No new controlled end-to-end
 wall-time improvement is claimed.
+
+### Isolated admission groundwork and static validation dispatch — 2026-10-22 UTC
+
+The live v6 conditioner remains byte-for-byte0996f40c. Auto-review rejected a
+premature v7 default switch and candidate admission import into production;
+neither was applied. A first in-file diagnostic foundation failed the unchanged
+live-source pin on both platforms. All four exact failed draft sources and
+receipts are preserved under h08-active-foundation-draft-live-pin-failure-2fed-v1.
+The foundation was moved into an isolated diagnostic-only module, not enabled
+by weakening the pin. A moved-module error-helper alias omitted in that draft
+was then caught by Ruff; its bytes5e9b2629 are retained and an error-path
+regression now covers the narrow correction.
+
+The isolated module0b5089ca retains strict raw per-CPU/thread data, exact birth
+strings, before/after affinity and normal priority, fully nested USER-only
+credit, every kernel/interrupt charge and integer ceilings500/100/1500.
+Partial failed acquisitions remain inspectable. Its fixed additional debit
+312500x100ns is not a proven physical CPU-accounting error bound; system-clock
+adjustment metadata is not used to infer one. Standalone proof-schema definitions
+cannot enter existing accepted conditioning snapshots, and v7 remains rejected.
+No diagnostic status can assert admission, profile, baseline or signing authority.
+Native49/49 focused cases pass; WSL48pass plus the actual Native-only complement.
+Correctly named direct-dependent suites pass140/140 Native and139pass plus one
+Native-only skip on WSL. An earlier nonexistent architecture-module invocation
+remains a retained loader failure, not a skipped requirement or product failure.
+
+A real pure integrity-check profile attributes4.998of5.407profiled seconds to
+schema validation. An independent narrow optimization uses public validator
+extension with exact builtin JSON type dispatch and canonical fallback for all
+other Python values and type extensions. It preserves every schema keyword,
+reference, traversal, error path/order/message/context and revalidation; it
+caches no instance or result and changes no global validator registration.
+The six fixed counterbalanced complete-check experiment retains every timing
+and all five validation labels per check. All six outputs are exactly equal,
+hashb24a38fe; report3c6839e7 preserves full inputs/results. Raw-data independent
+reconstruction confirms median2.3914621s canonical versus0.6439795s candidate,
+73.0717246percent lower. Host variation is substantial: this is an unconditioned
+single-operation diagnostic, not reliable whole-certification acceleration or
+performance qualification. The static controller integration524a39a7 is separate
+from the still-unqualified admission candidate; no candidate admission import
+exists in production.
+
+The generated-artifact skill maps the schema/controller only to the governed
+performance identity family; new source modules are not generated outputs.
+The exact registered integrity verifier passes before and after integration
+without regeneration. Baselinec8a5edf0 and manifest634ddb38 retain exact bytes,
+all measured data, policies and caps. No locks or authenticated evidence change.
+The new clean source still needs the complete36 gate and fresh prerequisites;
+no authoritative candidate is frozen. Full Q/P38/80/126/126 campaigns, fresh
+independent no-reuse Release each, rigorous governed admission/reference
+qualification, signing, immutable reviewed then pinned verification and guarded
+clean formal CLOSED remain uncompleted. H08OPEN; continuationACTIVE.

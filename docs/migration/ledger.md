@@ -8152,3 +8152,34 @@ remain pending; no new candidate is frozen. Both whole source-distinct
 38/80/126/126 campaigns, independent no-reuse Releases, signing, reviewed then
 pinned immutable verification and guarded clean formal CLOSED remain required.
 No controlled whole-certification gain is established. H08 OPEN; continuation ACTIVE.
+
+### H08 isolated accounting and lossless static dispatch — 2026-10-22 (UTC)
+
+Live conditioner0996f40c remains exact v6. Rejected premature v7 activation and
+production admission import were not applied or bypassed. The first in-file
+diagnostic foundation failed the unchanged source-pin guard; four exact failed
+sources/receipts are immutable. Isolation restores the original pin; a retained
+Ruff-detected missing error-helper alias gains a narrow error-path regression.
+Raw accounting remains diagnostic-only, v7 snapshots rejected, CPU-accounting
+uncertainty unqualified and all500/100/1500limits unchanged.
+
+Corrected complete direct dependents pass140Native/139WSL plus the separately
+executed Native-only complement. A nonexistent architecture-module loader error
+is retained separately and the correct module passes. No actual profile,
+admission retry, reference sample, signature or trusted acceptance is claimed.
+
+Actual static-check profiling locates its hot path in schema validation.
+Lossless builtin type dispatch preserves canonical fallback, every keyword,
+traversal and error, with no result cache. Six fixed counterbalanced full checks
+produce identical results/five labels; report3c6839e7 and independent raw
+reconstruction retain median2.3914621s versus0.6439795s (73.0717246percent).
+Substantial host variation remains; only an unconditioned one-operation
+diagnostic, never an end-to-end or authoritative performance gain. Static
+integration524a39a7 does not import candidate admission code.
+
+Registered integrity passes without regeneration; baselinec8a5edf0 and
+manifest634ddb38 unchanged. New source requires a fresh complete36 gate and
+prerequisites before any clean authoritative freeze. Both whole38/80/126/126
+source-distinct campaigns, fresh no-reuse independent Releases, governed
+admission/reference qualification, signing, reviewed-then-pinned immutable
+verification and guarded final clean formal CLOSED remain. H08OPEN; ACTIVE.

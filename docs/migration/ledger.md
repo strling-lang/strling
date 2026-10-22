@@ -8294,3 +8294,41 @@ terminalb0522263 and rawstderr ee547831 preserve the exact source pins.
 The native failed suite is not relabeled passed. This is diagnostic coverage,
 not Full, Release, signing, or trusted verification. Six-path correction record
 validation and commit follow; clean-source preparation remains before freeze.
+
+### H08 whole-product interference and median-blindness guard — 2026-10-22 (UTC)
+
+The preceding six-path correction is committed as6bd5a4e6, clean and unfrozen.
+Fixed27-epoch interference diagnostic04f4fb7f completes in724.5365052s with
+normal owner/child retirement and lease release. Independent reader314ae601,
+report6a28b89f, reconstructs850 receipts,2314 source entries,6886 retained files,
+54 product processes,18 owned workers and all3457 attempts (3456 accepted,
+1 rejected). All66of108 failed counter windows remain failed. No admission.
+
+Nine controls per coordinate remain below the original27838/3722510ns ceilings.
+Same-CPU competition also leaves every sample median below those ceilings, yet
+whole-action medians rise1.2891677to2.8761665s and1.9865019to4.3518379s.
+Sibling-memory load raises sample medians25307to43663ns and2734800to5722700ns;
+both ceilings fail in all9 repetitions. Median-only conditioning is therefore
+insufficient for these workloads. This is not a product-regression finding on
+an isolated host, a physical interrupt attribution, or authority to waive v6.
+
+Diagnostic-only whole-interval reconstruction now retains the complete process
+span, all accepted/rejected batch durations and original sample median, without
+CPU subtraction, cycle conversion or an admission decision. Tests-first48e221
+preserves the missing-function failure; corrected16 focused cases pass.
+Integration785e4e6e reconstructs all54 retained processes without acquisition;
+58Native pass,57WSL pass plus1 native-only skip covered by Native. All850 raw
+outputs remain exact. Registered integrity and Ruff checks pass; no generation.
+
+Checkpoint54 remains in progress. No live conditioner, controller, verifier,
+baseline, cap, sample count, security, license or isolation change. Fresh-source
+complete preparation/runtime/prerequisites and both whole38/80/126/independent
+no-reuse126 campaigns, all54-coordinate/reference qualification, signing,
+reviewed/pinned immutable verification and guarded clean formal CLOSED remain.
+No new or whole-certification speedup is claimed. H08 OPEN; continuation ACTIVE.
+
+Checkpoint54 reader addendum: initial validator22540941 failed its historical
+comparison because implicit nativecp1252 decoding corrupts UTF-8 prose. Direct
+byte-decoded comparison confirms all53 historical checkpoints unchanged.
+Explicit UTF-8 validation adds a lossless roundtrip guard; the first failed
+receipt remains immutable. This is a reader correction, not evidence rewriting.

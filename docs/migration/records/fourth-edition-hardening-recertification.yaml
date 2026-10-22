@@ -184,6 +184,7 @@ scope:
         - tooling/tests/test_performance_build_scheduling.py
         - tooling/tests/test_performance_resource_certification_architecture.py
         - tooling/tests/test_performance_windows.py
+        - tooling/tests/test_performance_whole_interval.py
         - tooling/tests/test_performance_comparison.py
         - tooling/tests/test_product_certification.py
         - tooling/tests/test_production_certification.py
@@ -1665,7 +1666,30 @@ checkpoints:
           - check: Current correction handoff and retained closure obligations
             result: not_run
             details: "Finalregressionwording above superseded by explicit nativefailure and targetedWSLsuccess, not erased. Exact6path recordvalidation/authorizedcommit/cleanSHA follow; newsource remainsunfrozen. Freshcomplete36/runtime/prerequisites beforefreeze and bothwholeQ/P38/80/126/independentnoReuse126, qualifiedconditioning/freshperformance/signing/immutableverification/guardedclosure remain. H08OPEN/continuationACTIVE; originalcaps/counts/history/security/license/isolation unchanged."
+    - name: Whole-product interference and diagnostic whole-interval guard
+      status: in_progress
+      evidence:
+          - check: Prior scheduling correction committed without certification freeze
+            result: passed
+            details: "Six-path correction committed6bd5a4e660452b9ec78f1d4cb30532d5dcab25dd, clean before the new diagnostic. This supersedes pending-commit wording in checkpoint53, not historical failures. No candidate freeze or authoritative profile/sample consumption. Existing native239 failure and targeted WSL98 proof remain exactly classified."
+          - check: Fixed interference experiment independently reconstructed
+            result: passed
+            details: "Prospective protocol639f4f24005863cd23ce131cabd026afb7530686de81e6264b3093046bb12ebd fixes27 rotated-triad epochs,9each control/sameCPU/SiblingMemory, two coordinates512warmups64samples/batch76or1. Terminal04f4fb7f2354ee74bdf664821c133764ba28bddbc60dd2019d1f8d00f1958851 actualexit0/724.5365052s/nochildren/releasedlease. Independent314ae601 reader12Native12WSLguards; report6a28b89f490904de7f159f5f172693350763bbcca8cc8c3e38e412e3438fda28 reconstructs850receipts/2314source/6886held/54productprocesses/18workers/3457attempts=3456accepted+1rejected. Retained predecessor binary is diagnostic-only; all compiled inputs unchanged, no fresh certification build or sample reuse claim."
+          - check: Conditioning failures and median-only blind spot preserved
+            result: failed
+            details: "66of108 counter windows fail unchanged diagnostic idle/IRQ/system caps:18control/31sameCPU/17sibling. All failure rows retained. Control product medians25307/2734800ns; sameCPU25495/2786800ns stays under27838/3722510 ceilings in all9repetitions, yet whole-action medians1.2891677to2.8761665s and1.9865019to4.3518379s. Sibling-memory43663/5722700ns exceeds both ceilings in all9, with whole medians2.1212398/4.0134917s. Median-only conditioning is insufficient. Neither raw CPU-accounting precision, driver attribution, isolated product regression, v7 admission nor reference qualification is established."
+          - check: Diagnostic-only full-interval reconstruction and direct-dependent coverage
+            result: passed
+            details: "Pure function requires independently expected source/artifact/workload, exact512/64/128 counts, same-birth nested child clocks, successful exit and all accepted/rejected batch durations. Preserves full process interval, batch sum, rawCPU100ns and original median; no CPU subtraction, cycle conversion, passing-capacity label or admission decision. Missing-function red48e221 preserved;16focusedPASS. Integration785e4e6ef7b5e0fcd33e418f14871febb7a198b51a366530ea61511b36f26259 reconstructs all54 original processes/3457attempts without acquisition; rawc8fe80d330cf0c204c6bf6885df4f9ce0859853c9f700989a080819cc0b5a843. Native58PASS0skip;WSL57PASS1native-onlyskip covered byNative. All850acquisitionoutputs unchanged; registeredintegrity/RuffPASS, zero generation."
+          - check: Fresh source and formal closure obligations remain
+            result: not_run
+            details: "Five diagnostic/test/record paths match no36registeredfamily; no live conditioner/controller/verifier/baseline/manifest/resource/valid-evidence/cap/count/security/license/isolation change. All12conditioningobligations/all54coordinates/independent fresh references remain unqualified; no median-only or CPU-credit-only promotion. New54checkpoint validation/exact-path commit/clean engineering source remain; full36/runtime/prerequisites required before eventual freeze. BothwholeQ/P38Local80PR126Full/independentnoReuse126Release,125PASS+soleVSCElicensewaiver, fresh valid performance/signing/reviewedthenpinnedimmutabletrust/guardedcleanformalCLOSED remain. No new or totalcertificationgain; prior5.838901164percent build reduction remains component-only. H08OPEN/continuationACTIVE. Earlier readiness rationale is retained historical context; this checkpoint is the current engineering state."
+          - check: Retained pre-commit reader failure and explicit UTF-8 correction
+            result: failed
+            details: "Initial validator225409412aeb99a86f431cebb6c52c63ed6019c625ba6bcb89acbff16dd6c48e fails historical comparison because implicit nativecp1252 decoding corrupts UTF-8 prose. Independent byte-decoded comparison confirms all53 prior checkpoints unchanged. New source-distinct v2 uses explicit UTF-8 with lossless roundtrip guard before schema/history checks; corrected final checkpoint follows. Failed receipt and original historical rationale remain immutable. This is tooling-reader repair, not evidence regeneration or history modification."
 commits:
+    - sha: 6bd5a4e660452b9ec78f1d4cb30532d5dcab25dd
+      subject: "perf(certification): separate build and measurement placement"
     - sha: 2808264e80f81ce82b16af5080b4c728d5b0850a
       subject: "docs(certification): record bounded verification session continuity"
     - sha: 2a99027fa00da9ee989706febde79d82b09043a7

@@ -53,6 +53,144 @@ def _active_filetime(value: object) -> int:
     return int(value)
 
 
+def whole_product_interval_diagnostic(
+    proof: Mapping[str, Any], expected_workload: Mapping[str, Any]
+) -> dict[str, object]:
+    """Keep whole serial in-process workload time alongside sample medians.
+
+    A sample median can miss time-sliced competition even when the complete
+    process takes twice as long. This pure diagnostic never subtracts CPU time,
+    converts cycles to time, applies an admission threshold, or changes sample
+    acceptance. The enclosing span includes launch, all warmups, every accepted
+    and rejected attempt, gaps, exit and caller overhead. Its difference from
+    the batch sum is NOT an attribution of scheduler/interrupt time.
+
+    The caller must independently bind expected_workload to reviewed source,
+    artifact and command receipts. Validation of supplied fields alone cannot
+    prove execution, qualify a reference, or grant certification authority.
+    This shape covers the existing 512-warmup/64-sample serial latency runner;
+    it does not claim coverage of nonlatency or subprocess workloads.
+    """
+    fields = {
+        "role",
+        "workload",
+        "action_begin_ns",
+        "action_end_ns",
+        "exit_code",
+        "child_before",
+        "child_after",
+        "accepted_batch_elapsed_samples",
+        "rejected_batch_elapsed_samples",
+    }
+    workload_fields = {
+        "source_sha",
+        "runner_sha256",
+        "operation_id",
+        "fixture_id",
+        "batch_iterations",
+        "warmup_iterations",
+        "sample_iterations",
+        "maximum_sample_attempts",
+        "selected_logical_cpu",
+    }
+    if (
+        not isinstance(proof, Mapping)
+        or set(proof) != fields
+        or proof["role"] != "unqualified-whole-product-interval"
+        or type(proof["exit_code"]) is not int
+        or proof["exit_code"] != 0
+    ):
+        raise WindowsQualificationError("complete diagnostic product interval required")
+    for workload in (expected_workload, proof["workload"]):
+        if not isinstance(workload, Mapping) or set(workload) != workload_fields:
+            raise WindowsQualificationError("closed expected workload required")
+        for name, pattern in (
+            ("source_sha", r"[0-9a-f]{40}"),
+            ("runner_sha256", r"[0-9a-f]{64}"),
+            ("operation_id", r"latency:[a-z0-9-]+"),
+            ("fixture_id", r"fixture:[a-z0-9-]+"),
+        ):
+            if (
+                not isinstance(workload[name], str)
+                or re.fullmatch(pattern, workload[name]) is None
+            ):
+                raise WindowsQualificationError(
+                    "invalid source-bound workload identity"
+                )
+        for name, required in (
+            ("warmup_iterations", 512),
+            ("sample_iterations", 64),
+            ("maximum_sample_attempts", 128),
+        ):
+            if _active_integer(workload[name]) != required:
+                raise WindowsQualificationError("whole-product workload count changed")
+        if (
+            _active_integer(workload["batch_iterations"], minimum=1) > 4096
+            or _active_integer(workload["selected_logical_cpu"]) > 63
+        ):
+            raise WindowsQualificationError("whole-product batch or CPU changed")
+    if proof["workload"] != expected_workload:
+        raise WindowsQualificationError("whole-product expected workload mismatch")
+    begin = _active_integer(proof["action_begin_ns"])
+    end = _active_integer(proof["action_end_ns"])
+    child_fields = {"pid", "birth", "kernel", "user", "query_begin_ns", "query_end_ns"}
+    for child in (proof["child_before"], proof["child_after"]):
+        if not isinstance(child, Mapping) or set(child) != child_fields:
+            raise WindowsQualificationError("closed child clock identity required")
+        _active_integer(child["pid"], minimum=1)
+        if _active_filetime(child["birth"]) == 0:
+            raise WindowsQualificationError("positive child birth required")
+        for name in child_fields - {"pid", "birth"}:
+            _active_integer(child[name])
+    before, after = proof["child_before"], proof["child_after"]
+    if (
+        before["pid"] != after["pid"]
+        or before["birth"] != after["birth"]
+        or not begin
+        <= before["query_begin_ns"]
+        <= before["query_end_ns"]
+        < after["query_begin_ns"]
+        <= after["query_end_ns"]
+        <= end
+        or any(after[k] < before[k] for k in ("kernel", "user"))
+    ):
+        raise WindowsQualificationError("whole child interval is not nested/monotonic")
+    accepted = proof["accepted_batch_elapsed_samples"]
+    rejected = proof["rejected_batch_elapsed_samples"]
+    if (
+        type(accepted) is not list
+        or len(accepted) != 64
+        or type(rejected) is not list
+        or len(accepted) + len(rejected) > 128
+    ):
+        raise WindowsQualificationError("all accepted/rejected attempts required")
+    samples = [*_validated_durations(accepted), *_validated_durations(rejected)]
+    total = sum(samples)
+    if total > end - begin:
+        raise WindowsQualificationError("serial batch durations exceed enclosing span")
+    batch = expected_workload["batch_iterations"]
+    normalized = sorted(max(1, (n + batch // 2) // batch) for n in accepted)
+    return {
+        "role": "unqualified-whole-product-interval",
+        "status": "diagnostic-complete",
+        "baseline_admission": False,
+        "certification_eligible": False,
+        "performance_qualification": False,
+        "whole_action_elapsed_ns": end - begin,
+        "all_attempt_batch_elapsed_ns": total,
+        "outside_sample_batches_ns": end - begin - total,
+        "accepted_sample_median_ns": (normalized[31] + normalized[32]) // 2,
+        "attempts": len(samples),
+        "rejected_attempts": len(rejected),
+        "child_cpu_delta_100ns": sum(after[k] - before[k] for k in ("kernel", "user")),
+        "cpu_time_subtracted": False,
+    }
+
+
+def _validated_durations(values: list[object]) -> list[int]:
+    return [_active_integer(value, minimum=1) for value in values]
+
+
 def active_quiescence_rates(
     proof: Mapping[str, Any], selected_logical_cpu: int, processor_count: int
 ) -> dict[str, int]:

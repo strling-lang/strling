@@ -3089,3 +3089,96 @@ workload speedup is inferred from these differently scoped suites. Fresh
 clean-source complete preparation/runtime/prerequisites, governed conditioning,
 both authoritative campaigns, signing and immutable verification remain before
 guarded closure. The six-path correction commit is not a certification freeze.
+
+### Checkpoint54 — whole-product interference and median-blindness guard
+
+The preceding correction is committed as
+`6bd5a4e660452b9ec78f1d4cb30532d5dcab25dd`, clean and unfrozen. This explicitly
+supersedes pending-commit wording above, not any historical failure. The new
+diagnostic uses the retained source-bound predecessor runner read-only: all
+compiled inputs are unchanged by the exact six Python/record-path commit.
+This avoids another diagnostic compile, but is not a fresh certification build
+or a measured equivalent-workload certification speedup.
+
+Prospective protocol639f4f24 fixes27 epochs, nine each of control, owned same-CPU
+SHA256 work and owned sibling-CPU0 memory work. Nine rotated triads balance each
+condition across order positions. Each epoch executes semantic-analysis/common
+and semantic-parse/large with unchanged512 warmups and64 samples, batch76/1,
+and ceilings27838/3722510ns. All32 CPU counters enclose each10second idle window
+and both whole product processes, including launch, warmups, attempts and exit.
+Workers have normal priority, own placement/HighQoS,64MiB maximum owned buffers,
+bounded lifetime and same-birth/token normal shutdown. No host setting changes.
+
+Terminal04f4fb7f2354ee74bdf664821c133764ba28bddbc60dd2019d1f8d00f1958851
+completes27 epochs in724.5365052s, with unchanged source/history, no retained
+children and released lease. Independent reader314ae60164d4733829fb0e28cf04a79ff609d9a5c8d6c7f9a4d0fdf17bd1bc38
+passes12 mutation guards on Native and WSL; report
+6a28b89f490904de7f159f5f172693350763bbcca8cc8c3e38e412e3438fda28 reconstructs
+all850 closed receipts,2314 source/Git/generated entries,6886 retained files,
+54 product processes,18 worker lifecycles and3457 attempts. The3456 accepted
+and1 rejected attempt are all retained. Of108 counter windows,66 fail at least
+one unchanged diagnostic idle/IRQ/system cap:18control,31same-CPU,17sibling.
+No unfavorable result is omitted or promoted into passing certification data.
+
+Control sample medians across nine repetitions are25307ns and2734800ns.
+Same-CPU medians are25495ns and2786800ns, with every repetition still below
+the original product ceilings. However, whole-action median times rise from
+1.2891677to2.8761665s and1.9865019to4.3518379s. Sample-median success alone
+therefore fails to establish isolation for these workloads. Sibling-memory
+medians are43663ns and5722700ns; all nine repetitions fail both product ceilings.
+Whole-action medians also rise to2.1212398s and4.0134917s. The experiment
+distinguishes scheduling-sensitive full duration from shared-resource-sensitive
+product duration; it does not identify an interrupt driver or quantify physical
+CPU-accounting error. Intentional interference is not an isolated product
+regression and does not justify optimizing away the workload.
+
+The narrow correction adds pure whole-product interval reconstruction only to
+the already unqualified diagnostic module. It requires independent expected
+source/artifact/workload fields, exact512/64/128 denominators, nested same-birth
+child clocks, successful exit and every accepted/rejected duration. It retains
+the full interval and batch sum alongside the original median. The difference
+between these durations includes warmups, launch, gaps and overhead; it is not
+called scheduler delay or used as an interference subtraction. CPU time stays
+raw in100ns units, cycles are not converted, and no threshold or admission
+decision is introduced. Nonlatency/subprocess coverage remains unqualified.
+
+The tests-first missing-function failure48e221 is retained. All16 focused
+guards pass, including the median-blindness counterexample, source/child identity,
+interval enclosure, attempt completeness, rejection retention and authority
+injection. Integration terminal
+785e4e6ef7b5e0fcd33e418f14871febb7a198b51a366530ea61511b36f26259 binds
+the exact source and reconstructs all54 original product intervals without new
+measurements. Its raw reconstruction is
+c8fe80d330cf0c204c6bf6885df4f9ce0859853c9f700989a080819cc0b5a843.
+Native58 pass0skip; WSL57 pass plus1 native-only integration skip, covered by
+Native. All850 acquisition receipts remain unchanged. Initial sandbox-only
+collector fixture-write failure and denied Ruff cache writes remain development
+failures, not measurement failures or passing reruns; scoped fixture access and
+read-only no-cache checks resolve those tool restrictions without host changes.
+
+Reproduction uses ignored, immutable `h08-product-interference-6bd5a4e6-v1.py`
+and its protocol, `h08-product-interference-independent-v1.py`, and
+`h08-whole-interval-integration-v1.py` under `target/codex-tools`. The generated
+artifact registry matches none of the five changed diagnostic/test/record paths.
+Registered performance-artifact integrity passes without regeneration. Live v6,
+the controller, trusted verifier, all four performance outputs and every actual
+cap/sample/security/license/isolation requirement remain unchanged.
+
+This is a diagnostic foundation, not a replacement conditioning policy. All12
+conditioning obligations, all54 coordinates and independently valid references
+still require qualification; median-only or CPU-credit-only admission is not
+permitted. No authoritative profile/sample was consumed and no candidate was
+frozen. Fresh complete preparation/runtime/prerequisites and both source-distinct
+38/80/126/independent no-reuse126 campaigns, signing, reviewed-then-pinned
+immutable verification and guarded final clean formal CLOSED remain. H08 OPEN;
+continuation ACTIVE. The earlier5.838901164percent build-component reduction
+remains separately scoped; no new end-to-end certification improvement is claimed.
+
+Checkpoint54 reader addendum: the first pre-commit validator failed its
+historical-checkpoint comparison, retained as
+225409412aeb99a86f431cebb6c52c63ed6019c625ba6bcb89acbff16dd6c48e.
+Native defaultcp1252 text decoding differed from the UTF-8 Git bytes. A direct
+byte-decoded comparison proves all53 historical checkpoints unchanged. The
+source-distinct v2 reader uses explicit UTF-8 and requires a lossless byte
+roundtrip before schema/history checks. No historical record or failed receipt
+is rewritten to repair the reader.

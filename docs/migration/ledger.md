@@ -8112,3 +8112,43 @@ annotations require fresh schema/format, exact-path commit and a new complete
 fresh independent no-reuse Release, threshold/sample/control, signing,
 immutable reviewed/pinned verification and guarded formal CLOSED requirement
 remains intact. H08 OPEN; continuation ACTIVE.
+
+### H08 active-work admission investigation and diagnostic repair — 2026-10-22 (UTC)
+
+Clean, unfrozen be2e3583 completed its independently accepted full36 gate,
+all19 prerequisites and the actual Native complement to 1,532 WSL-passed
+cases. These are source-bound predecessors, not new authoritative profiles.
+Original CPU1 admission remains FAILED: 1,406 busy/172 interrupt bp exceeded
+500/100, while system busy541 remained within1,500. The owner confirms an
+idle host and authorizes measurement/scheduling engineering, not host changes.
+
+An owned idle-priority companion demonstrates that high idle occupancy can
+fall under foreground work, but not invariably: the retained 93.92% service
+observation is below a hypothetical95% rule. No value is rounded into PASS.
+The first three-pair diagnostic fails on non-atomic ready-file publication;
+terminal b6cab9a6 and its64 completed control observations remain immutable.
+The source-distinct complete-byte atomic/no-clobber correction passes128
+guard executions, including deterministic race and preservation fixtures.
+
+The corrected experiment completes six fixed epochs/384 work observations in
+265.8909352s; report1c7a0cb0/terminal1325bf19, all14 Native2310-node fences,
+allthree owned children normalexit0 and released lease. Independent raw
+reconstruction7f4edd5f verifies384 clocks/576CPUrows/324PDHobservations/nine
+child intervals. Pair2 injected work retains90.23% service/3.92% interrupts
+and23.4950706s work wall versus21.3995996s paired control. This unfavorable
+epoch is not discarded and no general admission or speedup claim follows.
+
+A user-time-only active-accounting prototype passes14 guards per platform,
+retains500/100/1500 limits and still rejects that unfavorable epoch in
+counterfactual arithmetic. It remains inactive: CPU-accounting inclusion and
+uncertainty must be established, not inferred from a system-clock increment.
+No actual policy, ceiling, sample count, baseline or historical receipt changes.
+Any governed migration requires fresh independent reference data across all54
+coordinates/nine repetitions and every prior effective cap.
+
+Only three record paths change; the36-family registry maps none, so no
+generator or authority-bearing output is refreshed. Record validation/review
+remain pending; no new candidate is frozen. Both whole source-distinct
+38/80/126/126 campaigns, independent no-reuse Releases, signing, reviewed then
+pinned immutable verification and guarded clean formal CLOSED remain required.
+No controlled whole-certification gain is established. H08 OPEN; continuation ACTIVE.

@@ -2720,3 +2720,90 @@ Release each, signing, reviewed immutable qualification before pin-only
 promotion, pinned trusted verification and guarded final clean formal CLOSED
 remain mandatory. H08 remains OPEN; continuation remains ACTIVE. No successful
 end-to-end certification speedup has been established.
+
+### Clean-source predecessors and active-work admission investigation — 2026-10-22 (UTC)
+
+Engineering source be2e358312cd9748ae1e8b86ca95b7fd73ae90f2 remained clean,
+unfrozen and unsampled throughout this investigation. Its complete 36-family
+gate was independently accepted (07d3f9f2), followed by all 19 guarded
+prerequisites (7d8ccbcacdc0f31e6f7250bd3bd332902994b8416e466c54b58c1d94c9674f47).
+Actual WSL discovery retained 1,533 distinct cases: 1,532 passed and the one
+Native-only case was separately executed and independently accepted
+(c0fa83fd). Security counts were 30/30 dependency-integrity, 6/6 content/workflow
+and 54 PASS plus the sole license waiver across 55 dependency-risk checks.
+These source-bound prerequisites are not Local, PR, Full, Release or readiness
+results for a later source.
+
+The original CPU1 admission remains failed and immutable: terminal
+609b303970898175113b30d5fe1b098eaaca927fe6bd8dde93b68d0e3f63a25b records
+selected busy 1,406 bp and DPC/ISR 172 bp against unchanged 500/100 limits,
+with whole-host busy 541 bp against 1,500. The owner subsequently confirmed
+that the host was idle and authorized scheduling and measurement-attribution
+engineering, not changes to applications, services, security, power or
+privileges. No original admission or expensive consumed stage was replayed.
+
+All subsequent measurements are diagnostics, never baseline, performance
+qualification, authenticated product samples, profile, signing or trust
+evidence. An original-placement idle/active/idle diagnostic retained all 64
+identical PBKDF2 work records. A newly owned, bounded idle-priority companion
+then occupied 21.72–25% of the selected CPU during idle windows but only
+0.22% during active work. Foreground service was 93.92%; this is below a
+hypothetical 95% rule and must not be rounded or relabeled as passing.
+No unrelated process was controlled or terminated.
+
+The first three-pair counterbalanced diagnostic failed after 44.8844563s:
+its first 64-work control epoch completed, but the next epoch observed a
+ready-file path before its producer had written complete JSON. Terminal
+b6cab9a6 and all partial observations remain immutable. The owned child
+exited normally with code 0 and the exact lease was released. This was a
+diagnostic publication defect, not a product or performance failure.
+The source-distinct correction installs complete, flushed bytes atomically
+without overwriting existing evidence. Deterministic race, tampering,
+no-clobber and preservation fixtures passed all 32 guards twice on Native
+Windows and twice on WSL: 128 executions, zero failures, errors or skips.
+
+The corrected fixed experiment completed all six counterbalanced epochs and
+384 work observations in 265.8909352s. Report
+1c7a0cb0102d0f5113edcfffe893bef5d0a7b328ef8bb00cabae835c611fbd77 and terminal
+1325bf191fbe8c688034cd73855fd4ec40fdc58f0b203dbc7a082406826abc1d retain the
+entire result. All three owned companions exited normally; all 14 fresh
+Native 2,310-node source fences completed and the exact lease was released.
+Independent data-only reconstruction 7f4edd5f checks 384 raw work clocks,
+576 per-CPU rows, 324 PDH observations and nine exact child-CPU intervals,
+without importing producer or candidate verifier code. The initial
+PowerShell empty-object count mistake is retained separately; correcting
+that inspection did not change or rerun any measured data.
+
+The unfavorable second injected epoch remains visible: foreground service
+90.23%, DPC/ISR 3.92%, and 23.4950706s summed work wall time versus the paired
+control's 21.3995996s. The other two injected pairs had high idle occupancy
+but much less foreground interference. This distinguishes idle occupancy
+from interference under work; it does not prove every injected window valid,
+an admission replacement qualified, or a certification speedup.
+
+An inactive arithmetic prototype retains the 500/100/1,500 limits, credits
+only nested actor user-mode accounting, charges all kernel/interrupt time
+and an additional two accounting increments, and uses integer ceilings.
+All 14 guards pass on each platform. The unfavorable epoch still exceeds
+both candidate selected-work and interrupt limits. Its accounting-inclusion
+and uncertainty premises remain explicitly unqualified: reading a 156,250
+100ns system-clock increment alone is not a proof of a CPU-accounting error
+bound. Neither this prototype nor prior diagnostics activate a new policy,
+change a baseline, authorize historical acceptance or replace fresh reference
+qualification. Any operational alternative must be separately versioned,
+retain reconstructible raw evidence and reject invalid measurements; any
+governed reference migration must reproduce all 54 coordinates with fresh
+nine-repetition evidence and preserve every prior effective ceiling.
+
+Only three synchronized migration records change at this checkpoint. The
+36-family registry maps none of them to a generated family; no generator,
+lock, baseline or network-authenticated evidence is refreshed. Record-only
+schema/format validation and exact-path engineering review remain required.
+No new qualification candidate is frozen. Existing 512 warmups, 64 samples,
+nine reference repetitions, CPU/capacity controls, security/license scope and
+all evidence requirements remain intact. Both source-distinct whole
+38/80/126/126 campaigns, fresh independent no-reuse Release each, actual
+signing, reviewed immutable qualification before pin-only promotion, pinned
+trusted acceptance and guarded clean formal CLOSED remain uncompleted.
+H08 remains OPEN; continuation remains ACTIVE. No new controlled end-to-end
+wall-time improvement is claimed.

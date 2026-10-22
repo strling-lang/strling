@@ -8454,3 +8454,34 @@ Checkpoint58 is in progress. Six scoped paths; no generation or performance samp
 Actual admission/reference qualification, final36/runtime19 prerequisites, both
 complete campaigns and signed immutable verification/guarded closure remain open.
 H08 OPEN; continuation ACTIVE.
+
+### H08 owned compiler-helper lifecycle correction — 2026-10-22 (UTC)
+
+Clean unfrozen3d1219ac's independent-launch attempt failed its retained-owner guard
+before a build. The subsequent explicitly session-bound scheduling diagnostic
+bf310ddf failed after its first Cargo command returned0 in704.7043207s: worker exit
+did not imply an empty owned job. Zero comparison rounds completed; no speedup or
+certification result exists. Original survivor identity was not captured and is
+not retroactively attributed. The failed attempt, source receipts and all timings
+remain; its lease and P mapping released, and no failed output is reused.
+
+Separate tiny Rust reproductionf4f050a1 records69 snapshots, including61 after
+worker exit, with a live owned MSVC vctip.exe still present after30seconds. Its
+exact path and image hash are retained. Narrow diagnostic retirement now requires
+actual command success, complete required artifacts, complete owned-job identities
+and the exact pinned helper image; unknown survivors fail. Successful cleanup
+requires a fully drained private job and unchanged artifact bytes. No unrelated
+process or machine setting is touched; retained-owner independence remains strict.
+
+Source-bound proofbd9ee923 passes191Native/190WSL plus1Native-covered skip and the
+integrated artifact gate. Real tiny Cargo cleanup preserves its output and reaches
+zero owned members; the unknown-survivor fixture fails before success cleanup and
+is then retired through owned failure cleanup. These are lifecycle proofs, not
+STRling performance samples or an equivalent build speedup comparison.
+
+Checkpoint59 adds three implementation/test/charter paths and appends three records;
+all58 earlier checkpoints/readiness remain. No generated family matches or generator
+runs. A new clean engineering SHA and fresh immutable scheduling experiment remain
+required. Original admission/counter/reference qualification and both complete
+certification campaigns, signing, immutable trust and guarded clean closure remain.
+H08 OPEN; continuation ACTIVE.

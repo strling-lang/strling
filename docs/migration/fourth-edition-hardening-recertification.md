@@ -3411,3 +3411,60 @@ paths form checkpoint58; prior57 checkpoints and readiness remain preserved.
 Final-source complete36/runtime19 prerequisites, independent reference/holdout and
 all12/all54 challenges, both whole qualification/pin-promotion campaigns, signing,
 immutable verification and guarded clean formal closure remain. H08 OPEN; ACTIVE.
+
+### Successful build versus owned-job retirement — 2026-10-22 UTC
+
+Parent3d1219acfbc50ff9ebe5918fa429839b62413da4 remains unfrozen. Its independent
+diagnostic launch failed the existing retained-owner guard before source acquisition
+or Cargo execution. A bounded read-only probe found a remaining ancestor job with
+kill-on-close; no independence or ancestor-limit qualification is claimed. The
+subsequent experiment was explicitly session-bound and non-authoritative.
+
+That experiment's immutable terminal
+bf310ddfed1860d56251081d8156337e1131470c70aeaa74e7beb68bf8648d63 records771.295025s
+and zero completed rounds. Its first command successfully returned0 in704.7043207s;
+the harness then rejected a nonempty owned job after worker exit. Both source
+frames are identical, the private job was drained through failure cleanup, and the
+source lease and canonical P mapping released. No subsequent command ran. The
+failed round cannot supply a timing comparison or be retried/reused as successful.
+Its survivor's image was not recorded, so that particular identity remains unknown.
+
+A separate dependency-free Rust1.75 locked/offline/release fixture reproduced the
+lifecycle defect in36.638605s including a fixed30second post-exit observation.
+Terminalf4f050a179588172cee09b7ee07b8961aab0df5c6910b559088822420e9cb555 retains69
+native snapshots/61post-exit in rawd15ab8f18eb6b571d2b899834d28dbc185a9180c3bc8a5a95d4b5c3e6937a425.
+Live PID46144/birth134371857093131053 belongs to that exact private job and resolves
+to MSVC14.44.35207 Hostx64/x64/vctip.exe, image
+b52c617b17083cdc8ecbaedb1aee6bd08ed323308230eebef05d02747e36b00b. This establishes
+that command success does not imply descendant quiescence; it does not retroactively
+identify the survivor in the failed STRling build. Query brackets are retained;
+separate native queries are not represented as atomic.
+
+The new diagnostic-only policy accepts successful retirement only after actual
+build success, nonempty required artifacts, complete consistent job PID/accounting
+observations, live birth-identified membership and exact approved image path/hash.
+Only the explicitly pinned compiler helper may reach successful job termination.
+Unknown survivors, query errors, incomplete lists, changed files and drain timeout
+remain failures. Every observation is retained; outputs are rehashed after cleanup
+and job closure requires zero members. The caller retains bounded failure cleanup.
+This uses the scope of [TerminateJobObject](https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-terminatejobobject)
+for its own newly created job, not unrelated processes or host configuration.
+It does not change production certification scheduling or retained-owner guards.
+
+Tests-first06c4e2 records a missing-module loader failure, not14 executed negative
+cases. Source-bound final proofbd9ee92335fbb1929f0375290f6042176561282cfee882875171580d41b08f0f
+completes94.4443615s:191NativePASS,190WSLPASS plus1Native-covered skip, artifact gate,
+and two native fixtures. Actual compiler survivor24224/birth134371862062185282
+is retired and its144384byte artifact retains
+17fd96805792505c5a7ae1d2f0f00339579ec614cee76e520207279f45df4f67. Unknown Python
+and console survivors are rejected before success cleanup, then safely retired by
+the private-job failure path. This is lifecycle correctness, not product performance.
+
+Six scoped files match no registered generated family; no generator or authority
+renewal runs. All58 previous checkpoints and readiness remain unchanged. Fresh
+clean-source scheduling evidence remains necessary before any overlap optimization
+or speedup claim. Final-source complete36/runtime19, actual independent reference
+and holdout9+9/all12/all54 qualification, both whole38/80/126/independent no-reuse
+Release126 campaigns with125PASS and soleVSCEwaiver, signing, immutable reviewed
+qualification then pin-only promotion, verification and guarded clean formal
+closure remain. H08 OPEN; continuation ACTIVE.

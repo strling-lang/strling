@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/performance_build_retirement.py
+        - tooling/tests/test_performance_build_retirement.py
+        - tests/_design/unit/performance-build-retirement.md
         - .gitignore
         - .github/workflows/certification-integrity.yml
         - .github/workflows/ci.yml
@@ -1777,7 +1780,24 @@ checkpoints:
           - check: Remaining qualification and closure obligations
             result: not_run
             details: "Six scoped paths; generated verification only, no authority renewal or calibration. Previous57 checkpoints/readiness and historical failures retained; checkpoint58 schema/scope/exact-path commit verification follows. This deterministic build correction does not resolve original CPU1 admission or short-interval counter validity, qualify reference/holdout9+9 across all12 obligations/all54 coordinates, or establish phase-journal overhead equivalence. Final-source complete36/runtime19 prerequisites, wholeQ/P38/80/126/independentnoReuse126 campaigns125PASS+soleVSCEwaiver, freshperformance/signing/reviewedqualification thenpin-onlypromotion/immutable verification/guardedcleanformalCLOSED remain. H08OPEN; continuationACTIVE."
+    - name: Owned compiler-helper retirement after successful build
+      status: in_progress
+      evidence:
+          - check: Failed scheduling attempt preserved without timing comparison
+            result: failed
+            details: "Clean unfrozen3d1219acfbc50ff9ebe5918fa429839b62413da4/tree40a6f54dbb8ae3d5ceb9b750b8fbc403b8771db8. Independent v1 launch failed retained-owner guard before lease/Cargo; bounded probe proves remaining kill-on-close ancestor, not qualification. Explicit session-bound v2 terminalbf310ddfed1860d56251081d8156337e1131470c70aeaa74e7beb68bf8648d63 fails771.295025s after command0 returned0 in704.7043207s; worker exit did not imply empty owned job. Zero rounds completed/no later command/no speedup. Original survivor image unrecorded, identity unknown. Both source frames04d8d513413fbd2a57bba238aeef8b696196bd4b1c620ad5d3ae83a9111257bd identical. Failure cleanup drains only private job; source lease released/P absent. No unchanged failed experiment retry or output reuse."
+          - check: Smallest native reproduction identifies surviving compiler helper
+            result: passed
+            details: "Separate tiny Rust1.75 locked/offline/release fixturef4f050a179588172cee09b7ee07b8961aab0df5c6910b559088822420e9cb555 completes36.638605s including fixed30second post-exit observation; command2.897932s. Rawd15ab8f18eb6b571d2b899834d28dbc185a9180c3bc8a5a95d4b5c3e6937a425 retains69 snapshots/61post-exit. Actual live owned PID46144/birth134371857093131053 is MSVC14.44.35207 Hostx64/x64/vctip.exe, imageb52c617b17083cdc8ecbaedb1aee6bd08ed323308230eebef05d02747e36b00b. Source unchanged/owned job retired. Does not retroactively identify original failed build survivor or measure equivalent STRling build speedup. Native queries explicitly nonatomic."
+          - check: Narrow fail-closed diagnostic lifecycle policy and direct proofs
+            result: passed
+            details: "New7b9d7f281bf8271d9f28b38691504224a01efe4869fe9a1362ae5d71560e2664 requires successful command, complete nonempty required artifacts, consistent complete native job membership/PID birth/live state and exact approved vctip path/hash before one owned-job termination. Unknown survivors/query errors/truncation/timeout/artifact mutation fail, observations retained, closure requires empty job and unchanged outputs. Production controller/independent-owner guards unchanged. Tests-first06c4e2 is missing-module loader failure, not14 executed negative cases. Final source-boundbd9ee92335fbb1929f0375290f6042176561282cfee882875171580d41b08f0f completes94.4443615s;191NativePASS/190WSLPASS+1Native-covered skip and artifact integrity. Actual tiny Cargo survivor24224/birth134371862062185282 drains with144384byte output17fd96805792505c5a7ae1d2f0f00339579ec614cee76e520207279f45df4f67 unchanged. Unknown Python/conhost survivors rejected before success cleanup, followed by owned failure cleanup. No product sample or authority."
+          - check: Remaining engineering and certification obligations
+            result: not_run
+            details: "Three new implementation/test/charter paths plus three appended records, no36familymatches/no generator. Previous58checkpoints/readiness retained; schema/independent reconstruction/exactpathcommit/clean newSHA then fresh immutable fixedsixround build comparison remain. Original CPU1 admission, rawcounter validity and actual reference9/holdout9/all12/all54 challenges remain unqualified. Final-source complete36/runtime19, wholeQ/P38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/reviewedqualification then pin-onlypromotion/immutabletrust/guardedcleanformalCLOSED mandatory. No new build or totalcertification speedup established. H08OPEN; continuationACTIVE."
 commits:
+    - sha: 3d1219acfbc50ff9ebe5918fa429839b62413da4
+      subject: "fix(performance): reject missing build outputs immediately"
     - sha: 178e447ee99715130e01368a8d683661b8d608e0
       subject: "feat(performance): capture raw process counter observations"
     - sha: dd58982c70c857ad8f5bac9c5f151009c28cfc1f

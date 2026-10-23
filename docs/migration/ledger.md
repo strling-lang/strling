@@ -8752,3 +8752,30 @@ Ancestor-quota provenance and all conditioning/reference/holdout challenges stil
 require architectural engineering. Final preparation, both complete campaigns,
 fresh independent Releases, signing, immutable trust and closure remain mandatory.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+## H08 prospective absolute reference comparisons — 2026-10-23 UTC
+
+Checkpoint71 adds an unpromoted, data-only reference comparison. Nine complete
+reference observations freeze absolute launch-to-exit bounds before nine fresh
+source-distinct holdouts. An experimental500bp margin cannot be widened by
+unfavorable observations or holdout data. Separate rawCLI request/control median
+bounds catch sample-only common-mode delay that can disappear in the existing
+ratio and be diluted by512warmups. All raw values and original checks remain.
+
+Source-boundd8165871 passes17focused/292Native/269WSL tests plus23 native-covered
+skips, including the full53process-coordinate synthetic denominator and954
+observations. Integrated artifact integrity and style checks pass. Earlier
+f50907e6 preserves the validation helper's missingCargoPATH failure; the new
+attempt preflights exact tools and the smallest lifecycle fixture first.
+
+No certification measurement or new runtime improvement is claimed. Every result
+denies admission and quota qualification. Raw acquisition provenance, independent
+reference/holdout execution and all conditioning challenges still require work
+before any live promotion. Six scoped paths match no generated family; all prior
+authority, counts, ceilings, history and closure obligations remain. H08 OPEN;
+continuation ACTIVE; no owner action required.
+
+Commit guard2850c0eb stops before staging because the three new diagnostic files
+were not in the task's exact allowed-path inventory. Only those three paths are
+added under the existing architectural authorization; all previous declarations,
+forbidden paths and checkpoints remain. No guard or verification is waived.

@@ -4005,3 +4005,60 @@ a quieter workstation or escape from inherited ownership. All fresh independent
 reference/holdout conditioning and source-distinct certification obligations,
 signing, immutable trusted verification and guarded clean closure remain mandatory.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+### Checkpoint71 — prospective common-mode regression discrimination
+
+The clean93bf4d8c engineering source is followed by a data-only comparison
+component, not a new live conditioner. The retained actual CLI predictors show
+that favorable request/control ratios can coexist with substantially slower
+complete workloads. An independent absolute reference is needed; old baseline
+control medians or one historical diagnostic are not fresh reference cohorts.
+
+The prospective method fixes an experimental500bp control margin before any new
+acquisition. Nine reference observations per process coordinate must be stable
+within median+/-5percent; their complete raw values and derived bounds are frozen
+by externally supplied byte pins. Nine source-distinct holdouts cannot fit or
+enlarge those bounds. Independent acquisition is still a caller/trust obligation,
+not something inferred from differing source hashes or self-supplied receipts.
+
+An interval-only guard has a concrete blind spot: sample-only delay can be diluted
+across512warmups. Separate absolute marginal medians from every64 rawCLI request
+and control sample close that arithmetic blind spot. Twice-median integers avoid
+half-nanosecond rounding allowances. Original paired ratios and actual performance
+ceilings remain mandatory; no overhead is subtracted or normalized. All53
+process-backed coordinates are represented; size and functional resource groups
+remain separate obligations. This is not proof of all conditioning guarantees.
+
+Seventeen tests cover954 synthetic observations, reference/holdout order and
+denominator, source/acquisition/process/receipt reuse, changed pins, frozen-bound
+tampering, exact boundaries, rawCLI completeness, unfavorable values and10/50percent
+common-mode slowdowns. The tests-first missing-module failure is retained.
+Initial broad receiptf50907e650418f6e8493db5574855f8d2222245ec3f28d78d0414ca5b432d8d4
+retains291passes/1failure: the helper omitted governed Cargo from the child PATH.
+No lifecycle check is waived. Newv2 verifies exactCargo/Rust, then proves the
+smallest real lifecycle fixture before the broad suite.
+
+Source-boundd816587150c1779a440a1095117abc7f2a1988b64e0823ffe7abb1c81fe15964
+finishes12:27:36.805696Z in122.1781053s. Artifact integrity passes first;
+292Native tests pass70.947s;269WSL pass34.733s plus23 native-covered skips;
+Ruff/Prettier/diff pass. These are validation timings, not equivalent-workload
+speedups or certification evidence. Both validation owners have exited.
+
+Six code/test/charter/append-only record paths match no generated family. All70
+previous checkpoints/readiness and protected authority remain. The new component
+always denies baseline admission, certification eligibility and quota qualification.
+Actual receipt-to-cohort provenance, fresh independent reference9/holdout9, all12
+conditioning obligations/all54coordinates/5resourcegroups56limits and challenge
+discrimination are still required. Unknown ancestor quotas remain unknown. No
+idle-machine request, job escape, authority regeneration or consumed sample retry.
+Final preparation, both complete campaigns, fresh independent Releases, signing,
+immutable trusted qualification before pin-only promotion and guarded clean
+formal closure remain. H08 OPEN; continuation ACTIVE; no owner action required.
+
+Guard2850c0eb7c5c524654ca518285a4708db87a6b51acd0dd6fc0bc7f05fd95e913
+stops before staging: all33 architecture rules and other governance checks pass,
+but the three new diagnostic files need explicit task allowed-path declarations.
+Those exact paths are appended under the existing human architectural authority.
+Every prior scope entry, forbidden path, checkpoint and readiness field remains;
+no broad scope, waiver or verification bypass is introduced. A new immutable
+commit-guard attempt reruns complete governance with the corrected declarations.

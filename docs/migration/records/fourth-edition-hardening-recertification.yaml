@@ -220,6 +220,9 @@ scope:
         - tooling/tests/test_release_supply_chain_architecture.py
         - tooling/tests/test_security.py
         - tooling/tests/test_structured_operation_execution.py
+        - tooling/performance_reference_bounds.py
+        - tooling/tests/test_performance_reference_bounds.py
+        - tests/_design/unit/performance-reference-bounds.md
     forbidden_paths:
         - main
         - governance/baselines/**
@@ -1974,6 +1977,21 @@ checkpoints:
           - check: Continued architectural conditioning work and closure obligations
             result: not_run
             details: "Only three append-only migration records change; no generated family/output. All69 checkpoints/readiness/source/security/authority remain. Pre-execution child power and scoped lookup are directly integrated, but immediate inner-job unlimited is still not complete ancestor-quota provenance. Resolve that boundary through governed code/architecture, not host idleness or job escape; independent reference9/source-distinct holdout9/all12obligations/all54coordinates/5resourcegroups56limits/challenges remain before admission/verifierpromotion. Finalcomplete36/runtime19, bothsource-distinct38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, validperformance/signing/qualification-then-pin-onlypromotion/immutabletrust/guardedcleanCLOSED remain. H08OPEN/continuationACTIVE; no external action required."
+    - name: Prospective absolute reference bounds and common-mode regression discrimination
+      status: in_progress
+      evidence:
+          - check: Frozen reference arithmetic and complete synthetic denominator
+            result: passed
+            details: "From clean93bf4d8c, a tests-first experimental component freezes nine reference observations per process-backed coordinate before comparing nine source-distinct holdouts. Prospective500bp is a new experimental control margin, not an existing ceiling reinterpretation or qualified live allowance. Every reference lies within median+/-5percent; no maximum fitting, filtering or holdout refit. Separate exact rawCLI request/control marginal-median bounds prevent sample-only common-mode delays from being diluted by512warmups. All64pairs and unfavorable values remain; exact integer arithmetic preserves half-nanosecond boundaries.17 focused tests cover all53process coordinates/954synthetic observations, unknown/duplicate/nonfinite fields, byte/source/acquisition/process/receipt pins, tampered frozen bounds, raw denominator and10/50percent slowdowns. The existing ratio and all original caps/counts remain independent requirements; size and5resourcegroups are not fabricated as process observations. Every output denies admission/certification/quota qualification. No live acquisition or reference qualification is claimed."
+          - check: Source-bound integrity and Native/WSL direct-dependent validation
+            result: passed
+            details: "Immutablev1 terminalf50907e650418f6e8493db5574855f8d2222245ec3f28d78d0414ca5b432d8d4 preserves291NativePASS1FAIL: helper omitted childCargoPATH; exact lifecycle fixture could not start, not product regression. Newv2 supplies hash-pinnedCargo/Rust child environment and runs focused lifecycle predictor before the broad suite. Integrated artifact integrity passes first; focused lifecycle3.9741052s and17newtests pass. Terminald816587150c1779a440a1095117abc7f2a1988b64e0823ffe7abb1c81fe15964 finishes12:27:36.805696Z in122.1781053s:292Native pass70.947s;269WSL pass34.733s plus23 native-covered skips; Ruff/Prettier/diff pass. Source bytes are pinned across validation. No samples/profiles/build campaign or new measured runtime improvement. Initial missing-module red test and sandbox formatting denial remain tool-history failures, not passing validation."
+          - check: Unpromoted method and next qualification work
+            result: not_run
+            details: "Six scoped code/test/charter/append-only record paths match none of36generated families; no generator. All70prior checkpoints/readiness and protected baseline/manifest/evidence/limits/livev6/retained-owner/registry remain. This pure comparison does not establish raw execution provenance, continuous conditioning, quota independence or independent holdout acquisition. Next bind all actual immutable process receipts/rawCLI samples and full source/recipe/environment/build pins to prospectively sealed cohorts, then conduct fresh reference9/source-distinct holdout9/all12obligations/all54coordinates/5resourcegroups56limits and interference/common-mode challenges before any live promotion. No copying historical singles into nine-run cohorts, quota inference, guard bypass or consumed-sample retry. Final36/runtime19, bothsource-distinct38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, validperformance/signing/qualification-then-pin-onlypromotion/immutabletrust/guardedcleanCLOSED remain. H08OPEN/continuationACTIVE; no external action required."
+          - check: Exact diagnostic scope declarations
+            result: passed
+            details: "Guard2850c0eb7c5c524654ca518285a4708db87a6b51acd0dd6fc0bc7f05fd95e913 stops before staging: governance accepts all33architecture rules/contracts/release policy/change declarations but rejects the three new diagnostic paths absent from the task scope. The human-authorized architectural correction is now declared through only those exact three paths appended to allowed_paths; every preexisting scope entry/forbidden path/readiness/checkpoint remains. No broad wildcard, exemption or source-test change. A source-distinct guard must revalidate the complete task record and every original guard before committing."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

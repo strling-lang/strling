@@ -8566,3 +8566,26 @@ checkpoints/readiness remain. Production integration and original conditioning/
 reference qualification, both complete campaigns, signing, immutable trust and
 guarded clean closure remain. H08 OPEN; continuation ACTIVE; no owner action
 required.
+
+## H08 production owned-build integration — 2026-10-23 UTC
+
+Checkpoint63 integrates the measured concurrent prerequisite schedule into the
+Windows controller. All three original locked/offline Release commands, artifact
+roles, environments and1800-second deadlines remain. Each worker enters a new
+private kill-on-close job before authorization. Incremental artifact checks,
+birth-bound child receipts, exact pinned compiler-helper retirement and complete
+owned cleanup are mandatory; failure cancels peers and blocks measurement. Linux
+retains its serial backend. No inherited job or machine configuration changes.
+
+Source-bound validation547ba97d passes191Native tests and182WSL tests plus9
+native-only cases already passed onWindows. Real native overlap, tiny locked
+Cargo, missing outputs/tools, timeout and unknown-survivor regressions pass.
+The registered identity refresh and performance integrity check pass with all
+four governed artifacts byte-identical. No samples or profiles ran. Initial
+missing-module and shell-PATH fixture failures remain separately recorded.
+
+This is production code/lifecycle integration, not new product timing evidence.
+The prior20.2989percent build diagnostic remains scoped and consumed. Original
+CPU1 whole-process conditioning/reference qualification and all final preparation,
+source-distinct authoritative campaigns, signing, immutable trust and guarded
+clean closure remain. H08 OPEN; continuation ACTIVE; no owner action required.

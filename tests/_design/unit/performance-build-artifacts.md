@@ -9,16 +9,19 @@ this is an implementation regression, not a new performance policy.
 
 ## Scope
 
-Validate each successful Cargo command's outputs before launching the next
-build, and recheck all outputs before creating the bundle. Preserve the same
-three commands, order, flags, working directory, timeout, failure receipts and
-canonical-drive cleanup. Do not run conditioning, samples or profiles.
+Validate each successful Cargo command's outputs immediately, and recheck all
+outputs before creating the bundle. The serial backend stops before the next
+command; the Windows concurrent backend cancels owned peers. Preserve the same
+three-command membership and receipt order, flags, working directory, timeout,
+failure receipts and canonical-drive cleanup. Do not run conditioning, samples
+or profiles. Concurrent lifecycle cases live in performance-build-execution.md.
 
 ## Cases
 
 -   All four required files produce the existing bundle and fingerprints.
--   Missing runner or memory worker stops after the first command; missing kernel
-    stops after the second; missing interop stops after the third.
+-   In the serial backend, missing runner or memory worker stops after the first
+    command; missing kernel stops after the second; missing interop stops after
+    the third. No later serial build is launched after an artifact failure.
 -   Directories cannot satisfy file requirements; all missing paths are retained.
 -   Existing files cannot override a failed or unavailable command.
 -   A later command removing an earlier artifact fails the final recheck.

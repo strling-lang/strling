@@ -1,4 +1,4 @@
-"""Fail-closed retirement policy for an already successful diagnostic build.
+"""Fail-closed retirement policy for an already successful prerequisite build.
 
 The native adapter must own a new, private job and supply fresh observations of
 that exact job. This policy is not a process-ownership proof, an independent

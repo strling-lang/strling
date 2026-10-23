@@ -3658,3 +3658,58 @@ All final-source complete36/runtime19 preparation, both whole38/80/126 and
 independent no-reuse Release126 campaigns, fresh performance, signing, qualified
 then pin-only verifier promotion, immutable trust and guarded clean formal
 closure remain. H08 OPEN; continuation ACTIVE; no external owner action required.
+
+## Production concurrent build ownership — 2026-10-23 UTC
+
+Checkpoint63 integrates the existing six-round diagnostic's concurrent schedule
+into the Windows prerequisite controller, without rerunning that consumed
+experiment. The three command identities, locked/offline flags, environments,
+four binary roles,1800-second command deadlines, final artifact check and runner
+bundle are unchanged. Linux remains on the existing serial path.
+
+The executor creates one private unnamed kill-on-close job per worker and only
+authorizes the command after assignment and worker-birth capture. Authorization
+is one byte; environments are inherited and hashed, not written to raw receipts.
+Every invocation retains commands, logs, timing, child identities, incremental
+output checks and cleanup. Results are ordered by command identity regardless of
+completion order. First failure cancels owned peers; every worker is reaped and
+failure to prove quiescence prevents measurement placement. No inherited job,
+service, security setting or machine power setting changes. The unchanged
+process-local HighQoS policy remains. Successful retirement only permits the
+reviewed vctip image SHA
+b52c617b17083cdc8ecbaedb1aee6bd08ed323308230eebef05d02747e36b00b;
+an unknown survivor fails and is then contained through owned failure cleanup.
+
+Source-bound terminal
+547ba97de143d4ce047d501dba4b5f12f10b07cad50ae21394a901a18afe91fa
+passes08:31:53.804357Z in120.1541995s. Native191/191 has zero skips. WSL runs
+the same191 cases:182 pass,9 Windows-only integrations are covered by the native
+run. Real three-child synchronization proves overlap; tiny locked/offline
+Rust1.75 Cargo output remains byte-identical through retirement. Negative cases
+cover missing/unavailable tool, missing output, failed child, deadline, unknown
+descendant, no-authorization EOF, completion reordering, launch/poll/cleanup
+errors and interruption. Controller tests assert every original command, role,
+environment, timeout and build-before-measurement boundary. Ruff, Prettier,
+diff checks and the registered performance-artifact integrity command pass.
+
+The complete36-family registry map identifies only the controller as an input
+to performance-resource-source-identities. Its registered refresh-identities
+command passes without changing any of the four output files: baselinec8a5,
+manifest634d,valid8a1d,limits1110. The retained-owner guard remains00a38e69 and
+the live conditioner0996 is untouched. Development failures are preserved in
+target/codex-tools/h08-owned-build-development-failures.json,
+SHA bac683ce37e1815bfc8db02e9ae7ed27968678c0cf8b3090e33b75cd85b889d2:
+rejected shell patch transport before writes, expected missing-module red, and
+tiny Cargo test prerequisite absent from this tool shell PATH. Using the pinned
+Cargo directory in the validating process alone resolves the last fixture
+failure. No authoritative sample or campaign was consumed or retried.
+
+Seven engineering paths plus three migration records preserve all62 historical
+checkpoints/readiness and add three explicit scope paths. Production build and
+end-to-end wall time have not been remeasured here; the20.2989percent prior build
+diagnostic is not relabeled as certification performance. Original CPU1
+conditioning, fresh reference9/independent holdout9/all12 obligations/all54
+coordinates, finalcomplete36/runtime19, bothwhole38/80/126 and independent
+no-reuse Release126 campaigns, fresh performance, signing, reviewed qualification
+before pin-only verifier promotion, immutable trusted verification and guarded
+clean closure remain. H08 OPEN; continuation ACTIVE; no owner help requested.

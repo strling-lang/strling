@@ -62,6 +62,7 @@ class PerformanceBuildArtifactTests(unittest.TestCase):
             }
 
         with (
+            patch.object(performance.platform, "system", return_value="Linux"),
             patch.object(performance, "_canonical_build_root", canonical),
             patch.object(performance, "_run_command", side_effect=command),
             patch.object(

@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/performance_build_execution.py
+        - tooling/tests/test_performance_build_execution.py
+        - tests/_design/unit/performance-build-execution.md
         - tooling/diagnostic_campaign_journal.py
         - tooling/tests/test_diagnostic_campaign_journal.py
         - tests/_design/unit/diagnostic-campaign-journal.md
@@ -1846,6 +1849,21 @@ checkpoints:
           - check: Remaining production scheduling and conditioning qualification
             result: not_run
             details: "Only three migration records append; prior61 checkpoints/readiness unchanged; no generated family or generator. Separately tested production scheduling integration remains, then whole-process conditioning with independent reference9/holdout9/all12/all54. Original CPU1 admission is not resolved by this build diagnostic. Complete final36/runtime19, both whole38/80/126/independentnoReuseRelease126 campaigns each125PASS+soleVSCEwaiver, fresh performance/signing, immutable reviewed qualification before pin-only verifier promotion, trusted acceptance and guarded clean CLOSED remain mandatory. H08OPEN; continuationACTIVE; no external owner action required."
+    - name: Production concurrent prerequisite builds with owned lifecycle
+      status: in_progress
+      evidence:
+          - check: Narrow production scheduling integration with unchanged workload
+            result: passed
+            details: "Controller38c40d2b and executor1fbaac8c integrate Windows concurrent prerequisite execution, preserving all three original locked/offline Release commands, four required binary roles, environments,1800s command deadlines, final artifact recheck and bundle construction. Linux remains serial. Workers receive only one-byte authorization after exact private-job assignment; full environments are inherited and hashed, not persisted. Immutable invocation directories retain plan, command streams, birth identities, return codes, timing and cleanup. No generic threaded subprocess.run, result reuse, retries, sample acquisition or inherited-job change. Failed/incomplete/unknown cleanup prevents measurement placement. Exact reviewed vctip SHA b52c617b is the sole allowed successful-build survivor; unknown children fail then undergo owned failure cleanup. Retained-owner guard remains00a38e69."
+          - check: Native and WSL source-bound regression and lifecycle proof
+            result: passed
+            details: "Validation547ba97de143d4ce047d501dba4b5f12f10b07cad50ae21394a901a18afe91fa completes08:31:53.804357Z in120.1541995s. Native191/191 zero skips; WSL182 passed plus9 native-only cases already passed onWindows. Real three-child barrier proves concurrent overlap; tiny Rust1.75 locked/offline Cargo output survives verified owned-job retirement. Negative cases cover missing/unavailable tools, missing outputs, child errors, timeout, unknown survivors, no-authorization EOF, reordered completion, launch/poll/cleanup errors and interruption. Exact controller integration asserts every original command, environment, role, timeout and post-build measurement gate. Ruff, Prettier, diff and performance artifact integrity pass."
+          - check: Registered generation and preserved development failures
+            result: passed
+            details: "All36 family mappings inspected; only controller matches performance-resource-source-identities as generator input. Registered refresh-identities --json and performance_artifact_integrity --check --json pass; baselinec8a5,manifest634d,valid8a1d,limits1110 remain byte-identical. No measured value, budget, conditioning, sample count or security/license policy changed. Development failures remain in h08-owned-build-development-failures.json: rejected shell patch transport before writes; expected missing-module red; tiny Cargo test could not find existing pinned executable in this shell PATH, before child launch. Process-local PATH inclusion fixes the fixture prerequisite, not host state. No consumed campaign/sample retried."
+          - check: Measurement qualification and authoritative closure remain open
+            result: not_run
+            details: "Production integration is unit/native-lifecycle validated, not a new product build timing or complete certification result. Prior complete six-round20.2989percent diagnostic remains consumed and scoped; no whole-certification gain inferred. Seven engineering paths plus three records; previous62checkpoints/readiness unchanged, three exact new allowed paths. Record validation/guarded clean engineering commit follow. OriginalCPU1 whole-process conditioning/reference9/holdout9/all12/all54, finalcomplete36/runtime19, bothwhole38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/immutable reviewedqualification thenpin-onlypromotion/trust/guardedcleanCLOSED remain mandatory. H08OPEN; continuationACTIVE; no further owner idleness/manual help requested."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

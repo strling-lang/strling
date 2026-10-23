@@ -21,12 +21,14 @@ import subprocess
 import sys
 import tempfile
 import time
+import uuid
 from contextlib import contextmanager
 from contextvars import ContextVar
 from pathlib import Path
 from typing import Any, Callable, Iterator, Mapping, Sequence, cast
 
 from tooling import performance_windows
+from tooling import performance_build_execution
 from tooling.json_type_dispatch import (
     BuiltinDraft202012Validator as Draft202012Validator,
 )
@@ -2064,7 +2066,35 @@ def _build_release_artifacts(root: Path = ROOT) -> tuple[str, dict[str, object]]
     statuses: list[str] = []
     try:
         with _canonical_build_root(root) as build_root:
-            for command, roles in zip(commands, command_artifact_roles):
+            if platform.system().lower() == "windows":
+                receipt_parent = root / "target/performance-resource-builds"
+                receipt_parent.mkdir(parents=True, exist_ok=True)
+                produced = {
+                    **_release_artifacts(root),
+                    "memory_worker": _memory_worker_artifact(root),
+                }
+                builds = [
+                    performance_build_execution.Build(
+                        tuple(_resolved_command(command)),
+                        build_root,
+                        _resolved_environment(command, root=build_root),
+                        {role: cast(Path, produced[role]).resolve() for role in roles},
+                        1800,
+                    )
+                    for command, roles in zip(commands, command_artifact_roles)
+                ]
+                status, execution = performance_build_execution.execute(
+                    builds, receipt_parent / uuid.uuid4().hex
+                )
+                steps = execution["steps"]
+                if status != "passed":
+                    return status, execution
+                statuses = [status]
+            else:
+                execution = None
+            for command, roles in (
+                zip(commands, command_artifact_roles) if execution is None else []
+            ):
                 status, details = _run_command(
                     command, root=build_root, timeout_seconds=1800
                 )
@@ -2095,6 +2125,12 @@ def _build_release_artifacts(root: Path = ROOT) -> tuple[str, dict[str, object]]
             "code": error.code,
             "reason": str(error),
         }
+    except (OSError, ValueError) as error:
+        return "failed", {
+            "steps": steps,
+            "code": "release-build-execution",
+            "reason": f"{type(error).__name__}: {error}",
+        }
     artifacts = _release_artifacts(root)
     memory_worker = _memory_worker_artifact(root)
     missing = [
@@ -2122,6 +2158,7 @@ def _build_release_artifacts(root: Path = ROOT) -> tuple[str, dict[str, object]]
         }
         return "passed", {
             "steps": steps,
+            **({"execution": execution} if execution is not None else {}),
             "artifacts": artifact_details,
             "canonical_build_root": (
                 f"{WINDOWS_CANONICAL_BUILD_DRIVE}/"

@@ -8829,3 +8829,27 @@ scope. All 72 prior checkpoints, readiness, authority and controls remain.
 New-source real-acquisition integration, independent native cohorts and complete
 conditioning qualification still precede both signed/trusted certification
 campaigns. H08 OPEN; continuation ACTIVE; no owner action required.
+
+### H08 checkpoint 74 — real v2 integration and preparation profiling
+
+On clean 2cda685d, one real CLI and one protocol-memory acquisition pass the new
+independent byte reader. Receipt 4ed3a3d7 retains both original workloads and
+natural process-tree exits; separate data-only audit 15454643 verifies all 2308
+tracked files, source/binary/receipt pins and exact raw reconstruction. Diagnostic
+CLI 11131bp is below unchanged 12658bp; memory 6955008bytes is below 6970163.
+All 65 samples and 64 controls remain; the memory margin is narrow. Previously
+verified, unchanged binaries are explicitly reused for diagnostics only, never
+as a fresh Release claim or fresh nine-run reference.
+
+The 59.0203027s predictor includes 26.7917842s of measured process intervals;
+32.2285185s outside those intervals remains unattributed. A new preparation-only
+profile executes no product samples. Receipt de098cc6 measures 2.9249824s before
+trace-report postprocessing, with 2.0356008s in subprocess calls and 0.6154499s
+hashing. The prior long gap did not reproduce. These are different instrumented
+workloads, not a before/after speedup; no required validation is removed.
+
+Both source leases are released and owners exited. Three append-only records
+preserve all 73 previous checkpoints/readiness and protected authority; no
+generated family is affected. Fresh independent native cohorts and full
+conditioning qualification remain before either signed/trusted campaign.
+H08 OPEN; continuation ACTIVE; no owner action required.

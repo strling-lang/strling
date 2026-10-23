@@ -4164,3 +4164,56 @@ ancestor quotas remain unknown; no host-idleness request or job escape occurs.
 Both full signed/trusted Q/P campaigns and fresh independent Releases, immutable
 verifier qualification before pin-only promotion, and guarded clean formal
 closure remain mandatory. H08 OPEN; continuation ACTIVE; no owner action required.
+
+## Checkpoint 74: real v2 acquisition proof and preparation critical path
+
+Clean 2cda685d228c6566f5abe9f4a36730942fa7558a completes a bounded semantic CLI
+and protocol-memory diagnostic with new externally planned v2 receipts. The
+owned source/index lease covers all 2308 tracked files. Previously verified
+runner/memory-worker and archived kernel/interop binaries are used only after
+proving their mapped product inputs unchanged; this is diagnostic reuse, not a
+fresh Release or independently qualified build. No historical measurement is
+replayed, overwritten or relabeled as a new reference.
+
+Predictor 4ed3a3d7fbfca3f8b23803af6ac5b947bd34606d73f2b00fd72655be64919651
+finishes 13:31:48.657784Z in 59.0203027s. External plans precede each execution;
+all original raw stdout, events, identities, controls and cleanup remain pinned.
+The CLI job naturally retires 1154 processes after the original512 warmups,
+64 requests and64 controls, with zero rejections and26.6676084s whole interval.
+The alternating-pair geometric metric11131bp is below unchanged12658bp;
+raw request/control medians23668150/21320300ns remain separately retained.
+The protocol-memory job naturally retires three processes in0.1241758s and
+retains6955008bytes below6970163, only15155bytes of margin. Neither observation
+is performance admission or a full-cohort result.
+
+Separate data-only audit
+154546432673767a08a307981e28b84bada7256ea1f3fe5fc83e17f89aced9ac reconstructs
+all receipt/projection bytes, validates every tracked source and binary pin,
+independently recomputes the original cap predicates and confirms lease release.
+No product command runs during that audit. Both observations and all unfavorable
+values remain immutable; the two diagnostics must not be reused as reference
+members of a future nine-run campaign.
+
+The total predictor time minus the two process intervals leaves32.2285185s
+outside the measured work. That residual alone does not establish a cause.
+Preparation-only profile
+de098cc691488c4c03c8e5c2b9ad34493a8e7321cadb0ef66dcf0aba4718951b removes the
+measurement loop and retains unchanged source/build/input/gate/lease checks.
+Its preparation body takes2.9249824s, excluding trace-report postprocessing;
+immutable trace b955cf0e796f39215626b1f563af32a6d814004fe44a32b3c9ddd8030e53fb35
+records15 subprocess calls totaling2.0356008s exclusive,4645 SHA calls0.6154499s,
+and two complete source frames0.765995s inclusive. The long residual did not
+reproduce. Instrumentation and omitted product execution make these different
+workloads; no before/after improvement, cache assumption, omitted integrity
+check or causal claim follows from this observation.
+
+Three append-only records preserve73 earlier checkpoints/readiness and every
+protected authority. No generated family is affected. Real transport integration
+is now proven, but empirical independence, fresh build/source provenance,
+prospectively frozen nine-run native references and source-distinct holdouts,
+all twelve conditioning obligations/all54coordinates/five resourcegroups56limits
+and interference/common-mode challenges remain before live qualification.
+Unknown ancestor quotas remain unknown, without host-idleness requests or job
+escape. Both complete signed/trusted Q/P campaigns, fresh independent no-reuse
+Releases, qualified verifier before pin-only promotion and guarded clean formal
+closure remain mandatory. H08 OPEN; continuation ACTIVE; no owner action required.

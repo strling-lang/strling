@@ -225,6 +225,8 @@ scope:
         - tests/_design/unit/performance-reference-bounds.md
         - tooling/performance_envelope_receipts.py
         - tooling/tests/test_performance_envelope_receipts.py
+        - tooling/performance_acquisition_receipts.py
+        - tooling/tests/test_performance_acquisition_receipts.py
     forbidden_paths:
         - main
         - governance/baselines/**
@@ -2009,6 +2011,21 @@ checkpoints:
           - check: Remaining qualification and formal closure sequence
             result: not_run
             details: "The sealing defect is fixed; complete acquisition-to-cohort binding is still required before prospectively frozen fresh reference9/source-distinct holdout9/all12conditioning obligations/all54coordinates/5resourcegroups56limits and interference/common-mode challenges. Do not relabel historical v1 observations as newly sealed evidence, copy singles into nine-run cohorts, infer unlimited ancestor quota, weaken retained-owner guards or request host idleness. Existing diagnostic lookup99.7895percent/five-coordinate77.3958percent/build20.2989percent gains remain separately scoped, not total certification improvements. Final36/runtime19, bothsource-distinct38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, validperformance/signing/qualification-before-pin-onlypromotion/immutabletrust/guardedcleanCLOSED remain. H08OPEN/continuationACTIVE; no external action required."
+    - name: Lossless acquisition receipt reconstruction and complete cohort binding
+      status: in_progress
+      evidence:
+          - check: Independent raw acquisition-to-cohort reconstruction
+            result: passed
+            details: "From clean a59d026984bd2977938f18b2c5edc65a9bebd42d, data-only adapter 839205dff750b00b1b6a8bbb9870171fb91af240e9d05f6e20cee2f9a8bd4ef6 checks all eleven files against independent outer/process plans and external terminal pins. Original manifest bytes, every process event, nested v2 identity/lifecycle receipt, exact commands and raw output remain linked. It reconstructs accepted/rejected/control arrays, batch/CPU arithmetic and unchanged 512/64/9 workload policy, while memory preserves its actual one-sample command. The observed unlimited string remains only a claim, not ancestor-quota proof. No producer/controller import or command execution; all admission, build-provenance, independence and quota flags are false."
+          - check: Complete synthetic cohorts and unfavorable common-mode discrimination
+            result: passed
+            details: "Seventeen tests cover all 53 current process-backed coordinates, two complete synthetic 477-observation cohorts, source/runner/all artifact/input pins, canonical environment, role-based prospective recipe and ordered terminal-pin acquisition identity. Missing coordinates, partial nine-run cohorts, receipt/process reuse, overlaps, modified outer projections/events and malformed raw arithmetic fail. Every rejected attempt and control channel remains. The actual acquisition producer/command builder/raw validators pass compatibility tests with synthetic v2 executors for CLI and memory. A synthetic 10percent slowdown in both CLI channels preserves paired ratios and whole interval but fails the frozen marginal bounds; all unfavorable samples remain in the comparison. Hashes/source distinction do not establish empirical independence. Initial missing-module failure and one test-only compare_holdout/check_holdout API typo remain in tool history, corrected before source-bound validation."
+          - check: Source-bound artifact integrity and direct dependents
+            result: passed
+            details: "Receipt aaac59757100ca100ad173695790296f761199d800738cd1e15840cde250a009 verifies artifact integrity first, pinned Cargo/Rust lifecycle preflight, 17 focused tests, 330 Native tests in 93.461s, 307 WSL tests in 64.293s plus 23 native-covered skips, Ruff/Prettier/diff. Started 13:18:52.936628Z, finished 13:22:05.589284Z, elapsed 192.6526956s; validation duration is not a speedup. Three exact tested source/charter pins and eighteen raw streams remain available for independent commit verification. Six source/record paths match no generated family among all 36; no regeneration. Only two exact new allowed paths are added; all 72 previous checkpoints, readiness and seven protected authorities remain. No product sample/profile or authority-bearing evidence is regenerated."
+          - check: Prospective native qualification remains before admission
+            result: not_run
+            details: "Actual retained source/build provenance, prospective fresh nine-run native reference and source-distinct nine-run holdout, all twelve conditioning obligations, all 54 coordinates including separate size, five resource groups/56 limits and interference/common-mode challenges remain. The complete byte adapter is not a conditioning or trusted-verifier promotion. No historical v1 reuse, fabricated repetitions, unchanged consumed attempt, host-idleness request or job escape. First run a bounded new-source real-v2 acquisition integration predictor under the existing source/build/owner protections before the expensive cohorts. Unknown ancestor quota must remain unqualified until the governed architectural alternative is demonstrated. Final full36/runtime19, both complete Q/P 38/80/126/independent no-reuse Release126 each125PASS+soleVSCE, valid performance/signing/qualified-verifier-before-pin-only-promotion/immutable trust/guarded clean CLOSED remain. H08 OPEN; continuation ACTIVE; no external action required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

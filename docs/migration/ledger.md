@@ -8805,3 +8805,27 @@ checkpoints, readiness and protected authority remain.
 Actual cohort binding, fresh independent references/holdouts, conditioning
 qualification and both complete signed/trusted campaigns still remain. H08 OPEN;
 continuation ACTIVE; no owner action required.
+
+### H08 checkpoint 73 — reconstruct complete cohorts from pinned raw receipts
+
+On 2026-10-23, the new data-only adapter binds all eleven acquisition files,
+independent plans, original manifest bytes, process events, nested v2 identities
+and raw runner output. It reconstructs the original accepted/rejected/control
+arrays and requires nine observations for every one of the 53 process-backed
+coordinates. Size and resource checks remain separate obligations. Source,
+artifact, environment, recipe and ordered acquisition pins are checked; reused
+receipts/processes, overlapping work and incomplete denominators fail closed.
+
+Source-bound aaac5975 passes 17 focused, 330 Native and 307 WSL tests, plus 23
+native-covered skips and integrity/style checks. Two complete synthetic cohorts
+contain 954 observations. A 10% common-mode CLI slowdown remains visible to the
+frozen raw-channel bounds even when ratios and whole-run time do not change.
+Actual producer command/transport/validator compatibility is exercised with a
+synthetic executor. No product samples or performance qualification are claimed.
+
+Elapsed 192.6526956s is validation duration, not a runtime improvement. Six scoped
+paths match no generated family; two exact diagnostic paths are added to task
+scope. All 72 prior checkpoints, readiness, authority and controls remain.
+New-source real-acquisition integration, independent native cohorts and complete
+conditioning qualification still precede both signed/trusted certification
+campaigns. H08 OPEN; continuation ACTIVE; no owner action required.

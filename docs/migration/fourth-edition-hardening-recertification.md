@@ -4111,3 +4111,56 @@ complete Q/P campaigns with fresh independent no-reuse Releases, signing,
 immutable trusted qualification before pin-only promotion and guarded clean
 formal closure remain mandatory. H08 OPEN; continuation ACTIVE; no owner action
 required.
+
+## Checkpoint 73: complete raw acquisition-to-cohort reconstruction
+
+Clean engineering base a59d026984bd2977938f18b2c5edc65a9bebd42d now supports a
+separate data-only acquisition adapter. It verifies eleven files against external
+terminal pins and independently supplied exact plans: original manifest bytes,
+outer acquisition, process events and the complete nested v2 receipt. It checks
+the unchanged command workloads and reconstructs the controller observation from
+raw accepted/rejected/control arrays, including exact batch/CPU arithmetic and
+all attempted work fitting inside the enclosing interval. Memory keeps its
+original one-sample command; no process is invented for the size coordinate.
+
+Cohort assembly requires all 53 process-backed coordinates, nine observations
+each, exact source/runner and stable artifact pins, canonical environment, a
+prospective recipe with named artifact roles and all implementation/input pins,
+and acquisition identity derived from every ordered external terminal pin.
+Missing or reused receipts/processes and overlapping acquisitions fail closed.
+No producer/controller execution is used by this reader. Self-consistent bytes
+and an observed unlimited string do not prove source ownership, builds, empirical
+independence, ancestor quota or conditioning. Every qualification flag is false.
+
+Tests reconstruct two complete synthetic cohorts containing 954 observations.
+An additional synthetic counterexample slows both CLI channels by 10%, preserving
+their paired ratio and whole-action interval, but the frozen marginal checks
+reject it and preserve all unfavorable values. Actual acquisition command
+builders, transport and raw validators also pass compatibility checks with
+synthetic v2 process executors for CLI and memory. Initial missing-module failure
+and a test-only API-name typo remain in tool history; no product attempt was
+consumed or repeated to correct either test.
+
+Source-bound receipt
+aaac59757100ca100ad173695790296f761199d800738cd1e15840cde250a009 runs from
+13:18:52.936628Z to 13:22:05.589284Z, elapsed 192.6526956s. Integrated artifact
+integrity passes first, followed by pinned Cargo/Rust lifecycle preflight,
+17 focused tests, 330 Native tests in 93.461s, 307 WSL tests in 64.293s plus 23
+native-covered skips, Ruff/Prettier/diff. These are validation durations, not
+equivalent-workload improvements. Adapter
+839205dff750b00b1b6a8bbb9870171fb91af240e9d05f6e20cee2f9a8bd4ef6 and tests
+ee75e746119eedb6bca78164abc85ee09350e09a88e654fbfc14e411020f3186 are source-bound;
+all eighteen raw validation streams remain for independent commit verification.
+
+Six scoped files match no generated family; only two exact new diagnostic paths
+are added to task scope. All 72 prior checkpoints, readiness and protected
+authorities remain. Before expensive cohorts, run a bounded fresh-source real-v2
+acquisition integration predictor with existing source/build/owner protections.
+Do not promote old v1 receipts or reuse prior singles as fresh nine-run evidence.
+Native reference/holdout independence, all twelve conditioning obligations,
+all 54 coordinates, five resource groups/56 limits and interference/common-mode
+challenges remain before a governed live alternative can be admitted. Unknown
+ancestor quotas remain unknown; no host-idleness request or job escape occurs.
+Both full signed/trusted Q/P campaigns and fresh independent Releases, immutable
+verifier qualification before pin-only promotion, and guarded clean formal
+closure remain mandatory. H08 OPEN; continuation ACTIVE; no owner action required.

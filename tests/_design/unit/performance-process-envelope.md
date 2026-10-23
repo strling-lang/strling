@@ -102,3 +102,35 @@ inverted boundaries, out-of-interval events and all version1 receipts. Native
 fresh owned fixture processes must prove end-to-end sealing and data-only replay,
 including an exited descendant and timeout failure. Historical product samples
 are not repeated, rewritten or used as fresh reference observations.
+
+## Acquisition-to-cohort byte closure
+
+The next pure reader binds each externally pinned acquisition terminal to its
+exact independent acquisition/process plans, original manifest bytes, process
+events, nested v2 receipt and complete raw runner output. Reconstruct the
+controller's observation from those raw arrays without importing its producer,
+executing a command or dropping rejected attempts. Check fixed workload options,
+normalization/accounting arithmetic, process placement claims and every transport
+field. An observed `unlimited` string is retained as a claim, not proof of ancestor
+quota. Memory retains its actual one-sample command; size has no invented process.
+
+Assemble exactly nine observations for each manifest process-backed coordinate in
+the independent complete coordinate order. Derive the acquisition identity from
+all ordered external terminal pins. Bind source, all executable/input hashes,
+manifest bytes, canonical environment and a source-independent recipe that names
+artifact roles instead of mutable build paths. The recipe retains commands,
+batch/CPU/deadline and acquisition/control implementation pins. Never merge,
+duplicate, filter or fill in missing receipts. Reject reused processes/terminals
+and overlapping acquisition intervals, including distinct outer wrappers around
+one inner receipt. Compare the resulting bytes through the existing prospective
+bounds reader; preserve every original performance check separately.
+
+Positive tests cover actual manifest builders for all53 process coordinates,
+954 synthetic reference/holdout observations and both raw CLI channels, plus
+memory and rejected non-CLI attempts. Negative tests cover missing/extra files,
+forged projections, stream/event disagreement, inner/outer identity drift,
+changed workload/manifest/recipe/source/build pins, bool aliases, incomplete
+cohorts, replays, overlaps and valid unfavorable timings. Fake source distinction
+and hashes do not prove build provenance, empirical independence or conditioning.
+The outputs must deny admission, quota, build-provenance and independence
+qualification; no live conditioner or trusted verifier is promoted by this work.

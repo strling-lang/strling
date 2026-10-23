@@ -4062,3 +4062,52 @@ Those exact paths are appended under the existing human architectural authority.
 Every prior scope entry, forbidden path, checkpoint and readiness field remains;
 no broad scope, waiver or verification bypass is introduced. A new immutable
 commit-guard attempt reruns complete governance with the corrected declarations.
+
+## Checkpoint 72: bind process identity and lifecycle bytes before cohort use
+
+The next acquisition-to-cohort step exposed a specific v1 integrity gap: terminal
+receipts pinned stdout/stderr but left suspended/root-exit identities and the
+lifecycle journal unbound. Three tests failed before the correction. New v2
+terminals seal every required auxiliary file and both raw streams with byte
+counts and SHA256 after owned cleanup. Missing, changed, linked or unreadable
+artifacts fail closed. Failed acquisitions retain all available pins, including
+failure-only cleanup/survivor artifacts. Historical v1 attempts stay untouched;
+no reader may upgrade them into freshly sealed references.
+
+The original whole-action interval still encloses launch, controls, workload,
+output and natural process-tree exit; sealing is outside that interval. No work,
+sample, cap, conditioning control or valid unfavorable observation is removed.
+A separate pure data reader requires an external terminal pin and independently
+supplied complete command/source/input/environment/implementation plan. Closed
+shapes, exact types, duplicate/nonfinite JSON, every hash/size, identity/CPU
+continuity, clock order, root controls and final natural job accounting are
+checked. Lifecycle notifications are diagnostic, not retirement authority.
+Running-process exit FILETIME is undefined and is not incorrectly required to
+equal zero. Root CPU begins before job assignment and need not be below job CPU.
+All returned admission, certification, independence and quota claims are false.
+
+Validation98351a35e6967fd65d095b53a602ea45b178615f9b8eb2f9119a984bfdd72cb5
+runs from12:55:47.154587Z to12:57:57.972477Z,130.8179301s. Integrated artifact
+integrity passes first, followed by pinned Cargo/Rust lifecycle preflight,
+31focused tests,313Native tests73.236s,290WSL tests35.685s plus23 native-covered
+skips, Ruff/Prettier/diff. Native successful fixtures run through the independent
+reader; descendant/timeout/assignment/nonzero-exit cases retain complete available
+pins. All18 raw streams and exact five tested source pins remain for commit-guard
+verification. These timings are validation durations, not measured speedups.
+
+Envelopec9c55e39b9828efd53e63acaf7514c5954eab31f3c4b093710aaf3a7e47cfe2d
+and reader7e836027a271055a432175b86908f4d753da549b011e08a73aa8b1604b5a0146
+remain experimental acquisition infrastructure. Eight scoped files match no
+generated family. Only two new exact allowed paths are declared; all71 prior
+checkpoints/readiness/protected authority remain. No product sample/profile,
+reference reuse, authority regeneration, idle-host request or job escape occurs.
+
+Complete acquisition-to-cohort binding, prospectively frozen fresh reference9,
+source-distinct holdout9, all12conditioning obligations/all54coordinates and
+5resourcegroups56limits, interference/common-mode challenges and reliable quota
+provenance remain before live admission. Existing measured component/build and
+diagnostic improvements retain their original scope. Final36/runtime19, both
+complete Q/P campaigns with fresh independent no-reuse Releases, signing,
+immutable trusted qualification before pin-only promotion and guarded clean
+formal closure remain mandatory. H08 OPEN; continuation ACTIVE; no owner action
+required.

@@ -19,6 +19,7 @@ import json
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import time
 from types import SimpleNamespace
@@ -139,6 +140,69 @@ def _validate_accounting(row):
     )
 
 
+def _sealed_file(path):
+    before = path.lstat()
+    _require(
+        stat.S_ISREG(before.st_mode) and before.st_nlink == 1,
+        "regular unlinked artifact",
+    )
+    _require(0 <= before.st_size <= 64 * 1024 * 1024, "bounded artifact")
+    digest = _hash(path)
+    after = path.lstat()
+    fields = (
+        "st_dev",
+        "st_ino",
+        "st_mode",
+        "st_nlink",
+        "st_size",
+        "st_mtime_ns",
+        "st_ctime_ns",
+    )
+    _require(
+        all(getattr(before, k) == getattr(after, k) for k in fields),
+        "artifact changed during sealing",
+    )
+    return dict(sha256=digest, bytes=before.st_size)
+
+
+def _seal_artifacts(directory, result):
+    observed = result["status"] == "observed"
+    errors = []
+    groups = {
+        "logs": ("stdout.bin", "stderr.bin"),
+        "artifacts": (
+            "suspended.json",
+            "root-exit.json",
+            "lifecycle-wakeups.json",
+            "launch-cleanup.json",
+            "survivors.json",
+        ),
+    }
+    for group, names in groups.items():
+        result[group] = {}
+        for name in names:
+            path = directory / name
+            try:
+                path.lstat()
+            except FileNotFoundError:
+                continue
+            except OSError as error:
+                errors.append(f"{name}: {type(error).__name__}: {error}")
+                continue
+            try:
+                result[group][name] = _sealed_file(path)
+            except (OSError, ValueError) as error:
+                errors.append(f"{name}: {type(error).__name__}: {error}")
+    if observed and (
+        set(result["logs"]) != {"stdout.bin", "stderr.bin"}
+        or set(result["artifacts"])
+        != {"suspended.json", "root-exit.json", "lifecycle-wakeups.json"}
+    ):
+        errors.append("complete successful artifact denominator required")
+    if errors:
+        result.update(status="failed", artifact_error="; ".join(errors))
+
+
 def capture(spec: Command, directory: Path, *, factory: Callable | None = None) -> dict:
     """One immutable attempt. Failed acquisition never becomes an observation.
 
@@ -168,7 +232,7 @@ def capture(spec: Command, directory: Path, *, factory: Callable | None = None) 
     )
     _save(directory / "plan.json", plan)
     result = dict(
-        contract="unqualified-process-tree-envelope-v1",
+        contract="unqualified-process-tree-envelope-v2",
         status="failed",
         authoritative=False,
         certification_eligible=False,
@@ -208,12 +272,7 @@ def capture(spec: Command, directory: Path, *, factory: Callable | None = None) 
                 result.update(
                     status="failed", cleanup_error=f"{type(error).__name__}: {error}"
                 )
-        for name in ("stdout.bin", "stderr.bin"):
-            path = directory / name
-            if path.exists():
-                result["logs"][name] = dict(
-                    sha256=_hash(path), bytes=path.stat().st_size
-                )
+        _seal_artifacts(directory, result)
         result["finished_ns"] = time.perf_counter_ns()
         _save(directory / "terminal.json", result)
     return result

@@ -68,3 +68,37 @@ counts remain uninterpreted, all output/failures remain retained, and every resu
 explicitly denies certification eligibility. The generated-artifact registry
 matches none of this module, its tests or this charter; verify existing governed
 performance artifacts without regenerating measurements.
+
+## Versioned identity and lifecycle evidence sealing
+
+Version1 terminals pin streams but omit the suspended/exit identity snapshots
+and lifecycle wakeup journal used by downstream audits. Those historical bytes
+must remain unchanged and cannot supply a newly qualified reference by pretending
+to be a complete version2 receipt.
+
+Version2 terminals hash the exact bytes and sizes of every known auxiliary file
+after owned cleanup, including failure-only survivor/launch-cleanup records when
+present. Observed success requires both identity snapshots and the lifecycle
+journal, plus both streams. Missing, unreadable, linked, replaced or changed files
+fail closed while retaining the failed terminal and all available evidence. This
+sealing occurs outside the existing complete-work wall interval; no workload,
+launch placement, sample, CPU accounting or measured boundary changes.
+
+A separate data-only reader accepts only externally pinned version2 terminal
+bytes and an independently supplied exact command/source/input/implementation
+plan. It imports no producer or native process-control code and performs no
+execution or file-system mutation. Validate closed fields, byte sizes/hashes,
+identity continuity, monotonic clocks/counters, complete natural job retirement,
+root placement and all retained lifecycle events. Notifications remain diagnostic;
+they cannot override final job accounting. Preserve a running snapshot's undefined
+raw exit field without interpreting it as a completed exit or requiring zero.
+Unknown ancestor quotas and descendant-power qualification remain explicitly
+unqualified; no reader result grants admission, signing or trust authority.
+
+Tests must reject changed/missing/extra artifacts, same-size tampering, refreshed
+inner hashes under the old external pin, plan changes, malformed exact types,
+duplicate/nonfinite JSON, foreign/reused identities, terminated/surviving jobs,
+inverted boundaries, out-of-interval events and all version1 receipts. Native
+fresh owned fixture processes must prove end-to-end sealing and data-only replay,
+including an exited descendant and timeout failure. Historical product samples
+are not repeated, rewritten or used as fresh reference observations.

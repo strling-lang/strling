@@ -8779,3 +8779,29 @@ Commit guard2850c0eb stops before staging because the three new diagnostic files
 were not in the task's exact allowed-path inventory. Only those three paths are
 added under the existing architectural authorization; all previous declarations,
 forbidden paths and checkpoints remain. No guard or verification is waived.
+
+### H08 checkpoint 72 — seal process identities before cohort binding
+
+On 2026-10-23, clean engineering basee6eedbf6 exposed a concrete provenance gap:
+v1 process terminals did not pin the identity snapshots and lifecycle journals
+used by diagnostics. New v2 receipts seal those exact bytes and sizes after owned
+cleanup, retain failure-only artifacts, and reject incomplete or altered success
+receipts. Historical attempts remain immutable and cannot be promoted as v2.
+
+A separate data-only reader checks an external terminal pin and independently
+supplied plan, then validates all seven files, identity continuity, raw clocks,
+root controls and natural whole-job retirement. It does not infer conditioning,
+reference independence or ancestor quota from hash agreement. All admission and
+certification flags remain false.
+
+Source-bound98351a35 passes integrity first,31focused,313Native and290WSL tests
+plus23 native-covered skips; style checks pass. Native fixtures exercise the
+reader on successful process trees and preserve available evidence on failures.
+Elapsed130.8179301s is validation time, not an equivalent-workload speedup. No
+product campaign or sample is repeated. Eight scoped paths match no generated
+family; only two new diagnostic allowed-path entries are added. All71 earlier
+checkpoints, readiness and protected authority remain.
+
+Actual cohort binding, fresh independent references/holdouts, conditioning
+qualification and both complete signed/trusted campaigns still remain. H08 OPEN;
+continuation ACTIVE; no owner action required.

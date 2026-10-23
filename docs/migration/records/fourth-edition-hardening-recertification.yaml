@@ -223,6 +223,8 @@ scope:
         - tooling/performance_reference_bounds.py
         - tooling/tests/test_performance_reference_bounds.py
         - tests/_design/unit/performance-reference-bounds.md
+        - tooling/performance_envelope_receipts.py
+        - tooling/tests/test_performance_envelope_receipts.py
     forbidden_paths:
         - main
         - governance/baselines/**
@@ -1992,6 +1994,21 @@ checkpoints:
           - check: Exact diagnostic scope declarations
             result: passed
             details: "Guard2850c0eb7c5c524654ca518285a4708db87a6b51acd0dd6fc0bc7f05fd95e913 stops before staging: governance accepts all33architecture rules/contracts/release policy/change declarations but rejects the three new diagnostic paths absent from the task scope. The human-authorized architectural correction is now declared through only those exact three paths appended to allowed_paths; every preexisting scope entry/forbidden path/readiness/checkpoint remains. No broad wildcard, exemption or source-test change. A source-distinct guard must revalidate the complete task record and every original guard before committing."
+    - name: Versioned process identity sealing and independent data-only receipt reader
+      status: in_progress
+      evidence:
+          - check: Missing auxiliary provenance isolated and corrected without historical rewriting
+            result: passed
+            details: "From cleane6eedbf670762d9f029c46636b5f11435ae41300, inspection found v1 terminals pinned streams but not suspended/root-exit identity snapshots or lifecycle journals consumed by diagnostics. Three tests failed before correction. New opt-in v2 seals exact bytes/sizes after owned cleanup, requires every success artifact, rejects linked/changed/unreadable files, and retains available stream/identity/failure-only pins on failed acquisition. No existing v1 receipt is regenerated or promoted. Original whole-work interval, job controls, cleanup, sample counts and ceilings are unchanged. Envelopec9c55e39b9828efd53e63acaf7514c5954eab31f3c4b093710aaf3a7e47cfe2d and data-reader7e836027a271055a432175b86908f4d753da549b011e08a73aa8b1604b5a0146 are separate implementations; the reader imports no producer/native execution code."
+          - check: Exact externally pinned receipt and native lifecycle regression proof
+            result: passed
+            details: "Pure reader requires complete seven-file bytes, external terminal SHA and independently supplied exact command/source/inputs/environment/implementation plan. It checks closed shapes, duplicate/nonfinite JSON, exact integer types, all inner hashes/sizes, identity continuity, raw clock order, root placement and natural whole-job exit. Running-process exit FILETIME remains undefined rather than falsely required zero; root CPU can include work before job assignment. Notifications cannot substitute for final accounting. Native success fixtures are independently read, including descendants, unsampled sleep and controls; failed timeout/assignment/exit fixtures preserve sealed available evidence. All outputs deny authority, admission, reference independence and ancestor-quota qualification. Synthetic hash consistency is never proof of empirical execution."
+          - check: Source-bound integrity and direct-dependent validation
+            result: passed
+            details: "Immutable98351a35e6967fd65d095b53a602ea45b178615f9b8eb2f9119a984bfdd72cb5 passes integrity first, pinned Cargo/Rust lifecycle preflight,31focused tests,313Native73.236s and290WSL35.685s plus23native-covered skips, Ruff/Prettier/diff. Started12:55:47.154587Z, finished12:57:57.972477Z,130.8179301s elapsed; validation duration is not a measured speedup. All18 raw command streams and five tested source pins are retained for independent commit guard verification. No product sample/profile acquired. Five source/test/charter paths and three appended records match no family among all36; no generation. Exactly two new diagnostic allowed paths are appended, preserving all71 previous checkpoints, readiness and protected authorities."
+          - check: Remaining qualification and formal closure sequence
+            result: not_run
+            details: "The sealing defect is fixed; complete acquisition-to-cohort binding is still required before prospectively frozen fresh reference9/source-distinct holdout9/all12conditioning obligations/all54coordinates/5resourcegroups56limits and interference/common-mode challenges. Do not relabel historical v1 observations as newly sealed evidence, copy singles into nine-run cohorts, infer unlimited ancestor quota, weaken retained-owner guards or request host idleness. Existing diagnostic lookup99.7895percent/five-coordinate77.3958percent/build20.2989percent gains remain separately scoped, not total certification improvements. Final36/runtime19, bothsource-distinct38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, validperformance/signing/qualification-before-pin-onlypromotion/immutabletrust/guardedcleanCLOSED remain. H08OPEN/continuationACTIVE; no external action required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

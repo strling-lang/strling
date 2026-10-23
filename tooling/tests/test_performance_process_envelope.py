@@ -14,6 +14,7 @@ import unittest
 from unittest.mock import patch
 
 from tooling import performance_process_envelope as envelope
+from tooling import performance_envelope_receipts as reader
 
 
 class _Fixture(unittest.TestCase):
@@ -72,9 +73,21 @@ class EnvelopeTests(_Fixture):
         class Child:
             def __init__(self, spec, directory):
                 self.spec = spec
+                self.directory = directory
                 owner.events.append("created-suspended")
                 (directory / "stdout.bin").write_bytes(b"raw\x00stdout\xff")
                 (directory / "stderr.bin").write_bytes(b"raw stderr")
+                envelope._save(
+                    directory / "suspended.json",
+                    dict(
+                        pid=17,
+                        birth="1000",
+                        exit="0",
+                        kernel=0,
+                        user=0,
+                        exited_before_query=False,
+                    ),
+                )
 
             def step(self, stage):
                 owner.events.append(stage)
@@ -96,6 +109,18 @@ class EnvelopeTests(_Fixture):
 
             def finish(self):
                 self.step("finish")
+                envelope._save(
+                    self.directory / "root-exit.json",
+                    dict(
+                        pid=17,
+                        birth="1000",
+                        exit="2000",
+                        kernel=9,
+                        user=17,
+                        exited_before_query=True,
+                    ),
+                )
+                envelope._save(self.directory / "lifecycle-wakeups.json", [])
                 return dict(
                     total_processes=2,
                     active_processes=0,
@@ -130,6 +155,101 @@ class EnvelopeTests(_Fixture):
         )
         self.assertEqual(
             json.loads((self.root / "receipt" / "terminal.json").read_bytes()), result
+        )
+
+    def test_identity_and_lifecycle_bytes_are_bound(self):
+        result = self.run_fake()
+        self.assertEqual(result["contract"], "unqualified-process-tree-envelope-v2")
+        self.assertEqual(
+            set(result["artifacts"]),
+            {"suspended.json", "root-exit.json", "lifecycle-wakeups.json"},
+        )
+        for name, pin in result["artifacts"].items():
+            data = (self.root / "receipt" / name).read_bytes()
+            self.assertEqual(
+                pin, dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data))
+            )
+
+    def test_missing_identity_snapshot_retains_failed_terminal(self):
+        factory = self.fake()
+        original = factory.close
+
+        def close(child):
+            value = original(child)
+            (child.directory / "root-exit.json").unlink()
+            return value
+
+        factory.close = close
+        result = envelope.capture(self.spec, self.root / "missing", factory=factory)
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("artifact", result["artifact_error"])
+        self.assertEqual(
+            json.loads((self.root / "missing/terminal.json").read_bytes()), result
+        )
+
+    def test_snapshot_sealing_error_retains_failure_and_other_pins(self):
+        original = envelope._hash
+
+        def fail(path):
+            if path.name == "suspended.json":
+                raise OSError("fixture read failure")
+            return original(path)
+
+        with patch.object(envelope, "_hash", side_effect=fail):
+            result = self.run_fake()
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("root-exit.json", result["artifacts"])
+        self.assertIn("stdout.bin", result["logs"])
+        self.assertIn("fixture read failure", result["artifact_error"])
+
+    def test_same_size_artifact_change_during_sealing_fails(self):
+        original = envelope._hash
+
+        def change(path):
+            value = original(path)
+            if path.name == "stdout.bin":
+                path.write_bytes(b"X" * path.stat().st_size)
+                os.utime(path, ns=(1, 1))
+            return value
+
+        with patch.object(envelope, "_hash", side_effect=change):
+            result = self.run_fake()
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("changed during sealing", result["artifact_error"])
+
+    def test_hardlinked_artifact_fails_without_deleting_either_file(self):
+        factory = self.fake()
+        original = factory.close
+
+        def close(child):
+            value = original(child)
+            os.link(child.directory / "stdout.bin", owner.root / "alias.bin")
+            return value
+
+        owner = self
+        factory.close = close
+        result = envelope.capture(self.spec, self.root / "linked", factory=factory)
+        self.assertEqual(result["status"], "failed")
+        self.assertIn("regular unlinked", result["artifact_error"])
+        self.assertTrue((self.root / "alias.bin").is_file())
+        self.assertTrue((self.root / "linked/stdout.bin").is_file())
+
+    def test_failure_only_auxiliary_artifacts_remain_pinned(self):
+        factory = self.fake(exit_code=7)
+        original = factory.close
+
+        def close(child):
+            value = original(child)
+            envelope._save(child.directory / "survivors.json", {"fixture": True})
+            return value
+
+        factory.close = close
+        result = envelope.capture(self.spec, self.root / "failed", factory=factory)
+        self.assertEqual(result["status"], "failed")
+        data = (self.root / "failed/survivors.json").read_bytes()
+        self.assertEqual(
+            result["artifacts"]["survivors.json"],
+            dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data)),
         )
 
     def test_every_stage_failure_retains_terminal_and_cleans_up(self):
@@ -220,7 +340,49 @@ class NativeEnvelopeTests(_Fixture):
             command=(str(self.exe), "-I", "-B", "-c", code),
             timeout_seconds=timeout,
         )
-        return envelope.capture(spec, self.root / "native")
+        directory = self.root / "native"
+        expected = dict(
+            command=list(spec.command),
+            cwd=str(spec.cwd),
+            source_sha=spec.source_sha,
+            inputs={str(p): h for p, h in spec.inputs.items()},
+            environment_sha256=hashlib.sha256(
+                json.dumps(spec.environment, sort_keys=True).encode()
+            ).hexdigest(),
+            selected_cpu=spec.selected_cpu,
+            timeout_seconds=spec.timeout_seconds,
+        )
+        for key, module in (
+            ("implementation_sha256", envelope),
+            ("controls_implementation_sha256", envelope.windows),
+            ("observation_implementation_sha256", envelope.observation),
+        ):
+            expected[key] = hashlib.sha256(
+                Path(module.__file__).read_bytes()
+            ).hexdigest()
+        expected["job_implementation_sha256"] = hashlib.sha256(
+            Path(envelope.__file__)
+            .with_name("performance_build_execution.py")
+            .read_bytes()
+        ).hexdigest()
+        result = envelope.capture(spec, directory)
+        terminal_pin = hashlib.sha256(
+            (directory / "terminal.json").read_bytes()
+        ).hexdigest()
+        if result["status"] == "observed":
+            files = {name: (directory / name).read_bytes() for name in reader.FILES}
+            verified = reader.verify_process_receipt(files, terminal_pin, expected)
+            self.assertEqual(verified["whole_action_ns"], result["whole_action_ns"])
+            self.assertFalse(verified["certification_eligible"])
+        else:
+            for group in ("logs", "artifacts"):
+                for name, pin in result[group].items():
+                    data = (directory / name).read_bytes()
+                    self.assertEqual(
+                        pin,
+                        dict(sha256=hashlib.sha256(data).hexdigest(), bytes=len(data)),
+                    )
+        return result
 
     def test_native_exact_output_and_controls(self):
         self.spec = replace(

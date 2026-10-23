@@ -8637,3 +8637,25 @@ Clean-source real-product integration, independently pinned reference9/holdout9,
 all12 conditioning obligations, final preparation, complete campaigns, signing,
 immutable trusted verification and guarded closure remain. No new runtime gain
 claimed. H08 OPEN; continuation ACTIVE; no owner action required.
+
+## H08 complete real-product acquisition — 2026-10-23 UTC
+
+Checkpoint66 completes one immutable54-coordinate diagnostic on cleanf8cb1e8c.
+Producer737c88d9 retains all original batches/512warmups/64samples and completes
+in343.0202142s. Exact archived build bytes and source equivalence are verified;
+reused binaries are diagnostic only, not fresh reference or Release evidence.
+The source/index lease is released and the final source frame is clean.
+
+Data-only auditd7a40f14 reconstructs3204 workload samples,128paired controls,
+one retained rejected attempt and53 naturally retired whole-process envelopes.
+Both CLI jobs account1154 processes. No observed hard metric exceeds its original
+effective ceiling; no admission/performance pass is claimed. Initial readera114b092
+assumed the proposed CLI estimator; corrected source-distinct reader6a225bcc uses
+the actual governed alternating-order geometric estimator and passes8 regression
+cases without changing or replaying product evidence.
+
+Whole-process intervals total252.0725536s. Large editor/end-to-end and paired CLI
+operations dominate. These are measured diagnostic durations, not a speedup.
+Fresh independent reference9/holdout9, all12 conditioning guarantees and challenges,
+full final preparation/campaigns/signing/immutable trust/guarded clean closure remain.
+Originalv6 admission unchanged. H08 OPEN; continuation ACTIVE; no owner action needed.

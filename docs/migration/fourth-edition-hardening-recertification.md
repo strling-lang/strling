@@ -3801,3 +3801,44 @@ live; complete final preparation, both source-distinct campaigns, independent
 no-reuse Release, signing, qualified-then-pin-only trusted verifier promotion,
 immutable acceptance and guarded clean formal closure remain. H08 OPEN; continuation
 ACTIVE; no owner idleness/manual assistance requested.
+
+## Complete real-product acquisition (2026-10-23 UTC)
+
+Checkpoint66 executes every actual coordinate once on cleanf8cb1e8c, after the
+integrated artifact gate. Producer737c88d9 verifies archived build87917474, all2290
+copied source hashes, no product-source differences from02c827f7, and exact binary
+hashes. Those binaries are reused only for this diagnostic, never represented as
+fresh reference or independent Release artifacts. Original baseline batches,
+512warmups and64samples remain. The prospective first-of-each-kind predictor and
+remaining fixed order complete all54 coordinates without retry. Final2299-file
+source fence and clean Git state pass; the owned index lease is released.
+
+Independent data-only auditd7a40f14 reconstructs all3204 workload samples,
+128 paired controls, one rejected attempt,53 unique PID/birth envelopes and natural
+whole-job retirement. CLI jobs each account1154 processes, including warmup and
+sample launches. No observed hard metric exceeds the unchanged effective ceiling;
+conditioning remains unqualified, so no performance or admission pass is claimed.
+Size is a pinned file observation, not an invented process. Five functional resource
+groups are not replaced by this measurement sweep.
+
+Initial readera114b092 failed after assuming proposed request-first metadata and a
+different estimator. The actual manifest requires the default alternating-order
+geometric estimator. Reader6a225bcc pins original7de6d366, corrects only that
+interpretation and passes8 estimator/input regressions. The failure remains and
+no sample, producer receipt, baseline or threshold changed or reran.
+
+Complete elapsed time is343.0202142s, summed whole-process intervals252.0725536s,
+and summed outer acquisition intervals258.5252942s. Large editor36.9572887s,
+large end-to-end27.7413906s/27.5407693s and paired CLI26.8631868s/25.2614768s
+dominate the measured workload. Source/input validation overhead is retained.
+This is actual critical-path evidence, not an equivalent-workload before/after
+improvement or total-certification forecast.
+
+Fresh independently pinned reference9/source-distinct holdout9 and prospective
+work/delay/common-mode/order challenges must now use the proven acquisition path.
+All12 conditioning obligations, ancestor quota, descendant power, source-reviewed
+direct launch model and independent trust remain explicit requirements. No idle
+window is presumed or owner help requested. Originalv6 stays live; finalcomplete36/
+runtime19, complete source-distinct qualification/promotion campaigns, independent
+no-reuse Release, fresh valid performance/signing/immutable trusted verification
+and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.

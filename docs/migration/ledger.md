@@ -8616,3 +8616,24 @@ reference9/holdout9 and all12 conditioning obligations remain, followed by compl
 source-distinct campaigns, signing, immutable verification and guarded clean closure.
 No new runtime improvement is claimed. H08 OPEN; continuation ACTIVE; no owner
 action required.
+
+## H08 actual coordinate adapters — 2026-10-23 UTC
+
+Checkpoint65 connects the native process envelope to the actual controller through
+an explicit per-call executor. All54 measurement coordinates retain the original
+commands and validators:50latency, including paired CLI and informational host
+overhead,3memory and1size. Size is a file observation, not an invented process.
+All sample counts, rejected attempts, fixed batches and CLI allocation remain.
+Five functional resource groups remain separate mandatory checks.
+
+Source-bound receipt a3a23b0c passes223Native and202WSL with21 native-covered skips.
+Synthetic protocol tests compare normal/enclosed commands and results exactly and
+reject missing inputs, source drift, malformed output and replay. They are not
+product/reference samples. Initial missing-module and lint failures are retained.
+Registered identity-only refresh and integrity check pass with all four governed
+performance artifacts byte-identical; no recalibration or live admission change.
+
+Clean-source real-product integration, independently pinned reference9/holdout9,
+all12 conditioning obligations, final preparation, complete campaigns, signing,
+immutable trusted verification and guarded closure remain. No new runtime gain
+claimed. H08 OPEN; continuation ACTIVE; no owner action required.

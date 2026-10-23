@@ -3767,3 +3767,37 @@ relabeled. All caps, workloads and512/64/9 counts remain. Finalcomplete36/runtim
 whole qualification and pin-only-promotion38/80/126/independentnoReuse126 campaigns,
 fresh mandatory performance, signing, immutable trusted acceptance and guarded
 clean formal closure remain. H08 OPEN; continuation ACTIVE; no owner help requested.
+
+## Actual coordinate adapters (2026-10-23 UTC)
+
+Checkpoint65 implements actual native command acquisition for all54 performance
+coordinates through the existing controller. An explicit per-call executor keeps
+normal certification untouched and avoids parallel command or parser definitions.
+The controller still validates sample counts, placement, CPU accounting, rejected
+attempts and paired CLI allocation. The adapter binds clean engineering source,
+the full manifest/environment, exact binaries including the memory-worker sibling,
+and every required input. Failure preserves immutable output and terminal evidence;
+no automatic retries or admission claims. Size remains a pinned file observation.
+
+Source-bound validationa3a23b0c passes223Native and202WSL with21 native-covered
+cases. The54-coordinate fixture test compares normal/enclosed commands and parsed
+observations exactly, including64samples/512warmups, paired controls and rejected
+attempts. Missing worker/input, changed source/manifest, malformed/duplicate/nonfinite
+JSON, invalid controller output, wrong environment/batch and replay are rejected.
+Initial missing-module59597c and E731lint6e09f9 remain failed development receipts.
+
+The generated-artifact skill identifies only the controller as a generator input
+to performance-resource-source-identities. Registered refresh and integrity checks
+pass without changing baselinec8a5/manifest634d/valid8a1d/limits1110. No measurement
+or threshold was regenerated. Ruff, Prettier and diff checks pass. Historical64
+checkpoints/readiness remain. The adapter denies certification eligibility; this
+is synthetic integration proof, not product timing or an independently qualified
+whole-process reference. Five functional resource groups remain required separately.
+
+Clean-source real-product integration, prospective independent reference9 and
+source-distinct holdout9, all12 conditioning obligations and work/delay/common-mode/
+order challenges remain. No new speedup is claimed. Originalv6 admission remains
+live; complete final preparation, both source-distinct campaigns, independent
+no-reuse Release, signing, qualified-then-pin-only trusted verifier promotion,
+immutable acceptance and guarded clean formal closure remain. H08 OPEN; continuation
+ACTIVE; no owner idleness/manual assistance requested.

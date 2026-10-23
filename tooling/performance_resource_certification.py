@@ -2734,7 +2734,7 @@ def _retain_measurement_processes(
 
 
 def _measurement_process_run(
-    command: Sequence[str], **options: Any
+    command: Sequence[str], *, _executor: Callable | None = None, **options: Any
 ) -> subprocess.CompletedProcess[str]:
     """Retain complete raw child results, including rejected/partial attempts."""
     recorder = _MEASUREMENT_PROCESS_RECORDER.get()
@@ -2750,7 +2750,7 @@ def _measurement_process_run(
     if recorder is not None:
         recorder({"event": "measurement-process-start", "command": list(command)})
     try:
-        result = subprocess.run(command, **options)
+        result = (_executor or subprocess.run)(command, **options)
     except BaseException as error:
         if recorder is not None:
             recorder(
@@ -3504,6 +3504,7 @@ def _runner_samples(
     execution_resource: Mapping[str, object],
     cli_launch_schedule: str | None = None,
     cli_cycle_contract: str | None = None,
+    process_executor: Callable | None = None,
     root: Path = ROOT,
 ) -> dict[str, Any]:
     if cli_cycle_contract is not None:
@@ -3557,6 +3558,7 @@ def _runner_samples(
     try:
         completed = _measurement_process_run(
             command,
+            _executor=process_executor,
             cwd=root,
             check=True,
             capture_output=True,
@@ -3844,6 +3846,7 @@ def _memory_sample(
     artifacts: Mapping[str, object],
     selected_logical_cpu: int,
     execution_resource: Mapping[str, object],
+    process_executor: Callable | None = None,
     root: Path = ROOT,
 ) -> int:
     if execution_resource.get("platform") == "windows":
@@ -3863,6 +3866,7 @@ def _memory_sample(
         try:
             completed = _measurement_process_run(
                 command,
+                _executor=process_executor,
                 cwd=root,
                 check=True,
                 capture_output=True,
@@ -3980,6 +3984,7 @@ def _measure_key(
     artifacts: Mapping[str, object],
     environment: Mapping[str, object],
     batch_iterations: int | None = None,
+    process_executor: Callable | None = None,
     root: Path = ROOT,
 ) -> dict[str, Any]:
     operation_id, fixture_id = key
@@ -4006,6 +4011,7 @@ def _measure_key(
                 else _batch_selection_target(policy, environment, operation_id)
             ),
             maximum_batch_iterations=policy["maximum_batch_iterations"],
+            **({"process_executor": process_executor} if process_executor else {}),
             selected_logical_cpu=selected_logical_cpu,
             execution_resource=cast(
                 Mapping[str, object], environment["execution_resource"]
@@ -4026,6 +4032,11 @@ def _measure_key(
                 _memory_sample(
                     fixture_id,
                     artifacts=artifacts,
+                    **(
+                        {"process_executor": process_executor}
+                        if process_executor
+                        else {}
+                    ),
                     selected_logical_cpu=manifest["measurement_policy"][
                         "selected_logical_cpu"
                     ],

@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/performance_envelope_acquisition.py
+        - tooling/tests/test_performance_envelope_acquisition.py
+        - tests/_design/unit/performance-envelope-acquisition.md
         - tooling/performance_process_envelope.py
         - tooling/tests/test_performance_process_envelope.py
         - tests/_design/unit/performance-process-envelope.md
@@ -1882,6 +1885,21 @@ checkpoints:
           - check: Preserved authority and remaining qualification
             result: not_run
             details: "Six scoped source/test/charter/record paths match no generated family among36; no generation. Baselinec8a5/manifest634d/evidence8a1d/limits1110 and livev6/controller/build executor remain exact. Previous63 checkpoints/readiness retained. This primitive is not connected to live admission; actual all54-coordinate adapters, prospective independently bound reference9/holdout9 and all12-obligation work/delay/common-mode/order qualification remain. No console detachment survives, no external owner action requested and no runtime gain inferred from unit times. Finalcomplete36/runtime19, bothwhole38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/reviewed qualification before pin-only verifier promotion/immutable trust/guardedcleanCLOSED remain mandatory. H08OPEN; continuationACTIVE."
+    - name: Actual governed coordinate acquisition through native process envelopes
+      status: in_progress
+      evidence:
+          - check: Shared controller commands and validators for every coordinate
+            result: passed
+            details: "On2e00779b, an explicit per-call executor connects the unqualified native envelope to the existing controller without global monkeypatching or a second workload implementation. All54 coordinates use original builders and validators:50latency including2pairedCLI and2informational host-overhead,3memory and1size. Fixed predeclared batches,512warmups64samples, all rejected attempts, exact CLI schedule and memory-worker sibling are retained. Size remains a checked file observation, not a fabricated process interval. Five functional resource groups remain separate mandatory checks. Clean source and pinned complete inputs bracket each immutable acquisition; failure retains raw output and cannot retry. This is not live conditioning admission, a new baseline, or independent artifact provenance authority."
+          - check: Source-bound direct-dependent validation
+            result: passed
+            details: "Terminala3a23b0c9eee8c360177ba6aa4cfc50d1321045df29f6dcdf301cfe67eadb7e2 binds seven commands and all source pins. Native223 pass64.331s; WSL202 pass32.993s plus21 native-covered skips. All54 synthetic protocol cases compare normal-versus-enclosed commands and observations exactly. Negative cases reject malformed/duplicate/nonfinite JSON, controller result failure, missing/changed worker or artifact, changed manifest, wrong/dirty source, post-acquisition drift, nonnative environment, invalid batch and replay; raw process recorder remains intact. No product/reference sample consumed. Initial missingmodule59597c and E731lint6e09f9 remain preserved development failures."
+          - check: Registered identity-only preparation and retained authority
+            result: passed
+            details: "All36 registry entries inspected. Controller is the sole generator-input match to enforced operational projection performance-resource-source-identities. Exact registered refresh-identities --json and performance_artifact_integrity --check --json pass; baselinec8a5/manifest634d/valid8a1d/limits1110 remain byte-identical. Newadapter/test/charter and records match no family. Ruff/Prettier/diff pass. No cap, conditioning, sample count, source-provenance, security or license change. Previous64 checkpoints/readiness retained."
+          - check: Real-product integration and qualification remain mandatory
+            result: not_run
+            details: "Synthetic54-coordinate equivalence is not actual product timing, whole-process reference evidence, conditioning or overhead qualification. Clean-source bounded integration on independently verified product bytes is next, followed by independently pinned reference9/source-distinct holdout9 and all12 obligations/work-delay/common-mode/order challenges. Originalv6 remains live. Finalcomplete36/runtime19, bothwhole38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/reviewed qualification before pin-only verifier promotion/immutable trust/guardedcleanCLOSED remain mandatory. No new runtime gain or full-certification gain claimed. H08OPEN/continuationACTIVE; no owner idleness/manual assistance required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

@@ -8853,3 +8853,26 @@ preserve all 73 previous checkpoints/readiness and protected authority; no
 generated family is affected. Fresh independent native cohorts and full
 conditioning qualification remain before either signed/trusted campaign.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+### H08 checkpoint 75 — early memory stability and cap failures retained
+
+On clean6d1e117e, the fixed nine-run diagnostic c3204adf completes in10.0575012s.
+Independent audit742b7ea3 verifies all raw v2 receipts and2308source files. Seven
+of nine whole-process intervals fail the predeclared500bp stability band; median
+92.7777ms, range83.5074-170.9426ms. The proposed reference cannot advance. One
+original memory observation is6975488bytes,5325above unchanged6970163; the eight
+lower results do not cancel that failure. No observations are retried or removed.
+
+Separate allocation probe9548ab43 and data-only audit2917c925 retain two identical
+complete compile/serialize censuses:64148peak requested heap bytes,1164compile
+allocation calls,5294serialized bytes. These are not working-set measurements and
+do not establish the cause of the memory-cap exceedance. The owned compiler helper
+is retired under the existing exact-image rule; the probe exits naturally and
+the source lease releases. No host setting, actual cap or workload changes.
+
+The cheap predictor prevents premature full reference acquisition; no measured
+certification-time improvement or passing conditioning claim is made. Three
+append-only records preserve74prior checkpoints and match no generated family.
+Memory attribution and a justified architectural correction remain actionable;
+both complete signed/trusted campaigns and guarded closure remain required.
+H08 OPEN; continuation ACTIVE; no owner action required.

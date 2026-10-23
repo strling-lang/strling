@@ -4217,3 +4217,60 @@ Unknown ancestor quotas remain unknown, without host-idleness requests or job
 escape. Both complete signed/trusted Q/P campaigns, fresh independent no-reuse
 Releases, qualified verifier before pin-only promotion and guarded clean formal
 closure remain mandatory. H08 OPEN; continuation ACTIVE; no owner action required.
+
+## Memory predictor failures before expensive reference acquisition
+
+Checkpoint75 follows clean6d1e117e. The prospectively fixed protocol-memory
+nine-run diagnostic c3204adfa6029cdf511ca9cdce35f093bc4fe06eef59e18b26c1c48b2a294674
+finishes13:55:58.472435Z in10.0575012s. It preserves original one-warmup/one-sample
+memory commands and uses previously verified binaries only for diagnostics.
+No member is eligible for a future fresh reference cohort or independent Release.
+Separate data-only audit
+742b7ea3b8165aaa796d617b75c1422ca9503bb336b54179b1413ad777682e93 checks every raw
+receipt, independent plan, reconstruction and all2308tracked source files.
+
+All whole-process intervals remain, in nanoseconds:
+170942600,99886100,110009300,83507400,87464100,96163900,84005900,83538500,92777700.
+Median92777700 andMAD8771800 fail the existing prospective500bp stability rule;
+seven observations fall outside its band. This unsuccessful predictor blocks
+full reference acquisition. Neither first-run exclusion nor a more generous
+post-result tolerance is permitted. Setup, released execution and retirement
+all vary; their boundaries include observation and journal work and cannot be
+renamed as pure scheduler delay. The owner is not asked for a quieter machine.
+
+All original peak working sets remain, in bytes:
+6955008,6955008,6975488,6955008,6959104,6967296,6955008,6955008,6967296.
+Observation2 exceeds the unchanged effective6970163cap by5325bytes. Receipt
+completion and eight lower measurements cannot convert this into a pass.
+Unqualified conditioning prevents an authoritative regression verdict, but the
+unfavorable result is retained for engineering; no measurement is repeated.
+
+Allocation attribution uses a separate instrumented executable, not modified
+certification output. Probe
+9548ab431f84d062d1a1319fd08a8bab89d48ace0980b6b1504d66fa4404985e mechanically
+extracts four actual fixture constructors from pinned runner source and links
+unchanged diagnostic libraries. It retains canonical normalization, compilation
+and serialization. Both compile calls request134749total bytes in1164allocations,
+with64148peak live requested bytes. Serialization produces5294bytes in an8192byte
+vector, using seven allocations totaling16256bytes. Live requested bytes return
+to8406after each complete compile/serialize iteration. Requested Rust heap bytes
+are not working set, mapped-image residency, allocator overhead or proof of the
+RSS failure's cause; no subtraction from measured RSS is allowed.
+
+The probe finishes14:04:51.291976Z in148.0384954s, including a141.465s compiler
+command. Data-only reader
+2917c925e2d781655c6d0d7d71416f533d3666849dcf0611f1b530d993674aa2 verifies all
+2308source files,24linked libraries, actual fixture extraction, raw build streams,
+artifact continuity, process identities and natural probe retirement. The compiler
+exits naturally; the existing exact-image rule retires only its owned vctip helper.
+Leases release and all failed observations remain immutable. This is diagnostic
+attribution, not equivalent-workload speedup or certification evidence.
+
+Only three records change, matching no generated family. All74previous checkpoints,
+readiness, performance authorities, security/license controls and required counts
+remain. Next work must establish memory-worker image/allocator/working-set causes
+and correct demonstrated implementation costs, while qualifying conditioning
+architecture without fitting a passing threshold. Full native reference/holdout,
+all12obligations/all54coordinates/resource56, both complete Q/P campaigns, fresh
+independent no-reuse Release, signing/qualified immutable trust and guarded clean
+formal closure remain. H08 OPEN; continuation ACTIVE; no owner action required.

@@ -4363,3 +4363,34 @@ ancestor-quota evidence remain unresolved. All54coordinates/56resource limits,
 all12conditioning obligations, both whole source-distinct Q/P campaigns and fresh
 same-SHA independent no-reuse Release, signing, qualified trust before pin-only
 promotion and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.
+
+### Checkpoint 78 — compiler-recipe divergence defeats build equivalence
+
+The fresh, sequential full-dependency/worker-only build comparison on ac6782c7
+ends15:43:55.175463Z after948.0085075s. Immutable terminal
+3ba11eb03abf414d09de2ff65b1b0c3b9c2c4b50353c08b0b772f650280716f0 records
+570519ms versus374270ms, but different executable hashes and3163648versus3117568
+bytes. The predeclared exact identity requirement fails. The34.3983% observed
+timing reduction is not a validated speedup; the single fixed-order pair is not
+counterbalanced and says nothing about complete-certification wall time.
+
+Auditf8b60f55c15a71ac1ba68d130afb59feae7e10e42e081bbe20d55bee200feedb verifies
+2310sourcefiles, raw commands/receipts/logs, actual binaries and owned retirement.
+The actual worker-only kernel command adds linker-plugin-lto; the full graph,
+which also builds interop native libraries, does not. This is an established
+recipe divergence, not a complete attribution of every differing byte.
+
+Explicit correction to checkpoint77: unchanged declared profile settings are not
+generated-code or performance equivalence. The static assertion is renamed to
+match what it proves, and the charter disallows worker-only artifacts as canonical
+performance predictors. Existing complete-build tests guard default-feature
+commands and all artifacts. Integrity-first focused/default-build tests and style
+checks pass without product samples. No failed observation is replaced or retried.
+
+Five edited paths match none of36generated families. All77historical checkpoints,
+readiness, scope and authority remain. O2 remains diagnostic and unadopted pending
+broader full-graph runtime and correctness evidence. Conditioning/stability and
+ancestor-quota obligations remain unresolved, with no host-change request or
+weakened ceiling. Both source-distinct Q/P campaigns, fresh independent Release,
+signing, qualified immutable trust and guarded clean formal closure remain.
+H08 OPEN; continuation ACTIVE; no owner action required.

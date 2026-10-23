@@ -45,7 +45,7 @@ class PerformanceWorkerDependencyTests(unittest.TestCase):
         )
         self.assertEqual(len(binaries), 2)
 
-    def test_codegen_and_runtime_semantics_are_not_changed(self):
+    def test_declared_release_settings_and_toolchain_are_preserved(self):
         self.assertEqual(
             self.manifest["profile"]["release"],
             {"codegen-units": 1, "lto": "thin"},

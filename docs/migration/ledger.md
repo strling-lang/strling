@@ -8917,3 +8917,24 @@ The resident census remains current-page attribution only, with an unresolved
 32768byte counter gap and filename errors. Prior cap/stability failures remain.
 Conditioning qualification, both full signed/trusted campaigns and guarded clean
 closure are still required. H08 OPEN; continuation ACTIVE; no owner action needed.
+
+### H08 checkpoint 78 — failed build equivalence is not a speedup
+
+On clean ac6782c7, fresh sequential build receipt3ba11eb0 completes in948.0085075s.
+Full dependencies take570.519s and worker-only374.270s, but worker executable
+identities and sizes differ. The predeclared exact-output equivalence check fails;
+the observed34.3983% reduction is not a validated build or certification speedup.
+Both owned builds retire, the source lease releases, and no product samples run.
+
+Independent auditf8b60f55 verifies2310sourcefiles and all pinned build evidence.
+The worker-only kernel command uses linker-plugin-lto where the full graph does
+not. Correction to checkpoint77: identical declared profiles do not imply equal
+compiler recipes or performance. The test/charter now explicitly limit worker-only
+selection to functional diagnostics. Complete default-build commands and outputs
+remain guarded; integrity-first focused and build-contract tests plus style pass.
+No generated family matches the five changed paths; no generation occurs.
+
+All77prior checkpoints, readiness and scope remain unchanged. O2 needs broader
+full-graph runtime proof; previous memory/stability failures and unknown ancestor
+quota remain unresolved. Both complete signed/trusted campaigns and guarded clean
+closure remain required. H08 OPEN; continuation ACTIVE; no owner action needed.

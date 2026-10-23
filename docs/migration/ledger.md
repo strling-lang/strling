@@ -8485,3 +8485,33 @@ runs. A new clean engineering SHA and fresh immutable scheduling experiment rema
 required. Original admission/counter/reference qualification and both complete
 certification campaigns, signing, immutable trust and guarded clean closure remain.
 H08 OPEN; continuation ACTIVE.
+
+### H08 interrupted scheduling and independent-owner prerequisite — 2026-10-23 (UTC)
+
+The session-bound285ed760 diagnostic stopped without a producer terminal. Last
+progress70 is00:25:48.289457Z in the third round; the00:39 heartbeat found the
+session handle lost and recorded owner/children retired. Exact termination cause
+and time are unknown. Two round receipts report884.5163875s serial and699.9582025s
+concurrent; the required six-round protocol is incomplete, so no accepted comparison
+or speedup follows. All partial builds, timing observations and receipts remain.
+
+Recovery4d9555dd verifies all24 recorded identities retired, including a reused PID
+distinguished by birth, and no relevant compiler or helper remaining. All2287
+tracked files and Git/helper hashes match the original source frame. Only the
+exact abandoned lock was moved to recoverable
+target/codex-tools/h08-scheduling-interruption-recovery-v1/index.lock.orphan.bin;
+only its exact P mapping was removed. No interrupted evidence was rewritten and
+no synthetic producer terminal was created.
+
+Build-free current-context probe4e58d271 uses the already approved native launcher.
+Permitted breakaway still leaves the child in an inherited kill-on-close job;
+the existing independence guard rejects it before any source lease/build/sample.
+This proves the current launch limitation, not the historical termination trigger.
+The next long diagnostic must satisfy independent ownership before acquisition;
+there is no session-bound fallback. A guarded fresh-source standalone launch is
+required, not repeated waiting or replay of the interrupted attempt.
+
+Checkpoint60 appends only three records; no generated family matches or generation.
+All59 earlier checkpoints/readiness remain. Original admission/reference, both
+complete campaigns, signing/immutable trust and clean formal closure remain.
+H08 OPEN; continuation ACTIVE; no new certified runtime improvement.

@@ -3468,3 +3468,55 @@ and holdout9+9/all12/all54 qualification, both whole38/80/126/independent no-reu
 Release126 campaigns with125PASS and soleVSCEwaiver, signing, immutable reviewed
 qualification then pin-only promotion, verification and guarded clean formal
 closure remain. H08 OPEN; continuation ACTIVE.
+
+### Interrupted scheduling and strict launch prerequisite — 2026-10-23 UTC
+
+The source-bound285ed7609cff5e2f3789e66bead25d8687c15b60 experiment has no producer
+terminal. Last progress70,
+45553f732198752dfca9db48e3062e6cf7497a78df0254110414747ac4987746, was written at
+00:25:48.289457Z in round2/concurrent with command0 pending. At00:39 recorded
+owner19612, worker20424 and Cargo33292 were absent; exec session26849 was unknown.
+Exact termination trigger/time is not established. This is interrupted/incomplete,
+not a passed or resumable six-round experiment.
+
+Serial round0 receipt2e25290a2a534bb3989ff96fc2c015c539f76ffb64d63bdcdd810936faacf134
+reports884.5163875s; concurrent round1
+daf8d27aae2b651da0e0ed06f6675c41ed6ac60826411e9b189a9b7595c3c80e reports699.9582025s.
+These retained incomplete-protocol observations do not establish an accepted
+before/after improvement. Neither partial evidence nor existing outputs can replace
+any fresh round, certification workload or required independent sample.
+
+External recovery4d9555dd67aafb8de04851c1bed5a3aa0994e758163ba9020eafdfa941fb0a87
+reconstructs all70 progress records and confirms all24 recorded process identities
+retired twice. PID11744 was reused with a different birth and not touched. Native
+compiler/owned-helper inventory is empty. All2287 tracked files and recorded
+Git/helper hashes equal the original source frame before and after recovery.
+Exact token, single-link regular identity and exclusive access are proven before
+moving only the abandoned lock to recoverable
+target/codex-tools/h08-scheduling-interruption-recovery-v1/index.lock.orphan.bin,
+SHA b9e82452f0ae200a1623425152ed858ebd2dc954bcde3d289c076d2dfa23c556.
+Only the exact owned P mapping is removed. No data deletion, invented producer
+terminal, attempt retry, source rebind or historical evidence modification occurs.
+
+The earlier session-bound fallback was labeled non-authoritative but still exposed
+expensive diagnostics to session lifetime. A fresh bounded no-build probe through
+the unchanged approved launcher observes parent flags0x2800 and child flags0x2000.
+Receipt4e58d2712304ea323005fa3083fd4a4e9c60fdc86b323bc9874059e6fe6b4cb1 is rejected
+by the existing independence guard before any lease/build/sample. This proves the
+current launch limitation, not the historical termination cause. No job, token,
+security setting or unrelated process is modified.
+
+The next long diagnostic must require actual independent ownership before source
+acquisition, as certification already does; no retry loop or managed-job fallback.
+A source-distinct immutable standalone helper is prepared after this record commit
+and must pass its cheap guards before launch. All six fresh rounds,18 original
+commands, required outputs, source/byte fences and unfavorable observations remain.
+This is launch reliability, not an empirical build-throughput improvement.
+
+Only three migration records append; no generated family matches or generation.
+All59 prior checkpoints/readiness remain. An independent native context is required;
+repeated heartbeats are not environmental recovery. Original CPU1/counter/reference9
+and holdout9/all12/all54 qualification, final-source complete36/runtime19, both whole
+38/80/126/independent no-reuse Release126 campaigns,125PASS with soleVSCEwaiver,
+freshperformance/signing/immutable reviewed qualification then pin-only promotion,
+verification and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.

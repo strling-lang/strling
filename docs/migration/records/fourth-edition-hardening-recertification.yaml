@@ -1795,7 +1795,24 @@ checkpoints:
           - check: Remaining engineering and certification obligations
             result: not_run
             details: "Three new implementation/test/charter paths plus three appended records, no36familymatches/no generator. Previous58checkpoints/readiness retained; schema/independent reconstruction/exactpathcommit/clean newSHA then fresh immutable fixedsixround build comparison remain. Original CPU1 admission, rawcounter validity and actual reference9/holdout9/all12/all54 challenges remain unqualified. Final-source complete36/runtime19, wholeQ/P38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/reviewedqualification then pin-onlypromotion/immutabletrust/guardedcleanformalCLOSED mandatory. No new build or totalcertification speedup established. H08OPEN; continuationACTIVE."
+    - name: Interrupted diagnostic preserved and independent ownership required
+      status: in_progress
+      evidence:
+          - check: Session-bound scheduling interrupted without producer terminal
+            result: failed
+            details: "Source285ed7609cff5e2f3789e66bead25d8687c15b60/tree259694aff3eeea42c18d81d461ee36f76082d298. Last progress70/hash45553f732198752dfca9db48e3062e6cf7497a78df0254110414747ac4987746 at00:25:48.289457Z in round2/concurrent command0. At00:39 owner19612/worker20424/Cargo33292 absent and session26849 unknown; no producer terminal. Actual termination trigger/time unknown. Round receipts2e25290a/daf8d27a report884.5163875s serial/699.9582025s concurrent, but sixround protocol incomplete. No accepted gain, restart, filtering or partial-output reuse."
+          - check: Exact orphan recovery preserves source and partial results
+            result: passed
+            details: "Recovery4d9555dd67aafb8de04851c1bed5a3aa0994e758163ba9020eafdfa941fb0a87 reconstructs70progressrecords, confirms all24recorded identities retired twice and no relevantcompiler/helper remains. ReusedPID11744 distinguished by different birth and untouched. All2287trackedfiles plus Git/helper frame unchanged. Exact57byte locktoken/singlelink/unaliased identity/exclusiveaccess verified before recoverable move to target/codex-tools/h08-scheduling-interruption-recovery-v1/index.lock.orphan.bin, SHAb9e82452f0ae200a1623425152ed858ebd2dc954bcde3d289c076d2dfa23c556. Only exact ownedPmapping removed. No data deletion, fabricatedterminal, source rebind or priorattempt modification."
+          - check: Existing independent-owner guard rejects current context
+            result: failed
+            details: "One fresh build-free probe4e58d2712304ea323005fa3083fd4a4e9c60fdc86b323bc9874059e6fe6b4cb1 uses unchanged approved native launcher. Parentjob0x2800 permits breakaway but child31412 remains inheritedjob0x2000; existing independenceguard rejects before lease/build/sample, then probe exits. Historical termination cause remains unknown. Require actual independent ownership before next longdiagnostic; no session-boundfallback, job/security/scheduler mutation or repeated environmental waiting. Source-distinct sealed standalone helper and cheap guards follow recordcommit."
+          - check: Remaining obligations and external launch boundary
+            result: not_run
+            details: "Only3records append, no36familymatches/generation. Prior59checkpoints/readiness preserved; independent schema/source/receipt audit and exact3path cleancommit follow. Independent native context needed for next fixed6freshround/all18command diagnostic. No partialprotocol acceptance or reduced samples. Original CPU1/counter/reference9+holdout9/all12/all54, finalcomplete36/runtime19, wholeQ/P38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/immutable reviewedqualification thenpin-onlypromotion/verification/guardedcleanCLOSED mandatory. No accepted new or wholecertificationgain. H08OPEN; continuationACTIVE."
 commits:
+    - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
+      subject: "fix(performance): retire owned compiler helpers safely"
     - sha: 3d1219acfbc50ff9ebe5918fa429839b62413da4
       subject: "fix(performance): reject missing build outputs immediately"
     - sha: 178e447ee99715130e01368a8d683661b8d608e0

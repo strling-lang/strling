@@ -3975,3 +3975,33 @@ Final preparation/prerequisites, both source-distinct full campaigns with fresh
 independent no-reuse Releases, signing, qualified-then-pin-only verifier promotion,
 immutable trusted verification and guarded clean closure are still required.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+## Actual-path integration after scoped lookup — 2026-10-23
+
+Checkpoint70 records clean source10b350a039a5aba8937f70ef6ddc61ebef07faf7 and
+producer4bf644f7, finished11:53:31.512334Z. Data-onlyauditf6ebdaa9 reconstructs
+all five coordinate plans,2301 source-file identities,131 observations,128 controls
+and five naturally empty job trees. Both CLI jobs still account1154 processes,
+with original512warmups64samples and unchanged pairing. There are no rejected
+attempts in either diagnostic; no observation is dropped or repeated. The source
+lease is released, owner41988 exits and the checkout is independently clean.
+
+Total diagnostic duration is58.9642569s versus260.8548361s before the lookup
+correction. Whole CLI durations are25.9796068s/26.1866687s versus
+130.0063182s/123.8140964s. Five whole envelopes total52.9719243s rather than
+254.8888942s. Kernel, interop and memory-worker bytes, coordinate order, commands,
+workload counts and required controls match; the runner's thread lookup changed.
+This single before/after diagnostic supports the identified critical-path cost,
+but is not independent product or complete-certification performance evidence.
+The nine counterbalanced equivalent-operation pairs remain the separately scoped
+controlled comparison. Incremental/reused diagnostic binaries are not fresh Release.
+
+The unchanged CLI ceilings12658/12333 basis-points exceed new observations
+11122/11049. Memory observations17952768/16576512/6959104bytes remain below
+19968819/18531532/6970163, respectively; the small protocol-memory margin is not
+hidden. No admission or authoritative performance pass follows from these values.
+Ancestor-quota provenance remains unresolved and requires code/architecture, not
+a quieter workstation or escape from inherited ownership. All fresh independent
+reference/holdout conditioning and source-distinct certification obligations,
+signing, immutable trusted verification and guarded clean closure remain mandatory.
+H08 OPEN; continuation ACTIVE; no owner action required.

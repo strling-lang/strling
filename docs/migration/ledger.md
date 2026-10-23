@@ -8732,3 +8732,23 @@ and protected authority remain. New clean-source actual-path prediction,
 ancestor-quota qualification, independent reference/holdout obligations and both
 complete certification/signing/trust/closure campaigns remain mandatory.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+## H08 faster actual-path predictor — 2026-10-23 UTC
+
+Checkpoint70 follows guarded clean correction10b350a0 with immutable predictor
+4bf644f7 and data-onlyauditf6ebdaa9. All five actual coordinates complete with
+131 observations,128 controls, no rejected attempts and natural process-tree
+retirement. Original512warmups64samples/batch1, all raw evidence and ceilings
+remain. Source/index ownership is released; the worktree is clean.
+
+The same-workload diagnostic falls from260.8548361s to58.9642569s. Whole CLI
+intervals fall from130.0063182s/123.8140964s to25.9796068s/26.1866687s.
+This is one diagnostic before/after comparison, not an independently qualified
+product or total-certification speedup. The controlled nine-pair lookup comparison
+remains separately scoped. No new metric exceeds its unchanged ceiling, including
+the narrow protocol-memory margin, but none constitutes valid admission.
+
+Ancestor-quota provenance and all conditioning/reference/holdout challenges still
+require architectural engineering. Final preparation, both complete campaigns,
+fresh independent Releases, signing, immutable trust and closure remain mandatory.
+H08 OPEN; continuation ACTIVE; no owner action required.

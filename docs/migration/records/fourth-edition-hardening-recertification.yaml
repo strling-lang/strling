@@ -7,6 +7,8 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tests/certification/performance-resource/1.0/runner/src/controlled_spawn.rs
+        - tests/_design/unit/performance-controlled-spawn.md
         - tooling/performance_envelope_acquisition.py
         - tooling/tests/test_performance_envelope_acquisition.py
         - tests/_design/unit/performance-envelope-acquisition.md
@@ -1930,6 +1932,21 @@ checkpoints:
           - check: Governance and remaining engineering
             result: not_run
             details: "All66 prior checkpoints/readiness remain; six scoped paths match no generated family and no generator runs. Protected baselinec8a5/manifest634d/evidence8a1d/limits1110/livev60996/retained-owner00a3 unchanged. Next implement and test pre-execution HighQoS enforcement/readback for actual CLI and memory descendants, and a complete trusted ancestor-quota boundary before fresh reference builds; do not assume inheritance or infer unlimited from an inner job. Preserve original runtime/workloads/512warmups64samples9references, caps, rejected attempts, all54 coordinates/all12 obligations. Fresh independent reference9/source-distinct holdout9/challenges, finalcomplete36/runtime19, bothsource-distinct38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, valid performance/signing/qualified-then-pin-only-verifier promotion/immutable trust/guardedcleanCLOSED remain. H08OPEN/ACTIVE; no request for a quieter machine or routine owner decision."
+    - name: Enforced pre-execution HighQoS for actual runner descendants
+      status: in_progress
+      evidence:
+          - check: Narrow correction for the retained descendant-power counterexample
+            result: passed
+            details: "All four actual runner launch sites now use one controlled helper: CLI request, ordinary paired control, cycle-audited paired control and memory worker. Rust1.75 standard command construction preserves argv/environment/stdio and Child handles. Windows creates suspended, identifies the single initial thread, checks its retained process ownership, sets and reads back HighQoS, and requires ResumeThread previous count1. Setup failures kill/wait only the owned child with a bounded cleanup wait; missing/ambiguous threads, owner/policy/resume mismatches fail closed. Linux ordinary spawn is unchanged. No ancestor job, global power setting, security configuration, workload, sample count, rejection, pairing order or ceiling is changed. All setup cost remains within existing wall boundaries without subtraction. Task scope adds exactly the new helper and charter paths. Tests-first missing-helper failure remains retained."
+          - check: Source-bound cross-platform regression and offline build proof
+            result: passed
+            details: "Original terminala34f0d9cd65448b1ce8605ef9cd8f473330199f4c1a91985b11b240ad951612a finishes11:00:32.106709Z. Seven native helper tests and four Linux helper tests pass under pinned Rust1.75; controller dependents228Native pass66.227s and205WSL pass31.260s plus23 native-covered skips. Full runner33tests pass; offline Release build689.711s and runner-test build128.192s both retire naturally with zero active job members. Integrity/Ruff/Prettier/diff pass. Unicode quoted argv/environment, exact pipe bytes, null-input controls, nonzero child status and pre-resume failure without child entry are verified. No product performance sample or certification profile consumed."
+          - check: FFI declaration warning corrected without rewriting original proof
+            result: passed
+            details: "Review of the passing build finds clashing SetProcessInformation declarations. Narrow correction uses the same i32 enum and c_void pointer signature as the existing runner; typed local power state is cast at the call boundary. Final helper5dd2bc74/main97595df9 are bound by terminal9e1b00791682587708f66392977abaf7ecda46ba78458b926262658248e56e51, finished11:16:05.224716Z. Seven corrected native helper tests/eight architecture tests and all33 runner tests pass. Warning-free Release build229.525s and test build118.610s use a separately copied, hash-verified incremental cache; original cache/artifacts remain byte-identical. This is engineering validation, never fresh certification/Release evidence or an equivalent-workload speedup comparison. Final runner e1b0fd0f/9217536bytes, memory worker e0990d91/3163648bytes. Both final jobs naturally empty, no survivor exemption. Earlier Windows/WSL suite remains scoped to its exact source before the Windows-only ABI declaration repair."
+          - check: Preserved authority and remaining qualification
+            result: not_run
+            details: "Seven exact source/test/charter/record paths match no family in unchanged36-entry registry3193518c; no generator runs. All67 prior checkpoints, readiness and protected baselinec8a5/manifest634d/evidence8a1d/limits1110/livev60996/retained-owner00a3 remain. Actual source-bound CLI/memory predictors follow the clean scoped commit; no new overhead or total-certification improvement is claimed. Explicit descendant power is not complete ancestor-quota qualification. That boundary, independent reference9/source-distinct holdout9/all12 obligations/all54 coordinates/5resourcegroups/56limits and work-delay-common-mode-order challenges remain required. Original512warmups64samples/allrejections/allcaps and fresh no-reuse Release/source-distinct campaigns remain. Finalcomplete36/runtime19, whole38/80/126/independentRelease126 each125PASS+soleVSCEwaiver, valid performance/signing/qualified-then-pin-only verifier promotion/immutable trust/guardedcleanCLOSED mandatory. H08OPEN/ACTIVE; no owner action or quieter-machine request."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

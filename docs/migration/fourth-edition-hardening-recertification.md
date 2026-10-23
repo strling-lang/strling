@@ -3890,3 +3890,40 @@ evidence. All54 coordinates, all12 conditioning obligations, nine fresh independ
 reference and source-distinct holdout repetitions, challenges, final preparation,
 both complete campaigns, signing, immutable trust and guarded clean closure remain.
 H08 remains OPEN; continuation ACTIVE.
+
+## Pre-execution control of actual runner descendants — 2026-10-23 UTC
+
+Checkpoint68 addresses the native counterexample83ea8cfa rather than requiring
+additional host idleness. Four actual runner launch sites share a Rust1.75 helper:
+CLI requests, ordinary and cycle-audited paired controls, and the memory worker.
+Windows creation is suspended. A thread snapshot must identify exactly one initial
+thread; its process owner must match the retained child. Process HighQoS is set
+and read back before a resume count of exactly one is accepted. Setup failures
+retain their error and retire only the owned child with a bounded wait. Linux
+keeps ordinary spawning. Standard command quoting, environment, pipes and cycle
+handles remain; setup overhead stays measured, with no subtraction or cap change.
+
+Receipt a34f0d9c finishes11:00:32.106709Z with228Native/205WSL dependent passes,
+23 native-covered skips, seven native/four Linux helper tests and33 runner tests.
+The offline Release build takes689.711s and runner test build128.192s; both job
+trees retire naturally. Review finds a clashing API declaration warning despite
+passing tests. The narrow repair aligns the enum and opaque-pointer signature
+with the existing declaration without changing the power policy or work.
+
+Final receipt9e1b0079 finishes11:16:05.224716Z, binding helper5dd2bc74 and
+main97595df9. Seven native helper tests, eight architecture checks and33 runner
+tests pass; Release and test builds are warning-free and naturally quiescent.
+They take229.525s and118.610s using a separately copied, hash-verified incremental
+cache. Original binaries, logs and receipts remain unchanged. These timings are
+not equivalent-workload comparisons and establish no certification speedup.
+The earlier broader suite remains evidence for its exact pre-repair source.
+
+All67 prior checkpoints and readiness remain; task scope adds only the helper
+and charter. Seven scoped paths match no generated family under registry3193518c.
+No generated authority, performance measurement, live conditioning policy, sample
+count, ceiling, security proof, license waiver or trusted-verifier pin changes.
+Next are clean-source actual CLI/memory predictors and complete ancestor-quota
+provenance, followed by fresh independent reference9/source-distinct holdout9 and
+all12 conditioning obligations. Both complete campaigns, independent no-reuse
+Releases, signing, immutable trusted verification and guarded clean closure remain.
+H08 OPEN; continuation ACTIVE; no owner action required.

@@ -24,6 +24,28 @@ CHANGE_CONTROL = ROOT / "governance/change-control.json"
 
 
 class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
+    def test_all_runner_descendants_use_pre_execution_power_controls(self) -> None:
+        source = RUNNER_SOURCE.read_text(encoding="utf-8")
+        self.assertIn("mod controlled_spawn;", source)
+        self.assertEqual(source.count("controlled_spawn::spawn("), 4)
+        self.assertNotIn(".spawn()", source)
+        self.assertNotIn(".output()", source)
+        controls = (RUNNER_SOURCE.parent / "controlled_spawn.rs").read_text(
+            encoding="utf-8"
+        )
+        for required in (
+            "CREATE_SUSPENDED",
+            "GetProcessInformation",
+            "SetProcessInformation",
+            "GetProcessIdOfThread",
+            "ResumeThread",
+            "THREAD_SUSPEND_RESUME",
+            "WaitForSingleObject",
+        ):
+            self.assertIn(required, controls)
+        self.assertNotIn("CREATE_BREAKAWAY_FROM_JOB", controls)
+        self.assertNotIn("SetInformationJobObject", controls)
+
     def test_controller_is_verification_only_and_offline(self) -> None:
         source = MODULE.read_text(encoding="utf-8")
         for forbidden in (

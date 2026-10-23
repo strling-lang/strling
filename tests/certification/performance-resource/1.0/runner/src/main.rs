@@ -8,6 +8,7 @@ use std::time::Instant;
 use std::{cell::RefCell, rc::Rc};
 
 mod cli_cycles;
+mod controlled_spawn;
 mod phase_timeline;
 
 use serde_json::{json, Value};
@@ -518,13 +519,14 @@ fn run_inherited_memory_parent(
         .parent()
         .ok_or_else(|| "memory worker directory is absent".to_owned())?
         .join(MEMORY_WORKER_BINARY);
-    let mut child = Command::new(&worker)
-        .args(&worker_arguments)
-        .stdin(Stdio::piped())
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .spawn()
-        .map_err(|error| error.to_string())?;
+    let mut child = controlled_spawn::spawn(
+        Command::new(&worker)
+            .args(&worker_arguments)
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped()),
+    )
+    .map_err(|error| error.to_string())?;
     child
         .stdin
         .take()
@@ -1896,13 +1898,14 @@ fn prepare_cli_operation_with_cycles(
         )
     };
     Ok(Box::new(move || {
-        let mut child = Command::new(&executable)
-            .args(&arguments)
-            .stdin(Stdio::piped())
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .spawn()
-            .map_err(|error| error.to_string())?;
+        let mut child = controlled_spawn::spawn(
+            Command::new(&executable)
+                .args(&arguments)
+                .stdin(Stdio::piped())
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped()),
+        )
+        .map_err(|error| error.to_string())?;
         let retained = if cycle_sink.is_some() {
             Some(cli_cycles::RetainedChild::retain(&child)?)
         } else {
@@ -1936,13 +1939,15 @@ fn prepare_cli_launch_control(kernel_bin: Option<&Path>) -> RunResult<PreparedOp
         .ok_or_else(|| "latency:cli-startup requires --kernel-bin".to_owned())?
         .to_owned();
     Ok(Box::new(move || {
-        let output = Command::new(&executable)
-            .arg("--help")
-            .stdin(Stdio::null())
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()
-            .map_err(|error| error.to_string())?;
+        let child = controlled_spawn::spawn(
+            Command::new(&executable)
+                .arg("--help")
+                .stdin(Stdio::null())
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped()),
+        )
+        .map_err(|error| error.to_string())?;
+        let output = child.wait_with_output().map_err(|error| error.to_string())?;
         if !output.status.success() {
             return Err(format!(
                 "CLI launch control failed with {}: {}",
@@ -1962,13 +1967,14 @@ fn prepare_cli_launch_control_with_cycles(
         .ok_or_else(|| "latency:cli-startup requires --kernel-bin".to_owned())?
         .to_owned();
     Ok(Box::new(move || {
-        let child = Command::new(&executable)
-            .arg("--help")
-            .stdin(Stdio::null())
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .spawn()
-            .map_err(|error| error.to_string())?;
+        let child = controlled_spawn::spawn(
+            Command::new(&executable)
+                .arg("--help")
+                .stdin(Stdio::null())
+                .stdout(Stdio::piped())
+                .stderr(Stdio::piped()),
+        )
+        .map_err(|error| error.to_string())?;
         let retained = if cycle_sink.is_some() {
             Some(cli_cycles::RetainedChild::retain(&child)?)
         } else {

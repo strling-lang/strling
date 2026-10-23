@@ -8683,3 +8683,24 @@ jobs/processes were changed; all exited. Actual descendant launch enforcement
 and complete quota provenance must be corrected before fresh reference cohorts.
 Originalv6, existing authority, all ceilings/counts/security and historical attempts
 remain. H08 OPEN; continuation ACTIVE; no quieter-machine request or owner action.
+
+## H08 pre-execution descendant power controls — 2026-10-23 UTC
+
+Checkpoint68 corrects all four actual runner child-launch paths. Windows children
+are created suspended, assigned explicit HighQoS with readback, and resumed only
+through the uniquely identified initial thread belonging to the retained child.
+Setup failure retires only that owned child. Standard argv, environment, streams,
+cycle handles, all workloads and wall-time overhead remain; Linux spawn is unchanged.
+
+Original source-bound proofa34f0d9c passes228Native/205WSL plus23 native-covered
+skips, seven native/four Linux helper tests and33 complete runner tests. Review
+then corrects an API declaration clash. Final proof9e1b0079 passes seven native
+helper/eight architecture/33 runner tests and warning-free offline builds, with
+natural empty job retirement. Its separate copied incremental cache preserves
+every original build artifact and is not fresh certification evidence.
+
+All seven scoped paths match no generated family; no regeneration. No performance
+sample, profile, measured speedup or admission pass is claimed. Actual CLI/memory
+predictors, complete quota provenance, fresh independent reference/holdout cohorts,
+all conditioning obligations and complete certification/signing/trust/closure remain.
+H08 OPEN; continuation ACTIVE; no owner action needed.

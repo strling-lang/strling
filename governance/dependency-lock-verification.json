@@ -23,7 +23,7 @@
         "Cargo.toml": "0abf803ed7c400337a82da31dd1cae7ef745fca372c529a8786f164d78fe1ce0",
         "core/internal/Cargo.toml": "1cadcdc48d0edf00ca0c9bc7824ef7934376d92f240769f641e6aee7855662d9",
         "package.json": "af774b2565965aa8c436ac669839b83fec1656a3a4dbbc5dfa837a0ab6b228db",
-        "tests/certification/performance-resource/1.0/runner/Cargo.toml": "b7995f6e6e9bdf3b246d15d51d51540133a11e45983cb3fc93fd28013bc951db",
+        "tests/certification/performance-resource/1.0/runner/Cargo.toml": "c1cebc2f15cb4e00eb38d5f87b41078529571852403e0d0fb3f79d22bac6b456",
         "tooling/lsp-server/package.json": "bbca65f1186e8c50fbc99bd824a2821adb9843459ea9db57d2f276f5c4106a9d"
     },
     "lock_hashes": {

@@ -4312,3 +4312,54 @@ correction, without fitting a threshold or discarding failures. Original
 conditioning/isolation, caps, samples, Q/P campaigns, signing, trusted
 qualification/promotion and clean guarded formal closure remain mandatory.
 H08 OPEN; continuation ACTIVE; no owner action needed.
+
+### Checkpoint 77 — measured code footprint and worker dependency separation
+
+Resident diagnostic ea037179 and data audit11fed3ab complete without promoting
+the current page census into historical peak evidence. Of6934528enumerated bytes,
+6131712are image-backed and438272private allocations. The32768byte difference
+from API counters and all filename errors1006 remain explicit; no RSS failure
+cause is established.
+
+Prospective codegen experiment
+4fb473bca53ad3bc76f58c1af9974cad59ae7b6086e12d4cff518e2ae0500799 uses fresh
+locked/offline Rust1.75 O3/O2 builds on840b413e and a fixed interleaved54observation
+schedule: all three original memory coordinates nine times per variant. Audit
+f3d8c45a8615c0fe8ffc65ee9769a1c92fa7582efa38ee1b7c1ba3b617a93b43 reconstructs
+all eleven raw files per observation,2308source files, actual executable and
+recipe pins, original warmup/sample counts, nonoverlap and natural measurement
+retirement. No samples are trimmed, retried or admitted as certification.
+
+The worker binary shrinks3163648to2956800bytes. O3/O2 median working sets are
+17985536/17936384bytes for semantic-large,16646144/16580608for simply-large and
+6946816/6881280for protocol-common. One original O3 protocol observation6971392
+exceeds unchanged6970163 by1229bytes. All27O2 observations are below their
+unchanged caps. These are diagnostic measured improvements, not conditioning
+qualification, a new baseline or acceptance of O2; broader latency and correctness
+evidence is still required before adoption.
+
+The experiment takes630.7898921s, including575.402s of concurrent fresh builds.
+Its command logs show the memory-only target still builds unused public/interop
+dependencies and their native-library outputs. The scoped correction makes those
+unchanged path dependencies optional behind default-enabled full-runner, which
+the complete runner explicitly requires. Default builds retain all capabilities;
+only explicit worker-only selection avoids unused preparation. Optimization,
+LTO, codegen units, panic/check behavior, workload sources and authoritative
+certification commands remain unchanged. No build-time improvement is yet claimed.
+
+Red31b7bcbc preserves pre-fix regression failures. Final source-bound validation
+f745ce4851202aba202df7a72751fcfa1d9749bbbd165c6cee65015861131579 passes4focused
+and44Native dependent tests, plus one directory-symlink skip covered by49WSL
+passes. Integrity runs first; registered dependency verification, native
+locked/offline graphs, Ruff and formatting pass. The catalog review changes only
+the runner manifest fingerprint; every dependency path/version and lock byte is
+unchanged. The matched package-manager-lockfiles family is operational-projection,
+verification-only, with no generator command. No generator or automatic authority
+refresh runs. Fresh equivalent-output timing is the next engineering check.
+
+Checkpoint77 retains all76previous checkpoints/readiness and adds only two
+regression/charter scope paths. Failed whole-process stability and unknown
+ancestor-quota evidence remain unresolved. All54coordinates/56resource limits,
+all12conditioning obligations, both whole source-distinct Q/P campaigns and fresh
+same-SHA independent no-reuse Release, signing, qualified trust before pin-only
+promotion and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.

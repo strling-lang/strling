@@ -8,15 +8,20 @@ publish = false
 
 [workspace]
 
+[features]
+default = ["full-runner"]
+full-runner = ["dep:strling", "dep:strling-interop"]
+
 [dependencies]
 serde_json = "1.0"
-strling = { path = "../../../../../" }
-strling-interop = { path = "../../../../../bindings/interop" }
+strling = { path = "../../../../../", optional = true }
+strling-interop = { path = "../../../../../bindings/interop", optional = true }
 strling-kernel = { path = "../../../../../core/internal" }
 
 [[bin]]
 name = "strling-performance-runner"
 path = "src/main.rs"
+required-features = ["full-runner"]
 
 [[bin]]
 name = "strling-performance-memory-worker"

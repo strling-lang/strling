@@ -7,6 +7,8 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/tests/test_performance_worker_dependencies.py
+        - tests/_design/unit/performance-worker-dependencies.md
         - tests/certification/performance-resource/1.0/runner/src/controlled_spawn.rs
         - tests/_design/unit/performance-controlled-spawn.md
         - tooling/performance_envelope_acquisition.py
@@ -2071,6 +2073,21 @@ checkpoints:
           - check: Remaining architectural and closure obligations
             result: not_run
             details: "Checkpoint76 preserves75prior checkpoints/readiness/scope. Six scoped source/charter/record paths match none of36generated families; no generation. New-source diagnostic attribution must retain unknown filenames and prove actual worker identity/source/retirement; memory-cap cause and failed prospective stability remain unresolved. No tolerance fitting, favorable selection, host-idle request or authority-bearing evidence reuse. All12conditioning obligations/all54coordinates/56resource limits, bothcompleteQ/P38/80/126/freshindependentnoReuseRelease126each125PASSsoleVSCEwaiver, validperformance/signing/qualifiedverifier-before-pinpromotion/immutabletrust/guardedcleanCLOSED remain. H08OPEN; continuationACTIVE; no external action required."
+    - name: Audited codegen comparison and isolated worker preparation dependencies
+      status: in_progress
+      evidence:
+          - check: Current resident census remains distinct from historical peak attribution
+            result: passed
+            details: "Resident terminal ea037179d2d84334230328806538231e89308e499683aceafbea08fb51a85383 and data audit11fed3ab143ca5d9929dfa911d2f1c71cc82b619d2b9c203094748e3c86e2b77 reconstruct6934528resident bytes, including6131712image-backed and438272private allocation bytes. The32768byte difference from current API counters and all mapped-filename errors1006 remain unresolved. The instrumented post-peak census cannot explain or replace the earlier failed original peak; no cause or conditioning qualification is claimed. Owner32380 retires and source lease releases."
+          - check: Fixed equivalent-workload codegen diagnostic retains all unfavorable data
+            result: passed
+            details: "On clean840b413e, two fresh Rust1.75 locked/offline O3/O2 builds preserve original source, LTO/codegenunits and all workload/cap semantics. Terminal4fb473bca53ad3bc76f58c1af9974cad59ae7b6086e12d4cff518e2ae0500799 finishes15:13:27.231832Z in630.7898921s; builds consume575.402s. Independently reconstructed f3d8c45a8615c0fe8ffc65ee9769a1c92fa7582efa38ee1b7c1ba3b617a93b43 covers all54predeclared interleaved observations, nine per each3memorycoordinates pervariant, all11rawfiles per observation,2308sourcefiles, original plans/inputs and nonoverlapping owned retirement. O3/O2 binary bytes3163648/2956800; protocol medians6946816/6881280, semantic-large17985536/17936384, simply-large16646144/16580608. O3 protocol6971392 exceeds unchanged6970163 by1229; retained, not canceled by lower observations. All27 O2 values are below their unchanged caps. This is diagnostic evidence only; O2 is not adopted, and latency/correctness/conditioning qualification remains. Overlapped build durations are not uncontended build speedups or whole-certification improvement."
+          - check: Narrow build-graph correction preserves complete default behavior and lock bytes
+            result: passed
+            details: "Build logs expose compilation of unused public/interop dependencies including native-library outputs even for an explicitly memory-worker-only target. The runner manifest now puts those two unchanged path dependencies behind a default-enabled full-runner feature, required by the full runner binary. Only explicit no-default-features memory-worker selection omits them; default full builds still include both binaries/all dependencies. No compiler profile, worker implementation, runtime semantics, performance workload, threshold, sample count or authoritative build command changes. Red receipt31b7bcbc970ab41bae44a58c6bb569d0ee7aaccb46090ecc858ddb649cdb3c7b preserves the failing regressions. Final validationf745ce4851202aba202df7a72751fcfa1d9749bbbd165c6cee65015861131579 passes4focused plus44Native dependents with1symlink skip covered by49WSL passes; integrity first, Ruff/format/Prettier, registered lock verifier and exact locked/offline native graph checks pass. All lock bytes remain unchanged. Explicit review changes only the runner manifest identity in the independent catalog; no automatic generator, resolution, source-authority evidence refresh or weakened security check. Both manifest and catalog match the operational-projection, verification-only package-manager-lockfiles family; its generator is null, so none runs."
+          - check: Remaining measured build proof and formal certification obligations
+            result: not_run
+            details: "Checkpoint77 preserves76prior checkpoints and readiness, adds only two exact regression/charter scope paths. Fresh equivalent worker-output build timing is next; no speedup for dependency isolation is yet claimed. The O2 result requires broader runtime evidence before any governed adoption. Original whole-process stability failure and unknown ancestor-quota proof remain unresolved; no host-idleness request, job escape, threshold fitting, sample replay or retained-certifier access. Both complete source-distinct Q/P38/80/126 and same-SHA fresh independent no-reuse Release126 each125PASSsoleVSCE, all54coordinates/56resource limits/12conditioning obligations, signing, qualification before pin-only trusted promotion, immutable verification and guarded clean CLOSED remain mandatory. H08 OPEN; continuation ACTIVE; no external action required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

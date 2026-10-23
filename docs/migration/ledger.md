@@ -8893,3 +8893,27 @@ filenames stay unknown. Observer-only page reconstruction is not worker evidence
 or historical peak attribution. No caps, workloads, authority or host settings
 change; no speedup is claimed. Memory attribution, conditioning qualification and
 both complete signed/trusted campaigns remain. H08 OPEN; continuation ACTIVE.
+
+### H08 checkpoint 77 — codegen evidence and isolated worker preparation
+
+On clean840b413e, two fresh O3/O2 builds and54fixed memory observations complete
+in630.7898921s; build preparation consumes575.402s. Auditf3d8c45a reconstructs
+all raw receipts and2308source files. O2 reduces worker binary3163648to2956800
+bytes and protocol-memory median6946816to6881280bytes. One O3 observation remains
+above the unchanged cap; all27O2 observations are below their respective caps.
+No observations are trimmed or retried. O2 is not adopted or qualified, and no
+complete-certification or uncontended build speedup is claimed.
+
+The narrow architectural correction makes unused public/interop dependencies
+optional for an explicitly worker-only diagnostic build. Default full builds
+retain both binaries and every dependency; compiler settings, source workloads,
+all ceilings and authoritative commands remain unchanged. Validationf745ce48
+passes48Native tests plus1WSL-covered skip and49WSL tests, original lock integrity,
+offline graph checks and formatting. All lock bytes stay unchanged; only the
+reviewed runner-manifest catalog identity changes. The verification-only family
+has no generator, so no regeneration occurs. Fresh build timing proof is next.
+
+The resident census remains current-page attribution only, with an unresolved
+32768byte counter gap and filename errors. Prior cap/stability failures remain.
+Conditioning qualification, both full signed/trusted campaigns and guarded clean
+closure are still required. H08 OPEN; continuation ACTIVE; no owner action needed.

@@ -8540,3 +8540,29 @@ remain actionable engineering. No manual launch is requested. Whole final-source
 preparation, both complete qualification/promotion campaigns, independent no-reuse
 Release, signing, immutable trusted verification and clean formal closure remain.
 H08 OPEN; continuation ACTIVE.
+
+## H08 complete bounded build comparison — 2026-10-23 UTC
+
+Checkpoint62 records all six fresh rounds on02c827f7: serial/concurrent/concurrent/
+serial/serial/concurrent, all18 original locked/offline Release commands. Six
+separately bounded ordinary-token owners completed without manual launch or
+retry. All30 retained artifact files match; exact owned jobs drained, source
+fences held, and index/P leases were released. Producer87917474 and final
+checkpoint87f13774 bind the complete protocol. Data-only reader29dab838 verifies
+the raw chain,2290 root/copied sources, commands, binaries and schedule overlap.
+Its initial completion-order assumption failure97280967 is preserved; corrected
+identity-based reader passes8 regression cases without rerunning any build.
+
+Build-stage medians are869.2080572s serial and692.7686211s concurrent:20.2989%
+lower,176.4394361s saved. Including bounded-unit overhead, medians are878.2211674s
+and701.6065557s:20.1105% lower. All three observations per mode are retained.
+This is a fixed-order diagnostic build-stage measurement, not a production
+scheduling promotion, performance-admission qualification or whole-certification
+speedup. Initialization, inter-unit gaps and independent audit are outside these
+per-round timings. Historical interrupted/failed attempts remain unchanged.
+
+Only three records append; no generated family or regeneration. Prior61
+checkpoints/readiness remain. Production integration and original conditioning/
+reference qualification, both complete campaigns, signing, immutable trust and
+guarded clean closure remain. H08 OPEN; continuation ACTIVE; no owner action
+required.

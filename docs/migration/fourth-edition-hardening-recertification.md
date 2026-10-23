@@ -3587,3 +3587,74 @@ no-reuse Release126 campaigns, fresh performance, signing, reviewed qualificatio
 before pin-only verifier promotion, immutable verification and guarded clean
 formal CLOSED remain mandatory. H08 OPEN; continuation ACTIVE; no external owner
 action is requested and no new measured certification gain is claimed.
+
+## Complete bounded prerequisite-build comparison — 2026-10-23 UTC
+
+Clean engineering commit02c827f7ea66ffc926f5f99036f9f7aa7fc1cba3
+(tree26cf3cc8f580ff6e4312671139b6bd6095f80965) contains the tested diagnostic
+journal. Before acquisition, bounded adapter
+`target/codex-tools/h08-bounded-build-02c827f7-v1.py`
+(1b0a38d0716b8d42fd613fcd45121a10c8e5275978278e91ffb5aa66f29d8b46)
+passed9 native guard cases. Twenty-one reviewed build/retirement primitives are
+AST-identical to the earlier helper. The fixed plan
+145c899534a63103f13a590d9e111eedaa2424d3a3b24eef2087efca31fa07e4
+uses six fresh rounds in serial/concurrent/concurrent/serial/serial/concurrent
+order, all18 original locked/offline Release commands, three initially empty
+target directories per round, unchanged registry cache and canonical P paths.
+Each ordinary-token foreground owner seals one round before the next may claim.
+No historical attempt, artifact or incomplete timing is reused, and no host
+service, security, power setting or inherited job limit is modified.
+
+All six rounds complete. Producer summary
+87917474273f673a030688255348601b83c6f77212c3fb1d34b98c17df139909
+finishes07:47:16.366634Z; final checkpoint
+87f13774d88ffcc7c3b460ecdcd117d64909b014ac3e4e4a5150de920f748dd6
+binds every preceding claim and terminal. All18 command exits are0; all30
+retained artifact files have identical required identities across the rounds.
+Incremental artifact checks and exact owned-job retirement pass, source fences
+hold, and every index/P lease is released before the next owner starts.
+
+Independent data-only reader
+29dab8384d54e6fbd730438a852ebf3332ed0329b41b2ad82282ee568debbe9e
+passes07:53:28.553226Z. It rechecks2290 root/copied tracked files, Git/runtime/
+recipe pins, complete journal and raw command/retirement/log identities, all30
+artifact files, actual serial/concurrent overlap, and unfiltered timing groups.
+Initial reader receipt
+9728096734586918817a57f75cf5cc09d49b214ac6bc641ef7ba29b163fbe29f
+is a preserved reader failure: concurrent results appear in completion order,
+not command order. Corrected reader
+068285b55e76bbe9d5e4b22e550fe1ea9057b867cde6ca30dc6b589305c34e5c
+requires all three exact command identities and passes8 regression cases,
+including duplicate, missing, extra and transplanted commands. No build is
+replayed and no producer receipt is altered to repair the reader.
+
+| Measured interval     | Three serial observations (s)       | Three concurrent observations (s)   | Median reduction                          |
+| --------------------- | ----------------------------------- | ----------------------------------- | ----------------------------------------- |
+| All-three-build stage | 884.8518151,869.2080572,868.1523781 | 692.7686211,692.1576031,706.2242254 | 869.2080572 to692.7686211s;20.2988725931% |
+| Entire bounded unit   | 893.7155855,878.2211674,877.3940799 | 701.6065557,700.9914681,715.3269720 | 878.2211674 to701.6065557s;20.1104936041% |
+
+The build-stage median saving is176.4394361s. These are measured descriptive
+results for this fixed-order diagnostic, not statistical confidence estimates,
+performance samples or inherited-ancestor-limit qualification. Initialization,
+inter-unit verification/model gaps and the independent audit are outside these
+per-round measurements; no whole-campaign or whole-certification speedup is
+claimed. The slower final concurrent observation is retained. Production
+scheduling is not yet promoted by this experiment.
+
+Initial record-validation receipt
+26b08e89d01d8d7533d6ab2b92d6e8b7f3921027974cda922f762686cfa31015
+rejects the validator's mistaken registry key `families` before any verification
+command or generation. The actual registry key is `artifacts`, with36 entries.
+The corrected validator adds authority/input/no-match/malformed-key cases and
+must pass the complete record check before commit. This tooling failure is
+retained separately from the successful build comparison; no measurement repeats.
+
+Checkpoint62 appends only the three synchronized migration records, retaining
+all61 preceding checkpoints and readiness. No generated family matches and no
+generator is run. Next work is separately tested production scheduling
+integration and whole-process conditioning/reference9/holdout9/all12/all54
+qualification. The CPU1 admission problem is not resolved by faster builds.
+All final-source complete36/runtime19 preparation, both whole38/80/126 and
+independent no-reuse Release126 campaigns, fresh performance, signing, qualified
+then pin-only verifier promotion, immutable trust and guarded clean formal
+closure remain. H08 OPEN; continuation ACTIVE; no external owner action required.

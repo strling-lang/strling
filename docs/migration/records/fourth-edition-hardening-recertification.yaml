@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/performance_process_envelope.py
+        - tooling/tests/test_performance_process_envelope.py
+        - tests/_design/unit/performance-process-envelope.md
         - tooling/performance_build_execution.py
         - tooling/tests/test_performance_build_execution.py
         - tests/_design/unit/performance-build-execution.md
@@ -1864,6 +1867,21 @@ checkpoints:
           - check: Measurement qualification and authoritative closure remain open
             result: not_run
             details: "Production integration is unit/native-lifecycle validated, not a new product build timing or complete certification result. Prior complete six-round20.2989percent diagnostic remains consumed and scoped; no whole-certification gain inferred. Seven engineering paths plus three records; previous62checkpoints/readiness unchanged, three exact new allowed paths. Record validation/guarded clean engineering commit follow. OriginalCPU1 whole-process conditioning/reference9/holdout9/all12/all54, finalcomplete36/runtime19, bothwhole38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/immutable reviewedqualification thenpin-onlypromotion/trust/guardedcleanCLOSED remain mandatory. H08OPEN; continuationACTIVE; no further owner idleness/manual help requested."
+    - name: Suspended whole-process acquisition with enforced tree placement
+      status: in_progress
+      evidence:
+          - check: Whole-process acquisition primitive rather than sampled coverage claims
+            result: passed
+            details: "On engineering64e318b3, new opt-in moduleee41e999 creates the pinned native executable suspended, restricts inheritance to three owned standard-stream handles, assigns a private kill-on-close job before resume, and enforces fixed job affinity plus root CPUset/HighQoS. It retains full launch/control/work/output/exit wall time and raw job CPU accounting including exited descendants. Event-driven completion wakes a final accounting check; missing notifications/timeouts fail closed. No short-interval CPU polling, CPU subtraction, ratio normalization, sample filtering or threshold fitting. Original hidden-console behavior remains and its conhost must exit naturally inside the same deadline; no helper-name exemption, job breakaway or ancestor mutation. Caller still owns source freeze, actual workload/result validation, ancestor quota, descendant power qualification, broker-process exclusion and independent trust."
+          - check: Retained failures and narrow root-cause corrections
+            result: passed
+            details: "Tests-first ddee72 missing module retained. Initial14-test3FAIL1ERROR receipt3d78ac exposes wrong x64 affinity offset40; typed ABI uses correct48 and full144-byte structure. Receipt79ee8b retains3 failures from root-only versus whole-job exit, including one non-atomic cleanup observation error. Exact synthetic fb4860 preserves conhost PID51576/birth134372196556809422 in owned job. Intermediate console-free creation280a7f retains1 failure because grandchildren can create consoles; that approach is rejected, not adopted. Completion-port plus final zero-active accounting corrects natural whole-tree retirement. Development transcription6ae3619f and raw h08-envelope-survivor-diagnostic-v1 remain; no product sample was consumed or retried."
+          - check: Final source-bound dependent and native security proofs
+            result: passed
+            details: "Final receipt928b476cce63f3facc109d036cda8a43323442b1788263ea19d64087d1c8fa47 completes09:12:49.277138Z/13.8567103s. It binds101Native passes and81WSL passes plus20 native-covered skips from f6164342, whose overall formatter failure remains failed. Formatter-only repair preserves exact test ASTbbb33876; no full dependent replay. Fresh final19Native pass and8WSL pass plus11 native-covered skips, artifact integrity, Ruff and Prettier pass. Native cases prove assignment/control failure never executes the child, affinity cannot widen, unrelated inheritable handles do not leak, exited grandchildren are accounted, between-work sleep remains in whole wall time, timeout/orphan/nonzero/missing notifications reject. No empirical conditioning or overhead equivalence claim."
+          - check: Preserved authority and remaining qualification
+            result: not_run
+            details: "Six scoped source/test/charter/record paths match no generated family among36; no generation. Baselinec8a5/manifest634d/evidence8a1d/limits1110 and livev6/controller/build executor remain exact. Previous63 checkpoints/readiness retained. This primitive is not connected to live admission; actual all54-coordinate adapters, prospective independently bound reference9/holdout9 and all12-obligation work/delay/common-mode/order qualification remain. No console detachment survives, no external owner action requested and no runtime gain inferred from unit times. Finalcomplete36/runtime19, bothwhole38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/reviewed qualification before pin-only verifier promotion/immutable trust/guardedcleanCLOSED remain mandatory. H08OPEN; continuationACTIVE."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

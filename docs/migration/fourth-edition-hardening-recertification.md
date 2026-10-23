@@ -3713,3 +3713,57 @@ coordinates, finalcomplete36/runtime19, bothwhole38/80/126 and independent
 no-reuse Release126 campaigns, fresh performance, signing, reviewed qualification
 before pin-only verifier promotion, immutable trusted verification and guarded
 clean closure remain. H08 OPEN; continuation ACTIVE; no owner help requested.
+
+### Enforced process-tree envelope and complete retirement — 2026-10-23 UTC
+
+Checkpoint64 implements actual native acquisition after clean64e318b3, rather
+than another declared-coverage inventory. The exact pinned executable is created
+suspended and assigned to a new private job before any user code runs. The job
+enforces one CPU with no breakaway; root CPUset and HighQoS are set and read back.
+Only three owned standard-stream handles are inherited. The enclosing monotonic
+interval retains launch/control overhead, all work and output, and natural exit
+of every job member. Raw final job user/kernel accounting includes exited direct
+descendants. These coarse counts are neither elapsed time nor a causal attribution
+of scheduler, interrupt or frequency effects. No CPU subtraction or time/cycle
+conversion occurs. Private completion messages are wakeups, not reliable process
+history or authority; final accounting must independently report zero active members.
+
+Initial tests-first import failure ddee72 is retained. Wrong x64 affinity offset40
+caused ERROR_INVALID_PARAMETER87 before resume, with14 tests/3FAIL/1ERROR in3d78ac.
+Typed Basic/Extended limits correct the offset to48 and assert the144-byte ABI.
+The next3FAIL receipt79ee8b exposed the distinction between root and whole-job exit.
+Exact synthetic receipt fb4860 identifies owned conhost51576/birth134372196556809422.
+An intermediate console-free root still allowed a grandchild console and failed
+280a7f; this approach was rejected. Final code preserves original hidden-console
+behavior and includes its natural retirement within the same fixed deadline.
+There is no name-based helper exemption, process/job detachment or host change.
+Failure cleanup touches only newly owned handles/jobs. Raw synthetic acquisition
+remains under `target/codex-tools/h08-envelope-survivor-diagnostic-v1`; development
+transcription is6ae3619f6ca5ce00b315ee7e3c41512548835901e15a96c7fe7e7f89fce043fd.
+
+Source-bound validation65e9e089 initially passed101Native and81WSL with20 native
+cases already covered onWindows. Removing temporary task naming from a test
+environment variable then passed the same dependent suites, but formatter failure
+f6164342f75e6557c71cdffa1f64f4c0bc39d936731c1c4979611624b3ad6692 remains failed.
+The whitespace-only repair preserves exact ASTbbb33876. Final one-use proof
+928b476cce63f3facc109d036cda8a43323442b1788263ea19d64087d1c8fa47 binds those raw
+dependent receipts and final source, then passes19Native plus8WSL/11 native-covered
+skips without replaying the whole dependent suite. Artifact integrity, Ruff,
+Prettier and diff checks pass. Native negative cases prove no execution before
+assignment/control success, inability to widen job affinity, no unrelated-handle
+inheritance, nonzero/timeout/orphan/missing-event rejection and owned cleanup.
+Positive cases retain exited-grandchild accounting and unsampled sleep in wall time.
+Final proof takes13.8567103s; this is validation cost, not a measured speedup.
+
+The generated-artifact skill maps all six scoped paths to no family. No generator
+runs and all four performance outputs plus livev6/controller/build executor remain
+unchanged. Moduleee41e999 is opt-in and unqualified, not connected to live admission.
+Caller source freezing, workload/exit validation, ancestor quota, descendant power,
+source-reviewed absence of broker/service-created work and independent raw evidence
+verification remain explicit obligations. Prospective all54-coordinate adapters,
+independent reference9/source-distinct holdout9 and all12 conditioning guarantees
+must now use actual enclosing acquisition; existing sample-only baseline cannot be
+relabeled. All caps, workloads and512/64/9 counts remain. Finalcomplete36/runtime19,
+whole qualification and pin-only-promotion38/80/126/independentnoReuse126 campaigns,
+fresh mandatory performance, signing, immutable trusted acceptance and guarded
+clean formal closure remain. H08 OPEN; continuation ACTIVE; no owner help requested.

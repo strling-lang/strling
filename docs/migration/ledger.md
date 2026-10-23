@@ -8589,3 +8589,30 @@ The prior20.2989percent build diagnostic remains scoped and consumed. Original
 CPU1 whole-process conditioning/reference qualification and all final preparation,
 source-distinct authoritative campaigns, signing, immutable trust and guarded
 clean closure remain. H08 OPEN; continuation ACTIVE; no owner action required.
+
+## H08 enforced whole-process acquisition — 2026-10-23 UTC
+
+Checkpoint64 adds a native acquisition primitive with suspended creation, private
+job assignment before execution, enforced tree affinity and root CPUset/HighQoS.
+Full wall duration covers launch, control setup, warmups, attempts, output and
+natural whole-job exit. Final job accounting retains exited-child CPU time.
+Completion events only wake verification; final zero-active accounting is required.
+No periodic counter snapshots are presented as continuous control proof.
+
+Native tests exposed and corrected an x64 field offset and root-only exit logic.
+Hidden conhost is retained and must exit within the same deadline; an intermediate
+console-free approach failed and was rejected. Exact failures and the owned
+survivor receipt remain. No unknown-survivor exemption or inherited-job change.
+
+Final source-bound proof928b476c retains101Native/81WSL passes with20 cases covered
+natively. A test-only formatting failure stays failed; its AST-identical repair
+passes fresh19Native/8WSL tests with11 native-covered skips. Artifact integrity,
+Ruff and Prettier pass. Six scoped paths match no generated family; no regeneration
+and all four governed performance artifacts remain byte-identical.
+
+This closes an acquisition-mechanics gap, not CPU1 conditioning qualification.
+The primitive is not live admission. Actual all54-coordinate adapters, independent
+reference9/holdout9 and all12 conditioning obligations remain, followed by complete
+source-distinct campaigns, signing, immutable verification and guarded clean closure.
+No new runtime improvement is claimed. H08 OPEN; continuation ACTIVE; no owner
+action required.

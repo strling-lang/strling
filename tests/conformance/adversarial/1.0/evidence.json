@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "authority": "empirical/adversarial-conformance-evidence",
-  "source_sha": "5d5c5eb40be95647b8664268d5c819ab8ac37f3a",
+  "source_sha": "e27b056ebae794af8d6a430a0e7207e328e01277",
   "source_files": {
     "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
     "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
@@ -52,14 +52,14 @@
     "core/src/target/mod.rs": "0e3c27cb916ea8e0c5263eb5d561a89995944968e8f98f62431aaf83c8edcb2f",
     "core/src/target/profile.rs": "e913e7e6ef3985272e5255fd89df1c1655d51d19f7c46015c3d123f265b59f65",
     "core/src/target_lowering.rs": "21c5f321daef4758c152decd8ed71860b4a9038719cba2ad4d19ef93666bd168",
-    "core/src/target_serialization.rs": "d5c40a8586c650645b6456613c04272c6ab969147bcaea42b20c610ce549612c",
+    "core/src/target_serialization.rs": "110c9a9e2ec95f2c5e7236d4a4e765d3a3a53915dbb96a11c3fc79bfd893acfa",
     "core/src/validation/mod.rs": "0a4d03ace436db321b05f859ed6badb6cb71f962fcf798c403e2c1dae497f54f",
     "tooling/adversarial_semantic_audit.py": "c416a023b7a5285f9b458575a25fc39d3a3c46a882d8c6e3477a10f9f2ff1822",
     "tooling/node_regexp_harness.mjs": "96a85b99480b2a898590a847b06f8bb49255fef34a1c5b435226be785b03bcd9",
     "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
     "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
   },
-  "executed_at": "2026-10-23T21:08:29.079052+00:00",
+  "executed_at": "2026-10-23T23:27:22.935807+00:00",
   "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
   "repeat_runs": 2,
   "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
@@ -394,7 +394,7 @@
     }
   ],
   "findings": [],
-  "result_sha256": "bf6a3857501676f8ea0ddde3115b4d86d25882691139af2e2708a20c81e1f0c2",
+  "result_sha256": "a5efca7ef7d65f81f4b0c8dd83e4ce3be3473b548afcabab1d5a6ac63bd0e276",
   "case_observations": [
     {
       "case_id": "wildcard-excluding-lines",

@@ -383,8 +383,12 @@ fn emit_node(emitter: &mut PatternEmitter, node: &Pcre2Node) -> Result<(), Box<E
             emitter.push(")", &node.provenance)?;
         }
         Pcre2Operation::Literal(text) => {
+            let mut escaped = [0; 10];
             for character in text.chars() {
-                emitter.push(&escape_pattern_character(character), &node.provenance)?;
+                emitter.push(
+                    escape_pattern_character(character, &mut escaped),
+                    &node.provenance,
+                )?;
             }
         }
         Pcre2Operation::Wildcard(Pcre2Wildcard::NativeExclude) => {
@@ -767,20 +771,44 @@ fn validate_ascii_identifier(value: &str) -> Result<(), &'static str> {
     Ok(())
 }
 
-fn escape_pattern_character(character: char) -> String {
+fn escape_pattern_character(character: char, buffer: &mut [u8; 10]) -> &str {
     match character {
         '\\' | '^' | '$' | '.' | '|' | '?' | '*' | '+' | '(' | ')' | '[' | ']' | '{' | '}' => {
-            format!(r"\{character}")
+            buffer[0] = b'\\';
+            buffer[1] = character as u8;
+            std::str::from_utf8(&buffer[..2]).expect("escaped metacharacters are ASCII")
         }
-        '\t' => r"\t".to_owned(),
-        '\n' => r"\n".to_owned(),
-        '\r' => r"\r".to_owned(),
-        '\u{000c}' => r"\f".to_owned(),
-        '\u{000b}' => r"\v".to_owned(),
-        ' ' | '#' => code_point_escape(character),
-        value if value.is_control() || value.is_whitespace() => code_point_escape(value),
-        value => value.to_string(),
+        '\t' => r"\t",
+        '\n' => r"\n",
+        '\r' => r"\r",
+        '\u{000c}' => r"\f",
+        '\u{000b}' => r"\v",
+        ' ' | '#' => code_point_escape_into(character, buffer),
+        value if value.is_control() || value.is_whitespace() => {
+            code_point_escape_into(value, buffer)
+        }
+        value => value.encode_utf8(&mut buffer[..4]),
     }
+}
+
+fn code_point_escape_into(character: char, buffer: &mut [u8; 10]) -> &str {
+    // The longest Unicode scalar spelling is ten ASCII bytes: \x{10ffff}.
+    // Build the complete spelling before push checks its atomic byte limit.
+    const HEX: &[u8; 16] = b"0123456789abcdef";
+    let mut value = u32::from(character);
+    let mut start = buffer.len() - 1;
+    buffer[start] = b'}';
+    loop {
+        start -= 1;
+        buffer[start] = HEX[(value & 0xf) as usize];
+        value >>= 4;
+        if value == 0 {
+            break;
+        }
+    }
+    start -= 3;
+    buffer[start..start + 3].copy_from_slice(br"\x{");
+    std::str::from_utf8(&buffer[start..]).expect("code-point escapes are ASCII")
 }
 
 fn escape_class_character(character: char) -> String {
@@ -857,13 +885,17 @@ fn failure(plan: &Pcre2LoweringPlan, problem: EmitProblem) -> Pcre2Serialization
 
 #[cfg(test)]
 mod tests {
-    use super::{escape_class_character, escape_pattern_character, quantifier};
+    use super::{
+        code_point_escape_into, escape_class_character, escape_pattern_character, quantifier,
+        PatternEmitter, Pcre2Provenance, Pcre2SerializationErrorCode, MAX_PCRE2_PATTERN_BYTES,
+    };
 
     #[test]
     fn primitive_spellings_are_canonical() {
-        assert_eq!(escape_pattern_character('.'), r"\.");
-        assert_eq!(escape_pattern_character(' '), r"\x{20}");
-        assert_eq!(escape_pattern_character('é'), "é");
+        let mut buffer = [0; 10];
+        assert_eq!(escape_pattern_character('.', &mut buffer), r"\.");
+        assert_eq!(escape_pattern_character(' ', &mut buffer), r"\x{20}");
+        assert_eq!(escape_pattern_character('é', &mut buffer), "é");
         assert_eq!(escape_class_character('-'), r"\x{2d}");
         assert_eq!(escape_class_character('\n'), r"\n");
         assert_eq!(quantifier(0, None), "*");
@@ -872,5 +904,81 @@ mod tests {
         assert_eq!(quantifier(2, Some(2)), "{2}");
         assert_eq!(quantifier(2, None), "{2,}");
         assert_eq!(quantifier(2, Some(4)), "{2,4}");
+    }
+
+    #[test]
+    fn every_scalar_preserves_literal_spelling() {
+        let mut buffer = [0xff; 10];
+        for character in (0..=0x10ffff).filter_map(char::from_u32) {
+            let expected = match character {
+                '\\' | '^' | '$' | '.' | '|' | '?' | '*' | '+' | '(' | ')' | '[' | ']' | '{'
+                | '}' => format!(r"\{character}"),
+                '\t' => r"\t".to_owned(),
+                '\n' => r"\n".to_owned(),
+                '\r' => r"\r".to_owned(),
+                '\u{000c}' => r"\f".to_owned(),
+                '\u{000b}' => r"\v".to_owned(),
+                ' ' | '#' => format!(r"\x{{{:x}}}", u32::from(character)),
+                value if value.is_control() || value.is_whitespace() => {
+                    format!(r"\x{{{:x}}}", u32::from(value))
+                }
+                value => value.to_string(),
+            };
+            assert_eq!(escape_pattern_character(character, &mut buffer), expected);
+        }
+    }
+
+    #[test]
+    fn hexadecimal_escape_buffer_covers_all_scalars() {
+        let mut buffer = [0xff; 10];
+        for character in (0..=0x10ffff).filter_map(char::from_u32) {
+            assert_eq!(
+                code_point_escape_into(character, &mut buffer),
+                format!(r"\x{{{:x}}}", u32::from(character))
+            );
+        }
+    }
+
+    #[test]
+    fn scalar_emission_retains_atomic_utf8_byte_limit_and_provenance() {
+        let provenance = Pcre2Provenance {
+            semantic_node_ids: vec!["node:literal-limit".try_into().expect("test node id")],
+            source_spans: Vec::new(),
+            applied_rewrite: None,
+        };
+        let mut emitter = PatternEmitter {
+            text: "x".repeat(MAX_PCRE2_PATTERN_BYTES),
+            ..PatternEmitter::default()
+        };
+        let mut buffer = [0; 10];
+        for character in ['a', 'é', '🦀', '.', '\n', '\0', '\u{2028}'] {
+            let escaped = escape_pattern_character(character, &mut buffer);
+            for available in [0, escaped.len() - 1, escaped.len()] {
+                // Replace the whole prior scalar before choosing a byte boundary.
+                emitter.text.truncate(MAX_PCRE2_PATTERN_BYTES - 10);
+                emitter.text.push_str("xxxxxxxxxx");
+                let before = MAX_PCRE2_PATTERN_BYTES - available;
+                emitter.text.truncate(before);
+                let result = emitter.push(escaped, &provenance);
+                if available < escaped.len() {
+                    let error = result.expect_err("complete scalar must fit before emission");
+                    assert_eq!(
+                        error.code,
+                        Pcre2SerializationErrorCode::ResourceLimitExceeded
+                    );
+                    assert_eq!(error.provenance, provenance);
+                    assert_eq!(
+                        error.message,
+                        format!("serialized PCRE2 pattern exceeds {MAX_PCRE2_PATTERN_BYTES} UTF-8 bytes")
+                    );
+                    assert_eq!(emitter.text.len(), before);
+                } else {
+                    result.expect("exact byte limit must be accepted");
+                    assert_eq!(emitter.text.len(), MAX_PCRE2_PATTERN_BYTES);
+                    assert!(emitter.text.ends_with(escaped));
+                }
+                assert!(emitter.source_map.is_empty());
+            }
+        }
     }
 }

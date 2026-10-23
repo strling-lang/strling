@@ -4542,3 +4542,72 @@ qualification, all54coordinates/56limits/12conditioning obligations, both source
 Q/P38/80/126 and fresh same-SHA independent no-reuse Release126 each125PASSsoleVSCE,
 signing, qualified verifier before pin-only promotion, immutable trust and guarded
 clean formal closure remain required. H08 OPEN; continuation ACTIVE; no owner action.
+
+### Checkpoint 82 — allocation attribution and literal serialization correction
+
+Canonical e27b056e preparation completes in 2915.813s (audit 8befdaf6); fresh full
+default-graph builds take 677.065s. Instrumented preparation identifies 83 integrity
+snapshots and 1047.046s overlapping cumulative time, not an additive wall-time saving.
+Structural allocation audit 689f98a7 verifies calls 952 to 459 and requested bytes
+351224 to 110174, preserving the unfavorable 768-byte structural peak increase and
+unchanged complete peak. All 64 diagnostic samples remain, median 478816ns against
+607530ns; conditioning remains unqualified.
+
+Screen cabbbc52 and audit 14440b25 preserve all 2112 samples and the first failure:
+PCRE2 lower/serialize simply-large median 4708350ns, MAD 403200ns, cap 4565990ns.
+There are 32 coordinates within caps, one above and 16 unrun. No replay or qualified
+regression verdict. Allocation census 0311c4c9, audited by b70c2f92, uses the original
+4096-item fixture, normalized to 2049 nodes, producing 26624 pattern bytes and 2049
+source-map entries. Two equal complete artifacts hash to
+9d572b691109bab31ee562ef54215a2c17394d4e55287faa29c2c721a22b7109.
+Of 23938 serialization allocations, 15360 arise from literal-character temporaries.
+The first probe's incorrect normalized-count assertion fails before any census;
+acc2b25b remains immutable and only that diagnostic assertion is corrected.
+
+One ten-byte stack buffer now holds each complete escaped scalar. Original Unicode
+spelling, per-scalar byte checks, atomic rejection, error provenance, artifact checks
+and source maps remain unchanged; character classes and public contracts are untouched.
+Three new tests cover every valid scalar, maximum hexadecimal spelling and exact
+byte-limit admission/rejection. Focused terminal
+8b88d748eafbe571f4841c9606765391b879582859661705117a6c6d8da2774e
+finishes at 2026-10-23T23:04:05.081403Z in 122.338065865s. Integrity and formatting
+pass, as do 45 tests across 11 suites. Independent audit
+dc92f5dfcea249c72706005593d44bfe93b2716d9294d085fda507d90c454e2b
+rehashes all 13 persistent binaries and all 2310 source files. A pre-launch wrapper
+cardinality assertion remains preserved; its correction consumed no product run.
+
+All 81 prior checkpoints/readiness remain, with one exact serializer scope entry
+added. No serializer after-allocation/runtime improvement is claimed yet. The
+generated-artifact skill maps six families; no authority-bearing data is regenerated
+for green status. Broader tests, registered preparation, guarded commit/new freeze,
+fresh diagnostic proof and architectural conditioning work remain. All performance
+ceilings, samples, coverage, security/license proofs, complete source-distinct Q/P
+campaigns, independent Release, signing, qualified trust and clean closure remain.
+H08 OPEN; continuation ACTIVE; no owner action required.
+
+### Checkpoint 83 — complete serializer dependents and earlier diagnostic feedback
+
+Terminal94e36543523d347de30d371571289a0937926beb3132fd73f304aa43a4a04d18
+finishes2026-10-23T23:27:51.057773Z in867.256007766s, all14stages passing.
+Core512tests take273.430908807s; interop22take54.631879505s;131tooling and16deep
+tests pass, as does the deep-local component. Integrity runs first/last and exact
+runtimes pass. Fresh native targets preserve canonical commands, flags and coverage.
+Audita3bcaf2b45f2bdfc45a3fe2ef87c4a4aba133037d75c3c8768877c43ab59f5c0
+verifies2310source files,94persistent binaries/8609355192bytes and every raw result.
+No product samples/profiles were run; exact owner and source lease retired.
+
+The current six-family registry map matches independently. Deep identity refresh
+changes no bytes. Actual registered adversarial write/check renews the serializer
+source identity and execution/result metadata only, preserving every empirical
+observation, runtime, finding and denominator. Shared/stdlib retained verification
+and performance integrity pass unchanged. All measured baselines and controls remain.
+
+All82prior checkpoints/readiness remain. After a guarded engineering commit, run
+the narrow source-held allocation/latency predictor before costly canonical
+preparation to detect the next actionable failure earlier. This diagnostic does
+not freeze a certification candidate or qualify conditioning; no evidence is reused
+for required fresh execution. All36 canonical family checks and clean LSP certification
+remain mandatory before certification freeze. The changed schedule has no measured
+whole-certification speedup claim yet. Conditioning/ancestor-quota work, all complete
+source-distinct campaigns, independent Release, signing, immutable trust and guarded
+clean formal closure remain required. H08 OPEN; continuation ACTIVE.

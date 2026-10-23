@@ -7,6 +7,7 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - core/src/target_serialization.rs
         - core/src/structural_analysis.rs
         - core/tests/structural_analysis.rs
         - core/src/semantic/mod.rs
@@ -2152,6 +2153,33 @@ checkpoints:
           - check: Independent allocation attribution and remaining certification
             result: not_run
             details: "Independent allocation auditd6700a04f2fa6fbc9444e21ab1307c3a8844cd6ed787dd373fc3c80069cdd89c verifies all24original full-graph libraries, historical2310file source frame via prior pinned audit, identical fixture extraction/instrumentation, raw receipts and natural probe completion; both complete censuses retained. No resampling/build. Post-change allocation/runtime proof, new clean source freeze and conditioning/ancestor-quota qualification remain. Only two exact authorized structural source/test scope paths added; all80prior checkpoints/readiness preserved. Guarded engineering commit, canonical preparation, exact-runtime/prerequisites, both source-distinct Q/P38/80/126/freshsameSHAindependentnoReuseRelease126 each125PASSsoleVSCE, all54coordinates/56limits/12conditioning obligations, signing/qualified verifier before pin-only promotion/immutable trust and guarded clean CLOSED remain mandatory. No host changes, idle-host requests, discarded measurements, weakened gates or retained-certifier access. H08 OPEN; continuation ACTIVE; no owner action required."
+    - name: Allocation attribution and bounded literal serialization
+      status: in_progress
+      evidence:
+          - check: Retained structural improvement and critical-path profile
+            result: passed
+            details: "Checkpoint82: e27b056e canonical preparation completes2915.813s/audit8befdaf6; fresh default full-graph builds take677.065s. Instrumented83integrity snapshots have1047.046s overlapping cumulative time, not additive savings. Audit689f98a7 verifies equivalent structural allocation calls952to459 and requested bytes351224to110174, preserving structural peak increase768bytes and unchanged complete peak. All64 diagnostic samples remain, median478816ns against607530ns. Neither conditioning nor authoritative runtime improvement is established."
+          - check: Preserve partial diagnostic failure and exact allocation attribution
+            result: failed
+            details: "Screen cabbbc52 and audit14440b25 preserve2112samples:32coordinates within caps, one above,16unrun. PCRE2 lower/serialize simply-large median4708350ns, MAD403200ns, cap4565990ns; no consumed sample replay or qualified regression verdict. Allocation0311c4c9/auditb70c2f92 retains two equal complete original4096item/2049normalized-node censuses:26624pattern bytes,2049source-map entries,zero requirements, canonical artifact9d572b691109bab31ee562ef54215a2c17394d4e55287faa29c2c721a22b7109. Serialization23938allocations includes15360literal temporaries. First probeacc2b25b fails its incorrect normalized-count assertion before censuses; only that diagnostic assertion is corrected and original retained."
+          - check: Narrow source correction and exhaustive focused proof
+            result: passed
+            details: "One ten-byte stack buffer replaces literal scalar temporary Strings, retaining complete escaping, exact Unicode/hex spelling, per-scalar byte limits, atomic errors/provenance, all artifact checks and source maps. Character-class escaping/public contracts unchanged. Three new regressions exhaust valid scalars/hex spellings and exact byte-limit success/rejection. Focused8b88d748eafbe571f4841c9606765391b879582859661705117a6c6d8da2774e completes2026-10-23T23:04:05.081403Z in122.338065865s: integrity, fmt,45tests pass. Independent dc92f5dfcea249c72706005593d44bfe93b2716d9294d085fda507d90c454e2b verifies11suites,13persistent binaries and2310source files. Pre-launch wrapper cardinality failure retained; no product run consumed by it."
+          - check: Remaining after-change proof and formal closure
+            result: not_run
+            details: "All81prior checkpoints/readiness preserved; one exact serializer scope added. No after-allocation or runtime gain claimed for serializer. Six current generated families mapped; broader core/interop/tooling/deep and registered preparation remain before guarded commit/new freeze/fresh measurements. Conditioning/ancestor-quota qualification, all54coordinates/56limits/12conditioning guarantees, complete source-distinct Q/P38/80/126 and same-SHA independent no-reuse Release126 each125PASSsoleVSCE, signing, qualified verifier before pin-only promotion, immutable verification and guarded clean CLOSED remain mandatory. No weakened ceilings, omitted checks, authority regeneration for green status or retained-certifier access. H08 OPEN; continuation ACTIVE; no owner action."
+    - name: Audited serializer dependents and earlier diagnostic feedback
+      status: in_progress
+      evidence:
+          - check: Full direct dependents and retained executable audit
+            result: passed
+            details: "Checkpoint83: terminal94e36543523d347de30d371571289a0937926beb3132fd73f304aa43a4a04d18 finishes2026-10-23T23:27:51.057773Z in867.256007766s; all14stages pass. Core512tests/273.430908807s, interop22/54.631879505s,131tooling,16deep, deep-local component, exact runtimes and integrity first/last. Original canonical commands/flags/coverage retained in fresh native targets. Independenta3bcaf2b45f2bdfc45a3fe2ef87c4a4aba133037d75c3c8768877c43ab59f5c0 verifies2310source files,94binaries/8609355192bytes and every raw result. Owner/lease retired; no product samples or profiles."
+          - check: Exact generated delta and all empirical authority preserved
+            result: passed
+            details: "Current six-family map independently matched. Exact deep identity refresh/check changes no bytes. Registered actual adversarial write/check renews only serializer source identity and run/result metadata, with every empirical observation/runtime/finding/denominator unchanged. Shared/stdlib retained verification and integrated performance integrity pass without regeneration. All baseline measurements, ceilings, samples and controls unchanged."
+          - check: Earlier bounded predictor without omitting certification preparation
+            result: not_run
+            details: "All82prior checkpoints/readiness preserved. After guarded clean engineering commit, schedule the narrow source-held allocation/latency predictor before expensive canonical preparation. This is diagnostic only, not certification candidate freeze or qualification; fresh-execution requirements and no-reuse guarantees remain. Complete36family preparation/clean LSP certification still required before candidate freeze. No measured whole-certification scheduling gain claimed yet. Conditioning/ancestor-quota qualification, all54coords56limits12conditioning obligations, complete source-distinctQ/P38/80/126 and same-SHA independent no-reuseRelease126each125PASSsoleVSCE, signing/qualifiedverifier-before-pinpromotion/immutabletrust/guarded clean CLOSED remain mandatory. H08 OPEN; continuation ACTIVE."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

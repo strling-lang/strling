@@ -9036,3 +9036,66 @@ added; all80prior checkpoints/readiness remain. Guarded commit, new canonical
 preparation/freeze, conditioning and ancestor-quota qualification, both complete
 signed/trusted campaigns and guarded clean formal closure remain. H08 OPEN;
 continuation ACTIVE; no owner action required.
+
+### H08 checkpoint 82 — measured allocation attribution and bounded literal escaping
+
+On e27b056e, canonical preparation finishes in 2915.813s and is independently
+audited by 8befdaf6. Instrumented preparation exposes 83 integrity snapshots with
+1047.046s cumulative time; these overlapping, profiled durations are not a
+before/after improvement. Fresh full-graph builds take 677.065s. The structural
+diagnostic retains 64 samples, median 478816ns against the unchanged 607530ns cap.
+Audit 689f98a7 verifies equivalent allocation calls 952 to 459 and requested bytes
+351224 to 110174. Structural peak increases by 768 bytes; complete peak is unchanged.
+This is allocation evidence and an unqualified latency result, not certification.
+
+The remaining screen cabbbc52 stops after 67.329s at PCRE2 lower/serialize on
+simply-large: median 4708350ns exceeds 4565990ns, MAD 403200ns. All 2112 samples
+remain: 32 coordinates within caps, one above, 16 unrun. Audit 14440b25 reconstructs
+the partial schedule without replay; conditioning is still unqualified.
+
+Allocation census 0311c4c9 and audit b70c2f92 retain two identical complete results:
+2049 normalized nodes from 4096 generated items, 26624 pattern bytes, 2049 source-map
+entries, zero requirements and complete artifact SHA 9d572b69. Serialization uses
+23938 allocations; 15360 are temporary literal-character strings. The first probe
+acc2b25b fails before censuses because its expected normalized node count was wrong;
+only that diagnostic assertion is corrected, with the original receipt retained.
+
+The narrow source correction uses one ten-byte stack buffer per literal, preserving
+complete scalar escaping, Unicode spelling, byte-limit admission, atomic errors,
+provenance and all source maps. No character-class or public-contract change.
+Focused terminal 8b88d748 passes integrity, formatting and 45 tests in 122.338s.
+Audit dc92f5df independently verifies all 11 test suites, 13 binaries and 2310 source
+files. The pre-launch wrapper substitution failure is also retained; no product
+test or timing sample was consumed by that failure. No after-allocation or runtime
+gain is yet claimed for the new serializer.
+
+All 81 prior checkpoints and readiness remain. Broader dependents, registered
+preparation, guarded commit, new source freeze and fresh measurements are next.
+Conditioning and ancestor-quota qualification, all required complete source-distinct
+campaigns, independent no-reuse Release, signing, immutable trust and guarded clean
+formal closure remain mandatory. H08 OPEN; continuation ACTIVE; no owner action.
+
+### H08 checkpoint 83 — audited serializer dependents and earlier diagnostic feedback
+
+Terminal 94e36543 finishes at 2026-10-23T23:27:51.057773Z in 867.256007766s.
+All 14 stages pass: integrity first/last, exact runtimes, 512 core tests in273.431s,
+22 interop in54.632s, 131 tooling, 16 deep and deep-local component. Canonical test
+commands, compiler flags and complete coverage are retained in fresh native output.
+Independent audit a3bcaf2b rehashes all2310 source files and94 persistent binaries,
+reconstructs every raw count and confirms the owner retired and source lease released.
+
+The generated-artifact skill's six-family mapping is independently matched against
+the current registry. Exact deep refresh/check changes no bytes. Actual registered
+adversarial execution changes only source identity and run/result metadata; every
+empirical observation, runtime, finding and denominator remains equal. Shared/stdlib
+retained verification and performance integrity pass without evidence regeneration.
+All performance baselines, ceilings and controls remain unchanged.
+
+All82prior checkpoints and readiness are preserved. The next clean engineering SHA
+will receive a narrow source-held allocation/latency diagnostic before the expensive
+canonical preparation, shortening the path to a possible next failure. This is
+not certification freeze, qualification or permission to reuse evidence. Complete
+36-family canonical preparation and clean LSP certification still must pass before
+candidate freeze and the required independent campaigns. No measured end-to-end
+scheduling speedup is claimed yet. Conditioning/ancestor-quota engineering, signing,
+immutable trust and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.

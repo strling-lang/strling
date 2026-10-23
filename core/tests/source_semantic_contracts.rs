@@ -130,6 +130,48 @@ fn deeply_nested_semantic_validation_preserves_the_exact_error_path() {
 }
 
 #[test]
+fn dynamic_empty_value_errors_preserve_paths_messages_and_traversal_order() {
+    let program: SemanticProgram = serde_json::from_value(json!({
+        "contract_version": "1.0.0",
+        "specification_version": "1.0-draft.1",
+        "normalization": "canonical-v1",
+        "case_matching": "sensitive",
+        "root": {
+            "node_id": "node:root",
+            "kind": "sequence",
+            "items": [
+                {"node_id": "node:text", "kind": "literal", "text": ""},
+                {
+                    "node_id": "node:set", "kind": "character_set", "negated": false,
+                    "members": [{"kind": "unicode_property", "property": "", "value": "", "negated": false}]
+                },
+                {
+                    "node_id": "node:capture", "kind": "capture", "capture_id": "capture:empty",
+                    "name": "", "body": {"node_id": "node:body", "kind": "literal", "text": ""}
+                }
+            ]
+        }
+    }))
+    .expect("controlled invalid content is structurally deserializable");
+    let errors = program
+        .validate()
+        .expect_err("all empty values stay invalid");
+    let expected_paths = [
+        "$.root.items[0].text",
+        "$.root.items[1].members[0].property",
+        "$.root.items[1].members[0].value",
+        "$.root.items[2].name",
+        "$.root.items[2].body.text",
+    ];
+    assert_eq!(errors.errors.len(), expected_paths.len());
+    for (error, path) in errors.errors.iter().zip(expected_paths) {
+        assert_eq!(error.code, ValidationCode::EmptyValue);
+        assert_eq!(error.path, path);
+        assert_eq!(error.message, "value must not be empty");
+    }
+}
+
+#[test]
 fn mixed_source_content_is_rejected_as_unknown_data() {
     let fixture = include_str!("../../spec/contracts/1.0/invalid/source/source-mixed-content.json");
     assert!(matches!(

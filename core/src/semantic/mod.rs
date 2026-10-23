@@ -10,7 +10,7 @@ use crate::source::{
     SpecificationVersion,
 };
 use crate::validation::{
-    deserialize_optional_non_null, nonempty, Validate, ValidationCode, ValidationError,
+    deserialize_optional_non_null, nonempty_with_path, Validate, ValidationCode, ValidationError,
     ValidationErrors,
 };
 
@@ -193,9 +193,9 @@ impl CharacterSetMember {
             Self::UnicodeProperty {
                 property, value, ..
             } => {
-                nonempty(property, format!("{path}.property"), errors);
+                nonempty_with_path(property, || format!("{path}.property"), errors);
                 if let Some(value) = value {
-                    nonempty(value, format!("{path}.value"), errors);
+                    nonempty_with_path(value, || format!("{path}.value"), errors);
                 }
             }
             _ => {}
@@ -572,7 +572,7 @@ impl Node {
                 }
             }
             Self::Literal { text, .. } => {
-                nonempty(text, format!("{path}.text"), &mut context.errors);
+                nonempty_with_path(text, || format!("{path}.text"), &mut context.errors);
             }
             Self::CharacterSet { members, .. } => {
                 if members.is_empty() {
@@ -626,7 +626,7 @@ impl Node {
                     ));
                 }
                 if let Some(name) = name {
-                    nonempty(name, format!("{path}.name"), &mut context.errors);
+                    nonempty_with_path(name, || format!("{path}.name"), &mut context.errors);
                     if !context.capture_names.insert(name.as_str()) {
                         context.errors.push(ValidationError::new(
                             ValidationCode::DuplicateIdentity,

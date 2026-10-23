@@ -306,6 +306,86 @@ def test_payload_input_fingerprints_bind_all_registered_sources() -> None:
     assert not any("__pycache__" in name for name in inputs)
 
 
+def test_input_fingerprints_expand_duplicate_patterns_only_once(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = tmp_path / "repository"
+    lsp = root / "tooling" / "lsp-server"
+    resources = [
+        "tooling/lsp-server/package_contract.json",
+        "tooling/lsp-server/package-lock.json",
+        "core/internal/Cargo.lock",
+        "spec/frontends/simply/1.1/protocol.json",
+        "spec/stdlib/registry/1.0/registry.json",
+        "spec/tooling/island_boundaries.json",
+        "core/src/one.rs",
+        "core/src/two.rs",
+    ]
+    for relative in resources:
+        path = root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(relative, encoding="utf-8")
+    ignored = root / "core/src/ignored.rs"
+    ignored.write_text("not a repository input", encoding="utf-8")
+    family = {
+        "id": "lsp-extension-payload",
+        "authoritative_sources": ["core/src/*.rs", "core/src/one.rs"],
+        "generator_inputs": ["core/src/*.rs"],
+        "generator": {"implementation_paths": ["core/src/one.rs"]},
+    }
+    monkeypatch.setattr(package_extension, "REPOSITORY_ROOT", root)
+    monkeypatch.setattr(package_extension, "LSP_ROOT", lsp)
+    monkeypatch.setattr(
+        package_extension, "CONTRACT_PATH", lsp / "package_contract.json"
+    )
+    monkeypatch.setattr(
+        package_extension, "_load_json", lambda _path: {"artifacts": [family]}
+    )
+    monkeypatch.setattr(package_extension, "_git", lambda _args: "\0".join(resources))
+    original_glob = package_extension.glob.glob
+    calls: list[str] = []
+
+    def counted_glob(pattern: str, **kwargs: object) -> list[str]:
+        calls.append(pattern)
+        return original_glob(pattern, **kwargs)
+
+    monkeypatch.setattr(package_extension.glob, "glob", counted_glob)
+    first = package_extension._input_fingerprints()
+    assert len(calls) == 2
+    assert len(first) == 8
+    assert "file:core/src/ignored.rs" not in first
+    changed = root / "core/src/one.rs"
+    changed.write_text("changed on the next invocation", encoding="utf-8")
+    calls.clear()
+    second = package_extension._input_fingerprints()
+    assert len(calls) == 2
+    assert second["file:core/src/one.rs"] != first["file:core/src/one.rs"]
+    assert {
+        key: value for key, value in first.items() if key != "file:core/src/one.rs"
+    } == {key: value for key, value in second.items() if key != "file:core/src/one.rs"}
+    original_fingerprint = package_extension._file_fingerprint
+
+    def failing_fingerprint(path: Path) -> str:
+        if path == changed:
+            raise package_extension.PackageError("controlled fresh read failure")
+        return original_fingerprint(path)
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(package_extension, "_file_fingerprint", failing_fingerprint)
+        with pytest.raises(
+            package_extension.PackageError, match="controlled fresh read failure"
+        ):
+            package_extension._input_fingerprints()
+    changed.unlink()
+    if os.name != "nt":
+        changed.symlink_to(root / "core/src/two.rs")
+        with pytest.raises(package_extension.PackageError, match="input is a symlink"):
+            package_extension._input_fingerprints()
+        changed.unlink()
+    with pytest.raises(package_extension.PackageError, match="input is missing"):
+        package_extension._input_fingerprints()
+
+
 def test_payload_integrity_detects_current_compiler_source_change(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:

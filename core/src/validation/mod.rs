@@ -280,6 +280,54 @@ pub(crate) fn nonempty(value: &str, path: impl Into<String>, errors: &mut Valida
     }
 }
 
+/// Construct dynamic diagnostic paths only when validation actually fails.
+pub(crate) fn nonempty_with_path(
+    value: &str,
+    path: impl FnOnce() -> String,
+    errors: &mut ValidationErrors,
+) {
+    if value.is_empty() {
+        nonempty(value, path(), errors);
+    }
+}
+
+#[cfg(test)]
+mod nonempty_path_tests {
+    use super::{nonempty, nonempty_with_path, ValidationErrors};
+    use std::cell::Cell;
+
+    #[test]
+    fn valid_text_never_constructs_a_diagnostic_path() {
+        let mut errors = ValidationErrors::default();
+        for value in ["x", " ", "\0", "\u{1f680}"] {
+            nonempty_with_path(
+                value,
+                || panic!("valid value needs no error path"),
+                &mut errors,
+            );
+        }
+        assert!(errors.errors.is_empty());
+    }
+
+    #[test]
+    fn empty_text_constructs_the_original_error_exactly_once() {
+        let calls = Cell::new(0);
+        let mut actual = ValidationErrors::default();
+        let mut expected = ValidationErrors::default();
+        nonempty("", "$.root.items[12].text", &mut expected);
+        nonempty_with_path(
+            "",
+            || {
+                calls.set(calls.get() + 1);
+                "$.root.items[12].text".to_owned()
+            },
+            &mut actual,
+        );
+        assert_eq!(calls.get(), 1);
+        assert_eq!(actual, expected);
+    }
+}
+
 #[cfg(test)]
 mod canonical_digest_tests {
     use super::{canonical_sha256, serialized_sha256, JsonDigestWriter};

@@ -16,6 +16,7 @@ import subprocess
 import sys
 import uuid
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import contextmanager
 from pathlib import Path, PurePosixPath
 from typing import Any, Mapping, Sequence
@@ -419,12 +420,16 @@ def _input_fingerprints() -> dict[str, str]:
         )
     )
     source_paths: set[str] = set()
+    expanded_patterns: set[str] = set()
     for pattern in patterns:
         if not isinstance(pattern, str) or "\\" in pattern:
             raise PackageError("LSP payload registry input path is malformed")
         pure = PurePosixPath(pattern)
         if pure.is_absolute() or ".." in pure.parts:
             raise PackageError("LSP payload registry input escapes the repository")
+        if pattern in expanded_patterns:
+            continue
+        expanded_patterns.add(pattern)
         matches = [
             Path(path)
             for path in glob.glob(str(REPOSITORY_ROOT / pattern), recursive=True)
@@ -438,10 +443,19 @@ def _input_fingerprints() -> dict[str, str]:
             if path.is_symlink():
                 raise PackageError(f"LSP payload input is a symlink: {relative}")
             source_paths.add(relative)
-    for relative in sorted(source_paths):
-        fingerprints[f"file:{relative}"] = _file_fingerprint(
-            _safe_repository_source(relative)
-        )
+
+    def fingerprint_source(relative: str) -> str:
+        return _file_fingerprint(_safe_repository_source(relative))
+
+    # Each invocation reads every current input. Ordered, bounded parallel reads
+    # avoid serial filesystem latency without retaining hashes between checks.
+    ordered_sources = sorted(source_paths)
+    if ordered_sources:
+        with ThreadPoolExecutor(max_workers=min(8, len(ordered_sources))) as executor:
+            for relative, fingerprint in zip(
+                ordered_sources, executor.map(fingerprint_source, ordered_sources)
+            ):
+                fingerprints[f"file:{relative}"] = fingerprint
     return fingerprints
 
 

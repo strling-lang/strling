@@ -4394,3 +4394,75 @@ ancestor-quota obligations remain unresolved, with no host-change request or
 weakened ceiling. Both source-distinct Q/P campaigns, fresh independent Release,
 signing, qualified immutable trust and guarded clean formal closure remain.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+### Checkpoint 79 — validation semantics and fresh input scheduling
+
+Full-graph predictor41a2f7ac retains384samples; O2 is slower on all three selected
+coordinates and is not adopted. Fixed O2 screend14b41bc stops after three of47
+coordinates: tiny-request median4023ns exceeds unchanged3833ns. Unused O3
+counterfactuale92cf84d retains median3899ns against the same cap. Audit1b02c01e
+reconstructs all256screen/counterfactual samples;44coordinates remain unrun.
+These diagnostics are not conditioning-qualified regression verdicts or retries.
+
+Allocation-beforef769dab1 measures the original455byte request twice identically:
+decode11calls/1725requested bytes; validation4calls/204bytes. Four nonempty checks
+eagerly construct error paths for valid values. Lazy closures remove that work
+without changing predicates, messages, paths or traversal order. Focused361f403a
+passes57tests including Unicode/whitespace/NUL and exact nested error order.
+After-allocation and product runtime improvement remain unmeasured.
+
+Two full-core900second timeouts d59d8c01/7dbbc015 remain failed. Spooled diagnostic
+transport preserves exact decoded output/exit results after the first lost buffered
+details. Fixed storage paire1ad60cf observes193.518636659s mounted versus
+50.258559478s native,44tests each and28equal normalized compiler invocations.
+The owner verified equal81861536byte executables, but auditab9e8648 cannot reread
+the original native temporary output after restart. That limitation remains;
+74.0291% is not a fully independently artifact-verified certification improvement.
+
+V5 uses fresh persistent native output. Terminal
+2919ea135d29701cd1a6ed308ce02111ac1030fb32db8bd0efa7576174d79922 completes in
+1014.255882247s: core273.168873623s/505tests, interop56.048681690s/22tests,
+131tooling/16deep tests, exact runtimes, governed preparation and integrity.
+Auditcefb16b4f92fffb5c1d16a4faffa3c87ee5704b7474ae7097af309c60bc9f887
+rehashes2310sources and94persistent binaries after restart. Commands, compiler
+flags/debug, all-target coverage and original bounds remain. Incomplete versus
+completed workloads do not establish an equivalent speedup percentage.
+
+The generated-artifact skill maps six families: deep identity authority/inputs;
+LSP core authority/inputs and edited generator; shared-engine/stdlib/adversarial
+core inputs; performance core authority/test inputs. Exact deep identity refresh
+and real two-run adversarial --write/check pass. Only two synthetic deep JSON
+outputs and adversarial source metadata change. Every empirical observation,
+runtime, finding and denominator is independently unchanged. Shared/stdlib and
+performance integrity pass without regeneration. Deep-local component passes
+24.342745251s, not an authoritative Local profile.
+
+Precommit2b9a1dc2 retains22LSPfailures/15passes from the old diagnostic Git adapter
+rejecting the current NUL-delimited file-list query. The versioned adapter forwards
+all four queries byte-for-byte and rejects unknown queries. Precommit88ffc25b then
+reaches21passing tests before its diagnostic120second bound, with no reported
+assertion failure. Neither failure is erased or presented as a governed timeout.
+Profile393eceb3 identifies5.467s/call,717stat/1116lstat/41glob calls.
+
+The correction expands identical validated patterns once and uses at most eight
+ordered concurrent fresh source validation/hash readers. Every current input is
+still read; no digest survives between checks. The regression fails4expansions
+versus2 before correction, then proves freshness, missing/symlink refusal,
+read-error propagation and ignored-path exclusion. Existing payload and isolated
+build protections remain. Fixed six-run before/after/after/before/before/after
+comparison e348d964c8760aa6d9ce570af9d46824bb3179e3d11d61b19938d4ca79e20c5b
+preserves all87fields exactly: median3.889425539s to1.860919917s,52.154376% lower.
+No observation is discarded. This is diagnostic operation timing, not product or
+total-certification performance. WSLf25a813c passes38package tests in86.18s;
+audit54e4f2af4cb1c83d9e509eef9679ac76390fa3ef273d1ee0675650efbc46463c
+reconstructs all timing/source evidence and passes37Native tests with1symlink skip
+covered by WSL. Integrity and style pass first.
+
+All78previous checkpoints/readiness remain; only two exact core scope paths are
+added. Guarded commit precedes canonical preparation on the unfrozen SHA because
+LSP payload metadata binds HEAD. Clean LSP certification, freeze, fresh full-graph
+O3 after-allocation/tiny measurements, whole-process stability and ancestor-quota
+qualification remain. No host changes, weakened ceilings or reduced samples.
+Both source-distinct Q/P campaigns, fresh independent no-reuse Release, signing,
+qualified immutable trust and guarded clean formal closure remain mandatory.
+H08 OPEN; continuation ACTIVE; no owner action required.

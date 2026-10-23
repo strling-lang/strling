@@ -8938,3 +8938,33 @@ All77prior checkpoints, readiness and scope remain unchanged. O2 needs broader
 full-graph runtime proof; previous memory/stability failures and unknown ancestor
 quota remain unresolved. Both complete signed/trusted campaigns and guarded clean
 closure remain required. H08 OPEN; continuation ACTIVE; no owner action needed.
+
+### H08 checkpoint 79 — lazy error paths and fresh fingerprint scheduling
+
+Tiny-request diagnostics retain O2 median4023ns and O3 median3899ns against the
+unchanged3833ns cap. O2 is not adopted. The original455byte request's validation
+allocates four times for204requested bytes. Four eager semantic error paths are
+now lazy; exact validation/error-order tests pass. No product gain is claimed yet.
+
+Fresh native-output run2919ea13 passes505core,22interop,131tooling and16deep tests.
+Auditcefb16b4 verifies2310sourcefiles, raw logs and94retained executables after WSL
+restart. Core takes273.17s and interop56.05s; prior900second timeouts remain failed.
+The separate193.52s/50.26s storage pair retains its missing-native-artifact audit
+limitation and is not a fully independently verified certification speedup.
+
+Registered deep identities and actual two-run adversarial evidence renew only
+source metadata; all empirical rows/runtimes/findings remain identical. Retained
+shared/stdlib verification and performance integrity pass unchanged. LSP canonical
+preparation remains after the engineering commit and before source freeze.
+
+Preserved LSP failures expose a stale Git adapter and then repeated filesystem
+work. Adapter forwarding tests pass. Fingerprinting now deduplicates identical
+patterns and bounds concurrent fresh source readers at eight, without cached
+hashes or removed checks. Fixed six-run comparisone348d964 preserves all87fields:
+median3.889s to1.861s,52.15% lower diagnostic operation time. WSL38package tests
+and Native37plus1WSL-covered skip pass. Audit54e4f2af reconstructs every timing.
+This is not a product or complete-certification speedup.
+
+All78prior checkpoints/readiness remain. Clean commit/preparation/freeze, fresh
+product measurements, conditioning qualification, both signed/trusted campaigns
+and guarded formal closure remain. H08 OPEN; continuation ACTIVE.

@@ -1,12 +1,15 @@
 """Whole-process acquisition: synthetic children, never product samples."""
 
 from dataclasses import replace
+import ctypes
 import hashlib
 import json
 import os
 from pathlib import Path
 import sys
 import tempfile
+import time
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -32,6 +35,37 @@ class _Fixture(unittest.TestCase):
 
 
 class EnvelopeTests(_Fixture):
+    def test_job_wait_rechecks_accounting_after_bounded_timeout(self):
+        child = envelope._Native.__new__(envelope._Native)
+        child.directory, child.port, child.events = self.root, 17, []
+        child.deadline = 10.0
+        active = iter((1, 1, 0))
+        child.job = SimpleNamespace(active=lambda: next(active))
+        waits = []
+
+        def timeout(port, message, key, pid, milliseconds):
+            waits.append(milliseconds)
+            return 0
+
+        child.k = SimpleNamespace(GetQueuedCompletionStatus=timeout)
+        with (
+            patch.object(envelope.time, "monotonic", return_value=1.0),
+            patch.object(envelope.c, "get_last_error", return_value=258, create=True),
+        ):
+            child.await_job_exit()
+        self.assertEqual(waits, [100, 100])
+        self.assertEqual([e["kind"] for e in child.events], ["wait-timeout"] * 2)
+
+    def test_job_wait_never_accepts_post_deadline_empty_job(self):
+        child = envelope._Native.__new__(envelope._Native)
+        child.directory, child.port, child.events = self.root, 17, []
+        child.deadline = 10.0
+        child.job = SimpleNamespace(active=lambda: 0, snapshot=lambda: {"active": 0})
+        with patch.object(envelope.time, "monotonic", return_value=10.0):
+            with self.assertRaisesRegex(TimeoutError, "deadline"):
+                child.await_job_exit()
+        self.assertTrue((self.root / "survivors.json").exists())
+
     def fake(self, *, fail=None, exit_code=0, change=False):
         owner = self
 
@@ -301,8 +335,14 @@ class NativeEnvelopeTests(_Fixture):
     def test_native_missing_completion_is_not_silent_success(self):
         class LostNotification(envelope._Native):
             def finish(child):
+                def unavailable(*args):
+                    ctypes.set_last_error(6)  # Invalid handle, not a normal timeout.
+                    return 0
+
                 with (
-                    patch.object(child.k, "GetQueuedCompletionStatus", return_value=0),
+                    patch.object(
+                        child.k, "GetQueuedCompletionStatus", side_effect=unavailable
+                    ),
                     patch.object(child.job, "active", return_value=1),
                 ):
                     return super(LostNotification, child).finish()
@@ -312,6 +352,62 @@ class NativeEnvelopeTests(_Fixture):
         )
         self.assertEqual(result["status"], "failed")
         self.assertIn("completion unavailable", result["error"])
+
+    def test_native_lost_wakeups_still_observe_natural_whole_job_exit(self):
+        class LostWakeups(envelope._Native):
+            def finish(child):
+                def lost(port, message, key, pid, milliseconds):
+                    time.sleep(milliseconds / 1000)
+                    ctypes.set_last_error(258)
+                    return 0
+
+                with patch.object(
+                    child.k, "GetQueuedCompletionStatus", side_effect=lost
+                ):
+                    return super(LostWakeups, child).finish()
+
+        code = "import subprocess,sys; subprocess.Popen([sys.executable,'-I','-B','-c','import time; time.sleep(0.3)'])"
+        result = envelope.capture(
+            replace(self.spec, command=(str(self.exe), "-I", "-B", "-c", code)),
+            self.root / "native",
+            factory=LostWakeups,
+        )
+        self.assertEqual(result["status"], "observed", result)
+        self.assertFalse(result["cleanup"]["terminated"])
+        events = json.loads((self.root / "native/lifecycle-wakeups.json").read_bytes())
+        self.assertTrue(any(e["kind"] == "wait-timeout" for e in events))
+        self.assertTrue(all(e["wait_milliseconds"] <= 100 for e in events))
+        self.assertEqual(result["accounting"]["active_processes"], 0)
+
+    def test_native_lost_wakeups_do_not_excuse_live_descendants(self):
+        class LostWakeups(envelope._Native):
+            def finish(child):
+                def lost(port, message, key, pid, milliseconds):
+                    time.sleep(milliseconds / 1000)
+                    ctypes.set_last_error(258)
+                    return 0
+
+                with patch.object(
+                    child.k, "GetQueuedCompletionStatus", side_effect=lost
+                ):
+                    return super(LostWakeups, child).finish()
+
+        code = "import subprocess,sys; subprocess.Popen([sys.executable,'-I','-B','-c','import time; time.sleep(20)'])"
+        result = envelope.capture(
+            replace(
+                self.spec,
+                timeout_seconds=1,
+                command=(str(self.exe), "-I", "-B", "-c", code),
+            ),
+            self.root / "native",
+            factory=LostWakeups,
+        )
+        self.assertEqual(result["status"], "failed", result)
+        self.assertIn("deadline", result["error"])
+        self.assertTrue(result["cleanup"]["quiescent"])
+        events = json.loads((self.root / "native/lifecycle-wakeups.json").read_bytes())
+        self.assertTrue(events)
+        self.assertTrue(all(e["kind"] == "wait-timeout" for e in events))
 
 
 if __name__ == "__main__":

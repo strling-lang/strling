@@ -3842,3 +3842,51 @@ window is presumed or owner help requested. Originalv6 stays live; finalcomplete
 runtime19, complete source-distinct qualification/promotion campaigns, independent
 no-reuse Release, fresh valid performance/signing/immutable trusted verification
 and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.
+
+## Bounded completion waits and native control boundaries
+
+On parent6e2fb953, the acquisition envelope treated every missing completion
+notification as a deadline-long wait and failure. Windows documents that these
+notifications are not guaranteed. The corrected envelope2a487b49 uses at most
+100ms waits after root exit, then queries the actual remaining job population.
+Completion notifications remain wakeups only. Natural zero-active accounting,
+retained root identity, placement, and the original absolute deadline are still
+required; arbitrary API errors and remaining children still fail closed. The
+complete wait journal is retained even on timeout. No CPU sampling, estimated
+interference subtraction, survivor exemption, or workload change is introduced.
+
+The fixed36-case producer5069e8cc pins originalee41 and the same capture wrapper
+for both implementations. Nine counterbalanced pairs per notification mode use
+the same Python root, one0.3-second child, CPU1 and2-second deadline. Deliberately
+withheld wakeups produce nine retained legacy failures and nine corrected natural
+completions. Median return time changes2.0136237s to0.5705891s, a71.66356852077178
+percent reduction. Normal-notification medians are0.5125516s and0.5089218s. These
+synthetic recovery-path measurements are not product performance or a forecast
+of total certification savings. Reader8fa50ff5 imports no producer and reconstructs
+all36 raw terminal/plan/log chains, process identities, ordering, medians and2299
+unchanged source nodes. No failed or unfavorable observation is discarded.
+
+Source-bound validation49415ecd passes227Native tests in68.058s and204WSL tests
+in31.090s, with23 native-only cases already covered. Performance artifact integrity,
+Ruff, Prettier and diff checks pass. Tests-first80a77c retains the two missing-method
+failures before implementation. No product sample, profile or generated authority
+is produced; all66 preceding checkpoints and readiness remain unchanged.
+
+Before fresh reference acquisition, native probe83ea8cfa tests two specific control
+assumptions on newly owned synthetic processes only. The root reads explicit
+HighQoS(1,1,0), but its child and grandchild both read default(1,0,0). Source review
+shows ordinary CLI child spawning; root-only enforcement therefore cannot prove
+descendant HighQoS. The second probe creates a capped outer job(flags5/rate500)
+and an unrestricted inner job; the current immediate-job query reports unlimited.
+That query cannot establish the ancestor chain's effective quota. All test jobs
+retire naturally, and no existing process/job, host power policy or security setting
+is changed. The data-only reader verifies both raw counterexamples.
+
+Next work is concrete: enforce and verify actual descendant power policy before
+execution, and bind the complete ancestor-quota boundary before consuming fresh
+reference/holdout cohorts. Do not weaken these guarantees or ask the owner for
+more idle time. Originalv6 remains live and unqualified alternatives cannot admit
+evidence. All54 coordinates, all12 conditioning obligations, nine fresh independent
+reference and source-distinct holdout repetitions, challenges, final preparation,
+both complete campaigns, signing, immutable trust and guarded clean closure remain.
+H08 remains OPEN; continuation ACTIVE.

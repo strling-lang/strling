@@ -588,34 +588,55 @@ class _Native:
         )
         return code.value
 
-    def finish(self):
-        self.check_job_limits()
+    def await_job_exit(self):
         # Process exit precedes console-host retirement. Await the whole job's
         # natural exit, not root-only exit or a name-based survivor exemption.
-        # Completion messages are a wakeup, never proof: verify accounting zero.
-        # Missing messages/timeouts fail closed; no indefinite environmental wait.
-        while self.job.active():
+        # Windows does not guarantee these completion notifications. Recheck the
+        # authoritative job count after bounded waits, without CPU-counter polling.
+        # An expired deadline or an API error never becomes successful retirement.
+        while True:
             remaining = int((self.deadline - time.monotonic()) * 1000)
             if remaining <= 0:
                 _save(self.directory / "survivors.json", self.job.snapshot())
                 raise TimeoutError("whole-job exit deadline")
+            if self.job.active() == 0:
+                return
+            milliseconds = min(remaining, 100)
             message, key, pid = c.c_uint32(), c.c_size_t(), c.c_void_p()
             ok = self.k.GetQueuedCompletionStatus(
-                self.port, c.byref(message), c.byref(key), c.byref(pid), remaining
+                self.port, c.byref(message), c.byref(key), c.byref(pid), milliseconds
             )
             if not ok:
-                raise TimeoutError(
-                    f"whole-job completion unavailable: {c.get_last_error()}"
+                error = c.get_last_error()
+                if error != 258:  # WAIT_TIMEOUT, not a broken completion port
+                    raise OSError(error, "whole-job completion unavailable")
+                self.events.append(
+                    dict(
+                        kind="wait-timeout",
+                        wait_milliseconds=milliseconds,
+                        observed_ns=time.perf_counter_ns(),
+                    )
                 )
-            _require(key.value == 1, "private completion key")
-            self.events.append(
-                dict(
-                    message=message.value,
-                    pid=pid.value,
-                    observed_ns=time.perf_counter_ns(),
+            else:
+                _require(key.value == 1, "private completion key")
+                self.events.append(
+                    dict(
+                        kind="completion-wakeup",
+                        message=message.value,
+                        pid=pid.value,
+                        wait_milliseconds=milliseconds,
+                        observed_ns=time.perf_counter_ns(),
+                    )
                 )
-            )
             _require(len(self.events) <= 100_000, "bounded lifecycle event count")
+
+    def finish(self):
+        self.check_job_limits()
+        try:
+            self.await_job_exit()
+        finally:
+            _save(self.directory / "lifecycle-wakeups.json", self.events)
+        self.check_job_limits()
         row = _Accounting()
         begin = time.perf_counter_ns()
         self.job.check(
@@ -641,7 +662,9 @@ class _Native:
             "retained root identity and exit",
         )
         _save(self.directory / "root-exit.json", exited)
-        _save(self.directory / "lifecycle-wakeups.json", self.events)
+        _require(
+            time.monotonic() < self.deadline, "whole-job final verification deadline"
+        )
         self.completed = row.active == 0
         return result
 

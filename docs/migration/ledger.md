@@ -8659,3 +8659,27 @@ operations dominate. These are measured diagnostic durations, not a speedup.
 Fresh independent reference9/holdout9, all12 conditioning guarantees and challenges,
 full final preparation/campaigns/signing/immutable trust/guarded clean closure remain.
 Originalv6 admission unchanged. H08 OPEN; continuation ACTIVE; no owner action needed.
+
+## H08 bounded job retirement and control counterexamples — 2026-10-23 UTC
+
+Checkpoint67 replaces a deadline-long notification wait with bounded checks of
+actual job accounting after root exit. Windows completion notifications are not
+guaranteed. Empty accounting, natural retirement, retained identity, placement and
+the original absolute deadline remain mandatory. Broken ports and live descendants
+still fail, and timeout journals remain available on failure.
+
+Fixed proof5069e8cc retains36 native cases and all9 old notification-loss failures.
+Nine counterbalanced equivalent-workload pairs reduce failure-path median return
+time from2.0136237s to0.5705891s,71.6636percent. Normal-notification medians remain
+0.5125516s/0.5089218s. Data-only audit8fa50ff5 reconstructs every row and2299 source
+nodes. This is synthetic recovery-path evidence, not product or total-certification
+speedup. Source-bound49415ecd passes227Native/204WSL plus23 native-covered skips;
+all cheap integrity/style gates pass, without profiles or generated evidence.
+
+Separate native probe83ea8cfa establishes two control defects: explicit root
+HighQoS is not inherited by either tested descendant, and an unrestricted inner
+job reports unlimited despite a capped ancestor. Only newly owned synthetic
+jobs/processes were changed; all exited. Actual descendant launch enforcement
+and complete quota provenance must be corrected before fresh reference cohorts.
+Originalv6, existing authority, all ceilings/counts/security and historical attempts
+remain. H08 OPEN; continuation ACTIVE; no quieter-machine request or owner action.

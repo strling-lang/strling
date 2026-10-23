@@ -52,6 +52,14 @@ No old baseline is relabeled as new whole-process reference evidence.
     unrelated inheritable handles and private job handles do not leak.
 -   Offline: injected native adapter tests run without Windows and establish that
     every error fails closed and every live owned process receives cleanup.
+-   Notification loss: completion messages are optional wakeups, never lifecycle
+    authority. A bounded wait timeout rechecks actual job accounting; a naturally
+    empty job completes, while live members retain the original absolute deadline.
+    Unexpected port errors, changed limits and malformed accounting still fail.
+    Deadline expiry never becomes success merely because a later query is empty.
+    Compare the unchanged parent and corrected implementation on a fixed nine-pair
+    native fixture with deliberately withheld wakeups, retaining every timing and
+    failure. This is orchestration failure-path evidence, not product performance.
 
 ## Completion criteria
 

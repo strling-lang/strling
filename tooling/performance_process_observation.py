@@ -7,6 +7,7 @@ placement/control-state proof. Callers own launch, bounded waits and cleanup.
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 import ctypes
 import json
 import os
@@ -125,6 +126,41 @@ def _process_times(handle: Any, pid: int) -> dict:
         kernel=values[2].value,
         user=values[3].value,
     )
+
+
+@contextmanager
+def open_snapshot_process(pid: int, expected_birth: str):
+    """Own a read-only, non-inheritable handle bound to an expected live birth.
+
+    SYNCHRONIZE is necessary for _process_times' zero-timeout wait. Query and
+    VM-read rights alone are insufficient. This opens no mutation/control rights
+    and establishes identity only, never ownership or continuous isolation.
+    The caller must already have authority to observe this particular process.
+    """
+    _integer(pid, 2**32 - 1)
+    if pid == 0 or _filetime(expected_birth) == 0:
+        raise ValueError("invalid expected process identity")
+    kernel32 = live._kernel32()
+    opened = kernel32.OpenProcess
+    opened.argtypes = [ctypes.c_ulong, ctypes.c_int, ctypes.c_ulong]
+    opened.restype = ctypes.c_void_p
+    closed = kernel32.CloseHandle
+    closed.argtypes = [ctypes.c_void_p]
+    closed.restype = ctypes.c_int
+    # SYNCHRONIZE | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ.
+    handle = opened(0x100410, False, pid)
+    if not handle:
+        live._raise_last_error("OpenProcess(diagnostic snapshot)")
+    try:
+        identity = _process_times(handle, pid)
+        if identity["birth"] != expected_birth:
+            raise ValueError("diagnostic process birth mismatch")
+        if identity["exited_before_query"]:
+            raise ValueError("diagnostic process already exited")
+        yield handle, identity
+    finally:
+        if not closed(handle):
+            live._raise_last_error("CloseHandle(diagnostic snapshot)")
 
 
 def native_snapshot(count: int, child: Any | None) -> dict:

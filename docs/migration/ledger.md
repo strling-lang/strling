@@ -8876,3 +8876,20 @@ append-only records preserve74prior checkpoints and match no generated family.
 Memory attribution and a justified architectural correction remain actionable;
 both complete signed/trusted campaigns and guarded closure remain required.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+### H08 checkpoint 76 — read-only observer access corrected before more samples
+
+Resident diagnostic dc791904 preserves a successful build and natural owned-tree
+exit but a failed external observer: its process handle lacked SYNCHRONIZE for
+the identity wait. No consumed observation is repeated or relabeled as passing.
+The narrow code correction opens only query/VM-read/synchronization rights,
+requires exact PID/birth, rejects exited or reused identities and closes owned
+handles on failure. Validation a63d3258 passes23focused/134Native/119WSL tests,
+with15Windows-only skips covered natively, plus artifact integrity and formatting.
+
+A zero-product preflight catches a separate mapped-filename API error1006 before
+another build. Page categories and raw errors are retained separately; unknown
+filenames stay unknown. Observer-only page reconstruction is not worker evidence
+or historical peak attribution. No caps, workloads, authority or host settings
+change; no speedup is claimed. Memory attribution, conditioning qualification and
+both complete signed/trusted campaigns remain. H08 OPEN; continuation ACTIVE.

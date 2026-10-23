@@ -45,3 +45,23 @@ this component, as are admission decisions and authoritative reference signing.
     independently reconstruct the real API journal before product diagnostics.
 -   A functioning journal is not overhead qualification, all-coordinate coverage
     or a source-distinct reference. Those obligations remain before promotion.
+
+## Read-only handle acquisition regression
+
+An optional context manager opens a handle for a caller-supplied PID and exact
+creation FILETIME, not a PID alone. It requests only query-information, VM-read
+and synchronization rights. Synchronization is required by the existing
+zero-timeout signal-state check: a query/VM-read-only handle caused error 5 in
+the preserved resident-census diagnostic. No process mutation rights,
+inheritance, elevation, debug privilege, launch or termination are permitted.
+
+-   The exact access mask includes SYNCHRONIZE and excludes write/control rights.
+-   Reject invalid PID/birth before opening; reject PID reuse or a signaled
+    process before yielding. A running process's undefined raw exit FILETIME
+    is not evidence that it exited.
+-   Close the owned handle once on success, caller failure, identity failure or
+    counter-query failure. Do not close a failed-open null handle.
+-   Mocked API tests run everywhere; a native self-process check exercises the
+    actual open/wait/times/close path without executing product samples.
+-   This access helper does not qualify a working-set census, historical peak
+    attribution, continuous isolation or any certification result.

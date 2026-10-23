@@ -4274,3 +4274,41 @@ architecture without fitting a passing threshold. Full native reference/holdout,
 all12obligations/all54coordinates/resource56, both complete Q/P campaigns, fresh
 independent no-reuse Release, signing/qualified immutable trust and guarded clean
 formal closure remain. H08 OPEN; continuation ACTIVE; no owner action required.
+
+### Checkpoint 76 — bounded observer failure, identity correction and preflight
+
+The f18cd39f resident diagnostic preserves terminal
+dc791904e5f8cfb6e20e70c7f472bf84de600db20810aa5154b7054d61eca5ac.
+The compiler succeeds, and all three execution processes exit naturally. The
+external observer fails before its page census: OpenProcess0x410 lacks the
+SYNCHRONIZE right required by the existing zero-timeout process-identity wait.
+The instrumented worker's6922240byte marker is neither a replay nor replacement
+of the failed6975488byte observation. Added post-peak marker/hold code changes
+binary layout and forbids a historical peak or equivalent-workload comparison.
+
+The narrow access correction requires exact PID/birth FILETIME and opens only
+query-information, VM-read and synchronization rights, with no inheritance,
+mutation, debug privilege or host change. Reused or signaled identities fail;
+running exit FILETIME remains raw and undefined. Every successfully opened
+handle closes on success or failure. Nine new regression cases include native
+self-process preflight without product execution. Source-bound validation
+a63d32589576e6f6cfae1a62a9b078ea5e41a2d3721010162fafaf4886233ef6 records
+23focused/134Native and119WSL passes plus15native-covered skips; artifact
+integrity passes first, followed by Ruff, Prettier and whitespace checks.
+
+A complete zero-product census preflight then exposes K32GetMappedFileNameW
+error1006 in0.1775832s, preserved in3a161b1c. Diagnostic page reconstruction is
+separated from optional filename attribution: all raw page categories, shared
+bits and unresolved-name errors remain, with mapping_names_complete=false. The
+observer-only7320page reconstruction takes0.3871704s; it does not explain worker
+RSS, claim complete filename attribution or establish an equal-workload gain.
+
+The three code/charter and three record paths match no generated family. All75
+prior checkpoints/readiness/scope remain. Two record guards stop before staging:
+explicit UTF-8 fixes locale-dependent comparison, and moving the new section to
+the actual EOF restores append-only preservation. Their failed receipts remain.
+Next requires source-bound actual worker attribution and justified architectural
+correction, without fitting a threshold or discarding failures. Original
+conditioning/isolation, caps, samples, Q/P campaigns, signing, trusted
+qualification/promotion and clean guarded formal closure remain mandatory.
+H08 OPEN; continuation ACTIVE; no owner action needed.

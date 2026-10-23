@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 from pathlib import Path
+import sys
 import tempfile
 import unittest
+from unittest import mock
 
 from tooling import performance_process_observation as observation
 
@@ -208,6 +211,109 @@ class JournalTests(unittest.TestCase):
         with self.assertRaises(OSError):
             observation.ProcessCounterJournal(self.path, 2, reader=failed)
         self.assertEqual([r["event"] for r in self.rows()], ["header", "incomplete"])
+
+
+class SnapshotHandleTests(unittest.TestCase):
+    def setUp(self):
+        self.kernel = mock.Mock()
+        self.kernel.OpenProcess.return_value = 123
+        self.kernel.CloseHandle.return_value = 1
+        self.identity = snapshot(1, True)["child"]
+        self.native = mock.patch.object(
+            observation.live, "_kernel32", return_value=self.kernel
+        )
+        self.native.start()
+        self.addCleanup(self.native.stop)
+        times_patch = mock.patch.object(
+            observation, "_process_times", return_value=self.identity
+        )
+        self.times = times_patch.start()
+        self.addCleanup(times_patch.stop)
+
+    def test_required_read_only_rights_and_exact_identity(self):
+        with observation.open_snapshot_process(3, "30") as (handle, identity):
+            self.assertEqual((handle, identity), (123, self.identity))
+            self.kernel.OpenProcess.assert_called_once_with(0x100410, False, 3)
+            self.times.assert_called_once_with(123, 3)
+            self.kernel.CloseHandle.assert_not_called()
+        self.kernel.CloseHandle.assert_called_once_with(123)
+
+    def test_invalid_identity_never_opens(self):
+        for pid, birth in (
+            (True, "30"),
+            (0, "30"),
+            (2**32, "30"),
+            (3, "0"),
+            (3, "030"),
+            (3, 30),
+        ):
+            with self.subTest(pid=pid, birth=birth), self.assertRaises(ValueError):
+                with observation.open_snapshot_process(pid, birth):
+                    self.fail("invalid identity yielded")
+        self.kernel.OpenProcess.assert_not_called()
+
+    def test_running_undefined_exit_field_is_retained(self):
+        self.identity["exit"] = "987654321"
+        with observation.open_snapshot_process(3, "30") as (_, identity):
+            self.assertEqual(identity["exit"], "987654321")
+
+    def test_reuse_or_signaled_identity_closes_before_yield(self):
+        for change in ({"birth": "31"}, {"exited_before_query": True}):
+            self.times.return_value = self.identity | change
+            self.kernel.CloseHandle.reset_mock()
+            with self.subTest(change=change), self.assertRaises(ValueError):
+                with observation.open_snapshot_process(3, "30"):
+                    self.fail("wrong process yielded")
+            self.kernel.CloseHandle.assert_called_once_with(123)
+
+    def test_native_query_failure_closes_handle(self):
+        self.times.side_effect = OSError("query failure")
+        with self.assertRaisesRegex(OSError, "query failure"):
+            with observation.open_snapshot_process(3, "30"):
+                self.fail("failed query yielded")
+        self.kernel.CloseHandle.assert_called_once_with(123)
+
+    def test_caller_failure_closes_handle(self):
+        with self.assertRaisesRegex(RuntimeError, "caller failure"):
+            with observation.open_snapshot_process(3, "30"):
+                raise RuntimeError("caller failure")
+        self.kernel.CloseHandle.assert_called_once_with(123)
+
+    def test_failed_open_does_not_close_null(self):
+        self.kernel.OpenProcess.return_value = None
+        with mock.patch.object(
+            observation.live, "_raise_last_error", side_effect=OSError("open failed")
+        ):
+            with self.assertRaisesRegex(OSError, "open failed"):
+                with observation.open_snapshot_process(3, "30"):
+                    self.fail("failed open yielded")
+        self.kernel.CloseHandle.assert_not_called()
+        self.times.assert_not_called()
+
+    def test_failed_close_is_reported(self):
+        self.kernel.CloseHandle.return_value = 0
+        with mock.patch.object(
+            observation.live, "_raise_last_error", side_effect=OSError("close failed")
+        ):
+            with self.assertRaisesRegex(OSError, "close failed"):
+                with observation.open_snapshot_process(3, "30"):
+                    pass
+
+
+@unittest.skipUnless(sys.platform == "win32", "native Windows handle contract")
+class NativeSnapshotHandleTests(unittest.TestCase):
+    def test_self_process_open_wait_times_close_without_product_execution(self):
+        expected = observation._process_times(
+            observation.live._current_process_handle(), os.getpid()
+        )
+        with observation.open_snapshot_process(os.getpid(), expected["birth"]) as (
+            handle,
+            identity,
+        ):
+            self.assertTrue(handle)
+            self.assertEqual(identity["pid"], os.getpid())
+            self.assertEqual(identity["birth"], expected["birth"])
+            self.assertFalse(identity["exited_before_query"])
 
 
 if __name__ == "__main__":

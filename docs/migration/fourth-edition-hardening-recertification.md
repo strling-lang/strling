@@ -3520,3 +3520,70 @@ and holdout9/all12/all54 qualification, final-source complete36/runtime19, both 
 38/80/126/independent no-reuse Release126 campaigns,125PASS with soleVSCEwaiver,
 freshperformance/signing/immutable reviewed qualification then pin-only promotion,
 verification and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.
+
+### Checkpoint61 — bounded diagnostic units without a manual-launch dependency
+
+The human owner confirms the workstation is as idle as it will get, provides no
+further manual assistance, and authorizes architectural/code corrections. This
+supersedes the pending standalone-launch request as the continuation plan; it
+does not retroactively qualify a managed job or change any historical attempt.
+At05:54:55.8490866Z no relevant owner was present, no index lease or P mapping
+existed, and the prepared a09c4f3e attempt directory was absent. Its sealed helper,
+all interrupted evidence and the independent-owner guard remain unchanged.
+
+New diagnostic journal56470a9e37c3fa1312377652ec1082e02a39cf75dda7686fd8aad70b08cf7521
+separates a fixed experiment from its individual complete work units. The caller
+pins the ordered denominator, source/tree, implementation, environment and recipe
+before acquisition. Exclusive claims are flushed before work; closing is exclusive
+and binds the exact owner, independently checked raw result, elapsed bound and
+explicit child quiescence. Each subsequent unit requires the externally retained
+previous checkpoint. Malformed, failed, unsealed or interrupted units block the
+remaining experiment and cannot be retried. A complete prefix is not a complete
+experiment. There is no launch, detachment, stale-claim recovery or performance
+admission API. Source leases, timing, bounded waits and actual child supervision
+remain obligations of the caller, not facts inferred from journal fields.
+
+The tests-first missing-module failureab2fc4 is retained in the tool history.
+Initial native17PASS/1ERROR is a sandbox denial creating the hard-link fixture,
+not an exercised negative case; scoped execution proves the real link guard.
+After three additional cases, the focused/direct-dependent suite passes79/79 on
+Native and79/79 on WSL, zero skips. Cases include competing processes, six
+separate owner lifetimes, missing/partial terminals, denied replay, exact ordering,
+checkpoint transplant, pin/owner drift, hard links and unfavorable elapsed bounds.
+Ruff formatting/lint passes. An attempted Black check was unavailable and is not
+claimed passing; Ruff is the repository's canonical Python formatter. A sandbox
+temporary-index denial in the first governance invocation remains a tooling
+failure pending scoped validation, not a passing profile.
+
+One-use native proof4d6183fc92d91f454bbede2d716a1c08650664ff79ca1c1b0a4db70d8850ddaf
+is retained under `target/codex-tools/h08-bounded-journal-proof-v1.py`.
+It executes six fresh tiny locked/offline
+Rust1.75 Cargo fixtures, each under a separate ordinary-token foreground owner and
+the unchanged reviewed owned-job primitive. It never invokes the old long-run
+entrypoint. Terminal3d561da7a097d47d0b046bc3687173e12d435a5b7d338f765b6c6a49a0be3e06
+passes06:05:11.601671Z in19.5054387s. Every unit exits0, its exact owned job drains,
+and its output bytes survive cleanup. Unit durations are2.1847230,2.1819027,
+2.1799680,2.1816819,2.2055696 and2.1837098s. These are fixture timings, not a
+STRling build comparison, reference acquisition or certification speedup.
+
+Data-only readerc90f1dca887fd69f86941c2f5f5a58df2ca26f022a26852df8f153f45919d9ea
+reconstructs all six raw results, owner identities, streams, retirement receipts,
+source pins and the final chained checkpoint
+eb7ff43924c8fd1440a6ffe10a9cc8dd7d1de5d4dd1578a414fdf1c0aa754322.
+No inherited ancestor resource-limit qualification is claimed. The live v6
+conditioner, performance controller, thresholds,512 warmups/64 samples/nine
+references, existing baselines, trusted verifier and native independence guard
+are unchanged. Registered performance artifact integrity passes without generation;
+the six changed paths match no generated family.
+
+The next engineering step is a separately reviewed bounded real-build adapter
+with exact source leases, all six fresh rounds/all18 original commands, child
+retirement, source/copy/output fences and complete-protocol comparison. The unused
+a09c4f3e standalone helper is not to be launched against the changed checkout.
+The journal does not by itself resolve CPU1 admission: whole-process conditioning,
+independent reference9/holdout9, all12 obligations/all54 coordinates remain.
+Final-source complete36/runtime19 preparation, both whole38/80/126/independent
+no-reuse Release126 campaigns, fresh performance, signing, reviewed qualification
+before pin-only verifier promotion, immutable verification and guarded clean
+formal CLOSED remain mandatory. H08 OPEN; continuation ACTIVE; no external owner
+action is requested and no new measured certification gain is claimed.

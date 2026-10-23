@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/diagnostic_campaign_journal.py
+        - tooling/tests/test_diagnostic_campaign_journal.py
+        - tests/_design/unit/diagnostic-campaign-journal.md
         - tooling/performance_build_retirement.py
         - tooling/tests/test_performance_build_retirement.py
         - tests/_design/unit/performance-build-retirement.md
@@ -1810,6 +1813,21 @@ checkpoints:
           - check: Remaining obligations and external launch boundary
             result: not_run
             details: "Only3records append, no36familymatches/generation. Prior59checkpoints/readiness preserved; independent schema/source/receipt audit and exact3path cleancommit follow. Independent native context needed for next fixed6freshround/all18command diagnostic. No partialprotocol acceptance or reduced samples. Original CPU1/counter/reference9+holdout9/all12/all54, finalcomplete36/runtime19, wholeQ/P38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/immutable reviewedqualification thenpin-onlypromotion/verification/guardedcleanCLOSED mandatory. No accepted new or wholecertificationgain. H08OPEN; continuationACTIVE."
+    - name: Bounded sample-free diagnostic units without manual launch dependency
+      status: in_progress
+      evidence:
+          - check: Human-authorized architectural continuation and unchanged safety boundaries
+            result: passed
+            details: "Owner confirms idle baseline and no further manual assistance, requiring architectural/code corrections. At05:54:55.8490866Z no relevant owner, index lease or P mapping; unused a09c4f3e attempt absent. Pending standalone request superseded, not historical evidence or independent-owner guard. Old helper remains immutable/unlaunched and becomes stale on source change. No scheduler/service/job/security/power modification or detachment."
+          - check: Fixed-denominator one-use diagnostic journal and direct tests
+            result: passed
+            details: "Journal56470a9e37c3fa1312377652ec1082e02a39cf75dda7686fd8aad70b08cf7521 binds externally pinned source/tree/recipe/implementation/environment and ordered unit bounds. Exclusive pre-work claim, same-owner raw-result terminal, explicit child quiescence and previous-checkpoint chain; failed/incomplete/partial/malformed claims block continuation without replay. Caller still owns actual leases, timing, deadlines, process supervision and raw verification. Native79/79 and WSL79/79, zero skips; Ruff passes. Initial missing-module ab2fc4, sandbox hard-link fixture error3ddc01, unavailable noncanonical Black and sandbox governance temp-index errorceacb0 retained; no product sample consumed."
+          - check: Six distinct native unit lifetimes and independent data reconstruction
+            result: passed
+            details: "Sample-free proof4d6183fc92d91f454bbede2d716a1c08650664ff79ca1c1b0a4db70d8850ddaf uses six fresh tiny Cargo fixtures, not product builds or samples. Terminal3d561da7a097d47d0b046bc3687173e12d435a5b7d338f765b6c6a49a0be3e06 passes06:05:11.601671Z/19.5054387s; allsix owners exit0, exact ownedjobs empty, artifacts unchanged through retirement. Data-only readerc90f1dca887fd69f86941c2f5f5a58df2ca26f022a26852df8f153f45919d9ea reconstructs six raw results, streams, owner identities, source pins and finalcheckpoint eb7ff43924c8fd1440a6ffe10a9cc8dd7d1de5d4dd1578a414fdf1c0aa754322. No inherited-limit qualification or runtime-improvement claim."
+          - check: Required bounded real-work integration and full closure
+            result: not_run
+            details: "Three implementation/test/charter paths plus three synchronized records; no36familymatches/generator, performance artifact integrity passes. Previous60checkpoints/readiness retained. Next bounded realbuild adapter must keep sixfreshrounds/all18commands, exactsourcelease/copy/outputfences, child retirement and wholeprotocol comparison. OriginalCPU1/continuousconditioning/reference9/holdout9/all12/all54 remain unqualified. Finalcomplete36/runtime19, wholeQ/P38/80/126/independentnoReuseRelease126 each125PASS+soleVSCEwaiver, freshperformance/signing/immutable reviewedqualification thenpin-onlypromotion/verification/guardedcleanCLOSED mandatory. H08OPEN; continuationACTIVE; no external owner action requested."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

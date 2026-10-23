@@ -8515,3 +8515,28 @@ Checkpoint60 appends only three records; no generated family matches or generati
 All59 earlier checkpoints/readiness remain. Original admission/reference, both
 complete campaigns, signing/immutable trust and clean formal closure remain.
 H08 OPEN; continuation ACTIVE; no new certified runtime improvement.
+
+## H08 bounded diagnostic ownership — 2026-10-23 UTC
+
+The owner explicitly rules out further workstation-idleness/manual-launch help.
+Checkpoint61 replaces that waiting plan with code-led bounded diagnostic units;
+the old independent-owner guard and immutable attempts are preserved. Journal
+56470a9e binds a fixed denominator and source/recipe/environment pins, flushes an
+exclusive pre-work claim, seals only the same owner with retained raw evidence,
+and rejects replay, gaps, failed/incomplete units and missing child quiescence.
+It neither launches processes nor grants certification/admission authority.
+
+Native79/79 and WSL79/79 focused/dependent tests pass, zero skips. One-use tiny
+Cargo integration3d561da7 completes six separate foreground owners in19.5054387s,
+all private jobs drained and artifacts retained. Data-only readerc90f1dca verifies
+the entire chain and all raw results. This is sample-free lifecycle proof, not a
+six-round STRling build result, reference qualification or measured runtime gain.
+Initial missing-module, sandbox hard-link/governance temp denials and unavailable
+noncanonical Black invocation are retained, not reclassified as passing.
+
+Six changed paths, no generated-family matches or generator; performance artifact
+integrity passes. Bounded real-build integration and conditioning/reference work
+remain actionable engineering. No manual launch is requested. Whole final-source
+preparation, both complete qualification/promotion campaigns, independent no-reuse
+Release, signing, immutable trusted verification and clean formal closure remain.
+H08 OPEN; continuation ACTIVE.

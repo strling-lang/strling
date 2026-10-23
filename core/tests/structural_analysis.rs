@@ -300,3 +300,59 @@ fn mismatched_foundational_state_is_a_structured_error() {
         StructuralAnalysisErrorCode::MismatchedFoundationalFacts
     );
 }
+
+#[test]
+fn maximum_depth_preserves_every_fact_and_rejects_the_next_level() {
+    use strling_kernel::semantic::Node;
+    use strling_kernel::structural_analysis::MAX_STRUCTURE_DEPTH;
+
+    let mut semantic = program(literal("node:leaf", "z"));
+    for index in 1..MAX_STRUCTURE_DEPTH {
+        semantic.root = Node::Atomic {
+            node_id: node_id(&format!("node:depth-{index}")),
+            origin: None,
+            body: Box::new(semantic.root),
+        };
+    }
+    let foundational = analyze(&semantic).unwrap();
+    let structural = analyze_structure(&semantic, &foundational).unwrap();
+    assert_eq!(structural.len(), MAX_STRUCTURE_DEPTH);
+    for id in semantic.node_ids() {
+        assert_eq!(scalar_terms(&structural, id.as_str()), ['z']);
+    }
+    semantic.root = Node::Atomic {
+        node_id: node_id("node:over-limit"),
+        origin: None,
+        body: Box::new(semantic.root),
+    };
+    let errors = analyze_structure(&semantic, &foundational).unwrap_err();
+    assert_eq!(errors.errors.len(), 1);
+    assert_eq!(
+        errors.errors[0].code,
+        StructuralAnalysisErrorCode::DepthLimitExceeded
+    );
+    assert_eq!(errors.errors[0].path, "$.root");
+}
+
+#[test]
+fn relationship_failure_keeps_the_exact_path_after_prior_siblings() {
+    let branches: Vec<_> = (0..92)
+        .map(|index| literal(&format!("node:branch-{index}"), "z"))
+        .collect();
+    let semantic = program(json!({
+        "node_id":"node:root", "kind":"sequence", "items":[
+            {"node_id":"node:first", "kind":"atomic", "body":literal("node:first-leaf", "a")},
+            {"node_id":"node:second", "kind":"atomic", "body":{
+                "node_id":"node:choices", "kind":"alternation", "branches":branches
+            }}
+        ]
+    }));
+    let foundational = analyze(&semantic).unwrap();
+    let errors = analyze_structure(&semantic, &foundational).unwrap_err();
+    assert_eq!(errors.errors.len(), 1);
+    assert_eq!(
+        errors.errors[0].code,
+        StructuralAnalysisErrorCode::RelationshipLimitExceeded
+    );
+    assert_eq!(errors.errors[0].path, "$.root.items[1].body");
+}

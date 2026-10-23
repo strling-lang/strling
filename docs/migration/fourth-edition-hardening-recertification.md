@@ -4466,3 +4466,79 @@ qualification remain. No host changes, weakened ceilings or reduced samples.
 Both source-distinct Q/P campaigns, fresh independent no-reuse Release, signing,
 qualified immutable trust and guarded clean formal closure remain mandatory.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+### Checkpoint 80 — structural attribution and exact path preservation
+
+Clean5d5c5eb4 completes canonical preparation of all36families and independent
+LSP certification; audit70cdbf02 verifies source bindings. Fresh full-default-graph
+native builds take701.070s. Tiny-request64samples retain median3734ns against3833ns;
+audit5db37016 confirms original455byte validation falls from4allocations/204requested
+bytes to2/180, with decoding unchanged. No conditioning or runtime qualification.
+
+Remaining49coordinate screen563a46a0 stops after55.360s at structural-safety on the
+127-atomic pathological fixture: median627383ns exceeds607530ns, MAD56766ns.
+All1856samples remain:28coordinates within ceilings, one above,20unrun. Audit40cfb9dc
+reconstructs the partial schedule; no consumed coordinate is replayed. This is an
+unqualified failure, not established product regression.
+
+Allocation census104aabe3 uses the exact original3231byte fixture and full-graph
+libraries. Two identical complete observations attribute952allocations/351224requested
+bytes to structural analysis and168/14901 to safety. Reusable traversal buffers
+preserve DFS order, correspondence, limits, facts and owned error paths. New tests
+cover all variants/order, restoration on success/error, maximum depth and nested
+relationship-error paths. All58focused tests pass. Wrapperc9ff6f1e remains failed
+for expecting9executables when Cargo also built2CLIs. Auditc1ce24ee reconstructs
+9executed suites and all11binaries; the first audit48e20d82 remains failed for
+object-key ordering. Neither tests nor product observations are repeated.
+
+Initial integrity correctly rejects the expanded resource-test hash. The exact
+registered identity-only refresh updates that hash and dependent fingerprints;
+all baseline measurements, budgets, ceilings, samples, environment and policies
+remain unchanged. Integrity/format pass. At checkpoint80 broader dependents and
+post-change allocation/runtime proof remain pending. All79prior checkpoints and
+readiness retained; H08 OPEN; continuation ACTIVE.
+
+### Checkpoint 81 — audited dependents and equivalent source-census timing
+
+Terminal2ceb71edd4ce0e3b7ec18de902c75e656c9af553afbca28f406cb79cef97e037
+finishes2026-10-23T21:08:54.327529Z in888.707110036s, all14stages passing.
+Core509tests take275.914078020s; interop22take53.638488512s;131tooling and16deep
+tests pass. Integrity runs first/last, exact runtimes pass, and deep-local component
+passes21.884200864s. Original canonical commands, compiler flags and all-target
+coverage remain; each component uses fresh persistent native output. Independent
+auditc9451fd31e96a91e2677780e1aa8b9319239dec3268e3f2459020ae93f8a8647
+rehashes2310sourcefiles and all94executables/8608470376bytes after WSL restart.
+No product samples or authoritative profiles are run; the owner and lease retire.
+
+The generated-artifact skill resolves six current families: deep identities
+(authority/input), LSP payload(core authority/input), shared-engine/stdlib/adversarial
+observations(core inputs), performance identities(core authority/test input).
+The audit matches complete registry definitions. Exact deep refresh/check leaves
+both outputs unchanged. Actual registered two-run adversarial write/check renews
+one source identity and execution/result metadata only; all empirical observations,
+runtimes, findings and denominators remain equal. Shared/stdlib retained verification
+passes without regeneration. The four performance identity-only outputs retain
+the independently proved authority. LSP canonical preparation is still required
+after commit and before source freeze.
+
+Complete-source profiling fixes order WSL/native/native/WSL/WSL/native. Each call
+freshly reads all2310files using the same pinned Git and SHA256; all complete maps
+equal frameb904b4c568c4b0f5b13a96bdb7c41f6f0079584bf38761e89c2aa01be76ba54d.
+WSL times13808566379,13077000084,16548908687ns; native728940612,745653596,
+578807137ns. Medians13.808566379s to0.728940612s reduce94.72109854134771%.
+Auditc9451fd3 reconstructs all six receipts/arithmetic and helper pins. The native
+reader preserves every per-stage fence, with no persistent digest cache. This is
+measured diagnostic orchestration only, not product or total-certification gain.
+
+Auditd6700a04f2fa6fbc9444e21ab1307c3a8844cd6ed787dd373fc3c80069cdd89c verifies
+the original24full-graph libraries, historical full-source binding through its
+previous pinned audit, exact fixture/probe, raw build/execution receipts and both
+complete allocation censuses without running builds or measurements.
+
+Only two exact authorized structural source/test scope paths are added. All80prior
+checkpoints, readiness and controls remain. Clean guarded commit, canonical preparation,
+new exact freeze, post-change allocation/runtime proof, conditioning/ancestor-quota
+qualification, all54coordinates/56limits/12conditioning obligations, both source-distinct
+Q/P38/80/126 and fresh same-SHA independent no-reuse Release126 each125PASSsoleVSCE,
+signing, qualified verifier before pin-only promotion, immutable trust and guarded
+clean formal closure remain required. H08 OPEN; continuation ACTIVE; no owner action.

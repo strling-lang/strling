@@ -219,7 +219,7 @@
                 },
                 {
                     "path": "core/tests/structural_analysis.rs",
-                    "sha256": "927b4f50b42863036fbc153aa8cfcba93c78615b780817ddc489f68421bca54d"
+                    "sha256": "297ff1c2e8c53ae2ee515669c785fb173ff4f3b21a61bb350aae3960f945899d"
                 },
                 {
                     "path": "core/tests/safety_analysis.rs",
@@ -476,5 +476,5 @@
         }
     ],
     "declaration_count": 56,
-    "inventory_fingerprint": "b4acead805901e0156d6b2b6a9dbb113b8751967dc643466e58cf15aaea8a01a"
+    "inventory_fingerprint": "b8105aea31ee9641b478a1a1d46ce9deb4bb5c2ea2969353f3c07fa9988ac0fc"
 }

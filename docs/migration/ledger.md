@@ -8968,3 +8968,71 @@ This is not a product or complete-certification speedup.
 All78prior checkpoints/readiness remain. Clean commit/preparation/freeze, fresh
 product measurements, conditioning qualification, both signed/trusted campaigns
 and guarded formal closure remain. H08 OPEN; continuation ACTIVE.
+
+### H08 checkpoint 80 — fail-fast structural attribution and path-buffer correction
+
+On clean5d5c5eb4, canonical preparation completes with all36 artifact families
+verified, including fresh LSP preparation and independent certification. Audit
+70cdbf02 preserves its source bindings. Fresh default-graph native builds take
+701.070s; no worker-only recipe or donor output is used. The complete tiny-request
+diagnostic retains64 samples, median3734ns against3833ns. Allocation attribution
+confirms validation4to2 allocations and204to180 requested bytes. Neither result
+qualifies conditioning or establishes an authoritative runtime improvement.
+
+The49-coordinate remaining screen stops after55.360s at structural-safety on the
+127-atomic pathological fixture: median627383ns exceeds607530ns, MAD56766ns.
+All1856 samples remain:28coordinates within caps, one above,20unrun. Audit40cfb9dc
+reconstructs the exact partial schedule without replay. This unqualified failure
+is not yet proof of a product regression. The earlier tiny coordinate is excluded
+from this screen, not counted as fresh evidence.
+
+Allocation census104aabe3 produces identical complete results twice: structural
+analysis952allocations/351224requested bytes; safety168/14901. The narrow correction
+reuses structural traversal path buffers, preserving DFS order, all correspondence
+checks, limits, facts and owned error paths. New tests cover every variant, parent
+restoration on success/failure, maximum depth and exact nested failure paths.
+All58focused tests pass. Wrapperc9ff6f1e then fails an incorrect9-artifact count:
+Cargo also builds two CLI binaries. Independent auditc1ce24ee verifies the nine
+executed test suites and all11binaries; the original failure remains. Its first
+audit48e20d82 also remains failed for JSON-object delta ordering; the corrected
+read-only audit changes no values or list ordering and reruns no product tests.
+
+The initial integrity check correctly rejects the expanded test's stale identity.
+The registered identity-only refresh changes that hash and dependent fingerprints
+only; every measured baseline value, ceiling, sample count and policy is preserved.
+Integrated integrity and formatting then pass. No empirical evidence is refreshed
+to obtain green status. Broader dependents, post-change allocation/runtime proof,
+canonical preparation, clean commit/freeze, conditioning qualification and both
+complete signed/trusted campaigns remain. All79prior checkpoints are preserved.
+H08 OPEN; continuation ACTIVE; no owner action required.
+
+### H08 checkpoint 81 — complete dependents and lossless source-reader timing
+
+Terminal2ceb71ed completes at2026-10-23T21:08:54.327529Z in888.707110036s.
+All14stages pass: integrity, exact runtimes,509core tests in275.914s,22interop in
+53.638s,131tooling,16deep, deep-local component, governed preparation, retained
+shared/stdlib verification and final integrity. Auditc9451fd3 reconstructs every
+raw result,2310sourcefiles and94persistent native executables after WSL restart.
+The owner retires and releases its lease; no performance samples or profiles run.
+
+The generated-artifact skill maps six current families. Deep identities produce
+no changes. Actual registered two-run adversarial preparation changes one source
+identity and execution/result metadata only; every empirical row, runtime,
+finding and denominator remains equal. Previously audited performance identity
+outputs retain all measured authority. LSP preparation remains before freeze.
+
+Fixed six-run WSL/native/native/WSL/WSL/native profiling reads and hashes every
+tracked file fresh, preserving all2310hashes and all per-stage fences. Median
+13.808566379s becomes0.728940612s,94.72109854134771% lower. Auditc9451fd3 verifies
+the raw receipts and arithmetic. This is diagnostic source-census orchestration
+only, not product runtime or total-certification improvement; no cache or omitted
+check is introduced.
+
+Allocation auditd6700a04 independently verifies24original full-graph libraries,
+fixture/instrumentation, historical source, raw receipts and both complete
+censuses without reexecution. The structural path-buffer correction still needs
+fresh after-allocation and product measurements. Two exact scope entries are
+added; all80prior checkpoints/readiness remain. Guarded commit, new canonical
+preparation/freeze, conditioning and ancestor-quota qualification, both complete
+signed/trusted campaigns and guarded clean formal closure remain. H08 OPEN;
+continuation ACTIVE; no owner action required.

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "authority": "empirical/adversarial-conformance-evidence",
-  "source_sha": "8b86f38562d71f7c62d688dd76b639137d6d992f",
+  "source_sha": "5d5c5eb40be95647b8664268d5c819ab8ac37f3a",
   "source_files": {
     "core/cli/strling-kernel.rs": "1d1f9fcf7a9fcf9104810ae4f49ef557a761c8b99dc72c51f3d82bf9cd6ddc60",
     "core/examples/adversarial_emission_probe.rs": "10821d29c955c8a4eee36990798a69e25fcb1048a5ebc770b0a69419a84bb267",
@@ -48,7 +48,7 @@
     "core/src/simply.rs": "273208de2a39a91dc405e20c75d214f9f8cf8f702b88ad8d4d2215218dc71c6b",
     "core/src/source/mod.rs": "4838152afcd97014981e80b1428600440df671b7386378e656effe49cfff4127",
     "core/src/stdlib.rs": "3cf85b3e1a54910381a7972e594c08f447c3cc32ff06c929cd07a68393a03896",
-    "core/src/structural_analysis.rs": "a0ffd65f954545127fe07cb9ea1e0e876aed6d73f7123b8d53c2fc2af39146fc",
+    "core/src/structural_analysis.rs": "4d57291d7d12589ed1c30496b2284e24b8fe624a08b2259959e56dceac95c68f",
     "core/src/target/mod.rs": "0e3c27cb916ea8e0c5263eb5d561a89995944968e8f98f62431aaf83c8edcb2f",
     "core/src/target/profile.rs": "e913e7e6ef3985272e5255fd89df1c1655d51d19f7c46015c3d123f265b59f65",
     "core/src/target_lowering.rs": "21c5f321daef4758c152decd8ed71860b4a9038719cba2ad4d19ef93666bd168",
@@ -59,7 +59,7 @@
     "tooling/pcre2_feature_probe.py": "7699d219d1ae5f3f1b4833a6005741bad2caaa1b63266da32d16e6ae7762982e",
     "tooling/python_re_harness.py": "c5a28bd18476723945cede57a7e13dbb1c08e5638326ffd2f69056c678c59c8f"
   },
-  "executed_at": "2026-10-23T18:19:39.700837+00:00",
+  "executed_at": "2026-10-23T21:08:29.079052+00:00",
   "run_id": "1d33ff1a60d826a3bd2f309f9b70b98624d0adeceb0786827d2eeef2da10757b",
   "repeat_runs": 2,
   "corpus_sha256": "abad32441e4f1f445f4be3a3019766bb1a344446a01ab5cce36e73349de47d3b",
@@ -394,7 +394,7 @@
     }
   ],
   "findings": [],
-  "result_sha256": "f7bcc8f29de97ea0aad1d727974acbab9001f4073b87a64325e5a1cb6f051295",
+  "result_sha256": "bf6a3857501676f8ea0ddde3115b4d86d25882691139af2e2708a20c81e1f0c2",
   "case_observations": [
     {
       "case_id": "wildcard-excluding-lines",

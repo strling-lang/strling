@@ -4,6 +4,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::error::Error;
 use std::fmt;
+use std::fmt::Write as _;
 
 use serde::{Deserialize, Serialize};
 
@@ -371,19 +372,52 @@ struct StructureAnalyzer<'a> {
     node_facts: BTreeMap<NodeId, NodeStructuralFacts>,
 }
 
+#[derive(Clone, Copy)]
+enum PathSegment {
+    Root,
+    Item(usize),
+    Branch(usize),
+    Body,
+}
+
+impl PathSegment {
+    fn append(self, path: &mut String) {
+        match self {
+            Self::Root => path.push_str("$.root"),
+            Self::Item(index) => write!(path, ".items[{index}]").expect("String formatting"),
+            Self::Branch(index) => write!(path, ".branches[{index}]").expect("String formatting"),
+            Self::Body => path.push_str(".body"),
+        }
+    }
+}
+
 impl StructureAnalyzer<'_> {
     fn analyze(
         mut self,
         root: &Node,
     ) -> Result<BTreeMap<NodeId, NodeStructuralFacts>, StructuralAnalysisErrors> {
-        self.node(root, "$.root")?;
+        self.node(root, &mut "$.root".to_owned())?;
         Ok(self.node_facts)
+    }
+
+    fn child(
+        &mut self,
+        node: &Node,
+        path: &mut String,
+        segment: PathSegment,
+    ) -> Result<LeadingConsumption, StructuralAnalysisErrors> {
+        let parent_length = path.len();
+        segment.append(path);
+        let result = self.node(node, path);
+        // Errors own their path; restore the reusable buffer on both outcomes.
+        path.truncate(parent_length);
+        result
     }
 
     fn node(
         &mut self,
         node: &Node,
-        path: &str,
+        path: &mut String,
     ) -> Result<LeadingConsumption, StructuralAnalysisErrors> {
         if let Some(facts) = self.node_facts.get(node.node_id()) {
             return Ok(facts.leading_consumption.clone());
@@ -416,7 +450,7 @@ impl StructureAnalyzer<'_> {
             Node::Sequence { items, .. } => {
                 let mut children = Vec::with_capacity(items.len());
                 for (index, child) in items.iter().enumerate() {
-                    children.push((child, self.node(child, &format!("{path}.items[{index}]"))?));
+                    children.push((child, self.child(child, path, PathSegment::Item(index))?));
                 }
                 let mut leading = self.sequence(&children, path)?;
                 self.include_empty_or_unknown(node, &mut leading, path)?;
@@ -425,13 +459,13 @@ impl StructureAnalyzer<'_> {
             Node::Alternation { branches, .. } => {
                 let mut leading = LeadingConsumption::default();
                 for (index, branch) in branches.iter().enumerate() {
-                    let branch_leading = self.node(branch, &format!("{path}.branches[{index}]"))?;
+                    let branch_leading = self.child(branch, path, PathSegment::Branch(index))?;
                     leading.extend(&branch_leading);
                 }
                 leading
             }
             Node::Repeat { body, max, .. } => {
-                let body_leading = self.node(body, &format!("{path}.body"))?;
+                let body_leading = self.child(body, path, PathSegment::Body)?;
                 let mut leading = LeadingConsumption::default();
                 if *max != RepetitionMaximum::Bounded(0) {
                     leading.extend(&body_leading);
@@ -440,7 +474,7 @@ impl StructureAnalyzer<'_> {
                 leading
             }
             Node::Capture { body, .. } | Node::Atomic { body, .. } => {
-                self.node(body, &format!("{path}.body"))?
+                self.child(body, path, PathSegment::Body)?
             }
             Node::Backreference { node_id, .. } => {
                 let facts = self
@@ -458,7 +492,7 @@ impl StructureAnalyzer<'_> {
                 }
             }
             Node::Lookaround { body, .. } => {
-                self.node(body, &format!("{path}.body"))?;
+                self.child(body, path, PathSegment::Body)?;
                 LeadingConsumption::singleton(LeadingTerm::Empty)
             }
         };
@@ -1034,8 +1068,12 @@ fn validate_foundational_correspondence(
         }
     }
 
-    let mut pending = vec![(&input.root, "$.root".to_owned())];
-    while let Some((node, path)) = pending.pop() {
+    let mut path = String::new();
+    let mut pending = vec![(&input.root, 0, PathSegment::Root)];
+    while let Some((node, parent_length, segment)) = pending.pop() {
+        // Depth-first order retains the parent's prefix until its next child.
+        path.truncate(parent_length);
+        segment.append(&mut path);
         let facts = foundational
             .get(node.node_id())
             .ok_or_else(|| missing_fact(&path, node.node_id(), "node kind validation"))?;
@@ -1048,7 +1086,7 @@ fn validate_foundational_correspondence(
                 ),
             ));
         }
-        push_children_with_paths(node, &path, &mut pending);
+        push_children_with_paths(node, path.len(), &mut pending);
     }
     Ok(())
 }
@@ -1090,26 +1128,30 @@ fn enforce_depth_limit(root: &Node) -> Result<(), StructuralAnalysisErrors> {
     Ok(())
 }
 
-fn push_children_with_paths<'a>(node: &'a Node, path: &str, pending: &mut Vec<(&'a Node, String)>) {
+fn push_children_with_paths<'a>(
+    node: &'a Node,
+    parent_length: usize,
+    pending: &mut Vec<(&'a Node, usize, PathSegment)>,
+) {
     match node {
         Node::Sequence { items, .. } => pending.extend(
             items
                 .iter()
                 .enumerate()
                 .rev()
-                .map(|(index, child)| (child, format!("{path}.items[{index}]"))),
+                .map(|(index, child)| (child, parent_length, PathSegment::Item(index))),
         ),
         Node::Alternation { branches, .. } => pending.extend(
             branches
                 .iter()
                 .enumerate()
                 .rev()
-                .map(|(index, child)| (child, format!("{path}.branches[{index}]"))),
+                .map(|(index, child)| (child, parent_length, PathSegment::Branch(index))),
         ),
         Node::Repeat { body, .. }
         | Node::Capture { body, .. }
         | Node::Lookaround { body, .. }
-        | Node::Atomic { body, .. } => pending.push((body, format!("{path}.body"))),
+        | Node::Atomic { body, .. } => pending.push((body, parent_length, PathSegment::Body)),
         Node::Empty { .. }
         | Node::Literal { .. }
         | Node::Wildcard { .. }
@@ -1179,5 +1221,107 @@ fn structural_code(code: ValidationCode) -> StructuralAnalysisErrorCode {
         | ValidationCode::SpecificationMismatch
         | ValidationCode::UnresolvedReference
         | ValidationCode::Utf8Boundary => StructuralAnalysisErrorCode::InvalidSemanticStructure,
+    }
+}
+
+#[cfg(test)]
+mod path_tests {
+    use super::*;
+
+    fn original_paths(node: &Node, path: String, output: &mut Vec<(NodeId, String)>) {
+        output.push((node.node_id().clone(), path.clone()));
+        match node {
+            Node::Sequence { items, .. } => {
+                for (index, child) in items.iter().enumerate() {
+                    original_paths(child, format!("{path}.items[{index}]"), output);
+                }
+            }
+            Node::Alternation { branches, .. } => {
+                for (index, child) in branches.iter().enumerate() {
+                    original_paths(child, format!("{path}.branches[{index}]"), output);
+                }
+            }
+            Node::Repeat { body, .. }
+            | Node::Capture { body, .. }
+            | Node::Lookaround { body, .. }
+            | Node::Atomic { body, .. } => original_paths(body, format!("{path}.body"), output),
+            Node::Empty { .. }
+            | Node::Literal { .. }
+            | Node::Wildcard { .. }
+            | Node::CharacterSet { .. }
+            | Node::Position { .. }
+            | Node::Backreference { .. } => {}
+        }
+    }
+
+    #[test]
+    fn reusable_paths_preserve_every_variant_and_original_depth_first_order() {
+        let input: SemanticProgram = serde_json::from_str(include_str!(
+            "../../spec/contracts/1.0/examples/semantic-ir/semantic-all-nodes.json"
+        ))
+        .unwrap();
+        let mut expected = Vec::new();
+        original_paths(&input.root, "$.root".to_owned(), &mut expected);
+        let mut actual = Vec::new();
+        let mut path = String::new();
+        let mut pending = vec![(&input.root, 0, PathSegment::Root)];
+        while let Some((node, parent_length, segment)) = pending.pop() {
+            assert!(path.len() >= parent_length);
+            path.truncate(parent_length);
+            segment.append(&mut path);
+            actual.push((node.node_id().clone(), path.clone()));
+            push_children_with_paths(node, path.len(), &mut pending);
+        }
+        assert_eq!(actual, expected);
+        assert_eq!(actual.len(), input.node_ids().len());
+    }
+
+    #[test]
+    fn recursive_child_restores_parent_buffer_on_success_and_error() {
+        let input: SemanticProgram = serde_json::from_value(serde_json::json!({
+            "contract_version":"1.0.0", "specification_version":"1.0-draft.1",
+            "normalization":"canonical-v1", "case_matching":"sensitive",
+            "root":{"node_id":"node:literal", "kind":"literal", "text":"a"}
+        }))
+        .unwrap();
+        let foundational = crate::semantic_analysis::analyze(&input).unwrap();
+        for segment in [
+            PathSegment::Item(12),
+            PathSegment::Branch(123),
+            PathSegment::Body,
+        ] {
+            for valid in [true, false] {
+                let mut node = input.root.clone();
+                if let Node::Literal { text, .. } = &mut node {
+                    if !valid {
+                        text.clear();
+                    }
+                }
+                let mut analyzer = StructureAnalyzer {
+                    foundational: &foundational,
+                    case_matching: input.case_matching,
+                    node_facts: BTreeMap::new(),
+                };
+                let mut path = String::with_capacity(128);
+                path.push_str("$.root.items[1]");
+                let original_pointer = path.as_ptr();
+                let mut expected_error_path = path.clone();
+                segment.append(&mut expected_error_path);
+                let result = analyzer.child(&node, &mut path, segment);
+                assert_eq!(path, "$.root.items[1]");
+                assert_eq!(path.as_ptr(), original_pointer);
+                if valid {
+                    assert_eq!(result.unwrap().len(), 1);
+                } else {
+                    let errors = result.unwrap_err();
+                    assert_eq!(errors.errors.len(), 1);
+                    assert_eq!(
+                        errors.errors[0].code,
+                        StructuralAnalysisErrorCode::AnalysisInvariant
+                    );
+                    assert_eq!(errors.errors[0].path, expected_error_path);
+                }
+            }
+        }
     }
 }

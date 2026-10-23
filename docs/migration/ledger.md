@@ -8704,3 +8704,31 @@ sample, profile, measured speedup or admission pass is claimed. Actual CLI/memor
 predictors, complete quota provenance, fresh independent reference/holdout cohorts,
 all conditioning obligations and complete certification/signing/trust/closure remain.
 H08 OPEN; continuation ACTIVE; no owner action needed.
+
+## H08 process-scoped descendant lookup — 2026-10-23 UTC
+
+Checkpoint69 follows clean1aa244f5 with actual CLI/memory predictorc2ec208e.
+Data-onlyb510ad36 reconstructs131 workload observations,128 controls, no rejected
+attempts and5 naturally retired process envelopes. No observed metric exceeds
+its original ceiling, but admission remains unqualified. CLI whole intervals
+130.0063182s/123.8140964s expose expensive system-wide thread enumeration.
+
+Nine fixed counterbalanced same-child lookup pairs133855b8 reduce the median
+from93.2853ms to0.1964ms,99.7895percent. Independent3a02bf6e reconstructs all
+unfiltered raw operations and controls. This is component-only diagnostic
+evidence, not product or complete-certification speedup. The initial binding
+failure and subsequent Rust1.75 compile failure remain preserved.
+
+The helper now captures only the retained child's thread records. Unique live
+ownership, exact suspension, explicit HighQoS/readback, resume count1 and checked
+descriptor release remain mandatory before child execution. No clone, breakaway,
+ancestor-job change or timing subtraction is introduced. Source-bound6edaa74c
+passes8 native/4 Linux helper tests,34 runner tests,228Native/205WSL dependents
+plus23 native-covered skips, and warning-free naturally retired offline builds.
+The copied incremental cache is not fresh Release evidence.
+
+Six scoped paths match no generated family. Historical checkpoints/readiness
+and protected authority remain. New clean-source actual-path prediction,
+ancestor-quota qualification, independent reference/holdout obligations and both
+complete certification/signing/trust/closure campaigns remain mandatory.
+H08 OPEN; continuation ACTIVE; no owner action required.

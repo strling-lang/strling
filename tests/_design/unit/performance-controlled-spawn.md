@@ -11,14 +11,16 @@ This is implementation-control evidence, not conditioning qualification.
 
 Use Rust 1.75 standard command construction for unchanged argv, environment,
 streams and process handles. On Windows request suspended creation; find the
-single initial thread in a bounded snapshot, validate its retained process owner,
+single initial thread in a process-scoped snapshot, validate its retained process owner,
 set and read back process power throttling, and require resume's previous count
 to be exactly one. Never modify a pre-existing process, ancestor job, security
 setting, global power policy or CPU quota. Linux retains ordinary spawning.
 
 References: [suspended creation](https://learn.microsoft.com/en-us/windows/win32/procthread/process-creation-flags),
 [process power control](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setprocessinformation),
-[thread snapshots](https://learn.microsoft.com/en-us/windows/win32/api/tlhelp32/nf-tlhelp32-thread32first),
+[process snapshots](https://learn.microsoft.com/en-us/windows/win32/api/processsnapshot/nf-processsnapshot-psscapturesnapshot),
+[thread records](https://learn.microsoft.com/en-us/windows/win32/api/processsnapshot/ns-processsnapshot-pss_thread_entry),
+[snapshot release](https://learn.microsoft.com/en-us/windows/win32/api/processsnapshot/nf-processsnapshot-pssfreesnapshot),
 and [resume counts](https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-resumethread).
 
 ## Scope
@@ -39,7 +41,11 @@ Source review and later fresh reference/holdout qualification remain required.
     malformed thread count/owner, non-HighQoS readback, failed or unexpected resume
     count. No child entry marker is permitted on a pre-resume failure.
 -   Boundaries: retained handles identify only the newly owned child; ambiguous
-    initial threads fail closed. Cleanup is bounded, preserves original error and
+    initial threads fail closed. Capture only thread IDs, never a VA clone, context,
+    handle table or breakaway. At most two walk calls establish exactly one record;
+    missing, foreign, terminated, unsuspended and duplicate records and API errors
+    fail closed. Validate the SDK structure layout. Release the locally owned walk
+    marker and snapshot before resume and report release errors. Cleanup is bounded, preserves original error and
     reports kill/wait failures. Native failures must not hang a suspended child.
 -   Interactions: source guards cover all four actual call sites, prohibit direct
     ungoverned spawn/output there, and retain cycle-audit Child compatibility.
@@ -47,6 +53,11 @@ Source review and later fresh reference/holdout qualification remain required.
 -   Portability: compile the dependency-free helper with pinned Rust 1.75 on
     Windows and Linux; Linux command/output behavior is unchanged. Native tests
     are covered on Windows rather than counted as passed on Linux.
+-   Performance: retain nine fixed counterbalanced lookup pairs on the same newly
+    owned suspended children, comparing complete system-wide and process-scoped
+    lookup including allocation, owner validation and resource release. Preserve
+    all raw observations and errors; component timing is not a product or complete
+    certification speedup. All control overhead remains measured by the runner.
 
 ## Completion criteria
 

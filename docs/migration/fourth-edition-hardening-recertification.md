@@ -3927,3 +3927,51 @@ provenance, followed by fresh independent reference9/source-distinct holdout9 an
 all12 conditioning obligations. Both complete campaigns, independent no-reuse
 Releases, signing, immutable trusted verification and guarded clean closure remain.
 H08 OPEN; continuation ACTIVE; no owner action required.
+
+## Process-scoped launch control and measured lookup cost — 2026-10-23
+
+Checkpoint69 retains the completed five-coordinate predictor c2ec208e on clean
+1aa244f5. Auditb510ad36 verifies2301 tracked source files, all131 workload
+observations,128 paired controls, no rejections and5 naturally empty envelopes.
+CLI metrics10194/10187 basis-points and three memory observations remain below
+their unchanged effective ceilings. They are diagnostic, not valid admission.
+The two CLI whole-process intervals130.0063182s/123.8140964s show substantial
+new overhead; that overhead is neither subtracted nor hidden by passing ratios.
+
+Producer133855b8 measures nine fixed counterbalanced pairs using the same newly
+created suspended child for both complete lookup methods. The original method
+enumerates roughly7500 system threads. Process Snapshotting captures only the
+owned child's thread IDs, without cloning memory or modifying inherited jobs.
+Data-onlyaudit3a02bf6e reconstructs every partial journal, thread identity,
+explicit power readback, resume count and natural exit. Unfiltered lookup
+medians93.2853ms/0.1964ms show99.78946307724796percent lower component cost.
+This is an equivalent-operation diagnostic comparison, not a product or total
+certification speedup, independent reference, or conditioning qualification.
+
+The implementation requires exactly one live singly suspended thread and checks
+retained process ownership again after opening its handle. At most two snapshot
+walks establish uniqueness. Locally owned snapshot and walk-marker descriptors
+are released before resume, with failures reported together rather than ignored.
+All four real launch sites retain standard command construction, explicit
+HighQoS/readback, exact resume count, bounded owned cleanup and measured overhead.
+Linux behavior, workloads, ceilings and sampling are unchanged.
+
+Initial diagnostic22f29a2a fails on an unavailable Python ResumeThread binding;
+its owned suspended child is retired and the attempt stays immutable. Corrected
+v2 uses the documented Win32 binding and journals each operation before resume.
+Initial compilecc2f3463 discovers Rust1.75 raw pointers lack Default; a narrow
+zero-valid FFI initializer corrects it. Validation6edaa74c completes at
+11:47:30.705376Z with8 native/4 Linux helper tests,34 runner tests,228 native
+dependent passes and205 Linux passes plus23 Windows-covered skips. Both offline
+builds are warning-free and retire naturally. Their separate copied incremental
+cache preserves every original artifact and cannot count as fresh Release proof.
+
+Six scoped paths match no generated family; no authority regeneration. All68
+historical checkpoints and readiness remain. The next actual-path predictor
+requires the new clean engineering SHA. Complete ancestor-quota provenance,
+independent reference9/source-distinct holdout9, all12 conditioning obligations,
+all54 coordinates/5resourcegroups/56limits and deliberate challenges remain.
+Final preparation/prerequisites, both source-distinct full campaigns with fresh
+independent no-reuse Releases, signing, qualified-then-pin-only verifier promotion,
+immutable trusted verification and guarded clean closure are still required.
+H08 OPEN; continuation ACTIVE; no owner action required.

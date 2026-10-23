@@ -41,10 +41,16 @@ class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
             "ResumeThread",
             "THREAD_SUSPEND_RESUME",
             "WaitForSingleObject",
+            "PssCaptureSnapshot",
+            "PssWalkSnapshot",
+            "PssFreeSnapshot",
+            "PssWalkMarkerFree",
         ):
             self.assertIn(required, controls)
         self.assertNotIn("CREATE_BREAKAWAY_FROM_JOB", controls)
         self.assertNotIn("SetInformationJobObject", controls)
+        self.assertNotIn("CreateToolhelp32Snapshot", controls)
+        self.assertNotIn("PSS_CAPTURE_VA_CLONE", controls)
 
     def test_controller_is_verification_only_and_offline(self) -> None:
         source = MODULE.read_text(encoding="utf-8")

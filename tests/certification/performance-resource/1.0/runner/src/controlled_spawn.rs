@@ -20,7 +20,9 @@ mod native {
 
     type Handle = *mut c_void;
     const CREATE_SUSPENDED: u32 = 4;
-    const TH32CS_SNAPTHREAD: u32 = 4;
+    const PSS_CAPTURE_THREADS: u32 = 0x80;
+    const PSS_WALK_THREADS: i32 = 3;
+    const ERROR_NO_MORE_ITEMS: u32 = 259;
     const THREAD_SUSPEND_RESUME: u32 = 2;
     const THREAD_QUERY_LIMITED_INFORMATION: u32 = 0x0800;
     const PROCESS_POWER_THROTTLING: i32 = 4;
@@ -42,21 +44,62 @@ mod native {
 
     #[repr(C)]
     #[derive(Default)]
+    struct FileTime {
+        low: u32,
+        high: u32,
+    }
+
+    // SDK PSS_THREAD_ENTRY, including the fields we do not request or use.
+    #[repr(C)]
     struct ThreadEntry {
-        size: u32,
-        usage: u32,
-        thread_id: u32,
+        exit_status: u32,
+        teb: *mut c_void,
         owner_id: u32,
+        thread_id: u32,
+        affinity: usize,
+        priority: i32,
         base_priority: i32,
-        delta_priority: i32,
+        last_argument: *mut c_void,
+        last_call: u16,
+        create_time: FileTime,
+        exit_time: FileTime,
+        kernel_time: FileTime,
+        user_time: FileTime,
+        start_address: *mut c_void,
+        capture_time: FileTime,
         flags: u32,
+        suspend_count: u16,
+        context_size: u16,
+        context: *mut c_void,
+    }
+
+    impl Default for ThreadEntry {
+        fn default() -> Self {
+            // Every field is an integer, raw pointer or two-integer FILETIME;
+            // zero is valid for all of them. The API fills the output record.
+            unsafe { std::mem::zeroed() }
+        }
     }
 
     #[link(name = "kernel32")]
     extern "system" {
-        fn CreateToolhelp32Snapshot(flags: u32, pid: u32) -> Handle;
-        fn Thread32First(snapshot: Handle, entry: *mut ThreadEntry) -> i32;
-        fn Thread32Next(snapshot: Handle, entry: *mut ThreadEntry) -> i32;
+        fn PssCaptureSnapshot(
+            process: Handle,
+            flags: u32,
+            context: u32,
+            snapshot: *mut Handle,
+        ) -> u32;
+        fn PssWalkMarkerCreate(allocator: *const c_void, marker: *mut Handle) -> u32;
+        fn PssWalkSnapshot(
+            snapshot: Handle,
+            class: i32,
+            marker: Handle,
+            data: *mut c_void,
+            size: u32,
+        ) -> u32;
+        fn PssWalkMarkerFree(marker: Handle) -> u32;
+        fn PssFreeSnapshot(process: Handle, snapshot: Handle) -> u32;
+        fn GetCurrentProcess() -> Handle;
         fn OpenThread(access: u32, inherit: i32, thread_id: u32) -> Handle;
         fn GetProcessIdOfThread(thread: Handle) -> u32;
         fn ResumeThread(thread: Handle) -> u32;
@@ -81,6 +124,47 @@ mod native {
             unsafe {
                 CloseHandle(self.0);
             }
+        }
+    }
+
+    fn pss_status(code: u32) -> io::Result<()> {
+        if code == 0 {
+            Ok(())
+        } else {
+            Err(io::Error::from_raw_os_error(code as i32))
+        }
+    }
+
+    // These are PSS descriptors, not kernel handles. Snapshots captured here
+    // belong to this process even when the captured child is a different one.
+    struct Snapshot(Handle);
+    impl Snapshot {
+        fn close(&mut self) -> io::Result<()> {
+            if self.0.is_null() {
+                return Ok(());
+            }
+            let raw = std::mem::replace(&mut self.0, std::ptr::null_mut());
+            pss_status(unsafe { PssFreeSnapshot(GetCurrentProcess(), raw) })
+        }
+    }
+    impl Drop for Snapshot {
+        fn drop(&mut self) {
+            let _ = self.close();
+        }
+    }
+    struct Marker(Handle);
+    impl Marker {
+        fn close(&mut self) -> io::Result<()> {
+            if self.0.is_null() {
+                return Ok(());
+            }
+            let raw = std::mem::replace(&mut self.0, std::ptr::null_mut());
+            pss_status(unsafe { PssWalkMarkerFree(raw) })
+        }
+    }
+    impl Drop for Marker {
+        fn drop(&mut self) {
+            let _ = self.close();
         }
     }
 
@@ -157,40 +241,70 @@ mod native {
         Ok(())
     }
 
-    fn record_thread(entry: &ThreadEntry, owner: u32, found: &mut Option<u32>) -> io::Result<()> {
-        if entry.size < size_of::<ThreadEntry>() as u32 {
-            return Err(invalid("short initial-thread snapshot entry"));
+    fn unique_thread(owner: u32, mut next: impl FnMut(&mut ThreadEntry) -> u32) -> io::Result<u32> {
+        let mut entry = ThreadEntry::default();
+        let status = next(&mut entry);
+        if status == ERROR_NO_MORE_ITEMS {
+            return Err(invalid("suspended child initial thread is absent"));
         }
-        if entry.owner_id == owner && found.replace(entry.thread_id).is_some() {
-            return Err(invalid("suspended child has ambiguous initial threads"));
+        pss_status(status)?;
+        validate_owner(entry.owner_id, owner)?;
+        if entry.thread_id == 0
+            || entry.flags != 0
+            || entry.exit_status != 259
+            || entry.suspend_count != 1
+        {
+            return Err(invalid("initial thread is not live and singly suspended"));
         }
-        Ok(())
+        let thread_id = entry.thread_id;
+        match next(&mut entry) {
+            ERROR_NO_MORE_ITEMS => Ok(thread_id),
+            0 => Err(invalid("suspended child has ambiguous initial threads")),
+            error => Err(io::Error::from_raw_os_error(error as i32)),
+        }
+    }
+
+    fn finish_lookup(
+        found: io::Result<u32>,
+        marker: io::Result<()>,
+        snapshot: io::Result<()>,
+    ) -> io::Result<u32> {
+        match (found, marker, snapshot) {
+            (Ok(id), Ok(()), Ok(())) => Ok(id),
+            (found, marker, snapshot) => Err(invalid(&format!(
+                "initial thread lookup/release failed: lookup={found:?}; marker={marker:?}; snapshot={snapshot:?}"
+            ))),
+        }
     }
 
     fn initial_thread(child: &Child) -> io::Result<OwnedHandle> {
-        let raw = unsafe { CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0) };
-        if raw == -1isize as Handle {
-            return Err(io::Error::last_os_error());
-        }
-        let snapshot = OwnedHandle(raw);
-        let mut entry = ThreadEntry {
-            size: size_of::<ThreadEntry>() as u32,
-            ..Default::default()
-        };
-        let mut present = unsafe { Thread32First(snapshot.0, &mut entry) };
-        let mut thread_id = None;
-        while present != 0 {
-            record_thread(&entry, child.id(), &mut thread_id)?;
-            entry.size = size_of::<ThreadEntry>() as u32;
-            present = unsafe { Thread32Next(snapshot.0, &mut entry) };
-        }
-        let error = io::Error::last_os_error();
-        if error.raw_os_error() != Some(18) {
-            // ERROR_NO_MORE_FILES
-            return Err(error);
-        }
-        let thread_id =
-            thread_id.ok_or_else(|| invalid("suspended child initial thread is absent"))?;
+        let mut snapshot = Snapshot(std::ptr::null_mut());
+        let mut marker = Marker(std::ptr::null_mut());
+        let found = (|| {
+            pss_status(unsafe {
+                PssCaptureSnapshot(
+                    child.as_raw_handle(),
+                    PSS_CAPTURE_THREADS,
+                    0,
+                    &mut snapshot.0,
+                )
+            })?;
+            pss_status(unsafe { PssWalkMarkerCreate(std::ptr::null(), &mut marker.0) })?;
+            unique_thread(child.id(), |entry| unsafe {
+                PssWalkSnapshot(
+                    snapshot.0,
+                    PSS_WALK_THREADS,
+                    marker.0,
+                    (entry as *mut ThreadEntry).cast(),
+                    size_of::<ThreadEntry>() as u32,
+                )
+            })
+        })();
+        // Both releases are attempted even when capture, creation or walking
+        // failed. No child code runs until lookup AND both releases succeed.
+        let marker_result = marker.close();
+        let snapshot_result = snapshot.close();
+        let thread_id = finish_lookup(found, marker_result, snapshot_result)?;
         let raw = unsafe {
             OpenThread(
                 THREAD_SUSPEND_RESUME | THREAD_QUERY_LIMITED_INFORMATION,
@@ -285,22 +399,87 @@ mod native {
         }
 
         #[test]
-        fn thread_snapshot_rejects_short_or_ambiguous_records() {
-            let mut found = None;
-            let mut entry = ThreadEntry {
-                size: size_of::<ThreadEntry>() as u32,
-                thread_id: 7,
-                owner_id: 42,
-                ..Default::default()
-            };
-            record_thread(&entry, 99, &mut found).unwrap();
-            assert_eq!(found, None);
-            record_thread(&entry, 42, &mut found).unwrap();
-            assert_eq!(found, Some(7));
-            entry.thread_id = 8;
-            assert!(record_thread(&entry, 42, &mut found).is_err());
-            entry.size = 12;
-            assert!(record_thread(&entry, 99, &mut None).is_err());
+        fn thread_snapshot_rejects_missing_malformed_or_ambiguous_records() {
+            for (owner, tid, flags, suspended, exit, first, second, valid) in [
+                (42, 7, 0, 1, 259, 0, 259, true),
+                (99, 7, 0, 1, 259, 0, 259, false),
+                (0, 7, 0, 1, 259, 0, 259, false),
+                (42, 0, 0, 1, 259, 0, 259, false),
+                (42, 7, 1, 1, 259, 0, 259, false),
+                (42, 7, 0, 0, 259, 0, 259, false),
+                (42, 7, 0, 2, 259, 0, 259, false),
+                (42, 7, 0, 1, 0, 0, 259, false),
+                (42, 7, 0, 1, 259, 259, 259, false),
+                (42, 7, 0, 1, 259, 24, 259, false),
+                (42, 7, 0, 1, 259, 0, 0, false),
+                (42, 7, 0, 1, 259, 0, 6, false),
+            ] {
+                let mut calls = 0;
+                let result = unique_thread(42, |entry| {
+                    calls += 1;
+                    assert!(calls <= 2);
+                    *entry = ThreadEntry {
+                        owner_id: owner,
+                        thread_id: tid,
+                        flags,
+                        suspend_count: suspended,
+                        exit_status: exit,
+                        ..Default::default()
+                    };
+                    if calls == 1 {
+                        first
+                    } else {
+                        second
+                    }
+                });
+                assert_eq!(result.is_ok(), valid);
+            }
+        }
+
+        #[test]
+        fn snapshot_layout_and_release_errors_are_checked() {
+            if size_of::<usize>() == 8 {
+                let entry = ThreadEntry::default();
+                let base = &entry as *const ThreadEntry as usize;
+                assert_eq!(size_of::<ThreadEntry>(), 120);
+                assert_eq!(&entry.owner_id as *const u32 as usize - base, 16);
+                assert_eq!(&entry.thread_id as *const u32 as usize - base, 20);
+                assert_eq!(&entry.context as *const Handle as usize - base, 112);
+            }
+            assert_eq!(finish_lookup(Ok(7), Ok(()), Ok(())).unwrap(), 7);
+            for (lookup, marker, snapshot) in [
+                (false, true, true),
+                (true, false, true),
+                (true, true, false),
+                (false, false, false),
+            ] {
+                let result = finish_lookup(
+                    if lookup {
+                        Ok(7)
+                    } else {
+                        Err(invalid("lookup failure"))
+                    },
+                    if marker {
+                        Ok(())
+                    } else {
+                        Err(invalid("marker failure"))
+                    },
+                    if snapshot {
+                        Ok(())
+                    } else {
+                        Err(invalid("snapshot failure"))
+                    },
+                );
+                assert!(result.is_err());
+                if !lookup && !marker && !snapshot {
+                    let text = result.unwrap_err().to_string();
+                    assert!(
+                        text.contains("lookup failure")
+                            && text.contains("marker failure")
+                            && text.contains("snapshot failure")
+                    );
+                }
+            }
         }
 
         #[test]
@@ -323,9 +502,6 @@ mod native {
         }
 
         pub(super) fn assert_child_power() {
-            extern "system" {
-                fn GetCurrentProcess() -> Handle;
-            }
             validate_power(&power(unsafe { GetCurrentProcess() }).unwrap()).unwrap();
         }
     }

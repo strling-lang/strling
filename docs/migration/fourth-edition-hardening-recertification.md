@@ -5183,3 +5183,60 @@ runtime/prerequisites, source-distinctQ/P actual38/80/126 plus fresh independent
 same-SHA no-reuse Release126each125PASSsoleVSCE, signing and qualified immutable
 verification before pin-only promotion, guarded closure and final cleanCLOSED
 remain. H08 OPEN; continuation ACTIVE; no external action required.
+
+## Approved execution-context boundary — 2026-10-24 UTC
+
+Checkpoint95 begins at clean f71b447aee63d72713c1fc6a788170a58ca45143. The retained
+native counterexample establishes that immediate job flags0 can coexist with a
+capped ancestor. Microsoft's documented
+[null-handle query](https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-queryinformationjobobject)
+reports only the immediate job; documented
+[nested-job inheritance](https://learn.microsoft.com/en-us/windows/win32/procthread/nested-jobs)
+does not make an unrestricted child proof of unrestricted ancestors. These
+primary references were checked again; no undocumented job enumeration or host
+control workaround is attempted.
+
+One immutable, source-held, sample-free audit checks integrated artifact integrity
+first, then calls only the existing read-only quota observer. Terminal
+be6a42377b2ddeae90a7b7ffa92cf8a5988525f1d409893447c65567fe59c615 completes
+2026-10-24T04:14:17.324655Z in2.7244719s with source unchanged and lease released.
+At04:14:16.730260Z native Python reports in_job=true, immediate flags0 and unknown
+effective CPU quota. Observation stdout3af06d03a52e6b235596ee0b549622ee37631a0162f2c4f7a252536ad2e8ba90
+pins the runtime, current Windows reader64ea0869, controller9e951011 and shared
+Rust quota moduleac879433. Native counterexample338564b3 and pre-build rejection
+8c881e7b are hash-verified, including the latter's raw logs, without rerunning
+their executions. No builds, product samples, placement/conditioning calls or
+host changes occur. The audit is not a performance measurement or new speedup.
+
+This establishes a concrete stop boundary for autonomous certification under the
+current authorized execution path. No independently qualified alternative has
+resolved the missing provenance. Host idleness, an additional unrestricted child
+job, repeated immediate queries, favorable medians, and preparation optimizations
+do not provide that proof. This conclusion is scoped to the current path and
+qualified mechanisms, not a claim of universal impossibility. The incomplete
+memory primitive also must not be promoted to make this boundary disappear.
+
+The required external action is to provide access to an approved native Windows
+certification execution context with independently verifiable resource controls,
+or authenticated complete control provenance from its owner for review. An
+assurance of idleness or an unverified manifest is insufficient. No job escape,
+broker, privilege escalation, ancestor modification, unrelated-process control,
+security/power change, remote runner deployment or new worktree is performed.
+Verify supplied identity and controls before any build; a changed environment or
+admission architecture still needs formal review and fresh qualification. This
+prospectively supersedes the latest no-external-action continuation guidance,
+without changing the meaning of any historical checkpoint.
+
+Only three migration records are changed. The full36family registry matches
+none; no generator or evidence refresh runs. Preserve all94historical checkpoints,
+readiness and scope. There is no production, threshold, sample-count, conditioning,
+security, license or trust-pin change and no new certification pass. An approved
+execution context would resolve only this prerequisite; complete memory-lifetime
+and observer coverage, all12conditioning obligations, fresh independent9reference
+and source-distinct9holdout/adverse qualification, full36canonical preparation and
+cleanLSP before exact freeze, runtime/prerequisites, both source-distinctQ/P
+38/80/126 and fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE,
+signing/qualified immutable verification before pin-only promotion, guarded closure
+and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE. Subsequent unchanged
+heartbeats inspect state/owners/terminal only; do not repeat this probe, consumed
+cohorts or unrelated preparation experiments while awaiting this external input.

@@ -9431,3 +9431,31 @@ and leave every admission/security/source/coverage gate unchanged. Complete
 workstation admission, fresh qualification, canonical preparation, both signed
 and trusted campaigns with independent Releases, and guarded final cleanCLOSED
 remain. H08 OPEN; continuation ACTIVE; no external action required.
+
+### Approved execution-context prerequisite — 2026-10-24 UTC
+
+Checkpoint95 starts from clean f71b447a. Source-held, integrity-first audit
+be6a42377b2ddeae90a7b7ffa92cf8a5988525f1d409893447c65567fe59c615 finishes
+04:14:17.324655Z in2.7244719s, with source unchanged and lease released.
+The native read-only observation at04:14:16.730260Z still reports immediate
+job flags0 and unknown effective ancestor CPU quota. Retained counterexample
+338564b3 and pre-build rejection8c881e7b remain pinned; no workload is replayed.
+Zero builds, product samples, placement/conditioning calls or host changes.
+
+Current autonomous admission stops at this evidence boundary. An idle host or
+another immediate-job query cannot prove the missing ancestor controls, and no
+replacement admission architecture has been qualified. Request an approved
+native Windows execution context with independently verifiable resource controls,
+or authenticated complete provenance from its owner for review. Do not escape
+jobs, add brokers, alter privileges/security/power, or accept assertions as proof.
+This prospectively supersedes the latest no-external-action advice only.
+
+Only three migration records change; no generated family, generator, source
+freeze, code/policy/trust change or new speedup claim. Preserve all94prior
+checkpoints/readiness and scope. Memory coverage, all12conditioning obligations,
+fresh reference/holdout/adverse qualification, canonical preparation and exact
+runtime/prerequisites, both whole Q/P campaigns and independent no-reuse Releases,
+signing/qualified immutable verification and guarded final cleanCLOSED remain.
+A suitable execution context is not itself qualification or closure. H08 OPEN;
+continuation ACTIVE. Unchanged heartbeats remain quiet without repeating probes
+or consumed samples while the required execution-context input is outstanding.

@@ -5355,3 +5355,45 @@ canonical preparation, exact runtime/prerequisites and source freeze, actual
 required, fresh performance qualification, signing and qualified immutable
 verification before pin promotion and guarded cleanCLOSED remain.
 H08 OPEN; continuation ACTIVE.
+
+### Serialized allocation retirement and provider boundary — 2026-10-24 UTC
+
+Checkpoint99 follows76f8f610a4d6c28395458caaa37b7e424dfcb535. Retained agent
+process evidence establishes Windows Job Object membership but only immediate
+CPU controls. It leaves inherited ancestor quota unknown. A qualified execution
+provider must establish complete inherited controls, bind them to the actual
+worker PID/birth/image/source/launch, and maintain verifiable validity through
+acquisition. No accepted provider mechanism currently supplies that guarantee.
+An immediate null-handle query, parent PID chain, new child job, favorable timing
+or the completed manual no-job diagnostic cannot prove it. The gate stays closed.
+
+Independent engineering adds optional SerializedLedger.retire and its storage
+session adapter. An Entry now spans token validation, page-owner release and
+bounded caller deallocation. Failed validation/unlock or detected prior poison
+prevents free. Raw failure codes, panic, reentry and concurrent entry remain
+terminal; an in-flight callback can finish after contention but cannot publish
+success. Shared pages retain other owners, address reuse needs a fresh token,
+and the storage anchor cannot use this API. Callers still must prove correct
+allocation identity and that free does not invalidate shared live pages.
+
+Expected-red2162cac3 is preserved. Green9d89b1da passes32retirement-harness cases
+on Native and WSL:8new cases and12ledger cases through each of2module inclusions.
+Direct dependents pass19serialization and18storage tests on each platform.
+Barrier coordination tests contention without timed sleeps; unlock reentry proves
+free is skipped. No-stdd3eeba7d explicitly binds retained fixture04a42394 and
+passes Rust1.75on both platforms. Integrated integrity passes first; held frames
+remain unchanged and leases release. Validation50.4237624s/7.110907s is diagnostic,
+not an equivalent-workload speedup. Checkpoint98's accepted governance comparison
+is retained without replay or total-certification inference.
+
+Preserve all98historical checkpoints/readiness and add1scope path. No generated
+family matches and no authority-bearing evidence is refreshed. The owner stops
+unchanged check-ins; the continuation automation is already PAUSED and remains
+paused. H08 remains OPEN. No native challenge, product sample, manual procedure,
+job escape, broker, injection, privilege/security/power or unrelated host change.
+Complete memory and observer coverage, actual-worker eligibility and all12
+conditioning guarantees remain open. Preserve all thresholds/counts, original
+Jest/JUnit/soleVSCE/security/provenance/trust controls and the exact-source
+preparation/runtime/prerequisite,38/80/126/126profile, independent no-reuse Release,
+source-distinct qualification/promotion if required, signing, qualified immutable
+verification before pin promotion and guarded clean formal-closure requirements.

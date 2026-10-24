@@ -43,3 +43,20 @@ move the borrowed pinned backing object while the session is used afterward.
 Compile as Rust 1.75 no-std on Native and WSL, and run the existing serialization
 tests as direct dependents. No consumed native page challenge, reference cohort
 or manual diagnostic runs. No timing comparison or speedup claim is implied.
+
+## Serialized allocation retirement
+
+Keep exclusive ledger entry across page-owner release and the caller's bounded
+native deallocation callback. Do not invoke deallocation when token validation,
+unlock or prior concurrent entry fails. Retain the callback's raw failure code;
+panic, reentry or concurrent entry permanently poison and cannot publish success.
+Successful retirement permits later address reuse with a fresh token. Shared-page
+owners must retain their page protection. The storage anchor cannot use this API.
+This optional operation cannot prove the callback frees the intended allocation,
+cover allocator bypasses, or turn an incomplete observer into qualified coverage.
+
+Use deterministic callback logs and explicit reentry to verify ordering, no free
+after failed unlock/invalid token, permanent failure/panic poison, shared-page
+ownership, successful address reuse and storage-anchor rejection. Run existing
+storage and serialization suites on Native and WSL as direct dependents. Do not
+replay any native challenge or measurement.

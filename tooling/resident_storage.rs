@@ -90,6 +90,19 @@ impl<const L: usize, const P: usize> StorageSession<'_, L, P> {
         self.finished = true;
         Ok(())
     }
+
+    pub fn retire(
+        &mut self,
+        token: u64,
+        ops: &mut impl PageOps,
+        release_allocation: impl FnOnce() -> Result<(), u32>,
+    ) -> Result<(), Failure> {
+        if token == self.anchor {
+            self.ledger.invalidate();
+            return Err(Failure::UnknownToken);
+        }
+        self.ledger.retire(token, ops, release_allocation)
+    }
 }
 
 impl<const L: usize, const P: usize> Drop for StorageSession<'_, L, P> {

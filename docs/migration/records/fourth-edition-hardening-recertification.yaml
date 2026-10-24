@@ -7,6 +7,7 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/tests/resident_retirement.rs
         - tooling/tests/test_governance_pattern_cache.py
         - tests/_design/unit/governance-pattern-cache.md
         - tooling/resident_storage.rs
@@ -2431,6 +2432,21 @@ checkpoints:
           - check: Preserve historical records and authoritative completion obligations
             result: not_run
             details: "Preserve all97prior checkpoints/readiness and add exactly2scope paths. Registry maps no generated family; no evidence regeneration. Actual worker quota provenance, complete memory/observer coverage and all12conditioning guarantees remain unsatisfied. No manual procedures, job escape, broker, injection or host setting changes. Existing thresholds/workloads/sample counts, Jest security, narrow JUnit and sole VSCE waiver remain. Full canonical preparation/cleanLSP before exact freeze/runtime/prerequisites, actual38/80/126/126 with fresh independent same-SHA no-reuse Releases, source-distinct qualification/promotion if required, fresh performance evidence, signing, qualified immutable trusted verification before pin promotion, guarded closure and cleanCLOSED remain. H08 OPEN; continuation ACTIVE."
+    - name: Serialize allocation retirement and stop unchanged provider polling
+      status: in_progress
+      evidence:
+          - check: Identify the exact retained execution-provider dependency
+            result: passed
+            details: "Checkpoint99 follows76f8f610a4d6c28395458caaa37b7e424dfcb535. Retained agent-worker evidence reports in_job=true with disabled immediate CPU rate controls, but no authenticated complete ancestor-job quota provenance. QueryInformationJobObject with a null handle observes the immediate job only; ancestor controls can constrain descendants. The existing guard correctly rejects unknown ancestor quota. Prior review h08-worker-provenance-boundary-review-v1.json and counterexample338564b3 remain; no live query is repeated. A qualified provider mechanism must bind complete inherited controls and their validity interval to actual worker PID/birth/image/source/launch. No accepted mechanism currently exists in this environment. Parent process ancestry, a child job, favorable measurements and the consumed manual no-job diagnostic cannot substitute. This identifies the missing guarantee, not a universal impossibility claim."
+          - check: Preserve exclusive ownership through bounded deallocation callbacks
+            result: passed
+            details: "Add optional SerializedLedger.retire and StorageSession.retire. The same Entry spans token validation, page release and the caller's free callback. Unknown token, failed unlock or poison detected after unlock prevents free. Preserve raw retirement failure codes; panic/reentry/concurrent entry permanently poison and cannot publish success. Shared-page lifetimes retain ownership; later successful reuse gets a fresh token; the storage anchor cannot be retired through this API. The callback remains responsible for the correct allocation and must not invalidate shared pages. No allocator integration or whole-process/observer qualification is claimed."
+          - check: Source-bound regression and direct-dependent evidence
+            result: passed
+            details: "Retain expected-red2162cac3cd8c47415b2aa2368ac2d632f8f4eda3b2f8fa405cb36ce0670b9b21. Green9d89b1dade637ddae76e177c016afaaeb53bda9f3ae2552a8164684e9a0ce6c2 passes32retirement-harness cases on each platform (8new cases plus12ledger cases through each of2module inclusions), and19serialization/18storage direct dependents on Native and WSL. Barrier-coordinated contention and unlock reentry reject success without sleeps or retries. Source-bound no-stdd3eeba7d17ff0f70f96f469aa2d6597a8e4452c228ee2a808c9a3e9651d60988 explicitly pins retained fixture04a42394 and passes Rust1.75Native/WSL. Integrated integrity passes first; both leases release with unchanged frames. Green50.4237624s and no-std7.110907s are diagnostic validation durations, not comparative performance improvements."
+          - check: Stop unchanged check-ins while preserving all closure requirements
+            result: not_run
+            details: "The owner explicitly stops repeated unchanged heartbeat checks; the existing continuation automation is already PAUSED and is not reactivated. H08 remains OPEN, not retired or closed. Preserve all98prior checkpoints/readiness and add1scope path; no generated family matches or evidence refresh. Complete allocator/bootstrap/callback/stack/image/thread/descendant and observer coverage, actual-worker provenance and all12conditioning guarantees remain open. No manual workstation request, job escape, broker, injection, host/security/power change, unknown-quota bypass, consumed-sample retry or performance-ceiling change. Retain the accepted checkpoint98equivalent-governance52.0583percent reduction without repeating it or claiming whole-certification gains. Exact runtime/prerequisites, canonical preparation before freeze, actual38/80/126/126 profiles with125PASSsoleVSCE for Full/Release, fresh independent same-SHA no-reuse Release, source-distinct qualification/promotion if required, fresh performance evidence, signing, qualified immutable verification before pin promotion and guarded clean formal closure remain mandatory."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

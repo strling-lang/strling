@@ -9532,3 +9532,30 @@ Preserve all97prior checkpoints/readiness, add2scope paths and regenerate nothin
 Worker eligibility, memory/observer coverage, conditioning and the complete
 authoritative certification/signing/trusted-verification sequence remain open.
 No manual workstation procedure is requested. H08 OPEN; continuation ACTIVE.
+
+### Serialized allocation retirement and provider boundary — 2026-10-24 UTC
+
+Checkpoint99 follows76f8f610. The exact provider blocker is missing authenticated,
+complete ancestor-job CPU quota provenance for actual agent-launched workers.
+Retained evidence shows job membership and disabled immediate controls; that
+does not establish ancestor controls. The existing guard correctly rejects the
+unknown quota. The consumed manual no-job diagnostic applies only to its recorded
+processes. No new live probe, manual procedure or job escape is performed.
+
+Add optional retirement operations that retain exclusive ledger entry through
+page release and the caller's bounded free callback. Failed validation/unlock or
+detected poison prevents free; raw free errors, panic and contention remain
+terminal. Shared-page owners and the concealed storage anchor remain protected.
+The callback's allocation identity and whole-process coverage still need proof.
+
+Retain red2162cac3; green9d89b1da passes32cases per platform (8new cases plus
+12ledger cases included twice), with19serialization and18storage dependents on
+each. Explicitly source-bound no-stdd3eeba7d passes Rust1.75Native/WSL. Integrated
+integrity passes first and leases release with unchanged frames. Diagnostic
+durations50.4237624s/7.110907s establish no comparative speedup. No product sample.
+
+Preserve all98checkpoints/readiness; add1scope path and regenerate nothing.
+The owner stopped unchanged check-ins; the automation is already PAUSED and stays
+paused. H08 OPEN. Memory/observer coverage, worker eligibility, all12conditioning
+obligations and the complete38/80/126/126 certification/signing/trusted-verification
+and guarded clean-closure sequence remain unsatisfied. No gates are weakened.

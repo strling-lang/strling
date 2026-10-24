@@ -24,6 +24,7 @@ pub enum Failure {
     ReferenceOverflow,
     Lock { page: usize, code: u32 },
     Unlock { page: usize, code: u32 },
+    Retirement { code: u32 },
 }
 
 #[derive(Clone, Copy)]
@@ -159,6 +160,30 @@ impl<const L: usize, const P: usize> SerializedLedger<L, P> {
         let entry = self.enter()?;
         // SAFETY: Same exclusive-entry invariant as acquire.
         let result = unsafe { &mut *self.ledger.get() }.release(token, ops);
+        entry.complete(result)
+    }
+
+    /// Keep exclusive ownership through a caller's bounded deallocation.
+    /// The caller must free exactly the allocation identified by token, without
+    /// invalidating pages shared by other lifetimes. This is not allocator
+    /// coverage: callbacks, their storage and native behavior need qualification.
+    pub fn retire(
+        &self,
+        token: u64,
+        ops: &mut impl PageOps,
+        release_allocation: impl FnOnce() -> Result<(), u32>,
+    ) -> Result<(), Failure> {
+        let entry = self.enter()?;
+        // SAFETY: Entry owns the cell. Its temporary borrow ends before the
+        // deallocation callback; Entry remains held through that callback.
+        let released = unsafe { &mut *self.ledger.get() }.release(token, ops);
+        let result = match released {
+            Err(error) => Err(error),
+            Ok(()) if self.is_poisoned() => Err(Failure::Poisoned),
+            Ok(()) => release_allocation().map_err(|code| Failure::Retirement { code }),
+        };
+        // A racing rejection can occur after the poison check or during free.
+        // The callback may finish, but complete must never publish success.
         entry.complete(result)
     }
 

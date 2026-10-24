@@ -7,6 +7,7 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tests/_design/unit/test_generated_artifact_reference_prefetch.md
         - tooling/resident_page_ledger.rs
         - tooling/tests/native_resident_page_lifetimes.rs
         - tests/_design/unit/performance-resident-page-lifetimes.md
@@ -2346,6 +2347,24 @@ checkpoints:
           - check: Preserve complete admission and closure obligations
             result: not_run
             details: "Preserve all92historical checkpoints/readiness and existing scope; eight exact changed paths only. This closes a deterministic late-failure scheduling gap, not unknown-ancestor admission, whole-process memory coverage or H08. Previously measured runtime gains retain their original scopes; no new comparative speedup. Continue complete memory lifetime/observer and CPU/CLI qualification with all12conditioning guarantees, original thresholds/counts, source/security/Jest/JUnit/license/isolation controls. No refit/filter/widen/replay consumed evidence. Fresh9reference/source-distinct9holdout/adverse qualification, full36canonical preparation and cleanLSP before exact freeze, runtime/prerequisites, both source-distinctQ/P actual38/80/126 plus fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE, signing and qualified immutable verification before pin-only promotion, guarded closure and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required."
+    - name: Reject unconvincing reference-census scheduling experiment
+      status: in_progress
+      evidence:
+          - check: Actual preparation-path profile and bounded candidate
+            result: passed
+            details: "Checkpoint94 follows cleanb9a94ae4891be56cd89f3c259cc44e4e98e18d56. One source-held actual WSL full snapshot profile e4b55306b21d6deb0b43c6b5b9ddcd863386fd2af812d304b2afa072b5641281 completes03:46:17.672317Z in73.200280942s including source fences/integrity. Instrumented snapshot14.380646912s with2366entries: tracked repository5.985174254s, expansion1.891820038s, Git references5.047014179s. Aggregate metadata call timings overlap and must not be summed as wall time. Test a single condition-notified producer advancing the same lazy Git-ref census into at most16pathnames while retaining identical node readers,8reader limit,16futures, all bytes/metadata/identity/alias/error/census checks and joined retirement. This candidate changes scheduling only, not admission or snapshot coverage."
+          - check: Red and cross-platform candidate checks
+            result: passed
+            details: "Red b24263a86662107e48e7ca7666be3b28ac35a52f185a7a8e7b47614d2fa4a724 fails exact census-stalled assertion with original calling-thread traversal. Green810df80d15d689ff59cfbd6ab4e7196c27d9ec7e3cbceb8161421b582070baed finishes03:52:36.347455Z in29.8967114s:111NativePASS7POSIXskips and118WSLPASS cover all skips; integrity first, Ruff/format pass. Four added regressions cover overlapping traversal,16unread-path bound, duplicate/order/error propagation and producer retirement on consumer failure. Initial formatter error1224user-mapped-section is preserved in tool output; subsequent scoped format succeeds without host intervention. No generated family matches the source/test/evaluation paths; no generator runs."
+          - check: All equivalent timings retained and candidate rejected
+            result: passed
+            details: "One immutable six-pair AB/BA/BA/AB/AB/BA comparison5a1b55c7a9ed699e1c2839f069dbd43b0d06658fd816111b5c90760886ad41d3 completes03:57:07.453793Z in212.531527656s. All12ordered full snapshots have2367entries and SHA256d0d6b40fe493a8e783bca28eb24302d95f17572135e3a80a8cbec65d628d29fa; the extra entry is the new evaluation charter. Baseline median14.465856280s versus candidate14.4249523475s is0.2827619168078725percent lower, only3of6pairs favorable. Keep every adverse/favorable row. This marginal mixed result does not justify added threading: reject the candidate, no comparative certification gain claim, no repeat for favorable results. Data-only audit17ebdaef57fbe30252812ea8c0ec0d277c3581223728992185b6d10a8da523d8 at03:58:47.842307Z/0.9350568s verifies2327source files, all snapshots/receipts/checks and calculations, and archives exact candidate source/test/charter bytes plus patch691022c4ba7e1952326108bf7ec633f74237709703f7f08c97aee2ca602f3ac2 before restoration."
+          - check: Exact restoration and downstream dependents
+            result: passed
+            details: "Restore only the two owned experimental implementation/test deltas via apply_patch; no reset/checkout/history rewrite. Both files exactly match the pre-experiment byte hashes and have no Git diff. Candidate and failed red remain recoverable in the immutable archive. Downstream83e4c968b93d3b0f6962ac1e421b0dcd312074605ff88fc96bf178eea96bdfc6 finishes04:01:44.066589Z in75.6293886s:integrity first,75NativePASS7POSIXskips and82WSLPASS cover all skips. Only evaluation plus3migration records remain to commit; preserve all93prior checkpoints/readiness and add exactly1scope path. No production change, product samples, authoritative profile or generator."
+          - check: Unchanged authoritative admission and closure sequence
+            result: not_run
+            details: "H08 OPEN, continuation ACTIVE. No runtime improvement promoted in this increment; existing scoped gains remain unchanged. Do not revisit unchanged prefetch or consumed performance cohorts to seek green. Complete memory lifetime/observer and CPU/CLI admission still require reliable engineering preserving all12conditioning guarantees, original thresholds/workloads/sample counts, security/Jest/JUnit/soleVSCE/provenance/isolation. Fresh qualification cohorts, full36canonical preparation/cleanLSP before exact freeze, runtime/prerequisites, both source-distinctQ/P actual38/80/126 plus fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable trust before pin-only promotion, guarded closure and final cleanCLOSED remain. No routine external action required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

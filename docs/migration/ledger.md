@@ -9403,3 +9403,31 @@ Preserve all92historical checkpoints/readiness and existing scope. Whole-process
 memory and CPU/CLI admission, fresh qualification, canonical preparation, both
 signed/trusted campaigns with independent Releases, and guarded final cleanCLOSED
 remain. H08 OPEN; continuation ACTIVE; no external action required.
+
+### H08 reference-census prefetch evaluated and rejected — 2026-10-24 UTC
+
+Checkpoint94 follows cleanb9a94ae4. One actual source-held full-snapshot profile
+e4b55306 measures14.380646912s, including5.047014179s in Git references.
+Prototype bounded pathname-only prefetch to overlap the same lazy census with
+unchanged8readers/16futures and every existing node/alias/identity/error check.
+Red b24263a8 proves the scheduling stall; integrity-first green810df80d passes
+111Native plus7POSIXskips and118WSL, with bounded/error/retirement regressions.
+
+All twelve snapshots in the predeclared six-pair comparison5a1b55c7 match exactly:
+2367ordered entries and hashd0d6b40f. Median14.465856280to14.4249523475seconds is
+only0.2827619168078725percent lower, and only3of6pairs favor prefetch. Retain all
+unfavorable rows. Reject the added threading: no convincing measured benefit,
+no promoted speedup and no rerun for a favorable outcome.
+
+Independent audit17ebdaef verifies2327source files, all receipts and calculations,
+and archives complete candidate source/test/charter bytes plus a reversible patch.
+Restore only the two owned implementation/test deltas via apply_patch; both are
+byte-identical to the pre-experiment state. Integrity-first downstream83e4c968
+passes75Native plus7POSIXskips and82WSL. No generator, product sample or authoritative
+profile runs. Commit only this retained evaluation and three migration records.
+
+Preserve all93historical checkpoints/readiness, add one evaluation scope path,
+and leave every admission/security/source/coverage gate unchanged. Complete
+workstation admission, fresh qualification, canonical preparation, both signed
+and trusted campaigns with independent Releases, and guarded final cleanCLOSED
+remain. H08 OPEN; continuation ACTIVE; no external action required.

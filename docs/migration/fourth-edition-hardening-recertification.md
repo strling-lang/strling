@@ -5129,3 +5129,57 @@ canonical preparation/cleanLSP before freeze, runtime/prerequisites and both
 source-distinctQ/P actual38/80/126 plus fresh independent same-SHA no-reuse Release126
 each125PASSsoleVSCE, signing/qualified immutable trust before pin-only promotion,
 guarded closure and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE.
+
+### Reference-census prefetch rejected after equivalent comparison — 2026-10-24 UTC
+
+Checkpoint94 starts from cleanb9a94ae4891be56cd89f3c259cc44e4e98e18d56.
+Profile the actual WSL preparation filesystem once, with source ownership and
+integrity first. Receipt e4b55306b21d6deb0b43c6b5b9ddcd863386fd2af812d304b2afa072b5641281
+finishes03:46:17.672317Z in73.200280942s including full source fences.
+Instrumented full snapshot14.380646912s covers2366entries; tracked-repository
+stage5.985174254s, expansion1.891820038s, Git references5.047014179s. Metadata
+aggregate timings overlap across threads and are not additive wall-clock totals.
+
+Prototype one condition-notified census producer with at most16unread pathnames,
+retaining the same lazy order,8payload readers,16futures, every node validation,
+fresh bytes/modes/device/inode/aliases and error/disappearance rules. No authority
+is cached and the producer joins on success or error. Red
+b24263a86662107e48e7ca7666be3b28ac35a52f185a7a8e7b47614d2fa4a724 proves the old
+first-node scheduling stall. Green810df80d15d689ff59cfbd6ab4e7196c27d9ec7e3cbceb8161421b582070baed
+finishes03:52:36.347455Z in29.8967114s:111NativePASS plus7POSIXskips,118WSLPASS,
+integrity/Ruff/format pass. Four new tests exercise overlap, path-queue bounds,
+duplicate/order/census error handling and retirement after consumer failure.
+
+One predeclared six-pair AB/BA/BA/AB/AB/BA full-snapshot comparison,
+5a1b55c7a9ed699e1c2839f069dbd43b0d06658fd816111b5c90760886ad41d3, finishes
+03:57:07.453793Z in212.531527656s. All12complete ordered snapshots match,
+2367entries each, with SHA256d0d6b40fe493a8e783bca28eb24302d95f17572135e3a80a8cbec65d628d29fa.
+The additional entry is the proposed evaluation charter. Baseline median
+14.465856280s and candidate14.4249523475s differ by0.2827619168078725percent;
+only3of6pairs favor the candidate. Every favorable and unfavorable observation
+remains. This is not convincing benefit for the extra threading: reject it.
+Do not promote a speedup claim, extrapolate to certification or rerun unchanged.
+
+Data-only audit17ebdaef57fbe30252812ea8c0ec0d277c3581223728992185b6d10a8da523d8
+finishes03:58:47.842307Z in0.9350568s. It verifies2327source files, raw snapshots,
+every receipt/check and all-row calculations, and preserves complete candidate
+source/test/charter copies plus patch691022c4ba7e1952326108bf7ec633f74237709703f7f08c97aee2ca602f3ac2.
+Restore only the two experimental source/test deltas using apply_patch; both
+match their pre-experiment byte hashes and have no Git diff. No reset or history
+rewrite occurs. The rejected implementation remains recoverable in that archive.
+
+Restored-state downstream83e4c968b93d3b0f6962ac1e421b0dcd312074605ff88fc96bf178eea96bdfc6
+finishes04:01:44.066589Z in75.6293886s:integrity first,75NativePASS plus7POSIXskips
+and82WSLPASS cover all skips. The generated-artifact skill maps no family, and no
+generator, product sample or authoritative profile executes. Four documentation
+paths only remain: this evaluation and three migration records. Preserve all93
+prior checkpoints/readiness and add one explicit evaluation scope path.
+
+No runtime improvement is promoted. Workstation CPU/CLI and complete memory
+qualification still require all12conditioning guarantees and original ceilings,
+workloads/counts, security/Jest/JUnit/soleVSCE/source/isolation/evidence controls.
+Fresh qualification, full36canonical preparation/cleanLSP before exact freeze,
+runtime/prerequisites, source-distinctQ/P actual38/80/126 plus fresh independent
+same-SHA no-reuse Release126each125PASSsoleVSCE, signing and qualified immutable
+verification before pin-only promotion, guarded closure and final cleanCLOSED
+remain. H08 OPEN; continuation ACTIVE; no external action required.

@@ -665,7 +665,8 @@ def run_registry(
                 execution.stderr,
             )
         )
-        if check and integrity_snapshot(registry, root, snapshotter) != initial_state:
+        current_state = integrity_snapshot(registry, root, snapshotter) if check else {}
+        if check and current_state != initial_state:
             results.append(
                 ArtifactResult(
                     "repository-state",
@@ -673,12 +674,7 @@ def run_registry(
                     None,
                     None,
                     "check mode modified repository files: "
-                    + ", ".join(
-                        changed_paths(
-                            initial_state,
-                            integrity_snapshot(registry, root, snapshotter),
-                        )
-                    ),
+                    + ", ".join(changed_paths(initial_state, current_state)),
                 )
             )
             return results

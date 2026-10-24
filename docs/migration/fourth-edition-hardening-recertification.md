@@ -4973,3 +4973,49 @@ and cleanLSP, exact freeze/runtime/prerequisites, both source-distinctQ/P38/80/1
 with fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE, signing,
 qualified immutable trusted verification before pin-only promotion, and guarded
 closure with final cleanCLOSED remain. H08 OPEN; continuation ACTIVE.
+
+## Checkpoint91 — preserve the exact integrity rejection and reduce failure latency
+
+At cleaneba9c6db1544cc08c472cd820bc166e4145cedef, actual critical-path review finds
+one full integrity scan used only for explaining an already-final rejection.
+Taking that second post-command snapshot can observe restored content and erase
+the causal changed paths. Redbc12ad2f72f1553259121a45478ae6cee6113c886c0e9b998e9dbce45861cf95
+demonstrates the empty explanation. Retain the exact rejecting state instead.
+No accepting boundary is removed: every initial, per-command and final snapshot
+remains. A new final-boundary regression still rejects a late mutation; full
+readers, file bytes, modes, containment, aliases, census and Git authority remain.
+
+The prospective six-pair ABBAAB experiment invokes the complete real WSL registry
+snapshot on every call, while a controlled no-op executor changes a single
+synthetic overlay marker and executes no external command. Baseline takes three
+full scans and candidate two for the identical failed result. All30ordered real
+snapshots have2363entries and hash6a598084f175da6ee249c3fb6cc3378d174e6d6fe5b799fe2f64a28bd1a20a7a;
+all12failed results match. All six pairs favor the correction and none is dropped.
+Median41.7192234135to27.4483465715seconds is34.206957067619percent faster to the
+completed controlled failure result. Terminal11648aa3dd660ab0bb8547932a03f60d0e8b1604079fe9a73fb70d180a630baf
+finishes2026-10-24T02:57:35.602759Z in446.674189876s with owner retired. This is
+diagnostic failure feedback only, not successful preparation, real generator
+execution or a total certification wall-time claim.
+
+Independent data-only audit909e32e512278df891b3fbc26218107e69185792791066f95700873b1130665c
+finishes02:58:44.512755Z in0.5174413s. It independently verifies2323source files,
+all raw snapshots/results, exact three-versus-two scan counts, prospective order,
+red/green logs and source bindings, and recomputes all timings. No producer or
+workload executes in the audit. Integrity-first greenf78578d05f6f556d1a6cb63e732f93717a9870d36fd5b1d9bdc806eb8bd30278
+passes107Native plus7POSIXskips and114WSL0skip with Ruff/format. Downstream
+4b0ae243e053376819dd26526523e32a5f130279acbfb9683bff4c1726c0870b finishes
+02:59:48.985378Z in64.287844s, with75Native plus7POSIXskips and82WSL0skip.
+All native skips are covered on WSL; output, profile and certification consumers
+remain checked. No generator, authoritative profile or product sample runs.
+
+The generated-artifact skill maps no affected family among all six changed paths.
+Add only the new charter to exact scope and preserve all90historical checkpoints
+and readiness. Admission and trusted-verifier policy remain unchanged. The prior
+working-set-watch route remains rejected; complete memory lifetime, CPU/CLI and
+all12conditioning guarantees still require engineering and fresh qualification.
+Preserve all original ceilings, sample counts, unfavorable measurements, security
+proofs and sole VSCE waiver. Full36canonical preparation/cleanLSP before freeze,
+runtime/prerequisites, both source-distinctQ/P38/80/126 with fresh independent
+same-SHA no-reuse Release126each125PASSsoleVSCE, signing and qualified immutable
+trusted verification before pin-only promotion, guarded closure and final
+cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required.

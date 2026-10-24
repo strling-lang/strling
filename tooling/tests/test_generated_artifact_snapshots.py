@@ -21,6 +21,61 @@ from tooling.tests.test_generated_artifact_preparation import preparation_regist
 
 
 class BoundedArtifactSnapshotTests(unittest.TestCase):
+    def test_mutation_report_uses_the_exact_rejecting_snapshot(self) -> None:
+        registry = preparation_registry()
+        before = {"source.txt": "original", "removed.txt": "present"}
+        rejected = {"source.txt": "changed", "added.txt": "new"}
+        # A second diagnostic read might see the original files again. The
+        # reason must retain the actual snapshot which caused rejection.
+        with (
+            patch.object(generated, "validate_artifact_relationships"),
+            patch.object(generated, "missing_patterns", return_value=[]),
+            patch.object(
+                generated, "confined_working_directory", return_value=self.root
+            ),
+            patch.object(
+                generated, "integrity_snapshot", side_effect=[before, rejected, before]
+            ) as snapshots,
+        ):
+            result = generated.run_registry(
+                registry,
+                self.root,
+                check=True,
+                executor=lambda *_args: generated.CommandResult(0),
+            )
+        self.assertEqual(
+            "check mode modified repository files: added.txt, removed.txt, source.txt",
+            result[-1].reason,
+        )
+        self.assertEqual("failed", result[-1].status)
+        self.assertEqual(2, snapshots.call_count)
+
+    def test_no_mutation_retains_the_independent_final_boundary(self) -> None:
+        registry = preparation_registry()
+        original = {"source.txt": "original"}
+        final = {"source.txt": "late-change"}
+        with (
+            patch.object(generated, "validate_artifact_relationships"),
+            patch.object(generated, "missing_patterns", return_value=[]),
+            patch.object(
+                generated, "confined_working_directory", return_value=self.root
+            ),
+            patch.object(
+                generated, "integrity_snapshot", side_effect=[original, original, final]
+            ) as snapshots,
+        ):
+            result = generated.run_registry(
+                registry,
+                self.root,
+                check=True,
+                executor=lambda *_args: generated.CommandResult(0),
+            )
+        self.assertEqual("failed", result[-1].status)
+        self.assertEqual(
+            "check mode modified repository files: source.txt", result[-1].reason
+        )
+        self.assertEqual(3, snapshots.call_count)
+
     def setUp(self) -> None:
         self.temporary = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)

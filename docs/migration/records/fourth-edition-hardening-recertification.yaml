@@ -7,6 +7,7 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tests/_design/unit/test_generated_artifact_failure_snapshot.md
         - tooling/performance_working_set_watch.py
         - tooling/tests/test_performance_working_set_watch.py
         - tooling/tests/native_working_set_watch.rs
@@ -2297,6 +2298,21 @@ checkpoints:
           - check: Remaining admission engineering and unchanged closure obligations
             result: not_run
             details: "Preserve all89historical checkpoints/readiness and add four exact scope paths. Unqualified data decoder and synthetic fixture do not enter the live producer or trusted verifier. No new wall-time speedup is claimed; prior measured improvements remain scoped, including2.052percent snapshot read-ahead. Investigate a complete source-reviewed memory lifetime mechanism with live allocation/shared-page/free/reuse/stack/image/descendant coverage; initial locks and watch histories are insufficient. All12conditioning guarantees, original caps/counts, CPU/CLI admission, fresh9reference/source-distinct9holdout/adverse qualification, full36canonical preparation/cleanLSP before freeze, runtime/prerequisites, both source-distinctQ/P38/80/126 and independent fresh same-SHA no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable verifier before pin-only promotion, guarded closure/final cleanCLOSED remain. H08 OPEN, continuation ACTIVE; no routine owner action, retained-certifier access or external publication."
+    - name: Retain the exact rejecting integrity snapshot and remove explanatory rereading
+      status: in_progress
+      evidence:
+          - check: Reproduce the causal-path loss and preserve every acceptance boundary
+            result: passed
+            details: "Checkpoint91 follows cleaneba9c6db1544cc08c472cd820bc166e4145cedef. run_registry previously took a second full post-command snapshot only to explain an already-detected mutation; later restoration could erase the offending paths. Redbc12ad2f72f1553259121a45478ae6cee6113c886c0e9b998e9dbce45861cf95 proves the empty-path failure. Retain the exact rejecting state and derive the reason from it, removing only the explanatory reread after definitive rejection. Every initial, post-command and final successful-path snapshot remains; a second new regression proves late final-boundary mutation still rejects. Readers, census, byte/mode/containment/alias/Git controls, registered operations and profile counts are unchanged."
+          - check: Equivalent controlled failure-result wall time with all full snapshots retained
+            result: passed
+            details: "One source-held immutable six-pair ABBAAB diagnostic uses the complete real registry integrity snapshot for every call; a no-op executor runs no external command and changes one synthetic overlay marker only. Both implementations produce identical failed results. Baseline3fullscans versus candidate2; all30ordered real snapshots have2363entries and hash6a598084f175da6ee249c3fb6cc3378d174e6d6fe5b799fe2f64a28bd1a20a7a. All12results and all6pairs retained; all6favor the correction. Median41719223413.5ns to27448346571.5ns, measured34.206957067619percent reduction. Terminal11648aa3dd660ab0bb8547932a03f60d0e8b1604079fe9a73fb70d180a630baf finishes2026-10-24T02:57:35.602759Z in446.674189876s; owner retired. This measures only a controlled completed mutation-failure result, not real generator execution, successful preparation or total certification wall time. No product samples, thresholds or required work are removed."
+          - check: Independent raw audit and integrity-first cross-platform dependents
+            result: passed
+            details: "Data-only audit909e32e512278df891b3fbc26218107e69185792791066f95700873b1130665c finishes2026-10-24T02:58:44.512755Z in0.5174413s. It checks2323source files, all30complete snapshots,12identical failure results, exact scan counts, prospective order, red/green source bindings and recomputes every timing without producer execution. Greenf78578d05f6f556d1a6cb63e732f93717a9870d36fd5b1d9bdc806eb8bd30278 passes107Native plus7POSIXskips and114WSL0skip with Ruff/format; downstream4b0ae243e053376819dd26526523e32a5f130279acbfb9683bff4c1726c0870b finishes02:59:48.985378Z in64.287844s,75Native plus7POSIXskips and82WSL0skip. All native skips are covered on WSL. Integrated integrity passes first. No generators or authoritative profiles run."
+          - check: Preserve source authority and remaining formal certification work
+            result: not_run
+            details: "Exactly three implementation/test/charter paths plus three migration records; the36family registry maps none. Add one exact charter scope path and preserve all90historical checkpoints/readiness. No source freeze, live admission change, trust-pin promotion or certification claim. Complete source-reviewed memory lifetimes, CPU/CLI and all12conditioning guarantees remain; the prior working-set-watch mechanism stays rejected. Preserve every ceiling, sample count, unfavorable receipt, security proof and license policy. Fresh9reference/source-distinct9holdout/adverse qualification, full36canonical preparation/cleanLSP before freeze, exact runtime/prerequisites, both source-distinctQ/P38/80/126 with fresh independent same-SHA no-reuse Release126each125PASSsoleVSCE, signing and qualified immutable trusted verification before pin-only promotion, guarded closure and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

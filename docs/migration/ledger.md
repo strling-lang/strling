@@ -9320,3 +9320,29 @@ CPU/CLI admission and all12conditioning guarantees, fresh qualification cohorts,
 canonical preparation, both signed/trusted campaigns and independent Releases,
 guarded closure and final cleanCLOSED remain. No new runtime speedup claim.
 H08 OPEN; continuation ACTIVE, no external action required.
+
+### H08 exact rejecting snapshot and faster failure feedback — 2026-10-24 UTC
+
+Checkpoint91 follows cleaneba9c6db. A second full snapshot taken only to explain
+an already-rejected mutation could observe restoration and erase the causal
+paths. Redbc12ad2f proves this defect. Retain the exact rejecting snapshot and
+remove only that explanatory reread. Every successful-path initial, post-command
+and final boundary remains, including a new late-final-mutation regression.
+
+One immutable source-held six-pair ABBAAB controlled failure comparison retains
+all30full ordered real snapshots,2363entries each, and12identical failed results.
+The executor performs no external command and changes one synthetic marker only.
+Median41.7192234135to27.4483465715seconds is34.206957067619percent faster; all six
+pairs favor the correction. Terminal11648aa3 finishes02:57:35.602759Z in
+446.674189876s. This is completed controlled failure-result time only, not a
+successful preparation or total certification improvement. No sample is reused.
+
+Independent data-only audit909e32e5 verifies2323source files, every snapshot and
+result, exact scan counts, red/green evidence and timings in0.5174413s.
+Integrity-first green107Native/114WSL and downstream75Native/82WSL pass;
+all14Native POSIX skips are covered by zero-skip WSL runs. Ruff/format pass.
+The skill maps no generated family; no generator or authoritative profile runs.
+Preserve all90prior checkpoints/readiness and add one exact charter scope path.
+Complete workstation admission, source preparation, both signed/trusted campaigns
+with independent Releases, and guarded final cleanCLOSED remain. H08 OPEN;
+continuation ACTIVE, no external action required.

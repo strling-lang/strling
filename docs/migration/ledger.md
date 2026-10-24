@@ -9289,3 +9289,34 @@ Preserve all88prior checkpoints/readiness and add one exact charter scope path.
 Workstation admission qualification, complete source preparation, both signed and
 trusted source-distinct campaigns with independent Releases, guarded closure and
 final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no user action required.
+
+### H08 quiescent working-set history rejection — 2026-10-24 UTC
+
+Checkpoint90 follows cleane8ef6949. Two new owned synthetic children test whether
+watch history covers promised pages across explicit trimming. Drain only during
+documented all-thread debugger pauses, with fixed2MiB output buffers and raw
+events retained. The first setup24498f4e stops at exact single-suspension admission
+before fixture output. Preserve it; correct attachment-event ordering before
+removing the original creation suspension, still requiring exact count1.
+Four in-memory setup regression cases preserve strict count rejection and cleanup.
+
+Both corrected children complete1536logical page visits/checksum2560 and retire.
+Terminal7030662c finishes02:36:25.826671Z in3.3044861s. Default watch history loses38
+records; owned1MiB-hard-cap history loses5246plus230. The complete histories omit
+16and54of1024promised pages. Even zero-loss phase1 captures only62and392of512fresh
+A pages respectively; its internal omission cause is not established. Reject this
+mechanism for lossless admission, retain every unfavorable byte, and do not rerun
+or substitute page unions for raw RSS. Debugger observer effects are unqualified.
+
+Integrity-first61Native/47WSL plus14native-only skips covered on Windows and
+2Rust tests perplatform pass, with Ruff/format. Independent data-only audit6509e31e
+checks2322source files, all raw records, original failure, strict setup regression,
+loss terminators, missing pages, controls and retirement in0.8499431s. Four new
+source/test/charter paths and three records match no generated family; no generator,
+product sample, performance reference or authoritative profile executes.
+
+Preserve all89prior checkpoints/readiness. Complete memory lifetime protection,
+CPU/CLI admission and all12conditioning guarantees, fresh qualification cohorts,
+canonical preparation, both signed/trusted campaigns and independent Releases,
+guarded closure and final cleanCLOSED remain. No new runtime speedup claim.
+H08 OPEN; continuation ACTIVE, no external action required.

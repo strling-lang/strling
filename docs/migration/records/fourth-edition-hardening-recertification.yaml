@@ -7,6 +7,10 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/performance_working_set_watch.py
+        - tooling/tests/test_performance_working_set_watch.py
+        - tooling/tests/native_working_set_watch.rs
+        - tests/_design/unit/performance-working-set-watch.md
         - tests/_design/unit/test_generated_artifact_snapshot_read_ahead.md
         - tooling/tests/native_resident_guard.rs
         - tests/_design/unit/performance-resident-floor.md
@@ -2278,6 +2282,21 @@ checkpoints:
           - check: Retained workstation-admission and closure obligations
             result: not_run
             details: "Actual memory_worker.rs review confirms new parsing/warmup/compile/serialization allocations and result retirement before OS peak-RSS readback; initial-page locking alone cannot cover complete allocation/image/stack lifetimes. No incomplete guard is integrated or promoted. Unknown ancestry remains rejected, existing performance caps/counts/security/license/provenance/trusted pins unchanged. Current registry maps no changed family; one new exact charter scope path, all88prior checkpoints/readiness preserved. Complete memory coverage and all12conditioning guarantees, fresh independent9reference/source-distinct9holdout/adverse challenges, full36canonical preparation/cleanLSP, exact freeze/runtime/prerequisites, both source-distinctQ/P38/80/126 and fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable trusted verification and guarded final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required."
+    - name: Reject incomplete quiescent working-set history as admission
+      status: in_progress
+      evidence:
+          - check: Predeclared bounded owned-child experiment and setup correction
+            result: passed
+            details: "Checkpoint90 follows cleane8ef6949d0c7c3c920f7aae2df98a9c18384b7c5. New standalone fixture requires an owned debugger, retains two2MiB regions, performs1536logical page visits/checksum2560, and explicitly trims twice across five ordered barriers. Each write plus its volatile verification read is one logical visit; this is not a page-fault count. Initialize watch before first resume, retain initial census, and drain only at documented all-thread debug-event pauses. Original24498f4e42542b7d36f53a2c779a94cd21a9fa4632092afdb4ec3e97d8b507c6 fails the exact single-suspension guard before any fixture output; cleanup quiescent. The actual rejected count was not retained and is not invented. Correct only ordering: consume attachment events through their first breakpoint, then remove the original creation suspension with exact count1. Four in-memory regression cases accept1 and reject0/2/4294967295, preserving finally continuation. No live envelope guard changes or consumed workload replay."
+          - check: Preserve incomplete history despite quiescent boundaries and large output buffer
+            result: passed
+            details: "One default and one owned1MiB-hard-cap child complete and retire naturally; no privilege, inherited job, host setting, unrelated process or product sample is changed. Terminal7030662c31c51f2d92bf9e43bc779995c38ee09a31eced9b40976155aa9d79b4 finishes2026-10-24T02:36:25.826671Z in3.3044861s. Fixed2MiB caller buffers do not prevent internal watch loss: default losses0/0/0/38/0; hard-cap5246/0/0/230/0. Whole recorded histories omit16/54 of1024promised pages respectively. Even phase1 reports zero loss while recording only62/392 of512fresh A pages. This is an observed counterexample to treating zero loss as complete page coverage; exact internal omission mechanism is not established. Raw returned sizes, pointers, duplicates, flags, events and source bytes retained. Reject the tested watch mechanism for lossless admission; no buffer resizing, favorable rerun, silent address-union/RSS substitution or promotion. Hard-cap flags6 remain exact at every barrier; raw peakRSS2052096/private4878336bytes versus default peak6668288/private4857856 confirms low RSS is not unrestricted-memory proof. Debugger observer effects remain unqualified."
+          - check: Integrity-first dependent tests and independent raw reconstruction
+            result: passed
+            details: "Terminal6a8e99c67d64de75bbf929df3bcba683ca17c6624eba6a6114ddeba30563598e finishes2026-10-24T02:32:10.510627Z in28.7268588s: Native61PASS, WSL47PASS14native-only skips covered on Windows, Rust2Native/2WSL, Ruff/format all pass. Independent data-only audit6509e31e8ffcbe76e297f6860f7b82a42ff6f38fcb198bd8007f2d3e273a26bb finishes02:38:39.464837Z in0.8499431s; verifies2322source files, both helper pins, original setup failure, every raw artifact, exact decoded terminator/returned size, strict resume cases, work counts, incomplete promises and retirement. No producer, compiler, collector or workload replay in audit. Four new paths plus three records map no generated family; no generator or authoritative profile runs."
+          - check: Remaining admission engineering and unchanged closure obligations
+            result: not_run
+            details: "Preserve all89historical checkpoints/readiness and add four exact scope paths. Unqualified data decoder and synthetic fixture do not enter the live producer or trusted verifier. No new wall-time speedup is claimed; prior measured improvements remain scoped, including2.052percent snapshot read-ahead. Investigate a complete source-reviewed memory lifetime mechanism with live allocation/shared-page/free/reuse/stack/image/descendant coverage; initial locks and watch histories are insufficient. All12conditioning guarantees, original caps/counts, CPU/CLI admission, fresh9reference/source-distinct9holdout/adverse qualification, full36canonical preparation/cleanLSP before freeze, runtime/prerequisites, both source-distinctQ/P38/80/126 and independent fresh same-SHA no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable verifier before pin-only promotion, guarded closure/final cleanCLOSED remain. H08 OPEN, continuation ACTIVE; no routine owner action, retained-certifier access or external publication."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

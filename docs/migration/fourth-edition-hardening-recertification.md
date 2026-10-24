@@ -4915,3 +4915,61 @@ full36canonical preparation/cleanLSP before exact freeze, runtime/prerequisites,
 Q/P38/80/126 with fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE,
 qualified verifier before pin-only promotion, signing/immutable verification and
 guarded closure with a clean tree. H08 OPEN; continuation ACTIVE.
+
+## Quiescent working-set history counterexample — 2026-10-24 UTC
+
+Checkpoint90 starts from cleane8ef6949d0c7c3c920f7aae2df98a9c18384b7c5. Initial-page
+locking is incomplete for actual product lifetimes. A separate prospective
+working-set-watch experiment tests a less intrusive history mechanism, without
+changing live admission or raw RSS. Its documented query gap requires all-thread
+quiescence, so attach a debugger only to the newly owned suspended fixture and
+drain at its outstanding debug events. No privileges or inherited jobs change.
+
+The first setup fails the original launcher's exact single-suspension guard:
+24498f4e42542b7d36f53a2c779a94cd21a9fa4632092afdb4ec3e97d8b507c6.
+No fixture output occurs; owned cleanup is quiescent. Its rejected return count
+was not captured, so do not claim a particular value. Correct only the order:
+consume initial attachment events through the first attach breakpoint, then
+remove the original creation suspension. Both actual children return exactly1.
+Four in-memory regressions accept1 and reject0,2,4294967295, while always continuing
+the outstanding event. The existing live envelope guard is unchanged.
+
+The corrected experiment7030662c31c51f2d92bf9e43bc779995c38ee09a31eced9b40976155aa9d79b4
+finishes2026-10-24T02:36:25.826671Z in3.3044861s. A default child and an owned
+1MiB-hard-cap child each retain two2MiB regions, write512A pages, trim, write512B
+pages and reread A, then trim. Exactly1536logical page visits/checksum2560;
+each write plus volatile verification read is one visit, not a page-fault count.
+Five ordered barriers, successful trims and full natural tree retirement are
+retained, along with initial census, raw2MiB buffers, returned sizes, pointers,
+duplicates, reserved flags, process identity and debugger events.
+
+The API mechanism is rejected for lossless admission. Reported losses are
+default0/0/0/38/0 and hard-cap5246/0/0/230/0. Whole histories omit16and54of1024
+promised pages respectively. A zero-loss phase1 observes only62and392of512fresh
+A pages; the internal reason for those omissions is not established. Zero loss
+is therefore insufficient even with these quiescent boundaries. Caller buffer
+size does not establish internal capacity. Do not resize and replay this consumed
+experiment, discard unfavorable rows, or replace current/peak RSS with page unions.
+Under exact flags6 at every barrier, hard-cap peakRSS2052096/private4878336bytes
+contrasts with default peak6668288/private4857856. Debugger effects prevent any
+performance qualification or timing claim from this acquisition.
+
+Integrity-first checks6a8e99c67d64de75bbf929df3bcba683ca17c6624eba6a6114ddeba30563598e
+finish02:32:10.510627Z in28.7268588s:61NativePASS;47WSLPASS with14native-only skips
+covered on Windows;2Rust tests perplatform; Ruff/format pass. Independent data-only
+audit6509e31e8ffcbe76e297f6860f7b82a42ff6f38fcb198bd8007f2d3e273a26bb finishes
+02:38:39.464837Z in0.8499431s, checking2322source files, all raw receipts and test
+logs, exact byte decoding, missing promises, setup regression and cleanup without
+running any producer, compiler, collector or workload.
+
+The generated-artifact skill maps no affected family; no generator runs. Add the
+four exact source/test/charter scope paths and preserve all89historical checkpoints
+and readiness. Nothing is linked into the product or promoted to trusted code.
+No new speedup or certification pass is claimed. A complete memory lifetime
+mechanism still needs live allocation/free/shared-page/reuse/stack/image and
+descendant coverage, alongside CPU/CLI and all12conditioning obligations. Original
+thresholds and samples, fresh reference/holdout qualification, full36preparation
+and cleanLSP, exact freeze/runtime/prerequisites, both source-distinctQ/P38/80/126
+with fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE, signing,
+qualified immutable trusted verification before pin-only promotion, and guarded
+closure with final cleanCLOSED remain. H08 OPEN; continuation ACTIVE.

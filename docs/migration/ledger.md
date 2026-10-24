@@ -9459,3 +9459,30 @@ signing/qualified immutable verification and guarded final cleanCLOSED remain.
 A suitable execution context is not itself qualification or closure. H08 OPEN;
 continuation ACTIVE. Unchanged heartbeats remain quiet without repeating probes
 or consumed samples while the required execution-context input is outstanding.
+
+### Manual context verified and lifetime ownership serialized — 2026-10-24 UTC
+
+Checkpoint96 follows clean5ce3aabf. The user's one-use manual diagnostic
+0bd44da7 passes in3.6512028s, with no-elevation/no-job observations for the shell
+and actual Python parent/child. Independent86f4a36e verifies all7receipt hashes,
+2327source files, exact pins and lineage, integrity and lease release. This
+completes the requested diagnostic only; subsequent workers need their own proof.
+The user's latest instruction prohibits further manual workstation procedures.
+Continue repository engineering; do not repeat the consumed diagnostic or bypass
+an unknown ancestor quota. Historical failures remain valid for their contexts.
+
+Add optional allocation-free atomic exclusive entry to the resident lifetime
+ledger. Recursive or concurrent entry, native failure and panic poison permanently;
+an outer callback cannot hide an inner rejection or publish success after poison.
+No waiting, spinning, speculative unlock or product integration. Preserve red3903993b;
+integrity-first Native34f6e41a and WSLe6f87619 each pass19Rust tests and Rust1.75
+no-std builds. Direct-dependent39d545c9 passes55memory/quota tests and compiles the
+old native fixture without executing its consumed challenge. Leases release.
+
+No generated family matches; no measurement, calibration, profile or speedup claim.
+Preserve all95prior checkpoints/readiness and add only the new test to scope.
+Storage/callback, allocator, image/stack/thread/descendant coverage, actual worker
+eligibility and all12conditioning obligations remain. All original thresholds,
+counts and security/trust controls remain; fresh qualification, canonical
+preparation, both signed/trusted campaigns with independent Releases, and guarded
+cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no manual command requested.

@@ -5240,3 +5240,51 @@ signing/qualified immutable verification before pin-only promotion, guarded clos
 and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE. Subsequent unchanged
 heartbeats inspect state/owners/terminal only; do not repeat this probe, consumed
 cohorts or unrelated preparation experiments while awaiting this external input.
+
+## Manual provenance and serialized memory ownership — 2026-10-24 UTC
+
+Checkpoint96 begins at clean5ce3aabf2ba4268dab01c22123faac340e3b9f13. The user's
+completed manual diagnostic0bd44da7 finishes06:25:16.723047Z in3.6512028s.
+Independent byte/structure verification86f4a36e checks all7linked receipts,
+2327unchanged source files, exact runtime and module pins, process birth/nonce
+bindings and stable non-elevated/no-job observations for shell39720, parent54968
+and child25740. Integrated artifact integrity passes and the lease releases.
+This completes the requested boundary diagnostic, not qualification of another
+worker or continuous conditioning. Preserve the preparation import and newline
+translation failures and corrected13test receipt; no consumed attempt is repeated.
+
+The user explicitly prohibits further manual commands, launches, settings or
+workstation diagnostics. This prospectively supersedes the prior manual handoff
+plan. Continue repository-controlled engineering in the authorized environment;
+do not infer permission to escape jobs, inject into the shell, create a broker,
+change privileges/security/power or weaken admission. Actual worker ancestor-quota
+provenance remains an execution-provider dependency until independently established.
+
+The existing resident lifetime ledger required callers to prevent recursion and
+serialize access. Add an optional fixed-storage atomic entry wrapper with no
+waiting, spinning or allocation. Only its exclusive owner can access the inner
+ledger; references never escape. Racing or recursive entry poisons permanently.
+An already-running bounded callback sequence may finish, but cannot publish a
+successful token/release after poison. Native failure preserves raw error/page;
+panic poisons without speculative unlock. This conservative mechanism rejects
+contention; it is not yet a generally qualified multithreaded allocator.
+
+Preserve expected-red3903993b. Integrity-first Native34f6e41a passes19Rust tests,
+Rust1.75no-std and formatting in5.3144307s; WSLe6f87619 passes the same19tests
+and no-std in16.8291027s. Seven new deterministic cases exercise recursive/racing
+acquire/release, panic, native failure and overlap;12existing tests retain the
+independent page-union oracle and boundaries. Direct-dependent39d545c9 passes55
+memory/quota tests and compiles the old native fixture without replaying it.
+All owned leases release. These are diagnostic validation durations, not a
+comparative performance or total certification speedup.
+
+No generated family matches, no generator runs, and no product is instrumented
+or measured. Storage/callback residency, allocator bootstrap and alternate routes,
+image/stack/thread/descendant lifetimes and observer effects still require proof.
+All12conditioning guarantees and actual worker eligibility remain mandatory.
+Preserve all95historical checkpoints/readiness and all thresholds, sample counts,
+coverage/security/license/provenance/trust controls. Fresh qualification, full36
+canonical preparation/cleanLSP before freeze, exact runtime/prerequisites, both
+source-distinctQ/P38/80/126 and fresh independent same-SHA no-reuse Release126
+each125PASSsoleVSCE, signing/qualified immutable verification before pin promotion,
+and guarded closure with a clean tree remain. H08 OPEN; continuation ACTIVE.

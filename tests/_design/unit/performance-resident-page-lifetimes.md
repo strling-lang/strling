@@ -52,6 +52,33 @@ executes once; a failed attempt is retained, never rerun unchanged for green.
 All pages and the owned process retire. Do not enable privileges or change jobs,
 other applications, system security, power, or workstation configuration.
 
+## Serialized access extension
+
+The existing ledger requires exclusive mutable access but does not itself guard
+allocator callbacks against reentrancy or concurrent callers. Add an optional
+allocation-free, no-std wrapper with an atomic exclusive-entry state. It must
+never expose the underlying ledger, wait, spin, or allocate on entry. A racing or
+recursive entry is a terminal acquisition failure, not silently dropped work.
+After such an entry, native failure, or unwinding panic, the wrapper is permanently
+poisoned. An already-running bounded operation may finish its native callbacks,
+but must not publish a successful token or release after concurrent poisoning.
+No rollback or speculative unlock is allowed. This conservative wrapper does not
+claim to provide a generally usable multithreaded global allocator.
+
+Deterministic tests must cover sequential overlapping lifetimes, a recursive
+callback that attempts another acquisition, a callback that tries to release an
+earlier token, coordinated two-thread contention without timing sleeps, callback
+panic, and native failure. Assert no nested callbacks, no false successful outer
+completion, permanent poison and preservation of existing raw native errors.
+Compile the same implementation as a Rust 1.75 no-std library and test on Native
+and WSL. No live page-lock challenge or consumed product measurement is repeated.
+
+The wrapper does not protect its own storage, callback code, allocator bootstrap,
+stack growth, loaded images, other allocation routes, threads or descendants.
+Those lifetime sources and observer effects still require separate coverage and
+qualification before product integration. Admission and all ceilings/counts stay
+unchanged.
+
 ## Completion boundary
 
 Passing proves only finite lifetime bookkeeping and the declared owned-page

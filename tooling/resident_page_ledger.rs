@@ -2,6 +2,9 @@
 //! Callers must serialize all owners, prevent reentrancy, and release before free.
 //! This primitive allocates no storage; native callbacks must not reenter it.
 
+use core::cell::UnsafeCell;
+use core::sync::atomic::{AtomicU8, Ordering};
+
 pub const PAGE_BYTES: usize = 4096;
 
 pub trait PageOps {
@@ -12,6 +15,7 @@ pub trait PageOps {
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Failure {
     Poisoned,
+    ConcurrentOrReentrant,
     InvalidRange,
     Capacity,
     TokenExhausted,
@@ -39,6 +43,118 @@ pub struct Ledger<const L: usize, const P: usize> {
     pages: [Page; P],
     last_token: u64,
     poisoned: bool,
+}
+
+const READY: u8 = 0;
+const BUSY: u8 = 1;
+const POISONED: u8 = 2;
+
+/// Optional bounded exclusive-entry wrapper, not a global allocator or coverage
+/// proof. Contention is terminal: no spin, waiting, allocation or dropped event.
+/// Native callbacks may finish an in-flight bounded operation after poison, but
+/// it cannot publish success. Caller must retire the failed acquisition context.
+pub struct SerializedLedger<const L: usize, const P: usize> {
+    state: AtomicU8,
+    ledger: UnsafeCell<Ledger<L, P>>,
+}
+
+// SAFETY: Only the successful READY -> BUSY owner dereferences the UnsafeCell.
+// It holds Entry through all callbacks and mutation. No inner reference escapes.
+// Release publishes mutation before another Acquire can obtain the cell. A
+// competing/reentrant entry only accesses the atomic and poisons permanently;
+// it never touches the cell, including while an earlier callback is in flight.
+unsafe impl<const L: usize, const P: usize> Sync for SerializedLedger<L, P> {}
+
+struct Entry<'a> {
+    state: &'a AtomicU8,
+    finished: bool,
+}
+
+impl Entry<'_> {
+    fn complete<T>(mut self, result: Result<T, Failure>) -> Result<T, Failure> {
+        if result.is_err() {
+            self.state.store(POISONED, Ordering::Release);
+            self.finished = true;
+            return result;
+        }
+        // A callback can ignore a nested rejection. Never turn its outer
+        // operation into success, or reset poison written by a racing thread.
+        let publish = self
+            .state
+            .compare_exchange(BUSY, READY, Ordering::Release, Ordering::Relaxed)
+            .is_ok();
+        self.finished = true;
+        if publish {
+            result
+        } else {
+            Err(Failure::Poisoned)
+        }
+    }
+}
+
+impl Drop for Entry<'_> {
+    fn drop(&mut self) {
+        if !self.finished {
+            // Includes a callback panic. Never unlock or restore uncertain state.
+            self.state.store(POISONED, Ordering::Release);
+        }
+    }
+}
+
+impl<const L: usize, const P: usize> Default for SerializedLedger<L, P> {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl<const L: usize, const P: usize> SerializedLedger<L, P> {
+    pub const fn new() -> Self {
+        Self {
+            state: AtomicU8::new(READY),
+            ledger: UnsafeCell::new(Ledger::new()),
+        }
+    }
+
+    pub fn is_poisoned(&self) -> bool {
+        self.state.load(Ordering::Acquire) == POISONED
+    }
+
+    fn enter(&self) -> Result<Entry<'_>, Failure> {
+        match self
+            .state
+            .compare_exchange(READY, BUSY, Ordering::Acquire, Ordering::Acquire)
+        {
+            Ok(_) => Ok(Entry {
+                state: &self.state,
+                finished: false,
+            }),
+            Err(POISONED) => Err(Failure::Poisoned),
+            Err(_) => {
+                self.state.store(POISONED, Ordering::Release);
+                Err(Failure::ConcurrentOrReentrant)
+            }
+        }
+    }
+
+    pub fn acquire(
+        &self,
+        address: usize,
+        bytes: usize,
+        ops: &mut impl PageOps,
+    ) -> Result<u64, Failure> {
+        let entry = self.enter()?;
+        // SAFETY: Entry owns exclusive access until complete/drop; no reference
+        // to this cell is returned, and recursive entry cannot obtain an Entry.
+        let result = unsafe { &mut *self.ledger.get() }.acquire(address, bytes, ops);
+        entry.complete(result)
+    }
+
+    pub fn release(&self, token: u64, ops: &mut impl PageOps) -> Result<(), Failure> {
+        let entry = self.enter()?;
+        // SAFETY: Same exclusive-entry invariant as acquire.
+        let result = unsafe { &mut *self.ledger.get() }.release(token, ops);
+        entry.complete(result)
+    }
 }
 
 impl<const L: usize, const P: usize> Default for Ledger<L, P> {

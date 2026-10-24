@@ -7,6 +7,8 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/tests/test_governance_pattern_cache.py
+        - tests/_design/unit/governance-pattern-cache.md
         - tooling/resident_storage.rs
         - tooling/tests/resident_storage.rs
         - tests/_design/unit/performance-resident-storage.md
@@ -2414,6 +2416,21 @@ checkpoints:
           - check: Unchanged authoritative completion boundary
             result: not_run
             details: "Preserve all96historical checkpoints/readiness and add exactly3scope paths. No generated family matches and no authority-bearing artifacts are regenerated. Whole-process memory and observer coverage, all12conditioning obligations and actual worker eligibility remain open; the consumed manual boundary diagnostic does not qualify future workers. Unknown inherited quota remains an execution-provider dependency. No further manual procedure, job escape, broker, injection, privilege/security/power change or gate bypass. All thresholds, workloads, sample counts, Jest security, narrow JUnit policy and sole VSCE waiver remain. Fresh qualification, full36canonical preparation/cleanLSP before exact freeze/runtime/prerequisites, source-distinct qualification/promotion campaigns if required, actual38/80/126 plus fresh independent same-SHA no-reuse Release126 each125PASSsoleVSCE, signing, qualified immutable trusted verification before pin promotion and guarded final cleanCLOSED remain. Validation durations are diagnostic, not equivalent-workload or total certification improvements. H08 OPEN; continuation ACTIVE."
+    - name: Remove repeated governance pattern compilation
+      status: in_progress
+      evidence:
+          - check: Profile actual validation bottleneck without certification sampling
+            result: passed
+            details: "Checkpoint98 follows clean475b3f62334380063a3f98dfc390098268568326. Prior engineering commit spent37.2564471s of45.0279283s in governance. Source-held profile4862973d017a25ede98774a68cfe91b36303d72427bdd6cbd64e6ec568795447 passes integrated integrity and the complete governance gate, exposing488901pattern compilations consuming89.022profiled seconds of133.339total. Profiling overhead is diagnostic, not an unprofiled baseline. The owned lease releases; no worker, product sample or consumed native diagnostic runs."
+          - check: Bounded pure syntax cache preserves every validation decision
+            result: passed
+            details: "Add only functools.lru_cache(maxsize=512) around pure immutable pattern compilation. Concrete paths are normalized on every call; file discovery/content, Git state, exemptions, architecture rules, results and evidence are not cached. Preserve red03b2c381fbe9e7e6fbc43d2675e160a69bc29544c67f1d0ad97e40efae854cd3. Greene797db4d0adfee5e5568eac80ef77ac4b5e63203d467dbb2d6451e74e1eb0f4c passes4new semantic/bounded-eviction/invalid-pattern/path-validation tests and65existing governance/contract tests. One later test-only formatting adjustment has identical AST and is rechecked before commit; implementation bytes remain the measured bytes."
+          - check: Equivalent complete-governance before and after measurement
+            result: passed
+            details: "Source-held comparisona51425f675fa4b5a1e320ecacc94f44698d9798a562399d42be0174df77d8d29 runs fresh subprocesses in fixed uncached/cached/cached/uncached order. Pinned workerb899e0d91f01b2d5052ba9ef120c9f6739207f15079e221c5aa47891d9962167 verifies the compiler body AST equals the original475b3f62function, then disables only its decorator for controls. Identical complete repository inputs produce byte-identical successful JSONc00ba2d565a6cbcd6c4541979dfc4a6f611bacbb8d0a583c9ad8c6e6650140d5 including all33architecture rules and every check. Uncached36.7632389s/36.7016981s versus cached17.1179682s/18.1023833s: means36.7324685s/17.61017575s, measured52.0583percent reduction for this gate. All raw timings retained; no unfavorable sample discarded. This is a two-per-mode orchestration comparison, not governed product performance or a total certification wall-time claim. Source unchanged throughout, lease released."
+          - check: Preserve historical records and authoritative completion obligations
+            result: not_run
+            details: "Preserve all97prior checkpoints/readiness and add exactly2scope paths. Registry maps no generated family; no evidence regeneration. Actual worker quota provenance, complete memory/observer coverage and all12conditioning guarantees remain unsatisfied. No manual procedures, job escape, broker, injection or host setting changes. Existing thresholds/workloads/sample counts, Jest security, narrow JUnit and sole VSCE waiver remain. Full canonical preparation/cleanLSP before exact freeze/runtime/prerequisites, actual38/80/126/126 with fresh independent same-SHA no-reuse Releases, source-distinct qualification/promotion if required, fresh performance evidence, signing, qualified immutable trusted verification before pin promotion, guarded closure and cleanCLOSED remain. H08 OPEN; continuation ACTIVE."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

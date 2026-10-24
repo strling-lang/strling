@@ -9511,3 +9511,24 @@ All original certification/security/trust obligations remain, including actual
 38/80/126/126 profiles, independent no-reuse Releases, qualification/promotion
 when required, signing, immutable verification and guarded clean closure.
 H08 OPEN; continuation ACTIVE.
+
+### Bounded governance pattern compilation — 2026-10-24 UTC
+
+Checkpoint98 follows475b3f62. Profile4862973d identifies488901repeated pure
+pattern compilations in the governance gate. Cache at most512compiled immutable
+patterns; every concrete path and all files, Git state, findings and evidence
+remain freshly checked. Red03b2c381 is retained; greene797db4d passes4new tests
+and65governance/contract dependents. A test-only formatting correction is checked
+for identical AST and rerun before commit.
+
+Equivalent complete-gate comparisona51425f6 uses fixed uncached/cached/cached/
+uncached fresh subprocesses under one unchanged source frame. Complete successful
+JSONc00ba2d5 is byte-identical, including33architecture rules. Uncached means
+36.7324685s versus cached17.61017575s:52.0583percent less wall time for this gate.
+Raw runs36.7632389/17.1179682/18.1023833/36.7016981s all remain. No product or
+total-certification speedup is inferred, no check is removed, and leases release.
+
+Preserve all97prior checkpoints/readiness, add2scope paths and regenerate nothing.
+Worker eligibility, memory/observer coverage, conditioning and the complete
+authoritative certification/signing/trusted-verification sequence remain open.
+No manual workstation procedure is requested. H08 OPEN; continuation ACTIVE.

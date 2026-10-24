@@ -13,6 +13,7 @@ import sys
 import tempfile
 from dataclasses import dataclass, field
 from datetime import date
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterable, Mapping, Sequence
 
@@ -152,7 +153,9 @@ def normalize_repository_path(path: str, *, pattern: bool = False) -> str:
     return path
 
 
+@lru_cache(maxsize=512)
 def compile_path_pattern(pattern: str) -> re.Pattern[str]:
+    # Only immutable syntax is cached; paths, files and findings stay fresh.
     pattern = normalize_repository_path(pattern, pattern=True)
     expression = ["^"]
     index = 0

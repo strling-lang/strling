@@ -5321,3 +5321,37 @@ All original thresholds/counts/security/provenance/trust guarantees and actual
 exact freeze/prerequisites, source-distinct campaigns if required, independent
 same-SHA no-reuse Releases, signing, qualified immutable trusted verification
 before pin promotion and guarded clean closure remain. H08 OPEN; continuation ACTIVE.
+
+### Bounded governance pattern compilation — 2026-10-24 UTC
+
+Checkpoint98 starts at475b3f62334380063a3f98dfc390098268568326. The previous
+engineering commit spent37.2564471of45.0279283seconds in governance. Source-held
+profile4862973d locates488901calls to pure pattern compilation, accounting for
+89.022of133.339profiled seconds. Profile overhead is not a performance baseline.
+Add only a512entry LRU cache for immutable compiled patterns. Concrete paths,
+file discovery/content, Git state, findings, exemptions and evidence remain fresh.
+
+Retain red03b2c381 and greene797db4d:4new matching, invalid-input, fresh-path and
+bounded-eviction tests plus65existing governance/contract tests pass. A subsequent
+test-only formatter adjustment preserves its AST and is checked before commit.
+Comparison workerb899e0d9 independently matches the pattern-compiler body AST to
+the original source and switches only the cache decorator. Source-held ABBA
+comparisona51425f6 executes identical complete governance workloads in fresh
+subprocesses, preserving every raw output and timing. All four successful JSON
+outputs are byte-identicalc00ba2d5, including33architecture rules and every check.
+Uncached36.7632389/36.7016981s and cached17.1179682/18.1023833s yield means
+36.7324685/17.61017575s, a52.0583percent measured gate wall-time reduction.
+Two observations per mode establish this bounded comparison only; no product
+performance or full certification speedup is claimed. Leases release.
+
+Preserve all97prior checkpoints/readiness and add2scope paths; no registered
+generated family matches and no authority-bearing evidence is regenerated.
+Actual-worker ancestor quota, complete memory/observer coverage and all12
+conditioning guarantees still require proof. The consumed manual boundary
+diagnostic is not transferred or replayed. No manual procedures or host changes.
+All thresholds, counts, security/Jest/JUnit/soleVSCE/provenance/trust obligations,
+canonical preparation, exact runtime/prerequisites and source freeze, actual
+38/80/126/126 with independent no-reuse Releases, source-distinct campaigns if
+required, fresh performance qualification, signing and qualified immutable
+verification before pin promotion and guarded cleanCLOSED remain.
+H08 OPEN; continuation ACTIVE.

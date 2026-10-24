@@ -1,6 +1,14 @@
 #[cfg(target_os = "windows")]
 mod job_quota;
 
+#[cfg(all(target_os = "windows", feature = "resident-memory-audit"))]
+mod resident_allocator;
+
+#[cfg(all(target_os = "windows", feature = "resident-memory-audit", not(test)))]
+#[global_allocator]
+static RESIDENT_ALLOCATOR: resident_allocator::ResidentAllocator<1024, 1024> =
+    resident_allocator::ResidentAllocator::new();
+
 #[cfg(target_os = "windows")]
 mod worker {
     use std::ffi::c_void;
@@ -155,7 +163,12 @@ mod worker {
         println!(
             "{}",
             serde_json::to_string(&json!({
-                "worker_contract": "isolated-peak-rss-v1",
+                "worker_contract": if cfg!(feature = "resident-memory-audit") {
+                    "unqualified-resident-memory-audit-v1"
+                } else {
+                    "isolated-peak-rss-v1"
+                },
+                "residency_audit": residency_audit(),
                 "effective_cpu_affinity": [arguments.expected_logical_cpu],
                 "observed_processor_groups": [0],
                 "observed_logical_processors": observed_processors,
@@ -166,6 +179,26 @@ mod worker {
             .map_err(|error| error.to_string())?
         );
         Ok(())
+    }
+
+    fn residency_audit() -> serde_json::Value {
+        #[cfg(all(feature = "resident-memory-audit", not(test)))]
+        {
+            let (allocations, retirements) = super::RESIDENT_ALLOCATOR.counts();
+            json!({
+                "certification_eligible": false,
+                "rust_allocator_active_before_main": true,
+                "allocations": allocations,
+                "retirements": retirements,
+                "unqualified_routes": [
+                    "native-allocator", "loader-bootstrap", "image-pages",
+                    "stack-growth", "descendants", "observer-effects",
+                    "allocator-callback-window",
+                ],
+            })
+        }
+        #[cfg(any(not(feature = "resident-memory-audit"), test))]
+        serde_json::Value::Null
     }
 
     fn parse_arguments() -> WorkerResult<Arguments> {

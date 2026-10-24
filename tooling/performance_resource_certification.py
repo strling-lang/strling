@@ -122,6 +122,7 @@ ARTIFACT_SOURCE_PATHS = {
         "tests/certification/performance-resource/1.0/runner/Cargo.lock",
         "tests/certification/performance-resource/1.0/runner/Cargo.toml",
         "tests/certification/performance-resource/1.0/runner/src",
+        "tooling/resident_page_ledger.rs",
     ),
 }
 
@@ -3844,6 +3845,51 @@ def _sample_authenticity_details(
     }
 
 
+def _memory_lifetime_matches(result: Mapping[str, Any], peak: int) -> bool:
+    """Require the new root-lifetime scope without granting residency assurance."""
+    value = result.get("memory_lifetime")
+    if (
+        result.get("memory_worker_contract") != "isolated-peak-rss-v1"
+        or type(value) is not dict
+        or set(value)
+        != {
+            "contract",
+            "pid",
+            "birth_100ns",
+            "exit_100ns",
+            "worker_reported_peak_rss_bytes",
+            "terminal_peak_rss_bytes",
+            "residency_qualified",
+            "descendant_coverage_qualified",
+            "observer_effects_qualified",
+        }
+        or value["contract"] != "retained-process-terminal-peak-v1"
+    ):
+        return False
+    for name, maximum in (
+        ("pid", 2**32 - 1),
+        ("birth_100ns", 2**64 - 1),
+        ("exit_100ns", 2**64 - 1),
+        ("worker_reported_peak_rss_bytes", 2**64 - 1),
+        ("terminal_peak_rss_bytes", 2**64 - 1),
+    ):
+        if type(value[name]) is not int or not 1 <= value[name] <= maximum:
+            return False
+    return (
+        value["exit_100ns"] > value["birth_100ns"]
+        and value["worker_reported_peak_rss_bytes"] <= peak
+        and value["terminal_peak_rss_bytes"] == peak
+        and all(
+            value[name] is False
+            for name in (
+                "residency_qualified",
+                "descendant_coverage_qualified",
+                "observer_effects_qualified",
+            )
+        )
+    )
+
+
 def _memory_sample(
     fixture_id: str,
     *,
@@ -3891,6 +3937,7 @@ def _memory_sample(
         if (
             type(peak) is not int
             or peak <= 0
+            or not _memory_lifetime_matches(result, peak)
             or not _runner_resource_matches(
                 result,
                 selected_logical_cpu=selected_logical_cpu,

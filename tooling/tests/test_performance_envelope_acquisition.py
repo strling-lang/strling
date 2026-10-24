@@ -38,7 +38,22 @@ def result_for(command, environment):
         observed_logical_processors=[1],
     )
     if result["operation_id"].startswith("memory:"):
-        return dict(result, peak_working_set_bytes=123456)
+        return dict(
+            result,
+            peak_working_set_bytes=123456,
+            memory_worker_contract="isolated-peak-rss-v1",
+            memory_lifetime=dict(
+                contract="retained-process-terminal-peak-v1",
+                pid=456,
+                birth_100ns=1000010,
+                exit_100ns=1000110,
+                worker_reported_peak_rss_bytes=123000,
+                terminal_peak_rss_bytes=123456,
+                residency_qualified=False,
+                descendant_coverage_qualified=False,
+                observer_effects_qualified=False,
+            ),
+        )
     batch = int(option("--batch-iterations"))
     paired = result["operation_id"] == "latency:cli-startup"
     result.update(
@@ -255,6 +270,8 @@ class AcquisitionTests(unittest.TestCase):
                 def returned(command, **options):
                     raw = result_for(command, self.environment)
                     raw["peak_working_set_bytes"] = value
+                    raw["memory_lifetime"]["worker_reported_peak_rss_bytes"] = value
+                    raw["memory_lifetime"]["terminal_peak_rss_bytes"] = value
                     return subprocess.CompletedProcess(command, 0, json.dumps(raw), "")
 
                 with controller._retain_measurement_processes(events.append):
@@ -302,6 +319,8 @@ class AcquisitionTests(unittest.TestCase):
                 def returned(command, **options):
                     raw = result_for(command, self.environment)
                     raw["peak_working_set_bytes"] = value
+                    raw["memory_lifetime"]["worker_reported_peak_rss_bytes"] = value
+                    raw["memory_lifetime"]["terminal_peak_rss_bytes"] = value
                     return subprocess.CompletedProcess(command, 0, json.dumps(raw), "")
 
                 actual = controller._memory_sample(
@@ -314,6 +333,55 @@ class AcquisitionTests(unittest.TestCase):
                 )
                 self.assertIs(type(actual), int)
                 self.assertEqual(actual, value)
+
+    def test_memory_lifetime_gaps_and_audit_contract_never_admit(self):
+        mutations = [
+            ("pid", True),
+            ("pid", 0),
+            ("birth_100ns", 0),
+            ("exit_100ns", 100),
+            ("exit_100ns", 0),
+            ("terminal_peak_rss_bytes", 123455),
+            ("terminal_peak_rss_bytes", True),
+            ("worker_reported_peak_rss_bytes", 123457),
+            ("worker_reported_peak_rss_bytes", False),
+            ("contract", "self-report-only"),
+            ("residency_qualified", True),
+            ("descendant_coverage_qualified", 0),
+            ("observer_effects_qualified", None),
+            ("extra", 1),
+            ("missing-lifetime", None),
+            ("audit-contract", None),
+        ]
+        for index, (name, value) in enumerate(mutations):
+            with self.subTest(name=name, value=value):
+
+                def malformed(spec, directory):
+                    terminal = self.fake_capture(spec, directory)
+                    path = directory / "stdout.bin"
+                    raw = json.loads(path.read_bytes())
+                    if name == "missing-lifetime":
+                        del raw["memory_lifetime"]
+                    elif name == "audit-contract":
+                        raw["memory_worker_contract"] = (
+                            "unqualified-resident-memory-audit-v1"
+                        )
+                    else:
+                        raw["memory_lifetime"][name] = value
+                    path.write_text(json.dumps(raw), encoding="utf-8")
+                    return terminal
+
+                self.capture.side_effect = malformed
+                before = len(self.calls)
+                directory = self.root / f"lifetime-{index}"
+                receipt = self.acquire(
+                    ("memory:kernel-peak-rss", "fixture:protocol-common"),
+                    directory=directory,
+                )
+                self.assertEqual(receipt["status"], "failed")
+                self.assertNotIn("observation", receipt)
+                self.assertEqual(len(self.calls), before + 1)
+                self.assertTrue((directory / "process/stdout.bin").is_file())
 
     def test_unknown_coordinate_and_changed_manifest(self):
         with self.assertRaises(ValueError):

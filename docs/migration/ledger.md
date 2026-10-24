@@ -9637,3 +9637,44 @@ signing, immutable trusted verification and guarded clean closure remain require
 The prior 52.0583% governance-gate improvement remains the only accepted comparison
 referenced here; these test durations establish no total-certification speedup.
 H08 remains OPEN, with every gate retained.
+
+### Actual memory-worker integration — 2026-10-24 UTC
+
+Checkpoint103 follows70ef895a. The actual memory parent retains the exact child
+handle/birth before resume and reads kernel peak RSS after exit. It includes
+reporting and teardown; a native32MiB teardown challenge retains39714816bytes.
+13native launch/lifetime cases and39complete runner tests pass. Both initial
+macro-limit build failures remain. Raw requested input and child streams retain
+non-UTF8/NUL bytes, malformed output and failed exits; owned failure retirement
+has a bounded5second wait. No peak reset, subtraction or metric substitution.
+
+The actual memory-worker binary has a resident-memory-audit build using the
+existing serialized ledger as its global allocator before main. Private allocation
+headers bind exact System layouts and tokens; realloc allocates/copies/retires.
+18native allocator/ledger cases pass, including exhaustion and bootstrap contention.
+This distinct audit contract is explicitly ineligible. It does not prove native,
+loader/bootstrap, callback-window, image, stack or descendant protection.
+
+The production parser and separate data-only reader check closed terminal
+metadata, exact counters, child byte streams, placement/peak agreement, parent
+lifetime containment and per-cohort memory-child non-reuse. Retain the fixture
+identity failure; corrected21reader tests pass. Earlier124affected cases pass on
+Native and WSL; synthetic954observations are not fresh empirical references.
+Terminal60835534 preserves the final stream/source checks; cfe5c284 preserves
+actual builds, cross-platform checks and governance. Leases retire unchanged.
+
+The new actual audit-worker launch exits1 before parsing/warmup: inherited
+ancestor CPU quota remains unknown. Retain its empty stdout and stderr3a47b9d4.
+This is a failed actual-worker eligibility attempt, not a qualified positive.
+No manual diagnostic transfer, job escape, host mutation, broker or new manual
+procedure. Available saved execution projects are local; the existing cloud
+workflow only verifies signed candidate data. No alternative has been qualified.
+
+Preserve all102prior checkpoints/readiness and every workload, limit, sample,
+security, license, source and trust requirement. The feature changes no dependency
+or default build/profile setting; all16lock hashes remain. Review only its manifest
+identity. Registered performance identity projections remain byte-equivalent.
+Four exact scope paths are added. Complete native/bootstrap/descendant/observer
+qualification, inherited-control provenance and all12conditioning guarantees,
+fresh independent reference/holdout/adverse cohorts and both authoritative
+campaigns remain. H08 OPEN; no authenticated sample or total-certification speedup.

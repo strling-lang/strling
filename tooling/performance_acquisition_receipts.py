@@ -156,6 +156,41 @@ def _projection(raw, plan, process):
     equal({k: raw.get(k) for k in metadata}, metadata, "raw placement claims")
     if memory:
         peak = integer(raw.get("peak_working_set_bytes"), 1)
+        equal(
+            raw.get("memory_worker_contract"),
+            "isolated-peak-rss-v1",
+            "memory worker contract",
+        )
+        lifetime = raw.get("memory_lifetime")
+        shape(
+            lifetime,
+            set(
+                "contract pid birth_100ns exit_100ns worker_reported_peak_rss_bytes terminal_peak_rss_bytes residency_qualified descendant_coverage_qualified observer_effects_qualified".split()
+            ),
+            "terminal memory lifetime",
+        )
+        equal(
+            lifetime["contract"],
+            "retained-process-terminal-peak-v1",
+            "memory lifetime contract",
+        )
+        integer(lifetime["pid"], 1, 2**32 - 1)
+        birth = integer(lifetime["birth_100ns"], 1)
+        exit_time = integer(lifetime["exit_100ns"], birth + 1)
+        need(exit_time > birth, "memory worker exited after birth")
+        integer(lifetime["worker_reported_peak_rss_bytes"], 1, peak)
+        equal(
+            integer(lifetime["terminal_peak_rss_bytes"], 1), peak, "terminal peak RSS"
+        )
+        for name in (
+            "residency_qualified",
+            "descendant_coverage_qualified",
+            "observer_effects_qualified",
+        ):
+            need(
+                lifetime[name] is False,
+                "memory observation cannot assert qualification",
+            )
         return dict(samples=[peak], batch_iterations=1, batch_duration_samples=None)
     need(raw.get("unit") == "nanoseconds", "raw time unit")
     need(integer(raw.get("sample_iterations")) == 64, "all raw samples")
@@ -231,6 +266,57 @@ def _projection(raw, plan, process):
         "unsolicited cycle evidence",
     )
     return projected
+
+
+def _memory_worker_streams(stderr, raw):
+    packets = []
+    for line in stderr.splitlines():
+        if line.startswith("{"):
+            packet = parse(line.encode())
+            if (
+                type(packet) is dict
+                and packet.get("contract") == "retained-memory-worker-streams-v1"
+            ):
+                packets.append(packet)
+    need(len(packets) == 1, "one retained memory worker stream packet")
+    packet = packets[0]
+    shape(
+        packet,
+        set(
+            "contract pid birth_100ns input_bytes stdout_bytes stderr_bytes success".split()
+        ),
+        "memory worker streams",
+    )
+    lifetime = raw["memory_lifetime"]
+    equal(
+        [packet["pid"], packet["birth_100ns"]],
+        [lifetime["pid"], lifetime["birth_100ns"]],
+        "memory worker stream identity",
+    )
+    need(packet["success"] is True, "memory worker stream success")
+    streams = {}
+    for name in ("input_bytes", "stdout_bytes", "stderr_bytes"):
+        need(type(packet[name]) is list, "raw worker byte array")
+        for byte in packet[name]:
+            integer(byte, 0, 255)
+        streams[name] = bytes(packet[name])
+    need(type(parse(streams["input_bytes"])) is dict, "complete worker input JSON")
+    worker = parse(streams["stdout_bytes"])
+    need(type(worker) is dict, "complete worker output JSON")
+    equal(
+        worker.get("worker_contract"), "isolated-peak-rss-v1", "nested worker contract"
+    )
+    equal(
+        worker.get("peak_working_set_bytes"),
+        lifetime["worker_reported_peak_rss_bytes"],
+        "nested worker peak RSS",
+    )
+    for name in (
+        "effective_cpu_affinity",
+        "observed_processor_groups",
+        "observed_logical_processors",
+    ):
+        equal(worker.get(name), raw[name], "nested worker placement")
 
 
 def verify_acquisition_receipt(files, expected):
@@ -376,6 +462,19 @@ def verify_acquisition_receipt(files, expected):
         _projection(raw, plan, process),
         "raw observation projection",
     )
+    if plan["coordinate"][0].startswith("memory:"):
+        _memory_worker_streams(stderr, raw)
+        root_birth = parse(process_files["suspended.json"])
+        root_exit = parse(process_files["root-exit.json"])
+        lifetime = raw["memory_lifetime"]
+        need(
+            lifetime["pid"] != root_birth["pid"]
+            and int(root_birth["birth"])
+            <= lifetime["birth_100ns"]
+            < lifetime["exit_100ns"]
+            <= int(root_exit["exit"]),
+            "memory worker lifetime belongs within the retained root lifetime",
+        )
     if plan["coordinate"][0].startswith("latency:"):
         elapsed = sum(
             sum(raw[k])
@@ -458,9 +557,15 @@ def assemble_cohort(bundles, expectations, *, role, plan, pins, coordinates):
     recipes = [recipe_for(expectations[i * 9]) for i in range(len(coordinates))]
     need(sha(encode(recipes)) == plan["recipe_sha256"], "prospective recipe pin")
     rows, intervals = [], []
+    memory_workers = set()
     artifact_pins = None
     for index, (files, expected) in enumerate(zip(bundles, expectations, strict=True)):
         verified = verify_acquisition_receipt(files, expected)
+        if verified["raw_runner"].get("memory_lifetime") is not None:
+            lifetime = verified["raw_runner"]["memory_lifetime"]
+            identity = (lifetime["pid"], lifetime["birth_100ns"])
+            need(identity not in memory_workers, "memory worker evidence reuse")
+            memory_workers.add(identity)
         outer = expected["acquisition_plan"]
         manifest_coordinates = [
             [o["id"], f]

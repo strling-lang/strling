@@ -11,6 +11,8 @@ mod cli_cycles;
 mod controlled_spawn;
 #[cfg(target_os = "windows")]
 mod job_quota;
+#[cfg(target_os = "windows")]
+mod memory_lifetime;
 mod phase_timeline;
 
 use serde_json::{json, Value};
@@ -287,10 +289,22 @@ fn run() -> RunResult<()> {
         }
     }
     phase_timeline::close(&mut phase_timeline, "control-warmups")?;
-    let mut measure = |prepared: &PreparedOperation| -> RunResult<(u64, u64, u64, u64, u64, Option<CpuCycleEvidence>, Option<Value>)> {
+    let mut measure = |prepared: &PreparedOperation| -> RunResult<(
+        u64,
+        u64,
+        u64,
+        u64,
+        u64,
+        Option<CpuCycleEvidence>,
+        Option<Value>,
+    )> {
         let cpu_started = process_cpu_time_nanoseconds()?;
         let cycle_started = if arguments.cpu_cycle_audit {
-            Some((process_cpu_cycles()?, process_cpu_cycles()?, process_cpu_cycles()?))
+            Some((
+                process_cpu_cycles()?,
+                process_cpu_cycles()?,
+                process_cpu_cycles()?,
+            ))
         } else {
             None
         };
@@ -302,15 +316,20 @@ fn run() -> RunResult<()> {
         checksum ^= black_box(execute_batch(prepared, batch_iterations)?);
         let nanoseconds = started.elapsed().as_nanos().max(1);
         let cli_evidence = match (cli_started, &cli_cycle_sink) {
-            (Some((before, parent)), Some(sink)) => Some(before.evidence(
-                *sink.borrow(), divisor, parent, process_cpu_cycles()?,
-            )?),
+            (Some((before, parent)), Some(sink)) => {
+                Some(before.evidence(*sink.borrow(), divisor, parent, process_cpu_cycles()?)?)
+            }
             _ => None,
         };
         let cycle_evidence = match cycle_started {
-            Some((control_started, control_ended, work_started)) => Some(CpuCycleEvidence::from_endpoints(
-                control_started, control_ended, work_started, process_cpu_cycles()?,
-            )?),
+            Some((control_started, control_ended, work_started)) => {
+                Some(CpuCycleEvidence::from_endpoints(
+                    control_started,
+                    control_ended,
+                    work_started,
+                    process_cpu_cycles()?,
+                )?)
+            }
             None => None,
         };
         let cpu_nanoseconds = process_cpu_time_nanoseconds()?
@@ -521,23 +540,61 @@ fn run_inherited_memory_parent(
         .parent()
         .ok_or_else(|| "memory worker directory is absent".to_owned())?
         .join(MEMORY_WORKER_BINARY);
-    let mut child = controlled_spawn::spawn(
+    let (mut child, memory_lifetime) = controlled_spawn::spawn_observed(
         Command::new(&worker)
             .args(&worker_arguments)
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
             .stderr(Stdio::piped()),
+        memory_lifetime::Observation::begin,
     )
     .map_err(|error| error.to_string())?;
-    child
+    let worker_pid = child.id();
+    let worker_birth = memory_lifetime.birth_100ns;
+    let input_result = child
         .stdin
         .take()
-        .ok_or_else(|| "memory worker stdin is unavailable".to_owned())?
-        .write_all(&request)
-        .map_err(|error| error.to_string())?;
-    let output = child
-        .wait_with_output()
-        .map_err(|error| error.to_string())?;
+        .ok_or_else(|| "memory worker stdin is unavailable".to_owned())
+        .and_then(|mut stdin| stdin.write_all(&request).map_err(|error| error.to_string()));
+    if let Err(error) = input_result {
+        let retired = memory_lifetime.retire();
+        // Reap only after the bounded retirement has confirmed process exit.
+        let waited = retired.as_ref().ok().map(|_| child.wait_with_output());
+        if let Some(Ok(output)) = &waited {
+            eprintln!(
+                "{}",
+                memory_worker_stream_receipt(worker_pid, worker_birth, &request, output)
+            );
+        }
+        return Err(format!(
+            "memory worker input failed: {error}; owned retirement={retired:?}; wait={waited:?}"
+        ));
+    }
+    let output = match child.wait_with_output() {
+        Ok(output) => output,
+        Err(error) => {
+            let retired = memory_lifetime.retire();
+            return Err(format!(
+                "memory worker output failed: {error}; retirement={retired:?}"
+            ));
+        }
+    };
+    eprintln!(
+        "{}",
+        memory_worker_stream_receipt(worker_pid, worker_birth, &request, &output)
+    );
+    let terminal_memory = memory_lifetime
+        .finish()
+        .map_err(|error| format!("memory worker lifetime observation failed: {error}"))?;
+    // Preserve terminal identity/counter evidence for every actual child exit,
+    // including nonzero exit and malformed/truncated output.
+    eprintln!(
+        "memory-worker-terminal pid={} birth_100ns={} exit_100ns={} peak_rss_bytes={}",
+        terminal_memory.pid,
+        terminal_memory.birth_100ns,
+        terminal_memory.exit_100ns,
+        terminal_memory.peak_rss_bytes
+    );
     if !output.status.success() {
         return Err(format!(
             "inherited memory worker failed with {}: {}",
@@ -547,10 +604,25 @@ fn run_inherited_memory_parent(
     }
     let worker: Value =
         serde_json::from_slice(&output.stdout).map_err(|error| error.to_string())?;
-    let peak_working_set_bytes = worker
+    let reported_peak_working_set_bytes = worker
         .get("peak_working_set_bytes")
         .and_then(Value::as_u64)
         .ok_or_else(|| "memory worker peak working set is absent".to_owned())?;
+    terminal_memory
+        .validate_reported_peak(reported_peak_working_set_bytes)
+        .map_err(|error| format!("memory worker lifetime observation failed: {error}"))?;
+    let peak_working_set_bytes = terminal_memory.peak_rss_bytes;
+    let lifetime_evidence = json!({
+        "contract": "retained-process-terminal-peak-v1",
+        "pid": terminal_memory.pid,
+        "birth_100ns": terminal_memory.birth_100ns,
+        "exit_100ns": terminal_memory.exit_100ns,
+        "worker_reported_peak_rss_bytes": reported_peak_working_set_bytes,
+        "terminal_peak_rss_bytes": peak_working_set_bytes,
+        "residency_qualified": false,
+        "descendant_coverage_qualified": false,
+        "observer_effects_qualified": false,
+    });
     let sample_attempts = worker
         .get("sample_attempts")
         .and_then(Value::as_u64)
@@ -570,54 +642,99 @@ fn run_inherited_memory_parent(
         return Err("inherited memory worker evidence is not governed".to_owned());
     }
     verify_execution_resource(execution_resource, Some(expected))?;
+    let mut result = json!({
+        "runner_version": RUNNER_VERSION,
+        "operation_id": arguments.operation,
+        "fixture_id": arguments.fixture,
+        "unit": "nanoseconds",
+        "warmup_iterations": arguments.warmups,
+        "sample_iterations": arguments.samples,
+        "batch_iterations": 1,
+        "selected_logical_cpu": arguments.expected_logical_cpu,
+        "effective_cpu_affinity": effective_cpu_affinity,
+        "platform": execution_resource.platform,
+        "placement_mechanism": execution_resource.placement_mechanism,
+        "effective_cpuset": execution_resource.effective_cpuset,
+        "cgroup_path": execution_resource.cgroup_path,
+        "cpu_quota": execution_resource.cpu_quota,
+        "clocksource": execution_resource.clocksource,
+        "processor_group": execution_resource.processor_group,
+        "selected_cpu_set_id": execution_resource.selected_cpu_set_id,
+        "cpu_set_allocation_state": execution_resource.cpu_set_allocation_state,
+        "timer_source": execution_resource.timer_source,
+        "process_power_policy": execution_resource.process_power_policy,
+        "observed_processor_groups": worker["observed_processor_groups"],
+        "observed_logical_processors": worker["observed_logical_processors"],
+        "peak_working_set_bytes": peak_working_set_bytes,
+        "batch_elapsed_samples": [],
+        "samples": [],
+        "process_cpu_batch_elapsed_samples": [],
+        "process_cpu_samples": [],
+        "process_cpu_utilization_basis_points": [],
+        "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
+        "maximum_sample_attempts": maximum_sample_attempts,
+        "sample_attempts": sample_attempts,
+        "rejected_batch_elapsed_samples": [],
+        "rejected_process_cpu_batch_elapsed_samples": [],
+        "rejected_process_cpu_utilization_basis_points": [],
+        "control_batch_elapsed_samples": [],
+        "control_samples": [],
+        "control_process_cpu_batch_elapsed_samples": [],
+        "control_process_cpu_samples": [],
+        "control_process_cpu_utilization_basis_points": [],
+        "checksum": worker["checksum"],
+        "memory_worker_contract": worker["worker_contract"],
+    });
+    result["memory_lifetime"] = lifetime_evidence;
     println!(
         "{}",
-        serde_json::to_string(&json!({
-            "runner_version": RUNNER_VERSION,
-            "operation_id": arguments.operation,
-            "fixture_id": arguments.fixture,
-            "unit": "nanoseconds",
-            "warmup_iterations": arguments.warmups,
-            "sample_iterations": arguments.samples,
-            "batch_iterations": 1,
-            "selected_logical_cpu": arguments.expected_logical_cpu,
-            "effective_cpu_affinity": effective_cpu_affinity,
-            "platform": execution_resource.platform,
-            "placement_mechanism": execution_resource.placement_mechanism,
-            "effective_cpuset": execution_resource.effective_cpuset,
-            "cgroup_path": execution_resource.cgroup_path,
-            "cpu_quota": execution_resource.cpu_quota,
-            "clocksource": execution_resource.clocksource,
-            "processor_group": execution_resource.processor_group,
-            "selected_cpu_set_id": execution_resource.selected_cpu_set_id,
-            "cpu_set_allocation_state": execution_resource.cpu_set_allocation_state,
-            "timer_source": execution_resource.timer_source,
-            "process_power_policy": execution_resource.process_power_policy,
-            "observed_processor_groups": worker["observed_processor_groups"],
-            "observed_logical_processors": worker["observed_logical_processors"],
-            "peak_working_set_bytes": peak_working_set_bytes,
-            "batch_elapsed_samples": [],
-            "samples": [],
-            "process_cpu_batch_elapsed_samples": [],
-            "process_cpu_samples": [],
-            "process_cpu_utilization_basis_points": [],
-            "maximum_descheduling_nanoseconds": MAXIMUM_DESCHEDULING_NANOSECONDS,
-            "maximum_sample_attempts": maximum_sample_attempts,
-            "sample_attempts": sample_attempts,
-            "rejected_batch_elapsed_samples": [],
-            "rejected_process_cpu_batch_elapsed_samples": [],
-            "rejected_process_cpu_utilization_basis_points": [],
-            "control_batch_elapsed_samples": [],
-            "control_samples": [],
-            "control_process_cpu_batch_elapsed_samples": [],
-            "control_process_cpu_samples": [],
-            "control_process_cpu_utilization_basis_points": [],
-            "checksum": worker["checksum"],
-            "memory_worker_contract": worker["worker_contract"],
-        }))
-        .map_err(|error| error.to_string())?
+        serde_json::to_string(&result).map_err(|error| error.to_string())?
     );
     Ok(())
+}
+
+#[cfg(target_os = "windows")]
+fn memory_worker_stream_receipt(
+    pid: u32,
+    birth_100ns: u64,
+    input: &[u8],
+    output: &std::process::Output,
+) -> Value {
+    // Byte arrays preserve malformed UTF-8, NULs and partial output. This
+    // parent-side receipt is included in the enclosing retained stderr stream.
+    json!({
+        "contract": "retained-memory-worker-streams-v1",
+        "pid": pid,
+        "birth_100ns": birth_100ns,
+        "input_bytes": input,
+        "stdout_bytes": output.stdout,
+        "stderr_bytes": output.stderr,
+        "success": output.status.success(),
+    })
+}
+
+#[cfg(all(test, target_os = "windows"))]
+mod memory_stream_tests {
+    use super::*;
+    use std::os::windows::process::ExitStatusExt;
+
+    #[test]
+    fn child_streams_remain_exact_even_when_not_utf8_or_successful() {
+        for code in [0, 1] {
+            let output = std::process::Output {
+                status: std::process::ExitStatus::from_raw(code),
+                stdout: vec![0, 255, b'\n', b'{'],
+                stderr: vec![128, 0, b'}'],
+            };
+            let value = memory_worker_stream_receipt(7, 10, &[0, 254, b'x'], &output);
+            let bytes = serde_json::to_vec(&value).unwrap();
+            let decoded: Value = serde_json::from_slice(&bytes).unwrap();
+            assert_eq!(decoded["stdout_bytes"], json!(output.stdout));
+            assert_eq!(decoded["stderr_bytes"], json!(output.stderr));
+            assert_eq!(decoded["input_bytes"], json!([0, 254, b'x']));
+            assert_eq!(decoded["success"], json!(code == 0));
+        }
+    }
 }
 
 fn sample_is_authentic(wall_nanoseconds: u64, process_cpu_nanoseconds: u64) -> bool {
@@ -1911,7 +2028,9 @@ fn prepare_cli_launch_control(kernel_bin: Option<&Path>) -> RunResult<PreparedOp
                 .stderr(Stdio::piped()),
         )
         .map_err(|error| error.to_string())?;
-        let output = child.wait_with_output().map_err(|error| error.to_string())?;
+        let output = child
+            .wait_with_output()
+            .map_err(|error| error.to_string())?;
         if !output.status.success() {
             return Err(format!(
                 "CLI launch control failed with {}: {}",
@@ -1944,7 +2063,9 @@ fn prepare_cli_launch_control_with_cycles(
         } else {
             None
         };
-        let output = child.wait_with_output().map_err(|error| error.to_string())?;
+        let output = child
+            .wait_with_output()
+            .map_err(|error| error.to_string())?;
         if let (Some(retained), Some(sink)) = (retained, &cycle_sink) {
             sink.borrow_mut().observe(retained.read_and_close()?)?;
         }

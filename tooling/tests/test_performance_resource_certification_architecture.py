@@ -27,7 +27,8 @@ class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
     def test_all_runner_descendants_use_pre_execution_power_controls(self) -> None:
         source = RUNNER_SOURCE.read_text(encoding="utf-8")
         self.assertIn("mod controlled_spawn;", source)
-        self.assertEqual(source.count("controlled_spawn::spawn("), 4)
+        self.assertEqual(source.count("controlled_spawn::spawn("), 3)
+        self.assertEqual(source.count("controlled_spawn::spawn_observed("), 1)
         self.assertNotIn(".spawn()", source)
         self.assertNotIn(".output()", source)
         controls = (RUNNER_SOURCE.parent / "controlled_spawn.rs").read_text(
@@ -111,8 +112,25 @@ class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
         self.assertIn("SetProcessAffinityMask", memory_worker)
         self.assertIn("SetProcessDefaultCpuSets", memory_worker)
         self.assertIn("SetProcessInformation", memory_worker)
-        self.assertIn("QueryInformationJobObject", memory_worker)
+        self.assertIn("mod job_quota;", memory_worker)
+        self.assertIn("super::job_quota::require_unlimited()?;", memory_worker)
+        self.assertIn(
+            "QueryInformationJobObject",
+            (RUNNER_SOURCE.parent / "job_quota.rs").read_text(encoding="utf-8"),
+        )
         self.assertIn("K32GetProcessMemoryInfo", memory_worker)
+
+    def test_residency_audit_cannot_impersonate_the_accepted_worker(self) -> None:
+        source = MEMORY_WORKER_SOURCE.read_text(encoding="utf-8")
+        self.assertIn("#[global_allocator]", source)
+        self.assertIn('"unqualified-resident-memory-audit-v1"', source)
+        self.assertIn('"certification_eligible": false', source)
+        parent = RUNNER_SOURCE.read_text(encoding="utf-8")
+        self.assertIn('Some(&json!("isolated-peak-rss-v1"))', parent)
+        self.assertIn(
+            ".validate_reported_peak(reported_peak_working_set_bytes)", parent
+        )
+        self.assertIn("terminal_memory.peak_rss_bytes", parent)
 
     def test_bare_metal_qualification_is_offline_and_fail_closed(self) -> None:
         source = BARE_METAL_ENVIRONMENT.read_text(encoding="utf-8")

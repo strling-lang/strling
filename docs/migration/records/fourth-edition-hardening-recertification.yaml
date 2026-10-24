@@ -7,6 +7,10 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tests/_design/unit/memory-worker-lifetime.md
+        - tooling/tests/memory_worker_lifetime.rs
+        - tests/certification/performance-resource/1.0/runner/src/memory_lifetime.rs
+        - tests/certification/performance-resource/1.0/runner/src/resident_allocator.rs
         - tooling/tests/resident_owned_allocation.rs
         - tooling/tests/resident_allocation.rs
         - tooling/tests/resident_retirement.rs
@@ -2494,6 +2498,25 @@ checkpoints:
           - check: Record end-to-end qualification disposition without claiming closure
             result: not_run
             details: "Preserve all101checkpoints and readiness, adding no scope paths. Polling stays PAUSED; no manual workstation step, unchanged-provider probe, native challenge or product sample. Memory lifetime and observer-effect qualification, conditioning and actual-worker eligibility remain unsatisfied, so no exact candidate freeze or authoritative campaign is started. Every ceiling, workload, sample count, security/Jest/narrowJUnit/soleVSCE, provenance and isolation guarantee remains. Current38/80/126/126 membership, Full/Release125PASSsoleVSCE, fresh independent same-SHA no-reuse Release, source-distinct qualification and pin-only promotion if required, signing, qualified immutable trusted verification and guarded clean formal closure remain mandatory. Retain accepted52.0583percent governance-gate improvement only; current test durations are diagnostic and prove no total-certification improvement. H08 remains OPEN; no request to the owner."
+    - name: Integrate terminal memory observation and the actual worker residency audit
+      status: in_progress
+      evidence:
+          - check: Integrate exact-child process lifetime RSS into the real memory parent
+            result: passed
+            details: The production memory-parent path now retains a duplicate handle and birth before controlled_spawn resumes the child; it reads the original kernel peak after exit, including reporting and teardown. Native launch/lifetime tests pass13cases; two ignored functions are explicitly invoked child entry points, not skipped integration work. A teardown native allocation of32MiB produces retained terminal peak39714816bytes. This is a functional lifetime-scope challenge, not a product ceiling or observer-neutrality proof. Both failed macro-limit builds remain retained; corrected full runner passes39tests. Raw requested input and child stdout/stderr byte arrays survive non-UTF8, malformed JSON and nonzero exit. Failure-only cleanup uses the owned handle and a bounded5second wait. Source-held stream-final terminal608355340bb47c81e5fc20af647fb2ebc08d1a922d2fedb9e2ed477b73e98e23 preserves unchanged source bytes and released lease.
+          - check: Wire the existing serialized resident ledger into the actual worker allocator
+            result: passed
+            details: A separate resident-memory-audit Cargo feature installs a static global allocator in the actual memory_worker.rs binary before main. The private System-allocation header binds exact layout/address and ledger token; zeroing/alignment, allocation/retirement and allocate-copy-retire reallocation use existing serialized ledger callbacks. The static ledger has its own page-lifetime anchor.18native allocator/ledger tests pass, including terminal exhaustion and concurrent-bootstrap rejection. The audit has a distinct unqualified-resident-memory-audit-v1 contract that the parent, controller and independent reader reject for certification. It does not prove protection during native allocator callbacks or cover loader/native/image/stack/descendant routes. No observer bytes are subtracted.
+          - check: Independently bind nested worker streams, lifetime and no-reuse
+            result: passed
+            details: The production controller requires exact positive bounded terminal counters and a closed lifetime object; the separate data-only reader independently checks fields, strict denial flags, raw byte arrays, child contract/placement/peak, parent lifetime containment and unique memory-child PID/birth per cohort. Retain the stream-green fixture-identity failure9d07cb344f6b191d713a6547d84e805eb384c0461ec145fff621c8abb29b5eff; corrected stream-final passes21reader tests, including wrong-root and different-parent leaf-replay attacks. Earlier integration passes124affected Python cases per Native/WSL, including the all54coordinate producer compatibility and synthetic954observation reference/holdout checks. These are software validation, not new empirical reference cohorts or conditioning qualification.
+          - check: Test the new actual audit worker without bypassing inherited controls
+            result: passed
+            details: "One source-held launch of the newly built real audit worker with the semantic-input contract example and governed1warmup/1sample memory counts exits1 before input parsing: the Windows ancestor CPU quota is unknown (only the immediate job was queried). Raw stdout is empty; stderr hash3a47b9d4daad2b7b931fd51d25e88a654e47f31f238a4e4390814606dff02d32 is retained under target/codex-tools/h08-real-worker-integration-v1/actual-audit-worker. This rejection is the actual outcome, not a qualified positive run. Real-integration terminalcfe5c2844dd527a60cb9782f4687bd72772ba71b052eca616b95e791e2712832 also binds successful default worker/runner builds, cross-platform regressions and governance. Filesystem escalation only permits the conventional source/index lease; the inherited quota guard is unchanged. No earlier manual diagnostic is transferred, no ancestor control is changed, no broker or manual procedure is introduced."
+          - check: Preserve qualification dependencies and all authoritative campaigns
+            result: not_run
+            details: All102prior checkpoints/readiness remain. Add four exact scope paths; dependency review proves the new feature adds no dependencies/default-feature/profile changes and all16lock bytes remain unchanged. Update only the reviewed Cargo manifest identity; registered resource-identity projection equals existing outputs, so no generation or recalibration is needed. Available saved projects expose only the local execution host; the trusted cloud workflow verifies candidate data and does not execute certification workers. Actual-worker complete inherited-job provenance, pre-entry native/loader/stack/image/descendant coverage and observer-effects qualification remain external prerequisites to positive worker qualification. All12conditioning obligations, fresh9reference/source-distinct9holdout and adverse discrimination challenges remain unqualified. No candidate freeze, authoritative38/80/126/126, independent no-reuse Release, verifier qualification/promotion, signing, trusted cloud result or closure is claimed. H08 OPEN; zero authenticated samples; no total-certification speedup.
+
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

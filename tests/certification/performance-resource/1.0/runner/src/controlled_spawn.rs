@@ -8,7 +8,7 @@ pub fn spawn(command: &mut Command) -> io::Result<Child> {
 }
 
 #[cfg(target_os = "windows")]
-pub use native::spawn;
+pub use native::{spawn, spawn_observed};
 
 #[cfg(target_os = "windows")]
 mod native {
@@ -361,6 +361,20 @@ mod native {
 
     pub fn spawn(command: &mut Command) -> io::Result<Child> {
         spawn_with(command, prepare_and_resume)
+    }
+
+    /// Retain observer state while the child's initial thread is suspended.
+    /// The observer never replaces preparation, inherited controls or cleanup.
+    pub fn spawn_observed<T>(
+        command: &mut Command,
+        observe: impl FnOnce(&Child) -> io::Result<T>,
+    ) -> io::Result<(Child, T)> {
+        let mut observation = None;
+        let child = spawn_with(command, |child| {
+            observation = Some(observe(child)?);
+            prepare_and_resume(child)
+        })?;
+        Ok((child, observation.unwrap()))
     }
 
     #[cfg(test)]

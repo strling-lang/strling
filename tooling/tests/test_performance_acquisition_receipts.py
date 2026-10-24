@@ -14,7 +14,7 @@ from tooling.tests.test_performance_envelope_acquisition import result_for
 from tooling.tests import test_performance_envelope_acquisition as producer_fixture
 
 
-def fixture(coordinate=None, ordinal=0, source="a", delay=0):
+def fixture(coordinate=None, ordinal=0, source="a", delay=0, worker_ordinal=None):
     inner = envelope_fixture.ReceiptTests()
     inner.setUp()
     root = Path(__file__).resolve().parents[2]
@@ -117,7 +117,40 @@ def fixture(coordinate=None, ordinal=0, source="a", delay=0):
         )
         inner.files[name] = encoded(identity)
     raw = result_for(command, environment)
+    if memory:
+        worker_ordinal = ordinal if worker_ordinal is None else worker_ordinal
+        raw["memory_lifetime"].update(
+            pid=456 + worker_ordinal,
+            birth_100ns=1000010 + worker_ordinal,
+            exit_100ns=1000110 + worker_ordinal,
+        )
     inner.files["stdout.bin"] = encoded(raw)
+    if memory:
+        worker = {
+            name: raw[name]
+            for name in (
+                "effective_cpu_affinity",
+                "observed_processor_groups",
+                "observed_logical_processors",
+            )
+        }
+        worker.update(
+            worker_contract="isolated-peak-rss-v1",
+            peak_working_set_bytes=raw["memory_lifetime"][
+                "worker_reported_peak_rss_bytes"
+            ],
+        )
+        inner.files["stderr.bin"] = encoded(
+            dict(
+                contract="retained-memory-worker-streams-v1",
+                pid=raw["memory_lifetime"]["pid"],
+                birth_100ns=raw["memory_lifetime"]["birth_100ns"],
+                input_bytes=list(b'{"contract_version":"1.0.0"}'),
+                stdout_bytes=list(encoded(worker)),
+                stderr_bytes=[],
+                success=True,
+            )
+        )
     inner.seal()
     outer_plan = dict(
         contract="unqualified-enclosed-coordinate-v1",
@@ -218,6 +251,75 @@ class AcquisitionReceiptTests(unittest.TestCase):
             "independence_qualified",
         ):
             self.assertIs(value[key], False)
+
+    def test_independent_memory_projection_rejects_lifetime_gaps(self):
+        files, expected = fixture(["memory:kernel-peak-rss", "fixture:protocol-common"])
+        original = json.loads(files["process/stdout.bin"])
+        plan, process = expected["acquisition_plan"], expected["process_plan"]
+        self.assertEqual(
+            adapter._projection(original, plan, process)["samples"], [123456]
+        )
+        for name, value in [
+            ("pid", True),
+            ("pid", 0),
+            ("birth_100ns", 0),
+            ("exit_100ns", 100),
+            ("exit_100ns", False),
+            ("worker_reported_peak_rss_bytes", 123457),
+            ("terminal_peak_rss_bytes", 123455),
+            ("terminal_peak_rss_bytes", True),
+            ("contract", "self-report-only"),
+            ("observer_effects_qualified", True),
+            ("residency_qualified", 0),
+            ("extra", 1),
+        ]:
+            with self.subTest(name=name, value=value):
+                raw = copy.deepcopy(original)
+                raw["memory_lifetime"][name] = value
+                with self.assertRaises(ValueError):
+                    adapter._projection(raw, plan, process)
+        for name in ("memory_lifetime", "memory_worker_contract"):
+            raw = copy.deepcopy(original)
+            del raw[name]
+            with self.assertRaises(ValueError):
+                adapter._projection(raw, plan, process)
+        raw = copy.deepcopy(original)
+        raw["memory_worker_contract"] = "unqualified-resident-memory-audit-v1"
+        with self.assertRaises(ValueError):
+            adapter._projection(raw, plan, process)
+
+    def test_nested_worker_streams_are_exact_and_unique(self):
+        files, _ = fixture(["memory:kernel-peak-rss", "fixture:protocol-common"])
+        raw = json.loads(files["process/stdout.bin"])
+        packet = json.loads(files["process/stderr.bin"])
+        text = encoded(packet).decode()
+        adapter._memory_worker_streams(text, raw)
+        for name, value in [
+            ("pid", 999),
+            ("birth_100ns", True),
+            ("success", False),
+            ("input_bytes", [True]),
+            ("stdout_bytes", [256]),
+            ("stdout_bytes", list(b"{}")),
+            ("stderr_bytes", [None]),
+            ("extra", 1),
+        ]:
+            with self.subTest(name=name):
+                bad = copy.deepcopy(packet)
+                bad[name] = value
+                with self.assertRaises(ValueError):
+                    adapter._memory_worker_streams(encoded(bad).decode(), raw)
+        for bad in ("", text + "\n" + text):
+            with self.assertRaises(ValueError):
+                adapter._memory_worker_streams(bad, raw)
+
+    def test_worker_from_another_root_lifetime_is_rejected(self):
+        files, expected = fixture(
+            ["memory:kernel-peak-rss", "fixture:protocol-common"],
+            worker_ordinal=10_000_000,
+        )
+        with self.assertRaisesRegex(ValueError, "root lifetime"):
+            adapter.verify_acquisition_receipt(files, expected)
 
     def test_every_byte_stream_is_bound(self):
         for name in self.files:
@@ -649,6 +751,29 @@ class CohortTests(unittest.TestCase):
                 pins=pins,
                 coordinates=coordinates,
             )
+
+    def test_memory_leaf_reuse_with_different_parent_receipts_is_rejected(self):
+        first = next(
+            i * 9
+            for i, key in enumerate(self.coordinates)
+            if key[0].startswith("memory:")
+        )
+        second = first + 1
+        bundles = list(self.bundles)
+        expectations = list(self.expectations)
+        bundles[second], expectations[second] = fixture(
+            self.coordinates[first // 9],
+            ordinal=second,
+            worker_ordinal=first,
+        )
+        pins = dict(
+            self.pins,
+            acquisition_sha256=digest(
+                adapter.encode([e["terminal_sha256"] for e in expectations])
+            ),
+        )
+        with self.assertRaisesRegex(ValueError, "memory worker evidence reuse"):
+            self.assemble(bundles, expectations, pins=pins)
 
 
 if __name__ == "__main__":

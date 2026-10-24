@@ -5437,3 +5437,41 @@ same-SHA no-reuse Release, source-distinct qualification/promotion if required,
 signing, qualified immutable trusted verification before pin promotion and
 guarded clean formal closure. Security/Jest/narrowJUnit/license/provenance controls
 remain unchanged. H08 OPEN.
+
+### Owned allocation identities — 2026-10-24 UTC
+
+Checkpoint101 starts atb338e31b6a82c2adc5f2dbe1159bc72215339402. Optional
+OwnedAllocation carries private issuing-ledger/token/address/byte-count identity,
+borrows its session, and is neither Copy nor Clone. Its consuming retirement
+operation supplies the captured range to the callback and targets its issuer.
+Dropping an unretired handle permanently invalidates without native cleanup;
+forgetting one leaves a ledger lifetime that blocks successful session finish.
+
+Preserve missing-operation red9ec67d23 and preliminary green09a190f5. Source review
+finds that a mixed raw/owned session can still release a forgotten handle through
+a guessed local token. Introduce a distinct OwnedStorageSession with a private
+inner session and only owned allocation/finish operations. The initial tests are
+retained as preliminary evidence, not accepted coverage of this edge case.
+
+Corrected source-bound greena65cd208 passes18owned-handle tests per platform:
+6new cases plus12internal ledger cases. Allocation32, retirement32,
+serialization19 and storage18 direct dependents pass on Native and WSL. Four
+negative compilations per platform reject double consumption E0382, premature
+session finish E0505, copying E0277 and raw-token release E0599. Explicitly bound
+fixture04a42394 passes Rust1.75no-std on both. Integrated integrity passes first;
+all raw outputs retained, closing source frames unchanged and owned leases
+released. Diagnostic72.511907s/77.0558099s cover different tests and establish no
+runtime improvement. No product integration, native challenge or campaign sample.
+
+Preserve all100prior checkpoints/readiness and add1scope path; no generated family
+matches or authority-bearing evidence refresh. Polling remains PAUSED. No manual
+workstation request or unchanged-provider probe. Callbacks still must honor the
+range; unsafe/alternate/reallocation/bootstrap routes, stack/image/thread/
+descendant coverage and observer effects remain unqualified. No limits, samples,
+workloads, security/Jest/narrowJUnit/soleVSCE/provenance/isolation controls change.
+All12conditioning obligations, canonical preparation before exact freeze,
+runtime/prerequisites,38/80/126/126profiles with125PASSsoleVSCE for Full/Release,
+fresh independent same-SHA no-reuse Release, source-distinct qualification/promotion
+if required, signing, qualified immutable verification before promotion and
+guarded clean formal closure remain. Retain the accepted52.0583percent governance
+gate reduction without a whole-certification claim. H08 OPEN; not certified.

@@ -78,3 +78,19 @@ the requested bytes and satisfy alignment independently; this operation does
 not prove those contracts or coverage of bypasses, reallocations, bootstrap,
 stacks, images, other threads or descendants. It does not establish residency
 during allocation or observer neutrality. No product integration or gate change.
+
+## Allocation ownership handle
+
+Provide an optional non-Copy handle with private ledger, token, address and byte
+count, borrowing the session until retirement. The consuming retirement callback
+receives the captured range and always targets the issuing ledger. Dropping a
+live handle poisons without native cleanup. Forgetting one must leave an occupied
+lifetime that prevents successful session finish. Prove duplicate consumption
+and session destruction before later handle use fail compilation. Test two
+issuers, overlap, abandonment, forgotten handles, raw failures and callback panic.
+The handle cannot prove the allocator or free callback honors its range, or
+prevent unsafe code and alternate allocation routes. It is not a coverage proof.
+
+Keep the owned-only session distinct from the legacy raw-token session. Expose
+no inner session or raw release/acquire API, including after a handle is forgotten.
+A compiler test must reject a raw-token release on the owned-only session.

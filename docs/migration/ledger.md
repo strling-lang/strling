@@ -9583,3 +9583,27 @@ unchanged-provider probe. Polling remains PAUSED. Allocator bypass/reallocation,
 bootstrap, callbacks, stack/image/thread/descendant coverage and observer effects
 remain unqualified. All conditioning and authoritative profile/security/trust/
 closure requirements remain unchanged. H08 OPEN.
+
+### Owned allocation identities — 2026-10-24 UTC
+
+Checkpoint101 followsb338e31b. Add a non-Copy allocation handle containing private
+issuer/token/range identity. Retirement consumes the handle and passes its range
+to the callback. Abandonment invalidates without cleanup; forgotten handles leave
+live lifetimes that prevent successful finish. A distinct owned-only session
+hides raw-token operations, so guessed local tokens cannot release these handles.
+
+Retain red9ec67d23 and preliminary green09a190f5. Review found the initial mixed
+session still allowed legacy token release after forgetting a handle; that design
+is not accepted as the ownership proof. Corrected greena65cd208 passes18handle
+cases (6new plus12ledger),32allocation/32retirement/19serialization/18storage per
+platform, Rust1.75no-std both, and4specific compiler rejections each on Native/WSL:
+duplicate retirement, premature finish, Copy and raw-token release. Integrated
+integrity passes first; source frames unchanged and leases released. Different
+validation workloads72.511907s/77.0558099s imply no comparative speedup.
+
+Preserve all100checkpoints/readiness; add1scope path, regenerate nothing. No native
+challenge, product sample, manual workstation procedure or unchanged-provider
+query. Polling stays PAUSED. The handle cannot prove callback behavior or complete
+memory/observer coverage. Every conditioning, profile, independent Release,
+security, signing, trusted-verification and clean-closure requirement remains.
+H08 OPEN; certification not complete.

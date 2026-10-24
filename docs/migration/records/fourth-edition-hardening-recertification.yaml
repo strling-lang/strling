@@ -7,6 +7,7 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/tests/resident_owned_allocation.rs
         - tooling/tests/resident_allocation.rs
         - tooling/tests/resident_retirement.rs
         - tooling/tests/test_governance_pattern_cache.py
@@ -2463,6 +2464,21 @@ checkpoints:
           - check: Preserve historical and authoritative boundaries
             result: not_run
             details: "Preserve all99checkpoints/readiness and add1scope path. No generated family matches; no authority-bearing regeneration, native challenge, product sample or workstation step. Heartbeat polling remains PAUSED; no unchanged-provider check is repeated. Complete memory/observer coverage and all12conditioning obligations remain open; optional allocator entry is one tested component only. Preserve every threshold/workload/sample count, current38/80/126/126membership, Full/Release125PASSsoleVSCE, fresh independent same-SHA no-reuse Release, runtime/prerequisites and canonical preparation before exact freeze, source-distinct qualification/promotion if required, signing, qualified immutable trusted verification before pin promotion, and guarded clean formal closure. Existing security/Jest/narrowJUnit/license/provenance controls remain. H08 OPEN."
+    - name: Bind optional allocation ownership to an owned-only session
+      status: in_progress
+      evidence:
+          - check: Establish an issuer-bound consuming allocation handle
+            result: passed
+            details: "Checkpoint101 follows cleanb338e31b6a82c2adc5f2dbe1159bc72215339402. Add OwnedAllocation with private issuing ledger, token, address and byte count. It borrows the session, is non-Copy, exposes read-only range accessors and consumes itself on retirement. Retirement passes the captured range to the callback and always uses the issuing ledger. Drop of an unretired handle invalidates without native cleanup; forgetting a handle leaves a live lifetime that prevents successful session finish. Allocator/free callbacks still must honor the range; unsafe/bypass/native routes and observer neutrality remain unproved."
+          - check: Reject mixed ownership rather than accepting preliminary tests as coverage
+            result: passed
+            details: "Retain expected-red9ec67d23c11efdc3a1fd4bbc96d78c417aaa05e29ad513f72289618214183c35 and preliminary green09a190f5f8e7e751496db778b84921ab451371dd7b4ba0f96b328e0472eea2cb. Review identifies that putting private handles on the raw-token session permits a forgotten handle's local token to be guessed through legacy release. Do not accept preliminary tests as proving that boundary. Introduce distinct OwnedStorageSession via start_owned; its inner raw session stays private and it exposes only owned allocation and finish. Add a specific compiler rejection for raw-token release after forgetting a handle. Preserve the preliminary attempt; validate changed source in freshv2 without replaying any authoritative sample."
+          - check: Independently verifiable component and compiler evidence
+            result: passed
+            details: "Corrected greena65cd2080a8e1cd369885d0f1dc179c0b62d02646d4a6c56fb21898565755b6c passes18owned-handle cases (6new plus12ledger cases),32allocation/32retirement/19serialization/18storage direct dependents on Native and WSL. Four negative compilations on each platform reject double retirement E0382, early session finish E0505, Copy E0277 and raw release E0599. Rust1.75no-std passes on both with explicit fixture04a42394 binding. Integrated integrity passes first; all raw logs preserved, source frames unchanged and leases released. Preliminary72.511907s/corrected77.0558099s are different validation workloads, not a performance comparison. No product/native challenge or campaign sample is run."
+          - check: Preserve every authoritative completion requirement
+            result: not_run
+            details: "Preserve all100prior checkpoints/readiness and add1scope path. No generated family matches or authority-bearing refresh. Polling remains PAUSED; no workstation request or repeated unchanged-provider query. No gate, ceiling, workload, sample count, provenance, security/Jest/narrowJUnit/soleVSCE or isolation control changes. Owned allocation handles remain optional component mechanisms, not complete allocator/bootstrap/stack/image/thread/descendant or observer-effect coverage. All12conditioning obligations and full exact-source canonical preparation/runtime/prerequisites, actual38/80/126/126profiles with125PASSsoleVSCE for Full/Release, independent same-SHA no-reuse Release, source-distinct qualification/promotion if required, fresh performance evidence, signing, qualified immutable trusted verification before promotion and guarded clean formal closure remain mandatory. Accepted checkpoint98governance-only52.0583percent reduction retained without a total-certification claim. H08 OPEN; certification not complete."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

@@ -25,6 +25,17 @@ extern "system" {
 }
 
 struct NativePages;
+
+fn system_allocation_address(pointer: *mut u8) -> Result<usize, u32> {
+    if pointer.is_null() {
+        // GlobalAlloc provides no error code. HeapAlloc does not set LastError;
+        // zero marks an unknown allocation cause, not a Win32 success result.
+        Err(0)
+    } else {
+        Ok(pointer as usize)
+    }
+}
+
 impl PageOps for NativePages {
     fn lock(&mut self, page: usize) -> Result<(), u32> {
         if unsafe { VirtualLock(page as *mut c_void, PAGE_BYTES) } == 0 {
@@ -97,7 +108,8 @@ impl<const L: usize, const P: usize> ResidentAllocator<L, P> {
         self.ledger.invalidate();
         self.initialized.store(3, Ordering::Release);
         // No Rust formatting, stdout initialization or heap allocation in an
-        // allocator callback. Preserve the exact failure code on the raw stream.
+        // allocator callback. Preserve supplied failure codes on the raw stream;
+        // allocation failure code zero explicitly means no cause is available.
         let (kind, code) = match error {
             ledger::Failure::Lock { code, .. } => (b'L', code),
             ledger::Failure::Unlock { code, .. } => (b'U', code),
@@ -159,11 +171,7 @@ impl<const L: usize, const P: usize> ResidentAllocator<L, P> {
             } else {
                 System.alloc(combined)
             };
-            if pointer.is_null() {
-                Err(unsafe { GetLastError() })
-            } else {
-                Ok(pointer as usize)
-            }
+            system_allocation_address(pointer)
         });
         match result {
             Ok((token, address)) => {
@@ -228,6 +236,26 @@ unsafe impl<const L: usize, const P: usize> GlobalAlloc for ResidentAllocator<L,
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    extern "system" {
+        fn SetLastError(code: u32);
+    }
+
+    #[test]
+    fn system_allocator_failure_does_not_claim_thread_last_error() {
+        let pointer = std::ptr::NonNull::<u8>::dangling().as_ptr();
+        for marker in [0, 5, 0xdead_beef] {
+            unsafe { SetLastError(marker) };
+            let failed = system_allocation_address(std::ptr::null_mut());
+            let after_failure = unsafe { GetLastError() };
+            let succeeded = system_allocation_address(pointer);
+            let after_success = unsafe { GetLastError() };
+            assert_eq!(failed, Err(0));
+            assert_eq!(after_failure, marker);
+            assert_eq!(succeeded, Ok(pointer as usize));
+            assert_eq!(after_success, marker);
+        }
+    }
 
     #[test]
     fn actual_native_allocator_zeroes_aligns_reallocates_and_retires() {

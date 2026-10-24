@@ -20,6 +20,13 @@ until the replacement is copied and registered. No callback allocates metadata.
 Allocation failure, lock failure, capacity exhaustion, reentry and contention
 are terminal; unregistered pointers must never be returned as success.
 
+System's allocator returns a pointer or null without an error code. A null
+allocation must retain an explicitly unknown cause (allocation failure code
+zero), independent of unrelated thread-local Windows last-error values. Native
+lock and unlock failures still retain their documented Windows error codes.
+Test the production pointer conversion with distinct last-error markers and
+both null and non-null pointers; it must preserve the thread's last-error value.
+
 Positive and negative native tests exercise the integrated allocator and the
 actual worker's compiler path. The audit build cannot supply authoritative
 evidence: native allocator bypasses, loader/bootstrap, images, stack growth,

@@ -9678,3 +9678,35 @@ Four exact scope paths are added. Complete native/bootstrap/descendant/observer
 qualification, inherited-control provenance and all12conditioning guarantees,
 fresh independent reference/holdout/adverse cohorts and both authoritative
 campaigns remain. H08 OPEN; no authenticated sample or total-certification speedup.
+
+### Allocator attribution and complete registry integration — 2026-10-24 UTC
+
+Checkpoint104 follows87004d1e. The canonical LSP payload generator repairs the
+pre-existing target-serialization input drift after preserving both earlier
+inventory failures and all22original payload files. Both kernel binaries and the
+manifest change; the other19files remain identical. Corrected38package tests,
+build-check and complete package certification pass. The original environment-
+contaminated1failure/37pass remains. Reproducible payload/VSIX builds, runtime
+kernel, LSP and install/upgrade/uninstall checks pass; stdout8bc5187b is retained.
+
+At clean87004d1e the complete registered WSL inventory passes all36families,
+including public-contract builds. Raw stdoutd5dc3c9f and terminalb4756b81 bind
+unchanged source and retired owner10948. This is repository integration evidence;
+it is not an authoritative profile result or a certification timing comparison.
+
+Correct the actual audit allocator's null-pointer evidence: GlobalAlloc supplies
+no error code, and HeapAlloc does not set LastError. Use explicit unknown cause0
+while preserving terminal failure and native lock/unlock codes. The production
+conversion rejects unrelated0/5/deadbeef error attribution and retains exact
+non-null addresses. All19audit-worker tests, both worker builds,9architecture
+checks, performance integrity, governance and formatting pass. The source lease
+retires unchanged. Retain the pre-lease receipt-directory invocation failure.
+
+Continue exact source integration and source-bound metadata verification. All103
+prior checkpoints/readiness and scope remain. Actual-worker ancestor provenance,
+complete memory/native/bootstrap/descendant/observer qualification, all12
+conditioning guarantees and fresh independent reference/holdout/adverse cohorts
+remain open. No favorable-context retry, manual diagnostic transfer, host change,
+broker or manual procedure. Preserve every acceptance, source, security, sample,
+no-reuse, authoritative campaign and trusted-closure obligation. H08 OPEN;
+zero authenticated samples, polling PAUSED, no total-certification gain claimed.

@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/resident_storage.rs
+        - tooling/tests/resident_storage.rs
+        - tests/_design/unit/performance-resident-storage.md
         - tooling/tests/resident_page_serialization.rs
         - tests/_design/unit/test_generated_artifact_reference_prefetch.md
         - tooling/resident_page_ledger.rs
@@ -2396,6 +2399,21 @@ checkpoints:
           - check: Autonomous continuation and unchanged completion boundary
             result: not_run
             details: "User prohibits further manual PowerShell/process/setting/diagnostic procedures; supersede prior next-step requests prospectively. Continue authorized repository engineering without transferring completed no-job observations to later workers or escaping jobs, adding brokers/injection, changing privileges/security/power or bypassing quota. Storage/callback, allocator bootstrap/routes, image/stack/thread/descendant lifetimes, observer effects and all12conditioning obligations remain unqualified. Actual worker ancestor-quota provenance remains an execution-provider dependency until independently established; immediate-job assertions cannot supply it. Preserve all95historical checkpoints/readiness and add exactly1scope path. No36family registry match or generation. Original ceilings/workloads/sample counts/security/Jest/JUnit/soleVSCE/provenance/isolation remain. Fresh9reference/9holdout/adverse qualification, full36canonical preparation/cleanLSP before exact freeze/runtime/prerequisites, source-distinctQ/P actual38/80/126 with independent fresh same-SHA no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable verification before pin-only promotion and guarded final cleanCLOSED remain. H08 OPEN; continuation ACTIVE."
+    - name: Bind resident ledger storage lifetime
+      status: in_progress
+      evidence:
+          - check: Stable one-use observer backing and conservative retirement
+            result: passed
+            details: "Checkpoint97 follows c8b1d1b0e2531b11c51422df868230c06d52a574. Pinned backing acquires its full byte range in the same page-union ledger before returning a session. Overlapping client lifetimes cannot unlock backing early; the private anchor cannot be explicitly released and finish requires the anchor to be the sole live lifetime. Abandonment, bootstrap failure and invalid teardown poison permanently without speculative native cleanup. Pinning is address stability, not residency: PageOps implementations, session stack, callbacks, bootstrap, allocator routes, images, threads and descendants still require coverage. No product integration or native residency challenge."
+          - check: Integrity-first source-bound deterministic checks
+            result: passed
+            details: "Retain expected-red113e6e7ae1a350f17fb02c849f291fc0ddd6619b601e8f7cba59f7da52f311c3. Native0ec42cce4161d25ec1159f912f61ae5a049dd84d67316846bbae2cc7e600ba84 passes18tests in14.8829597s including compile/no-std/format; parity675b293348bc6107d4d38377ec9c931b29ffef8442d3144145d9157112655c58 passes18WSL storage tests and19serialization direct dependents on each platform in42.9966531s. Six new storage cases accompany12existing ledger tests. Preliminary compiler fixtures were ignored and omitted from the general source frame; retain those diagnostics without treating them as sufficient fixture provenance. Narrow corrected af71d1d0fa3299a111268da8f5e5492ba430250973d58489e050c2c9e0d0137f explicitly pins all3fixtures and includes them in the unchanged held source frame137fc8ed4f2394eb076d37324a1ba39d7bb8cfb3c12945576ac766f9aa301d68. Native and WSL reject borrowed backing movement with E0505 and unpinning with E0277, and pass Rust1.75no-std in11.0908052s. All leases release. No repeated behavioral suites, product samples, qualification or speedup claim from this narrow correction."
+          - check: Preserve commit-reader contract correction
+            result: passed
+            details: "First commit audit b272df5ff63d61c5e261c4d8ba776b23b2ede1fae6ac2cd60ffd3b60f132addc stops before staging because it expects a persisted source-after.json that the pinned test harness does not produce. That harness compares its closing frame to source-before before releasing its owned lease; any mismatch changes terminal status to failed. Independently pin the executed wrappers through plan.json and the reviewed base harness, and require their successful terminal/released lease plus current file-byte equality. Preserve the failed reader and use a distinct pinned v2 audit; no test or source evidence is regenerated."
+          - check: Unchanged authoritative completion boundary
+            result: not_run
+            details: "Preserve all96historical checkpoints/readiness and add exactly3scope paths. No generated family matches and no authority-bearing artifacts are regenerated. Whole-process memory and observer coverage, all12conditioning obligations and actual worker eligibility remain open; the consumed manual boundary diagnostic does not qualify future workers. Unknown inherited quota remains an execution-provider dependency. No further manual procedure, job escape, broker, injection, privilege/security/power change or gate bypass. All thresholds, workloads, sample counts, Jest security, narrow JUnit policy and sole VSCE waiver remain. Fresh qualification, full36canonical preparation/cleanLSP before exact freeze/runtime/prerequisites, source-distinct qualification/promotion campaigns if required, actual38/80/126 plus fresh independent same-SHA no-reuse Release126 each125PASSsoleVSCE, signing, qualified immutable trusted verification before pin promotion and guarded final cleanCLOSED remain. Validation durations are diagnostic, not equivalent-workload or total certification improvements. H08 OPEN; continuation ACTIVE."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

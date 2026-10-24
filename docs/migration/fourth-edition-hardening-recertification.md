@@ -5288,3 +5288,36 @@ canonical preparation/cleanLSP before freeze, exact runtime/prerequisites, both
 source-distinctQ/P38/80/126 and fresh independent same-SHA no-reuse Release126
 each125PASSsoleVSCE, signing/qualified immutable verification before pin promotion,
 and guarded closure with a clean tree remain. H08 OPEN; continuation ACTIVE.
+
+### Resident observer backing lifetime — 2026-10-24 UTC
+
+Checkpoint97 starts at c8b1d1b0e2531b11c51422df868230c06d52a574. Optional
+StorageLedger requires a pinned stable address and a one-use session. Bootstrap
+registers the complete backing object with the same page-union ledger used for
+clients. The private anchor cannot be released through the client API. Explicit
+finish fails before unlock if clients remain; abandonment poisons without native
+cleanup guesses. Native failure/panic retains conservative terminal behavior.
+Pinning alone proves no residency; callback and session memory remain separate.
+
+Expected-red113e6e7a is retained. Native0ec42cce passes18tests including6new
+storage cases, and parity675b2933 passes18WSL tests plus19serialization tests
+on each platform. The initial ignored compiler fixtures were absent from the
+general source frame. Their preliminary compiler diagnostics remain preserved;
+only corrected af71d1d0 explicitly binds all3fixtures and records their unchanged
+held frame137fc8ed. Both platforms reject movement while borrowed (E0505) and
+unpinning (E0277), and build no-std with Rust1.75. All leases release. The three
+diagnostic phase durations are14.8829597s,42.9966531s and11.0908052s; these are
+not controlled before/after runtime or total certification improvements.
+
+Preserve all96historical checkpoints/readiness and add exactly3scope paths.
+No generated family matches, no evidence refresh, product integration, native
+challenge or performance sample occurs. Whole-process allocator/bootstrap,
+callback/image/stack/thread/descendant and observer coverage remain incomplete.
+Actual worker quota provenance and all12conditioning obligations remain open;
+the consumed manual diagnostic never qualifies later workers. Continue without
+manual workstation procedures, job escape, brokers or host-setting changes.
+All original thresholds/counts/security/provenance/trust guarantees and actual
+38/80/126/126 profile membership remain. Fresh qualification, canonical preparation,
+exact freeze/prerequisites, source-distinct campaigns if required, independent
+same-SHA no-reuse Releases, signing, qualified immutable trusted verification
+before pin promotion and guarded clean closure remain. H08 OPEN; continuation ACTIVE.

@@ -16,6 +16,7 @@ pub trait PageOps {
 pub enum Failure {
     Poisoned,
     ConcurrentOrReentrant,
+    LiveLifetimes,
     InvalidRange,
     Capacity,
     TokenExhausted,
@@ -119,6 +120,11 @@ impl<const L: usize, const P: usize> SerializedLedger<L, P> {
         self.state.load(Ordering::Acquire) == POISONED
     }
 
+    /// Abandon an incomplete acquisition without guessing native cleanup.
+    pub fn invalidate(&self) {
+        self.state.store(POISONED, Ordering::Release);
+    }
+
     fn enter(&self) -> Result<Entry<'_>, Failure> {
         match self
             .state
@@ -153,6 +159,19 @@ impl<const L: usize, const P: usize> SerializedLedger<L, P> {
         let entry = self.enter()?;
         // SAFETY: Same exclusive-entry invariant as acquire.
         let result = unsafe { &mut *self.ledger.get() }.release(token, ops);
+        entry.complete(result)
+    }
+
+    /// A storage anchor can retire only after every client lifetime has retired.
+    pub fn release_last(&self, token: u64, ops: &mut impl PageOps) -> Result<(), Failure> {
+        let entry = self.enter()?;
+        // SAFETY: Entry exclusively owns the cell through validation/callbacks.
+        let ledger = unsafe { &mut *self.ledger.get() };
+        let result = if ledger.live_lifetimes() != 1 {
+            ledger.fail(Failure::LiveLifetimes)
+        } else {
+            ledger.release(token, ops)
+        };
         entry.complete(result)
     }
 }

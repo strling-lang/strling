@@ -9486,3 +9486,28 @@ eligibility and all12conditioning obligations remain. All original thresholds,
 counts and security/trust controls remain; fresh qualification, canonical
 preparation, both signed/trusted campaigns with independent Releases, and guarded
 cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no manual command requested.
+
+### Resident observer backing lifetime — 2026-10-24 UTC
+
+Checkpoint97 follows c8b1d1b0. One-use pinned backing registers its complete byte
+range in the resident page ledger. Shared client pages retain protection until
+their last owner retires. Only explicit finish with no live clients can retire
+the private backing anchor; abandoned or failed sessions poison without cleanup
+guesses. This is optional lifecycle infrastructure, not whole-process residency.
+
+Retain red113e6e7a. Native0ec42cce passes18storage/ledger tests; parity675b2933
+passes18on WSL and19serialization dependents on each platform. Preliminary
+ignored compiler fixtures lacked source-frame binding. Narrow af71d1d0 explicitly
+pins all3fixtures and preserves them in held frame137fc8ed: Native/WSL reject
+movement with E0505 and unpinning with E0277, and pass Rust1.75no-std. Leases
+release. Diagnostic phase durations14.8829597s/42.9966531s/11.0908052s establish
+no comparative speedup. No product samples or consumed diagnostic is repeated.
+
+Preserve all96prior checkpoints/readiness; add3scope paths, with no generated
+family match. Allocator/bootstrap/callback/image/stack/thread/descendant and
+observer coverage, actual-worker provenance and all12conditioning guarantees
+remain. Unknown inherited quota is not bypassed. No manual procedure requested.
+All original certification/security/trust obligations remain, including actual
+38/80/126/126 profiles, independent no-reuse Releases, qualification/promotion
+when required, signing, immutable verification and guarded clean closure.
+H08 OPEN; continuation ACTIVE.

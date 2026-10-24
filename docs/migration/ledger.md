@@ -9375,3 +9375,31 @@ allocator interception, storage/callbacks, stack/image/thread/descendant lifetim
 and observer effects remain unqualified. All admission/certification obligations
 and original ceilings/counts remain. No runtime speedup or certification claim.
 H08 OPEN; continuation ACTIVE; no external action required.
+
+### H08 CPU-quota rejection before expensive builds — 2026-10-24 UTC
+
+Checkpoint93 follows clean47ecae47. All seven build callers already run an isolated
+placement probe, but quota rejection occurred only during post-build environment
+collection. Reuse the exact existing quota check before Windows probe placement;
+retain the independent later query and every successful-path build and gate.
+Unknown ancestry remains rejected. No policy, threshold or sample count changes.
+
+Preserve initial test-stub failure b75dbef1, corrected red cfe569a6 with four
+missing-query assertions, and first green b9053159 stopped by its source-pin guard.
+Strengthen the guard with exact prior-source AST equivalence of the extracted
+quota statements and remaining resource function. Fresh green26052f9b passes149
+Native and148WSL tests plus1native-only skip covered on Windows, with integrity
+first and Ruff/format, finishing03:35:37.025863Z in93.6724213s.
+
+One guarded live probe8c881e7b retains unknown ancestry from immediate-job flags0
+and rejects before its placement tripwire: zero builds, placement calls or samples.
+Its0.7338289s child interval is diagnostic only, not comparative certification
+speedup. Independent audit1aa4fb93 verifies2326source files and all receipt/log
+bytes. The skill maps only the controller to source-identity projection; exact
+registered identity refresh and verification pass with all four outputs unchanged
+and no measurement recalibration. No authoritative profile executes.
+
+Preserve all92historical checkpoints/readiness and existing scope. Whole-process
+memory and CPU/CLI admission, fresh qualification, canonical preparation, both
+signed/trusted campaigns with independent Releases, and guarded final cleanCLOSED
+remain. H08 OPEN; continuation ACTIVE; no external action required.

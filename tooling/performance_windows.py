@@ -889,7 +889,8 @@ def evaluate_quiescence(observation: Mapping[str, int]) -> list[str]:
     return failures
 
 
-def execution_resource(selected_logical_cpu: int) -> dict[str, object]:
+def require_unlimited_cpu_quota() -> dict[str, object]:
+    """Reject unproven quota ancestry before work or placement side effects."""
     quota = cpu_quota_state()
     if quota["effective_cpu_quota"] == "unknown":
         raise WindowsQualificationError(
@@ -897,6 +898,11 @@ def execution_resource(selected_logical_cpu: int) -> dict[str, object]:
         )
     if quota["effective_cpu_quota"] != "unlimited":
         raise WindowsQualificationError("the current Windows job imposes a CPU quota")
+    return quota
+
+
+def execution_resource(selected_logical_cpu: int) -> dict[str, object]:
+    quota = require_unlimited_cpu_quota()
     placement = enforce_current_process_placement(selected_logical_cpu)
     timer = timer_information()
     selected = placement["selected_cpu_set"]

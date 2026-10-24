@@ -409,7 +409,7 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
     def test_live_conditioner_only_adds_reviewed_fail_closed_quota_check(self) -> None:
         source = ROOT / "tooling/performance_windows.py"
         self.assertEqual(
-            "ae27259d989e0ea55e0a79c84c0ad7fee3a9e74f502432925b4f174b23ce7112",
+            "64ea086985e1d754d24a87fafdff5f70e194d48ef9614a0e74b4f0a149a855e6",
             hashlib.sha256(source.read_bytes()).hexdigest(),
         )
         original = subprocess.check_output(
@@ -431,13 +431,56 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
                 node
                 for node in tree.body
                 if not isinstance(node, ast.FunctionDef)
-                or node.name not in {"cpu_quota_state", "execution_resource"}
+                or node.name
+                not in {
+                    "cpu_quota_state",
+                    "execution_resource",
+                    "require_unlimited_cpu_quota",
+                }
             ]
             return ast.dump(tree, include_attributes=False)
 
         self.assertEqual(
             unchanged_policy(original), unchanged_policy(source.read_bytes())
         )
+        previous = subprocess.check_output(
+            [
+                "git",
+                "show",
+                "47ecae47915db7b89905bf0b6341ad25370bf7e6:tooling/performance_windows.py",
+            ],
+            cwd=ROOT,
+        )
+        self.assertEqual(
+            "ae27259d989e0ea55e0a79c84c0ad7fee3a9e74f502432925b4f174b23ce7112",
+            hashlib.sha256(previous).hexdigest(),
+        )
+        old_functions = {
+            node.name: node
+            for node in ast.parse(previous).body
+            if isinstance(node, ast.FunctionDef)
+        }
+        new_functions = {
+            node.name: node
+            for node in ast.parse(source.read_bytes()).body
+            if isinstance(node, ast.FunctionDef)
+        }
+
+        def statements(nodes):
+            return [ast.dump(node, include_attributes=False) for node in nodes]
+
+        old_resource = old_functions["execution_resource"].body
+        helper = new_functions["require_unlimited_cpu_quota"].body
+        new_resource = new_functions["execution_resource"].body
+        self.assertEqual(statements(old_resource[:3]), statements(helper[1:-1]))
+        self.assertEqual(
+            statements(helper[-1:]), statements(ast.parse("return quota").body)
+        )
+        self.assertEqual(
+            statements(new_resource[:1]),
+            statements(ast.parse("quota = require_unlimited_cpu_quota()").body),
+        )
+        self.assertEqual(statements(old_resource[3:]), statements(new_resource[1:]))
 
     def test_conditioner_child_preparation_preserves_exit_and_authority(self) -> None:
         arguments = {

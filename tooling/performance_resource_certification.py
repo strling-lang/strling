@@ -3138,8 +3138,9 @@ def _preflight_governed_cpu_affinity(
     """Fail early in an isolated child without serializing subsequent builds.
 
     The probe exercises the same native placement controls as measurement,
-    including Windows CPU sets and HighQoS. It is not evidence of the parent's
-    placement: that must be enforced again after every successful build.
+    including Windows CPU sets and HighQoS, after rejecting unproven CPU quota.
+    It is not evidence of the parent's placement or quota: both must be checked
+    independently again after every successful build.
     """
     policy = cast(Mapping[str, object], manifest["measurement_policy"])
     selected = policy.get("selected_logical_cpu")
@@ -3150,9 +3151,12 @@ def _preflight_governed_cpu_affinity(
     ):
         raise PerformanceResourceError("affinity-policy", "invalid fixed CPU policy")
     program = (
-        "import json, sys; "
+        "import json, platform, sys; "
+        "from tooling import performance_windows; "
         "from tooling.performance_resource_certification import "
         "_enforce_governed_cpu_affinity; "
+        "performance_windows.require_unlimited_cpu_quota() "
+        "if platform.system() == 'Windows' else None; "
         "print(json.dumps({'effective_cpu_affinity': "
         "_enforce_governed_cpu_affinity(json.loads(sys.argv[1]))}))"
     )

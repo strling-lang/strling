@@ -5077,3 +5077,55 @@ runtime/prerequisites, both source-distinctQ/P38/80/126 with independent fresh
 same-SHA no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable trusted
 verification before pin-only promotion, guarded closure and final cleanCLOSED
 remain. H08 OPEN; continuation ACTIVE; no external action required.
+
+### Pre-build CPU-quota prerequisite — 2026-10-24 UTC
+
+Checkpoint93 starts from clean47ecae47915db7b89905bf0b6341ad25370bf7e6.
+The existing isolated probe precedes all seven public build callers, but checks
+placement only. The quota guard in live-environment collection was reached after
+expensive builds. Extract its exact statements into a shared read-only helper;
+invoke it in the Windows probe before placement, while independently retaining
+the later quota query, every successful-path build, measurement placement and
+all existing limits/errors. Linux does not query Windows quota. This prevents
+known-inadmissible builds without making unknown job ancestry admissible.
+
+Preserve three unsuccessful attempts: b75dbef11da82e70e232a42aa234225d92125ed99b9021f7727f99aa0ac73f14
+contains an incomplete build stub and a genuine missing-query assertion;
+cfe569a67bd0e608fc781450bfe763e1e2d64274b80092c8c2c0c949dd12e996 corrects only that
+stub and proves unknown/limited/query-error rejection and successful-path ordering
+all miss the query; b90531594272580bcfdfad945f5839bdb40966c6aacba0248964d30562edd87c
+passes148of149tests and stops at the retained exact-source pin. Review the narrow
+extraction and strengthen the guard: compare quota statements, return value and
+the full remaining resource-function AST against pinned prior source, in addition
+to the original unchanged-conditioner-policy comparison. No guard is removed.
+
+Green26052f9b41c5496b690835b71421e6b49bf6d11996c49e33daf5b5a1cfef61ac finishes
+03:35:37.025863Z in93.6724213s: integrity first,149NativePASS,148WSLPASS plus1
+native-only skip covered on Windows, Ruff/format pass. Existing seven-caller
+ordering, independent late quota rejection and exact output-shape tests remain.
+
+Live8c881e7b21cc1a873ee46de11df4895e9313e7f9de01dd951890400f37625e1b finishes
+03:36:23.416180Z in4.7210326s including integrity. The unchanged generated probe
+body runs once in the exact Python child with placement replaced by a rejecting
+tripwire. Actual inherited-job flags0 produce unknown ancestry and exit1 before
+the tripwire. Zero placement calls/builds/product samples; no host mutation.
+The0.7338289s child interval is a single guarded diagnostic, not an equivalent
+before/after comparison or a total-certification speedup.
+
+Data-only audit1aa4fb93e4d082b6e94949d3bd7b4560f328fa348d51949b8afa5f65cb4a4a0a
+finishes03:37:35.583328Z in1.0324467s, verifying2326source files, each terminal,
+planned step/raw stream, all passing-source equality, actual quota rejection and
+four output hashes against HEAD. Generated-artifact-sync maps only the controller
+as generator-input to enforced operational-projection performance-resource-source-identities.
+The registered refresh-identities and integrity commands pass with no output diff
+and measurements_recalibrated=false; baseline measurements and policy remain intact.
+
+All92prior checkpoints/readiness and scope remain unchanged; eight exact paths
+are the engineering delta. No candidate freeze, authoritative profile or closure.
+Unknown CPU ancestry and complete memory/observer qualification remain unresolved;
+preserve all12conditioning guarantees, prior rejected evidence, thresholds/counts,
+security/Jest/JUnit/sole-license-waiver/source/isolation controls. Fresh qualification,
+canonical preparation/cleanLSP before freeze, runtime/prerequisites and both
+source-distinctQ/P actual38/80/126 plus fresh independent same-SHA no-reuse Release126
+each125PASSsoleVSCE, signing/qualified immutable trust before pin-only promotion,
+guarded closure and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE.

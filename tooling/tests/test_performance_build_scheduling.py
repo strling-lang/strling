@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from contextlib import ExitStack
+from contextlib import ExitStack, redirect_stdout
 import ast
 import inspect
+import io
 import json
 from pathlib import Path
 import subprocess
@@ -188,6 +189,104 @@ class IsolatedPlacementProbeTests(unittest.TestCase):
         "cpu_affinity_policy": "single-fixed-logical-cpu",
         "selected_logical_cpu": 1,
     }
+
+    @staticmethod
+    def execute_probe(command, **kwargs):
+        """Execute the production child program with mocked native operations."""
+        output = io.StringIO()
+        try:
+            with patch.object(sys, "argv", ["-c", command[4]]), redirect_stdout(output):
+                exec(compile(command[3], "<isolated-probe>", "exec"), {})
+        except performance.performance_windows.WindowsQualificationError as error:
+            return subprocess.CompletedProcess(
+                command, 1, output.getvalue(), str(error)
+            )
+        return subprocess.CompletedProcess(command, 0, output.getvalue(), "")
+
+    def test_probe_quota_rejection_stops_full_before_placement_and_build(self):
+        for observation in (
+            {"effective_cpu_quota": "unknown"},
+            {"effective_cpu_quota": "limited"},
+            performance.performance_windows.WindowsQualificationError("query failed"),
+        ):
+            with (
+                self.subTest(observation=observation),
+                patch.object(performance.platform, "system", return_value="Windows"),
+                patch.object(
+                    performance, "validate_repository_contract", return_value={}
+                ),
+                patch.object(
+                    performance, "_git_identity", return_value=("f" * 40, False)
+                ),
+                patch.object(
+                    performance.subprocess, "run", side_effect=self.execute_probe
+                ) as run,
+                patch.object(
+                    performance.performance_windows,
+                    "cpu_quota_state",
+                    side_effect=[observation],
+                ) as quota,
+                patch.object(
+                    performance, "_enforce_governed_cpu_affinity", return_value=[1]
+                ) as pin,
+                patch.object(
+                    performance,
+                    "_build_and_enforce_measurement_affinity",
+                    return_value=("failed", {"reason": "unexpected build"}),
+                ) as build,
+                patch.object(performance, "live_environment") as environment,
+            ):
+                result = performance.certify("full")
+                self.assertNotEqual(result["status"], "passed")
+                quota.assert_called_once_with()
+                run.assert_called_once()
+                pin.assert_not_called()
+                build.assert_not_called()
+                environment.assert_not_called()
+
+    def test_probe_unlimited_quota_precedes_placement_without_changing_output(self):
+        events = []
+        with (
+            patch.object(performance.platform, "system", return_value="Windows"),
+            patch.object(performance.subprocess, "run", side_effect=self.execute_probe),
+            patch.object(
+                performance.performance_windows,
+                "cpu_quota_state",
+                side_effect=lambda: (
+                    events.append("quota") or {"effective_cpu_quota": "unlimited"}
+                ),
+            ),
+            patch.object(
+                performance,
+                "_enforce_governed_cpu_affinity",
+                side_effect=lambda manifest: events.append("pin") or [1],
+            ),
+        ):
+            self.assertEqual(
+                performance._preflight_governed_cpu_affinity(
+                    {"measurement_policy": self.policy}
+                ),
+                [1],
+            )
+        self.assertEqual(events, ["quota", "pin"])
+
+    def test_non_windows_probe_does_not_query_windows_quota(self):
+        with (
+            patch.object(performance.platform, "system", return_value="Linux"),
+            patch.object(performance.subprocess, "run", side_effect=self.execute_probe),
+            patch.object(performance.performance_windows, "cpu_quota_state") as quota,
+            patch.object(
+                performance, "_enforce_governed_cpu_affinity", return_value=[1]
+            ) as pin,
+        ):
+            self.assertEqual(
+                performance._preflight_governed_cpu_affinity(
+                    {"measurement_policy": self.policy}
+                ),
+                [1],
+            )
+        quota.assert_not_called()
+        pin.assert_called_once_with({"measurement_policy": self.policy})
 
     def test_exact_runtime_bounded_data_only_child_and_no_parent_placement(self):
         root = Path("fixture-root")

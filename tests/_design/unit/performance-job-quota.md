@@ -23,6 +23,11 @@ relaxation, baseline refresh, or alternative admission is authorized by this fix
     capped-outer/unrestricted-inner jobs on newly owned synthetic processes.
 -   Query failures and truncated/oversized result lengths: fail closed.
 -   Early failure: quota rejection precedes placement, timer reads, and waits.
+-   Pre-build failure: execute the actual isolated probe program with unknown,
+    limited, and failed quota observations; all reject before placement or builds.
+    Unlimited observations retain placement and exact output. Non-Windows probes
+    do not query Windows quota. All seven public build callers retain the probe;
+    the later live-environment quota check remains independent and mandatory.
 -   Direct dependents: both Rust runner and memory worker share the same native
     query and rejection implementation. Build both with the complete default
     dependency graph, without executing a product performance coordinate.

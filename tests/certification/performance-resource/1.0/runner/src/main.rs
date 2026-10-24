@@ -9,6 +9,8 @@ use std::{cell::RefCell, rc::Rc};
 
 mod cli_cycles;
 mod controlled_spawn;
+#[cfg(target_os = "windows")]
+mod job_quota;
 mod phase_timeline;
 
 use serde_json::{json, Value};
@@ -978,8 +980,6 @@ mod windows_placement {
 
     type Handle = *mut c_void;
 
-    const JOB_OBJECT_CPU_RATE_CONTROL_INFORMATION: i32 = 15;
-    const JOB_OBJECT_CPU_RATE_CONTROL_ENABLE: u32 = 0x1;
     const PROCESS_POWER_THROTTLING_INFORMATION: i32 = 4;
     const PROCESS_POWER_THROTTLING_CURRENT_VERSION: u32 = 1;
     const PROCESS_POWER_THROTTLING_EXECUTION_SPEED: u32 = 0x1;
@@ -1060,14 +1060,6 @@ mod windows_placement {
             cpu_set_ids: *mut u32,
             cpu_set_id_count: u32,
             required_id_count: *mut u32,
-        ) -> i32;
-        fn IsProcessInJob(process: Handle, job: Handle, result: *mut i32) -> i32;
-        fn QueryInformationJobObject(
-            job: Handle,
-            information_class: i32,
-            information: *mut c_void,
-            information_length: u32,
-            returned_length: *mut u32,
         ) -> i32;
         fn QueryPerformanceFrequency(frequency: *mut i64) -> i32;
         fn GetCurrentProcessorNumberEx(processor_number: *mut ProcessorNumber);
@@ -1222,34 +1214,6 @@ mod windows_placement {
         Ok(values)
     }
 
-    fn require_unlimited_cpu_quota() -> RunResult<()> {
-        let mut in_job = 0i32;
-        if unsafe { IsProcessInJob(current_process(), std::ptr::null_mut(), &mut in_job) } == 0 {
-            return Err(last_error("IsProcessInJob"));
-        }
-        if in_job == 0 {
-            return Ok(());
-        }
-        let mut values = [0u32; 2];
-        let mut returned = 0u32;
-        if unsafe {
-            QueryInformationJobObject(
-                std::ptr::null_mut(),
-                JOB_OBJECT_CPU_RATE_CONTROL_INFORMATION,
-                values.as_mut_ptr().cast(),
-                std::mem::size_of_val(&values) as u32,
-                &mut returned,
-            )
-        } == 0
-        {
-            return Err(last_error("QueryInformationJobObject(CPU rate)"));
-        }
-        if values[0] & JOB_OBJECT_CPU_RATE_CONTROL_ENABLE != 0 {
-            return Err("the Windows job imposes a CPU rate limit".to_owned());
-        }
-        Ok(())
-    }
-
     fn set_high_qos() -> RunResult<()> {
         let state = ProcessPowerThrottlingState {
             version: PROCESS_POWER_THROTTLING_CURRENT_VERSION,
@@ -1283,6 +1247,7 @@ mod windows_placement {
     }
 
     pub fn enforce(expected: usize) -> RunResult<ExecutionResource> {
+        super::job_quota::require_unlimited()?;
         let groups = unsafe { GetActiveProcessorGroupCount() };
         if groups != 1 {
             return Err("the governed Windows runner requires one processor group".to_owned());
@@ -1310,7 +1275,6 @@ mod windows_placement {
         }
         let cpu_set_allocation_state = cpu_set_allocation_state(flags, allocation_tag)?;
         let process_power_policy = enforce_high_qos()?;
-        require_unlimited_cpu_quota()?;
         let mut frequency = 0i64;
         if unsafe { QueryPerformanceFrequency(&mut frequency) } == 0 || frequency <= 0 {
             return Err(last_error("QueryPerformanceFrequency"));

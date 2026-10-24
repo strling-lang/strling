@@ -465,6 +465,7 @@ def enforce_current_process_placement(selected_logical_cpu: int) -> dict[str, ob
 
 
 def cpu_quota_state() -> dict[str, object]:
+    """Observe immediate-job controls without inventing ancestor provenance."""
     kernel32 = _kernel32()
     in_job = ctypes.c_int(0)
     is_in_job = kernel32.IsProcessInJob
@@ -483,15 +484,15 @@ def cpu_quota_state() -> dict[str, object]:
             "rate_control_enabled": False,
             "effective_cpu_quota": "unlimited",
         }
-    values = (ctypes.c_ulong * 2)()
-    returned = ctypes.c_ulong(0)
+    values = (ctypes.c_uint32 * 2)()
+    returned = ctypes.c_uint32(0)
     query = kernel32.QueryInformationJobObject
     query.argtypes = [
         ctypes.c_void_p,
         ctypes.c_int,
         ctypes.c_void_p,
-        ctypes.c_ulong,
-        ctypes.POINTER(ctypes.c_ulong),
+        ctypes.c_uint32,
+        ctypes.POINTER(ctypes.c_uint32),
     ]
     query.restype = ctypes.c_int
     if not query(
@@ -502,13 +503,16 @@ def cpu_quota_state() -> dict[str, object]:
         ctypes.byref(returned),
     ):
         _raise_last_error("QueryInformationJobObject(CPU rate)")
+    if returned.value != ctypes.sizeof(values):
+        raise WindowsQualificationError("incomplete Windows CPU quota information")
     flags = int(values[0])
     enabled = bool(flags & _JOB_OBJECT_CPU_RATE_CONTROL_ENABLE)
     return {
         "in_job": True,
         "control_flags": flags,
         "rate_control_enabled": enabled,
-        "effective_cpu_quota": "limited" if enabled else "unlimited",
+        # A null job handle observes only the immediate job, never its ancestors.
+        "effective_cpu_quota": "limited" if enabled else "unknown",
     }
 
 
@@ -886,10 +890,14 @@ def evaluate_quiescence(observation: Mapping[str, int]) -> list[str]:
 
 
 def execution_resource(selected_logical_cpu: int) -> dict[str, object]:
-    placement = enforce_current_process_placement(selected_logical_cpu)
     quota = cpu_quota_state()
+    if quota["effective_cpu_quota"] == "unknown":
+        raise WindowsQualificationError(
+            "the Windows ancestor CPU quota is unknown (only the immediate job was queried)"
+        )
     if quota["effective_cpu_quota"] != "unlimited":
         raise WindowsQualificationError("the current Windows job imposes a CPU quota")
+    placement = enforce_current_process_placement(selected_logical_cpu)
     timer = timer_information()
     selected = placement["selected_cpu_set"]
     return {

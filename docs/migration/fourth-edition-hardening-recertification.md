@@ -4683,3 +4683,65 @@ freeze, conditioning/ancestor-quota and all12guarantees,54coordinates/56limits,
 complete source-distinct Q/P38/80/126 plus fresh independent same-SHA Release126
 each125PASS/soleVSCE, signing, qualified verifier before pin-only promotion, immutable
 trust and guarded clean formal CLOSED remain. H08 OPEN; continuation ACTIVE.
+
+## Truthful Windows ancestor-quota boundary — 2026-10-24 UTC
+
+Checkpoint86 corrects the previously retained native counterexample rather than
+requesting host idleness. Microsoft's documented null-handle
+[job query](https://learn.microsoft.com/en-us/windows/win32/api/jobapi2/nf-jobapi2-queryinformationjobobject)
+observes only the immediate job; [nested jobs](https://learn.microsoft.com/en-us/windows/win32/procthread/nested-jobs)
+can retain ancestor restrictions. Disabled immediate CPU rate control therefore
+means unknown effective ancestor quota, not unlimited.
+
+The Python observer preserves raw membership/flags/enabled fields and reports
+unknown. The execution prerequisite rejects it before changing placement or reading
+the timer. Both actual native binaries delegate to a single Rust implementation
+before their placement changes. API failures and incomplete structures reject.
+No-job unlimited and enabled immediate-control rejection remain unchanged. This
+narrows acceptance; it does not create a replacement conditioning policy.
+
+Proof338564b3df4c093976b6ada9ca71826767b0e716184844392c66c98591f0eb0c
+uses owned synthetic immediate-disabled, immediate-limited and capped-outer/
+unrestricted-inner jobs. It executes the exact original0996 query alongside the
+corrected Python query and compiled Rust implementation. The outer has flags5,
+rate500; the inner has0/0. Original output claims unlimited, while both corrected
+implementations reject unknown. All three owned trees retire naturally. Recorded
+early-rejection90500/93700/92000ns is diagnostic feedback latency only, not a
+controlled whole-certification or equivalent-workload improvement.
+
+Source-held integrity and191Native dependent tests pass (56a16dca), followed by
+full-default-graph cargo check39.5080676s. WSL191tests pass176 with15native-only
+skips already covered. Shared Rust3Native/3Linux cases pass. Both debug binaries
+build locked/offline with default dependencies in83.9673282s; no performance
+coordinate, release recipe or reference cohort is executed. Independent data
+audite206481a2a2d462dba92e61f8c06bb80bf2f7ca374ae02184f7bf84a9dd36bf0
+checks2312source files, all raw logs and receipts, three complete v2 process
+bundles, actual controls, binary identities and entrypoint ordering. It completes
+2026-10-24T00:57:53.903494Z in48.1126856s without sample replay.
+
+Initial test-authoring SyntaxErrore2fcbf4f, genuine preimplementation seven failures
+15fdcc0e, stale whole-source guard failure5d1959b2 and Linux compiler invocation
+failure3ec3745d remain. The revised test keeps the original0996 byte identity and
+checks every AST node outside the two quota functions unchanged; a new test pin
+does not promote the conditioner, an attestation or trusted verifier. The native
+build's successful prefix is preserved; only the Linux remainder059e0716 executes
+with the explicit pinned1.75 compiler. Ruff/new quota module/memory-worker format
+checks pass. Whole-main Rust formatting reports inherited unrelated differences;
+no full-format pass or unrelated rewrite is claimed.
+
+The generated-artifact skill maps six correction/charter paths to no current
+family, so no generator runs. Two exact scope entries are added, with all85prior
+checkpoints/readiness preserved. The live quota check now fails closed; the former
+whole-source0996 equality is superseded only by this reviewed correctness change,
+not by qualification of new admission. Historical evidence remains byte-preserved.
+Unknown quotas, reliable workstation conditioning, fresh independent9reference/
+source-distinct9holdout and challenges, all12guarantees, canonical36preparation/
+cleanLSP, both Q/P38/80/126 and same-SHA fresh independent Release126 campaigns,
+signing and qualified immutable verification, guarded closure and final clean tree
+remain. H08 OPEN; continuation ACTIVE; no owner action or host change requested.
+
+The first pre-staging guardee0956f1397ffc83cc163152e256ccb88af038fdda357cf3f9c49a5bcfe0baae
+is preserved. It compared UTF8 Git content with default-locale decoded disk text,
+misreading the historical readiness em dash. No readiness bytes changed and no
+staging occurred. Explicit UTF8 parsing proves equality; v2 corrects only those
+three helper reads and reruns complete commit guards, never product samples.

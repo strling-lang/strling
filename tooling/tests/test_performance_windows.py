@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import copy
 import hashlib
 import json
@@ -51,6 +52,95 @@ def _counter(
 
 
 class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
+    def quota_api(self, *, in_job=True, flags=0, returned_bytes=8, failure=None):
+        def membership(process, job, output):
+            if failure == "membership":
+                return 0
+            output._obj.value = int(in_job)
+            return 1
+
+        def query(job, information_class, values, size, returned):
+            self.assertIsNone(job)
+            self.assertEqual(information_class, 15)
+            self.assertEqual(size, 8)
+            if failure == "query":
+                return 0
+            values[0] = flags
+            returned._obj.value = returned_bytes
+            return 1
+
+        return Mock(
+            IsProcessInJob=Mock(side_effect=membership),
+            QueryInformationJobObject=Mock(side_effect=query),
+        )
+
+    def test_job_quota_observation_distinguishes_unknown_ancestors(self):
+        for in_job, flags, expected in (
+            (False, 0, "unlimited"),
+            (True, 0, "unknown"),
+            (True, 1, "limited"),
+            (True, 5, "limited"),
+            (True, 0x10, "unknown"),
+        ):
+            with self.subTest(in_job=in_job, flags=flags):
+                api = self.quota_api(in_job=in_job, flags=flags)
+                with (
+                    patch.object(performance_windows, "_kernel32", return_value=api),
+                    patch.object(
+                        performance_windows, "_current_process_handle", return_value=42
+                    ),
+                ):
+                    result = performance_windows.cpu_quota_state()
+                self.assertEqual(result["effective_cpu_quota"], expected)
+                self.assertEqual(result["control_flags"], flags)
+                self.assertEqual(api.QueryInformationJobObject.call_count, int(in_job))
+
+    def test_job_quota_query_errors_and_wrong_lengths_fail_closed(self):
+        for failure, length in (
+            ("membership", 8),
+            ("query", 8),
+            (None, 0),
+            (None, 7),
+            (None, 9),
+        ):
+            with self.subTest(failure=failure, length=length):
+                api = self.quota_api(failure=failure, returned_bytes=length)
+                with (
+                    patch.object(performance_windows, "_kernel32", return_value=api),
+                    patch.object(
+                        performance_windows, "_current_process_handle", return_value=42
+                    ),
+                    patch.object(
+                        performance_windows,
+                        "_raise_last_error",
+                        side_effect=WindowsQualificationError("API failure"),
+                    ),
+                    self.assertRaises(WindowsQualificationError),
+                ):
+                    performance_windows.cpu_quota_state()
+
+    def test_job_quota_rejection_precedes_placement_and_timer(self):
+        for state, reason in (
+            ("unknown", "ancestor CPU quota is unknown"),
+            ("limited", "imposes a CPU quota"),
+        ):
+            with (
+                self.subTest(state=state),
+                patch.object(
+                    performance_windows,
+                    "cpu_quota_state",
+                    return_value={"effective_cpu_quota": state},
+                ),
+                patch.object(
+                    performance_windows, "enforce_current_process_placement"
+                ) as placement,
+                patch.object(performance_windows, "timer_information") as timer,
+            ):
+                with self.assertRaisesRegex(WindowsQualificationError, reason):
+                    performance_windows.execution_resource(1)
+                placement.assert_not_called()
+                timer.assert_not_called()
+
     def test_conditioning_policy_requires_sustained_recovery_window(self) -> None:
         self.assertEqual(CONDITIONING_VERSION, "1.5.0")
         self.assertEqual(POLICY_ID, "native-windows-supported-controls-quiescence-v6")
@@ -316,22 +406,37 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
                 controller._prepared_windows_platform_probe(1)
             power_mock.assert_not_called()
 
-    def test_live_conditioner_is_exact_original_attested_source(self) -> None:
+    def test_live_conditioner_only_adds_reviewed_fail_closed_quota_check(self) -> None:
         source = ROOT / "tooling/performance_windows.py"
         self.assertEqual(
-            "0996f40c7f96f747a8dabf4018c57238cbbec6d3a2daa0ed4df413bd0fda908c",
+            "ae27259d989e0ea55e0a79c84c0ad7fee3a9e74f502432925b4f174b23ce7112",
             hashlib.sha256(source.read_bytes()).hexdigest(),
         )
+        original = subprocess.check_output(
+            [
+                "git",
+                "show",
+                "9d36da894c826cf2331d43fb413c3bb0b34db08e:tooling/performance_windows.py",
+            ],
+            cwd=ROOT,
+        )
         self.assertEqual(
-            subprocess.check_output(
-                [
-                    "git",
-                    "show",
-                    "9d36da894c826cf2331d43fb413c3bb0b34db08e:tooling/performance_windows.py",
-                ],
-                cwd=ROOT,
-            ),
-            source.read_bytes(),
+            "0996f40c7f96f747a8dabf4018c57238cbbec6d3a2daa0ed4df413bd0fda908c",
+            hashlib.sha256(original).hexdigest(),
+        )
+
+        def unchanged_policy(data):
+            tree = ast.parse(data)
+            tree.body = [
+                node
+                for node in tree.body
+                if not isinstance(node, ast.FunctionDef)
+                or node.name not in {"cpu_quota_state", "execution_resource"}
+            ]
+            return ast.dump(tree, include_attributes=False)
+
+        self.assertEqual(
+            unchanged_policy(original), unchanged_policy(source.read_bytes())
         )
 
     def test_conditioner_child_preparation_preserves_exit_and_authority(self) -> None:
@@ -583,7 +688,11 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
         if completed.returncode != 0:
             unavailable = json.loads(completed.stderr)
             self.assertEqual(unavailable["status"], "unavailable")
-            self.assertIn("selected Windows CPU set", unavailable["reason"])
+            self.assertTrue(
+                "selected Windows CPU set" in unavailable["reason"]
+                or "ancestor CPU quota is unknown" in unavailable["reason"],
+                unavailable,
+            )
             return
         probe = json.loads(completed.stdout)
         execution = probe["execution_resource"]
@@ -601,6 +710,7 @@ class NativeWindowsPerformanceEnvironmentTests(unittest.TestCase):
             },
         )
         self.assertEqual(execution["cpu_quota"]["effective_cpu_quota"], "unlimited")
+        self.assertIs(execution["cpu_quota"]["in_job"], False)
         self.assertEqual(probe["power"]["source"], "ac")
         self.assertEqual(
             probe["power"]["processor_settings"],

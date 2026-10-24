@@ -7,6 +7,8 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tests/certification/performance-resource/1.0/runner/src/job_quota.rs
+        - tests/_design/unit/performance-job-quota.md
         - core/src/target_serialization.rs
         - core/src/structural_analysis.rs
         - core/tests/structural_analysis.rs
@@ -2204,6 +2206,24 @@ checkpoints:
           - check: Preservation and remaining campaign obligations
             result: not_run
             details: "Current36familyregistry maps bothcode and3record paths to nofamily, no generators. All83prior checkpoints/readiness preserved with84/85 appended; existing exact scope covers2codepaths. Guardedcommit/newcleanSHA, complete36canonicalpreparation/cleanLSP beforefreeze, conditioning/ancestorquota/all12guarantees, all54coords56limits and fullsource-distinctQ/P38/80/126 plus sameSHAfreshindependentnoReuseRelease126each125PASSsoleVSCE, signing/qualifiedverifier-before-pin-onlypromotion/immutableverification/guardedcleanCLOSED remain. No retained-certifier access or owner action. H08 OPEN; continuation ACTIVE."
+    - name: Fail closed on unknown Windows ancestor CPU quotas
+      status: in_progress
+      evidence:
+          - check: Source-bound correction and owned nested-job counterexample
+            result: passed
+            details: "Checkpoint86: the null-handle Windows query observes only the immediate job. Python now returns unknown for disabled immediate controls and rejects before placement/timer/wait. Both native binaries use one shared Rust query and reject before placement; short/oversized query structures fail closed. No-job unlimited and enabled-control rejection remain. Native338564b3df4c093976b6ada9ca71826767b0e716184844392c66c98591f0eb0c reconstructs the original0996 query against owned immediate-disabled, immediate-limited and capped-outer/unrestricted-inner jobs. Old nested result incorrectly says unlimited; new Python and actual Rust reject unknown. All owned trees retire naturally. Rejection observations90500/93700/92000ns are diagnostic latency only, not an equivalent-workload or certification speedup. No ancestor or host setting is changed."
+          - check: Direct dependents, actual builds and independent readback
+            result: passed
+            details: "Integrity and191Native tests pass, terminal56a16dcabf7a34edbbac8947f2dc37eebe3af256fe5bf63ec35a8a554daf742a. WSL191tests=176PASS/15native-only skips covered on Windows. Shared Rust3Native and3Linux cases pass. Full-default-graph locked/offline native cargo check passes39.5080676s and both debug binaries build83.9673282s, not a Release or timing comparison. Independent audite206481a2a2d462dba92e61f8c06bb80bf2f7ca374ae02184f7bf84a9dd36bf0 finishes2026-10-24T00:57:53.903494Z,48.1126856s, verifies2312source files, every stage/raw hash,3complete v2 envelopes, actual job controls, binary identities, both entrypoint call sites and unchanged authority. No product coordinate is executed."
+          - check: Failed receipts and historical authority preserved
+            result: passed
+            details: "Initial test-authoring SyntaxErrore2fcbf4f, genuine preimplementation7failures15fdcc0e, stale whole-source guard failure5d1959b2 and Linux rustup-syntax invocation failure3ec3745d remain failed. Corrected guard retains original0996 pin and compares every AST node outside the two reviewed quota functions unchanged; it does not promote the corrected conditioner or verifier. Successful native build prefix is not replayed; only unexecuted Linux remainder runs with explicit pinned1.75 compiler, terminal059e0716. Ruff checks and new shared-module/memory-worker Rust formatting pass; whole-main Rust formatting reports inherited unrelated differences, not a full formatting pass. No baseline, trust pin, sample/count/cap/quiescence threshold, security, waiver or license change."
+          - check: Remaining architecture and authoritative closure
+            result: not_run
+            details: "Current registry maps6correction/charter paths to no generated family; no generator runs. Add only2exact newly authorized scope paths; all85prior checkpoints and readiness remain. Guarded engineering commit/clean source is not a candidate freeze. Unknown ancestor quota now explicitly blocks v6 execution instead of falsely claiming unlimited; this is not a qualified workstation admission alternative. All12conditioning guarantees, fresh independent9reference/source-distinct9holdout and challenges, full36canonical preparation/cleanLSP, exact-runtime/prerequisites, Q/P38/80/126 and fresh same-SHA independent no-reuse Release126 each125PASS/soleVSCE, signing/qualified immutable trust and guarded clean formal closure remain. No environmental waiting, job escape or owner action. H08 OPEN; continuation ACTIVE."
+          - check: Preserve pre-staging encoding guard failure
+            result: passed
+            details: "Initial commit helper ee0956f1397ffc83cc163152e256ccb88af038fdda357cf3f9c49a5bcfe0baae stops before staging because default-locale read_text misdecodes the UTF8 readiness em dash. Git byte diff shows no readiness change; explicit UTF8 parsed comparison confirms equality. Original helper/receipt remain immutable; v2 changes only three text reads to explicit UTF8 and repeats the complete guards, not product tests or samples."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

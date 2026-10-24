@@ -1,4 +1,7 @@
 #[cfg(target_os = "windows")]
+mod job_quota;
+
+#[cfg(target_os = "windows")]
 mod worker {
     use std::ffi::c_void;
     use std::hint::black_box;
@@ -13,8 +16,6 @@ mod worker {
 
     const MAXIMUM_DESCHEDULING_NANOSECONDS: u64 = 50_000_000;
     const MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER: usize = 2;
-    const JOB_OBJECT_CPU_RATE_CONTROL_INFORMATION: i32 = 15;
-    const JOB_OBJECT_CPU_RATE_CONTROL_ENABLE: u32 = 0x1;
     const PROCESS_POWER_THROTTLING_INFORMATION: i32 = 4;
     const PROCESS_POWER_THROTTLING_CURRENT_VERSION: u32 = 1;
     const PROCESS_POWER_THROTTLING_EXECUTION_SPEED: u32 = 0x1;
@@ -85,14 +86,6 @@ mod worker {
             cpu_set_ids: *mut u32,
             cpu_set_id_count: u32,
             required_id_count: *mut u32,
-        ) -> i32;
-        fn IsProcessInJob(process: Handle, job: Handle, result: *mut i32) -> i32;
-        fn QueryInformationJobObject(
-            job: Handle,
-            information_class: i32,
-            information: *mut c_void,
-            information_length: u32,
-            returned_length: *mut u32,
         ) -> i32;
         fn GetCurrentProcessorNumberEx(processor_number: *mut ProcessorNumber);
         fn K32GetProcessMemoryInfo(
@@ -231,6 +224,7 @@ mod worker {
     }
 
     fn enforce_controls(expected_cpu: usize, expected_set_id: u32) -> WorkerResult<()> {
+        super::job_quota::require_unlimited()?;
         if expected_cpu >= usize::BITS as usize {
             return Err("logical CPU is outside the affinity mask".to_owned());
         }
@@ -286,34 +280,6 @@ mod worker {
         } == 0
         {
             return Err(last_error("SetProcessInformation(ProcessPowerThrottling)"));
-        }
-        require_unlimited_cpu_quota()
-    }
-
-    fn require_unlimited_cpu_quota() -> WorkerResult<()> {
-        let mut in_job = 0i32;
-        if unsafe { IsProcessInJob(current_process(), std::ptr::null_mut(), &mut in_job) } == 0 {
-            return Err(last_error("IsProcessInJob"));
-        }
-        if in_job == 0 {
-            return Ok(());
-        }
-        let mut values = [0u32; 2];
-        let mut returned = 0u32;
-        if unsafe {
-            QueryInformationJobObject(
-                std::ptr::null_mut(),
-                JOB_OBJECT_CPU_RATE_CONTROL_INFORMATION,
-                values.as_mut_ptr().cast(),
-                std::mem::size_of_val(&values) as u32,
-                &mut returned,
-            )
-        } == 0
-        {
-            return Err(last_error("QueryInformationJobObject(CPU rate)"));
-        }
-        if values[0] & JOB_OBJECT_CPU_RATE_CONTROL_ENABLE != 0 {
-            return Err("the Windows job imposes a CPU rate limit".to_owned());
         }
         Ok(())
     }

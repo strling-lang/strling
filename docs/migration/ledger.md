@@ -9149,3 +9149,46 @@ appended and no scope expansion. Guarded commit, complete canonical preparation,
 conditioning/ancestor-quota qualification, both complete signed/trusted campaigns,
 independent no-reuse Releases and guarded clean formal closure remain. H08 OPEN;
 continuation ACTIVE; no owner action required.
+
+### H08 checkpoint 86 — truthful ancestor-quota rejection
+
+The retained nested-job counterexample identifies an actual admission defect:
+QueryInformationJobObject with a null handle observes only the immediate job.
+An unrestricted inner job cannot prove its ancestors unrestricted. Python now
+reports unknown and fails before placement, timer reads or conditioning waits.
+The runner and memory worker share one Rust implementation and reject before
+placement. No-job unlimited and immediate enabled-control rejection remain;
+incomplete query structures fail closed. No host or existing ancestor is modified.
+
+Native proof338564b3 tests newly owned immediate-disabled, immediate-limited and
+capped-outer/unrestricted-inner jobs. The exact old0996 function incorrectly reports
+unlimited for the nested case; corrected Python and actual Rust reject it. All
+owned trees retire naturally. Rejection90.5/93.7/92.0microseconds is diagnostic
+feedback latency, not a comparable whole-certification speedup or admission proof.
+
+Integrity and191Native dependent tests pass. WSL passes176 with15native-only cases
+covered on Windows. Shared Rust3Native/3Linux tests pass; both native debug binaries
+build with the full default dependency graph, locked/offline, in83.9673282s.
+This is not a fresh Release or a build-speedup comparison. Independent audite206481a
+finishes2026-10-24T00:57:53.903494Z in48.1126856s, reconstructing2312source files,
+all raw logs, three complete process receipts, actual quota controls, entrypoints
+and binaries. No product performance sample or generated authority is produced.
+
+Preserve the initial test-authoring syntax failure, seven genuine pre-fix failures,
+stale whole-source guard failure and Linux compiler CLI mismatch. The guard retains
+the original0996 source pin and proves every node outside the two quota functions
+unchanged; this is not trust promotion. Only the unexecuted Linux remainder ran
+after its invocation correction. Whole-main Rust formatting has inherited unrelated
+differences; no full-format pass is claimed. New quota/memory modules and Ruff pass.
+
+All85prior checkpoints/readiness remain; only two exact new scope paths are added.
+The registry maps no generated family, so no generator runs. Unknown ancestor quota
+now explicitly blocks execution. Qualifying a reliable alternative, all12conditioning
+guarantees/fresh independent references and challenges, complete canonical preparation,
+both authoritative campaigns and fresh independent Releases, signing/immutable trust,
+and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.
+
+Pre-staging guardee0956f1 is retained: its default-locale text read misdecoded the
+existing UTF8 readiness em dash. The actual readiness bytes are unchanged. Explicit
+UTF8 readback confirms equality; only the helper's three text reads are corrected,
+with no source-test or product-sample replay.

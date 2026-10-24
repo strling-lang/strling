@@ -9227,3 +9227,37 @@ generator runs. All86prior checkpoints/readiness remain with three exact scope
 paths added. Reliable governed admission/all12guarantees, fresh references and
 holdouts, complete preparation, both signed/trusted campaigns and independent
 Releases, guarded closure and final clean tree remain. H08 OPEN; continuation ACTIVE.
+
+### H08 resident-page protection mechanism — 2026-10-24 UTC
+
+Checkpoint88 follows cleand069e61a. The first64MiB equal-bound hard-minimum
+request fails87before execution (863e90f3); distinct128MiB maximum headroom
+succeeds (c2a989ad). The actual explicit-trim challenge c5c1238b then reduces
+currentRSS29429760to2646016bytes without changing hard-minimum flags9. Do not
+promote minimum snapshots as continuous protection. Preserve both wrapper
+setup failures before child creation and every unfavorable receipt.
+
+A new standalone Rust mechanism fixture locks the pages it promises to cover.
+It retains1179initial pages plus two1024page regions through two successful
+explicit trims: all3227remain resident and locked, independently checked from
+raw per-page flags. A separate1MiB hard-cap child rejects lock44/error1453
+instead of accepting low RSS. Terminal6cca4e1f finishes01:46:05.243550Z in
+18.9067169s; four successful synthetic processes, one setup failure and one
+intentional hard-cap rejection across this checkpoint all retire. No product
+sample, host setting, privilege, inherited job or performance ceiling changes.
+
+Rust3Native/3WSL and direct dependents54Native/40WSL plus14native-only skips
+covered on Windows pass. Independent data-only audit1e627498 validates2317source
+files, all six attempts, controls and page sets in0.320633s. Two new source/charter
+paths and three records map no generated family. All87prior checkpoints/readiness
+are preserved. Page locking is a concrete implementation route, not complete
+product residency coverage or workstation admission qualification. Complete
+product allocation/image/stack/descendant coverage, CPU/CLI guarantees, fresh
+reference/holdout qualification, preparation, both signed/trusted campaigns and
+independent Releases remain. No new total-certification speedup claim. H08 OPEN;
+continuation ACTIVE, no external action required.
+
+Preserve initial commit-guard5ef9b563: it rejects the new narrative section placed
+at a repeated earlier paragraph, before any staging. Relocate only that section
+to EOF and prove the whole historical narrative remains an exact prefix. No
+source fixture or experiment changes, and no measurement is replayed.

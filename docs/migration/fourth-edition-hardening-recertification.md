@@ -4786,3 +4786,68 @@ source-distinct9holdout, complete36canonical preparation/cleanLSP before freeze,
 Q/P38/80/126 plus fresh same-SHA independent no-reuse Release126, unchanged
 performance ceilings/counts, soleVSCE waiver, signing, qualified immutable trust
 and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.
+
+## Resident-page protection mechanism — 2026-10-24 UTC
+
+Checkpoint88 tests a conservative memory-control alternative before attempting
+another expensive campaign. Minimum residency above the original RSS ceilings
+was only a hypothesis. The first equal64MiB minimum/maximum request returns87
+before resume; receipt863e90f343d2af4fe784f2ad507563032d7a8354f8e0e3d87a36f6b71e98a6a6
+preserves unchanged defaults and complete cleanup. A distinct setup with the
+same minimum and128MiB maximum succeeds in two owned Python synthetic processes,
+including an owned CPU-limited ancestor. Receipt
+c2a989adf57b7f5066db46861ad27d6d83410c6bf398bad4f1b73dc39aa1367e
+retains the original8MiB/8192touch/1000000CPU work and raw counters. The floor
+does not force64MiB of resident pages. This is not an ancestor-quota proof.
+
+A separate challenge keeps two4MiB allocations live and explicitly trims between
+them. `K32EmptyWorkingSet` succeeds, changing currentRSS29429760to2646016bytes
+while hard-minimum flags9 and bounds stay unchanged. Terminal
+c5c1238b45c8f3a7c8f150a1d4afde576023478b1b45b0144d05e6ef368dea08
+disproves using minimum readback alone as continuous protection. Preserve the
+earlier wrapper syntax/source-marker failures; neither created a child. No
+unfavorable observation is filtered, no consumed workload is retried.
+
+The distinct standalone Rust1.75 fixture exercises `VirtualLock`, whose Windows
+contract protects the specified pages until unlock or process termination. It
+is not linked into a product executable or a live admission path. The fixture
+locks1179pages from one bounded initial working-set census, then allocates and
+locks two additional1024page regions. It touches8192pages with checksum1007360,
+performs two successful explicit trims, and retains raw `QueryWorkingSetEx`
+address/flag arrays. All3227promised pages remain both valid and locked. Final
+currentRSS13221888bytes contains the promised13217792bytes; peakRSS13307904and
+privatecommit9703424remain raw. An independent1MiB hard-cap child fails initial
+page lock44with1453/exit1. Its reduced RSS never becomes an accepted measurement.
+
+Mechanism terminal6cca4e1f477d4d69b778e3cdeaf83645f1bab8e85dbc45a421a9ad1c4e0c6e55
+finishes2026-10-24T01:46:05.243550Z in18.9067169s. Positive process
+df3f1a68e72097d8e4d13da221d358fe7985f1cbc51ec515a7e22c9563cfbb59
+and negative f2e97419ecb8e254ee2fe902fd95883312b72e11eac5ec079fba3161a3d41143
+both retire complete owned trees. All six checkpoint attempts remain: four
+completed synthetic processes, one pre-execution setup failure and one expected
+lock rejection. Native/WSL Rust tests3each pass. Integrity-first direct dependents
+eea6ba5643ac88c0207a1b5fc5c8e1b47ad57cdcec7fe7fdbad64b6386a55496
+finish01:48:24.658381Z in17.6712185s:54Native,40WSL plus14native-only skips covered
+on Windows, Rust formatting pass. The argument-less check invocation failed
+before creating an attempt; the explicit phase ran once.
+
+Independent data-only audit
+1e627498d3228f2a6ca83785b19a6b6f913227760f60364e3f4376078caf807c
+finishes01:49:47.022247Z in0.320633s. It checks2317source files, complete raw
+streams, retained failures, controls, distinct aligned pages, original-page
+retention, complete allocation regions, lock/residency bits and both actual
+trims. No producer, build or workload executes in this audit. These durations
+are diagnostic costs, not equivalent certification runtime improvements.
+
+Page locking supplies a concrete protective mechanism, not complete product
+coverage. Unobserved pages are explicitly outside its guarantee. Product
+integration must cover allocation/free/reuse, image/stack lifetimes, original
+warmup and every measured descendant without normalizing RSS, omitting work or
+weakening ceilings. CPU ancestry remains unknown and live admission rejects.
+Every conditioning obligation, fresh independent9reference/source-distinct9holdout,
+adverse challenge, full36canonical preparation/cleanLSP, exact freeze/prerequisites,
+both source-distinctQ/P campaigns and fresh same-SHA independent no-reuse Releases,
+qualified verifier before pin-only promotion, signing/immutable trusted verification
+and guarded final cleanCLOSED remain. No host, privilege or inherited-job changes;
+no generated family matches and no generator runs. Preserve all87prior checkpoints
+and readiness. H08 OPEN; continuation ACTIVE; no user action required.

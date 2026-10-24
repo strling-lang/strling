@@ -40,3 +40,13 @@ denies certification eligibility. Existing live conditioning is unchanged; no
 baseline regeneration, cap change, sample omission, normalization or reference
 selection is authorized. Fresh independent reference nine, source-distinct holdout
 nine, all conditioning challenges and independent trust remain required.
+
+## Native memory result domain
+
+The production RSS parser must accept exact positive JSON integers only; Python
+booleans must not become one-byte passing samples. Exercise the actual direct
+controller parser and envelope acquisition adapter with booleans, zero, negative,
+floating-point, string and null values. Preserve raw output, failed receipts and
+the one-attempt boundary. Valid integers, including values beyond exact float
+precision, must survive unchanged. These synthetic protocol tests establish parser
+integrity only, never memory residency, conditioning or empirical qualification.

@@ -5475,3 +5475,33 @@ fresh independent same-SHA no-reuse Release, source-distinct qualification/promo
 if required, signing, qualified immutable verification before promotion and
 guarded clean formal closure remain. Retain the accepted52.0583percent governance
 gate reduction without a whole-certification claim. H08 OPEN; not certified.
+
+### Live memory evidence and qualification disposition — 2026-10-24 UTC
+
+Checkpoint 102 traces the actual qualification route from 35fb1ceb. The memory
+worker does not use the optional resident helpers. Its peak working set includes
+startup, input and warmup; complete lifetime and observer-effect coverage is still
+unqualified. The 12 conditioning obligations remain open. No authoritative
+campaign can advance on these component tests.
+
+Correct a live parser defect: Python accepted true as a positive integer RSS.
+Require an exact positive integer. Direct-controller and acquisition tests reject
+booleans, zero, negatives, floats, strings and null while preserving raw failed
+receipts and the one-attempt boundary. Valid large integers remain exact. Native
+and WSL each pass 27 adapter/receipt and 82 controller tests, including the
+existing all-54-coordinate protocol check. Source leases retire unchanged.
+
+Preserve failed route audit 77cfda19. Its historical raw artifact pins were stale;
+corrected audit 68415b95 verifies the exact six historical identity/fingerprint
+changes against immutable Git source. Measured data, budgets and policies are
+unchanged. The registered identity projection equals the current artifacts;
+no generation is needed. Integrated integrity passes first.
+
+All prior checkpoints, readiness and scope are preserved. Polling stays PAUSED.
+No manual workstation request, repeated provider probe or product sample. Memory,
+conditioning and worker prerequisites remain unsatisfied. Current profiles,
+independent no-reuse Release, source-distinct qualification/promotion if required,
+signing, immutable trusted verification and guarded clean closure remain required.
+The prior 52.0583% governance-gate improvement remains the only accepted comparison
+referenced here; these test durations establish no total-certification speedup.
+H08 remains OPEN, with every gate retained.

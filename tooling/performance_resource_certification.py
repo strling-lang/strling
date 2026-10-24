@@ -3889,7 +3889,7 @@ def _memory_sample(
             ) from error
         peak = result.get("peak_working_set_bytes")
         if (
-            not isinstance(peak, int)
+            type(peak) is not int
             or peak <= 0
             or not _runner_resource_matches(
                 result,

@@ -246,6 +246,75 @@ class AcquisitionTests(unittest.TestCase):
         self.capture.assert_not_called()
         self.assertFalse((self.root / "attempt").exists())
 
+    def test_memory_scalar_requires_exact_positive_integer(self):
+        key = ("memory:kernel-peak-rss", "fixture:protocol-common")
+        for index, value in enumerate((True, False, 0, -1, 1.0, "1", None)):
+            with self.subTest(value=value):
+                events = []
+
+                def returned(command, **options):
+                    raw = result_for(command, self.environment)
+                    raw["peak_working_set_bytes"] = value
+                    return subprocess.CompletedProcess(command, 0, json.dumps(raw), "")
+
+                with controller._retain_measurement_processes(events.append):
+                    with self.assertRaises(controller.PerformanceResourceError):
+                        controller._memory_sample(
+                            key[1],
+                            artifacts=self.artifacts,
+                            selected_logical_cpu=1,
+                            execution_resource=self.environment["execution_resource"],
+                            process_executor=returned,
+                            root=self.root,
+                        )
+                self.assertEqual(len(events), 2)
+                self.assertEqual(
+                    json.loads(events[-1]["stdout"])["peak_working_set_bytes"], value
+                )
+
+                def malformed(spec, directory):
+                    terminal = self.fake_capture(spec, directory)
+                    path = directory / "stdout.bin"
+                    raw = json.loads(path.read_bytes())
+                    raw["peak_working_set_bytes"] = value
+                    path.write_text(json.dumps(raw), encoding="utf-8")
+                    return terminal
+
+                self.capture.side_effect = malformed
+                before = len(self.calls)
+                directory = self.root / f"memory-{index}"
+                receipt = self.acquire(key, directory=directory)
+                self.assertEqual(receipt["status"], "failed")
+                self.assertNotIn("observation", receipt)
+                self.assertFalse(receipt["certification_eligible"])
+                self.assertEqual(len(self.calls), before + 1)
+                self.assertEqual(
+                    json.loads((directory / "process/stdout.bin").read_bytes())[
+                        "peak_working_set_bytes"
+                    ],
+                    value,
+                )
+
+    def test_memory_integer_preserved_without_coercion(self):
+        for value in (1, 123456, 2**53 + 1):
+            with self.subTest(value=value):
+
+                def returned(command, **options):
+                    raw = result_for(command, self.environment)
+                    raw["peak_working_set_bytes"] = value
+                    return subprocess.CompletedProcess(command, 0, json.dumps(raw), "")
+
+                actual = controller._memory_sample(
+                    "fixture:protocol-common",
+                    artifacts=self.artifacts,
+                    selected_logical_cpu=1,
+                    execution_resource=self.environment["execution_resource"],
+                    process_executor=returned,
+                    root=self.root,
+                )
+                self.assertIs(type(actual), int)
+                self.assertEqual(actual, value)
+
     def test_unknown_coordinate_and_changed_manifest(self):
         with self.assertRaises(ValueError):
             self.acquire(("unknown", None))

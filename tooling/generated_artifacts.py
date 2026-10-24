@@ -437,9 +437,13 @@ def _snapshot_governed_path(root: Path, path: Path) -> tuple[str, str] | None:
         raise RegistryError(
             f"governed output must be a regular repository file: {path}"
         )
-    if path.is_dir():
+    # Classify from one fresh no-follow result. Separate is_dir/is_file calls
+    # repeat the same metadata I/O for every regular governed output. Keep the
+    # later mode read independent, just as for the original snapshot boundary.
+    metadata = _snapshot_metadata(path)
+    if metadata is not None and stat.S_ISDIR(metadata.st_mode):
         return None
-    if not path.is_file():
+    if metadata is None or not stat.S_ISREG(metadata.st_mode):
         raise RegistryError(
             f"governed output must be a regular repository file: {path}"
         )

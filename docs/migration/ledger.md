@@ -9099,3 +9099,53 @@ not certification freeze, qualification or permission to reuse evidence. Complet
 candidate freeze and the required independent campaigns. No measured end-to-end
 scheduling speedup is claimed yet. Conditioning/ancestor-quota engineering, signing,
 immutable trust and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.
+
+### H08 checkpoint 84 — audited serializer reduction and complete diagnostic inventory
+
+Clean engineering fca03bbc receives fresh full-default-graph builds, completing in
+698.067s; predictor1d7bf6ff finishes at2026-10-23T23:49:29.982482Z. Independent
+auditb7e77065 verifies all2310source files, four artifacts,24libraries and complete
+equivalent allocation censuses. Serialization allocations fall23938to8578 (64.166%);
+complete allocations35572to20212, with all peaks unchanged. Both complete output
+artifacts retain SHA9d572b69. The unchanged isolated old escape function is a control,
+not the optimized product. No timing, RSS or build-speedup claim follows from this.
+
+The fresh serializer diagnostic retains64samples, median3695100ns against4565990ns.
+Remaining screenf7ead747 finishes2026-10-24T00:09:15.313236Z in291.2804239s:
+49coordinates/3136samples, all within unchanged caps, none unrun or retried. Audit
+eb13fb33 reconstructs the complete50-coordinate latency inventory. Failed audit
+0cfc6570 remains: it assumed an unpromoted CLI estimator. Corrected data-only v2 uses
+the current order-balanced paired-ratio estimator; no policy or sample was changed.
+
+Memory diagnostic8891e566 finishes in5.4415577s; auditc4056f07 verifies all three
+original single-observation worker workloads. Semantic-large17997824/19968819,
+simply-large16695296/18531532 and protocol-common6950912/6970163 bytes are within
+their unchanged caps. Exact kernel-plus-interop size8636416 is below11018444bytes.
+All54diagnostic coordinates are now covered, with3200latency samples and three
+memory observations. These are not fresh nine-run references or qualified campaigns.
+Historical cap/stability failures remain; conditioning and ancestor quotas remain
+unresolved. No canonical preparation, certification, signing or closure gate is waived.
+
+### H08 checkpoint 85 — lossless governed-output metadata consolidation
+
+The measured preparation critical path motivates consolidating repeated file/directory
+classification into one fresh no-follow metadata result. All containment, symlink,
+alias, separate fresh mode and complete content checks remain, with the same ordered
+eight-worker bound and every snapshot boundary. Four regressions cover classifications,
+fresh modes/bytes, nonregular rejection, nonretried errors and same-size/mtime edits.
+
+Proofd2b9ebfb finishes2026-10-24T00:25:44.749255Z in104.560795144s. Integrity passes,
+then145WSL dependent tests pass without skips. The fixed before/after/after/before/
+before/after comparison reads all207governed nodes/193files every round; all six
+path/mode/content snapshots are identical. Median1.263642914s becomes1.025140551s,
+18.8741898805124% lower. This is governed-output census time only, not complete
+preparation or certification wall time. Auditafaa98e8 independently verifies the
+committed reference function, full source, every raw receipt and arithmetic; native
+dependents pass131tests with14POSIX-only skips covered by WSL. Format and lint pass.
+
+The generated-artifact skill maps both source paths and three records to no current
+family; no generator runs. All83previous checkpoints/readiness remain, with84/85
+appended and no scope expansion. Guarded commit, complete canonical preparation,
+conditioning/ancestor-quota qualification, both complete signed/trusted campaigns,
+independent no-reuse Releases and guarded clean formal closure remain. H08 OPEN;
+continuation ACTIVE; no owner action required.

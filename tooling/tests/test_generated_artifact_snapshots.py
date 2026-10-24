@@ -740,7 +740,7 @@ class BoundedArtifactSnapshotTests(unittest.TestCase):
                 generated.integrity_snapshot(registry, self.root, lambda _root: {})
         nonregular = directory / "nonregular-node"
         nonregular.write_bytes(b"must not be read")
-        native_is_file = Path.is_file
+        native_lstat = Path.lstat
         native_read = Path.read_bytes
         reads = []
 
@@ -748,17 +748,118 @@ class BoundedArtifactSnapshotTests(unittest.TestCase):
             reads.append(path)
             return native_read(path)
 
+        def metadata(path):
+            observed = native_lstat(path)
+            if path == nonregular:
+                fields = list(observed)
+                fields[0] = stat.S_IFIFO | 0o600
+                return os.stat_result(fields)
+            return observed
+
         with (
-            patch.object(
-                Path,
-                "is_file",
-                lambda path: path != nonregular and native_is_file(path),
-            ),
+            patch.object(Path, "lstat", metadata),
             patch.object(Path, "read_bytes", read),
             self.assertRaisesRegex(generated.RegistryError, "regular repository file"),
         ):
             generated.integrity_snapshot(registry, self.root, lambda _root: {})
         self.assertNotIn(nonregular, reads)
+
+    def test_governed_classification_reads_once_and_keeps_fresh_mode_and_bytes(
+        self,
+    ) -> None:
+        path = self.root / "binary.bin"
+        native_metadata = generated._snapshot_metadata
+        native_lstat = Path.lstat
+        native_read = Path.read_bytes
+        classifications = []
+        reads = []
+        classified = False
+
+        def classify(candidate):
+            nonlocal classified
+            classifications.append(candidate)
+            result = native_metadata(candidate)
+            classified = True
+            return result
+
+        def metadata(candidate):
+            result = native_lstat(candidate)
+            if candidate == path and classified:
+                fields = list(result)
+                fields[0] = stat.S_IFREG | 0o444
+                return os.stat_result(fields)
+            return result
+
+        def read(candidate):
+            reads.append(candidate)
+            return native_read(candidate)
+
+        expected = hashlib.sha256(b"292\0" + native_read(path)).hexdigest()
+        with (
+            patch.object(generated, "_snapshot_metadata", classify),
+            patch.object(Path, "lstat", metadata),
+            patch.object(Path, "read_bytes", read),
+            patch.object(Path, "is_dir", side_effect=AssertionError("extra stat")),
+            patch.object(Path, "is_file", side_effect=AssertionError("extra stat")),
+        ):
+            self.assertEqual(
+                ("binary.bin", expected),
+                generated._snapshot_governed_path(self.root, path),
+            )
+        self.assertEqual([path], classifications)
+        self.assertEqual([path], reads)
+
+    def test_governed_classification_denies_missing_and_every_nonregular_type(
+        self,
+    ) -> None:
+        path = self.root / "binary.bin"
+        initial = list(path.lstat())
+        for kind in (
+            None,
+            stat.S_IFIFO,
+            stat.S_IFSOCK,
+            stat.S_IFCHR,
+            stat.S_IFBLK,
+            stat.S_IFLNK,
+        ):
+            fields = initial[:]
+            fields[0] = (kind or 0) | 0o600
+            metadata = None if kind is None else os.stat_result(fields)
+            with (
+                self.subTest(kind=kind),
+                patch.object(generated, "_snapshot_metadata", return_value=metadata),
+                patch.object(Path, "read_bytes") as read,
+                self.assertRaisesRegex(
+                    generated.RegistryError, "regular repository file"
+                ),
+            ):
+                generated._snapshot_governed_path(self.root, path)
+            read.assert_not_called()
+
+    def test_governed_classification_errors_are_not_retried_or_read(self) -> None:
+        path = self.root / "binary.bin"
+        for error in (PermissionError(13, "denied"), OSError(5, "I/O")):
+            with (
+                self.subTest(error=error),
+                patch.object(
+                    generated, "_snapshot_metadata", side_effect=error
+                ) as metadata,
+                patch.object(Path, "read_bytes") as read,
+                self.assertRaises(type(error)) as seen,
+            ):
+                generated._snapshot_governed_path(self.root, path)
+            self.assertIs(error, seen.exception)
+            metadata.assert_called_once_with(path)
+            read.assert_not_called()
+
+    def test_governed_snapshots_reread_same_size_and_mtime_content(self) -> None:
+        path = self.root / "binary.bin"
+        before = generated._snapshot_governed_path(self.root, path)
+        metadata = path.stat()
+        path.write_bytes(bytes(reversed(range(256))) * 13)
+        os.utime(path, ns=(metadata.st_atime_ns, metadata.st_mtime_ns))
+        after = generated._snapshot_governed_path(self.root, path)
+        self.assertNotEqual(before, after)
 
 
 if __name__ == "__main__":

@@ -2180,6 +2180,30 @@ checkpoints:
           - check: Earlier bounded predictor without omitting certification preparation
             result: not_run
             details: "All82prior checkpoints/readiness preserved. After guarded clean engineering commit, schedule the narrow source-held allocation/latency predictor before expensive canonical preparation. This is diagnostic only, not certification candidate freeze or qualification; fresh-execution requirements and no-reuse guarantees remain. Complete36family preparation/clean LSP certification still required before candidate freeze. No measured whole-certification scheduling gain claimed yet. Conditioning/ancestor-quota qualification, all54coords56limits12conditioning obligations, complete source-distinctQ/P38/80/126 and same-SHA independent no-reuseRelease126each125PASSsoleVSCE, signing/qualifiedverifier-before-pinpromotion/immutabletrust/guarded clean CLOSED remain mandatory. H08 OPEN; continuation ACTIVE."
+    - name: Complete audited diagnostic inventory and measured serializer allocation reduction
+      status: in_progress
+      evidence:
+          - check: Equivalent complete allocation reduction with unchanged output
+            result: passed
+            details: "Checkpoint84: cleanfca03bbc fresh full-graph builds698.067s; predictor1d7bf6ff/auditb7e77065 verify2310source files,4artifacts,24libraries. Two identical complete censuses: serialization23938to8578calls/64.16576155067257% fewer, complete35572to20212/43.18002923647813% fewer, requested2806534to2791174bytes, allpeaks unchanged. Canonical artifact9d572b691109bab31ee562ef54215a2c17394d4e55287faa29c2c721a22b7109 unchanged,26624patternbytes/2049mapentries. Old isolated escape function remains unchanged control, not optimized product. No time/RSS/build/whole-certification gain inferred."
+          - check: Every diagnostic coordinate retains original workload and cap
+            result: passed
+            details: "Serializer64samples median3695100ns/MAD305500ns/p954207300ns below4565990ns; no retry. Remainingf7ead747ff72a2d67c5190d6ee669a99d5b3a7db74b2606b6e2814e57da86d4b finishes2026-10-24T00:09:15.313236Z in291.2804239s,49coords/3136samples allwithin unchangedcaps, noneunrun. Auditeb13fb3347d68a1fa069d7ec51c81e456ae9b9921833f00ab78852386828723f reconstructs all50latency slots. Audit-v1failure0cfc657039475810a6266b5893e3287b7da3e6598476ef4d813721aa63097c7f retained; only reader corrected from assumed unpromoted estimator to current order-balanced paired-ratio policy, no sample/policy change. Memory8891e566/auditc4056f07 preserves three original singleton workloads:17997824/19968819,16695296/18531532,6950912/6970163bytes. Kernel+interop8636416/11018444bytes. All54diagnostic coordinates covered,3200latencysamples; not nine-run reference or qualifiedcampaign."
+          - check: Conditioning and authoritative closure remain required
+            result: not_run
+            details: "All prior unfavorable observations preserved. No same-SHA sample replay, reference qualification, baseline admission or trusted-verifier promotion. Complete preparation, all12conditioning/ancestor-quota guarantees, original54coords/56limits/512warmups/64samples/9references, source-distinct complete Q/P campaigns and fresh independent Releases, signing/immutable verification/guarded clean formal closure remain. H08 OPEN; continuation ACTIVE."
+    - name: Lossless governed-output metadata classification with measured component timing
+      status: in_progress
+      evidence:
+          - check: Narrow implementation and cross-platform direct dependents
+            result: passed
+            details: "Checkpoint85: consolidate separate is_dir/is_file calls into one fresh nofollow classification. Preserve containment/root resolutions/symlink and alias denial, separate fresh finalmode, fullbytes, everyboundary and ordered8worker bound. Four regressions coverclassification/mode/bytes, missing/nonregulartypes, nonretriederrors and same-size/mtime rewrites. Proofd2b9ebfbb433e445f4bb863c0ed96c7889e36ef3532bccf3f703d05a48a0ec67 completes2026-10-24T00:25:44.749255Z in104.560795144s: integrityfirst,145WSL tests0skip. Native145tests=131pass/14POSIXskipscoveredWSL. Ruff format/lintpass; unavailableBlack invocations retained as no-edit/no-install failures."
+          - check: Equivalent complete census timings independently reconstructed
+            result: passed
+            details: "Fixed before/after/after/before/before/after, all207nodes/193files and everymode/content fingerprint equal across6rounds; no cache/trimming/omission. Before1148134836/1340435678/1263642914ns, after1142094543/996141422/1025140551ns; medians1263642914to1025140551ns,18.8741898805124% lower. Independentafaa98e84ec370627487dfaa1d4f01d2a3a03e61d0d7cf2cc9a613fcdb7ba4d9 verifies exactHEAD reference function,2310sourcebytes, allrawreceipts/stages and arithmetic. Scope is governed-output census only, never completepreparation or totalcertification speedup."
+          - check: Preservation and remaining campaign obligations
+            result: not_run
+            details: "Current36familyregistry maps bothcode and3record paths to nofamily, no generators. All83prior checkpoints/readiness preserved with84/85 appended; existing exact scope covers2codepaths. Guardedcommit/newcleanSHA, complete36canonicalpreparation/cleanLSP beforefreeze, conditioning/ancestorquota/all12guarantees, all54coords56limits and fullsource-distinctQ/P38/80/126 plus sameSHAfreshindependentnoReuseRelease126each125PASSsoleVSCE, signing/qualifiedverifier-before-pin-onlypromotion/immutableverification/guardedcleanCLOSED remain. No retained-certifier access or owner action. H08 OPEN; continuation ACTIVE."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

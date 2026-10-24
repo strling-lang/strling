@@ -4611,3 +4611,75 @@ remain mandatory before certification freeze. The changed schedule has no measur
 whole-certification speedup claim yet. Conditioning/ancestor-quota work, all complete
 source-distinct campaigns, independent Release, signing, immutable trust and guarded
 clean formal closure remain required. H08 OPEN; continuation ACTIVE.
+
+### Checkpoint 84 — all diagnostic coordinates reconstructed without promotion
+
+On clean fca03bbc46f577b14cb6a4ac1dc110417c86639b, fresh original full-graph
+builds take698.067s. Predictor1d7bf6ff and auditb7e77065 retain two identical complete
+allocation results: serialization23938to8578calls (64.16576155067257% reduction),
+complete35572to20212calls (43.18002923647813%), requested bytes2806534to2791174,
+all peaks unchanged. Complete artifact9d572b691109bab31ee562ef54215a2c17394d4e55287faa29c2c721a22b7109
+remains identical:26624pattern bytes,2049source-map entries,zero requirements.
+The old isolated escape probe is deliberately unchanged; only the public product
+serializer links the correction. No latency/RSS/build or total-certification gain
+is inferred from allocation counts.
+
+The consumed PCRE2/simply-large diagnostic retains64samples/64attempts,512warmups,
+original batch/CPU1, median3695100ns/MAD305500ns/p954207300ns against4565990ns.
+It is explicitly excluded from remaining screen
+f7ead747ff72a2d67c5190d6ee669a99d5b3a7db74b2606b6e2814e57da86d4b,
+which finishes2026-10-24T00:09:15.313236Z in291.2804239s with49coordinates,
+3136samples, no rejected attempts, no over-cap results and none unrun.
+Independent auditeb13fb3347d68a1fa069d7ec51c81e456ae9b9921833f00ab78852386828723f
+reconstructs every receipt, complete source and original gate. Audit-only v1
+0cfc657039475810a6266b5893e3287b7da3e6598476ef4d813721aa63097c7f
+incorrectly assumed the unpromoted ratio-of-marginal-medians estimator; v2 preserves
+that failure and uses the current governed order-balanced paired-ratio estimator.
+No workload, measurement, policy or threshold is rerun or altered by this correction.
+
+Three-memory diagnostic8891e566f6076c38fcc04c39e47646770fc151ad40af42b79e61b766a188c3a6
+finishes2026-10-24T00:17:29.949585Z in5.4415577s. Audit
+c4056f07af677b5a27910f020b9e38181f301ad3b7f2853feab93ca8d12445cb
+retains all original singleton worker observations and complete raw v2 receipts:
+semantic-large17997824bytes/cap19968819, simply-large16695296/cap18531532,
+protocol-common6950912/cap6970163. Exact kernel-plus-interop size8636416bytes
+is below11018444. All54diagnostic coordinates now have audited observations;
+all latency samples total3200. These are not nine-run independent references,
+conditioning qualification, baseline admission, authoritative Full or Release.
+Prior unfavorable observations and every remaining obligation stay intact.
+
+### Checkpoint 85 — remove duplicate governed-output classification I/O
+
+Instrumented canonical preparation had83integrity snapshots with1047.046s overlapping
+cumulative time, not an additive end-to-end estimate. The narrow implementation
+replaces separate file/directory stat calls with one fresh no-follow classification;
+it retains both root resolutions, containment, symlink/path-alias denial, independent
+fresh final mode, full content reads, all snapshot boundaries and eight ordered workers.
+Four new tests cover fresh classification/mode/bytes, all missing/nonregular types,
+nonretried errors and same-size/mtime edits. Existing nonregular coverage now injects
+actual FIFO metadata instead of mocking a removed classification method.
+
+Proofd2b9ebfbb433e445f4bb863c0ed96c7889e36ef3532bccf3f703d05a48a0ec67
+finishes2026-10-24T00:25:44.749255Z in104.560795144s. Integrity runs first;
+145WSL dependent tests pass0skip. Fixed six-round original/current/current/original/
+original/current execution reads all207nodes/193files with identical complete
+path/mode/content snapshots each time. Before durations1148134836,1340435678,
+1263642914ns; after1142094543,996141422,1025140551ns. Medians1.263642914s and
+1.025140551s give18.8741898805124% lower governed-output census time. Nothing is
+cached, omitted, trimmed or used as a whole-preparation/certification speedup claim.
+
+Independent auditafaa98e84ec370627487dfaa1d4f01d2a3a03e61d0d7cf2cc9a613fcdb7ba4d9
+finishes2026-10-24T00:28:06.911276Z in20.9942472s, checking the exact committed
+reference function, all2310source bytes, six raw results, stage logs and arithmetic.
+Native dependents run145tests:131pass/14POSIX-only skips covered by WSL. Ruff format
+and lint pass. Black was unavailable in native/default WSL Python; those failed
+formatter invocations changed nothing and installed no dependencies.
+
+The generated-artifact skill maps both implementation/test paths and three records
+against all36current families: no matches, no generator or authority refresh.
+All83previous checkpoints/readiness remain with84/85 appended and no scope expansion.
+Guarded clean engineering commit, all36canonical preparation and clean LSP before
+freeze, conditioning/ancestor-quota and all12guarantees,54coordinates/56limits,
+complete source-distinct Q/P38/80/126 plus fresh independent same-SHA Release126
+each125PASS/soleVSCE, signing, qualified verifier before pin-only promotion, immutable
+trust and guarded clean formal CLOSED remain. H08 OPEN; continuation ACTIVE.

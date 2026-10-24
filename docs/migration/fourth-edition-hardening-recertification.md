@@ -5019,3 +5019,61 @@ runtime/prerequisites, both source-distinctQ/P38/80/126 with fresh independent
 same-SHA no-reuse Release126each125PASSsoleVSCE, signing and qualified immutable
 trusted verification before pin-only promotion, guarded closure and final
 cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required.
+
+## Checkpoint92 — bounded shared-page lifetime ownership, not live admission
+
+At clean9583897713a18acf5b2fd0d308a9d883f7329fc5, source review isolates the next
+residency-guard obligation: multiple live allocations can share one page, while
+the Windows VirtualLock API has no lock count. A naive lock-per-allocation and
+unlock-per-free scheme is therefore insufficient. Implement a safe-core,
+allocation-free, fixed-capacity ledger with independent monotonic lifetime tokens,
+exact shared-page counts and first-owner/last-owner native operations. Preflight
+all range, capacity and arithmetic conditions. A failed operation retains its
+page/error and permanently poisons the instance without speculative unlock,
+rollback or successful retry. Exclusive mutable access is not a global-allocator
+reentrancy/synchronization solution; release must precede actual deallocation.
+
+Original check9c246b10d8b1e2ce42b6dbc20bbbcf4704a1918466d52ff37c903e65b2f4d70f
+passes integrity but fails to compile because its temporary no-std wrapper
+traverses one directory too high. No fixture executes. Preserve it and correct
+only that wrapper path in a fresh immutable attempt. Checks
+858c3e8543a6dfb6cce5b9aae9d0c9bdcf21c1364ac0fa0903a79caf36fe6fae finish
+2026-10-24T03:12:50.783607Z in30.6945483s: Rust1.75 no-std compilation and12unit
+tests pass on Native and WSL, including all15625six-step histories perplatform
+against an independent byte-range-union oracle. Tests cover shared/overlapping
+pages, crossing boundaries, last-owner release, address reuse, stale/unknown
+tokens, range/capacity/overflow and partial native failures. Python direct
+dependents61NativePASS and47WSLPASS with14native-only skips covered on Windows,
+integrated integrity and Rustfmt pass. No product samples are consumed.
+
+One standalone native fixture allocates two distinct4096byte regions. Two direct
+locks followed by one unlock remove the first page's lock. On the second region,
+two lifetime tokens share the page; releasing the first calls no unlock, and
+explicit successful trimming leaves it resident and locked. Last-owner release
+unlocks, address reuse requires a new token and fresh lock, and final release
+unlocks. Six raw query flags are88080449/83886145/88080449/83886145/88080449/83886145.
+Preserve all18ordered native events, naive2locks1unlock, ledger2locks2unlocks and
+3tokens, two successful frees, and natural process exit. Terminal
+cc2f478998046bd2d05e92c60544da484441b9018e1f9efb754d7a586f98d7c9 finishes
+2026-10-24T03:13:07.855836Z in2.8418172s including integrity/build. The fixture's
+0.1274988s interval is diagnostic only, not performance evidence or a speedup.
+No privilege, inherited-job, host-policy or unrelated-process changes occur.
+
+Independent data-only audit985d3ed313f4b41e5e5eeff392500e2b936cdbf3bee12e6987bf0a1601f0f61f
+finishes03:14:41.233080Z in1.2097402s, checking2326source files, every attempt/log,
+ordered native event and process-owned page identity, raw operation counts/flags,
+no-std and cross-platform results without re-execution. The generated-artifact
+skill maps no family for the three new source/fixture/charter paths or three
+migration records. Preserve all91historical checkpoints/readiness and add exactly
+three scope paths. No generator or authoritative profile runs.
+
+This does not establish complete residency or admission. Storage and callbacks,
+allocator hooks/reentrancy, allocation/free/reuse, image/stack/thread/descendant
+coverage and observer effects remain unqualified. Prior floor/watch counterexamples
+remain rejected; no raw-RSS substitution or performance ceiling/count changes.
+All12conditioning guarantees, CPU/CLI ancestry, fresh9reference/source-distinct
+9holdout/adverse qualification, full36canonical preparation/cleanLSP before freeze,
+runtime/prerequisites, both source-distinctQ/P38/80/126 with independent fresh
+same-SHA no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable trusted
+verification before pin-only promotion, guarded closure and final cleanCLOSED
+remain. H08 OPEN; continuation ACTIVE; no external action required.

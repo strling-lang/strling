@@ -9346,3 +9346,32 @@ Preserve all90prior checkpoints/readiness and add one exact charter scope path.
 Complete workstation admission, source preparation, both signed/trusted campaigns
 with independent Releases, and guarded final cleanCLOSED remain. H08 OPEN;
 continuation ACTIVE, no external action required.
+
+### H08 bounded shared-page lifetime primitive — 2026-10-24 UTC
+
+Checkpoint92 follows clean95838977. Windows virtual-page locks have no reference
+count, so per-allocation unlocking can remove another live allocation's protection.
+Add an allocation-free fixed-capacity Rust ownership ledger: monotonic lifetime
+tokens, exact overlap counts, first-owner lock, last-owner unlock, and permanent
+poisoning on invalid events, overflow, exhausted capacity or native failure.
+No speculative unlock/rollback or live admission integration is permitted.
+
+Preserve wrapper-path failure9c246b10 before fixture execution. The corrected
+temporary wrapper changes no tracked source. Checks858c3e85 pass Rust1.75 no-std
+builds and12tests perplatform, including15625six-step deterministic histories
+against an independent live-byte-range union oracle;61Native/47WSL Python tests
+pass with14native-only skips covered on Windows. Integrity first, Rustfmt pass.
+
+One new owned-page challengecc2f4789 proves the naive double-lock/single-unlock
+counterexample. The ledger's shared page survives first release plus explicit
+trim, unlocks only after last release, and relocks on address reuse. All18raw
+native events and six query flags remain; both regions and the process retire.
+Data-only audit985d3ed3 verifies2326source files and every receipt in1.2097402s.
+No product sample, reference cohort, authoritative profile or generator runs.
+
+The skill maps no generated family. Preserve all91prior checkpoints/readiness;
+add only three exact scope paths. This primitive is not whole-process coverage:
+allocator interception, storage/callbacks, stack/image/thread/descendant lifetimes
+and observer effects remain unqualified. All admission/certification obligations
+and original ceilings/counts remain. No runtime speedup or certification claim.
+H08 OPEN; continuation ACTIVE; no external action required.

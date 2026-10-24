@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/resident_page_ledger.rs
+        - tooling/tests/native_resident_page_lifetimes.rs
+        - tests/_design/unit/performance-resident-page-lifetimes.md
         - tests/_design/unit/test_generated_artifact_failure_snapshot.md
         - tooling/performance_working_set_watch.py
         - tooling/tests/test_performance_working_set_watch.py
@@ -2313,6 +2316,21 @@ checkpoints:
           - check: Preserve source authority and remaining formal certification work
             result: not_run
             details: "Exactly three implementation/test/charter paths plus three migration records; the36family registry maps none. Add one exact charter scope path and preserve all90historical checkpoints/readiness. No source freeze, live admission change, trust-pin promotion or certification claim. Complete source-reviewed memory lifetimes, CPU/CLI and all12conditioning guarantees remain; the prior working-set-watch mechanism stays rejected. Preserve every ceiling, sample count, unfavorable receipt, security proof and license policy. Fresh9reference/source-distinct9holdout/adverse qualification, full36canonical preparation/cleanLSP before freeze, exact runtime/prerequisites, both source-distinctQ/P38/80/126 with fresh independent same-SHA no-reuse Release126each125PASSsoleVSCE, signing and qualified immutable trusted verification before pin-only promotion, guarded closure and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required."
+    - name: Implement bounded shared-page lifetime ownership without admission promotion
+      status: in_progress
+      evidence:
+          - check: Source-reviewed ownership gap and allocation-free fail-closed primitive
+            result: passed
+            details: "Checkpoint92 follows clean9583897713a18acf5b2fd0d308a9d883f7329fc5. The Microsoft VirtualLock contract explicitly lacks per-page lock counts; naive per-allocation unlock can release protection still needed by another owner. Add a safe-core fixed-capacity Rust lifetime/page ledger, with exclusive mutable access, monotonic tokens, exact page overlap counts, first-owner lock and last-owner unlock. Preflight ranges/arithmetic/capacity/reference/token overflow before callbacks. Every invalid event or native error permanently poisons; no speculative rollback, cleanup unlock or retry. Native errors retain page and code. This is not a global allocator or live admission guard; it cannot establish complete event capture or protect its own storage, callbacks, images, stacks, threads or descendants."
+          - check: Preserve wrapper-only failure and prove finite histories on both platforms
+            result: passed
+            details: "First check9c246b10d8b1e2ce42b6dbc20bbbcf4704a1918466d52ff37c903e65b2f4d70f stops after integrity when the temporary no-std wrapper traverses one directory too high; no fixture or product sample executes. Preserve that failed attempt and correct only the temporary wrapper in v2. Same-source858c3e8543a6dfb6cce5b9aae9d0c9bdcf21c1364ac0fa0903a79caf36fe6fae finishes2026-10-24T03:12:50.783607Z in30.6945483s: Rust1.75 no-std builds and12unit tests on Native and WSL, including all15625six-step histories against an independent live-byte-range union oracle perplatform, pass. Partial overlap, boundary crossing, stale tokens, address reuse, zero/overflow, capacities and partial native failures remain fail-closed. Python direct dependents61NativePASS/47WSLPASS14native-only skips covered on Windows, Rustfmt and integrity pass."
+          - check: One new owned-page counterexample and correct lifetime mechanism
+            result: passed
+            details: "One standalone Windows fixture, not a product worker, uses two distinct fresh4096byte regions. Naive two-lock/one-unlock loses the lock exactly as the API specifies. Ledger shared-page first release performs no unlock; explicit successful trim leaves the second owner's page resident and locked. Last release unlocks, and reuse relocks under a new token before its final release. Raw query flags88080449/83886145/88080449/83886145/88080449/83886145 retained, along with18ordered allocation/lock/query/trim/free events. Naive2locks1unlock; ledger2locks2unlocks3tokens; both regions freed and process exits normally. Terminalcc2f478998046bd2d05e92c60544da484441b9018e1f9efb754d7a586f98d7c9 finishes2026-10-24T03:13:07.855836Z in2.8418172s including checks/build; native fixture interval0.1274988s is diagnostic only, not a performance result or speedup. No privileges, inherited jobs, host settings or unrelated processes changed."
+          - check: Independent audit and unchanged complete-admission obligations
+            result: not_run
+            details: "Data-only audit985d3ed313f4b41e5e5eeff392500e2b936cdbf3bee12e6987bf0a1601f0f61f passes at2026-10-24T03:14:41.233080Z in1.2097402s, verifying2326source files, all attempts/steps/raw logs, exact native sequence, page identities, operation counts/flags, no-std and cross-platform tests without replay. All three new source/fixture/charter paths plus three records map no generated family. Preserve all91historical checkpoints/readiness and add exactly three scope paths. No live producer, verifier, conditioning or performance policy changes. Primitive storage/callbacks, allocator interception/reentrancy, complete allocation/free/reuse/image/stack/thread/descendant coverage and observer effects remain unqualified. Prior incomplete watch/floor mechanisms stay rejected; raw RSS cannot be substituted. All12conditioning guarantees, CPU/CLI ancestry, original ceilings/counts, fresh9reference/source-distinct9holdout/adverse qualification, full36canonical preparation/cleanLSP before freeze, runtime/prerequisites, both source-distinctQ/P38/80/126 with independent fresh same-SHA no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable trust before pin-only promotion, guarded closure and final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

@@ -350,14 +350,17 @@ def _snapshot_entries(
     workers: int = SNAPSHOT_READ_WORKERS,
     wrap_os_errors: bool = True,
 ) -> dict[str, str]:
-    """Read every census item with a fixed bound, retaining original path order."""
+    """Read every item with eight active readers and bounded ordered read-ahead."""
     if not 1 <= workers <= SNAPSHOT_READ_WORKERS:
         raise RegistryError("snapshot read concurrency must be between one and eight")
     iterator = iter(inputs)
     pending: deque[Future[tuple[str, str] | None]] = deque()
     snapshot: dict[str, str] = {}
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        for _ in range(workers):
+        # A small queued window keeps idle readers busy behind a slow earlier
+        # path. Completed results count against this same finite window; no
+        # bytes, metadata or census entries survive a snapshot boundary.
+        for _ in range(2 * workers):
             try:
                 item = next(iterator)
             except StopIteration:
@@ -786,7 +789,8 @@ def git_reference_snapshot(directory: Path, prefix: str) -> dict[str, str]:
         return f"{prefix}/{relative}", digest
 
     # The lazy census and ordered results/errors are unchanged. Validate every
-    # node, including excluded UI receipts, with at most eight in-flight reads.
+    # node, including excluded UI receipts, with at most eight active reads and
+    # sixteen queued/completed futures retained for deterministic input order.
     # No node identity or content is cached across this or later boundaries.
     return _snapshot_entries(
         (directory / "refs").rglob("*"), read_reference, wrap_os_errors=False

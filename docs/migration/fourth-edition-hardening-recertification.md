@@ -4851,3 +4851,67 @@ qualified verifier before pin-only promotion, signing/immutable trusted verifica
 and guarded final cleanCLOSED remain. No host, privilege or inherited-job changes;
 no generated family matches and no generator runs. Preserve all87prior checkpoints
 and readiness. H08 OPEN; continuation ACTIVE; no user action required.
+
+## Bounded snapshot read-ahead — 2026-10-24 UTC
+
+Checkpoint89 begins from cleanb3147b745b48dfcc417d0a9cb493957d73b1e914. Review of
+the actual `runner/src/memory_worker.rs` confirms allocations during input
+parsing, original warmup, compilation and result serialization. Compile results
+and serialized buffers are retired before OS peak-RSS readback. Locking only an
+initial working-set census cannot prove complete product residency, including
+later allocation/image/stack lifetimes. The existing synthetic page-lock fixture
+therefore remains unpromoted and no memory or quota admission rule is weakened.
+
+The preparation critical path has an independent scheduling bottleneck: the
+ordered eight-future snapshot queue waits for an early slow path before feeding
+more work, even when other readers are idle. Keep eight active readers and add a
+finite look-ahead window of twice the selected worker count, at most sixteen
+queued/completed futures. Preserve ordered results/errors and join submitted
+work on failure. Every reader, complete byte read, fresh physical mode, alias and
+containment check, Git authority check, census and snapshot boundary is unchanged.
+There is no cross-boundary or content/metadata cache. Completed futures retain
+only the existing path/digest result, not a second copy of file contents.
+
+The prospective blocked-first/ninth-reader regression fails on the old scheduler,
+retained as10a5ba6839e688d55362eb5a2be0eb99d0bd273ebe2a94cbf00356afe3c666ea,
+after a passing integrated performance-artifact integrity check. The corrected
+source passes112tests natively (105PASS/7POSIXskips) and112WSL (zero skips), plus
+Ruff and formatting. Green terminal
+7cd33936b99175e9359dda3c8fe768731628f1ab3f0e4eb58469329722e2897b
+finishes02:08:28.536779Z in31.1987204s. Source and owner receipts are retained.
+
+One fixed six-pair ABBAAB comparison executes the full `integrity_snapshot` on
+the actual WSL preparation filesystem, not just a synthetic delayed reader.
+Both schedulers use eight active workers, every tracked/governed/Git-authority
+entry and the same held source. All twelve snapshots are exactly equal in order
+and content:2358entries, hash
+20b1146447854b8aec20483bf3f3ebcac1bc94947e8c862ab70e26eca35d2fc7.
+Baseline median13.018812762s becomes12.7516654115s: observed2.05201008251508percent
+reduction. Four of six pairs favor the candidate; the two slower pairs and every
+individual duration remain. No selection, repetition or fit follows inspection.
+Terminal37d0b8d5d2c2d7b9dfaf8f97cbed008cda341aa1aa53ecd1466b4ab590dd585b
+finishes02:13:10.137211Z in192.887941924s. This is a modest diagnostic observation,
+not statistical certainty, a drastic reduction, or a total preparation or
+certification wall-time claim. Prior scoped build/component gains remain scoped.
+
+Independent data-only audit
+2842676902e6e91faed536bcf0ed670ac78d1285242399a85aa6b04d45ed6b90
+finishes02:15:10.839472Z in0.487778s. It checks all2318source files, exact plan
+order, every raw snapshot and receipt, unique complete ordered entry sets,
+red/green logs and recomputed medians without invoking the producer or workload.
+Further integrity-first output/profile/production consumers pass82tests natively
+(75PASS/7POSIXskips) and82WSL (zero skips), terminal
+5a9d96b56507b272e52b8ef72312a64ed15ba0a5055bd61591558636cdd214a4,
+finished02:16:43.958864Z in70.4375363s. All native skips are covered on WSL.
+
+The registry matches no changed family; no generator, performance sample,
+reference fit or authoritative profile executes. Add only the new charter to
+scope and preserve all88historical checkpoints/readiness. Performance thresholds,
+counts, conditioning, isolation, provenance, security, soleVSCE waiver, narrow
+JUnit policy, unknown-quota rejection and trusted pins remain intact. Required
+work still includes complete product memory protection and all12conditioning
+guarantees, fresh independent9reference/source-distinct9holdout/adverse challenges,
+full36canonical preparation/cleanLSP before exact freeze, runtime/prerequisites,
+Q/P38/80/126 with fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE,
+qualified verifier before pin-only promotion, signing/immutable verification and
+guarded closure with a clean tree. H08 OPEN; continuation ACTIVE.

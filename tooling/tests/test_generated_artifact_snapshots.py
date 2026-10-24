@@ -192,7 +192,7 @@ class BoundedArtifactSnapshotTests(unittest.TestCase):
                 paths, lambda path: (path, "fixture-digest")
             )
         self.assertEqual(8, workers)
-        self.assertEqual(8, maximum)
+        self.assertEqual(16, maximum)
         self.assertEqual(0, outstanding)
         self.assertEqual(paths, list(result))
         for invalid in (0, -1, 9):
@@ -203,6 +203,34 @@ class BoundedArtifactSnapshotTests(unittest.TestCase):
                 generated._snapshot_entries(
                     paths, lambda path: (path, "unused"), workers=invalid
                 )
+
+    def test_read_ahead_keeps_workers_busy_behind_a_blocked_first_path(self) -> None:
+        ninth_started = threading.Event()
+
+        def reader(index):
+            if index == 0 and not ninth_started.wait(timeout=1):
+                raise AssertionError("ordered first path starved the ninth read")
+            if index == 8:
+                ninth_started.set()
+            return str(index), "exact-fixture-digest"
+
+        result = generated._snapshot_entries(range(31), reader)
+        self.assertEqual([str(index) for index in range(31)], list(result))
+
+    def test_read_ahead_with_one_worker_preserves_exact_order_and_duplicates(
+        self,
+    ) -> None:
+        calls = []
+
+        def reader(item):
+            calls.append(item)
+            return None if item == "skip" else (item, str(len(calls)))
+
+        result = generated._snapshot_entries(
+            ["first", "skip", "first", "last"], reader, workers=1
+        )
+        self.assertEqual(["first", "skip", "first", "last"], calls)
+        self.assertEqual([("first", "3"), ("last", "4")], list(result.items()))
 
     def test_regular_fast_path_keeps_every_full_read_and_fresh_final_mode(self) -> None:
         native_stat = os.stat
@@ -616,7 +644,7 @@ class BoundedArtifactSnapshotTests(unittest.TestCase):
         with self.assertRaises(PermissionError) as failure:
             generated._snapshot_entries(range(29), reader, wrap_os_errors=False)
         self.assertIs(first, failure.exception)
-        self.assertCountEqual(range(8), completed)
+        self.assertCountEqual(range(16), completed)
 
     def test_reference_same_size_same_mtime_edit_is_reread_without_cache(self) -> None:
         directory = self.reference_fixture()

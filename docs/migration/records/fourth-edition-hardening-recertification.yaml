@@ -7,6 +7,7 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tests/_design/unit/test_generated_artifact_snapshot_read_ahead.md
         - tooling/tests/native_resident_guard.rs
         - tests/_design/unit/performance-resident-floor.md
         - tooling/performance_memory_observation.py
@@ -2262,6 +2263,21 @@ checkpoints:
           - check: Remaining product integration and certification authority
             result: not_run
             details: "Only two source/charter paths plus three append-only migration records; current registry maps none. Preserve all87prior checkpoints/readiness; no generation, policy/trust/baseline promotion or candidate freeze. VirtualLock protects only explicitly covered pages, not unobserved allocation/image/stack lifetimes or every product descendant. Must implement source-bound complete product memory coverage, preserve actual raw RSS and every ceiling/count, qualify remaining CPU/CLI/conditioning/isolation guarantees with fresh independent9reference/source-distinct9holdout and adverse challenges. Unknown CPU ancestry remains unknown and live admission rejects. Do not replay the six synthetic attempts or prior consumed product coordinates unchanged. Complete36family canonical preparation/cleanLSP before freeze, exact-runtime/prerequisites, Q/P38/80/126 with fresh independent same-SHA no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable trusted verification and guarded final cleanCLOSED remain. Mechanism timings are diagnostics only, no equivalent-workload or total certification speedup claim. H08 OPEN; continuation ACTIVE; no user action required."
+    - name: Bound snapshot read-ahead and measure the complete integrity boundary
+      status: in_progress
+      evidence:
+          - check: Preserve reader and authority checks while reducing head-of-line blocking
+            result: passed
+            details: "Checkpoint89 follows cleanb3147b745b48dfcc417d0a9cb493957d73b1e914. The ordered eight-future queue can starve idle workers behind an earlier slow path. Retain at most eight active readers and increase only the finite queued/completed future window to twice the worker count, at most16. All reader functions, bytes, modes, containment/alias checks, Git authority, census and snapshot boundaries are AST-identical to the baseline; no content or metadata cache. Results and reader errors retain input order and submitted work joins on failure. Prospective blocked-first/ninth-reader regression fails on old implementation:10a5ba6839e688d55362eb5a2be0eb99d0bd273ebe2a94cbf00356afe3c666ea, integrity passes first, original failure retained."
+          - check: Equivalent complete-snapshot timing with every measurement retained
+            result: passed
+            details: "One immutable six-pair ABBAAB experiment on the actual WSL preparation filesystem invokes complete integrity_snapshot for both schedulers, with identical eight active workers. All12ordered snapshots have2358entries and identical hash20b1146447854b8aec20483bf3f3ebcac1bc94947e8c862ab70e26eca35d2fc7. Source2318files held and unchanged; owner lease retires. Baseline median13018812762ns, candidate12751665411.5ns, observed reduction2.05201008251508percent. Four of six pairs improve, both unfavorable pairs remain. Timing terminal37d0b8d5d2c2d7b9dfaf8f97cbed008cda341aa1aa53ecd1466b4ab590dd585b finishes2026-10-24T02:13:10.137211Z in192.887941924s. This is a modest full-integrity-snapshot diagnostic improvement, not statistical certainty or a full preparation/certification speedup. No extrapolated total saving is claimed."
+          - check: Independent data audit and cross-platform direct dependents
+            result: passed
+            details: "Data-only audit2842676902e6e91faed536bcf0ed670ac78d1285242399a85aa6b04d45ed6b90 finishes02:15:10.839472Z in0.487778s. It independently checks every raw snapshot/receipt, exact prospective order, all2318source files and red/green logs, and recomputes medians including unfavorable rows without producer execution. Integrity-first green7cd33936b99175e9359dda3c8fe768731628f1ab3f0e4eb58469329722e2897b passes105Native plus7POSIXskips and112WSL with0skips, Ruff/format; downstream5a9d96b56507b272e52b8ef72312a64ed15ba0a5055bd61591558636cdd214a4 finishes02:16:43.958864Z in70.4375363s, passes75Native plus7POSIXskips and82WSL with0skips. Registry/preparation/snapshots, output/profile gates, profile and production consumers remain covered. No authoritative profile, product sample, generator or calibration executes."
+          - check: Retained workstation-admission and closure obligations
+            result: not_run
+            details: "Actual memory_worker.rs review confirms new parsing/warmup/compile/serialization allocations and result retirement before OS peak-RSS readback; initial-page locking alone cannot cover complete allocation/image/stack lifetimes. No incomplete guard is integrated or promoted. Unknown ancestry remains rejected, existing performance caps/counts/security/license/provenance/trusted pins unchanged. Current registry maps no changed family; one new exact charter scope path, all88prior checkpoints/readiness preserved. Complete memory coverage and all12conditioning guarantees, fresh independent9reference/source-distinct9holdout/adverse challenges, full36canonical preparation/cleanLSP, exact freeze/runtime/prerequisites, both source-distinctQ/P38/80/126 and fresh same-SHA independent no-reuse Release126each125PASSsoleVSCE, signing/qualified immutable trusted verification and guarded final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no external action required."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

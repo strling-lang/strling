@@ -9261,3 +9261,31 @@ Preserve initial commit-guard5ef9b563: it rejects the new narrative section plac
 at a repeated earlier paragraph, before any staging. Relocate only that section
 to EOF and prove the whole historical narrative remains an exact prefix. No
 source fixture or experiment changes, and no measurement is replayed.
+
+### H08 bounded snapshot read-ahead — 2026-10-24 UTC
+
+Checkpoint89 follows cleanb3147b74. Actual memory-worker review confirms that an
+initial-page lock set misses later parsing, compilation and serialization
+allocations plus image/stack lifetimes; no incomplete admission guard is promoted.
+For the measured preparation critical path, correct ordered-read starvation with
+a bounded16future look-ahead while retaining eight active readers and every
+existing byte, metadata, containment, alias, Git-authority and snapshot check.
+The blocked-first/ninth-reader regression fails on the old scheduler and passes
+afterward. Preserve red10a5ba68; no reader or certification policy changes.
+
+One source-held six-pair ABBAAB comparison retains all12complete ordered snapshots,
+each2358entries/hash20b11464. Median13.018812762to12.7516654115seconds is a measured
+2.05201008251508percent diagnostic improvement; four of six pairs favor read-ahead,
+and both slower pairs remain. Terminal37d0b8d5 finishes02:13:10.137211Z in
+192.887941924s with its owner retired. This is modest, not a drastic or statistically
+established gain, and is not a full preparation/certification wall-time claim.
+
+Independent data-only audit28426769 verifies2318source files, every receipt and
+ordered result, retained unfavorable timings, and recomputes the comparison.
+Integrity-first core dependents105Native/112WSL and downstream75Native/82WSL pass;
+all14Native POSIX skips are covered by zero-skip WSL runs. Ruff/format pass.
+The registry maps no changed family; no generator, product sample or profile runs.
+Preserve all88prior checkpoints/readiness and add one exact charter scope path.
+Workstation admission qualification, complete source preparation, both signed and
+trusted source-distinct campaigns with independent Releases, guarded closure and
+final cleanCLOSED remain. H08 OPEN; continuation ACTIVE; no user action required.

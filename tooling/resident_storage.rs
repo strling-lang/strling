@@ -68,6 +68,15 @@ pub struct StorageSession<'a, const L: usize, const P: usize> {
 }
 
 impl<const L: usize, const P: usize> StorageSession<'_, L, P> {
+    pub fn allocate(
+        &mut self,
+        bytes: usize,
+        ops: &mut impl PageOps,
+        allocate_memory: impl FnOnce() -> Result<usize, u32>,
+    ) -> Result<(u64, usize), Failure> {
+        self.ledger.allocate(bytes, ops, allocate_memory)
+    }
+
     pub fn acquire(
         &mut self,
         address: usize,

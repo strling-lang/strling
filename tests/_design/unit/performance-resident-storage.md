@@ -60,3 +60,21 @@ after failed unlock/invalid token, permanent failure/panic poison, shared-page
 ownership, successful address reuse and storage-anchor rejection. Run existing
 storage and serialization suites on Native and WSL as direct dependents. Do not
 replay any native challenge or measurement.
+
+## Serialized allocation entry
+
+Hold exclusive entry before calling a bounded allocator and through page-owner
+registration. Reject zero size, exhausted lifetime/token capacity and a minimum
+page count beyond capacity before allocator callbacks. Validate the returned
+address and exact page union afterward; publish address/token only on success.
+Raw allocator errors, panic, reentry, contention or page-lock failure are terminal.
+Never guess rollback or call free after partially established native ownership.
+An allocated range on a failed path requires enclosing-context retirement.
+
+Test callback ordering, shared pages and fresh reuse, preflight rejection,
+invalid/overflowing addresses, raw allocation failure/panic, reentry/concurrency,
+partial lock failure and the storage-session adapter. Callbacks must allocate
+the requested bytes and satisfy alignment independently; this operation does
+not prove those contracts or coverage of bypasses, reallocations, bootstrap,
+stacks, images, other threads or descendants. It does not establish residency
+during allocation or observer neutrality. No product integration or gate change.

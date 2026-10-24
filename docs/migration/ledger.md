@@ -9559,3 +9559,27 @@ The owner stopped unchanged check-ins; the automation is already PAUSED and stay
 paused. H08 OPEN. Memory/observer coverage, worker eligibility, all12conditioning
 obligations and the complete38/80/126/126 certification/signing/trusted-verification
 and guarded clean-closure sequence remain unsatisfied. No gates are weakened.
+
+### Serialized allocation entry — 2026-10-24 UTC
+
+Checkpoint100 follows62919d84. Add optional allocation operations on the
+serialized ledger and storage session. Exclusive entry now starts before the
+bounded allocator callback and spans page registration. Reject impossible
+size/lifetime/token capacity before allocation; validate the exact returned
+range afterward. Publish token/address only on success. Raw allocator failure,
+panic, reentry, contention and partial lock failure remain terminal, without
+speculative cleanup. Failed registration may require enclosing-context retirement.
+
+Retain redd4b80370 and greencefb7c46. Native/WSL each pass32allocation-harness
+cases (8new plus12internal cases included twice),32retirement,19serialization
+and18storage dependents. Token exhaustion additionally proves callback exclusion.
+Explicitly bound fixture04a42394 passes Rust1.75no-std on both. Integrated integrity
+passes first; unchanged source frames and released leases verified. Diagnostic
+68.1905064s is not an equivalent-workload or total-certification improvement.
+
+Preserve all99checkpoints/readiness; add1scope path, no generated family or refresh.
+No product integration, native challenge, sample, workstation procedure or
+unchanged-provider probe. Polling remains PAUSED. Allocator bypass/reallocation,
+bootstrap, callbacks, stack/image/thread/descendant coverage and observer effects
+remain unqualified. All conditioning and authoritative profile/security/trust/
+closure requirements remain unchanged. H08 OPEN.

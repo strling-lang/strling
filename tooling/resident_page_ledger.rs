@@ -25,6 +25,7 @@ pub enum Failure {
     Lock { page: usize, code: u32 },
     Unlock { page: usize, code: u32 },
     Retirement { code: u32 },
+    Allocation { code: u32 },
 }
 
 #[derive(Clone, Copy)]
@@ -163,6 +164,34 @@ impl<const L: usize, const P: usize> SerializedLedger<L, P> {
         entry.complete(result)
     }
 
+    /// Hold entry across bounded allocation and page registration; return
+    /// (token, address) only after both succeed. The caller must allocate bytes
+    /// and satisfy alignment. This does not protect pages during allocation or
+    /// establish allocator coverage. On failure, retire the enclosing context:
+    /// an allocation may exist, and native ownership may be only partial.
+    pub fn allocate(
+        &self,
+        bytes: usize,
+        ops: &mut impl PageOps,
+        allocate_memory: impl FnOnce() -> Result<usize, u32>,
+    ) -> Result<(u64, usize), Failure> {
+        let entry = self.enter()?;
+        // SAFETY: Entry exclusively owns the cell. The preflight borrow ends
+        // before the allocator callback, which cannot reenter successfully.
+        let preflight = unsafe { &mut *self.ledger.get() }.preflight_allocation(bytes);
+        let result = preflight.and_then(|()| {
+            let address = allocate_memory().map_err(|code| Failure::Allocation { code })?;
+            if self.is_poisoned() {
+                return Err(Failure::Poisoned);
+            }
+            // SAFETY: The same Entry still owns the cell through page callbacks.
+            let token = unsafe { &mut *self.ledger.get() }.acquire(address, bytes, ops)?;
+            Ok((token, address))
+        });
+        // Contention after the poison check still prevents publishing success.
+        entry.complete(result)
+    }
+
     /// Keep exclusive ownership through a caller's bounded deallocation.
     /// The caller must free exactly the allocation identified by token, without
     /// invalidating pages shared by other lifetimes. This is not allocator
@@ -245,6 +274,24 @@ impl<const L: usize, const P: usize> Ledger<L, P> {
         self.pages
             .iter()
             .position(|p| p.owners != 0 && p.address == address)
+    }
+
+    fn preflight_allocation(&mut self, bytes: usize) -> Result<(), Failure> {
+        if self.poisoned {
+            return Err(Failure::Poisoned);
+        }
+        if bytes == 0 {
+            return self.fail(Failure::InvalidRange);
+        }
+        // This lower bound cannot reject a range that would fit. Exact page
+        // overlap and alignment are checked after the address is known.
+        if (bytes - 1) / PAGE_BYTES + 1 > P || self.live_lifetimes() == L {
+            return self.fail(Failure::Capacity);
+        }
+        if self.last_token == u64::MAX {
+            return self.fail(Failure::TokenExhausted);
+        }
+        Ok(())
     }
 
     pub fn acquire(
@@ -451,6 +498,16 @@ mod tests {
 
     #[test]
     fn token_and_reference_overflow_poison_before_callbacks() {
+        let serialized = SerializedLedger::<2, 2>::new();
+        // SAFETY: This private fixture has no outstanding entry or references.
+        unsafe { &mut *serialized.ledger.get() }.last_token = u64::MAX;
+        let mut callbacks = Mock::default();
+        assert_eq!(
+            serialized.allocate(8, &mut callbacks, || panic!("exhausted token")),
+            Err(Failure::TokenExhausted)
+        );
+        assert!(callbacks.calls.is_empty());
+        assert!(serialized.is_poisoned());
         let (mut ledger, mut ops) = (Ledger::<2, 2>::new(), Mock::default());
         ledger.last_token = u64::MAX;
         assert_eq!(

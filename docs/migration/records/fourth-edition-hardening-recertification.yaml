@@ -7,6 +7,7 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/tests/resident_allocation.rs
         - tooling/tests/resident_retirement.rs
         - tooling/tests/test_governance_pattern_cache.py
         - tests/_design/unit/governance-pattern-cache.md
@@ -2447,6 +2448,21 @@ checkpoints:
           - check: Stop unchanged check-ins while preserving all closure requirements
             result: not_run
             details: "The owner explicitly stops repeated unchanged heartbeat checks; the existing continuation automation is already PAUSED and is not reactivated. H08 remains OPEN, not retired or closed. Preserve all98prior checkpoints/readiness and add1scope path; no generated family matches or evidence refresh. Complete allocator/bootstrap/callback/stack/image/thread/descendant and observer coverage, actual-worker provenance and all12conditioning guarantees remain open. No manual workstation request, job escape, broker, injection, host/security/power change, unknown-quota bypass, consumed-sample retry or performance-ceiling change. Retain the accepted checkpoint98equivalent-governance52.0583percent reduction without repeating it or claiming whole-certification gains. Exact runtime/prerequisites, canonical preparation before freeze, actual38/80/126/126 profiles with125PASSsoleVSCE for Full/Release, fresh independent same-SHA no-reuse Release, source-distinct qualification/promotion if required, fresh performance evidence, signing, qualified immutable verification before pin promotion and guarded clean formal closure remain mandatory."
+    - name: Serialize allocation entry through page registration
+      status: in_progress
+      evidence:
+          - check: Close the optional allocation-entry ordering gap
+            result: passed
+            details: "Checkpoint100 follows clean62919d843f0f3c8135144571882fdef94c03d1ea. Checkpoint99holds ownership through retirement, but callers still allocate before entry. Add optional SerializedLedger.allocate and StorageSession.allocate. Hold one exclusive Entry before the bounded allocator callback through page registration and publication. Reject zero size, full lifetime slots, exhausted tokens and an impossible minimum page count before allocation. Validate exact address/range/page overlap afterward; return token/address only after successful registration. The preflight uses a lower bound, so unknown alignment cannot prematurely reject a range that fits."
+          - check: Preserve terminal failure and observer limitations
+            result: passed
+            details: "Preserve raw allocator error codes; panic, reentry and contention permanently poison. A poison observed after allocation prevents page callbacks; later contention prevents publication. Invalid/overflowing addresses and exact page-capacity failure cannot publish success. Partial native lock failure performs no speculative unlock/free or retry. Failed allocation-registration may leave an allocation requiring enclosing-context retirement. Caller remains responsible for allocating the requested bytes and alignment. No claim covers residency during allocator execution, bypass/reallocation/bootstrap routes, callback/stack/image/thread/descendant lifetimes or observer neutrality. No actual product allocator is replaced and no measurement/gate is changed."
+          - check: Source-bound allocation and direct-dependent validation
+            result: passed
+            details: "Integrated artifact integrity passes first. Preserve expected-redd4b803700937735f9321cf0ed91d6449bc48ebab806ead424323549f70e68029. Greencefb7c46a426dadcb931d362e7d904804777d065bd46b98abbb6f31e24c32d89 passes32allocation-harness cases per platform (8new cases plus12internal ledger cases included through2modules),32retirement/19serialization/18storage dependents on Native and WSL, and Rust1.75no-std on both. The existing token-overflow test additionally proves no allocator callback on exhaustion. Barrier-based contention releases the owner before assertions, preserving short failure feedback. Retained no-std fixture04a42394 is explicitly bound in the source frame. All raw logs retained; unchanged closing frames and released leases verified. Green68.1905064s is diagnostic validation time, not a comparative speedup."
+          - check: Preserve historical and authoritative boundaries
+            result: not_run
+            details: "Preserve all99checkpoints/readiness and add1scope path. No generated family matches; no authority-bearing regeneration, native challenge, product sample or workstation step. Heartbeat polling remains PAUSED; no unchanged-provider check is repeated. Complete memory/observer coverage and all12conditioning obligations remain open; optional allocator entry is one tested component only. Preserve every threshold/workload/sample count, current38/80/126/126membership, Full/Release125PASSsoleVSCE, fresh independent same-SHA no-reuse Release, runtime/prerequisites and canonical preparation before exact freeze, source-distinct qualification/promotion if required, signing, qualified immutable trusted verification before pin promotion, and guarded clean formal closure. Existing security/Jest/narrowJUnit/license/provenance controls remain. H08 OPEN."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

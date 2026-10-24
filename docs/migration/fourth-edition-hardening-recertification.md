@@ -5397,3 +5397,43 @@ Jest/JUnit/soleVSCE/security/provenance/trust controls and the exact-source
 preparation/runtime/prerequisite,38/80/126/126profile, independent no-reuse Release,
 source-distinct qualification/promotion if required, signing, qualified immutable
 verification before pin promotion and guarded clean formal-closure requirements.
+
+### Serialized allocation entry — 2026-10-24 UTC
+
+Checkpoint100 starts at62919d843f0f3c8135144571882fdef94c03d1ea. Extend the
+optional observer-lifetime primitive with allocation entry. Hold one Entry
+across a bounded allocator callback and page-owner registration, complementing
+checkpoint99retirement. Before allocating, reject zero size, full lifetime slots,
+exhausted tokens and a minimum page count beyond capacity. The lower bound cannot
+reject a fitting range based on unknown alignment. Validate the actual returned
+address, checked range and exact page union before publication.
+
+Raw allocator failures, panic, reentry and contention permanently poison. Poison
+observed after allocation skips page callbacks; a later race prevents successful
+publication. Partial native lock failures preserve the exact error and perform
+no guessed rollback/free. An allocation may exist after failed registration;
+retire the enclosing context. Callers still must prove the requested allocation,
+alignment and native behavior. This supplies no protection during allocation,
+coverage of bypass/reallocation/bootstrap routes or callback/stack/image/thread/
+descendant lifetimes, nor proof of observer neutrality. No product integration.
+
+Preserve expected-redd4b80370. Greencefb7c46 passes32allocation-harness cases on
+Native and WSL (8new cases plus12ledger cases included twice), along with
+32retirement/19serialization/18storage dependents per platform. Extend the
+existing token-overflow test to prove callback exclusion. Barrier-coordinated
+contention releases the owner before assertions rather than hanging on an adverse
+result. The source frame explicitly includes no-std fixture04a42394; Rust1.75
+no-std builds pass on both platforms. Integrated artifact integrity passes first;
+source frames remain unchanged and leases release. All logs retained. The
+68.1905064s validation duration is diagnostic, not a comparative speedup.
+
+Preserve all99prior checkpoints/readiness, add1scope path, regenerate nothing.
+Heartbeat polling remains PAUSED. No unchanged-provider query, consumed sample,
+native challenge or manual workstation step is repeated. Memory/observer and
+all12conditioning obligations remain open. Preserve all existing ceilings,
+workloads, counts, exact-source preparation/runtime/prerequisites/freeze, actual
+38/80/126/126profiles with125PASSsoleVSCE for Full/Release, fresh independent
+same-SHA no-reuse Release, source-distinct qualification/promotion if required,
+signing, qualified immutable trusted verification before pin promotion and
+guarded clean formal closure. Security/Jest/narrowJUnit/license/provenance controls
+remain unchanged. H08 OPEN.

@@ -4745,3 +4745,44 @@ is preserved. It compared UTF8 Git content with default-locale decoded disk text
 misreading the historical readiness em dash. No readiness bytes changed and no
 staging occurred. Explicit UTF8 parsing proves equality; v2 corrects only those
 three helper reads and reruns complete commit guards, never product samples.
+
+## Checkpoint 87 — distinguish memory restriction from elapsed-time delay
+
+The new unpromoted read-only observer records effective process working-set
+controls alongside raw resident and committed-memory counters, PID/birth and
+query brackets. Pair validation rejects changed controls/identity, overlapping
+queries and regressed peaks; raw page-fault DWORD wrap is retained. It does not
+normalize RSS, infer unlimited ancestry, replace any metric or grant admission.
+
+Identical synthetic8MiB allocation/8192page touches/1000000CPU iterations produce
+peakRSS33685504bytes and private20942848bytes in the reference process. A verified
+owned-process hard working-set maximum reduces peakRSS to2068480bytes while private
+commit remains20930560bytes. CPU-only work180490700to381725100ns and combined
+work1050129800ns are diagnostic observations, not a qualified performance result
+or equivalent-workload speedup. Complete wall intervals remain in raw receipts.
+
+The actual ancestor-memory experiment fails before execution: minimum65536 gives
+Errno87; corrected204800 gives privilege1314. Receiptsfe7d93ac/a3572624 remain,
+and no privilege is changed. The fallback is explicitly a different process-only
+restriction, not an ancestor proof. v3 0a41929b observes flags10, so those rows do
+not establish the requested hard cap. v4 851ed33b directly observes hard flags6
+before assignment becoming10 afterward; after all assignments, reapplying only
+the owned child's cap and reading it back yields6 before resume and at both
+measurement snapshots. All six observed process trees retire naturally. This
+demonstrates why API-call success cannot substitute for effective-state readback.
+
+Terminal80d4018e finishes2026-10-24T01:23:14.681345Z in109.1252642s: performance
+artifact integrity,201Native tests and185WSL tests plus16Windows-only skips covered
+natively, Ruff and format pass. Independent data-only audita5c1f340 verifies all
+2315source files, complete raw logs, six v2 envelopes, actual controls, workload
+checksums and preserved failures without executing a producer or resampling.
+The registry maps no family for the three new source/test/charter paths; no
+generator runs. All86prior checkpoints and readiness remain unchanged.
+
+This closes an attribution/instrumentation gap, not admission qualification.
+Unknown ancestor quota still rejects. Ancestor working-set challenges, every
+conditioning/isolation/regression guarantee, independent fresh9reference and
+source-distinct9holdout, complete36canonical preparation/cleanLSP before freeze,
+Q/P38/80/126 plus fresh same-SHA independent no-reuse Release126, unchanged
+performance ceilings/counts, soleVSCE waiver, signing, qualified immutable trust
+and guarded clean formal closure remain. H08 OPEN; continuation ACTIVE.

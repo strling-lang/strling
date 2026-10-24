@@ -7,6 +7,9 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - tooling/performance_memory_observation.py
+        - tooling/tests/test_performance_memory_observation.py
+        - tests/_design/unit/performance-memory-observation.md
         - tests/certification/performance-resource/1.0/runner/src/job_quota.rs
         - tests/_design/unit/performance-job-quota.md
         - core/src/target_serialization.rs
@@ -2224,6 +2227,21 @@ checkpoints:
           - check: Preserve pre-staging encoding guard failure
             result: passed
             details: "Initial commit helper ee0956f1397ffc83cc163152e256ccb88af038fdda357cf3f9c49a5bcfe0baae stops before staging because default-locale read_text misdecodes the UTF8 readiness em dash. Git byte diff shows no readiness change; explicit UTF8 parsed comparison confirms equality. Original helper/receipt remain immutable; v2 changes only three text reads to explicit UTF8 and repeats the complete guards, not product tests or samples."
+    - name: Observe effective memory restrictions without granting admission
+      status: in_progress
+      evidence:
+          - check: Read-only process memory attribution and drift regression
+            result: passed
+            details: "Checkpoint87 adds an unpromoted read-only Windows x64 observer. Retain PID/birth/query brackets, raw working-set min/max/enforcement flags, page faults, current/peak RSS, current/peak pagefile and private commit. Closed exact types and peak consistency fail closed. Pair validation rejects identity/order/control/peak drift while preserving raw DWORD page-fault wrap without inferred deltas. No producer uses this module for live admission; every result denies eligibility. Original quota rejection, conditioning policy, performance ceilings/counts, baselines and trust pins are unchanged."
+          - check: Owned synthetic restrictions and honest negative controls
+            result: passed
+            details: "All six observed processes perform identical8MiB allocation/8192page touches/1000000CPU iterations and checksums. Reference peakRSS33685504/private20942848bytes; explicitly enforced owned-process hard maximum yields peakRSS2068480/private20930560bytes. The combined owned-process memory plus ancestorCPU challenge retains peakRSS2068480/private20701184bytes. CPU-only work180490700to381725100ns is diagnostic, not a controlled certification speedup or qualification cohort. Initial working-set ancestor setup fails Errno87, then corrected minimum fails privilege1314 before execution; preserve fe7d93ac/a3572624, change no privileges. v3 0a41929b completes but requested hard flags6 become observed soft flags10, so its memory rows are not valid hard-cap challenges. v4 851ed33b directly observes assignment6to10, reapplies only the owned child's cap after all assignments, verifies6 before resume and in both child snapshots. Ancestor working-set qualification remains unproven; no inherited job, service, power, security or unrelated process changes."
+          - check: Source-bound dependent checks and independent data-only audit
+            result: passed
+            details: "Performance-artifact integrity passes first. Terminal80d4018ee9c3e681ab43fdb37b27020dedc326be88889d61eaeb8dab7c075fe4 finishes2026-10-24T01:23:14.681345Z in109.1252642s: Native201PASS/0skips; WSL185PASS/16native-only skips covered on Windows; Ruff and formatting pass. This is not full36family canonical preparation or an authoritative profile. Audita5c1f3407fa0f22695fa811c87db6874589d77a61d0f09368c455851d622b842 finishes2026-10-24T01:25:28.952148Z,0.8070331s, verifies2315source files, all streams, six complete v2 process bundles, actual owned-job and effective-process controls, deterministic work and preserved failures. It reconstructs exact original observer bytes by removing only the later pair validator; no measurement replay, producer execution or authority claim."
+          - check: Retained guarantees and remaining authoritative sequence
+            result: not_run
+            details: "Three new source/test/charter paths match no current generated family; no generator runs. Add these exact scope paths and preserve all86prior checkpoints/readiness. Unknown ancestor CPU quotas still reject; raw elapsed-time conservatism alone cannot qualify RSS. Need a governed workstation admission alternative, effective memory-control protection, all12conditioning guarantees, independent fresh9reference/source-distinct9holdout/challenges, full36canonical preparation/cleanLSP before freeze, exact-runtime/prerequisites, both source-distinctQ/P38/80/126 and fresh same-SHA independent no-reuse Release126 each125PASS/soleVSCE, signing/qualified-verifier-before-pin-promotion/immutableverification and guarded clean formalCLOSED. No claimed whole-certification gain, weakened gate, replayed product coordinate, retained-certifier access or owner action. H08 OPEN; continuation ACTIVE."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

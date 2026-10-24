@@ -9192,3 +9192,38 @@ Pre-staging guardee0956f1 is retained: its default-locale text read misdecoded t
 existing UTF8 readiness em dash. The actual readiness bytes are unchanged. Explicit
 UTF8 readback confirms equality; only the helper's three text reads are corrected,
 with no source-test or product-sample replay.
+
+### H08 checkpoint 87 — effective memory attribution and control drift
+
+New read-only diagnostics retain process identity, query brackets, effective
+working-set bounds/flags and raw resident/committed-memory counters. Pair guards
+reject changed identities, overlapping queries, changed controls and regressed
+peaks. Page-fault DWORD wrap stays raw. This module is not a live conditioner or
+admission gate; unknown ancestor CPU quota continues to reject.
+
+Six owned synthetic processes perform identical8MiB allocation/8192page touches/
+1000000CPU iterations with identical checksums. Reference peakRSS33685504bytes
+becomes2068480bytes under an explicitly enforced owned-process hard working-set
+maximum, while private commit remains20942848versus20930560bytes. Low RSS alone
+therefore cannot establish that the measurement was unrestricted. The combined
+CPU/memory challenge preserves the same conclusion. These are synthetic
+diagnostics, not product samples, independent reference cohorts or speedups.
+
+Preserve failed ancestor-memory setups fe7d93ac/a3572624: invalid minimum Errno87,
+then corrected minimum privilege1314, both before workload execution. No privilege
+is changed. v3 0a41929b observes soft flags10 despite requesting hard flags6; its
+memory rows do not prove hard enforcement. v4 851ed33b records assignment6to10,
+reapplies only the owned child's cap after all job assignments, verifies6 before
+resume and at both child snapshots, and naturally retires every owned process.
+Ancestor working-set qualification remains unproven; no inherited job or host
+setting is changed.
+
+Integrity-first dependents80d4018e pass201Native and185WSL plus16native-only skips
+covered on Windows, with Ruff/format passing. Independent data-only audita5c1f340
+finishes2026-10-24T01:25:28.952148Z in0.8070331s, checking2315source files, all raw
+streams, six complete process bundles, actual controls and preserved failures.
+No product execution is repeated. The registry maps no generated family and no
+generator runs. All86prior checkpoints/readiness remain with three exact scope
+paths added. Reliable governed admission/all12guarantees, fresh references and
+holdouts, complete preparation, both signed/trusted campaigns and independent
+Releases, guarded closure and final clean tree remain. H08 OPEN; continuation ACTIVE.

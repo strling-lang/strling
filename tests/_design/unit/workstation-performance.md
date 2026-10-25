@@ -24,7 +24,7 @@ resident-allocation audit remains a separate, ineligible experiment.
 Build frozen reference and candidate kernels independently with identical pinned
 harness code. Record the mixed-source recipe honestly. Acquire nine adjacent
 pairs in the policy's fixed alternating order, never choose the best attempt or
-refit bounds. Revision 2 retains exactly 64 latency slots and one measured
+refit bounds. Revision 3 retains exactly 64 latency slots and one measured
 memory compilation, with no replacements or discarded attempts. Scheduling
 interference and product stalls remain measured. Preserve every raw byte and failure. Missing,
 reused, reordered or forged observations fail independent reconstruction.
@@ -37,11 +37,21 @@ actual compiler measurement must fail while an independently built equivalent
 candidate passes. Memory uses every observed peak commit, its fixed absolute
 ceiling and its separate relative-plus-fixed allowance; RSS remains visible.
 
-Nearest-rank p95 and whole-process pair ratios have a 25% median margin and a
-50% per-pair margin, requiring seven of nine passing pairs. Intermittent stalls
-with an unchanged median must fail the tail guard; startup/warmup-only delay
-must fail the whole-process guard. Two transient bad pairs remain allowed;
-three fail. Guard both CLI request and control marginals, retaining paired
+Compare nearest-rank p95 over all 576 fixed slots in each lane with a 25%
+regression margin. The rank is 548, so 29 delayed values can change the p95;
+28 delayed values can remain below that rank. This is an empirical quantile,
+not a bound on every stall or a population confidence claim. Keep all nine
+64-slot block p95 ratios as diagnostics. Equal complete distributions must
+remain equivalent when stalls fall in different blocks: the block p95 crosses
+its rank at four delayed values, making a separate seven-block tail gate
+sensitive to partition boundaries. No noisy block is excluded from the pooled
+tail; even two completely slow blocks must fail it. Test the exact rank,
+exact 25% boundary, unchanged-median sparse stalls and control-only stalls.
+
+Whole-process pair ratios retain a 25% median margin and a 50% per-pair margin,
+requiring seven of nine passing pairs. Startup/warmup-only delay must fail this
+guard. Two transient bad whole intervals remain allowed; three fail. Guard
+both CLI request and control marginals, retaining paired
 ratios so common-mode slowdown cannot cancel from all guards. Independently
 reconstruct CPU normalization, all fixed slots and child lifetime identity;
 refreshing inner hashes must not make malformed evidence pass. The executor
@@ -52,6 +62,9 @@ this policy, avoiding hundreds of unrelated process launches per repetition.
 In-process operations retain 512 warmups and 64 samples. Include all 54 governed
 coordinates and five functional resource groups before adoption. Component or
 synthetic tests alone do not constitute the native qualification campaign.
+Revision 2 acquisitions retain their original decisions. Adoption of revision 3
+requires a fresh prospectively pinned complete cohort; no old failed cohort is
+rescored into certification or reused in a new profile.
 
 Process exit must precede terminal memory collection. A private job may still
 report its one exited member briefly; allow at most five seconds of bookkeeping

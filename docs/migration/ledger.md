@@ -9800,3 +9800,35 @@ preserves identical source frames and releases the owned lease. Retain earlier
 runtime/driver failures. Proceed directly from exact-path commit to fresh complete
 actual-Full-CLI qualification with its atomic ledger and independent consumer;
 this checkpoint is not H08 completion.
+
+### Complete acquisition and fixed-slot tail correction — 2026-10-25
+
+Checkpoint108 preserves the actual Full CLI failure at679bff9d. Independent
+reconstruction validates all1021 roots,54 memory children,1075 unique process
+identities,64248 authenticated values,1022 ledger coordinates, three fresh builds,
+18 native tests, five resource groups and exact atomic projection. The actual
+double-work control fails. Exactly53of54 coordinate decisions pass; the remaining
+simply-tiny CLI request-tail gate has6of9 passing blocks despite a1.021590 median
+tail ratio. Acceptance correctly rejects the original revision2 cohort. The
+owner retires with unchanged source and releases its lease; no slot is replaced.
+
+Revision3 prospectively compares pooled nearest-rank p95 over every576 fixed
+sample per lane using the unchanged25% margin. Keep all block p95 diagnostics,
+median/whole-process pair gates, both CLI marginals and all memory/provenance/
+security/no-reuse requirements. This addresses different block partitions of
+equal complete distributions; it excludes no noisy block and rejects two fully
+slow blocks. Rank548 does not bound stalls below that quantile. No laboratory
+equivalence, population confidence claim or retrospective certification follows.
+Thirty-nine affected workstation tests pass. Four exact signed execution
+size-only allowances pass12 hygiene tests and the2355-file registered check.
+No generated family matches the changed paths. Continue directly through final
+source verification, exact commit and a completely fresh actual Full CLI native
+qualification, then all canonical preparation, whole profiles, independent
+no-reuse Releases, source-distinct trust qualification/promotion, signing, trusted
+cloud verification and formal closure. H08 remains OPEN and the goal ACTIVE.
+
+Source-held final integration retains51 passing focused tests and eight passed
+checks. Preserve its PR Cargo-path failure; a source-identical resolution using
+process-local pinned Rust/Cargo completes the actual PR route in54.5932068s and
+releases the lease unchanged. No timed performance sample was acquired. Proceed
+directly through exact commit to the fresh revision3 native acquisition.

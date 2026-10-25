@@ -1,6 +1,6 @@
 {
     "policy_id": "shared-workstation-v1",
-    "policy_revision": 2,
+    "policy_revision": 3,
     "sample_retention": "all-fixed-slots-v1",
     "status": "accepted",
     "authority": "Repository owner authorized revised architecture and laboratory requirements for shared-laptop certification on 2026-10-25.",
@@ -25,8 +25,10 @@
     "pair_regression_basis_points": 2500,
     "minimum_passing_pairs": 7,
     "tail_percentile": 95,
+    "tail_estimator": "pooled-fixed-slots-nearest-rank-v1",
     "tail_regression_basis_points": 2500,
     "tail_pair_regression_basis_points": 5000,
+    "tail_scope": "Compare nearest-rank p95 over all 576 fixed observations in each lane, separately for each request/control marginal. Retain all nine block p95 ratios as diagnostics, without a per-block tail gate. The median and whole-process pair gates remain mandatory. No observation is discarded or replaced.",
     "whole_process_regression_basis_points": 2500,
     "whole_process_pair_regression_basis_points": 5000,
     "calibration_minimum_nanoseconds": 1000000,
@@ -44,7 +46,7 @@
     "claim_limits": [
         "No exclusive CPU, unlimited ancestor quota, idle host or absence of interference is asserted.",
         "Paired comparisons reduce common context effects; they cannot prove every possible interference pattern cancels.",
-        "The fixed robust rule tolerates at most two unfavorable pairs; it is an engineering acceptance rule, not a claimed statistical confidence bound.",
+        "The median and whole-process rules tolerate at most two unfavorable pairs. The tail rule uses every fixed slot and grants no bad-block exclusion; it does not bound stalls below the pooled p95 rank. These are engineering acceptance rules, not claimed statistical confidence bounds.",
         "Absolute wall times, tail latencies and RSS remain visible even when relative regression checks pass.",
         "The historical isolated-host manifest, baseline and failures remain historical authority for that separate method; no result is relabeled as laboratory certification."
     ],

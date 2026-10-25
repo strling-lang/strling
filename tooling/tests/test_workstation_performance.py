@@ -87,14 +87,58 @@ class WorkstationPolicyTests(unittest.TestCase):
         self.assertFalse(result["whole_process"]["passed"])
         self.assertFalse(result["passed"])
 
-    def test_whole_and_tail_allow_two_transients_but_not_three(self):
+    def test_whole_interval_allows_two_transients_but_not_three(self):
         pairs = self.guarded_pairs()
         for pair in pairs[-2:]:
             pair["candidate"]["whole_action_ns"] *= 100
-            pair["candidate"]["samples"] = [100000] * 64
         self.assertTrue(score.guarded_latency_decision(pairs)["passed"])
         pairs[-3]["candidate"]["whole_action_ns"] *= 100
         self.assertFalse(score.guarded_latency_decision(pairs)["passed"])
+
+    def test_pooled_tail_never_excludes_two_slow_blocks(self):
+        pairs = self.guarded_pairs()
+        for pair in pairs[-2:]:
+            pair["candidate"]["samples"] = [100000] * 64
+        result = score.guarded_latency_decision(pairs)
+        self.assertTrue(result["channels"]["samples"]["median"]["passed"])
+        self.assertFalse(result["channels"]["samples"]["tail"]["passed"])
+        self.assertFalse(result["passed"])
+
+    def test_equal_complete_tails_survive_different_block_partitions(self):
+        pairs = self.guarded_pairs()
+        counts = {"reference": [3] * 7 + [4] * 2, "candidate": [4] * 3 + [3] * 5 + [2]}
+        for lane, blocks in counts.items():
+            for pair, count in zip(pairs, blocks):
+                pair[lane]["samples"][-count:] = [2000] * count
+        result = score.guarded_latency_decision(pairs)
+        tail = result["channels"]["samples"]["tail"]
+        self.assertEqual(tail["pooled_ratio"], [1, 1])
+        self.assertEqual(tail["samples_per_lane"], 576)
+        self.assertEqual(tail["rank_one_based"], 548)
+        self.assertFalse(tail["block_diagnostics"]["passed"])
+        self.assertEqual(tail["block_diagnostics"]["passing_pairs"], 6)
+        self.assertTrue(result["passed"])
+
+    def test_pooled_tail_exact_rank_and_regression_boundary(self):
+        pairs = self.pairs([1000] * 9)
+        pairs[0]["candidate"][-28:] = [1251] * 28
+        self.assertTrue(score.tail_decision(pairs)["passed"])
+        pairs[0]["candidate"][-29:] = [1251] * 29
+        self.assertFalse(score.tail_decision(pairs)["passed"])
+        pairs[0]["candidate"][-29:] = [1250] * 29
+        self.assertTrue(score.tail_decision(pairs)["passed"])
+        pairs[0]["candidate"].pop()
+        with self.assertRaises(ValueError):
+            score.tail_decision(pairs)
+
+    def test_control_only_tail_regression_is_not_cancelled_by_requests(self):
+        pairs = self.guarded_pairs()
+        for pair in pairs:
+            pair["candidate"]["control_samples"][-4:] = [1600] * 4
+        result = score.guarded_latency_decision(pairs, cli=True)
+        self.assertTrue(result["channels"]["samples"]["tail"]["passed"])
+        self.assertFalse(result["channels"]["control_samples"]["tail"]["passed"])
+        self.assertFalse(result["passed"])
 
     def test_cli_common_mode_delay_cannot_cancel_from_both_marginals(self):
         pairs = self.guarded_pairs()
@@ -113,7 +157,11 @@ class WorkstationPolicyTests(unittest.TestCase):
         pairs[0]["candidate"]["whole_action_ns"] = True
         with self.assertRaises(ValueError):
             score.guarded_latency_decision(pairs)
-        self.assertEqual(score.load_policy()["policy_revision"], 2)
+        policy = score.load_policy()
+        self.assertEqual(policy["policy_revision"], 3)
+        policy["policy_revision"] = 2
+        with self.assertRaises(ValueError):
+            score.validate_policy(policy)
 
 
 if __name__ == "__main__":

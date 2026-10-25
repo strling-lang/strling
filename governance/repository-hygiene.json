@@ -235,6 +235,26 @@
             "path": "tests/certification/hardened-core/1.0/current/evidence/profile-release/profile-release.json",
             "rule": "maximum-file-size",
             "rationale": "This signed closure artifact preserves the complete independent Release profile evidence required by the hardened-core attestation verifier."
+        },
+        {
+            "path": "tests/certification/hardened-core/1.0/current/evidence/execution-full/result.json",
+            "rule": "maximum-file-size",
+            "rationale": "This signed closure object preserves the complete invocation-bound performance execution result or exact producer stdout required by the hardened-core attestation verifier. All other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/hardened-core/1.0/current/evidence/execution-full/stdout.txt",
+            "rule": "maximum-file-size",
+            "rationale": "This signed closure object preserves the complete invocation-bound performance execution result or exact producer stdout required by the hardened-core attestation verifier. All other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/hardened-core/1.0/current/evidence/execution-release/result.json",
+            "rule": "maximum-file-size",
+            "rationale": "This signed closure object preserves the complete invocation-bound performance execution result or exact producer stdout required by the hardened-core attestation verifier. All other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/hardened-core/1.0/current/evidence/execution-release/stdout.txt",
+            "rule": "maximum-file-size",
+            "rationale": "This signed closure object preserves the complete invocation-bound performance execution result or exact producer stdout required by the hardened-core attestation verifier. All other hygiene rules remain enforced."
         }
     ],
     "generated_paths": [

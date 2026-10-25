@@ -29,7 +29,7 @@ def validate_policy(value):
     require(value["policy_id"] == CONTEXT and value["status"] == "accepted", "policy")
     for key, expected in {
         "latency_warmups": 512,
-        "policy_revision": 2,
+        "policy_revision": 3,
         "cli_warmups": 8,
         "latency_samples": 64,
         "paired_repetitions": 9,
@@ -61,6 +61,10 @@ def validate_policy(value):
     )
     require(value["memory_metric"] == "process-lifetime-peak-commit-bytes", "metric")
     require(value["sample_retention"] == "all-fixed-slots-v1", "fixed raw slots")
+    require(
+        value["tail_estimator"] == "pooled-fixed-slots-nearest-rank-v1",
+        "fixed pooled tail estimator",
+    )
     return value
 
 
@@ -117,6 +121,54 @@ def latency_decision(pairs, policy=None):
     return result
 
 
+def tail_decision(pairs, policy=None):
+    """Compare the complete fixed-slot tails without excluding noisy blocks.
+
+    A block of 64 values has only four values at or above its p95 rank. Moving
+    one stall across a block boundary can change that block's p95 substantially.
+    Pool all nine complete blocks; keep their individual decisions as diagnostics.
+    This is a fixed empirical rule, not a population confidence bound.
+    """
+    policy = load_policy() if policy is None else policy
+    require(
+        type(pairs) is list and len(pairs) == policy["paired_repetitions"], "nine pairs"
+    )
+    pooled = {lane: [] for lane in ("reference", "candidate")}
+    block_ratios = []
+    block_rank = (policy["tail_percentile"] * policy["latency_samples"] + 99) // 100 - 1
+    for pair in pairs:
+        require(type(pair) is dict and set(pair) == set(pooled), "pair")
+        tails = {}
+        for lane in pooled:
+            median_twice(pair[lane], policy["latency_samples"])
+            pooled[lane].extend(pair[lane])
+            tails[lane] = sorted(pair[lane])[block_rank]
+        block_ratios.append(Fraction(tails["candidate"], tails["reference"]))
+    count = policy["latency_samples"] * policy["paired_repetitions"]
+    rank = (policy["tail_percentile"] * count + 99) // 100 - 1
+    tails = {lane: sorted(values)[rank] for lane, values in pooled.items()}
+    ratio = Fraction(tails["candidate"], tails["reference"])
+    return {
+        "passed": ratio
+        <= Fraction(10000 + policy["tail_regression_basis_points"], 10000),
+        "method": policy["tail_estimator"],
+        "samples_per_lane": count,
+        "rank_one_based": rank + 1,
+        "reference_p95_ns": tails["reference"],
+        "candidate_p95_ns": tails["candidate"],
+        "pooled_ratio": [ratio.numerator, ratio.denominator],
+        "block_diagnostics": dict(
+            diagnostic_only=True,
+            **_decision(
+                block_ratios,
+                policy,
+                center_key="tail_regression_basis_points",
+                pair_key="tail_pair_regression_basis_points",
+            ),
+        ),
+    }
+
+
 def guarded_latency_decision(pairs, policy=None, *, cli=False):
     """All fixed-slot distributions and whole root lifetimes are mandatory.
 
@@ -154,18 +206,7 @@ def guarded_latency_decision(pairs, policy=None, *, cli=False):
             for pair in pairs
         ]
         median = latency_decision(values, policy)
-        # Nearest-rank percentile: ceil(p*n/100)-1. Every raw slot contributes.
-        rank = (policy["tail_percentile"] * policy["latency_samples"] + 99) // 100 - 1
-        tails = [
-            Fraction(sorted(v["candidate"])[rank], sorted(v["reference"])[rank])
-            for v in values
-        ]
-        tail = _decision(
-            tails,
-            policy,
-            center_key="tail_regression_basis_points",
-            pair_key="tail_pair_regression_basis_points",
-        )
+        tail = tail_decision(values, policy)
         result["channels"][channel] = {"median": median, "tail": tail}
         result["passed"] &= median["passed"] and tail["passed"]
     result["whole_process"] = _decision(

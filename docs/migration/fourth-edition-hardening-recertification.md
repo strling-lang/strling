@@ -5541,3 +5541,43 @@ preserves identical source frames and releases the owned lease. Retain earlier
 runtime/driver failures. Proceed directly from exact-path commit to fresh complete
 actual-Full-CLI qualification with its atomic ledger and independent consumer;
 this checkpoint is not H08 completion.
+
+### Complete acquisition and fixed-slot tail correction — 2026-10-25
+
+Checkpoint108 preserves the actual Full CLI failure at679bff9d. It seals all1021
+roots and54 memory children. Independent reconstruction accepts three fresh
+builds,1075 unique process identities,64248 authenticated values and1022 ledger
+coordinates,18 native tests, five resource groups and the complete check
+projection. The real double-work control is rejected. Exactly53of54 decisions
+pass; simply-tiny CLI-startup fails its request-tail block-count gate with6of9
+passing blocks, despite a1.021590 median tail ratio. The acceptance consumer
+correctly rejects it. Source frames agree and the owner releases its lease.
+The original failed cohort remains immutable and ineligible; no sample is reused.
+
+The owner-authorized shared-laptop method now declares revision3 prospectively.
+Compare nearest-rank p95 over all576 fixed samples in each lane with the unchanged
+25% tail margin, retaining all block tails as diagnostics. Equal complete
+distributions can partition their stalls differently across64-slot blocks,
+whose p95 crosses its rank at four delayed values. Pooling prevents that
+partition boundary from deciding acceptance and excludes no noisy block. It
+also rejects two completely slow blocks that the former robust tail rule could
+allow. The rank548 does not bound stalls below that quantile, and this empirical
+rule supplies no population confidence or laboratory-equivalence claim. Median,
+whole-process, both CLI marginal, memory, provenance and no-reuse gates remain.
+No previous acquisition can be rescored into revision3 certification.
+
+Four exact size-only hygiene allowances retain required signed Full/Release
+atomic result and stdout objects. Twelve hygiene tests and the registered
+2355-file check pass, with neighboring paths and credential detection preserved.
+Thirty-nine workstation integration tests pass. No generated family matches the
+changed paths. Continue through style/governance verification and exact commit,
+then immediately execute fresh actual-worker positive/negative qualification.
+Canonical preparation, both whole source-distinct campaigns, independent no-reuse
+Releases, signing, trusted verifier promotion/cloud verification and guarded
+closure remain. H08 OPEN; goal ACTIVE.
+
+Source-held final integration retains51 passing focused tests and eight passed
+checks. Preserve its PR Cargo-path failure; a source-identical resolution using
+process-local pinned Rust/Cargo completes the actual PR route in54.5932068s and
+releases the lease unchanged. No timed performance sample was acquired. Proceed
+directly through exact commit to the fresh revision3 native acquisition.

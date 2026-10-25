@@ -48,7 +48,15 @@ def _run(command, *, root, directory, name, environment):
 
 
 def build_lane(
-    root, directory, *, kernel_revision, harness_root, cargo, rustc, slowdown=False
+    root,
+    directory,
+    *,
+    kernel_revision,
+    harness_root,
+    cargo,
+    rustc,
+    slowdown=False,
+    git_invocation=None,
 ):
     """A fresh directory is mandatory. Never reuse another lane's artifacts.
 
@@ -81,13 +89,23 @@ def build_lane(
         environment.pop(name, None)
     with archive.open("xb") as stream:
         subprocess.run(
-            [
-                "git",
-                "--no-optional-locks",
-                "archive",
-                "--format=zip",
-                kernel_revision,
-            ],
+            (
+                git_invocation(
+                    root,
+                    "--no-optional-locks",
+                    "archive",
+                    "--format=zip",
+                    kernel_revision,
+                )
+                if git_invocation is not None
+                else [
+                    "git",
+                    "--no-optional-locks",
+                    "archive",
+                    "--format=zip",
+                    kernel_revision,
+                ]
+            ),
             cwd=root,
             stdout=stream,
             check=True,

@@ -25,8 +25,7 @@ def integer(value, minimum=1):
     return value
 
 
-def load_policy(path=POLICY_PATH):
-    value = json.loads(Path(path).read_text(encoding="utf-8"))
+def validate_policy(value):
     require(value["policy_id"] == CONTEXT and value["status"] == "accepted", "policy")
     for key, expected in {
         "latency_warmups": 512,
@@ -56,9 +55,17 @@ def load_policy(path=POLICY_PATH):
         and value["reference_first"] == [i % 2 == 0 for i in range(9)],
         "fixed pair order",
     )
+    require(
+        value["reference_source"] == "1593801e187dfe913357e92e6c798b47b8944370",
+        "fixed independently frozen reference source",
+    )
     require(value["memory_metric"] == "process-lifetime-peak-commit-bytes", "metric")
     require(value["sample_retention"] == "all-fixed-slots-v1", "fixed raw slots")
     return value
+
+
+def load_policy(path=POLICY_PATH):
+    return validate_policy(json.loads(Path(path).read_text(encoding="utf-8")))
 
 
 def median_twice(values, count=64):

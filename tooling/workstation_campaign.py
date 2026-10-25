@@ -1,7 +1,7 @@
 """Fresh native acquisition for the explicitly scoped workstation policy.
 
-This entry point is qualification engineering. Profile adoption requires the
-independent reader, functional resource checks and trusted attestation routing.
+Qualification runs and formal profiles use fresh builds and native observations.
+Formal captures also bind their exact invocation context and consumption ledger.
 The caller retains exclusive source ownership for the complete invocation.
 """
 
@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import subprocess
 import time
+import uuid
 
 from tooling import performance_envelope_receipts as process_reader
 from tooling import performance_process_envelope as envelope
@@ -38,7 +39,9 @@ def save(path, value):
 def source_identity(root):
     def git(*args):
         return (
-            subprocess.check_output(["git", "--no-optional-locks", *args], cwd=root)
+            subprocess.check_output(
+                governed._git_invocation(root, "--no-optional-locks", *args), cwd=root
+            )
             .decode()
             .strip()
         )
@@ -48,7 +51,7 @@ def source_identity(root):
     return git("rev-parse", "HEAD")
 
 
-def acquire(root, output, *, cargo, rustc, coordinates=None):
+def acquire(root, output, *, cargo, rustc, coordinates=None, execution_ledger=None):
     """No retry, slot filling, candidate calibration or compiled artifact reuse."""
     if os.name != "nt":
         raise ValueError("native Windows acquisition required")
@@ -57,6 +60,21 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
         raise ValueError("qualification output must be inside target")
     source = source_identity(root)
     output.mkdir(exist_ok=False)
+    invocation = (
+        dict(execution_ledger.context)
+        if execution_ledger is not None
+        else dict(
+            purpose="qualification", source_sha=source, acquisition_id=uuid.uuid4().hex
+        )
+    )
+    context_bytes = json.dumps(
+        dict(contract="workstation-capture-context-v1", execution=invocation),
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+    ).encode("ascii")
+    with (output / "capture-context.json").open("xb") as context_stream:
+        context_stream.write(context_bytes)
     policy = score.load_policy(root / "governance/workstation-performance-policy.json")
     manifest = governed.load_json(root / MANIFEST)
     complete_coordinates = governed.performance_measurement_keys(manifest)
@@ -80,7 +98,8 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
         ).hexdigest(),
     )
     document = dict(
-        contract="shared-workstation-cohort-v2",
+        contract="shared-workstation-cohort-v3",
+        invocation=invocation,
         source_sha=source,
         policy_sha256=digest(root / "governance/workstation-performance-policy.json"),
         manifest_sha256=digest(root / MANIFEST),
@@ -88,6 +107,7 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
         observations=[],
     )
     prospective = dict(
+        invocation=invocation,
         source_sha=source,
         policy=policy,
         coordinates=[list(x) for x in coordinates],
@@ -121,6 +141,9 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
                     "policy_sha256"
                 ],
                 root / MANIFEST: document["manifest_sha256"],
+                output / "capture-context.json": hashlib.sha256(
+                    context_bytes
+                ).hexdigest(),
             }
         )
         expected = dict(
@@ -143,6 +166,9 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
                 calibration=calibration,
             ),
         )
+        ledger_key = (coordinate[0] + "/" + slot, coordinate[1])
+        if execution_ledger is not None:
+            execution_ledger.start_coordinate(ledger_key)
         acquired = envelope.capture(
             envelope.Command(tuple(command), root, environment, inputs, source, 1, 300),
             output / slot,
@@ -172,6 +198,13 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
         )
         if checked["identity"] in seen or checked["begin_ns"] < previous_end:
             raise ValueError("process reuse or overlapping acquisition")
+        if execution_ledger is not None:
+            consumed = (
+                [checked["peak_commit_bytes"]]
+                if coordinate[0].startswith("memory:")
+                else checked["samples"] + checked["control_samples"]
+            )
+            execution_ledger.complete_coordinate(ledger_key, consumed)
         seen.add(checked["identity"])
         previous_end = checked["end_ns"]
         document["observations"].append(
@@ -267,10 +300,21 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
                 cargo=cargo,
                 rustc=rustc,
                 slowdown=lane == "slowdown",
+                git_invocation=governed._git_invocation,
             )
             print(json.dumps(dict(stage="build-passed", lane=lane)), flush=True)
         for index, coordinate in enumerate(coordinates):
             if coordinate[0] == "size:kernel-artifacts":
+                if execution_ledger is not None:
+                    execution_ledger.start_coordinate(coordinate)
+                    sizes = [
+                        sum(
+                            document["builds"][lane]["artifacts"][kind]["bytes"]
+                            for kind in ("kernel", "interop")
+                        )
+                        for lane in ("reference", "candidate")
+                    ]
+                    execution_ledger.complete_coordinate(coordinate, sizes)
                 continue
             batch = 1
             if (
@@ -321,6 +365,7 @@ def acquire(root, output, *, cargo, rustc, coordinates=None):
         reconstructed = reader.verify_cohort(
             json.loads((output / "cohort.json").read_bytes()),
             coordinates=coordinates,
+            expected_invocation=invocation,
             policy=policy,
             source_sha=source,
             policy_sha256=document["policy_sha256"],

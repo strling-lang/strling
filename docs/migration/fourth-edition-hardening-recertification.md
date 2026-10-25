@@ -5505,3 +5505,39 @@ signing, immutable trusted verification and guarded clean closure remain require
 The prior 52.0583% governance-gate improvement remains the only accepted comparison
 referenced here; these test durations establish no total-certification speedup.
 H08 remains OPEN, with every gate retained.
+
+### Actual memory retirement and profile integration — 2026-10-25
+
+Checkpoint107 preserves failed target/ws-full1 at source0a8ad116:993 successful
+roots and consumed memory slot0993. Independent reconstruction accepts all993
+root receipts,45 memory children, three builds and every52 complete coordinate
+decision. The missing denominator and negative cohort keep the campaign failed;
+no slot is replaced and no old cohort can satisfy formal version3.
+
+The observer now waits only for bounded native bookkeeping after exact-child
+exit and retains exact accounting failures. Native18 and runner42 tests pass,
+including128 fresh fast exits. Actual production-worker validation completes48
+unique children across all three governed memory fixtures with unchanged source,
+binary and lease. Retain both driver mistakes and the original consumed slot.
+
+Wire the explicit workstation profiles, canonical invocation input, eight capture
+pins, fresh Full/Release builds and independent atomic consumption reconstruction.
+Lossless bounded transport retains every raw byte;35 synthetic tests and an exact
+110249973-byte payload round-trip pass. Preserve the native Python user-site
+isolation failure and its successful workspace-only self-contained runtime check.
+The broad source-held test driver reaches its1800second limit and retires without
+source changes. Complete outstanding tests, integration checks and a clean-source
+commit, then immediately execute fresh complete actual-Full-CLI qualification.
+No host settings, inherited controls, performance bounds, trust pins or publication
+change. Canonical candidate preparation, both whole source-distinct campaigns,
+independent no-reuse Releases, signing, promotion and trusted cloud verification
+remain. H08 OPEN; goal ACTIVE.
+
+Final source-held integration passes66 focused/source-definition/native lifecycle
+regressions and all13 stages, including the five registered artifact checks,
+all16locks, governance/style and actual Local/PR producer routes. Terminal
+e5994618e3853320eb4a263740d0ac49d686b8976e8f037e31ec6adb0a9d0ed5
+preserves identical source frames and releases the owned lease. Retain earlier
+runtime/driver failures. Proceed directly from exact-path commit to fresh complete
+actual-Full-CLI qualification with its atomic ledger and independent consumer;
+this checkpoint is not H08 completion.

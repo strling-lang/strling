@@ -6,6 +6,7 @@ use std::io;
 use std::mem::size_of;
 use std::os::windows::io::AsRawHandle;
 use std::process::Child;
+use std::time::{Duration, Instant};
 
 type Handle = *mut c_void;
 
@@ -86,7 +87,7 @@ struct ExtendedLimits {
 }
 
 #[repr(C)]
-#[derive(Default)]
+#[derive(Debug, Default)]
 struct Accounting {
     times: [i64; 4],
     page_faults: u32,
@@ -97,6 +98,42 @@ struct Accounting {
 
 fn invalid(message: &str) -> io::Error {
     io::Error::new(io::ErrorKind::InvalidData, message)
+}
+
+// A signaled process handle does not synchronize the job's final accounting.
+// Only bookkeeping may be pending here: finish has already proved exact-child
+// exit. Never rerun work, accept another member, or terminate a job to pass.
+fn await_natural_job_retirement(
+    mut query: impl FnMut() -> io::Result<(Accounting, u32)>,
+    mut elapsed: impl FnMut() -> Duration,
+    mut pause: impl FnMut(),
+) -> io::Result<()> {
+    let mut observations = 0u32;
+    loop {
+        let (accounting, returned) = query()?;
+        observations += 1;
+        if returned == size_of::<Accounting>() as u32
+            && accounting.total == 1
+            && accounting.terminated == 0
+        {
+            if accounting.active == 0 {
+                return Ok(());
+            }
+            if accounting.active == 1 && elapsed() < Duration::from_secs(5) {
+                pause();
+                continue;
+            }
+        }
+        return Err(invalid(&format!(
+            "memory worker job did not retire exactly one natural process: \
+             returned={returned}, total={}, active={}, limit_terminated={}, \
+             observations={observations}, elapsed_ms={}",
+            accounting.total,
+            accounting.active,
+            accounting.terminated,
+            elapsed().as_millis(),
+        )));
+    }
 }
 
 fn identity(handle: Handle) -> io::Result<(u32, u64, u64)> {
@@ -255,29 +292,28 @@ impl Observation {
             return Err(invalid("terminal peak commit is inconsistent"));
         }
         if !self.private_job.is_null() {
-            let mut accounting = Accounting::default();
-            let mut returned = 0;
-            if unsafe {
-                QueryInformationJobObject(
-                    self.private_job,
-                    1,
-                    (&mut accounting as *mut Accounting).cast(),
-                    size_of::<Accounting>() as u32,
-                    &mut returned,
-                )
-            } == 0
-            {
-                return Err(io::Error::last_os_error());
-            }
-            if returned != size_of::<Accounting>() as u32
-                || accounting.total != 1
-                || accounting.active != 0
-                || accounting.terminated != 0
-            {
-                return Err(invalid(
-                    "memory worker job did not retire exactly one natural process",
-                ));
-            }
+            let started = Instant::now();
+            await_natural_job_retirement(
+                || {
+                    let mut accounting = Accounting::default();
+                    let mut returned = 0;
+                    if unsafe {
+                        QueryInformationJobObject(
+                            self.private_job,
+                            1,
+                            (&mut accounting as *mut Accounting).cast(),
+                            size_of::<Accounting>() as u32,
+                            &mut returned,
+                        )
+                    } == 0
+                    {
+                        return Err(io::Error::last_os_error());
+                    }
+                    Ok((accounting, returned))
+                },
+                || started.elapsed(),
+                || std::thread::sleep(Duration::from_millis(1)),
+            )?;
         }
         Ok(Terminal {
             pid,
@@ -341,6 +377,76 @@ impl Drop for Observation {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn accounting(total: u32, active: u32, terminated: u32) -> (Accounting, u32) {
+        (
+            Accounting {
+                total,
+                active,
+                terminated,
+                ..Accounting::default()
+            },
+            size_of::<Accounting>() as u32,
+        )
+    }
+
+    #[test]
+    fn signaled_child_allows_bounded_job_bookkeeping_lag() {
+        let mut observations = [
+            accounting(1, 1, 0),
+            accounting(1, 1, 0),
+            accounting(1, 0, 0),
+        ]
+        .into_iter();
+        let mut pauses = 0;
+        await_natural_job_retirement(
+            || Ok(observations.next().unwrap()),
+            || Duration::from_millis(2),
+            || pauses += 1,
+        )
+        .unwrap();
+        assert_eq!(pauses, 2);
+        assert!(observations.next().is_none());
+    }
+
+    #[test]
+    fn job_accounting_failure_and_deadline_preserve_exact_counts() {
+        for (total, active, terminated) in [(0, 0, 0), (2, 0, 0), (1, 2, 0), (1, 0, 1), (1, 1, 0)] {
+            let error = await_natural_job_retirement(
+                || Ok(accounting(total, active, terminated)),
+                || Duration::from_secs(5),
+                || panic!("invalid or expired accounting cannot wait"),
+            )
+            .unwrap_err()
+            .to_string();
+            assert!(
+                error.contains(&format!(
+                    "total={total}, active={active}, limit_terminated={terminated}"
+                )),
+                "{error}"
+            );
+            assert!(error.contains("observations=1, elapsed_ms=5000"), "{error}");
+        }
+        let error = await_natural_job_retirement(
+            || {
+                let (a, _) = accounting(1, 0, 0);
+                Ok((a, 0))
+            },
+            || Duration::ZERO,
+            || panic!("incomplete accounting cannot wait"),
+        )
+        .unwrap_err()
+        .to_string();
+        assert!(error.contains("returned=0"));
+        assert!(await_natural_job_retirement(
+            || Err(invalid("native query failed")),
+            || Duration::ZERO,
+            || panic!("query failure cannot wait"),
+        )
+        .unwrap_err()
+        .to_string()
+        .contains("native query failed"));
+    }
 
     #[test]
     fn terminal_identity_and_high_water_must_match() {

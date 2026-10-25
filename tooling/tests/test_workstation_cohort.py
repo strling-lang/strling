@@ -3,6 +3,8 @@
 import base64
 import copy
 import hashlib
+import json
+from pathlib import PureWindowsPath
 import unittest
 
 from tooling import performance_envelope_receipts as process
@@ -14,11 +16,18 @@ from tooling.tests import test_workstation_evidence as fixtures
 class WorkstationCohortTests(unittest.TestCase):
     def setUp(self):
         self.policy = score.load_policy()
+        self.invocation = dict(
+            source_sha="a" * 40,
+            invocation_id="fixture-invocation",
+            certification_profile="release",
+            producer_profile="full",
+        )
         self.coordinate = ("latency:semantic-parse", "fixture:semantic-tiny")
         self.builds = {}
         for lane in ("reference", "candidate", "slowdown"):
             self.builds[lane] = dict(
                 build_root="C:/" + lane,
+                recipe_sha256="e" * 64,
                 kernel_revision=self.policy["reference_source"]
                 if lane == "reference"
                 else "a" * 40,
@@ -29,7 +38,8 @@ class WorkstationCohortTests(unittest.TestCase):
                 },
             )
         self.document = dict(
-            contract="shared-workstation-cohort-v2",
+            contract="shared-workstation-cohort-v3",
+            invocation=copy.deepcopy(self.invocation),
             source_sha="a" * 40,
             policy_sha256="c" * 64,
             manifest_sha256="d" * 64,
@@ -70,6 +80,26 @@ class WorkstationCohortTests(unittest.TestCase):
         fixture.bundle.plan["inputs"] = {
             v["path"]: v["sha256"] for v in self.builds[lane]["artifacts"].values()
         }
+        build = PureWindowsPath(self.builds[lane]["build_root"])
+        cwd = PureWindowsPath(fixture.bundle.plan["cwd"])
+        context_bytes = json.dumps(
+            dict(contract="workstation-capture-context-v1", execution=self.invocation),
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=True,
+        ).encode("ascii")
+        fixture.bundle.plan["inputs"].update(
+            {
+                str(build / "recipe.json"): "e" * 64,
+                str(cwd / "governance/workstation-performance-policy.json"): "c" * 64,
+                str(
+                    cwd / "tests/certification/performance-resource/1.0/manifest.json"
+                ): "d" * 64,
+                str(build.parent / "capture-context.json"): hashlib.sha256(
+                    context_bytes
+                ).hexdigest(),
+            }
+        )
         fixture.bundle.files["plan.json"] = fixtures.encoded(fixture.bundle.plan)
         fixture.bundle.row["plan_sha256"] = hashlib.sha256(
             fixture.bundle.files["plan.json"]
@@ -115,6 +145,7 @@ class WorkstationCohortTests(unittest.TestCase):
         return reader.verify_cohort(
             self.document,
             coordinates=[self.coordinate],
+            expected_invocation=copy.deepcopy(self.invocation),
             policy=self.policy,
             source_sha="a" * 40,
             policy_sha256="c" * 64,
@@ -138,6 +169,7 @@ class WorkstationCohortTests(unittest.TestCase):
         original = copy.deepcopy(self.document)
         for mutate in (
             lambda d: d["observations"].pop(),
+            lambda d: d["observations"][1].__setitem__("repetition", False),
             lambda d: d["observations"].append(copy.deepcopy(d["observations"][-1])),
             lambda d: d["observations"].reverse(),
             lambda d: d["observations"][1].__setitem__("lane", "slowdown"),
@@ -158,6 +190,27 @@ class WorkstationCohortTests(unittest.TestCase):
         self.document["builds"]["candidate"]["kernel_revision"] = "9" * 40
         with self.assertRaisesRegex(ValueError, "pinned builds"):
             self.verify()
+
+    def test_formal_context_and_complete_pinned_inputs_are_required(self):
+        self.verify()
+        original = copy.deepcopy(self.document)
+        attacks = [
+            lambda d: d["invocation"].__setitem__("certification_profile", "full"),
+            lambda d: d["observations"][1]["expected_plan"]["inputs"].pop(
+                str(
+                    PureWindowsPath("C:/fixture")
+                    / "governance/workstation-performance-policy.json"
+                )
+            ),
+            lambda d: d["observations"][1]["expected_plan"]["inputs"].__setitem__(
+                "C:/foreign-input", "f" * 64
+            ),
+        ]
+        for mutate in attacks:
+            self.document = copy.deepcopy(original)
+            mutate(self.document)
+            with self.assertRaises(ValueError):
+                self.verify()
 
 
 if __name__ == "__main__":

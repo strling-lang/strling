@@ -8806,6 +8806,11 @@ def main(argv: list[str] | None = None) -> int:
         else:
             parser = argparse.ArgumentParser(description=__doc__)
             parser.add_argument("--profile", choices=PROFILE_IDS, required=True)
+            parser.add_argument(
+                "--certification-policy",
+                choices=("laboratory-isolated-v1", "shared-workstation-v1"),
+                default="laboratory-isolated-v1",
+            )
             parser.add_argument("--preflight-only", action="store_true")
             parser.add_argument("--json", action="store_true")
             parser.add_argument("--execution-directory")
@@ -8855,11 +8860,23 @@ def main(argv: list[str] | None = None) -> int:
                     certification_profile=arguments.certification_profile,
                     producer_profile=arguments.profile,
                 )
-            result = certify(
-                arguments.profile,
-                execution_ledger=execution_ledger,
-                preflight_only=arguments.preflight_only,
-            )
+            if arguments.certification_policy == "shared-workstation-v1":
+                from tooling.workstation_certification import (
+                    certify as workstation_certify,
+                )
+
+                result = workstation_certify(
+                    arguments.profile,
+                    authority=sys.modules[__name__],
+                    execution_ledger=execution_ledger,
+                    preflight_only=arguments.preflight_only,
+                )
+            else:
+                result = certify(
+                    arguments.profile,
+                    execution_ledger=execution_ledger,
+                    preflight_only=arguments.preflight_only,
+                )
             status = result["deterministic_evidence"]["status"]
             if arguments.preflight_only:
                 result = {

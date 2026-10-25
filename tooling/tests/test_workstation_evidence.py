@@ -40,6 +40,23 @@ class WorkstationEvidenceTests(unittest.TestCase):
             cpu_quota="observed-immediate-job:flags=0:rate=0:ancestors=unknown",
             selected_logical_cpu=1,
             effective_cpu_affinity=[1],
+            selected_cpu_set_id=17,
+            placement_mechanism="process-affinity-cpu-sets-supported-controls",
+            timer_source="QueryPerformanceCounter:10000000",
+            process_power_policy=dict(
+                api="SetProcessInformation(ProcessPowerThrottling)",
+                version=1,
+                control_mask=1,
+                state_mask=0,
+                execution_speed_policy="high-qos",
+                enforcement_result="success",
+            ),
+            cpu_set_allocation_state=dict(
+                allocated=False,
+                allocated_to_target_process=False,
+                realtime=False,
+                allocation_tag="0x0000000000000000",
+            ),
             platform="windows",
             processor_group=0,
             observed_processor_groups=[0],
@@ -92,6 +109,8 @@ class WorkstationEvidenceTests(unittest.TestCase):
         self.verify()
         attacks = [
             ("sample_attempts", 65),
+            ("selected_cpu_set_id", 18),
+            ("timer_source", "QueryPerformanceCounter:0"),
             ("maximum_sample_attempts", 128),
             ("sample_retention", "best-slots"),
             ("cpu_quota", "unlimited"),
@@ -116,6 +135,7 @@ class WorkstationEvidenceTests(unittest.TestCase):
                     self.verify()
 
     def memory(self):
+        self.bundle.row["accounting"]["total_processes"] = 3
         self.raw.update(
             operation_id="memory:kernel-peak-rss",
             warmup_iterations=1,
@@ -203,6 +223,30 @@ class WorkstationEvidenceTests(unittest.TestCase):
         for value in (b'{"a":1,"a":2}', b'{"a":NaN}'):
             with self.assertRaises(ValueError):
                 evidence.parse(value)
+
+    def test_native_control_field_types_survive_refreshed_stream_hashes(self):
+        original = copy.deepcopy(self.raw)
+        self.verify()
+        for section, key, value in [
+            ("process_power_policy", "version", True),
+            ("process_power_policy", "state_mask", 1),
+            ("cpu_set_allocation_state", "allocated", 0),
+            ("cpu_set_allocation_state", "allocated", True),
+        ]:
+            with self.subTest(section=section, key=key):
+                self.raw = copy.deepcopy(original)
+                self.raw[section][key] = value
+                with self.assertRaises(ValueError):
+                    self.verify()
+
+    def test_container_retains_strict_json_with_a_separate_aggregate_bound(self):
+        valid = b'{"valid":true}'
+        self.assertEqual(evidence.parse_container(valid), evidence.parse(valid))
+        for data in (b'{"a":1,"a":2}', b'{"a":NaN}'):
+            with self.assertRaises(ValueError):
+                evidence.parse_container(data)
+        with self.assertRaises(ValueError):
+            evidence._parse_json(valid, len(valid) - 1)
 
 
 if __name__ == "__main__":

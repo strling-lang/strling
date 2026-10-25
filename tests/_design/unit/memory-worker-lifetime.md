@@ -1,6 +1,9 @@
 # Test Design — Certification memory worker lifetime
 
-The governed metric remains process peak RSS. A worker self-report taken before
+The laboratory context's governed metric remains process peak RSS. The separately
+named shared-workstation policy has an explicit peak-commit budget and retains
+raw peak RSS independently; see `workstation-performance.md` for its qualification.
+A worker self-report taken before
 serialization cannot cover reporting, destructors or process teardown. Retain the
 exact child's kernel handle before its initial thread resumes, record its birth,
 and read the original kernel peak after that process exits. Never subtract

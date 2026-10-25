@@ -92,6 +92,28 @@ mod native {
     }
 
     #[test]
+    fn rapid_exact_children_retire_naturally_without_replacement() {
+        // Stress the exit-signal/job-accounting boundary with fresh processes.
+        // Every launch must succeed; a failed observation is never retried.
+        for _ in 0..128 {
+            let (child, observer) = controlled_spawn::spawn_observed(
+                Command::new(std::env::current_exe().unwrap())
+                    .arg("--list")
+                    .stdout(Stdio::null())
+                    .stderr(Stdio::null()),
+                memory_lifetime::Observation::begin_workstation,
+            )
+            .unwrap();
+            let pid = child.id();
+            assert!(child.wait_with_output().unwrap().status.success());
+            let terminal = observer.finish().unwrap();
+            assert_eq!(terminal.pid, pid);
+            assert!(terminal.single_process_job);
+            assert!(terminal.peak_commit_bytes > 0);
+        }
+    }
+
+    #[test]
     #[ignore = "owned child entry point for descendant prevention qualification"]
     fn child_attempting_a_grandchild() {
         match Command::new(std::env::current_exe().unwrap())

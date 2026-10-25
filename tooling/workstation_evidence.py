@@ -6,7 +6,10 @@ No producer, process-control or filesystem imports are used.
 
 import base64
 import json
+import hashlib
+from pathlib import PureWindowsPath
 import re
+import zlib
 
 
 def need(value, message):
@@ -20,7 +23,16 @@ def integer(value, minimum=0, maximum=2**64 - 1):
 
 
 def parse(data):
-    need(type(data) is bytes and len(data) <= 64 * 1024 * 1024, "bounded raw bytes")
+    return _parse_json(data, 64 * 1024 * 1024)
+
+
+def parse_container(data):
+    """A complete fixed cohort contains many separately bounded process streams."""
+    return _parse_json(data, 256 * 1024 * 1024)
+
+
+def _parse_json(data, maximum_bytes):
+    need(type(data) is bytes and len(data) <= maximum_bytes, "bounded raw bytes")
 
     def pairs(items):
         result = {}
@@ -64,6 +76,7 @@ def _memory(raw, files, root_before, root_after):
     ):
         need(life[key] is False, "no inherited laboratory assertion")
     child_pid = integer(life["pid"], 1, 2**32 - 1)
+    need(child_pid != root_before["pid"], "distinct live parent and child")
     birth = integer(life["birth_100ns"], 1)
     exited = integer(life["exit_100ns"], birth + 1)
     need(
@@ -116,6 +129,10 @@ def _memory(raw, files, root_before, root_after):
             need(len(packet[key]) > 0, "nonempty child transport")
         for item in packet[key]:
             integer(item, 0, 255)
+    need(
+        packet["contract"] == "retained-memory-worker-streams-v1",
+        "child packet contract",
+    )
     request = parse(bytes(packet["input_bytes"]))
     need(type(request) is dict and request, "actual compiler request")
     reply = parse(bytes(packet["stdout_bytes"]))
@@ -123,8 +140,10 @@ def _memory(raw, files, root_before, root_after):
     need(reply["certification_context"] == "shared-workstation-v1", "child context")
     need(reply["sample_retention"] == "all-fixed-slots-v1", "child fixed slots")
     need(
-        reply["effective_cpu_affinity"] == raw["effective_cpu_affinity"],
-        "child placement",
+        reply["effective_cpu_affinity"] == raw["effective_cpu_affinity"]
+        and type(reply["effective_cpu_affinity"]) is list
+        and all(type(x) is int for x in reply["effective_cpu_affinity"]),
+        "exact child placement",
     )
     need(
         integer(reply["peak_working_set_bytes"], 1)
@@ -225,6 +244,63 @@ def verify_observation(
             "fixed raw sample retention",
         )
         need(attempts == count, "no replacement attempts")
+    terminal = parse(files["terminal.json"])
+    expected_processes = 3 if memory else 2 + 2 * (warmups + count) if cli else 2
+    need(
+        integer(terminal["accounting"]["total_processes"], 1) == expected_processes,
+        "exact prescribed process launches",
+    )
+    need(
+        integer(raw["selected_cpu_set_id"], 1, 2**32 - 1)
+        == terminal["controls"]["cpu_set_id"],
+        "worker/envelope CPU-set binding",
+    )
+    need(
+        raw["placement_mechanism"] == "process-affinity-cpu-sets-supported-controls",
+        "actual placement mechanism",
+    )
+    power = raw["process_power_policy"]
+    need(type(power) is dict, "raw process power policy")
+    for key in ("version", "control_mask", "state_mask"):
+        integer(power[key], 0, 2**32 - 1)
+    need(
+        power
+        == dict(
+            api="SetProcessInformation(ProcessPowerThrottling)",
+            version=1,
+            control_mask=1,
+            state_mask=0,
+            execution_speed_policy="high-qos",
+            enforcement_result="success",
+        ),
+        "actual HighQoS policy",
+    )
+    allocation = raw["cpu_set_allocation_state"]
+    need(
+        type(allocation) is dict
+        and set(allocation)
+        == {"allocated", "allocated_to_target_process", "realtime", "allocation_tag"},
+        "closed CPU-set observation",
+    )
+    for key in ("allocated", "allocated_to_target_process", "realtime"):
+        need(type(allocation[key]) is bool, "exact CPU-set flag")
+    need(
+        allocation["allocated"] is allocation["allocated_to_target_process"],
+        "available CPU set",
+    )
+    need(
+        type(allocation["allocation_tag"]) is str
+        and re.fullmatch(r"0x[0-9a-f]{16}", allocation["allocation_tag"]),
+        "CPU-set tag",
+    )
+    need(
+        type(raw["timer_source"]) is str
+        and re.fullmatch(
+            r"QueryPerformanceCounter:[1-9][0-9]{0,19}", raw["timer_source"]
+        ),
+        "native timer observation",
+    )
+    integer(int(raw["timer_source"].split(":")[1]), 1)
     before, after = parse(files["suspended.json"]), parse(files["root-exit.json"])
     result = dict(
         identity=(checked["pid"], int(checked["birth"])),
@@ -400,6 +476,7 @@ def verify_cohort(
     document,
     *,
     coordinates,
+    expected_invocation,
     policy,
     source_sha,
     policy_sha256,
@@ -415,12 +492,15 @@ def verify_cohort(
     Build identities and implementation hashes must be supplied independently
     by the caller, never copied from this candidate evidence document.
     """
-    need(document["contract"] == "shared-workstation-cohort-v2", "cohort contract")
+    need(document["contract"] == "shared-workstation-cohort-v3", "cohort contract")
     need(
         document["source_sha"] == source_sha
         and document["policy_sha256"] == policy_sha256
         and document["manifest_sha256"] == manifest_sha256,
         "source and policy binding",
+    )
+    need(
+        document["invocation"] == expected_invocation, "exact certification invocation"
     )
     need(document["builds"] == build_identities, "independently pinned builds")
     need(
@@ -455,6 +535,12 @@ def verify_cohort(
         row = records[cursor]
         cursor += 1
         need(
+            row["repetition"] is None
+            if repetition is None
+            else type(row["repetition"]) is int,
+            "exact repetition metadata",
+        )
+        need(
             row["coordinate"] == list(coordinate)
             and row["lane"] == lane
             and row["purpose"] == purpose
@@ -479,11 +565,40 @@ def verify_cohort(
         )
         for key, value in implementation_pins.items():
             need(plan[key] == value, "measurement implementation binding")
-        for artifact in build_identities[lane]["artifacts"].values():
-            need(
-                plan["inputs"].get(artifact["path"]) == artifact["sha256"],
-                "actual binary binding",
-            )
+        build_root = PureWindowsPath(build_identities[lane]["build_root"])
+        cwd = PureWindowsPath(plan["cwd"])
+        context_bytes = json.dumps(
+            dict(
+                contract="workstation-capture-context-v1", execution=expected_invocation
+            ),
+            sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=True,
+        ).encode("ascii")
+        expected_inputs = {
+            artifact["path"]: artifact["sha256"]
+            for artifact in build_identities[lane]["artifacts"].values()
+        }
+        expected_inputs.update(
+            {
+                str(build_root / "recipe.json"): build_identities[lane][
+                    "recipe_sha256"
+                ],
+                str(
+                    cwd / "governance/workstation-performance-policy.json"
+                ): policy_sha256,
+                str(
+                    cwd / "tests/certification/performance-resource/1.0/manifest.json"
+                ): manifest_sha256,
+                str(build_root.parent / "capture-context.json"): hashlib.sha256(
+                    context_bytes
+                ).hexdigest(),
+            }
+        )
+        need(
+            plan["inputs"] == expected_inputs,
+            "complete exact binary/recipe/policy/manifest/invocation inputs",
+        )
         need(type(row["files"]) is dict, "raw files")
         files = {
             name: base64.b64decode(value, validate=True)
@@ -591,3 +706,92 @@ def verify_cohort(
         observations=cursor,
         unique_processes=len(identities),
     )
+
+
+def pack_profile_payload(payload):
+    """Lossless transport only; every raw process byte remains in the payload."""
+    need(type(payload) is dict, "profile payload object")
+    need(
+        payload.get("contract") == "shared-workstation-profile-evidence-v2",
+        "profile payload contract",
+    )
+    raw = json.dumps(
+        payload,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=True,
+        allow_nan=False,
+    ).encode("ascii")
+    need(len(raw) <= 256 * 1024 * 1024, "bounded profile payload")
+    compressed = zlib.compress(raw, level=9)
+    need(len(compressed) <= 64 * 1024 * 1024, "bounded compressed payload")
+    return dict(
+        contract="shared-workstation-profile-capsule-v1",
+        compression="zlib",
+        raw_bytes=len(raw),
+        raw_sha256=hashlib.sha256(raw).hexdigest(),
+        compressed_bytes=len(compressed),
+        compressed_sha256=hashlib.sha256(compressed).hexdigest(),
+        data_base64=base64.b64encode(compressed).decode("ascii"),
+    )
+
+
+def unpack_profile_payload(packet):
+    """Bound expansion before allocation and reject incomplete/trailing data."""
+    need(
+        type(packet) is dict
+        and set(packet)
+        == {
+            "contract",
+            "compression",
+            "raw_bytes",
+            "raw_sha256",
+            "compressed_bytes",
+            "compressed_sha256",
+            "data_base64",
+        },
+        "closed profile capsule",
+    )
+    need(
+        packet["contract"] == "shared-workstation-profile-capsule-v1"
+        and packet["compression"] == "zlib",
+        "profile capsule encoding",
+    )
+    limit = integer(packet["raw_bytes"], 1, 256 * 1024 * 1024)
+    length = integer(packet["compressed_bytes"], 1, 64 * 1024 * 1024)
+    encoded = packet["data_base64"]
+    need(
+        type(encoded) is str and len(encoded) <= 96 * 1024 * 1024,
+        "bounded encoded capsule",
+    )
+    compressed = base64.b64decode(encoded, validate=True)
+    need(len(compressed) == length, "compressed payload size")
+    for name in ("raw_sha256", "compressed_sha256"):
+        need(
+            type(packet[name]) is str and re.fullmatch("[0-9a-f]{64}", packet[name]),
+            "profile capsule pin syntax",
+        )
+    need(
+        hashlib.sha256(compressed).hexdigest() == packet["compressed_sha256"],
+        "compressed payload pin",
+    )
+    decoder = zlib.decompressobj()
+    try:
+        raw = decoder.decompress(compressed, limit + 1)
+    except zlib.error as error:
+        raise ValueError("invalid compressed profile payload") from error
+    need(
+        len(raw) == limit
+        and decoder.eof
+        and not decoder.unused_data
+        and not decoder.unconsumed_tail,
+        "complete bounded payload expansion",
+    )
+    need(hashlib.sha256(raw).hexdigest() == packet["raw_sha256"], "raw payload pin")
+    payload = parse_container(raw)
+    need(
+        type(payload) is dict
+        and payload.get("contract") == "shared-workstation-profile-evidence-v2",
+        "expanded profile payload contract",
+    )
+    return payload

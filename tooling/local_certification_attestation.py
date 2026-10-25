@@ -338,9 +338,40 @@ def _validate_atomic_evidence(
     ):
         raise AttestationError("atomic structured evidence source or profile mismatch")
     if operation["operation_id"] == "performance_resource_full_certification":
-        _validate_performance_measurements(
-            repository_root, source_sha, structured, integrity
-        )
+        policy = "laboratory-isolated-v1"
+        if "--certification-policy" in command:
+            if command.count("--certification-policy") != 1:
+                raise AttestationError("ambiguous performance policy selector")
+            policy = command[command.index("--certification-policy") + 1]
+        if policy == "shared-workstation-v1":
+            try:
+                _helper_module("workstation_attestation").validate_profile_evidence(
+                    repository_root,
+                    source_sha,
+                    structured,
+                    integrity,
+                    authority=_helper_module("performance_resource_certification"),
+                    reader=_helper_module("workstation_evidence"),
+                    score=_helper_module("workstation_performance"),
+                    process_reader=_helper_module("performance_envelope_receipts"),
+                )
+            except (ValueError, KeyError, TypeError) as error:
+                raise AttestationError(
+                    f"invalid workstation performance evidence: {error}"
+                ) from error
+        elif policy == "laboratory-isolated-v1":
+            if any(
+                check.get("id") == "method:shared-workstation-v1"
+                for check in structured.get("checks", [])
+            ):
+                raise AttestationError(
+                    "workstation evidence cannot satisfy the laboratory policy"
+                )
+            _validate_performance_measurements(
+                repository_root, source_sha, structured, integrity
+            )
+        else:
+            raise AttestationError("unknown performance certification policy")
 
 
 def _validate_security_evidence(
@@ -1071,6 +1102,29 @@ def _validate_waiver_scope(
 
 
 def _producer_invocations(artifacts: Iterable[Mapping[str, Any]]) -> list[str]:
+    artifacts = tuple(artifacts)
+    workstation = any(
+        operation.get("operation_id") == "performance_resource_full_certification"
+        and any(
+            check.get("id") == "method:shared-workstation-v1"
+            for check in operation.get("structured_evidence", {}).get("checks", [])
+        )
+        for artifact in artifacts
+        for operation in artifact["deterministic_evidence"]["operations"]
+    )
+    if workstation:
+        try:
+            _helper_module(
+                "workstation_attestation"
+            ).require_distinct_profile_campaigns(
+                artifacts,
+                _helper_module("workstation_evidence").parse,
+                _helper_module("workstation_evidence").unpack_profile_payload,
+            )
+        except (ValueError, KeyError, TypeError) as error:
+            raise AttestationError(
+                f"workstation Full/Release reuse: {error}"
+            ) from error
     values: set[str] = set()
     for artifact in artifacts:
         operations = artifact["deterministic_evidence"]["operations"]

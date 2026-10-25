@@ -287,6 +287,25 @@ evidence-only closure commit is accepted only when every changed path matches
 the trust policy; any semantic, compiler, profile, tooling, or workflow change
 requires fresh local certification.
 
+## Shared-workstation performance certification
+
+The performance/resource operations explicitly select the versioned
+`shared-workstation-v1` policy in `toolchain.json`. Its authority and acceptance
+rules are in `governance/workstation-performance-policy.json`. Local and PR
+retain deterministic contract and functional resource checks. Each Full and
+independent Release acquires a fresh complete native cohort, independent frozen
+reference/candidate builds and an actual compiler slowdown control. Every fixed
+sample and failure is retained; the independent verifier reconstructs the full
+invocation, source/build roles, raw observations and consumption ledger.
+
+This policy certifies relative regressions under the observed shared workstation
+context, including inherited controls and background interference. It asserts
+neither laboratory isolation nor unlimited ancestor CPU capacity. Memory uses
+its explicit lifetime peak-commit budget and retains raw lifetime peak RSS.
+Historical laboratory results keep their separate meaning. Bounded lossless
+transport changes evidence packaging only; signing, source integrity, security,
+licensing, independent Release and immutable trusted verification remain required.
+
 ## Human-summary ownership
 
 The human-readable summary is rendered from the completed certification

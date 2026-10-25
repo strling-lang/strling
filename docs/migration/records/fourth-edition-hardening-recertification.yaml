@@ -13,6 +13,12 @@ scope:
         - tooling/workstation_builds.py
         - tooling/workstation_campaign.py
         - tooling/workstation_evidence.py
+        - tooling/workstation_certification.py
+        - tooling/workstation_attestation.py
+        - tooling/tests/test_workstation_certification.py
+        - tooling/tests/test_workstation_attestation.py
+        - tooling/tests/test_workstation_builds.py
+        - tooling/tests/test_workstation_capsule.py
         - tooling/tests/test_workstation_evidence.py
         - tooling/tests/test_workstation_cohort.py
         - tooling/tests/test_workstation_performance.py
@@ -2570,6 +2576,27 @@ checkpoints:
           - check: Execute complete fresh native workload qualification
             result: not_run
             details: The source controller now includes every54 governed coordinate, standalone kernel-plus-interop size, three fresh independently compiled lanes, native memory/descendant counterfactuals, five functional resource groups, reference-only batch calibration, prospective slot intents, exact raw byte bundles and independent complete-cohort reconstruction. The actual workers retain all shared-context slots and preserve the laboratory default. Source and integrated validation, fresh full native acquisition, profile/attestation integration and authoritative campaigns follow directly. H08 remains OPEN and the goal ACTIVE.
+
+    - name: Integrate workstation producers and retain the failed complete acquisition
+      status: in_progress
+      evidence:
+          - check: Preserve the consumed native memory slot and reconstruct the complete prefix
+            result: passed
+            details: Source0a8ad116 completes993 distinct native roots before slot0993 fails after its memory child succeeds. The parent rejects immediate private-job retirement accounting; the original error lacks counts, so a bookkeeping race is a hypothesis rather than a proven cause. Preserve the failed slot and incomplete cohort in target/ws-full1 without replacement. The owner retires with unchanged source and releases its lease. Independent target/ws-full1-prefix-independent1 reconstructs all993 roots,45 memory children,1038 unique identities and7215 accounted processes, all three mixed-source builds,15 native tests and five resource groups. Every52 complete latency/memory coordinate decision passes the unchanged revision2 policy. No negative cohort was acquired; this failed run is ineligible for certification and cannot be completed or relabeled as version3.
+          - check: Validate exact-child retirement and the actual production memory workers
+            result: passed
+            details: Retain exact one-member, zero-active, zero-limit-termination requirements. After retained-child exit only, allow up to five seconds for native job bookkeeping; invalid counters and expiry report exact counts and observation time. Eighteen native tests pass, including128 fresh fast children, delayed bookkeeping, invalid counts, query failure, timeout, native commit trim/free, late native/thread memory and descendant prevention. Forty-two runner tests pass. Actual-memory-retirement-3 validates48 distinct actual memory children,16 per governed fixture, with unchanged source, binary and source lease; lifetime peak commit ranges1159168to12496896bytes and raw peak RSS10375168to21385216bytes. Preserve earlier driver stderr-framing and nonexistent-fixture failures; reconstruct two preceding successful workers and execute46 remaining workers without repeating those successes. These are integration checks, not formal profile evidence.
+          - check: Bind profile invocations and independently reconstruct bounded complete evidence
+            result: not_run
+            details: Install explicit shared-workstation policy routing for Local/PR/Full without changing38/80/126/126 membership. Version3 binds a canonical invocation input before every capture, all eight input pins, source archives, three fresh build recipes, native/resource receipts and exact atomic sample consumption. A bounded lossless capsule retains every raw byte with compressed/expanded size and hash checks, strict JSON and complete-stream validation; the failed993-root prefix plus two source archives round-trips from110249973expanded bytes to25649871transport bytes. Thirty-five synthetic overlay tests pass. Reject raw ZIP names changed by platform normalization. A workspace-only self-contained Python runtime preserves isolated imports; its previously failing verifier case passes1of1 after the original user-site dependency failure is retained. The broad integrated driver reaches its1800second test limit, retires unchanged and releases its lease; finish outstanding cases and remaining integration gates before exact-path commit and fresh complete actual-Full-CLI qualification. All54 coordinates, actual slowdown discrimination, independent consumer qualification, canonical candidate preparation, both whole source-distinct campaigns, independent no-reuse Releases, signing, immutable promotion and trusted cloud closure remain required. H08 OPEN and goal ACTIVE; no host setting, inherited control, trust pin or publication change.
+
+          - check: Resolve runtime-specific integration failures without weakening ownership
+            result: passed
+            details: Integrated-adoption-2 retains502 cases with494 passes and eight older native lifecycle failures. Raw retained stderr proves the Windows virtualenv redirector creates a different Python PID, which exact authorized-worker checks correctly reject; the separate Cargo case also lacks its governed PATH. Direct C:/Python313 with process-local governed Cargo passes all nine native lifecycle cases, including every failed case, actual overlap, timeout, child failure, missing outputs/tools, descendant drain and a locked offline Cargo build. Keep the self-contained virtualenv for isolated-import verification only. All five mapped artifact verifications, all16locks, governance, Ruff/format, Prettier and actual Local/PR workstation producer routes pass under the unchanged source hold; the owner retires and releases its lease. Normalize six changed Python files to repository-required LF after retirement. This is engineering integration evidence, not an authoritative whole profile or complete native performance qualification. Continue immediately through final focused checks, exact commit and fresh actual-Full-CLI acquisition; no manual owner action or host setting change is needed.
+
+          - check: Finish source-held integration before fresh complete qualification
+            result: passed
+            details: Final integrated-adoption-final-1 passes all13 stages, including66 focused/source-definition/native lifecycle regressions, five registered artifact verifications, all16locks, governance, Ruff/format, Prettier and actual Local/PR producer routes. Terminal e5994618e3853320eb4a263740d0ac49d686b8976e8f037e31ec6adb0a9d0ed5 preserves identical source frames and releases the lease. Retain both earlier driver dispositions and all original unit/runtime failures. This does not certify the complete worker cohort or a whole profile. Review and commit only exact authorized paths, then immediately execute the actual Full CLI producer with fresh native acquisition, atomic ledger and independent consumer validation.
 
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60

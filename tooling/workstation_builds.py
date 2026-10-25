@@ -9,7 +9,6 @@ from pathlib import Path, PurePosixPath
 import subprocess
 import zipfile
 
-KERNEL_PATHS = ("Cargo.toml", "Cargo.lock", "core", "bindings/interop", "spec")
 HARNESS = Path("tests/certification/performance-resource/1.0/runner")
 
 
@@ -79,8 +78,6 @@ def build_lane(
                 "archive",
                 "--format=zip",
                 kernel_revision,
-                "--",
-                *KERNEL_PATHS,
             ],
             cwd=root,
             stdout=stream,

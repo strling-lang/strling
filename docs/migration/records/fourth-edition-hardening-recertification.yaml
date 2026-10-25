@@ -11,6 +11,10 @@ scope:
         - tests/_design/unit/workstation-performance.md
         - tooling/workstation_performance.py
         - tooling/workstation_builds.py
+        - tooling/workstation_campaign.py
+        - tooling/workstation_evidence.py
+        - tooling/tests/test_workstation_evidence.py
+        - tooling/tests/test_workstation_cohort.py
         - tooling/tests/test_workstation_performance.py
         - tests/_design/unit/memory-worker-lifetime.md
         - tooling/tests/memory_worker_lifetime.rs
@@ -2553,6 +2557,19 @@ checkpoints:
           - check: Continue into independent builds and actual regression discrimination
             result: not_run
             details: Build frozen reference1593801e and candidate kernels independently with identical pinned harness source; bind mixed-source recipes honestly instead of assigning one SHA to all inputs. A separately marked negative-control feature doubles actual measured compiler work and cannot enter ordinary cohorts. Review the empty feature only; all16lock hashes remain unchanged. Reference/candidate and negative-control native campaigns, full coordinate coverage, independent byte reconstruction and profile adoption follow immediately. Functional resources, semantic integrity, security/license, source and no-reuse Release/signing/trusted-verification/closure remain mandatory. H08 OPEN and goal ACTIVE; the former external-blocked disposition no longer controls this owner-authorized method.
+
+    - name: Retain complete workstation slots and qualify whole workloads
+      status: in_progress
+      evidence:
+          - check: Reconstruct the first native paired pilot independently
+            result: passed
+            details: Clean38d8b853 pilot target/ws-q2 completes three independent mixed-source builds and37 distinct nonoverlapping native processes. The ordinary candidate passes9of9 pairs with median195/196; the actual double-work control passes0of9 with median14648/7291. Independent terminal e3c00a77 and data-only reconstruction verify source archives, recipes, artifact identities, exact streams, CPU normalization and process lifetimes. Preserve the earlier incomplete archive failure in target/ws-q1. The pilot is revision1 mechanism evidence, not final qualification or closure.
+          - check: Correct selection bias prospectively before pilot outcomes
+            result: passed
+            details: Pending-source-audit-revision2.json was recorded before paired results became available. Revision2 retains exactly64 latency attempts and one measured memory compilation with no discarded or replacement attempts. Keep the10percent median and seven-of-nine25percent pair rule, adding nearest-rank p95 and whole-process guards with25percent median and50percent pair margins. Guard both CLI marginals and retain paired ratios. Synthetic tests retain a100ms scheduling gap, reject malformed slot/accounting/identity evidence, catch unchanged-median tail stalls and startup-only slowdown, and distinguish two from three transient bad pairs. No threshold is fitted to candidate results; no laboratory isolation or hardware-attestation claim is made.
+          - check: Execute complete fresh native workload qualification
+            result: not_run
+            details: The source controller now includes every54 governed coordinate, standalone kernel-plus-interop size, three fresh independently compiled lanes, native memory/descendant counterfactuals, five functional resource groups, reference-only batch calibration, prospective slot intents, exact raw byte bundles and independent complete-cohort reconstruction. The actual workers retain all shared-context slots and preserve the laboratory default. Source and integrated validation, fresh full native acquisition, profile/attestation integration and authoritative campaigns follow directly. H08 remains OPEN and the goal ACTIVE.
 
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60

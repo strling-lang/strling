@@ -132,7 +132,13 @@ mod worker {
         }
         let maximum_sample_attempts = arguments
             .samples
-            .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
+            .checked_mul(
+                if arguments.certification_context == super::job_quota::WORKSTATION {
+                    1
+                } else {
+                    MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER
+                },
+            )
             .ok_or_else(|| "sample attempt limit overflow".to_owned())?;
         let mut accepted_samples = 0usize;
         let mut sample_attempts = 0usize;
@@ -157,7 +163,9 @@ mod worker {
             )
             .map_err(|_| "CPU sample overflow".to_owned())?;
             observe_processor(arguments.expected_logical_cpu, &mut observed_processors)?;
-            if elapsed.saturating_sub(cpu_elapsed) <= MAXIMUM_DESCHEDULING_NANOSECONDS {
+            if arguments.certification_context == super::job_quota::WORKSTATION
+                || elapsed.saturating_sub(cpu_elapsed) <= MAXIMUM_DESCHEDULING_NANOSECONDS
+            {
                 accepted_samples += 1;
             }
         }
@@ -180,6 +188,7 @@ mod worker {
         });
         if arguments.certification_context == super::job_quota::WORKSTATION {
             report["certification_context"] = json!(arguments.certification_context);
+            report["sample_retention"] = json!("all-fixed-slots-v1");
             report["cpu_quota_observation"] = json!(quota);
             report["peak_commit_bytes"] = json!(peak_commit_bytes);
         }

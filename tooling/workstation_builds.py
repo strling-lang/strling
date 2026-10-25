@@ -64,6 +64,15 @@ def build_lane(
     archive = directory / "kernel-source.zip"
     environment = dict(os.environ, RUSTC=str(rustc), CARGO_NET_OFFLINE="true")
     environment["CARGO_INCREMENTAL"] = "0"
+    environment.pop("RUSTFLAGS", None)
+    build_flags = [
+        f"--remap-path-prefix={directory}=C:/strling-workstation-build",
+        "-C",
+        "link-arg=/Brepro",
+        "-C",
+        "link-arg=/PDBALTPATH:%_PDB%",
+    ]
+    environment["CARGO_ENCODED_RUSTFLAGS"] = "\x1f".join(build_flags)
     for name in (
         "RUSTC_WRAPPER",
         "RUSTC_WORKSPACE_WRAPPER",
@@ -146,6 +155,7 @@ def build_lane(
         cargo_lock_sha256=digest(harness / "Cargo.lock"),
         cargo_sha256=digest(Path(cargo)),
         rustc_sha256=digest(Path(rustc)),
+        rust_flags=build_flags,
         mixed_source_build=True,
         negative_control=slowdown,
     )
@@ -188,11 +198,30 @@ def build_lane(
         name="kernel-build",
         environment=environment,
     )
+    _run(
+        [
+            str(cargo),
+            "build",
+            "--release",
+            "--locked",
+            "--offline",
+            "--manifest-path",
+            str(source / "bindings/interop/Cargo.toml"),
+            "--target-dir",
+            str(source / "bindings/interop/target"),
+            "--lib",
+        ],
+        root=root,
+        directory=directory,
+        name="interop-build",
+        environment=environment,
+    )
     executables = {
         "runner": harness / "target/release/strling-performance-runner.exe",
         "memory_worker": harness
         / "target/release/strling-performance-memory-worker.exe",
         "kernel": source / "core/internal/target/release/strling-kernel.exe",
+        "interop": source / "bindings/interop/target/release/strling_interop.dll",
     }
     for relative, expected in recipe["kernel_source_files"].items():
         if digest(source / relative) != expected:
@@ -207,6 +236,8 @@ def build_lane(
         raise ValueError("build manifest or lock changed")
     result = dict(
         status="passed",
+        kernel_revision=kernel_revision,
+        build_root=str(directory),
         recipe_sha256=digest(directory / "recipe.json"),
         negative_control=slowdown,
         artifacts={

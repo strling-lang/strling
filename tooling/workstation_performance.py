@@ -30,12 +30,20 @@ def load_policy(path=POLICY_PATH):
     require(value["policy_id"] == CONTEXT and value["status"] == "accepted", "policy")
     for key, expected in {
         "latency_warmups": 512,
+        "policy_revision": 2,
         "cli_warmups": 8,
         "latency_samples": 64,
         "paired_repetitions": 9,
         "median_regression_basis_points": 1000,
         "pair_regression_basis_points": 2500,
         "minimum_passing_pairs": 7,
+        "tail_percentile": 95,
+        "tail_regression_basis_points": 2500,
+        "tail_pair_regression_basis_points": 5000,
+        "whole_process_regression_basis_points": 2500,
+        "whole_process_pair_regression_basis_points": 5000,
+        "calibration_minimum_nanoseconds": 1000000,
+        "maximum_batch_iterations": 4096,
         "memory_absolute_ceiling_bytes": 67108864,
         "memory_relative_allowance_basis_points": 1000,
         "memory_fixed_allowance_bytes": 1048576,
@@ -49,6 +57,7 @@ def load_policy(path=POLICY_PATH):
         "fixed pair order",
     )
     require(value["memory_metric"] == "process-lifetime-peak-commit-bytes", "metric")
+    require(value["sample_retention"] == "all-fixed-slots-v1", "fixed raw slots")
     return value
 
 
@@ -59,11 +68,17 @@ def median_twice(values, count=64):
     return ordered[middle - 1] + ordered[middle]
 
 
-def _decision(ratios, policy):
+def _decision(
+    ratios,
+    policy,
+    *,
+    center_key="median_regression_basis_points",
+    pair_key="pair_regression_basis_points",
+):
     require(len(ratios) == policy["paired_repetitions"], "all prospective pairs")
     center = sorted(ratios)[len(ratios) // 2]
-    limit = Fraction(10000 + policy["median_regression_basis_points"], 10000)
-    pair_limit = Fraction(10000 + policy["pair_regression_basis_points"], 10000)
+    limit = Fraction(10000 + policy[center_key], 10000)
+    pair_limit = Fraction(10000 + policy[pair_key], 10000)
     passed = sum(r <= pair_limit for r in ratios)
     return {
         "passed": center <= limit and passed >= policy["minimum_passing_pairs"],
@@ -92,6 +107,69 @@ def latency_decision(pairs, policy=None):
     # Preserve both absolute distributions; a ratio is not a wall-time guarantee.
     result["reference_medians_twice_ns"] = reference_medians
     result["candidate_medians_twice_ns"] = candidate_medians
+    return result
+
+
+def guarded_latency_decision(pairs, policy=None, *, cli=False):
+    """All fixed-slot distributions and whole root lifetimes are mandatory.
+
+    The CLI request and control marginals are each guarded. Paired ratios are
+    retained as context only; a common slowdown cannot cancel out of the guards.
+    """
+    policy = load_policy() if policy is None else policy
+    require(
+        type(pairs) is list and len(pairs) == policy["paired_repetitions"], "nine pairs"
+    )
+    channels = ["samples", "control_samples"] if cli else ["samples"]
+    result = {"passed": True, "channels": {}}
+    whole = []
+    cli_ratios = []
+    for pair in pairs:
+        require(type(pair) is dict and set(pair) == {"reference", "candidate"}, "pair")
+        whole.append(
+            Fraction(
+                integer(pair["candidate"]["whole_action_ns"]),
+                integer(pair["reference"]["whole_action_ns"]),
+            )
+        )
+        if cli:
+            row = {}
+            for lane in ("reference", "candidate"):
+                request = pair[lane]["samples"]
+                control = pair[lane]["control_samples"]
+                median_twice(request, policy["latency_samples"])
+                median_twice(control, policy["latency_samples"])
+                row[lane] = [[integer(r), integer(c)] for r, c in zip(request, control)]
+            cli_ratios.append(row)
+    for channel in channels:
+        values = [
+            {lane: pair[lane][channel] for lane in ("reference", "candidate")}
+            for pair in pairs
+        ]
+        median = latency_decision(values, policy)
+        # Nearest-rank percentile: ceil(p*n/100)-1. Every raw slot contributes.
+        rank = (policy["tail_percentile"] * policy["latency_samples"] + 99) // 100 - 1
+        tails = [
+            Fraction(sorted(v["candidate"])[rank], sorted(v["reference"])[rank])
+            for v in values
+        ]
+        tail = _decision(
+            tails,
+            policy,
+            center_key="tail_regression_basis_points",
+            pair_key="tail_pair_regression_basis_points",
+        )
+        result["channels"][channel] = {"median": median, "tail": tail}
+        result["passed"] &= median["passed"] and tail["passed"]
+    result["whole_process"] = _decision(
+        whole,
+        policy,
+        center_key="whole_process_regression_basis_points",
+        pair_key="whole_process_pair_regression_basis_points",
+    )
+    result["passed"] &= result["whole_process"]["passed"]
+    if cli:
+        result["request_control_ratios"] = cli_ratios
     return result
 
 

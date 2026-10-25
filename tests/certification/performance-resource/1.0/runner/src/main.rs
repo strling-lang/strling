@@ -281,7 +281,13 @@ fn run() -> RunResult<()> {
     let mut cli_control_cycle_evidence = Vec::new();
     let maximum_sample_attempts = arguments
         .samples
-        .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
+        .checked_mul(
+            if arguments.certification_context == "shared-workstation-v1" {
+                1
+            } else {
+                MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER
+            },
+        )
         .ok_or_else(|| "sample attempt limit overflow".to_owned())?;
     let mut sample_attempts = 0usize;
     let mut checksum = 0usize;
@@ -414,7 +420,9 @@ fn run() -> RunResult<()> {
             }
             sample_attempts += 1;
             let sample = measure(&operation)?;
-            if !sample_is_authentic(sample.1, sample.3) {
+            if arguments.certification_context != "shared-workstation-v1"
+                && !sample_is_authentic(sample.1, sample.3)
+            {
                 rejected_batch_elapsed_samples.push(sample.1);
                 rejected_process_cpu_batch_elapsed_samples.push(sample.3);
                 rejected_process_cpu_utilization_basis_points.push(sample.4);
@@ -484,6 +492,7 @@ fn run() -> RunResult<()> {
     });
     if arguments.certification_context == "shared-workstation-v1" {
         result["certification_context"] = json!(arguments.certification_context);
+        result["sample_retention"] = json!("all-fixed-slots-v1");
         result["measurement_role"] = json!(if cfg!(feature = "workstation-slowdown-challenge") {
             "slowdown-control"
         } else {
@@ -657,7 +666,13 @@ fn run_inherited_memory_parent(
         .ok_or_else(|| "memory worker sample attempts are absent".to_owned())?;
     let maximum_sample_attempts = arguments
         .samples
-        .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
+        .checked_mul(
+            if arguments.certification_context == "shared-workstation-v1" {
+                1
+            } else {
+                MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER
+            },
+        )
         .ok_or_else(|| "sample attempt limit overflow".to_owned())?;
     let worker_contract = if arguments.certification_context == "shared-workstation-v1" {
         "shared-workstation-memory-v1"
@@ -725,6 +740,7 @@ fn run_inherited_memory_parent(
             .and_then(Value::as_u64)
             .ok_or_else(|| "worker peak commit is absent".to_owned())?;
         if worker.get("certification_context") != Some(&json!(arguments.certification_context))
+            || worker.get("sample_retention") != Some(&json!("all-fixed-slots-v1"))
             || reported_commit == 0
             || reported_commit > terminal_memory.peak_commit_bytes
             || !terminal_memory.single_process_job
@@ -732,6 +748,7 @@ fn run_inherited_memory_parent(
             return Err("workstation memory lifetime is inconsistent".to_owned());
         }
         result["certification_context"] = json!(arguments.certification_context);
+        result["sample_retention"] = json!("all-fixed-slots-v1");
         result["workstation_memory"] = json!({
             "contract": "process-lifetime-peak-commit-v1",
             "peak_commit_bytes": terminal_memory.peak_commit_bytes,

@@ -24,7 +24,9 @@ resident-allocation audit remains a separate, ineligible experiment.
 Build frozen reference and candidate kernels independently with identical pinned
 harness code. Record the mixed-source recipe honestly. Acquire nine adjacent
 pairs in the policy's fixed alternating order, never choose the best attempt or
-refit bounds. Preserve every raw byte, failure and rejected sample. Missing,
+refit bounds. Revision 2 retains exactly 64 latency slots and one measured
+memory compilation, with no replacements or discarded attempts. Scheduling
+interference and product stalls remain measured. Preserve every raw byte and failure. Missing,
 reused, reordered or forged observations fail independent reconstruction.
 
 The median of nine pair ratios must not exceed the fixed 10% regression margin;
@@ -34,6 +36,16 @@ pairs, sustained 20% regressions and order drift. An injected slowdown in an
 actual compiler measurement must fail while an independently built equivalent
 candidate passes. Memory uses every observed peak commit, its fixed absolute
 ceiling and its separate relative-plus-fixed allowance; RSS remains visible.
+
+Nearest-rank p95 and whole-process pair ratios have a 25% median margin and a
+50% per-pair margin, requiring seven of nine passing pairs. Intermittent stalls
+with an unchanged median must fail the tail guard; startup/warmup-only delay
+must fail the whole-process guard. Two transient bad pairs remain allowed;
+three fail. Guard both CLI request and control marginals, retaining paired
+ratios so common-mode slowdown cannot cancel from all guards. Independently
+reconstruct CPU normalization, all fixed slots and child lifetime identity;
+refreshing inner hashes must not make malformed evidence pass. The executor
+and native APIs are trusted observations, with no hardware-attestation claim.
 
 CLI retains 64 paired request/control samples but uses eight launch warmups in
 this policy, avoiding hundreds of unrelated process launches per repetition.

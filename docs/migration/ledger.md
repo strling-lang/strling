@@ -9745,3 +9745,22 @@ coordinates, independent reconstruction and profile adoption remain next. Add
 five exact scope paths; review the empty challenge feature without changing any
 lock graph. All security, semantics, functional resources, source/no-reuse Release,
 signing, trusted verification and formal closure remain. H08 OPEN; goal ACTIVE.
+
+### Complete workstation observation — 2026-10-25
+
+Checkpoint106 preserves the successful revision1 native pilot as partial
+mechanism evidence: independent reconstruction validates37 distinct processes,
+three mixed-source builds,9of9 ordinary pairs and0of9 double-work pairs. A
+source-audit correction recorded before those outcomes now governs revision2:
+exactly64 latency slots or one measured memory compilation, no replacements,
+and additional tail and whole-process guards. Both CLI marginals remain guarded.
+The data-only reader rejects incomplete/reordered/reused observations and
+reconstructs batch and CPU arithmetic, actual child streams and lifetime peaks.
+
+The complete acquisition controller includes all54 coordinates, native memory
+and descendant counterfactuals, five functional resource groups, independently
+built kernel plus interop bytes, frozen reference-only calibration and raw
+whole-process observation. Continue immediately through integrated validation
+and fresh native qualification, then profile/attestation adoption and all
+authoritative no-reuse campaigns. The historical laboratory method is preserved.
+No host change or owner procedure is required. H08 OPEN; goal ACTIVE.

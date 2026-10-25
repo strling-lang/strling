@@ -56,6 +56,65 @@ class WorkstationPolicyTests(unittest.TestCase):
         pairs[0] = {"reference": 10_000_000, "candidate": 12_048_577}
         self.assertFalse(score.memory_decision(pairs)["passed"])
 
+    def guarded_pairs(self):
+        return [
+            {
+                lane: dict(
+                    samples=[1000] * 64,
+                    control_samples=[800] * 64,
+                    whole_action_ns=1000000,
+                )
+                for lane in ("reference", "candidate")
+            }
+            for _ in range(9)
+        ]
+
+    def test_tail_catches_intermittent_stalls_with_unchanged_median(self):
+        pairs = self.guarded_pairs()
+        for pair in pairs:
+            pair["candidate"]["samples"][-4:] = [2000] * 4
+        result = score.guarded_latency_decision(pairs)
+        self.assertTrue(result["channels"]["samples"]["median"]["passed"])
+        self.assertFalse(result["channels"]["samples"]["tail"]["passed"])
+        self.assertFalse(result["passed"])
+
+    def test_whole_lifetime_catches_startup_or_warmup_only_delay(self):
+        pairs = self.guarded_pairs()
+        for pair in pairs:
+            pair["candidate"]["whole_action_ns"] *= 2
+        result = score.guarded_latency_decision(pairs)
+        self.assertTrue(result["channels"]["samples"]["median"]["passed"])
+        self.assertFalse(result["whole_process"]["passed"])
+        self.assertFalse(result["passed"])
+
+    def test_whole_and_tail_allow_two_transients_but_not_three(self):
+        pairs = self.guarded_pairs()
+        for pair in pairs[-2:]:
+            pair["candidate"]["whole_action_ns"] *= 100
+            pair["candidate"]["samples"] = [100000] * 64
+        self.assertTrue(score.guarded_latency_decision(pairs)["passed"])
+        pairs[-3]["candidate"]["whole_action_ns"] *= 100
+        self.assertFalse(score.guarded_latency_decision(pairs)["passed"])
+
+    def test_cli_common_mode_delay_cannot_cancel_from_both_marginals(self):
+        pairs = self.guarded_pairs()
+        self.assertTrue(score.guarded_latency_decision(pairs, cli=True)["passed"])
+        for pair in pairs:
+            for channel in ("samples", "control_samples"):
+                pair["candidate"][channel] = [x * 2 for x in pair["candidate"][channel]]
+        result = score.guarded_latency_decision(pairs, cli=True)
+        self.assertFalse(result["passed"])
+        self.assertEqual(
+            result["request_control_ratios"][0]["candidate"][0], [2000, 1600]
+        )
+
+    def test_complete_whole_interval_is_required_and_policy_revision_is_bound(self):
+        pairs = self.guarded_pairs()
+        pairs[0]["candidate"]["whole_action_ns"] = True
+        with self.assertRaises(ValueError):
+            score.guarded_latency_decision(pairs)
+        self.assertEqual(score.load_policy()["policy_revision"], 2)
+
 
 if __name__ == "__main__":
     unittest.main()

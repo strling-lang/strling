@@ -92,6 +92,66 @@ mod native {
     }
 
     #[test]
+    #[ignore = "owned child entry point for descendant prevention qualification"]
+    fn child_attempting_a_grandchild() {
+        match Command::new(std::env::current_exe().unwrap())
+            .arg("--list")
+            .output()
+        {
+            Ok(output) => {
+                assert!(output.status.success());
+                println!("DESCENDANT_ALLOWED");
+            }
+            Err(error) => println!("DESCENDANT_DENIED:{}", error.raw_os_error().unwrap_or(-1)),
+        }
+    }
+
+    #[test]
+    fn workstation_prevents_descendants_with_an_unrestricted_counterfactual() {
+        for restricted in [false, true] {
+            let (child, observation) = controlled_spawn::spawn_observed(
+                Command::new(std::env::current_exe().unwrap())
+                    .args([
+                        "--ignored",
+                        "--exact",
+                        "native::child_attempting_a_grandchild",
+                        "--nocapture",
+                    ])
+                    .stdout(Stdio::piped())
+                    .stderr(Stdio::piped()),
+                |child| {
+                    if restricted {
+                        memory_lifetime::Observation::begin_workstation(child)
+                    } else {
+                        memory_lifetime::Observation::begin(child)
+                    }
+                },
+            )
+            .unwrap();
+            let output = child.wait_with_output().unwrap();
+            assert!(output.status.success(), "{output:?}");
+            let lines = String::from_utf8(output.stdout).unwrap();
+            let terminal = observation.finish().unwrap();
+            assert_eq!(terminal.single_process_job, restricted);
+            if restricted {
+                assert!(
+                    lines.lines().any(|line| matches!(
+                        line,
+                        "DESCENDANT_DENIED:5" | "DESCENDANT_DENIED:1816"
+                    )),
+                    "{lines}"
+                );
+            } else {
+                assert!(
+                    lines.lines().any(|line| line == "DESCENDANT_ALLOWED"),
+                    "{lines}"
+                );
+            }
+            println!("restricted={restricted} terminal={terminal:?}");
+        }
+    }
+
+    #[test]
     #[ignore = "owned child entry point; run only from the parent integration test"]
     fn child_with_late_native_thread_and_rust_allocations() {
         let _teardown = LateNativeMemory;

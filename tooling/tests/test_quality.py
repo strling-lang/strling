@@ -1025,6 +1025,8 @@ class QualityRoutingTests(unittest.TestCase):
                 "tooling.performance_resource_certification",
                 "--profile",
                 "full",
+                "--certification-policy",
+                "shared-workstation-v1",
                 "--json",
             ],
             toolchain.operation("performance_resource_full_certification")["command"],

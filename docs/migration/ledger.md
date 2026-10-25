@@ -9855,3 +9855,28 @@ certification, all source-bound prerequisites and whole38/80/126/independent
 no-reuse Release126 campaigns, required verifier qualification/promotion, signing,
 trusted cloud verification and guarded closure. This is method qualification;
 H08 remains OPEN and the goal ACTIVE.
+
+### Packaging authentication security correction — 2026-10-25
+
+Checkpoint110 preserves successful7ac740eb canonical36/LSP preparation and the
+subsequent real security failure. Eight prerequisite stages pass and all60
+completed guards retain2395 source/generated/Git entries,17 physical Git nodes,
+29 controls and607 historical measurement receipts. Independent reconstruction
+accepts the failure evidence; original c76edc84 remains failed. No full unit
+suite, Native complement or formal profile is claimed.
+
+Fix the retrieved high-severity MSAL Node advisory through an exact packaging
+development override to7.1.0. Native lock resolution changes two package nodes;
+its isolated npm audit reports zero vulnerabilities. Public SDK construction
+and VSCE4.0.0 startup pass with no credential or authentication request. Preserve
+the private-subpath probe mistake. Review only the LSP manifest/lock identities
+in the16-lock catalog, retaining all15 peer locks and the exact existing VSCE
+license waiver. No compiler, memory-worker, observer, performance-policy or
+trust code changes. Package-lock verification and LSP payload are the affected
+registered families.
+
+Continue immediately through exact source integration/commit, canonical36 and
+all source-bound prerequisites, then fresh whole38/80/126 and independent
+no-reuse Release126 campaigns, source-distinct verifier qualification/promotion,
+signing, trusted cloud verification and guarded closure. No old failure or
+cohort is reused. H08 remains OPEN and the goal ACTIVE.

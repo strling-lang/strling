@@ -103,7 +103,8 @@
         "vscode-languageclient": "^9.0.1"
     },
     "overrides": {
-        "@vscode/vsce-sign": "2.0.9"
+        "@vscode/vsce-sign": "2.0.9",
+        "@azure/msal-node": "7.1.0"
     },
     "extensionKind": [
         "workspace"

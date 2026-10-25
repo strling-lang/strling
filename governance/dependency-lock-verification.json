@@ -24,7 +24,7 @@
         "core/internal/Cargo.toml": "1cadcdc48d0edf00ca0c9bc7824ef7934376d92f240769f641e6aee7855662d9",
         "package.json": "af774b2565965aa8c436ac669839b83fec1656a3a4dbbc5dfa837a0ab6b228db",
         "tests/certification/performance-resource/1.0/runner/Cargo.toml": "f89604f6d60d13909e4c4e57bdf12d9203eaa1c3bbbbefa158837dfba0bb5dd9",
-        "tooling/lsp-server/package.json": "bbca65f1186e8c50fbc99bd824a2821adb9843459ea9db57d2f276f5c4106a9d"
+        "tooling/lsp-server/package.json": "26cd9122279410ac239262c87287c67561b751b28b368b7028588919eb24ee15"
     },
     "lock_hashes": {
         "bindings/dart/pubspec.lock": "59c530f1a37d19eb43045be8999e5460571d293369e1dade31c19af6bb324241",
@@ -42,6 +42,6 @@
         "core/internal/Cargo.lock": "c2165bb39e6660cdb2f4c56e7fb13f51d459dd05b0910036a8c061b083738d00",
         "package-lock.json": "5bdbbbd486013fc100a2a787b31be25225a79f5e05d542eb893b51202d89a028",
         "tests/certification/performance-resource/1.0/runner/Cargo.lock": "45772d4c580f3a0cf8a8b5d255c534ec9548711b80a26fdf7287ead101ff3661",
-        "tooling/lsp-server/package-lock.json": "37d04485ee991730630e1d303e56b7299c93e0d985e5630affa4b802a89fd3e8"
+        "tooling/lsp-server/package-lock.json": "7bb97966da72ae83196027fb3bb875f538b4b73842b2fd54e14a97fa23cd8de6"
     }
 }

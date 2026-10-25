@@ -5616,3 +5616,48 @@ all whole profiles, independent no-reuse Releases, source-distinct verifier
 qualification/promotion, signing, trusted cloud verification and guarded closure.
 Qualification evidence cannot substitute for a whole profile. H08 OPEN;
 goal ACTIVE.
+
+### Packaging authentication security correction — 2026-10-25
+
+Checkpoint110 preserves the clean7ac740eb canonical36 preparation and clean LSP
+certification, independently accepted with all2355 source files and22 payload
+files. Its subsequent source-bound prerequisite run fails honestly on
+security.vulnerability.lsp-npm after eight accepted stages. All60 completed
+guard phases pass; the source lease releases without faults. The independent
+failure reconstruction preserves all2395 source/generated/Git entries,17 Git
+nodes,29 controls and607 historical measurement receipts. Original terminal
+c76edc849e3c4b8c6830b96a1ee10ab417f7a05958b599f95f011a9444c01472
+remains failed. The full1881-test census has no import errors and identifies25
+Native complements; that full suite and the Native complements have not run.
+The follow-through correctly launches no dependent workload after failure.
+
+The retrieved npm advisory identifies high-severity GHSA-xcx6-jx8p-x3h5 in
+packaging-only transitive @azure/msal-node5.6.0. The maintainer identifies7.1.0
+as patched. Add an exact development-tree override for7.1.0; retain VSCE4.0.0,
+Azure Identity4.13.2 and the existing signing override. Native npm resolution
+changes only the MSAL Node package and adds its required MSAL Common16.14.2
+nested dependency. The isolated npm audit reports zero vulnerabilities. Public
+SDK construction and the real VSCE version entrypoint pass without credentials
+or authentication requests. Preserve the first compatibility-probe failure,
+which incorrectly imported an unexported private subpath.
+
+Update only the reviewed LSP manifest/lock identities in the16-lock catalog.
+All15 peer locks, security thresholds and the sole ten-binding VSCE development
+license waiver remain unchanged. This explicit security repair adds no waiver
+and does not change compiler, memory, observer or shared-workstation policy code.
+The prior complete worker-method qualification remains evidence for that code;
+it is never reused as a whole profile or a fresh acquisition. Package-manager
+lock verification and the LSP payload are the two affected registered families.
+
+Apply the exact six paths after actual owner retirement; run native dependency
+integrity/risk, focused lock/security tests, style/governance checks and the
+registered package tests. Commit the corrected source and immediately repeat
+complete canonical preparation and source-bound prerequisites on that source,
+then all whole38/80/126 and independent same-SHA no-reuse Release126 campaigns,
+required source-distinct verifier qualification/promotion, signing, trusted
+cloud verification and guarded closure. No failed source or cohort is rescored,
+no host setting is changed and no manual owner action is needed. H08 OPEN;
+goal ACTIVE.
+
+Advisory: <https://github.com/advisories/GHSA-xcx6-jx8p-x3h5>.
+Patched release: <https://github.com/AzureAD/microsoft-authentication-library-for-js/releases/tag/msal-node-v7.1.0>.

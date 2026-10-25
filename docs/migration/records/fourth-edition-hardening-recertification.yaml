@@ -2639,6 +2639,22 @@ checkpoints:
             result: not_run
             details: Continue immediately through exact-path metadata validation/commit and fresh complete36 canonical artifact preparation, clean LSP certification, exact runtime and all source-bound prerequisites with genuine retained-owner continuity. Then execute whole Local38, PR80, Full126 and independent same-SHA no-reuse Release126; Full/Release require125PASS and the sole existing VSCE license waiver. Complete required source-distinct verifier qualification before pin-only promotion, a second fresh campaign after that source change, signing, immutable trusted cloud verification and guarded clean formal closure. The worker-method qualification is complete; H08 remains OPEN and the goal ACTIVE.
 
+    - name: Repair packaging authentication vulnerability and restart corrected-source qualification
+      status: in_progress
+      evidence:
+          - check: Preserve independently reconstructed failed prerequisite source
+            result: passed
+            details: "Checkpoint110 preserves clean7ac740eb canonical36/LSP preparation and the real subsequent prerequisite failure. Eight stages are accepted, all60 completed guard phases pass, and actual source/Native supervisor exit is1. Independent reconstruction binds2395 source/generated/Git entries,17 physical Git nodes,29 controls and607 historical receipts; source is clean and its lease is released without faults. Original terminalc76edc849e3c4b8c6830b96a1ee10ab417f7a05958b599f95f011a9444c01472 remains failed. Full1881 discovery has0 import errors and25 Native cases, but the full suite and Native complements are not executed. The retained follow-through correctly executes no dependent workload."
+          - check: Resolve the unwaived MSAL Node vulnerability with trusted patched metadata
+            result: passed
+            details: "The completed npm-registry scan identifies high-severity GHSA-xcx6-jx8p-x3h5 in transitive packaging-only @azure/msal-node5.6.0. The reviewed upstream advisory/release identifies7.1.0 as patched. An exact development-tree override resolves7.1.0 and adds nested MSAL Common16.14.2; all other package nodes remain unchanged. Isolated npm audit returns0 and all vulnerability counts are0. Azure Identity4.13.2 public SDK construction and actual VSCE4.0.0 version startup pass with no real credentials or authentication/network requests. Preserve the first probe failure on an incorrectly requested private export path."
+          - check: Apply reviewed dependency identities and integrate the corrected source
+            result: not_run
+            details: "The exact six-path prepared correction contains the LSP package manifest/lock, their independently reviewed identities in governance/dependency-lock-verification.json and these three migration records. Preserve all15 peer locks, all109 previous checkpoints/readiness and the sole existing ten-binding VSCE development-license waiver; no new waiver or policy relaxation. Package-manager-lockfiles and lsp-extension-payload are the two affected registered families. Apply only after original owner retirement and genuine source handoff, then run native dependency integrity/risk, focused lock/security units, governance/hygiene/style and registered package tests, commit and immediately execute fresh canonical preparation. No compiler, memory, observer, performance or trust code changes."
+          - check: Complete corrected-source authoritative certification and closure
+            result: not_run
+            details: "The accepted revision3 real-worker method qualification remains evidence for unchanged worker code only; it is never a whole profile or fresh sample reuse. Complete canonical36, clean LSP certification and all source-bound prerequisites on corrected source, then actual whole Local38/PR80/Full126 and fresh same-SHA independent no-reuse Release126, with125PASS and the sole existing VSCE waiver in Full/Release. Qualify a reviewed source-distinct immutable verifier before pin-only promotion and repeat fresh campaigns after that source change, then signing, trusted cloud verification and guarded clean formal closure. H08 OPEN; goal ACTIVE. No host setting, inherited control, broker, manual procedure, trust pin, signing or publication changes."
+
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"

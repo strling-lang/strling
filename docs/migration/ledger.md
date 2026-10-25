@@ -9832,3 +9832,26 @@ checks. Preserve its PR Cargo-path failure; a source-identical resolution using
 process-local pinned Rust/Cargo completes the actual PR route in54.5932068s and
 releases the lease unchanged. No timed performance sample was acquired. Proceed
 directly through exact commit to the fresh revision3 native acquisition.
+
+### Complete real-worker qualification — 2026-10-25
+
+Checkpoint109 completes the accepted shared-workstation revision3 worker-method
+qualification at clean2fa30fb0. All54 coordinate decisions pass across1021 fresh
+roots and54 memory children. Three fresh build lanes produce12 artifacts;
+18 native memory tests and five resource groups pass. The actual double-work
+control fails with median ratio2957/1463. Both independent consumer entrypoints
+accept1075 unique process identities,64248 authenticated values and1022 ledger
+coordinates. Source frames match, the actual Full CLI exits0 and its lease retires.
+Lifetime peak private commit1073152to12083200bytes passes every bound; raw RSS
+7200768to17780736bytes remains separate. Preserve all old failed cohorts.
+
+Supported cmd.exe execution and a hash-validated workspace direct Python runtime
+resolve provider/dependency failures without host changes or identity relaxation;
+nine actual native lifecycle tests pass first. No manual diagnostic is transferred
+to another process. Atomic result26f9fd11022b5fb05af92e383320206064b565fd0c8dd77b5809f87ce410ad4d
+retains complete lossless evidence. No generated family matches these three
+record paths. Continue immediately into fresh canonical36 preparation, clean LSP
+certification, all source-bound prerequisites and whole38/80/126/independent
+no-reuse Release126 campaigns, required verifier qualification/promotion, signing,
+trusted cloud verification and guarded closure. This is method qualification;
+H08 remains OPEN and the goal ACTIVE.

@@ -5581,3 +5581,38 @@ checks. Preserve its PR Cargo-path failure; a source-identical resolution using
 process-local pinned Rust/Cargo completes the actual PR route in54.5932068s and
 releases the lease unchanged. No timed performance sample was acquired. Proceed
 directly through exact commit to the fresh revision3 native acquisition.
+
+### Complete real-worker qualification — 2026-10-25
+
+Checkpoint109 qualifies the accepted shared-workstation revision3 method on
+clean2fa30fb0. The actual Full CLI acquires all1021 planned process observations,
+including54 memory children, after three fresh independent build lanes and12
+artifacts. All54 coordinate decisions,18 native memory tests and five resource
+groups pass. The actual double-work compiler control is rejected with median
+ratio2957/1463. Independent reconstruction binds1075 unique process identities,
+64248 authenticated values and1022 ledger coordinates. Both consumer entrypoints
+pass, the actual CLI exits0, source frames match and the owned lease is released.
+
+Every observed private-commit peak passes; the range is1073152to12083200bytes.
+Raw lifetime RSS is separately retained at7200768to17780736bytes. The real worker
+uses the qualified startup-to-natural-exit observer, private descendant control
+and terminal counters; the native challenges include late/thread allocation and
+trim/free churn. The empirical shared-workstation claim retains unknown ancestry
+and its documented limits. Earlier failed cohorts remain failed and ineligible.
+
+The supported cmd.exe override resolves the command provider's missing
+pwsh.dll. A workspace-only direct isolated Python runtime preserves pinned
+dependencies and exact process identity; all nine actual native lifecycle tests
+pass before acquisition. Preserve the initial missing-dependency launch, which
+consumes no worker slot. No host setting, inherited control, broker, manual
+procedure, trust pin or publication changes.
+
+Campaign terminal8b5e7f97486a7cf4e8a7b847ff49a445b0a604119e7db1c145b1b599c2ef7cb6,
+owner terminal7a4138d9bebd8899ec42857609014287617040e098d35f9a6247288d228cb8ee
+and atomic result26f9fd11022b5fb05af92e383320206064b565fd0c8dd77b5809f87ce410ad4d
+retain the complete source-bound proof. Continue directly into fresh canonical36
+preparation, clean LSP certification and source-bound prerequisites, followed by
+all whole profiles, independent no-reuse Releases, source-distinct verifier
+qualification/promotion, signing, trusted cloud verification and guarded closure.
+Qualification evidence cannot substitute for a whole profile. H08 OPEN;
+goal ACTIVE.

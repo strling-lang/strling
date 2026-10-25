@@ -7,6 +7,11 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        - governance/workstation-performance-policy.json
+        - tests/_design/unit/workstation-performance.md
+        - tooling/workstation_performance.py
+        - tooling/workstation_builds.py
+        - tooling/tests/test_workstation_performance.py
         - tests/_design/unit/memory-worker-lifetime.md
         - tooling/tests/memory_worker_lifetime.rs
         - tests/certification/performance-resource/1.0/runner/src/memory_lifetime.rs
@@ -2532,6 +2537,22 @@ checkpoints:
           - check: Continue source integration without promoting software tests to qualification
             result: not_run
             details: Preserve all103prior checkpoints/readiness and add no scope path. Exact source integration and subsequent source-bound generated metadata remain next. The actual-worker inherited-ancestor provenance failure remains; neither earlier manual output nor another process supplies eligibility. Native/loader/bootstrap/image/stack/descendant coverage, observer effects, every conditioning guarantee and fresh independent reference/holdout/adverse discrimination remain unqualified. No unchanged-provider retry, host change, broker, manual procedure, authenticated sample, candidate freeze or authoritative campaign. All original limits, sample counts, security, provenance, no-reuse, independent Release, source-distinct verifier qualification/promotion if required, signing, immutable trusted verification and guarded clean closure remain. H08 OPEN; polling PAUSED; no total-certification speedup claim.
+
+    - name: Adopt owner-authorized shared-workstation certification conditions
+      status: in_progress
+      evidence:
+          - check: Apply the owner's explicit laboratory-requirement and architecture revision
+            result: passed
+            details: On2026-10-25 the owner explicitly authorizes changing architecture and laboratory conditions to obtain the best honest performance certification on this non-isolated laptop without further owner action. The accepted shared-workstation-v1 policy records the revised claim and prospective criteria. Complete ancestor-quota proof, host idleness and universal residency protection are superseded as admission prerequisites for this named method; their absence is reported rather than asserted away. Preserve every prior checkpoint, failure, laboratory baseline and its original meaning. No inherited control is escaped or changed, no host setting or broker is introduced, and no manual procedure is requested.
+          - check: Integrate the named context into the actual compiler and memory workers
+            result: passed
+            details: Actual shared-context memory and latency invocations complete semantic work while reporting observed immediate-job flags0/rate0/ancestors unknown. Legacy invocation retains its original quota rejection and contract. The memory parent assigns the exact suspended child to a private non-breakaway one-process job and retains kernel peak commit plus raw peak RSS through natural exit. Observer memory remains in the parent; all worker threads and native/Rust/startup/teardown allocation contribute to lifetime counters. Native14tests pass with four explicitly invoked child entry points; the96MiB commit/trim/free challenge retains101900288commit bytes and6156288RSS bytes, while the2MiB positive retains3149824commit bytes. Original terminal scope and identity tests remain. Full runner40tests pass. Preserve integration-1 failure caused by the driver's missing maximum-batch option; corrected actual latency execution passes64samples and512warmups. Evidence is retained under target/codex-tools/h08-workstation-v1. These are integration results, not final workstation certification.
+          - check: Fix the decision method before reference or candidate acquisition
+            result: passed
+            details: Nine adjacent reference/candidate pairs alternate their order. A median pair ratio above1.10 or fewer than seven pairs within1.25 fails; every pair and raw sample remains required. In-process512warmups/64samples remain; this new policy explicitly uses8CLI launch warmups with64request/control samples. Memory uses every lifetime peak commit, a prospectively fixed64MiB absolute ceiling and10percent plus1MiB pair allowance; raw RSS remains visible and is not redefined as commit. Five focused tests pass, including two transient spikes, three unfavorable pairs, sustained20percent regression, exact large-integer boundaries, missing/invalid samples and one over-budget memory peak. This is a bounded engineering rule, not a statistical confidence or laboratory isolation claim.
+          - check: Continue into independent builds and actual regression discrimination
+            result: not_run
+            details: Build frozen reference1593801e and candidate kernels independently with identical pinned harness source; bind mixed-source recipes honestly instead of assigning one SHA to all inputs. A separately marked negative-control feature doubles actual measured compiler work and cannot enter ordinary cohorts. Review the empty feature only; all16lock hashes remain unchanged. Reference/candidate and negative-control native campaigns, full coordinate coverage, independent byte reconstruction and profile adoption follow immediately. Functional resources, semantic integrity, security/license, source and no-reuse Release/signing/trusted-verification/closure remain mandatory. H08 OPEN and goal ACTIVE; the former external-blocked disposition no longer controls this owner-authorized method.
 
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60

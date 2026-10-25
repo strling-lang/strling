@@ -18,6 +18,8 @@ mod native {
         fn VirtualAlloc(address: *mut c_void, bytes: usize, kind: u32, protect: u32)
             -> *mut c_void;
         fn VirtualFree(address: *mut c_void, bytes: usize, kind: u32) -> i32;
+        fn GetCurrentProcess() -> *mut c_void;
+        fn K32EmptyWorkingSet(process: *mut c_void) -> i32;
     }
 
     struct LateNativeMemory;
@@ -30,6 +32,62 @@ mod native {
                 unsafe { memory.cast::<u8>().add(offset).write_volatile(0x5a) };
             }
             assert_ne!(unsafe { VirtualFree(memory, 0, 0x8000) }, 0);
+        }
+    }
+
+    fn commit_and_trim(bytes: usize) {
+        let memory = unsafe { VirtualAlloc(std::ptr::null_mut(), bytes, 0x3000, 4) };
+        assert!(!memory.is_null());
+        // Deliberately do not touch the committed pages. Residency is not the
+        // measurement: their private commit still consumes the resource budget.
+        assert_ne!(unsafe { K32EmptyWorkingSet(GetCurrentProcess()) }, 0);
+        assert_ne!(unsafe { VirtualFree(memory, 0, 0x8000) }, 0);
+        println!("COMMIT_CHALLENGE={bytes}");
+    }
+
+    #[test]
+    #[ignore = "owned child entry point for the native commit qualification"]
+    fn child_with_small_commit_and_trim() {
+        commit_and_trim(2 * 1024 * 1024);
+    }
+
+    #[test]
+    #[ignore = "owned child entry point for the negative native commit qualification"]
+    fn child_with_over_budget_commit_and_trim() {
+        commit_and_trim(96 * 1024 * 1024);
+    }
+
+    #[test]
+    fn workstation_commit_observation_survives_trim_and_free() {
+        for (entry, bytes) in [
+            ("native::child_with_small_commit_and_trim", 2 * 1024 * 1024),
+            (
+                "native::child_with_over_budget_commit_and_trim",
+                96 * 1024 * 1024,
+            ),
+        ] {
+            let (child, observer) = controlled_spawn::spawn_observed(
+                Command::new(std::env::current_exe().unwrap())
+                    .args(["--ignored", "--exact", entry, "--nocapture"])
+                    .stdout(Stdio::piped())
+                    .stderr(Stdio::piped()),
+                memory_lifetime::Observation::begin_workstation,
+            )
+            .unwrap();
+            let output = child.wait_with_output().unwrap();
+            assert!(output.status.success(), "{output:?}");
+            let terminal = observer.finish().unwrap();
+            assert!(terminal.single_process_job);
+            assert!(terminal.peak_commit_bytes >= bytes);
+            if bytes > 64 * 1024 * 1024 {
+                assert!(terminal.peak_rss_bytes < terminal.peak_commit_bytes);
+            } else {
+                assert!(terminal.peak_commit_bytes <= 64 * 1024 * 1024);
+            }
+            println!(
+                "workstation bytes={bytes} peak_commit={} peak_rss={}",
+                terminal.peak_commit_bytes, terminal.peak_rss_bytes
+            );
         }
     }
 

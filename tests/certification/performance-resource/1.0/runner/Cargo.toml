@@ -13,6 +13,8 @@ default = ["full-runner"]
 full-runner = ["dep:strling", "dep:strling-interop"]
 # Qualification build of the actual worker; its distinct contract cannot certify.
 resident-memory-audit = []
+# Deliberately doubles measured work; raw reports identify this negative control.
+workstation-slowdown-challenge = []
 
 [dependencies]
 serde_json = "1.0"

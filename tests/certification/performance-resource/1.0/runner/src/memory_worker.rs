@@ -109,6 +109,7 @@ mod worker {
         samples: usize,
         expected_logical_cpu: usize,
         expected_cpu_set_id: u32,
+        certification_context: String,
     }
 
     pub fn main() -> WorkerResult<()> {
@@ -116,6 +117,7 @@ mod worker {
         if arguments.warmups == 0 || arguments.samples == 0 {
             return Err("warmups and samples must be positive".to_owned());
         }
+        let quota = super::job_quota::for_context(&arguments.certification_context)?;
         enforce_controls(
             arguments.expected_logical_cpu,
             arguments.expected_cpu_set_id,
@@ -159,24 +161,31 @@ mod worker {
                 accepted_samples += 1;
             }
         }
-        let peak_working_set_bytes = peak_working_set_bytes()?;
+        let (peak_working_set_bytes, peak_commit_bytes) = peak_memory_bytes()?;
+        let mut report = json!({
+            "worker_contract": if cfg!(feature = "resident-memory-audit") {
+                "unqualified-resident-memory-audit-v1"
+            } else if arguments.certification_context == super::job_quota::WORKSTATION {
+                "shared-workstation-memory-v1"
+            } else {
+                "isolated-peak-rss-v1"
+            },
+            "residency_audit": residency_audit(),
+            "effective_cpu_affinity": [arguments.expected_logical_cpu],
+            "observed_processor_groups": [0],
+            "observed_logical_processors": observed_processors,
+            "peak_working_set_bytes": peak_working_set_bytes,
+            "sample_attempts": sample_attempts,
+            "checksum": checksum,
+        });
+        if arguments.certification_context == super::job_quota::WORKSTATION {
+            report["certification_context"] = json!(arguments.certification_context);
+            report["cpu_quota_observation"] = json!(quota);
+            report["peak_commit_bytes"] = json!(peak_commit_bytes);
+        }
         println!(
             "{}",
-            serde_json::to_string(&json!({
-                "worker_contract": if cfg!(feature = "resident-memory-audit") {
-                    "unqualified-resident-memory-audit-v1"
-                } else {
-                    "isolated-peak-rss-v1"
-                },
-                "residency_audit": residency_audit(),
-                "effective_cpu_affinity": [arguments.expected_logical_cpu],
-                "observed_processor_groups": [0],
-                "observed_logical_processors": observed_processors,
-                "peak_working_set_bytes": peak_working_set_bytes,
-                "sample_attempts": sample_attempts,
-                "checksum": checksum,
-            }))
-            .map_err(|error| error.to_string())?
+            serde_json::to_string(&report).map_err(|error| error.to_string())?
         );
         Ok(())
     }
@@ -207,6 +216,7 @@ mod worker {
         let mut samples = None;
         let mut expected_logical_cpu = None;
         let mut expected_cpu_set_id = None;
+        let mut certification_context = super::job_quota::LABORATORY.to_owned();
         let mut index = 0usize;
         while index < values.len() {
             let flag = &values[index];
@@ -214,6 +224,10 @@ mod worker {
                 .get(index + 1)
                 .ok_or_else(|| format!("missing value for {flag}"))?;
             match flag.as_str() {
+                "--certification-context" => {
+                    super::job_quota::validate_context(value)?;
+                    certification_context = value.clone();
+                }
                 "--warmups" => warmups = Some(value.parse().map_err(|_| "invalid --warmups")?),
                 "--samples" => samples = Some(value.parse().map_err(|_| "invalid --samples")?),
                 "--expected-logical-cpu" => {
@@ -236,6 +250,7 @@ mod worker {
             samples: samples.ok_or_else(|| "missing --samples".to_owned())?,
             expected_logical_cpu: expected_logical_cpu
                 .ok_or_else(|| "missing --expected-logical-cpu".to_owned())?,
+            certification_context,
             expected_cpu_set_id: expected_cpu_set_id
                 .ok_or_else(|| "missing --expected-cpu-set-id".to_owned())?,
         })
@@ -257,7 +272,6 @@ mod worker {
     }
 
     fn enforce_controls(expected_cpu: usize, expected_set_id: u32) -> WorkerResult<()> {
-        super::job_quota::require_unlimited()?;
         if expected_cpu >= usize::BITS as usize {
             return Err("logical CPU is outside the affinity mask".to_owned());
         }
@@ -355,7 +369,7 @@ mod worker {
         Ok(u128::from(kernel_ticks.saturating_add(user_ticks)) * 100)
     }
 
-    fn peak_working_set_bytes() -> WorkerResult<u64> {
+    fn peak_memory_bytes() -> WorkerResult<(u64, u64)> {
         let mut counters = ProcessMemoryCounters {
             cb: std::mem::size_of::<ProcessMemoryCounters>() as u32,
             page_fault_count: 0,
@@ -371,8 +385,12 @@ mod worker {
         if unsafe { K32GetProcessMemoryInfo(current_process(), &mut counters, counters.cb) } == 0 {
             return Err(last_error("K32GetProcessMemoryInfo"));
         }
-        u64::try_from(counters.peak_working_set_size)
-            .map_err(|_| "peak working set overflow".to_owned())
+        Ok((
+            u64::try_from(counters.peak_working_set_size)
+                .map_err(|_| "peak working set overflow".to_owned())?,
+            u64::try_from(counters.peak_pagefile_usage)
+                .map_err(|_| "peak commit overflow".to_owned())?,
+        ))
     }
 }
 

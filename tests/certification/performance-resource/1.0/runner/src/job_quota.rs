@@ -1,5 +1,29 @@
 //! Immediate-job observations cannot prove an unlimited ancestor chain.
 
+pub const LABORATORY: &str = "laboratory-isolated-v1";
+pub const WORKSTATION: &str = "shared-workstation-v1";
+
+pub fn validate_context(context: &str) -> Result<(), String> {
+    if matches!(context, LABORATORY | WORKSTATION) {
+        Ok(())
+    } else {
+        Err("unknown certification context".to_owned())
+    }
+}
+
+fn describe(context: &str, in_job: bool, flags: u32, rate: u32) -> Result<String, String> {
+    validate_context(context)?;
+    if context == LABORATORY {
+        classify(in_job, flags)?;
+        return Ok("unlimited".to_owned());
+    }
+    Ok(if in_job {
+        format!("observed-immediate-job:flags={flags}:rate={rate}:ancestors=unknown")
+    } else {
+        "observed-no-job-at-query".to_owned()
+    })
+}
+
 fn classify(in_job: bool, flags: u32) -> Result<(), String> {
     if !in_job {
         return Ok(());
@@ -11,7 +35,8 @@ fn classify(in_job: bool, flags: u32) -> Result<(), String> {
 }
 
 #[cfg(target_os = "windows")]
-pub fn require_unlimited() -> Result<(), String> {
+pub fn for_context(context: &str) -> Result<String, String> {
+    validate_context(context)?;
     use std::ffi::c_void;
     type Handle = *mut c_void;
     #[link(name = "kernel32")]
@@ -34,7 +59,7 @@ pub fn require_unlimited() -> Result<(), String> {
         ));
     }
     if in_job == 0 {
-        return classify(false, 0);
+        return describe(context, false, 0, 0);
     }
     let mut values = [0u32; 2];
     let mut returned = 0u32;
@@ -57,12 +82,28 @@ pub fn require_unlimited() -> Result<(), String> {
     if returned != size {
         return Err("incomplete Windows CPU quota information".to_owned());
     }
-    classify(true, values[0])
+    describe(context, true, values[0], values[1])
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn shared_context_observes_limits_without_claiming_unlimited_ancestors() {
+        for flags in [0, 1, 5, u32::MAX] {
+            let report = describe(WORKSTATION, true, flags, 100).unwrap();
+            assert!(report.contains("ancestors=unknown"));
+            assert!(report.contains(&format!("flags={flags}:rate=100")));
+            assert!(describe(LABORATORY, true, flags, 100).is_err());
+        }
+        assert_eq!(describe(LABORATORY, false, 0, 0).unwrap(), "unlimited");
+        assert_eq!(
+            describe(WORKSTATION, false, 0, 0).unwrap(),
+            "observed-no-job-at-query"
+        );
+        assert!(describe("shared-workstation-v0", false, 0, 0).is_err());
+    }
 
     #[test]
     fn no_job_does_not_invent_a_limit() {

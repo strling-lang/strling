@@ -113,7 +113,15 @@ class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
         self.assertIn("SetProcessDefaultCpuSets", memory_worker)
         self.assertIn("SetProcessInformation", memory_worker)
         self.assertIn("mod job_quota;", memory_worker)
-        self.assertIn("super::job_quota::require_unlimited()?;", memory_worker)
+        self.assertIn(
+            "super::job_quota::for_context(&arguments.certification_context)?",
+            memory_worker,
+        )
+        self.assertIn("super::job_quota::LABORATORY.to_owned()", memory_worker)
+        quota = (RUNNER_SOURCE.parent / "job_quota.rs").read_text(encoding="utf-8")
+        self.assertIn("if context == LABORATORY", quota)
+        self.assertIn("classify(in_job, flags)?;", quota)
+        self.assertIn("ancestors=unknown", quota)
         self.assertIn(
             "QueryInformationJobObject",
             (RUNNER_SOURCE.parent / "job_quota.rs").read_text(encoding="utf-8"),
@@ -126,7 +134,10 @@ class PerformanceResourceCertificationArchitectureTests(unittest.TestCase):
         self.assertIn('"unqualified-resident-memory-audit-v1"', source)
         self.assertIn('"certification_eligible": false', source)
         parent = RUNNER_SOURCE.read_text(encoding="utf-8")
-        self.assertIn('Some(&json!("isolated-peak-rss-v1"))', parent)
+        self.assertIn('"isolated-peak-rss-v1"', parent)
+        self.assertIn('"shared-workstation-memory-v1"', parent)
+        self.assertIn("Some(&json!(worker_contract))", parent)
+        self.assertIn("!terminal_memory.single_process_job", parent)
         self.assertIn(
             ".validate_reported_peak(reported_peak_working_set_bytes)", parent
         )

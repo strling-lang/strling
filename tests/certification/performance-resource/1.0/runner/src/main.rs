@@ -65,6 +65,7 @@ struct Arguments {
     cpu_cycle_audit: bool,
     cli_cycle_audit: bool,
     diagnostic_phase_log: Option<PathBuf>,
+    certification_context: String,
     ping: bool,
 }
 
@@ -103,6 +104,13 @@ fn main() {
 
 fn run() -> RunResult<()> {
     let arguments = parse_arguments()?;
+    if cfg!(feature = "workstation-slowdown-challenge")
+        && arguments.certification_context != "shared-workstation-v1"
+    {
+        return Err(
+            "slowdown challenge requires the explicit shared-workstation context".to_owned(),
+        );
+    }
     if arguments.ping {
         println!(
             "{}",
@@ -148,7 +156,7 @@ fn run() -> RunResult<()> {
         }
     }
     let execution_resource = match arguments.expected_logical_cpu {
-        Some(expected) => effective_execution_resource(expected)?,
+        Some(expected) => effective_execution_resource(expected, &arguments.certification_context)?,
         None => ExecutionResource {
             platform: String::new(),
             placement_mechanism: String::new(),
@@ -474,6 +482,14 @@ fn run() -> RunResult<()> {
         "control_process_cpu_utilization_basis_points": control_process_cpu_utilization_basis_points,
         "checksum": checksum,
     });
+    if arguments.certification_context == "shared-workstation-v1" {
+        result["certification_context"] = json!(arguments.certification_context);
+        result["measurement_role"] = json!(if cfg!(feature = "workstation-slowdown-challenge") {
+            "slowdown-control"
+        } else {
+            "ordinary"
+        });
+    }
     if arguments.cli_launch_schedule.is_some() {
         result["cli_launch_schedule"] = json!(arguments.cli_launch_schedule);
         result["request_first"] = json!((0..64).map(robust_cli_request_first).collect::<Vec<_>>());
@@ -525,7 +541,7 @@ fn run_inherited_memory_parent(
     verify_execution_resource(execution_resource, Some(expected))?;
     let fixture = materialize_fixture(&arguments.fixture, &arguments.operation)?;
     let request = serde_json::to_vec(&fixture.request).map_err(|error| error.to_string())?;
-    let worker_arguments = vec![
+    let mut worker_arguments = vec![
         "--warmups".to_owned(),
         arguments.warmups.to_string(),
         "--samples".to_owned(),
@@ -535,6 +551,12 @@ fn run_inherited_memory_parent(
         "--expected-cpu-set-id".to_owned(),
         cpu_set_id.to_string(),
     ];
+    if arguments.certification_context == "shared-workstation-v1" {
+        worker_arguments.extend([
+            "--certification-context".to_owned(),
+            arguments.certification_context.clone(),
+        ]);
+    }
     let worker = env::current_exe()
         .map_err(|error| error.to_string())?
         .parent()
@@ -546,7 +568,13 @@ fn run_inherited_memory_parent(
             .stdin(Stdio::piped())
             .stdout(Stdio::piped())
             .stderr(Stdio::piped()),
-        memory_lifetime::Observation::begin,
+        |child| {
+            if arguments.certification_context == "shared-workstation-v1" {
+                memory_lifetime::Observation::begin_workstation(child)
+            } else {
+                memory_lifetime::Observation::begin(child)
+            }
+        },
     )
     .map_err(|error| error.to_string())?;
     let worker_pid = child.id();
@@ -631,7 +659,12 @@ fn run_inherited_memory_parent(
         .samples
         .checked_mul(MAXIMUM_SAMPLE_ATTEMPT_MULTIPLIER)
         .ok_or_else(|| "sample attempt limit overflow".to_owned())?;
-    if worker.get("worker_contract") != Some(&json!("isolated-peak-rss-v1"))
+    let worker_contract = if arguments.certification_context == "shared-workstation-v1" {
+        "shared-workstation-memory-v1"
+    } else {
+        "isolated-peak-rss-v1"
+    };
+    if worker.get("worker_contract") != Some(&json!(worker_contract))
         || worker.get("effective_cpu_affinity") != Some(&json!([expected]))
         || worker.get("observed_processor_groups")
             != Some(&json!([execution_resource.processor_group]))
@@ -686,6 +719,27 @@ fn run_inherited_memory_parent(
         "memory_worker_contract": worker["worker_contract"],
     });
     result["memory_lifetime"] = lifetime_evidence;
+    if arguments.certification_context == "shared-workstation-v1" {
+        let reported_commit = worker
+            .get("peak_commit_bytes")
+            .and_then(Value::as_u64)
+            .ok_or_else(|| "worker peak commit is absent".to_owned())?;
+        if worker.get("certification_context") != Some(&json!(arguments.certification_context))
+            || reported_commit == 0
+            || reported_commit > terminal_memory.peak_commit_bytes
+            || !terminal_memory.single_process_job
+        {
+            return Err("workstation memory lifetime is inconsistent".to_owned());
+        }
+        result["certification_context"] = json!(arguments.certification_context);
+        result["workstation_memory"] = json!({
+            "contract": "process-lifetime-peak-commit-v1",
+            "peak_commit_bytes": terminal_memory.peak_commit_bytes,
+            "worker_reported_peak_commit_bytes": reported_commit,
+            "single_process_job": true,
+            "observer_scope": "parent-outside-measured-worker",
+        });
+    }
     println!(
         "{}",
         serde_json::to_string(&result).map_err(|error| error.to_string())?
@@ -833,6 +887,7 @@ fn parse_arguments() -> RunResult<Arguments> {
             cpu_cycle_audit: false,
             cli_cycle_audit: false,
             diagnostic_phase_log: None,
+            certification_context: "laboratory-isolated-v1".to_owned(),
             ping: true,
         });
     }
@@ -849,6 +904,7 @@ fn parse_arguments() -> RunResult<Arguments> {
     let mut cpu_cycle_audit = false;
     let mut cli_cycle_audit = false;
     let mut diagnostic_phase_log = None;
+    let mut certification_context = "laboratory-isolated-v1".to_owned();
     let mut index = 0;
     while index < values.len() {
         let flag = &values[index];
@@ -884,6 +940,15 @@ fn parse_arguments() -> RunResult<Arguments> {
                         .map_err(|_| "invalid --expected-logical-cpu")?,
                 )
             }
+            "--certification-context" => {
+                if !matches!(
+                    value.as_str(),
+                    "laboratory-isolated-v1" | "shared-workstation-v1"
+                ) {
+                    return Err("unknown certification context".to_owned());
+                }
+                certification_context = value.clone();
+            }
             "--kernel-bin" => kernel_bin = Some(PathBuf::from(value)),
             "--cli-launch-schedule" => cli_launch_schedule = Some(value.clone()),
             "--cpu-cycle-audit" => cpu_cycle_audit = parse_cycle_audit(value)?,
@@ -917,6 +982,7 @@ fn parse_arguments() -> RunResult<Arguments> {
         cpu_cycle_audit,
         cli_cycle_audit,
         diagnostic_phase_log,
+        certification_context,
         ping: false,
     })
 }
@@ -984,7 +1050,7 @@ fn effective_cpu_affinity() -> RunResult<Vec<usize>> {
 }
 
 #[cfg(target_os = "linux")]
-fn effective_execution_resource(expected: usize) -> RunResult<ExecutionResource> {
+fn effective_execution_resource(expected: usize, context: &str) -> RunResult<ExecutionResource> {
     let cgroup = std::fs::read_to_string("/proc/self/cgroup")
         .map_err(|error| format!("read /proc/self/cgroup: {error}"))?;
     let cgroup_path = cgroup
@@ -1363,8 +1429,8 @@ mod windows_placement {
         }))
     }
 
-    pub fn enforce(expected: usize) -> RunResult<ExecutionResource> {
-        super::job_quota::require_unlimited()?;
+    pub fn enforce(expected: usize, context: &str) -> RunResult<ExecutionResource> {
+        let cpu_quota = super::job_quota::for_context(context)?;
         let groups = unsafe { GetActiveProcessorGroupCount() };
         if groups != 1 {
             return Err("the governed Windows runner requires one processor group".to_owned());
@@ -1403,7 +1469,7 @@ mod windows_placement {
             effective_cpuset: format!(
                 "group-0:logical-{expected}:cpu-set-{set_id}:core-{core}:efficiency-{efficiency}"
             ),
-            cpu_quota: "unlimited".to_owned(),
+            cpu_quota,
             clocksource: String::new(),
             processor_group: Some(0),
             selected_cpu_set_id: Some(set_id),
@@ -1482,8 +1548,8 @@ fn effective_cpu_affinity() -> RunResult<Vec<usize>> {
 }
 
 #[cfg(target_os = "windows")]
-fn effective_execution_resource(expected: usize) -> RunResult<ExecutionResource> {
-    windows_placement::enforce(expected)
+fn effective_execution_resource(expected: usize, context: &str) -> RunResult<ExecutionResource> {
+    windows_placement::enforce(expected, context)
 }
 
 #[cfg(target_os = "windows")]
@@ -1526,7 +1592,7 @@ fn effective_cpu_affinity() -> RunResult<Vec<usize>> {
 }
 
 #[cfg(not(any(target_os = "linux", target_os = "windows")))]
-fn effective_execution_resource(_expected: usize) -> RunResult<ExecutionResource> {
+fn effective_execution_resource(_expected: usize, _context: &str) -> RunResult<ExecutionResource> {
     Err("governed execution resource requires native Linux or Windows".to_owned())
 }
 
@@ -1599,6 +1665,11 @@ fn execute_batch(operation: &PreparedOperation, iterations: usize) -> RunResult<
     let mut checksum = 0usize;
     for iteration in 0..iterations {
         checksum ^= black_box(operation()?).rotate_left((iteration % usize::BITS as usize) as u32);
+        #[cfg(feature = "workstation-slowdown-challenge")]
+        {
+            checksum ^=
+                black_box(operation()?).rotate_left((iteration % usize::BITS as usize) as u32);
+        }
     }
     Ok(checksum)
 }

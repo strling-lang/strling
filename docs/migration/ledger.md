@@ -9710,3 +9710,38 @@ remain open. No favorable-context retry, manual diagnostic transfer, host change
 broker or manual procedure. Preserve every acceptance, source, security, sample,
 no-reuse, authoritative campaign and trusted-closure obligation. H08 OPEN;
 zero authenticated samples, polling PAUSED, no total-certification gain claimed.
+
+### Shared-workstation certification authorization — 2026-10-25
+
+Checkpoint105 preserves all104prior checkpoints and records the owner's explicit
+authorization to change laboratory requirements and architecture for this shared
+laptop. Adopt shared-workstation-v1 as a separately named empirical regression
+method. Unknown inherited controls and background services are observed context;
+no unlimited ancestry, idle host, exclusive CPU or universal residency is claimed.
+The former external-blocked disposition no longer gates this method. No host
+setting, inherited job, broker or manual procedure changes.
+
+The actual memory and latency workers now execute in that explicit context.
+The exact suspended memory child enters an owned one-process non-breakaway job;
+parent-retained kernel peak commit includes native/Rust allocation, startup,
+parsing, warmup, threads and teardown. RSS remains raw reported evidence. A96MiB
+untouched native allocation survives trim/free as101900288peak commit bytes
+despite6156288peak RSS; the2MiB positive retains3149824commit bytes. All14native
+tests and40runner tests pass. Preserve the first driver's missing-maximum-batch
+failure; corrected actual compiler timing completes512warmups and64samples.
+
+Fix nine alternating reference/candidate pairs,10% median regression margin and
+at least7pairs within25% before acquisition. Retain every pair and failure. The
+new method retains512/64in-process counts and explicitly uses8CLI launch warmups
+with64request/control samples. Its separate memory budget is64MiB lifetime peak
+commit with10% plus1MiB pair allowance; no RSS-to-commit relabeling. Five exact
+arithmetic/coverage/transient/regression/memory tests pass. These rules establish
+an engineering acceptance boundary, not a statistical confidence guarantee.
+
+Continue directly into independent frozen-reference/candidate builds with the
+same pinned harness, honestly recorded mixed-source recipes, and a separately
+identified compiler-work slowdown challenge. Native qualification across all
+coordinates, independent reconstruction and profile adoption remain next. Add
+five exact scope paths; review the empty challenge feature without changing any
+lock graph. All security, semantics, functional resources, source/no-reuse Release,
+signing, trusted verification and formal closure remain. H08 OPEN; goal ACTIVE.

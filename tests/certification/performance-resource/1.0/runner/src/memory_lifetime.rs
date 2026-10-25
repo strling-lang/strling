@@ -48,6 +48,51 @@ extern "system" {
     fn WaitForSingleObject(handle: Handle, milliseconds: u32) -> u32;
     fn TerminateProcess(process: Handle, exit_code: u32) -> i32;
     fn K32GetProcessMemoryInfo(process: Handle, counters: *mut MemoryCounters, size: u32) -> i32;
+    fn CreateJobObjectW(attributes: *mut c_void, name: *const u16) -> Handle;
+    fn SetInformationJobObject(job: Handle, class: i32, value: *const c_void, bytes: u32) -> i32;
+    fn AssignProcessToJobObject(job: Handle, process: Handle) -> i32;
+    fn QueryInformationJobObject(
+        job: Handle,
+        class: i32,
+        value: *mut c_void,
+        bytes: u32,
+        returned: *mut u32,
+    ) -> i32;
+}
+
+#[repr(C)]
+#[derive(Default)]
+struct BasicLimits {
+    process_time: i64,
+    job_time: i64,
+    flags: u32,
+    minimum_ws: usize,
+    maximum_ws: usize,
+    active_processes: u32,
+    affinity: usize,
+    priority: u32,
+    scheduling: u32,
+}
+
+#[repr(C)]
+#[derive(Default)]
+struct ExtendedLimits {
+    basic: BasicLimits,
+    io: [u64; 6],
+    process_memory: usize,
+    job_memory: usize,
+    peak_process_memory: usize,
+    peak_job_memory: usize,
+}
+
+#[repr(C)]
+#[derive(Default)]
+struct Accounting {
+    times: [i64; 4],
+    page_faults: u32,
+    total: u32,
+    active: u32,
+    terminated: u32,
 }
 
 fn invalid(message: &str) -> io::Error {
@@ -68,7 +113,7 @@ fn identity(handle: Handle) -> io::Result<(u32, u64, u64)> {
     Ok((pid, birth, exit))
 }
 
-fn peak(handle: Handle) -> io::Result<u64> {
+fn peaks(handle: Handle) -> io::Result<(u64, u64)> {
     let mut counters = MemoryCounters {
         cb: size_of::<MemoryCounters>() as u32,
         ..MemoryCounters::default()
@@ -78,10 +123,16 @@ fn peak(handle: Handle) -> io::Result<u64> {
     {
         return Err(io::Error::last_os_error());
     }
-    if counters.cb != size_of::<MemoryCounters>() as u32 || counters.rss > counters.peak_rss {
+    if counters.cb != size_of::<MemoryCounters>() as u32
+        || counters.rss > counters.peak_rss
+        || counters.commit > counters.peak_commit
+    {
         return Err(invalid("memory observer received incomplete peak RSS"));
     }
-    u64::try_from(counters.peak_rss).map_err(|_| invalid("peak RSS overflow"))
+    Ok((
+        u64::try_from(counters.peak_rss).map_err(|_| invalid("peak RSS overflow"))?,
+        u64::try_from(counters.peak_commit).map_err(|_| invalid("peak commit overflow"))?,
+    ))
 }
 
 pub struct Observation {
@@ -89,6 +140,8 @@ pub struct Observation {
     pub pid: u32,
     pub birth_100ns: u64,
     initial_peak: u64,
+    initial_commit: u64,
+    private_job: Handle,
 }
 
 #[derive(Debug)]
@@ -97,6 +150,8 @@ pub struct Terminal {
     pub birth_100ns: u64,
     pub exit_100ns: u64,
     pub peak_rss_bytes: u64,
+    pub peak_commit_bytes: u64,
+    pub single_process_job: bool,
 }
 
 impl Terminal {
@@ -111,6 +166,14 @@ impl Terminal {
 impl Observation {
     /// Called only while controlled_spawn still owns a singly suspended child.
     pub fn begin(child: &Child) -> io::Result<Self> {
+        Self::begin_context(child, false)
+    }
+
+    pub fn begin_workstation(child: &Child) -> io::Result<Self> {
+        Self::begin_context(child, true)
+    }
+
+    fn begin_context(child: &Child, single_process: bool) -> io::Result<Self> {
         let mut handle = std::ptr::null_mut();
         let current = unsafe { GetCurrentProcess() };
         if unsafe {
@@ -132,6 +195,8 @@ impl Observation {
             pid: child.id(),
             birth_100ns: 0,
             initial_peak: 0,
+            initial_commit: 0,
+            private_job: std::ptr::null_mut(),
         };
         let (pid, birth, exit) = identity(handle)?;
         if pid != result.pid || exit != 0 || unsafe { WaitForSingleObject(handle, 0) } != 258 {
@@ -141,7 +206,34 @@ impl Observation {
         }
         result.birth_100ns = birth;
         // A pre-entry process can legitimately have no resident pages yet.
-        result.initial_peak = peak(handle)?;
+        (result.initial_peak, result.initial_commit) = peaks(handle)?;
+        if single_process {
+            if size_of::<ExtendedLimits>() != 144 || size_of::<Accounting>() != 48 {
+                return Err(invalid("unsupported native job ABI"));
+            }
+            result.private_job =
+                unsafe { CreateJobObjectW(std::ptr::null_mut(), std::ptr::null()) };
+            if result.private_job.is_null() {
+                return Err(io::Error::last_os_error());
+            }
+            let mut limits = ExtendedLimits::default();
+            // Only this owned child is affected. No breakaway, CPU quota, memory
+            // cap or ancestor mutation; a second process cannot join this job.
+            limits.basic.flags = 0x2008; // KILL_ON_JOB_CLOSE | ACTIVE_PROCESS
+            limits.basic.active_processes = 1;
+            if unsafe {
+                SetInformationJobObject(
+                    result.private_job,
+                    9,
+                    (&limits as *const ExtendedLimits).cast(),
+                    size_of::<ExtendedLimits>() as u32,
+                )
+            } == 0
+                || unsafe { AssignProcessToJobObject(result.private_job, handle) } == 0
+            {
+                return Err(io::Error::last_os_error());
+            }
+        }
         Ok(result)
     }
 
@@ -150,18 +242,50 @@ impl Observation {
             return Err(invalid("memory lifetime observation requires process exit"));
         }
         let (pid, birth, exit) = identity(self.handle)?;
-        let terminal_peak = peak(self.handle)?;
+        let (terminal_peak, terminal_commit) = peaks(self.handle)?;
         validate_terminal(
             (self.pid, self.birth_100ns),
             (pid, birth, exit),
             self.initial_peak,
             terminal_peak,
         )?;
+        if terminal_commit < self.initial_commit
+            || (!self.private_job.is_null() && terminal_commit == 0)
+        {
+            return Err(invalid("terminal peak commit is inconsistent"));
+        }
+        if !self.private_job.is_null() {
+            let mut accounting = Accounting::default();
+            let mut returned = 0;
+            if unsafe {
+                QueryInformationJobObject(
+                    self.private_job,
+                    1,
+                    (&mut accounting as *mut Accounting).cast(),
+                    size_of::<Accounting>() as u32,
+                    &mut returned,
+                )
+            } == 0
+            {
+                return Err(io::Error::last_os_error());
+            }
+            if returned != size_of::<Accounting>() as u32
+                || accounting.total != 1
+                || accounting.active != 0
+                || accounting.terminated != 0
+            {
+                return Err(invalid(
+                    "memory worker job did not retire exactly one natural process",
+                ));
+            }
+        }
         Ok(Terminal {
             pid,
             birth_100ns: birth,
             exit_100ns: exit,
             peak_rss_bytes: terminal_peak,
+            peak_commit_bytes: terminal_commit,
+            single_process_job: !self.private_job.is_null(),
         })
     }
 
@@ -208,6 +332,9 @@ fn validate_terminal(
 impl Drop for Observation {
     fn drop(&mut self) {
         unsafe { CloseHandle(self.handle) };
+        if !self.private_job.is_null() {
+            unsafe { CloseHandle(self.private_job) };
+        }
     }
 }
 
@@ -235,6 +362,8 @@ mod tests {
             birth_100ns: 10,
             exit_100ns: 20,
             peak_rss_bytes: 4,
+            peak_commit_bytes: 8,
+            single_process_job: false,
         };
         assert!(terminal.validate_reported_peak(3).is_ok());
         assert!(terminal.validate_reported_peak(4).is_ok());

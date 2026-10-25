@@ -1,0 +1,42 @@
+{
+    "policy_id": "shared-workstation-v1",
+    "status": "accepted",
+    "authority": "Repository owner authorized revised architecture and laboratory requirements for shared-laptop certification on 2026-10-25.",
+    "scope": "Empirical local regression certification under the observed shared workstation context, including inherited execution-provider controls and background services.",
+    "reference_source": "1593801e187dfe913357e92e6c798b47b8944370",
+    "latency_warmups": 512,
+    "cli_warmups": 8,
+    "latency_samples": 64,
+    "paired_repetitions": 9,
+    "reference_first": [
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true,
+        false,
+        true
+    ],
+    "median_regression_basis_points": 1000,
+    "pair_regression_basis_points": 2500,
+    "minimum_passing_pairs": 7,
+    "memory_metric": "process-lifetime-peak-commit-bytes",
+    "memory_absolute_ceiling_bytes": 67108864,
+    "memory_relative_allowance_basis_points": 1000,
+    "memory_fixed_allowance_bytes": 1048576,
+    "rss_disposition": "Retain raw process-lifetime peak RSS; do not substitute it for peak commit or claim protection from trimming.",
+    "observation": "Retain exact commands, source and binary hashes, input bytes, process identities, all stdout/stderr, wall intervals, CPU samples, rejected attempts, job observations and both members of every pair. Failures consume their prospective slots; never silently retry or fill missing slots.",
+    "reference_build": "Build the frozen reference kernel and candidate kernel independently using identical source-pinned measurement harness code. Bind both kernel source trees, harness source, build recipe and produced bytes explicitly; do not relabel a mixed-source build as one clean Git revision.",
+    "memory_scope": "The memory worker is assigned while suspended to a private non-breakaway job with one active process allowed; require one total member, no limit terminations and natural quiescence. Kernel lifetime peak counters include native/Rust allocation, initialisation, parsing, warmup, all threads and teardown. Observer memory is outside this worker process. Native allocation success and semantic success remain mandatory.",
+    "claim_limits": [
+        "No exclusive CPU, unlimited ancestor quota, idle host or absence of interference is asserted.",
+        "Paired comparisons reduce common context effects; they cannot prove every possible interference pattern cancels.",
+        "The fixed robust rule tolerates at most two unfavorable pairs; it is an engineering acceptance rule, not a claimed statistical confidence bound.",
+        "Absolute wall times, tail latencies and RSS remain visible even when relative regression checks pass.",
+        "The historical isolated-host manifest, baseline and failures remain historical authority for that separate method; no result is relabeled as laboratory certification."
+    ],
+    "qualification": "Require native positive and negative memory challenges, actual compiler reference/candidate execution, a deliberately slower candidate discrimination challenge, independent raw-evidence reconstruction, all governed workload coordinates and unchanged functional resource checks before profile adoption.",
+    "publication": "Certification does not authorize publication. Source integrity, security, licensing, independent Release, signing and trusted verification remain required."
+}

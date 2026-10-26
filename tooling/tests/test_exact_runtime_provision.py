@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -16,6 +17,7 @@ from tooling.exact_runtime_provision import (
     runtime_environment,
     verify_maven_repository,
     verify_maven_repository_inputs,
+    verify_gradle_test_inputs,
     verify_pull_request_environment,
     verify_pull_request_inputs,
     write_environment,
@@ -261,6 +263,10 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
                 "tooling.exact_runtime_provision.verify_maven_repository",
                 side_effect=AssertionError("early check attempted a build"),
             ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_gradle_test_inputs",
+                side_effect=AssertionError("read-only check attempted Gradle"),
+            ),
         ):
             result = verify_pull_request_inputs(load_manifest())
         inputs.assert_called_once_with(Path("/declared/repository"))
@@ -342,10 +348,196 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
                     "tooling.exact_runtime_provision.verify_maven_repository",
                     return_value={"path": str(repository)},
                 ) as verify_maven,
+                mock.patch(
+                    "tooling.exact_runtime_provision.verify_gradle_test_inputs",
+                    return_value={"configurations": {"testCompileClasspath": 8}},
+                ) as verify_gradle,
             ):
                 result = verify_pull_request_environment(load_manifest())
         self.assertEqual("passed", result["status"])
         verify_maven.assert_called_once_with(repository)
+        verify_gradle.assert_called_once_with(repository)
+
+    def gradle_fixture(self, root: Path) -> tuple[Path, Path]:
+        wrapper = (
+            root / "bindings/kotlin" / ("gradlew.bat" if os.name == "nt" else "gradlew")
+        )
+        wrapper.parent.mkdir(parents=True)
+        wrapper.write_text("fixture wrapper", encoding="utf-8")
+        script = root / "tooling/gradle_test_inputs.init.gradle"
+        script.parent.mkdir()
+        script.write_text("fixture input probe", encoding="utf-8")
+        return wrapper, script
+
+    def gradle_report(self, **changes: object) -> str:
+        value = {
+            "offline": True,
+            "configurations": {"testCompileClasspath": 8, "testRuntimeClasspath": 10},
+        }
+        value.update(changes)
+        return "STRLING_KOTLIN_TEST_INPUTS " + json.dumps(value) + "\n"
+
+    def test_kotlin_probe_resolves_both_test_classpaths_offline(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            wrapper, script = self.gradle_fixture(root)
+            run = mock.Mock(
+                return_value=mock.Mock(
+                    returncode=0, stdout=self.gradle_report(), stderr=""
+                )
+            )
+            repository = root / "declared Maven repository"
+            with (
+                mock.patch("tooling.exact_runtime_provision.ROOT", root),
+                mock.patch(
+                    "tooling.exact_runtime_provision.GRADLE_TEST_INPUTS_SCRIPT", script
+                ),
+            ):
+                result = verify_gradle_test_inputs(repository, run=run)
+            self.assertEqual(
+                [
+                    str(wrapper),
+                    "--offline",
+                    "--no-daemon",
+                    "--init-script",
+                    str(script),
+                    "strlingVerifyTestInputs",
+                ],
+                run.call_args.args[0],
+            )
+            self.assertEqual(root / "bindings/kotlin", run.call_args.kwargs["cwd"])
+            self.assertEqual(
+                str(repository.resolve()),
+                run.call_args.kwargs["env"]["STRLING_MAVEN_REPOSITORY"],
+            )
+            self.assertEqual(2, len(result["configurations"]))
+
+    def test_kotlin_probe_rejects_missing_wrapper_or_probe(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            wrapper, script = self.gradle_fixture(root)
+            with (
+                mock.patch("tooling.exact_runtime_provision.ROOT", root),
+                mock.patch(
+                    "tooling.exact_runtime_provision.GRADLE_TEST_INPUTS_SCRIPT", script
+                ),
+            ):
+                script.unlink()
+                with self.assertRaisesRegex(ExactRuntimeProvisionError, "unavailable"):
+                    verify_gradle_test_inputs(root, run=mock.Mock())
+                script.write_text("probe", encoding="utf-8")
+                wrapper.unlink()
+                with self.assertRaisesRegex(ExactRuntimeProvisionError, "unavailable"):
+                    verify_gradle_test_inputs(root, run=mock.Mock())
+
+    def test_kotlin_probe_preserves_missing_cache_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, script = self.gradle_fixture(root)
+            with (
+                mock.patch("tooling.exact_runtime_provision.ROOT", root),
+                mock.patch(
+                    "tooling.exact_runtime_provision.GRADLE_TEST_INPUTS_SCRIPT", script
+                ),
+                self.assertRaisesRegex(ExactRuntimeProvisionError, "No cached version"),
+            ):
+                verify_gradle_test_inputs(
+                    root,
+                    run=mock.Mock(
+                        return_value=mock.Mock(
+                            returncode=1, stdout="", stderr="No cached version"
+                        )
+                    ),
+                )
+
+    def test_kotlin_probe_rejects_skipped_or_malformed_success(self) -> None:
+        invalid = (
+            "BUILD SUCCESSFUL\n",
+            "STRLING_KOTLIN_TEST_INPUTS {broken}\n",
+            self.gradle_report() * 2,
+            self.gradle_report(offline=False),
+            self.gradle_report(configurations={"testCompileClasspath": 8}),
+            self.gradle_report(
+                configurations=["testCompileClasspath", "testRuntimeClasspath"]
+            ),
+            self.gradle_report(
+                configurations={
+                    "testCompileClasspath": True,
+                    "testRuntimeClasspath": 10,
+                }
+            ),
+            self.gradle_report(
+                configurations={"testCompileClasspath": 8, "testRuntimeClasspath": 0}
+            ),
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, script = self.gradle_fixture(root)
+            for stdout in invalid:
+                with (
+                    self.subTest(stdout=stdout),
+                    mock.patch("tooling.exact_runtime_provision.ROOT", root),
+                    mock.patch(
+                        "tooling.exact_runtime_provision.GRADLE_TEST_INPUTS_SCRIPT",
+                        script,
+                    ),
+                    self.assertRaisesRegex(
+                        ExactRuntimeProvisionError, "invalid evidence"
+                    ),
+                ):
+                    verify_gradle_test_inputs(
+                        root,
+                        run=mock.Mock(
+                            return_value=mock.Mock(
+                                returncode=0, stdout=stdout, stderr=""
+                            )
+                        ),
+                    )
+
+    def test_kotlin_probe_execution_failure_remains_blocking(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, script = self.gradle_fixture(root)
+            for error in (
+                OSError("missing Java"),
+                subprocess.TimeoutExpired("gradle", 120),
+            ):
+                with (
+                    self.subTest(error=error),
+                    mock.patch("tooling.exact_runtime_provision.ROOT", root),
+                    mock.patch(
+                        "tooling.exact_runtime_provision.GRADLE_TEST_INPUTS_SCRIPT",
+                        script,
+                    ),
+                    self.assertRaisesRegex(
+                        ExactRuntimeProvisionError, "failed to execute"
+                    ),
+                ):
+                    verify_gradle_test_inputs(root, run=mock.Mock(side_effect=error))
+
+    def test_full_preflight_rejects_kotlin_gap_despite_valid_maven(self) -> None:
+        with (
+            mock.patch.dict(
+                "tooling.exact_runtime_provision.os.environ",
+                {"STRLING_MAVEN_REPOSITORY": "/repository"},
+            ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_configured_runtimes",
+                return_value={"status": "passed"},
+            ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_maven_repository",
+                return_value={"status": "passed"},
+            ),
+            mock.patch(
+                "tooling.exact_runtime_provision.verify_gradle_test_inputs",
+                side_effect=ExactRuntimeProvisionError("Kotlin test cache incomplete"),
+            ),
+            self.assertRaisesRegex(
+                ExactRuntimeProvisionError, "Kotlin test cache incomplete"
+            ),
+        ):
+            verify_pull_request_environment(load_manifest())
 
     def test_environment_file_is_sorted_and_append_only(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -34,6 +34,8 @@ OWNED_ROOT = Path("/opt/strling-toolchains")
 ROOT = Path(__file__).resolve().parents[1]
 JVM_RELEASE_GRAPH = ROOT / "tests/adapters/3.0/release-graph.json"
 GRADLE_VERIFICATION_METADATA = ROOT / "bindings/kotlin/gradle/verification-metadata.xml"
+GRADLE_TEST_INPUTS_SCRIPT = ROOT / "tooling/gradle_test_inputs.init.gradle"
+GRADLE_TEST_CONFIGURATIONS = ("testCompileClasspath", "testRuntimeClasspath")
 
 
 class ExactRuntimeProvisionError(ValueError):
@@ -254,6 +256,76 @@ def verify_pull_request_inputs(
     }
 
 
+def verify_gradle_test_inputs(
+    repository: Path,
+    *,
+    run: Any = subprocess.run,
+) -> dict[str, Any]:
+    """Resolve both real Kotlin test classpaths offline before qualification."""
+
+    wrapper = (
+        ROOT / "bindings/kotlin" / ("gradlew.bat" if os.name == "nt" else "gradlew")
+    )
+    if not wrapper.is_file() or not GRADLE_TEST_INPUTS_SCRIPT.is_file():
+        raise ExactRuntimeProvisionError("Kotlin offline input probe is unavailable")
+    command = [
+        str(wrapper),
+        "--offline",
+        "--no-daemon",
+        "--init-script",
+        str(GRADLE_TEST_INPUTS_SCRIPT),
+        "strlingVerifyTestInputs",
+    ]
+    environment = dict(os.environ)
+    environment["STRLING_MAVEN_REPOSITORY"] = str(repository.resolve())
+    try:
+        completed = run(
+            command,
+            cwd=ROOT / "bindings/kotlin",
+            env=environment,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=120,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        raise ExactRuntimeProvisionError(
+            f"offline Kotlin test input probe failed to execute: {error}"
+        ) from error
+    if completed.returncode != 0:
+        diagnostics = (completed.stderr.strip() or completed.stdout.strip())[-4000:]
+        raise ExactRuntimeProvisionError(
+            "offline Kotlin test input probe failed: " + diagnostics
+        )
+    prefix = "STRLING_KOTLIN_TEST_INPUTS "
+    reports = [
+        line[len(prefix) :]
+        for line in completed.stdout.splitlines()
+        if line.startswith(prefix)
+    ]
+    try:
+        if len(reports) != 1:
+            raise ValueError("expected exactly one executed input probe")
+        report = json.loads(reports[0])
+        counts = report["configurations"]
+        if (
+            report["offline"] is not True
+            or not isinstance(counts, dict)
+            or set(counts) != set(GRADLE_TEST_CONFIGURATIONS)
+            or any(type(count) is not int or count <= 0 for count in counts.values())
+        ):
+            raise ValueError("both nonempty test classpaths must resolve offline")
+    except (KeyError, TypeError, ValueError) as error:
+        raise ExactRuntimeProvisionError(
+            f"offline Kotlin test input probe returned invalid evidence: {error}"
+        ) from error
+    return {"offline_probe": command, "configurations": counts}
+
+
 def verify_pull_request_environment(
     manifest: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
@@ -267,6 +339,7 @@ def verify_pull_request_environment(
         "status": "passed",
         "exact_runtimes": exact,
         "maven_repository": verify_maven_repository(Path(repository)),
+        "kotlin_test_inputs": verify_gradle_test_inputs(Path(repository)),
     }
 
 

@@ -144,11 +144,26 @@ declared repository.
 
 Before starting a Pull Request profile, export and validate the complete
 handoff. The preflight verifies both PCRE2 libraries, Node, CPython, the Maven
-repository's governed JVM artifacts, and an offline Maven compile. The profile
+repository's governed JVM artifacts, an offline Maven compile, and actual
+offline resolution of Kotlin's test compile and runtime classpaths. The profile
 entrypoint repeats this preflight after the shared generated-artifact integrity
 gate passes and before the second registered operation. Stale generated state
 therefore fails before even the offline Maven compile, while missing or
 mismatched runtime inputs still fail before the remaining profile work.
+
+Prepare Kotlin's locked, checksum-verified test dependencies during setup,
+before freezing a certification candidate. From the repository root, after
+exporting the environment handoff, run:
+
+```bash
+(cd bindings/kotlin && ./gradlew --no-daemon \
+  --init-script ../../tooling/gradle_test_inputs.init.gradle strlingVerifyTestInputs)
+```
+
+This explicit setup command may use the configured repositories. The preflight
+runs the same resolver with `--offline` and requires both classpaths to be
+nonempty. It rejects a skipped resolver even when Gradle exits successfully.
+The probe does not replace the subsequent live Java/Kotlin parity tests.
 
 ```bash
 eval "$(python3 -m tooling.exact_runtime_provision --print-pull-request-env)"

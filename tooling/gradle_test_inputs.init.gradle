@@ -1,0 +1,21 @@
+// Resolve the actual Kotlin test classpaths. Dependency reports alone can
+// succeed while displaying unresolved modules, so they are not an input probe.
+gradle.projectsEvaluated {
+    def kotlinProject = gradle.rootProject
+    kotlinProject.tasks.register('strlingVerifyTestInputs') {
+        doLast {
+            def counts = [:]
+            ['testCompileClasspath', 'testRuntimeClasspath'].each { name ->
+                def files = kotlinProject.configurations.getByName(name).resolve()
+                if (files.empty) {
+                    throw new GradleException("Empty Kotlin test input configuration: ${name}")
+                }
+                counts[name] = files.size()
+            }
+            println('STRLING_KOTLIN_TEST_INPUTS ' + groovy.json.JsonOutput.toJson([
+                offline: gradle.startParameter.offline,
+                configurations: counts
+            ]))
+        }
+    }
+}

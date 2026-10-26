@@ -216,6 +216,8 @@ scope:
         - tooling/dependency_license_evidence.py
         - tooling/deep_quality_certification.py
         - tooling/exact_runtime_provision.py
+        # Exact resolver used to prepare and verify offline Kotlin test inputs.
+        - tooling/gradle_test_inputs.init.gradle
         - tooling/governance.py
         - tooling/jvm_adapter_runtime.py
         - tooling/jvm_adapter_package.py

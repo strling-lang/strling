@@ -5661,3 +5661,65 @@ goal ACTIVE.
 
 Advisory: <https://github.com/advisories/GHSA-xcx6-jx8p-x3h5>.
 Patched release: <https://github.com/AzureAD/microsoft-authentication-library-for-js/releases/tag/msal-node-v7.1.0>.
+
+### Isolated Release construction and read-only Git identity — 2026-10-27
+
+Candidate `ca0d359a` completed Local38, Pull Request80, readiness123 and an
+authoritative Full126 with125 passes and only
+`WVR-SEC-VSCE-LICENSE-001`. Full took6h51m38s wall time; its fresh workstation
+acquisition retained1021 observations and passed independent reconstruction.
+The subsequent same-source independent no-reuse Release exited1 at07:25CDT,
+after3h21m41s wall time. It stopped at23of126 operations:21 passed, the sole
+license waiver and one failure, leaving103 operations unexecuted. The complete
+failed profile, production result, original child terminal and retained isolated
+source remain unchanged. No signing, verifier promotion or closure is credited.
+
+Release failed before its first performance observation. Native Cargo exited101
+while linking reference-harness dependency build scripts: MSVC reported LNK1104
+on270–276-character output paths inside the isolated checkout. A tiny unchanged
+Rust program independently reproduces LNK1104 with a long output path and succeeds
+with a short output path; ordinary file creation in the long directory succeeds.
+The correction shortens only the fresh acquisition prefix inside the repository's
+target directory. Each lane still uses the original layout, frozen source
+archive, pinned harness and dependency lock, build flags and compiler. Directory
+creation remains exclusive; no previous artifact, workload or sample is reused.
+The exact-depth three-lane Native construction regression passes all nine build
+steps in50m07s. The frozen pre-correction verifier independently reconstructs all
+three lanes and12 actual artifact hashes, and rejects five deliberate path, role,
+exit, raw-stream and recipe substitutions. This is sample-free engineering proof;
+no historical certification is transferred to a corrected candidate.
+
+The separate source-integrity rejection was a real index-file mutation. Replaying
+the committed observer on a private copy reproduces the retained failed index
+exactly. Across2356 entries, only cached creation-time seconds/nanoseconds,
+device and inode fields change, together with the checksum; all other bytes,
+including extensions, stay identical. Git's own staged-entry projection confirms
+unchanged paths, object identities and modes. Native `git status` was refreshing
+the stat cache and replacing the index while reporting a clean worktree. The
+isolated worktree has its own index, unlike the primary source index held by the
+outer campaign's lease. The identity probe now explicitly disables optional Git
+writes. The frozen-source guard is unchanged: the corrected probe preserves its
+full digest, while byte-identical node replacement still fails that guard.
+Unstaged source, staged blob/mode changes and staged removal remain dirty.
+
+Focused verification passes189 WSL tests and189 Native tests with12 declared
+platform skips. These are component results, not whole-profile certification.
+The updated unfiltered repository census discovers1893 tests with no import
+errors; it has not yet executed that whole suite. The registered performance
+identity refresh and artifact-integrity check pass without recalibration or any
+generated-output change. The first Native test invocation and direct build
+diagnostic retain sandbox temporary-directory permission failures; the tests
+pass with a workspace-local temporary directory. The first corrected-temp
+diagnostic fixture was21 characters deeper than the actual Release source and
+retains its later linker failure. The successful fresh construction uses the
+exact actual source-root depth and process-local workspace temporary directories.
+Complete governance and repository hygiene also pass. No host setting or
+performance acceptance rule changes.
+
+The owner authorizes bounded correction of these two blockers and fresh
+certification after their independent verification. Existing accepted results
+retain their original source identity and cannot certify the corrected source.
+The proposed three-pin equivalence substitution was not established or approved;
+the existing source-distinct campaign and actual hosted verification remain
+required. The October27 18:00CDT event is a mandatory status/decision checkpoint,
+not authority to interrupt healthy execution. H08 remains OPEN.

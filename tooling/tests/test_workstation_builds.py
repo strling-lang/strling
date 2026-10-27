@@ -1,6 +1,10 @@
-"""Synthetic Git namespace routing only; no compiler or native worker executes."""
+"""Build routing and read-only Git identity; no native workload executes."""
 
+import hashlib
+import os
 from pathlib import Path
+import struct
+import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -8,6 +12,7 @@ from unittest.mock import patch
 from tooling import performance_resource_certification as authority
 from tooling import workstation_builds as builds
 from tooling import workstation_campaign as campaign
+from tooling import workstation_certification as gateway
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -84,6 +89,95 @@ class WorkstationGitRoutingTests(unittest.TestCase):
         self.assertEqual(
             command[5:], ["--no-optional-locks", "archive", "--format=zip", "a" * 40]
         )
+
+
+class ReadOnlyIdentityTests(unittest.TestCase):
+    def git(self, *args):
+        return subprocess.check_output(
+            ["git", "--no-optional-locks", *args], cwd=self.root, env=self.env
+        )
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory(
+            dir=ROOT / "target", prefix="atomic-readonly-index-"
+        )
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        self.env = dict(os.environ, GIT_OPTIONAL_LOCKS="1")
+        self.env.pop("GIT_INDEX_FILE", None)
+        self.git("init", "--quiet")
+        self.git("config", "user.name", "Atomic fixture")
+        self.git("config", "user.email", "fixture@example.invalid")
+        self.git("config", "core.autocrlf", "false")
+        (self.root / "tracked.txt").write_bytes(b"original\n")
+        self.git("add", "tracked.txt")
+        self.git("-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "Fixture")
+        self.commit = self.git("rev-parse", "HEAD").decode().strip()
+        self.index = self.root / ".git/index"
+
+    def probe(self, dirty):
+        before = self.index.read_bytes()
+        identity = self.index.stat().st_ino
+        with patch.dict(os.environ, self.env, clear=True):
+            self.assertEqual(authority._git_identity(self.root), (self.commit, dirty))
+        self.assertEqual(self.index.read_bytes(), before)
+        self.assertEqual(self.index.stat().st_ino, identity)
+
+    def test_clean_identity_does_not_refresh_stale_index_stat_cache(self):
+        data = bytearray(self.index.read_bytes())
+        self.assertEqual(struct.unpack(">I", data[4:8])[0], 2)
+        # Invalidate cached filesystem metadata without changing entry mode,
+        # object identity, path, flags or source bytes. Optional status refresh
+        # would replace this index even though it reports a clean worktree.
+        for offset in (12, 16, 20, 24, 28, 32):
+            data[offset : offset + 4] = b"\0" * 4
+        data[-20:] = hashlib.sha1(data[:-20]).digest()
+        self.index.write_bytes(data)
+        self.probe(False)
+
+    def test_unstaged_source_change_remains_dirty_without_index_write(self):
+        (self.root / "tracked.txt").write_bytes(b"changed\n")
+        self.probe(True)
+
+    def test_staged_blob_change_remains_dirty_without_index_write(self):
+        (self.root / "tracked.txt").write_bytes(b"changed\n")
+        self.git("add", "tracked.txt")
+        self.probe(True)
+
+    def test_staged_mode_change_remains_dirty_without_index_write(self):
+        self.git("update-index", "--chmod=+x", "tracked.txt")
+        self.probe(True)
+
+    def test_staged_removal_remains_dirty_without_index_write(self):
+        self.git("update-index", "--force-remove", "tracked.txt")
+        self.probe(True)
+
+
+class NativeBuildPathTests(unittest.TestCase):
+    def test_isolated_release_prefix_leaves_room_for_failed_linker_outputs(self):
+        root = Path(
+            "D:/Projects/strling-lang/strling/.cert/production-certification/"
+            "0123456789ab-20260101T000000Z/source"
+        )
+        first = gateway.acquisition_directory(root)
+        second = gateway.acquisition_directory(root)
+        self.assertNotEqual(first, second)
+        self.assertEqual(first.parent, root / "target")
+        for target in (
+            "reference/harness/target",
+            "reference/source/core/internal/target",
+            "reference/source/bindings/interop/target",
+        ):
+            with self.subTest(target=target):
+                output = (
+                    first
+                    / target
+                    / (
+                        "release/build/proc-macro2-cd35bd4de16d1eb6/"
+                        "build_script_build-cd35bd4de16d1eb6.exe"
+                    )
+                )
+                self.assertLess(len(str(output)), 260)
 
 
 if __name__ == "__main__":

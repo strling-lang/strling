@@ -1901,14 +1901,20 @@ def _git_invocation(root: Path, *arguments: str) -> list[str]:
 
 def _git_identity(root: Path = ROOT) -> tuple[str, bool]:
     commit = subprocess.run(
-        _git_invocation(root, "rev-parse", "HEAD"),
+        _git_invocation(root, "--no-optional-locks", "rev-parse", "HEAD"),
         cwd=root,
         check=True,
         capture_output=True,
         text=True,
     ).stdout.strip()
     status = subprocess.run(
-        _git_invocation(root, "status", "--porcelain", "--untracked-files=normal"),
+        _git_invocation(
+            root,
+            "--no-optional-locks",
+            "status",
+            "--porcelain",
+            "--untracked-files=normal",
+        ),
         cwd=root,
         check=True,
         capture_output=True,

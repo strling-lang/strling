@@ -14,6 +14,16 @@ from tooling import workstation_performance as score
 METHOD_CHECK = "method:shared-workstation-v1"
 
 
+def acquisition_directory(root):
+    """Leave room for native linker outputs inside an isolated Release checkout.
+
+    Acquisition still creates this fresh directory exclusively; a collision is
+    rejected rather than reusing artifacts. Build recipes and workloads retain
+    their existing layout below this shorter, repository-owned prefix.
+    """
+    return Path(root) / "target" / ("wp-" + uuid.uuid4().hex[:16])
+
+
 def read_json(path):
     return reader.parse(Path(path).read_bytes())
 
@@ -176,7 +186,7 @@ def certify(
         )
     # A fresh directory and three independent builds are mandatory on every run,
     # including the independent Release invocation. Never load an earlier cohort.
-    directory = root / "target/workstation-performance" / str(uuid.uuid4())
+    directory = acquisition_directory(root)
     directory.parent.mkdir(exist_ok=True)
     rust = Path(
         os.environ.get(

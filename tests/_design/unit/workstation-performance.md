@@ -1,5 +1,19 @@
 # Test Design — Shared-workstation performance certification
 
+Native build placement must fit the isolated Release checkout as well as the
+primary checkout. Reproduce the Windows linker failure independently with one
+unchanged tiny source at long and short output paths, then construct the actual
+reference, candidate and slowdown build lanes at the shortened acquisition
+prefix without acquiring performance samples. Retain exact recipes, source and
+artifact hashes; do not change lane layouts, workloads or acceptance rules.
+
+Git identity observations must disable optional index writes even when the
+environment enables them. Exercise a clean index with stale stat-cache fields,
+unstaged source edits, staged blob/mode changes and staged removal. Each probe
+must preserve index bytes and node identity while still reporting real changes.
+Keep the frozen-source guard strict: this correction prevents the observer's
+metadata refresh rather than exempting index changes from source protection.
+
 The owner-authorized policy is `governance/workstation-performance-policy.json`.
 It supersedes laboratory isolation prerequisites only for its explicitly named
 context. The existing default laboratory worker and historical results retain

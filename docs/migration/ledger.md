@@ -1,5 +1,27 @@
 # Architecture Migration Ledger
 
+## H08 isolated Release failure and bounded correction — 2026-10-27
+
+Source `ca0d359a` passed Local38, PR80, readiness123 and authoritative Full126
+with125 passes and the sole existing license waiver. Its independent no-reuse
+Release failed before performance sampling: reference-harness LNK1104 and a
+separate Git-index integrity rejection. Preserve that failed source, its zero
+sample receipt and every accepted earlier result; none certifies a corrected
+candidate.
+
+The owner authorizes bounded remediation of those two blockers. Atomic tests
+identify native output-path length and an optional Git stat-cache refresh that
+replaces the index without changing staged content. The correction shortens only
+the fresh acquisition prefix and disables optional writes in the identity probe;
+the strict source guard, workloads and acceptance rules stay unchanged. Focused
+tests and the registered generated-family check pass. Exact-depth Native
+construction passes all three lanes and nine build steps in50m07s; the frozen
+independent reader verifies12 artifacts and rejects all five substitution attacks.
+No expensive profile has restarted. Checkpoint111 records the evidence and
+preserved diagnostic failures.
+H08 remains OPEN. October27 18:00CDT is a mandatory status/decision checkpoint,
+not authority to interrupt healthy execution.
+
 ## H08 synthetic atomic fixtures are confined to temporary roots
 
 On clean source `e35932f2fa472b35160159874e636652ea93b04f`, independent

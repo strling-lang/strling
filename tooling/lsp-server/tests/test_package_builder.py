@@ -2,6 +2,7 @@ import importlib.util
 import json
 import os
 import stat
+import subprocess
 import warnings
 import zipfile
 from pathlib import Path
@@ -18,6 +19,54 @@ SPEC = importlib.util.spec_from_file_location(
 assert SPEC is not None and SPEC.loader is not None
 package_extension = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(package_extension)
+
+
+def test_git_identity_reads_disable_optional_index_refresh(monkeypatch) -> None:
+    calls = []
+
+    def capture(arguments, **kwargs):
+        calls.append(arguments)
+        return subprocess.CompletedProcess(arguments, 0, b"clean\n", b"")
+
+    monkeypatch.setenv("GIT_OPTIONAL_LOCKS", "1")
+    monkeypatch.setattr(package_extension, "_tool", lambda *args: Path("git"))
+    monkeypatch.setattr(package_extension, "_run", capture)
+    assert package_extension._git(["status", "--porcelain"]) == "clean"
+    assert calls == [["git", "--no-optional-locks", "status", "--porcelain"]]
+
+
+def test_git_status_preserves_index_and_detects_content_changes(tmp_path, monkeypatch):
+    def git(*arguments):
+        return subprocess.run(
+            ["git", "--no-optional-locks", *arguments],
+            cwd=tmp_path,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+    git("init", "--quiet")
+    source = tmp_path / "source.txt"
+    source.write_text("original\n")
+    git("add", "source.txt")
+    index = tmp_path / ".git" / "index"
+    before = (index.read_bytes(), index.stat().st_ino, index.stat().st_mtime_ns)
+    monkeypatch.setattr(package_extension, "REPOSITORY_ROOT", tmp_path)
+    original_run = package_extension._run
+    monkeypatch.setattr(
+        package_extension,
+        "_run",
+        lambda args, **kwargs: original_run(args, cwd=tmp_path, **kwargs),
+    )
+    monkeypatch.setenv("GIT_OPTIONAL_LOCKS", "1")
+    os.utime(
+        source, ns=(source.stat().st_atime_ns, source.stat().st_mtime_ns - 1000000000)
+    )
+    assert package_extension._git(["status", "--porcelain"]) == "A  source.txt"
+    assert (index.read_bytes(), index.stat().st_ino, index.stat().st_mtime_ns) == before
+    source.write_text("changed\n")
+    assert package_extension._git(["status", "--porcelain"]) == "AM source.txt"
+    assert (index.read_bytes(), index.stat().st_ino, index.stat().st_mtime_ns) == before
 
 
 def _contract() -> dict:

@@ -181,7 +181,7 @@ def _node_or_native_command(node: Path, entry: Path) -> list[str]:
 def _git(arguments: Sequence[str]) -> str:
     git = _tool("git", "GIT")
     return (
-        _run([str(git), *arguments], timeout=30.0)
+        _run([str(git), "--no-optional-locks", *arguments], timeout=30.0)
         .stdout.decode("utf-8", errors="strict")
         .strip()
     )

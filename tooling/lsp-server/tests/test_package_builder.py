@@ -36,6 +36,9 @@ def test_git_identity_reads_disable_optional_index_refresh(monkeypatch) -> None:
 
 
 def test_git_status_preserves_index_and_detects_content_changes(tmp_path, monkeypatch):
+    # Use the same PATH Git for fixture setup and package queries.
+    monkeypatch.delenv("GIT", raising=False)
+
     def git(*arguments):
         return subprocess.run(
             ["git", "--no-optional-locks", *arguments],

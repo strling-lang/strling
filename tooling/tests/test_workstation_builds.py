@@ -1,6 +1,7 @@
 """Build routing and read-only Git identity; no native workload executes."""
 
 import hashlib
+from contextlib import contextmanager
 import os
 from pathlib import Path
 import struct
@@ -15,6 +16,80 @@ from tooling import workstation_campaign as campaign
 from tooling import workstation_certification as gateway
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+class CanonicalBuildExecutionTests(unittest.TestCase):
+    def test_commands_use_one_canonical_lane_and_keep_external_tool_identity(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / "target") as temporary:
+            lane = Path(temporary) / "physical-lane"
+            lane.mkdir()
+            canonical = Path(temporary) / "canonical-lane"
+            tool = Path(temporary) / "pinned-cargo.exe"
+            command = [
+                str(tool),
+                "build",
+                "--manifest-path",
+                str(lane / "harness/Cargo.toml"),
+            ]
+
+            @contextmanager
+            def mapping(directory):
+                self.assertEqual(directory, lane)
+                yield canonical
+
+            with (
+                patch.object(authority, "_canonical_build_root", mapping),
+                patch.object(
+                    builds.subprocess,
+                    "run",
+                    return_value=subprocess.CompletedProcess([], 0),
+                ) as run,
+            ):
+                builds._run(
+                    command,
+                    root=ROOT,
+                    directory=lane,
+                    name="probe",
+                    environment={"PIN": "kept"},
+                )
+            self.assertEqual(
+                run.call_args.args[0],
+                [
+                    str(tool),
+                    "build",
+                    "--manifest-path",
+                    str(canonical / "harness/Cargo.toml"),
+                ],
+            )
+            self.assertEqual(run.call_args.kwargs["cwd"], canonical)
+            self.assertEqual(run.call_args.kwargs["env"], {"PIN": "kept"})
+
+    def test_busy_canonical_root_fails_before_any_compiler_launch(self):
+        with tempfile.TemporaryDirectory(dir=ROOT / "target") as temporary:
+            lane = Path(temporary)
+
+            @contextmanager
+            def busy(_directory):
+                raise ValueError("canonical root occupied")
+                yield  # pragma: no cover
+
+            with (
+                patch.object(authority, "_canonical_build_root", busy),
+                patch.object(
+                    builds.subprocess,
+                    "run",
+                    return_value=subprocess.CompletedProcess([], 0),
+                ) as run,
+            ):
+                with self.assertRaisesRegex(ValueError, "canonical root occupied"):
+                    builds._run(
+                        ["cargo", "build"],
+                        root=ROOT,
+                        directory=lane,
+                        name="busy",
+                        environment={},
+                    )
+                run.assert_not_called()
 
 
 class WorkstationGitRoutingTests(unittest.TestCase):

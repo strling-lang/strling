@@ -22,18 +22,30 @@ def save(path, value):
 
 
 def _run(command, *, root, directory, name, environment):
+    from tooling.performance_resource_certification import _canonical_build_root
+
     with (
         (directory / (name + ".stdout")).open("xb") as stdout,
         (directory / (name + ".stderr")).open("xb") as stderr,
     ):
-        result = subprocess.run(
-            command,
-            cwd=root,
-            env=environment,
-            stdout=stdout,
-            stderr=stderr,
-            timeout=1800,
-        )
+        with _canonical_build_root(directory) as build_root:
+            # Cargo package paths and compiler arguments must be stable before
+            # code generation; remapping only embedded debug paths is too late.
+            command = [
+                str(build_root / Path(argument).relative_to(directory))
+                if Path(argument).is_absolute()
+                and Path(argument).is_relative_to(directory)
+                else argument
+                for argument in command
+            ]
+            result = subprocess.run(
+                command,
+                cwd=build_root,
+                env=environment,
+                stdout=stdout,
+                stderr=stderr,
+                timeout=1800,
+            )
     save(
         directory / (name + ".json"),
         dict(
@@ -65,6 +77,8 @@ def build_lane(
     copied manifest are materialized. This is explicitly a mixed-source build.
     The caller retains source ownership and verifies provenance before and after.
     """
+    from tooling.performance_resource_certification import WINDOWS_CANONICAL_BUILD_DRIVE
+
     root, directory, harness_root = map(Path, (root, directory, harness_root))
     if not all(p.is_absolute() for p in (root, directory, harness_root)):
         raise ValueError("absolute roots required")
@@ -73,8 +87,11 @@ def build_lane(
     environment = dict(os.environ, RUSTC=str(rustc), CARGO_NET_OFFLINE="true")
     environment["CARGO_INCREMENTAL"] = "0"
     environment.pop("RUSTFLAGS", None)
+    compiler_root = (
+        Path(f"{WINDOWS_CANONICAL_BUILD_DRIVE}/") if os.name == "nt" else directory
+    )
     build_flags = [
-        f"--remap-path-prefix={directory}=C:/strling-workstation-build",
+        f"--remap-path-prefix={compiler_root}=C:/strling-workstation-build",
         "-C",
         "link-arg=/Brepro",
         "-C",
@@ -154,7 +171,8 @@ def build_lane(
         needle = 'path = "' + original + '"'
         if manifest.count(needle) != 1:
             raise ValueError("unreviewed harness dependency layout")
-        manifest = manifest.replace(needle, 'path = "' + target.as_posix() + '"')
+        dependency = "../" + target.relative_to(directory).as_posix()
+        manifest = manifest.replace(needle, 'path = "' + dependency + '"')
     (harness / "Cargo.toml").write_text(manifest, encoding="utf-8")
     (harness / "Cargo.lock").write_bytes(
         (harness_root / HARNESS / "Cargo.lock").read_bytes()

@@ -534,13 +534,12 @@ mod tests {
     use std::process::Stdio;
 
     pub(super) fn fixture_command(kind: &str, piped: bool) -> (Command, PathBuf) {
-        let marker = std::env::current_dir()
-            .unwrap()
-            .join("target")
-            .join(format!(
-                "controlled-spawn-{}-{kind}.marker",
-                std::process::id()
-            ));
+        // Native qualification also runs from an isolated canonical build root.
+        // Its marker must not depend on a repository target directory existing.
+        let marker = std::env::temp_dir().join(format!(
+            "controlled-spawn-{}-{kind}.marker",
+            std::process::id()
+        ));
         assert!(!marker.exists(), "test attempt marker already exists");
         let mut command = Command::new(std::env::current_exe().unwrap());
         // Works both standalone and within the runner's test module.

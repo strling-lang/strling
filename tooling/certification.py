@@ -16,7 +16,8 @@ from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError, ValidationError
 
 
-ARTIFACT_SCHEMA_VERSION = "1.0.0"
+ARTIFACT_SCHEMA_VERSION = "2.0.0"
+CERTIFICATION_CONTRACT = "strling-deterministic-certification-v1"
 ARTIFACT_KIND = "strling-profile-certification"
 RESULT_STATUSES = (
     "passed",
@@ -253,6 +254,7 @@ def build_certification_artifact(
     aggregate_counts = {status: counts.get(status, 0) for status in RESULT_STATUSES}
     repository = dict(resolved_repository_state or repository_state(root))
     deterministic_evidence: dict[str, object] = {
+        "certification_contract": CERTIFICATION_CONTRACT,
         "repository": repository,
         "profile": {
             "id": profile_id,

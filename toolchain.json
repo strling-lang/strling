@@ -673,9 +673,29 @@
                     "--json"
                 ],
                 "network": "offline"
+            },
+            "functional_resource_certification": {
+                "kind": "repository",
+                "component": "repository",
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.functional_resource_certification",
+                    "--profile",
+                    "pull-request",
+                    "--json"
+                ],
+                "network": "offline",
+                "result_contract": "certification-result-v1",
+                "result_operation_id": "certification.functional-resource",
+                "result_transport": "atomic-artifact-v1"
             }
         },
-        "profile_prefix": [{ "operation": "generated_integrity" }],
+        "profile_prefix": [
+            {
+                "operation": "generated_integrity"
+            }
+        ],
         "profiles": {
             "local": {
                 "definition_version": "1.16.0",
@@ -723,9 +743,6 @@
                     },
                     {
                         "operation": "deep_quality_local_certification"
-                    },
-                    {
-                        "operation": "performance_resource_local_certification"
                     },
                     {
                         "operation": "interop_contract_check"
@@ -828,10 +845,7 @@
                         "operation": "deep_quality_pull_request_certification"
                     },
                     {
-                        "operation": "performance_resource_local_certification"
-                    },
-                    {
-                        "operation": "performance_resource_pull_request_certification"
+                        "operation": "functional_resource_certification"
                     },
                     {
                         "operation": "interop_contract_check"
@@ -1006,13 +1020,7 @@
                         "operation": "deep_quality_full_certification"
                     },
                     {
-                        "operation": "performance_resource_local_certification"
-                    },
-                    {
-                        "operation": "performance_resource_pull_request_certification"
-                    },
-                    {
-                        "operation": "performance_resource_full_certification"
+                        "operation": "functional_resource_certification"
                     },
                     {
                         "operation": "interop_contract_check"
@@ -1254,13 +1262,7 @@
                         "operation": "deep_quality_full_certification"
                     },
                     {
-                        "operation": "performance_resource_local_certification"
-                    },
-                    {
-                        "operation": "performance_resource_pull_request_certification"
-                    },
-                    {
-                        "operation": "performance_resource_full_certification"
+                        "operation": "functional_resource_certification"
                     },
                     {
                         "operation": "interop_contract_check"

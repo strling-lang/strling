@@ -51,7 +51,9 @@ MANIFEST_SCHEMA_PATH = Path(
     "governance/schemas/product-certification-producer-manifest.schema.json"
 )
 MANIFEST_PATH = Path("tests/certification/product/1.0/producer-manifest.json")
-FIXTURE_PATH = Path("tests/certification/product/1.0/fixtures/valid-product.json")
+FIXTURE_PATH = Path(
+    "tests/certification/product/1.0/fixtures/valid-deterministic-product.json"
+)
 MUTATIONS_PATH = Path("tests/certification/product/1.0/fixtures/mutations.json")
 TOOLCHAIN_PATH = Path("toolchain.json")
 RESULT_STATUSES = (

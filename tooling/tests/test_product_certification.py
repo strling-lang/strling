@@ -18,6 +18,7 @@ from tooling.local_certification_attestation import contract_result
 from tooling.profile_composition import resolve_profile
 from tooling.product_certification import (
     ProductCertificationError,
+    expected_profile_result_ids,
     aggregate_product_status,
     build_product_artifact,
     render_product_report,
@@ -41,7 +42,7 @@ MANIFEST_SCHEMA_PATH = (
     ROOT / "governance/schemas/product-certification-producer-manifest.schema.json"
 )
 MANIFEST_PATH = PRODUCT_ROOT / "producer-manifest.json"
-VALID_FIXTURE_PATH = PRODUCT_ROOT / "fixtures/valid-product.json"
+VALID_FIXTURE_PATH = PRODUCT_ROOT / "fixtures/valid-deterministic-product.json"
 MUTATIONS_PATH = PRODUCT_ROOT / "fixtures/mutations.json"
 FIXTURE_REPOSITORY = {
     "commit": "1111111111111111111111111111111111111111",
@@ -90,6 +91,12 @@ def apply_mutation(base: dict[str, Any], mutation: dict[str, Any]) -> dict[str, 
 
 
 class ProductCertificationContractTests(unittest.TestCase):
+    def test_historical_fixture_is_not_reinterpreted(self) -> None:
+        historical = load_json(PRODUCT_ROOT / "fixtures/valid-product.json")
+        self.assertFalse(
+            Draft202012Validator(self.artifact_schema).is_valid(historical)
+        )
+
     @classmethod
     def setUpClass(cls) -> None:
         cls.artifact_schema = cast(dict[str, Any], load_json(ARTIFACT_SCHEMA_PATH))
@@ -102,7 +109,7 @@ class ProductCertificationContractTests(unittest.TestCase):
         Draft202012Validator.check_schema(self.artifact_schema)
         Draft202012Validator.check_schema(self.manifest_schema)
 
-    def test_checked_in_manifest_and_positive_fixture_validate(self) -> None:
+    def test_current_manifest_and_deterministic_fixture_validate(self) -> None:
         Draft202012Validator(self.manifest_schema).validate(self.manifest)
         Draft202012Validator(self.artifact_schema).validate(self.fixture)
 
@@ -408,10 +415,28 @@ class ProductCertificationImplementationTests(unittest.TestCase):
             dict[str, Any], self.product_artifact["deterministic_evidence"]
         )
         coverage = cast(dict[str, Any], deterministic["coverage"])
-        self.assertEqual(126, coverage["expected_result_count"])
-        self.assertEqual(126, coverage["observed_result_count"])
-        self.assertEqual(34, coverage["expected_structured_producer_count"])
-        self.assertEqual(34, coverage["observed_structured_producer_count"])
+        self.assertEqual(
+            len(expected_profile_result_ids(self.toolchain)),
+            coverage["expected_result_count"],
+        )
+        self.assertEqual(
+            len(expected_profile_result_ids(self.toolchain)),
+            coverage["observed_result_count"],
+        )
+        self.assertEqual(
+            sum(
+                row.get("result_contract") is not None
+                for row in self.manifest["producers"]
+            ),
+            coverage["expected_structured_producer_count"],
+        )
+        self.assertEqual(
+            sum(
+                row.get("result_contract") is not None
+                for row in self.manifest["producers"]
+            ),
+            coverage["observed_structured_producer_count"],
+        )
         self.assertEqual(4, len(cast(list[object], deterministic["claims"])))
         self.assertEqual("passed", deterministic["aggregate"]["status"])
 
@@ -473,14 +498,23 @@ class ProductCertificationImplementationTests(unittest.TestCase):
         authority = cast(dict[str, Any], deterministic["authority"])
         source = cast(dict[str, Any], authority["source_profile"])
         self.assertEqual("release", source["profile_id"])
-        self.assertEqual(126, deterministic["coverage"]["observed_result_count"])
+        self.assertEqual(
+            len(expected_profile_result_ids(self.toolchain)),
+            deterministic["coverage"]["observed_result_count"],
+        )
         self.assertEqual("passed", deterministic["aggregate"]["status"])
 
     def test_human_report_is_derived_only_from_the_machine_artifact(self) -> None:
         report = render_product_report(self.product_artifact)
         self.assertIn("# STRling Product Certification", report)
-        self.assertIn("126/126 results", report)
-        self.assertIn("34/34 structured producers", report)
+        self.assertIn(
+            f"{len(expected_profile_result_ids(self.toolchain))}/{len(expected_profile_result_ids(self.toolchain))} results",
+            report,
+        )
+        count = sum(
+            row.get("result_contract") is not None for row in self.manifest["producers"]
+        )
+        self.assertIn(f"{count}/{count} structured producers", report)
         self.assertIn("`structured.essential-five-contract`", report)
         self.assertNotIn("stdout", report.casefold())
         self.assertNotIn("test name", report.casefold())
@@ -504,8 +538,17 @@ class ProductCertificationImplementationTests(unittest.TestCase):
         self.assertEqual("certification.product-authority", result["operation_id"])
         self.assertEqual("passed", result["status"])
         details = cast(dict[str, Any], result["details"])
-        self.assertEqual(126, details["profile_result_count"])
-        self.assertEqual(34, details["structured_producer_count"])
+        self.assertEqual(
+            len(expected_profile_result_ids(self.toolchain)),
+            details["profile_result_count"],
+        )
+        self.assertEqual(
+            sum(
+                row.get("result_contract") is not None
+                for row in self.manifest["producers"]
+            ),
+            details["structured_producer_count"],
+        )
         self.assertEqual(0, details["prose_authority_inputs"])
         self.assertEqual(
             profile_definition_fingerprint(

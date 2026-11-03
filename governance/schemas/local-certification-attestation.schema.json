@@ -50,12 +50,16 @@
                     "type": "object",
                     "additionalProperties": false,
                     "required": [
+                        "scope",
                         "toolchain_sha256",
                         "profile_registry_fingerprint",
                         "operation_registry_fingerprint",
                         "trust_policy_sha256"
                     ],
                     "properties": {
+                        "scope": {
+                            "const": "strling-deterministic-certification-v1"
+                        },
                         "toolchain_sha256": { "$ref": "#/$defs/sha256" },
                         "profile_registry_fingerprint": {
                             "$ref": "#/$defs/sha256"
@@ -170,8 +174,8 @@
                 },
                 "authenticated_sample_counts": {
                     "type": "object",
-                    "minProperties": 2,
-                    "additionalProperties": { "type": "integer", "minimum": 1 }
+                    "maxProperties": 0,
+                    "additionalProperties": false
                 },
                 "real_engine_evidence": {
                     "type": "object",

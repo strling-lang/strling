@@ -18,6 +18,7 @@ from unittest.mock import patch
 import yaml
 
 from tooling import performance_resource_certification as performance
+from tooling import functional_resource_certification as functional
 from tooling import adversarial_semantic_audit as audit
 from tooling import production_certification as production
 from tooling import product_certification as product
@@ -177,7 +178,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                 "purpose": f"test {name}",
                 "network_policy": "allowed",
                 "operations": [
-                    {"operation": "performance_resource_full_certification"},
+                    {"operation": "functional_resource_certification"},
                     {"operation": "adversarial_real_engine_equivalence"},
                     {"operation": "required_security_check"},
                 ],
@@ -189,13 +190,13 @@ class LocalCertificationAttestationTests(unittest.TestCase):
             "policy": {
                 "profiles": self.profiles,
                 "operation_registry": {
-                    "performance_resource_full_certification": {
+                    "functional_resource_certification": {
                         "kind": "repository",
                         "component": "repository",
                         "result_contract": "certification-result-v1",
-                        "result_operation_id": "certification.performance-resource-full",
+                        "result_operation_id": "certification.functional-resource",
                         "result_transport": "atomic-artifact-v1",
-                        "command": ["performance", "--profile", "full"],
+                        "command": ["functional-resource", "--profile", "pull-request"],
                     },
                     "adversarial_real_engine_equivalence": {
                         "kind": "repository",
@@ -353,7 +354,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         performance_result, integrity = self._performance_result(profile)
         return [
             {
-                "operation": "performance_resource_full_certification",
+                "operation": "functional_resource_certification",
                 "component": "repository",
                 "status": "passed",
                 "command": ["performance"],
@@ -391,6 +392,58 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         ]
 
     def _performance_result(self, profile: str) -> tuple[dict, dict]:
+        checks = functional.execute_checks(
+            lambda command: {
+                "command": command,
+                "exit_code": 0,
+                "stdout": "fixture output",
+                "stderr": "",
+                "stdout_sha256": hashlib.sha256(b"fixture output").hexdigest(),
+                "stderr_sha256": hashlib.sha256(b"").hexdigest(),
+            }
+        )
+        result = functional.make_evidence(self.source_sha, "pull-request", checks)
+        execution = {
+            **transport.execution_context(
+                producer_id="functional_resource_certification@repository",
+                operation_id="certification.functional-resource",
+                source_sha=self.source_sha,
+                invocation_id=("3" if profile == "full" else "4") * 32,
+                certification_profile=profile,
+                producer_profile="pull-request",
+            ),
+            "artifact_kind": "structured-operation-result",
+            "result_contract": "certification-result-v1",
+            "process_exit_code": 0,
+            "terminal_status": "passed",
+            "environment_identity": transport.extract_environment_identity(result),
+            "performance_evidence_identity": result["evidence_fingerprint"],
+            "sample_consumption": transport.zero_sample_consumption(),
+            "structured_result": result,
+            "integrity_error": None,
+        }
+        execution["artifact_fingerprint"] = transport.document_fingerprint(execution)
+        root = self.repository if profile == "full" else self.production_worktree
+        directory = (
+            root / "target/certification-operation-results" / execution["invocation_id"]
+        )
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / "result.json").write_text(json.dumps(execution))
+        streams = {
+            "stdout": transport.atomic_write_stream(
+                directory / "stdout.txt", json.dumps(result)
+            ),
+            "stderr": transport.atomic_write_stream(directory / "stderr.txt", ""),
+        }
+        integrity = {
+            key: value
+            for key, value in execution.items()
+            if key not in ("structured_result", "integrity_error")
+        }
+        integrity.update(artifact_directory=str(directory), streams=streams)
+        return result, integrity
+
+    def _historical_performance_result(self, profile: str) -> tuple[dict, dict]:
         manifest = json.loads((ROOT / performance.MANIFEST_PATH).read_text())
         baseline = json.loads((ROOT / performance.BASELINE_PATH).read_text())
         environment_identity = performance.environment_identity_fingerprint(
@@ -667,7 +720,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                 producer_id="performance_resource_full_certification@repository",
                 operation_id="certification.performance-resource-full",
                 source_sha=self.source_sha,
-                invocation_id=("3" if profile == "full" else "4") * 32,
+                invocation_id=("5" if profile == "full" else "6") * 32,
                 certification_profile=profile,
                 producer_profile="full",
             ),
@@ -793,6 +846,28 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         self._write_resigned(attestation)
 
     def _resign_full_profile(self, mutate) -> None:
+        if self._testMethodName.startswith("test_historical_performance_"):
+            # Standalone historical measurement-reader coverage. These samples
+            # are synthetic diagnostics, never signed deterministic evidence.
+            structured, integrity = self._historical_performance_result("full")
+            value = {
+                "operations": [
+                    {
+                        "structured_evidence": structured,
+                        "execution_integrity": integrity,
+                    }
+                ]
+            }
+            mutate(value)
+            structured["deterministic_evidence"]["checks"] = structured["checks"]
+            structured["evidence_fingerprint"] = object_sha256(
+                structured["deterministic_evidence"]
+            )
+            integrity["performance_evidence_identity"] = structured[
+                "evidence_fingerprint"
+            ]
+            self.historical_reader_input = (structured, integrity)
+            return
         relative = "evidence/profile-full/full.json"
         artifact = json.loads((self.bundle / relative).read_text())
         mutate(artifact["deterministic_evidence"])
@@ -802,7 +877,10 @@ class LocalCertificationAttestationTests(unittest.TestCase):
             if not isinstance(integrity, dict):
                 continue
             structured = operation["structured_evidence"]
-            structured["deterministic_evidence"]["checks"] = structured["checks"]
+            structured["deterministic_evidence"]["resources"]["checks"] = [
+                {"id": row["id"], "steps": row["details"]["steps"]}
+                for row in structured["checks"]
+            ]
             structured["evidence_fingerprint"] = object_sha256(
                 structured["deterministic_evidence"]
             )
@@ -847,6 +925,15 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         self._write_resigned(attestation)
 
     def _verify(self) -> dict:
+        if hasattr(self, "historical_reader_input"):
+            from tooling.local_certification_attestation import (
+                _validate_performance_measurements,
+            )
+
+            _validate_performance_measurements(
+                self.repository, self.source_sha, *self.historical_reader_input
+            )
+            return {"status": "passed", "scope": "historical-reader-only"}
         return verify_attestation(
             repository_root=self.repository,
             trust_root=self.repository,
@@ -882,52 +969,36 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "invocation-bound"):
             self._verify()
 
-    def test_one_sample_with_consistent_signed_fingerprints_is_rejected(self) -> None:
+    def test_performance_samples_cannot_enter_deterministic_evidence(self) -> None:
         def mutate(value):
-            operation = value["operations"][0]
-            measurement = next(
-                item
-                for item in operation["structured_evidence"]["checks"]
-                if item["id"].startswith("measurement:latency:")
+            value["operations"][0]["execution_integrity"]["sample_consumption"].update(
+                state="consumed", authenticated_sample_count=1, completed_sample_count=1
             )
-            measurement["details"]["samples"] = measurement["details"]["samples"][:1]
-            operation["execution_integrity"]["sample_consumption"][
-                "authenticated_sample_count"
-            ] -= 63
-            operation["execution_integrity"]["sample_consumption"][
-                "completed_sample_count"
-            ] -= 63
 
         self._resign_full_profile(mutate)
-        with self.assertRaisesRegex(AttestationError, "sample denominator"):
+        with self.assertRaises(AttestationError):
             self._verify()
 
-    def test_missing_measurement_coordinate_is_rejected(self) -> None:
+    def test_missing_functional_resource_obligation_is_rejected(self) -> None:
         def mutate(value):
-            checks = value["operations"][0]["structured_evidence"]["checks"]
-            checks.pop(
-                next(
-                    index
-                    for index, item in enumerate(checks)
-                    if item["id"].startswith("measurement:")
-                )
-            )
+            value["operations"][0]["structured_evidence"]["checks"].pop()
 
         self._resign_full_profile(mutate)
-        with self.assertRaisesRegex(AttestationError, "coordinate denominator"):
+        with self.assertRaisesRegex(
+            AttestationError, "functional resource denominator"
+        ):
             self._verify()
 
-    def test_false_passing_statistics_are_rejected(self) -> None:
+    def test_false_passing_functional_resource_command_is_rejected(self) -> None:
         def mutate(value):
-            measurement = next(
-                item
-                for item in value["operations"][0]["structured_evidence"]["checks"]
-                if item["id"].startswith("measurement:")
-            )
-            measurement["details"]["statistics"]["median"] += 1
+            value["operations"][0]["structured_evidence"]["checks"][0]["details"][
+                "steps"
+            ][0]["exit_code"] = 1
 
         self._resign_full_profile(mutate)
-        with self.assertRaisesRegex(AttestationError, "statistics or acceptance"):
+        with self.assertRaisesRegex(
+            AttestationError, "functional resource command failed"
+        ):
             self._verify()
 
     def test_stale_atomic_source_is_rejected(self) -> None:
@@ -1370,10 +1441,10 @@ class LocalCertificationAttestationTests(unittest.TestCase):
     def test_performance_sample_count_altered_is_rejected(self) -> None:
         self._resign_payload_mutation(
             lambda payload: payload["authenticated_sample_counts"].update(
-                {next(iter(payload["authenticated_sample_counts"])): 1}
+                {"full:performance_resource_full_certification": 1}
             )
         )
-        with self.assertRaisesRegex(AttestationError, "sample count mismatch"):
+        with self.assertRaises(AttestationError):
             verify_attestation(
                 repository_root=self.repository,
                 trust_root=self.repository,
@@ -1428,10 +1499,14 @@ class LocalCertificationAttestationTests(unittest.TestCase):
             ]
 
         self._resign_full_profile(mutate)
-        with self.assertRaisesRegex(AttestationError, "successful check denominator"):
+        with self.assertRaisesRegex(
+            AttestationError, "functional resource denominator"
+        ):
             self._verify()
 
-    def test_performance_latency_elapsed_must_normalize_to_samples(self) -> None:
+    def test_historical_performance_latency_elapsed_must_normalize_to_samples(
+        self,
+    ) -> None:
         def mutate(value):
             details = next(
                 check["details"]
@@ -1444,7 +1519,9 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "batch normalization"):
             self._verify()
 
-    def test_performance_cli_control_sample_count_is_authenticated(self) -> None:
+    def test_historical_performance_cli_control_sample_count_is_authenticated(
+        self,
+    ) -> None:
         def mutate(value):
             details = next(
                 check["details"]
@@ -1457,7 +1534,9 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "control sample denominator"):
             self._verify()
 
-    def test_performance_cli_control_elapsed_must_normalize_to_samples(self) -> None:
+    def test_historical_performance_cli_control_elapsed_must_normalize_to_samples(
+        self,
+    ) -> None:
         def mutate(value):
             details = next(
                 check["details"]
@@ -1470,7 +1549,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "control batch normalization"):
             self._verify()
 
-    def test_performance_cli_pair_ratios_are_reconstructed(self) -> None:
+    def test_historical_performance_cli_pair_ratios_are_reconstructed(self) -> None:
         def mutate(value):
             details = next(
                 check["details"]
@@ -1483,7 +1562,9 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "statistics or acceptance"):
             self._verify()
 
-    def test_performance_latency_batch_must_equal_governed_batch(self) -> None:
+    def test_historical_performance_latency_batch_must_equal_governed_batch(
+        self,
+    ) -> None:
         def mutate(value):
             details = next(
                 check["details"]
@@ -1506,13 +1587,17 @@ class LocalCertificationAttestationTests(unittest.TestCase):
                 for check in value["operations"][0]["structured_evidence"]["checks"]
                 if check["id"] == "resource:kernel-limits"
             )
-            details["steps"][0]["return_code"] = 1
+            details["steps"][0]["exit_code"] = 1
 
         self._resign_full_profile(mutate)
-        with self.assertRaisesRegex(AttestationError, "command or terminal"):
+        with self.assertRaisesRegex(
+            AttestationError, "functional resource command failed"
+        ):
             self._verify()
 
-    def test_performance_workload_observation_cannot_claim_isolation(self) -> None:
+    def test_historical_performance_workload_observation_cannot_claim_isolation(
+        self,
+    ) -> None:
         def mutate(value):
             details = next(
                 check["details"]
@@ -1525,7 +1610,9 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "workload isolation"):
             self._verify()
 
-    def test_performance_cpu_check_must_match_governed_placement(self) -> None:
+    def test_historical_performance_cpu_check_must_match_governed_placement(
+        self,
+    ) -> None:
         def mutate(value):
             check = value["operations"][0]["structured_evidence"]["checks"][0]
             check["details"]["effective_cpu_affinity"].append(0)
@@ -1534,7 +1621,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "CPU placement"):
             self._verify()
 
-    def test_performance_candidate_rebind_cannot_claim_normal_certification(
+    def test_historical_performance_candidate_rebind_cannot_claim_normal_certification(
         self,
     ) -> None:
         def mutate(value):
@@ -1549,7 +1636,9 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "baseline artifact identity"):
             self._verify()
 
-    def test_performance_conditioning_snapshot_is_independently_bound(self) -> None:
+    def test_historical_performance_conditioning_snapshot_is_independently_bound(
+        self,
+    ) -> None:
         def mutate(value):
             details = next(
                 check["details"]
@@ -1562,7 +1651,9 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         with self.assertRaisesRegex(AttestationError, "quiescence or snapshot"):
             self._verify()
 
-    def test_performance_controlled_regression_cannot_be_relabelled(self) -> None:
+    def test_historical_performance_controlled_regression_cannot_be_relabelled(
+        self,
+    ) -> None:
         def mutate(value):
             check = value["operations"][0]["structured_evidence"]["checks"][-1]
             check["details"]["comparison"]["status"] = "passed"

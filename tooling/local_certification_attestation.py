@@ -25,6 +25,7 @@ from jsonschema.exceptions import SchemaError, ValidationError
 
 try:
     from .certification import (
+        CERTIFICATION_CONTRACT,
         operation_registry_fingerprint,
         profile_definition_fingerprint,
         profile_registry_fingerprint,
@@ -35,6 +36,7 @@ except ImportError:  # pragma: no cover - direct script execution
     # only this verifier's package; candidate files remain data, never imports.
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
     from tooling.certification import (
+        CERTIFICATION_CONTRACT,
         operation_registry_fingerprint,
         profile_definition_fingerprint,
         profile_registry_fingerprint,
@@ -337,6 +339,15 @@ def _validate_atomic_evidence(
         or structured.get("schema_version") != definition["result_contract"]
     ):
         raise AttestationError("atomic structured evidence source or profile mismatch")
+    if operation["operation_id"] == "functional_resource_certification":
+        try:
+            _helper_module("functional_resource_certification").validate_evidence(
+                structured, source_sha=source_sha, profile=producer_profile
+            )
+        except (ValueError, KeyError, TypeError) as error:
+            raise AttestationError(
+                f"invalid functional resource evidence: {error}"
+            ) from error
     if operation["operation_id"] == "performance_resource_full_certification":
         policy = "laboratory-isolated-v1"
         if "--certification-policy" in command:
@@ -1154,17 +1165,23 @@ def _sample_counts(artifacts: Iterable[Mapping[str, Any]]) -> dict[str, int]:
             if not isinstance(consumption, dict):
                 continue
             count = consumption.get("authenticated_sample_count")
-            if isinstance(count, int):
+            if type(count) is int and count != 0:
                 counts[f"{profile}:{operation['operation_id']}"] = count
     return dict(sorted(counts.items()))
 
 
-def _require_authenticated_samples(counts: Mapping[str, int]) -> None:
-    for profile in ("full", "release"):
-        key = f"{profile}:performance_resource_full_certification"
-        if counts.get(key, 0) <= 0:
+def _require_deterministic_scope(artifacts: Iterable[Mapping[str, Any]]) -> None:
+    """Reject legacy or mixed-scope evidence; optional benchmarks stay separate."""
+    for artifact in artifacts:
+        evidence = artifact["deterministic_evidence"]
+        if evidence.get("certification_contract") != CERTIFICATION_CONTRACT:
+            raise AttestationError("incompatible certification scope")
+        if any(
+            item["operation_id"].startswith("performance_resource_")
+            for item in evidence["operations"]
+        ) or _sample_counts((artifact,)):
             raise AttestationError(
-                f"{profile} evidence has no authenticated governed performance samples"
+                "performance evidence is outside deterministic scope"
             )
 
 
@@ -1515,11 +1532,19 @@ def _verify_production_evidence(
         raise AttestationError(
             "production launcher aggregate differs from Release evidence"
         )
-    invocation = next(
+    invocations = [
         item["execution_integrity"]["invocation_id"]
         for item in release["deterministic_evidence"]["operations"]
-        if item["operation_id"] == "performance_resource_full_certification"
-    )
+        if isinstance(item.get("execution_integrity"), dict)
+    ]
+    # The current bundle transport has one flattened execution directory per
+    # profile. Reject ambiguous mappings rather than selecting an arbitrary
+    # producer or silently dropping evidence from additional producers.
+    if len(invocations) != 1:
+        raise AttestationError(
+            "Release requires exactly one preserved atomic invocation"
+        )
+    invocation = invocations[0]
     preserved = []
     for entry in entries:
         role = entry["role"]
@@ -1911,7 +1936,7 @@ def create_attestation(
             (full, release), repository_root, source_sha
         )
         sample_counts = _sample_counts((full, release))
-        _require_authenticated_samples(sample_counts)
+        _require_deterministic_scope((full, release))
         payload: dict[str, Any] = {
             "certification_state": "LOCALLY_CERTIFIED",
             "certified_source": {
@@ -1920,6 +1945,7 @@ def create_attestation(
                 "clean": True,
             },
             "certification_contract": {
+                "scope": CERTIFICATION_CONTRACT,
                 "toolchain_sha256": hashlib.sha256(toolchain_bytes).hexdigest(),
                 "profile_registry_fingerprint": profile_registry_fingerprint(profiles),
                 "operation_registry_fingerprint": operation_registry_fingerprint(
@@ -2137,6 +2163,7 @@ def verify_attestation(
     operations = toolchain["policy"]["operation_registry"]
     contract = payload["certification_contract"]
     expected_contract = {
+        "scope": CERTIFICATION_CONTRACT,
         "toolchain_sha256": hashlib.sha256(toolchain_bytes).hexdigest(),
         "profile_registry_fingerprint": profile_registry_fingerprint(profiles),
         "operation_registry_fingerprint": operation_registry_fingerprint(operations),
@@ -2205,7 +2232,7 @@ def verify_attestation(
     if payload["producer_invocation_ids"] != _producer_invocations(artifacts):
         raise AttestationError("producer invocation identity mismatch")
     reconstructed_samples = _sample_counts(artifacts)
-    _require_authenticated_samples(reconstructed_samples)
+    _require_deterministic_scope(artifacts)
     if payload["authenticated_sample_counts"] != reconstructed_samples:
         raise AttestationError("authenticated performance sample count mismatch")
     real_engine, runtimes = _real_engine_claim(artifacts, repository_root, source_sha)

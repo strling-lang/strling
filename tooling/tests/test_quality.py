@@ -759,13 +759,12 @@ class QualityRoutingTests(unittest.TestCase):
                 "governance",
                 "product_certification_authority",
                 "deep_quality_local_certification",
-                "performance_resource_local_certification",
                 "interop_contract_check",
                 "semantic_authority_check",
                 "migration_explanation_certification",
                 "lsp_package_contract_check",
             ],
-            [member["operation"] for member in local_members[:20]],
+            [member["operation"] for member in local_members[:19]],
         )
         self.assertEqual(
             [
@@ -1007,11 +1006,7 @@ class QualityRoutingTests(unittest.TestCase):
             toolchain.operation("deep_quality_full_certification")["command"],
         )
         self.assertEqual(
-            [
-                "performance_resource_local_certification",
-                "performance_resource_pull_request_certification",
-                "performance_resource_full_certification",
-            ],
+            [],
             [
                 operation
                 for operation in full_ids

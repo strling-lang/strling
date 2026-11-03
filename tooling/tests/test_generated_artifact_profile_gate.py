@@ -458,12 +458,28 @@ class GeneratedArtifactProfileGateTests(unittest.TestCase):
         self.assertEqual(COMMAND, definition["command"])
         self.assertEqual(RESULT_ID, definition["result_operation_id"])
         self.assertEqual("certification-result-v1", definition["result_contract"])
-        counts = {"local": 38, "pull-request": 80, "full": 126, "release": 126}
+        profiles = ("local", "pull-request", "full", "release")
         runner = QualityRunner(toolchain)
-        for profile, count in counts.items():
+        for profile in profiles:
             stages = runner._profile_stages(profile, None)
             self.assertEqual(GATE, stages[0].operation)
-            self.assertEqual(count, len(stages))
+            self.assertEqual(
+                len({(s.operation, s.component) for s in stages}), len(stages)
+            )
+            from tooling.profile_composition import resolve_profile
+
+            policy = json.loads((ROOT / "toolchain.json").read_text())["policy"]
+            expected = []
+            for member in resolve_profile(policy, profile)["operations"]:
+                operation = member["operation"]
+                registered = policy["operation_registry"][operation]
+                targets = (
+                    [registered["component"]]
+                    if registered["kind"] == "repository"
+                    else member["targets"]
+                )
+                expected.extend((operation, component) for component in targets)
+            self.assertEqual(expected, [(s.operation, s.component) for s in stages])
 
     def test_integrity_producer_cannot_waive_or_defer_mandatory_gate(self) -> None:
         for status in ("waived", "unavailable", "incomplete"):

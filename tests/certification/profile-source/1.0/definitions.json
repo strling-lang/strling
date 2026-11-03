@@ -8,11 +8,11 @@
         },
         {
             "path": "governance/schemas/product-certification-producer-manifest.schema.json",
-            "sha256": "9d93318c713827e181ec1454ac8a02541fb9d626ad99f00c9c884e312027a9db"
+            "sha256": "7373e272ae8c7460723883f30a852ef6d563911819b0872307efa2bc3563dc01"
         },
         {
             "path": "governance/schemas/profile-certification-artifact.schema.json",
-            "sha256": "2d3ca7e1eab69c1c415fc42a2eb4920702bba29663885298f2610d3b0f4cdb85"
+            "sha256": "ad5a9bed6e7bc4f2e768c849efe5ea015dac9f5f3037ca61f46da74e1d32e235"
         },
         {
             "path": "governance/schemas/profile-source-evidence.schema.json",
@@ -31,7 +31,7 @@
         "path": "governance/certification-evidence-dependency-graph.json",
         "sha256": "b2bbaf5123b86b81c9c4f8793fabd8ee8f78dfc669d69892c383611901467617"
     },
-    "evidence_fingerprint": "a935979a42e3b00ec82081ffe7f1ae546030e5109abc4d8e6f915fe245043ef1",
+    "evidence_fingerprint": "74fabb4bcf820653c4f336851ed4d68170deab85a1fed63acef3f09e42c76db3",
     "evidence_role": "identity-only",
     "producer": {
         "path": "tooling/profile_source_identity.py",
@@ -39,30 +39,30 @@
     },
     "profiles": [
         {
-            "definition_fingerprint": "c2049da0a3c1ce69a5912e7c3c61bc07facefc6a797daea4b0e170c91cfe18a0",
+            "definition_fingerprint": "00716be3158481476b33c49582918bcfefc7440677681e8bbf22ed73ffc8af7c",
             "definition_version": "1.16.0",
             "id": "local"
         },
         {
-            "definition_fingerprint": "933e11f2c255a7496255d51e576fa72de706caac1bae126397778671a2ae8684",
+            "definition_fingerprint": "08b44b6e3b922b1d9bf973fe0a5222cb956f58d8b070942d1f67778f11647cbb",
             "definition_version": "1.22.0",
             "id": "pull-request"
         },
         {
-            "definition_fingerprint": "3e13586d3611fe6bee2ac1792bc7d6b2b7c5b8e15f902af6e9c2772faab50355",
+            "definition_fingerprint": "3838262ebd8b7af770a8147259fc83789e43701b07aff8a05c87a2e7e4fe965e",
             "definition_version": "1.30.0",
             "id": "full"
         },
         {
-            "definition_fingerprint": "01dbb030ba6e5fe842b3a45ed0e3eebb7a6459475d917672727aad49f3d9bfe6",
+            "definition_fingerprint": "565570fe7fd43182770edfbdc848a0ef0e72477e181e5448064bab1bc9db0afa",
             "definition_version": "1.30.0",
             "id": "release"
         }
     ],
     "registry": {
-        "operation_registry_fingerprint": "9f2c0a7f220d3fea0ef0b8e47f55bec027a86d3312007f96243135312c18734d",
+        "operation_registry_fingerprint": "df0d43a63c7ff4971ac52a836818945ef5921fa3116216f8af07bbc49c9a10e9",
         "path": "toolchain.json",
-        "profile_registry_fingerprint": "25cfb70e9f8a14c6e3e188bb62761677c76f8ef865d1514ccfcc3ec9c62cec8f",
+        "profile_registry_fingerprint": "fc7d7a147228b9257203a3fc75becb9a01f19707935d90b29ac920c9ac59bba7",
         "schema_version": 1
     },
     "schema_version": "1.0.0"

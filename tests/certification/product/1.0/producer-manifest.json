@@ -3,14 +3,14 @@
     "manifest_kind": "strling-product-certification-producers",
     "source_profile": {
         "id": "full",
-        "artifact_schema_version": "1.0.0",
+        "artifact_schema_version": "2.0.0",
         "identity_source": {
             "path": "tests/certification/profile-source/1.0/definitions.json"
         }
     },
     "release_profile": {
         "id": "release",
-        "artifact_schema_version": "1.0.0",
+        "artifact_schema_version": "2.0.0",
         "identity_source": {
             "path": "tests/certification/profile-source/1.0/definitions.json"
         }
@@ -67,7 +67,7 @@
         "documentation",
         "interop-resilience",
         "migration",
-        "performance-resource",
+        "functional-resource",
         "repository-quality",
         "security-provenance",
         "target-conformance"
@@ -218,25 +218,11 @@
             "structured_operation_id": "certification.deep-quality-full"
         },
         {
-            "operation_id": "performance_resource_local_certification",
-            "evidence_area": "performance-resource",
+            "operation_id": "functional_resource_certification",
+            "evidence_area": "functional-resource",
             "requirement": "required",
             "result_contract": "certification-result-v1",
-            "structured_operation_id": "certification.performance-resource-local"
-        },
-        {
-            "operation_id": "performance_resource_pull_request_certification",
-            "evidence_area": "performance-resource",
-            "requirement": "required",
-            "result_contract": "certification-result-v1",
-            "structured_operation_id": "certification.performance-resource-pull-request"
-        },
-        {
-            "operation_id": "performance_resource_full_certification",
-            "evidence_area": "performance-resource",
-            "requirement": "required",
-            "result_contract": "certification-result-v1",
-            "structured_operation_id": "certification.performance-resource-full"
+            "structured_operation_id": "certification.functional-resource"
         },
         {
             "operation_id": "interop_contract_check",
@@ -456,7 +442,9 @@
             "claim_id": "product.full-profile-coverage",
             "description": "Every result selected by the governed Full profile is present exactly once and retains its authoritative state.",
             "evidence_area": "architecture-governance",
-            "source": { "all_profile_results": true }
+            "source": {
+                "all_profile_results": true
+            }
         },
         {
             "claim_id": "structured.duplicate-name-contract",

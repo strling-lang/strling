@@ -85,8 +85,26 @@ class CertificationArtifactTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         Draft202012Validator.check_schema(schema)
+        validate_certification_artifact(ROOT, build([result()], "passed", 0))
+
+    def test_historical_performance_contract_is_not_reinterpreted(self) -> None:
         fixture = json.loads((FIXTURES / "valid.json").read_text(encoding="utf-8"))
-        validate_certification_artifact(ROOT, fixture)
+        with self.assertRaises(CertificationError):
+            validate_certification_artifact(ROOT, fixture)
+
+    def test_scope_binding_cannot_be_removed_or_rehashed(self) -> None:
+        for scope in (None, "strling-performance-inclusive-v1"):
+            artifact = build([result()], "passed", 0)
+            evidence = artifact["deterministic_evidence"]
+            if scope is None:
+                del evidence["certification_contract"]
+            else:
+                evidence["certification_contract"] = scope
+            artifact["evidence_fingerprint"] = hashlib.sha256(
+                json.dumps(evidence, sort_keys=True, separators=(",", ":")).encode()
+            ).hexdigest()
+            with self.assertRaises(CertificationError):
+                validate_certification_artifact(ROOT, artifact)
 
     def test_invalid_fixture_is_rejected_mechanically(self) -> None:
         fixture = json.loads((FIXTURES / "invalid.json").read_text(encoding="utf-8"))

@@ -2,6 +2,14 @@
 
 ## Authority and scope
 
+The owner-approved successor acceptance scope is
+[`strling-deterministic-certification-v1`](deterministic-certification.md).
+It removes quantitative performance requirements for the new candidate while
+preserving functional resource safety and all other mandatory obligations.
+Historical performance-inclusive evidence keeps its original contract and
+status. Producer, reader, registry, and trust integration must be validated
+before a candidate can claim certification under the successor contract.
+
 This document defines STRling's stable repository certification profiles and
 their evidence contract. It governs engineering validation and does not define
 STRling language, compiler, runtime, target, or package behavior.

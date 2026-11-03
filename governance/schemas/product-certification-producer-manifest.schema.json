@@ -27,7 +27,7 @@
             "required": ["id", "artifact_schema_version", "identity_source"],
             "properties": {
                 "id": { "const": "full" },
-                "artifact_schema_version": { "const": "1.0.0" },
+                "artifact_schema_version": { "const": "2.0.0" },
                 "identity_source": {
                     "const": {
                         "path": "tests/certification/profile-source/1.0/definitions.json"
@@ -41,7 +41,7 @@
             "required": ["id", "artifact_schema_version", "identity_source"],
             "properties": {
                 "id": { "const": "release" },
-                "artifact_schema_version": { "const": "1.0.0" },
+                "artifact_schema_version": { "const": "2.0.0" },
                 "identity_source": {
                     "const": {
                         "path": "tests/certification/profile-source/1.0/definitions.json"
@@ -154,7 +154,7 @@
                 "documentation",
                 "interop-resilience",
                 "migration",
-                "performance-resource",
+                "functional-resource",
                 "repository-quality",
                 "security-provenance",
                 "target-conformance"

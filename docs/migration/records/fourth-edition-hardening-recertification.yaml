@@ -7,6 +7,15 @@ scope:
         base: 61338f1581e8ecf436fc59acbfae28a603a90382
         head: working-tree
     allowed_paths:
+        # Owner-authorized deterministic contract scope amendment, 2026-11-02.
+        - governance/deterministic-certification.md
+        - governance/schemas/product-certification-artifact.schema.json
+        - governance/schemas/product-certification-producer-manifest.schema.json
+        - governance/schemas/profile-certification-artifact.schema.json
+        - tests/certification/product/1.0/fixtures/valid-deterministic-product.json
+        - tooling/functional_resource_certification.py
+        - tooling/tests/test_certification.py
+        - tooling/tests/test_functional_resource_certification.py
         - governance/workstation-performance-policy.json
         - tests/_design/unit/workstation-performance.md
         - tooling/workstation_performance.py

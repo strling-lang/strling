@@ -250,8 +250,26 @@ def main(argv=None):
         "--profile", required=True, choices=("local", "pull-request", "full", "release")
     )
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--execution-directory")
+    parser.add_argument("--certification-invocation-id")
+    parser.add_argument(
+        "--certification-profile", choices=("local", "pull-request", "full", "release")
+    )
+    parser.add_argument("--expected-source-sha")
+    parser.add_argument("--producer-id")
     args = parser.parse_args(argv)
     root = Path(__file__).resolve().parents[1]
+    execution_values = (
+        args.execution_directory,
+        args.certification_invocation_id,
+        args.certification_profile,
+        args.expected_source_sha,
+        args.producer_id,
+    )
+    if any(value is not None for value in execution_values) and not all(
+        value is not None for value in execution_values
+    ):
+        parser.error("invocation-bound execution arguments must be supplied together")
 
     def source():
         return (
@@ -265,6 +283,25 @@ def main(argv=None):
         )
 
     before = source()
+    if args.execution_directory:
+        if (
+            before != args.expected_source_sha
+            or subprocess.check_output(
+                ["git", "--no-optional-locks", "status", "--porcelain"],
+                cwd=root,
+                timeout=120,
+            ).strip()
+        ):
+            raise ValueError(
+                "producer source SHA or clean-tree identity does not match invocation"
+            )
+        if args.producer_id != "functional_resource_certification@repository" or (
+            args.certification_profile != args.profile
+            and (args.certification_profile, args.profile) != ("release", "full")
+        ):
+            raise ValueError(
+                "functional resource invocation profile or producer mismatch"
+            )
     (root / "target/functional-resource").mkdir(parents=True, exist_ok=True)
 
     def run(command):
@@ -285,8 +322,39 @@ def main(argv=None):
     result = make_evidence(before, args.profile, execute_checks(run))
     if source() != before:
         raise ValueError("source changed during functional resource execution")
+    exit_code = 0 if result["status"] == "passed" else 1
+    if args.execution_directory:
+        from tooling.structured_operation_execution import (
+            atomic_write_artifact,
+            execution_context,
+            extract_environment_identity,
+            zero_sample_consumption,
+        )
+
+        atomic_write_artifact(
+            Path(args.execution_directory) / "result.json",
+            {
+                **execution_context(
+                    producer_id=args.producer_id,
+                    operation_id=result["operation_id"],
+                    source_sha=before,
+                    invocation_id=args.certification_invocation_id,
+                    certification_profile=args.certification_profile,
+                    producer_profile=args.profile,
+                ),
+                "artifact_kind": "structured-operation-result",
+                "result_contract": "certification-result-v1",
+                "process_exit_code": exit_code,
+                "terminal_status": result["status"],
+                "environment_identity": extract_environment_identity(result),
+                "performance_evidence_identity": result["evidence_fingerprint"],
+                "sample_consumption": zero_sample_consumption(),
+                "structured_result": result,
+                "integrity_error": None,
+            },
+        )
     print(json.dumps(result, sort_keys=True))
-    return 0 if result["status"] == "passed" else 1
+    return exit_code
 
 
 if __name__ == "__main__":

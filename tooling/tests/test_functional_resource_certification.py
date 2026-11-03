@@ -2,10 +2,101 @@
 
 import copy
 import unittest
+import contextlib
+import io
+import tempfile
+from pathlib import Path
+from unittest.mock import patch
 from tooling import functional_resource_certification as subject
 
 
 class ResourceContractTests(unittest.TestCase):
+    def test_runner_transport_roundtrip_and_rejection(self):
+        from tooling.structured_operation_execution import (
+            StructuredExecutionError,
+            execution_context,
+            validate_result_directory,
+        )
+
+        sha = "a" * 40
+        for profile, producer_profile in (
+            ("pull-request", "pull-request"),
+            ("full", "full"),
+            ("release", "full"),
+        ):
+            for failed in (False, True):
+                with tempfile.TemporaryDirectory() as directory:
+                    checks = self.evidence()
+                    if failed:
+                        checks["checks"][0]["steps"][0]["exit_code"] = 1
+                    context = execution_context(
+                        producer_id="functional_resource_certification@repository",
+                        operation_id="certification.functional-resource",
+                        source_sha=sha,
+                        invocation_id="b" * 32,
+                        certification_profile=profile,
+                        producer_profile=producer_profile,
+                    )
+                    argv = [
+                        "--profile",
+                        producer_profile,
+                        "--json",
+                        "--execution-directory",
+                        directory,
+                        "--certification-invocation-id",
+                        "b" * 32,
+                        "--certification-profile",
+                        profile,
+                        "--expected-source-sha",
+                        sha,
+                        "--producer-id",
+                        context["producer_id"],
+                    ]
+                    with (
+                        patch(
+                            "subprocess.check_output",
+                            side_effect=[sha.encode(), b"", sha.encode()],
+                        ),
+                        patch.object(subject, "execute_checks", return_value=checks),
+                        contextlib.redirect_stdout(io.StringIO()),
+                    ):
+                        code = subject.main(argv)
+                    self.assertEqual(code, int(failed))
+                    artifact = validate_result_directory(
+                        Path(directory),
+                        expected_context=context,
+                        result_contract="certification-result-v1",
+                        actual_exit_code=code,
+                    )
+                    self.assertEqual(
+                        artifact["sample_consumption"]["authenticated_sample_count"], 0
+                    )
+                    for key in ("source_sha", "invocation_id", "certification_profile"):
+                        altered = {**context, key: "wrong"}
+                        with self.assertRaises(StructuredExecutionError):
+                            validate_result_directory(
+                                Path(directory),
+                                expected_context=altered,
+                                result_contract="certification-result-v1",
+                                actual_exit_code=code,
+                            )
+                    with self.assertRaises(StructuredExecutionError):
+                        validate_result_directory(
+                            Path(directory),
+                            expected_context=context,
+                            result_contract="certification-result-v1",
+                            actual_exit_code=1 - code,
+                        )
+
+    def test_partial_transport_arguments_rejected_before_execution(self):
+        with (
+            patch.object(subject, "execute_checks") as execute,
+            contextlib.redirect_stderr(io.StringIO()),
+        ):
+            with self.assertRaises(SystemExit):
+                subject.main(["--profile", "full", "--execution-directory", "unused"])
+            execute.assert_not_called()
+
     def evidence(self):
         return subject.execute_checks(
             lambda command: {"command": command, "exit_code": 0}

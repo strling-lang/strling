@@ -10,7 +10,11 @@ from typing import Any
 
 from jsonschema import Draft202012Validator
 
-from tooling.certification import profile_definition_fingerprint
+from tooling.certification import (
+    ARTIFACT_SCHEMA_VERSION,
+    CERTIFICATION_CONTRACT,
+    profile_definition_fingerprint,
+)
 from tooling.product_certification import (
     _certification_profile,
     expected_profile_result_ids,
@@ -435,10 +439,15 @@ def synthetic_full_profile_artifact(manifest: dict[str, Any]) -> dict[str, Any]:
         },
     }
     return {
-        "schema_version": "1.0.0",
+        "schema_version": ARTIFACT_SCHEMA_VERSION,
         "artifact_kind": "strling-profile-certification",
-        "deterministic_evidence": deterministic,
-        "evidence_fingerprint": fingerprint(deterministic),
+        "deterministic_evidence": {
+            **deterministic,
+            "certification_contract": CERTIFICATION_CONTRACT,
+        },
+        "evidence_fingerprint": fingerprint(
+            {**deterministic, "certification_contract": CERTIFICATION_CONTRACT}
+        ),
         "execution_metadata": {"generated_at": "2026-08-22T12:00:00Z"},
     }
 

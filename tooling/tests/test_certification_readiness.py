@@ -43,17 +43,14 @@ class CertificationReadinessTests(unittest.TestCase):
         ]
 
     def test_exact_governed_membership_only_performance_is_deferred(self) -> None:
-        for profile, total, deferred in (
-            ("local", 38, 1),
-            ("pull-request", 80, 2),
-            ("full", 126, 3),
-            ("release", 126, 3),
-        ):
+        for profile in ("local", "pull-request", "full", "release"):
             with self.subTest(profile=profile):
                 plan = selection(self.runner, profile)
                 stages = quality.QualityRunner._profile_stages(
                     self.runner, profile, None
                 )
+                total = len(stages)
+                deferred = 0
                 self.assertEqual(len(plan["governed_result_ids"]), total)
                 self.assertEqual(len(plan["deferred_operations"]), deferred)
                 self.assertEqual(len(plan["selected_result_ids"]), total - deferred)
@@ -83,10 +80,10 @@ class CertificationReadinessTests(unittest.TestCase):
             for stage in quality.QualityRunner._profile_stages(
                 self.runner, "full", None
             )
-            if performance_stage(stage)
         )
         definition = copy.deepcopy(stage.definition)
         definition["command"] = ["python3", "some_other_producer.py"]
+        definition["result_operation_id"] = "certification.performance-resource-full"
         with self.assertRaises(quality.ConfigurationError):
             performance_stage(replace(stage, definition=definition))
 

@@ -215,7 +215,7 @@ class LaunchNormalizationTests(unittest.TestCase):
                 patch.object(performance, "MANIFEST_PATH", manifest_path),
                 patch.object(performance, "BASELINE_PATH", baseline_path),
             ):
-                synthetic, _ = fixture._performance_result("full")
+                synthetic, _ = fixture._historical_performance_result("full")
             checks = [
                 check
                 for check in synthetic["checks"]
@@ -280,6 +280,7 @@ class LaunchNormalizationTests(unittest.TestCase):
                     ("validate_baseline", None),
                     ("validate_evidence", None),
                     ("_enforce_governed_cpu_affinity", None),
+                    ("_preflight_governed_cpu_affinity", [0]),
                     ("_build_release_artifacts", ("passed", {"artifacts": {}})),
                     ("_artifact_source_changes", {}),
                     ("_artifact_identity_check", (True, {})),

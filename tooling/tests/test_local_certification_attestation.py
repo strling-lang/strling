@@ -218,7 +218,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
         manifest["producers"] = [
             {
                 "operation_id": name,
-                "evidence_area": "performance-resource",
+                "evidence_area": "functional-resource",
                 "requirement": "required",
                 "result_contract": definition.get("result_contract"),
                 "structured_operation_id": definition.get("result_operation_id"),
@@ -235,7 +235,7 @@ class LocalCertificationAttestationTests(unittest.TestCase):
             }
             for name, definition in toolchain["policy"]["operation_registry"].items()
         ]
-        manifest["evidence_areas"] = ["performance-resource"]
+        manifest["evidence_areas"] = ["functional-resource"]
         for claim in manifest["claims"]:
             claim["source"] = {"all_profile_results": True}
         manifest_path = self.repository / product.MANIFEST_PATH

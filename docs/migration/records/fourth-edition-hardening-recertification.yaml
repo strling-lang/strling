@@ -260,6 +260,8 @@ scope:
         - tooling/tests/test_launch_readiness.py
         - tooling/tests/test_launch_normalization.py
         - tooling/tests/test_local_certification_attestation.py
+        # Owner-authorized deterministic certification fixture correction, 2026-11-03.
+        - tooling/tests/test_target_adapter_certification_matrix.py
         - tooling/tests/test_jvm_adapter_runtime.py
         - tooling/tests/test_jvm_adapter_package.py
         - tooling/tests/test_ecmascript_lowering_architecture.py

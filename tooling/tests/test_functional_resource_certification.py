@@ -19,8 +19,17 @@ class ResourceContractTests(unittest.TestCase):
         )
 
         sha = "a" * 40
+        import json
+
+        registry = json.loads(Path("toolchain.json").read_text())["policy"][
+            "operation_registry"
+        ]["functional_resource_certification"]
+        command = registry["command"]
+        registered_profile = command[command.index("--profile") + 1]
         for profile, producer_profile in (
             ("pull-request", "pull-request"),
+            ("full", registered_profile),
+            ("release", registered_profile),
             ("full", "full"),
             ("release", "full"),
         ):

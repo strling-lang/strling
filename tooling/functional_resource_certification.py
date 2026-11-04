@@ -277,7 +277,12 @@ def main(argv=None):
             )
         if args.producer_id != "functional_resource_certification@repository" or (
             args.certification_profile != args.profile
-            and (args.certification_profile, args.profile) != ("release", "full")
+            and (args.certification_profile, args.profile)
+            not in {
+                ("full", "pull-request"),
+                ("release", "pull-request"),
+                ("release", "full"),
+            }
         ):
             raise ValueError(
                 "functional resource invocation profile or producer mismatch"

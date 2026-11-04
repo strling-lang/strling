@@ -163,8 +163,18 @@ class ResourceContractTests(unittest.TestCase):
             if isinstance(n, ast.AnnAssign)
             and getattr(n.target, "id", "") == "RESOURCE_COMMANDS"
         )
-        self.assertEqual({k: subject.COMMANDS[k] for k in original}, original)
-        self.assertIn("resource:native-memory-lifetime", subject.COMMANDS)
+        self.assertEqual(subject.COMMANDS, original)
+
+    def test_recorder_diagnostics_and_old_resource_contract_are_excluded(self):
+        self.assertNotIn("resource:native-memory-lifetime", subject.COMMANDS)
+        old = self.evidence()
+        old["contract"] = "strling-functional-resource-v1"
+        with self.assertRaises(ValueError):
+            subject.validate_checks(old)
+        mixed = self.evidence()
+        mixed["checks"].append({"id": "resource:native-memory-lifetime", "steps": []})
+        with self.assertRaises(ValueError):
+            subject.validate_checks(mixed)
 
     def test_envelope_rejects_old_scope_stale_and_tampered(self):
         value = subject.make_evidence("a" * 40, "full", self.evidence())

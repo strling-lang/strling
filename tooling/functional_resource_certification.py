@@ -6,7 +6,7 @@ these functions only execute and validate the complete functional denominator.
 
 from __future__ import annotations
 
-CONTRACT = "strling-functional-resource-v1"
+CONTRACT = "strling-functional-resource-v2"
 COMMANDS = {
     "resource:frontend-limits": [
         [
@@ -111,26 +111,6 @@ COMMANDS = {
         ]
     ],
 }
-
-
-COMMANDS["resource:native-memory-lifetime"] = [
-    [
-        "rustup",
-        "run",
-        "1.75.0",
-        "rustc",
-        "--edition=2021",
-        "--test",
-        "tooling/tests/memory_worker_lifetime.rs",
-        "-o",
-        "target/functional-resource/native-memory-lifetime.exe",
-    ],
-    [
-        "target/functional-resource/native-memory-lifetime.exe",
-        "--test-threads=1",
-        "--nocapture",
-    ],
-]
 
 
 def execute_checks(run_command):

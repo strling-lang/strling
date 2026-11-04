@@ -38,6 +38,15 @@ normalization variability investigations. Actual memory-safety defects and
 functional resource-limit violations remain blocking; an operation that mixes
 those checks with benchmarking must be split rather than removed wholesale.
 
+The resource evidence contract `strling-functional-resource-v2` preserves the
+original frontend, kernel, target, editor/interop, and no-match resource-limit
+commands unchanged. Windows benchmark-recorder lifetime and memory-accounting
+qualification (`tooling/tests/memory_worker_lifetime.rs`) is a separate
+performance diagnostic, excluded from authoritative membership. It does not
+test product memory safety. Its platform-disabled zero-test result cannot
+establish resource coverage. The earlier resource-v1 envelope is rejected;
+its historical results remain unchanged and require fresh candidate execution.
+
 Removed operations are excluded from the new denominator, not passed, waived,
 or unavailable. Mandatory denominators MUST be derived from the effective
 registered definitions, never historical operation counts.

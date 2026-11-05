@@ -35,7 +35,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: 4d5ef0750847152e7e574f8442f1edcecb415c99
+                  ref: dd9d7702237ba9c56e1269418d5a9bd5b582b9f0
                   path: trusted
 
             - name: Checkout release candidate

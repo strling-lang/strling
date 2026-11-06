@@ -15,6 +15,11 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+try:
+    from tooling.sync_versions import get_source_version
+except ModuleNotFoundError:
+    from sync_versions import get_source_version
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OPERATION_ID = "certification.jvm-adapter-runtime"
@@ -137,11 +142,15 @@ def _assert_dependency_direction() -> None:
     kotlin = (ROOT / "bindings/kotlin/build.gradle.kts").read_text(encoding="utf-8")
     bridge = (ROOT / "bindings/jvm/pom.xml").read_text(encoding="utf-8")
     coordinate = "strling-jvm"
+    product_version = get_source_version()
     if java.count(f"<artifactId>{coordinate}</artifactId>") != 1:
         raise JvmAdapterRuntimeError(
             "Java does not depend on exactly one shared bridge"
         )
-    if kotlin.count(f"com.strling:{coordinate}:3.0.0") != 1:
+    if (
+        kotlin.count(f"com.strling:{coordinate}:") != 1
+        or kotlin.count(f'com.strling:{coordinate}:{product_version}"') != 1
+    ):
         raise JvmAdapterRuntimeError(
             "Kotlin does not depend on exactly one shared bridge"
         )

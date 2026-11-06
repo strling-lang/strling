@@ -9,6 +9,47 @@ from tooling import jvm_adapter_runtime as runtime
 
 
 class JvmAdapterRuntimeTests(unittest.TestCase):
+    def test_current_repository_has_one_governed_shared_bridge(self) -> None:
+        runtime._assert_dependency_direction()
+
+    def test_kotlin_bridge_tracks_authority_and_rejects_stale_or_duplicate_routes(
+        self,
+    ) -> None:
+        for dependency, accepted in (
+            ('api("com.strling:strling-jvm:4.1.0")', True),
+            ('api("com.strling:strling-jvm:3.0.0")', False),
+            ('api("com.strling:strling-jvm:4.1.0-extra")', False),
+            (
+                'api("com.strling:strling-jvm:4.1.0")\n'
+                'api("com.strling:strling-jvm:3.0.0")',
+                False,
+            ),
+        ):
+            with self.subTest(dependency=dependency), TemporaryDirectory() as directory:
+                root = Path(directory)
+                for path, text in (
+                    ("bindings/java/pom.xml", "<artifactId>strling-jvm</artifactId>"),
+                    ("bindings/kotlin/build.gradle.kts", dependency),
+                    (
+                        "bindings/jvm/pom.xml",
+                        "<artifactId>jna</artifactId><version>5.19.1</version>",
+                    ),
+                ):
+                    output = root / path
+                    output.parent.mkdir(parents=True, exist_ok=True)
+                    output.write_text(text, encoding="utf-8")
+                with (
+                    patch.object(runtime, "ROOT", root),
+                    patch.object(runtime, "get_source_version", return_value="4.1.0"),
+                ):
+                    if accepted:
+                        runtime._assert_dependency_direction()
+                    else:
+                        with self.assertRaisesRegex(
+                            runtime.JvmAdapterRuntimeError, "exactly one shared bridge"
+                        ):
+                            runtime._assert_dependency_direction()
+
     def test_fingerprint_is_order_stable(self) -> None:
         self.assertEqual(
             runtime._fingerprint({"b": 2, "a": 1}),

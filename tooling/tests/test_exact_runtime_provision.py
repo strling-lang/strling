@@ -23,6 +23,7 @@ from tooling.exact_runtime_provision import (
     write_environment,
 )
 from tooling.exact_runtime_toolchains import ExactRuntimeToolchainError, load_manifest
+from tooling.sync_versions import get_source_version
 
 
 class ExactRuntimeProvisionTests(unittest.TestCase):
@@ -52,14 +53,19 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
                 f"{hashlib.sha256(jar.read_bytes()).hexdigest()}"
                 '"/></artifact></component>'
             )
-        bridge = repository / "com/strling/strling-jvm/3.0.0/strling-jvm-3.0.0.jar"
+        version = get_source_version()
+        bridge = (
+            repository / f"com/strling/strling-jvm/{version}/strling-jvm-{version}.jar"
+        )
         bridge.parent.mkdir(parents=True)
         bridge.write_bytes(b"prepared bridge")
         graph = directory / "release-graph.json"
         graph.write_text(
             json.dumps(
                 {
-                    "roots": {"jvm": ["com.strling:strling-jvm:3.0.0", *coordinates]},
+                    "roots": {
+                        "jvm": [f"com.strling:strling-jvm:{version}", *coordinates]
+                    },
                     "packages": [
                         {"coordinate": coordinate, "internal": False}
                         for coordinate in coordinates
@@ -77,6 +83,52 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
             encoding="utf-8",
         )
         return repository, graph, metadata
+
+    def test_maven_inputs_reject_stale_or_duplicate_product_bridges(self) -> None:
+        for bridges in (
+            ["com.strling:strling-jvm:3.0.0"],
+            [f"com.strling:strling-jvm:{get_source_version()}"] * 2,
+        ):
+            with (
+                self.subTest(bridges=bridges),
+                tempfile.TemporaryDirectory() as directory,
+            ):
+                repository, graph, metadata = self.maven_fixture(Path(directory))
+                document = json.loads(graph.read_text(encoding="utf-8"))
+                document["roots"]["jvm"] = bridges + [
+                    value
+                    for value in document["roots"]["jvm"]
+                    if not value.startswith("com.strling:strling-jvm:")
+                ]
+                graph.write_text(json.dumps(document), encoding="utf-8")
+                with self.assertRaisesRegex(
+                    ExactRuntimeProvisionError, "governed product version"
+                ):
+                    verify_maven_repository_inputs(
+                        repository,
+                        release_graph_path=graph,
+                        verification_metadata_path=metadata,
+                    )
+
+    def test_old_prepared_bridge_cannot_substitute_for_current_product(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            repository, graph, metadata = self.maven_fixture(Path(directory))
+            version = get_source_version()
+            current = (
+                repository
+                / f"com/strling/strling-jvm/{version}/strling-jvm-{version}.jar"
+            )
+            old = repository / "com/strling/strling-jvm/3.0.0/strling-jvm-3.0.0.jar"
+            old.parent.mkdir(parents=True)
+            current.rename(old)
+            with self.assertRaisesRegex(
+                ExactRuntimeProvisionError, f"missing prepared.*{version}"
+            ):
+                verify_maven_repository_inputs(
+                    repository,
+                    release_graph_path=graph,
+                    verification_metadata_path=metadata,
+                )
 
     def test_environment_handoff_is_complete_and_stable(self) -> None:
         environment = runtime_environment(load_manifest())

@@ -186,3 +186,5 @@ commits:
       subject: Make package projections stable across clean source checkouts
     - sha: 9a446043271d282b8d893f6827bea2eef71bfa3f
       subject: Preserve historical certification and qualify current package verification
+    - sha: c854b0b18bcece75181eea5985991223cbf6bd78
+      subject: Apply canonical Python package formatting

@@ -753,3 +753,19 @@ adapter architecture tests pass. Package-pair acquisition was deliberately held
 until whole qualification, so this formatting correction invalidates no claimed
 release-artifact evidence. The stopped Local result remains retained with its
 actual source identity and is not promoted to a pass.
+
+Source `c854b0b18bcece75181eea5985991223cbf6bd78` passes the complete Local
+profile: 37 operations, zero failures or waivers, in 11 minutes 10 seconds.
+Its Pull Request run passes 21 operations before the JVM runtime validator
+rejects the correct 4.0.0 bridge because that validator still requires a literal
+3.0.0 coordinate. The sibling exact-runtime provisioning check has the same
+obsolete requirement. Both now read the canonical active product-version
+authority; stale, duplicated and substituted bridge routes fail closed. The
+source-bound 3.0 migration suite identities remain unchanged. Package-pair
+acquisition is still held, so this correction invalidates no current artifact
+receipts. The original failed whole-profile result remains retained.
+The focused repair suite passes 56 tests and eighteen subtests on both Windows
+and Linux. Actual Linux JDK 11 Java/Kotlin parity passes two repetitions of
+three operations, and the offline Maven probe accepts the prepared 4.0.0 bridge
+and four governed third-party artifacts. This targeted proof does not replace
+fresh whole-profile certification on the next committed source.

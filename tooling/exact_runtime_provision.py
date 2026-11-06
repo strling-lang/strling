@@ -29,6 +29,7 @@ from tooling.exact_runtime_toolchains import (
     load_manifest,
     verify_configured_runtimes,
 )
+from tooling.sync_versions import get_source_version
 
 OWNED_ROOT = Path("/opt/strling-toolchains")
 ROOT = Path(__file__).resolve().parents[1]
@@ -172,10 +173,21 @@ def verify_maven_repository_inputs(
                 f"Maven repository artifact SHA-256 differs: {coordinate}"
             )
         verified[coordinate] = observed
-    bridge = _maven_jar(repository, "com.strling:strling-jvm:3.0.0")
+    bridge_coordinate = f"com.strling:strling-jvm:{get_source_version()}"
+    bridge_roots = [
+        coordinate
+        for coordinate in roots
+        if isinstance(coordinate, str)
+        and coordinate.startswith("com.strling:strling-jvm:")
+    ]
+    if bridge_roots != [bridge_coordinate]:
+        raise ExactRuntimeProvisionError(
+            "JVM release graph bridge differs from the governed product version"
+        )
+    bridge = _maven_jar(repository, bridge_coordinate)
     if not bridge.is_file():
         raise ExactRuntimeProvisionError(
-            "Maven repository is missing prepared com.strling:strling-jvm:3.0.0"
+            f"Maven repository is missing prepared {bridge_coordinate}"
         )
     if shutil.which("mvn") is None:
         raise ExactRuntimeProvisionError("mvn is unavailable")
@@ -183,7 +195,7 @@ def verify_maven_repository_inputs(
         "path": str(repository),
         "release_graph_fingerprint": graph.get("fingerprint"),
         "verified_artifacts": verified,
-        "prepared_bridge": "com.strling:strling-jvm:3.0.0",
+        "prepared_bridge": bridge_coordinate,
     }
 
 

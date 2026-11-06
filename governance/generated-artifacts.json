@@ -2475,7 +2475,8 @@
             "authoritative_sources": [
                 "bindings/jvm/pom.xml",
                 "bindings/jvm/src/main/**",
-                "governance/release-policy.json"
+                "governance/release-policy.json",
+                "tests/certification/release-supply-chain/1.0/jvm-product-builds.json"
             ],
             "generator_inputs": [
                 "bindings/jvm/pom.xml",
@@ -2483,7 +2484,8 @@
                 "governance/release-policy.json",
                 "tooling/jvm_adapter_package.py",
                 "tooling/maven_release.py",
-                "tooling/release_payload.py"
+                "tooling/release_payload.py",
+                "tests/certification/release-supply-chain/1.0/jvm-product-builds.json"
             ],
             "generator": {
                 "implementation_paths": [

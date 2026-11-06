@@ -1,0 +1,20 @@
+{
+    "schema_version": "1.0.0",
+    "product_version": "4.0.0",
+    "source_files": {
+        "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+        "bindings/jvm/pom.xml": "6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21",
+        "bindings/jvm/src/main/java/com/strling/jvm/AbiMismatchException.java": "c21a6d5f1423571afdadc808067432d490aff9297bfa741c32b576420ba590b1",
+        "bindings/jvm/src/main/java/com/strling/jvm/ClosedClientException.java": "9a393b1a21b0f55acd2db2eed57b33cd486c51a6ec5d1e1c7f4f96380aa3d390",
+        "bindings/jvm/src/main/java/com/strling/jvm/InteropLibrary.java": "33b2d7cbe8e199a130d9653ce57987567fdb3968a853a8044f4ebeaa7fc13482",
+        "bindings/jvm/src/main/java/com/strling/jvm/NativeAdapterException.java": "cb1b458905cb821b4d12487b23c69488b2d0476c4ef1eec238b46b6c20c65e7f",
+        "bindings/jvm/src/main/java/com/strling/jvm/NativeClient.java": "c88597b9e2ffeb165f2cbadce157ed8ff09fa2595b005d1403ab9f621d58c82b",
+        "bindings/jvm/src/main/java/com/strling/jvm/NativeLoadException.java": "a4a9370fba8159144f27d0626c0520aedfe3bd1e4aaee652ba957ef218612542",
+        "bindings/jvm/src/main/java/com/strling/jvm/ProtocolException.java": "66a33d5098202b3c4789a8e3794cc77619fd2d8219ada0e47444c25858fa2ff0",
+        "bindings/jvm/src/main/java/com/strling/jvm/TransportException.java": "376e846471dd57737f03049b68dcc97352a6fdf253bbac3698640d5f5a8f196b"
+    },
+    "compiler_variants": {
+        "11": "1a48d0124227bd3f8cb4fd2b620e549372d1b633285855b074ccf50232c6cf64",
+        "21": "1b9861ed7249b7fd572d317d8347f9a950f3658d6c5e3dc1cc59bc1c31cc942a"
+    }
+}

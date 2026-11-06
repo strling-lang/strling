@@ -132,7 +132,9 @@
       </component>
       <component group="com.strling" name="strling-jvm" version="4.0.0">
          <artifact name="strling-jvm-4.0.0.jar">
-            <sha256 value="1b9861ed7249b7fd572d317d8347f9a950f3658d6c5e3dc1cc59bc1c31cc942a" origin="Canonical STRling JVM package"/>
+            <sha256 value="1a48d0124227bd3f8cb4fd2b620e549372d1b633285855b074ccf50232c6cf64" origin="Canonical STRling JVM package">
+               <also-trust value="1b9861ed7249b7fd572d317d8347f9a950f3658d6c5e3dc1cc59bc1c31cc942a"/>
+            </sha256>
          </artifact>
          <artifact name="strling-jvm-4.0.0.pom">
             <sha256 value="6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21" origin="Canonical STRling JVM package"/>

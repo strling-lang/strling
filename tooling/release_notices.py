@@ -100,7 +100,10 @@ def notices(root: Path = ROOT, cargo_home: Path | None = None) -> str:
                     raise ValueError("unbounded dependency notice")
                 file = archive.extractfile(entry)
                 assert file is not None
-                found.append((entry.name, file.read().decode("utf-8")))
+                content = file.read().decode("utf-8")
+                found.append(
+                    (entry.name, content.replace("\r\n", "\n").replace("\r", "\n"))
+                )
         if not found:
             raise ValueError(
                 "locked dependency has no redistributable notice: " + filename
@@ -115,7 +118,7 @@ def notices(root: Path = ROOT, cargo_home: Path | None = None) -> str:
         )
         for name, content in found:
             lines.extend(["--- " + name, content.rstrip(), ""])
-    return "\n".join(lines) + "\n"
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def write_notices(output: Path, root: Path = ROOT) -> None:

@@ -506,11 +506,16 @@ fun main(args: Array<String>) {
 
 
 def product_verification_projection(
-    text: str, version: str, jar_sha256: str, pom_sha256: str
+    text: str, version: str, jar_sha256: str | list[str], pom_sha256: str
 ) -> str:
+    jar_hashes = sorted(
+        set([jar_sha256] if isinstance(jar_sha256, str) else jar_sha256)
+    )
+    if not jar_hashes:
+        raise JvmPackageCertificationError("missing product verification digest")
     if any(
         re.fullmatch(r"[0-9a-f]{64}", value) is None
-        for value in (jar_sha256, pom_sha256)
+        for value in (*jar_hashes, pom_sha256)
     ):
         raise JvmPackageCertificationError("invalid product verification digest")
     pattern = r'(?ms)^      <component group="com\.strling" name="strling-jvm" version="[^"]+">.*?^      </component>'
@@ -518,15 +523,83 @@ def product_verification_projection(
         raise JvmPackageCertificationError(
             "expected exactly one local JVM product verification entry"
         )
+    digest = f'            <sha256 value="{jar_hashes[0]}" origin="Canonical STRling JVM package"'
+    if len(jar_hashes) == 1:
+        digest += "/>"
+    else:
+        digest += (
+            ">\n"
+            + "\n".join(
+                f'               <also-trust value="{value}"/>'
+                for value in jar_hashes[1:]
+            )
+            + "\n            </sha256>"
+        )
     component = f'''      <component group="com.strling" name="strling-jvm" version="{version}">
          <artifact name="strling-jvm-{version}.jar">
-            <sha256 value="{jar_sha256}" origin="Canonical STRling JVM package"/>
+{digest}
          </artifact>
          <artifact name="strling-jvm-{version}.pom">
             <sha256 value="{pom_sha256}" origin="Canonical STRling JVM package"/>
          </artifact>
       </component>'''
     return re.sub(pattern, lambda match: component, text)
+
+
+def product_build_inputs(root: Path = ROOT) -> dict[str, str]:
+    """Bind reviewed compiler variants to every byte entering the bridge JAR."""
+    sources = [root / "LICENSE", root / "bindings/jvm/pom.xml"]
+    sources.extend(sorted((root / "bindings/jvm/src/main").rglob("*")))
+    return {
+        path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in sources
+        if path.is_file()
+    }
+
+
+def reviewed_product_hashes(root: Path, jar: Path, pom: Path) -> list[str]:
+    """Accept only reviewed, same-source JDK 11/21 build identities, never wildcards."""
+    path = root / "tests/certification/release-supply-chain/1.0/jvm-product-builds.json"
+
+    def unique_fields(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise JvmPackageCertificationError("duplicate reviewed JVM build field")
+            result[key] = value
+        return result
+
+    document = json.loads(
+        path.read_text(encoding="utf-8"), object_pairs_hook=unique_fields
+    )
+    if (
+        set(document)
+        != {"schema_version", "product_version", "source_files", "compiler_variants"}
+        or document["schema_version"] != "1.0.0"
+        or document["product_version"] != PRODUCT_VERSION
+        or document["source_files"] != product_build_inputs(root)
+        or set(document["compiler_variants"]) != {"11", "21"}
+    ):
+        raise JvmPackageCertificationError(
+            "reviewed JVM compiler/source identities are stale"
+        )
+    variants = document["compiler_variants"]
+    if any(re.fullmatch(r"[0-9a-f]{64}", value) is None for value in variants.values()):
+        raise JvmPackageCertificationError("invalid reviewed JVM build digest")
+    with zipfile.ZipFile(jar) as archive:
+        manifest = archive.read("META-INF/MANIFEST.MF").decode("utf-8")
+    match = re.search(r"(?m)^Build-Jdk-Spec: (11|21)\r?$", manifest)
+    if (
+        match is None
+        or hashlib.sha256(jar.read_bytes()).hexdigest() != variants[match[1]]
+    ):
+        raise JvmPackageCertificationError("unreviewed JVM compiler output")
+    if (
+        document["source_files"]["bindings/jvm/pom.xml"]
+        != hashlib.sha256(pom.read_bytes()).hexdigest()
+    ):
+        raise JvmPackageCertificationError("reviewed JVM POM identity changed")
+    return sorted(set(variants.values()))
 
 
 def _install_canonical_jar(
@@ -580,7 +653,7 @@ def synchronize_product_verification(*, write: bool) -> dict[str, Any]:
     expected = product_verification_projection(
         text,
         PRODUCT_VERSION,
-        hashlib.sha256(jar.read_bytes()).hexdigest(),
+        reviewed_product_hashes(ROOT, jar, pom),
         hashlib.sha256(pom.read_bytes()).hexdigest(),
     )
     if expected != text and not write:

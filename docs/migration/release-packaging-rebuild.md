@@ -661,3 +661,32 @@ place. The workflow promotion passes 131 focused tests and eighteen subtests;
 the governed content-security check passes all six checks. Full frozen-verifier
 qualification, fresh source-bound artifact acquisition and Full/Release remain
 open until their actual retained results are available.
+
+Clean-checkout preparation of integration source
+`3f1d841008522c0a34b2a2fc98fd3bc1cd10374b` exposed three remaining defects before
+any authoritative profile executed. The Rust public snapshot still recorded
+the superseded 1.70 minimum. Twenty upstream CRLF notice lines disagreed with
+Git's LF checkout normalization. Production JDK 11 and release JDK 21 produce
+different bridge class bytes and manifest data, so one first-party checksum
+could not validate both declared compiler contexts. Canonical notices now use
+LF and one final newline; the public snapshot is regenerated. Kotlin's canonical
+projection consumes a reviewed pair of actual compiler-output hashes bound to
+every bridge source/resource, POM and license byte. It rejects stale source,
+unknown compiler variants, output substitution and duplicate input fields;
+third-party verification remains unchanged. Windows JDK 21 generation and
+production JDK 11 verification both pass, with 32 focused tests passing and one
+platform-inapplicable test skipped. The reviewed lock catalog changes only the
+first-party verification metadata hash; resolved dependencies do not change.
+
+The original source-bound acquisition attempts are retained as diagnostics.
+Their completed C and Windows Conan captures are not reused for the next source
+freeze. The deep Windows Conan attempt exceeded the MSVC linker path limit;
+an independent shorter-root build and isolated consumer passed. Future Windows
+Conan acquisition uses short, separate source roots. No Full or Release success
+is claimed for the superseded source.
+
+The integrated repair suite passes 120 tests and 21 subtests with two
+platform-inapplicable skips. All public-contract projections pass after canonical
+regeneration, as do version projection, release policy, release contract and
+reviewed dependency-integrity verification. The corrected source is frozen
+before restarting independent acquisition.

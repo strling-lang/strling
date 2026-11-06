@@ -68,6 +68,19 @@ def test_unverified_dependency_archive_is_rejected(tmp_path):
         notices(root, cache)
 
 
+def test_upstream_notice_line_endings_survive_a_git_text_checkout(tmp_path):
+    root, cache, _ = source_fixture(
+        tmp_path, license_payload=b"First line\r\nSecond line\rThird line\n"
+    )
+    expected = notices(root, cache)
+    assert "First line\nSecond line\nThird line" in expected
+    assert "\r" not in expected
+    assert expected.endswith("\n") and not expected.endswith("\n\n")
+    output = root / "notices.txt"
+    output.write_text(expected, encoding="utf-8", newline="\n")
+    assert output.read_text(encoding="utf-8") == expected
+
+
 def test_missing_notices_are_rejected(tmp_path):
     root, cache, _ = source_fixture(tmp_path, license_payload=None)
     with pytest.raises(ValueError, match="notice"):

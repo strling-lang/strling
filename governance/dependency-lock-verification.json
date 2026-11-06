@@ -30,7 +30,7 @@
         "bindings/dart/pubspec.lock": "59c530f1a37d19eb43045be8999e5460571d293369e1dade31c19af6bb324241",
         "bindings/interop/Cargo.lock": "dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f",
         "bindings/kotlin/gradle.lockfile": "285aa7334bccd3ed0a651cd058959ee06492f2689b26d6475343f9e682a34dd0",
-        "bindings/kotlin/gradle/verification-metadata.xml": "003fb50a1111e8c0cd91f7c06402fb5186e5f8346ac35fb9dce08840bd9e7a59",
+        "bindings/kotlin/gradle/verification-metadata.xml": "21c8b008c9299abd9f85c41e6bde35f06ca30555cd22db6435363f0ee365d71b",
         "bindings/lua/luarocks.lock": "f2fb2e3ca14e5ff386d032589b23ab545c30a84ade477a6ab7191a5c9a22439a",
         "bindings/perl/cpanfile.snapshot": "f3b54b3304b0e9faed6bce49a55f099418bd761cb6e56ab3e8e85e6de740d766",
         "bindings/php/composer.lock": "6c9f10e1cbd5cfda1d65bb7991e13adbf106f1fcea16177356980f28426e3780",

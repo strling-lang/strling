@@ -184,3 +184,5 @@ commits:
       subject: Pin independent packaging verification for protected publication
     - sha: c5d464fb9c673ef584c4983d790b3d776d647af4
       subject: Make package projections stable across clean source checkouts
+    - sha: 9a446043271d282b8d893f6827bea2eef71bfa3f
+      subject: Preserve historical certification and qualify current package verification

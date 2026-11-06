@@ -131,13 +131,25 @@ def test_missing_library_has_no_implicit_fallback(tmp_path: Path) -> None:
         load_native(tmp_path / "missing-native-library")
 
 
-@pytest.mark.parametrize("payload", [b"old kernel", b"\0STRLING-PRODUCT-VERSION:3.0.0\0", b"\0STRLING-PRODUCT-VERSION:4.0.0\0\0STRLING-PRODUCT-VERSION:4.0.0\0"])
-def test_native_product_mismatch_rejected_before_loading(tmp_path, monkeypatch, payload):
+@pytest.mark.parametrize(
+    "payload",
+    [
+        b"old kernel",
+        b"\0STRLING-PRODUCT-VERSION:3.0.0\0",
+        b"\0STRLING-PRODUCT-VERSION:4.0.0\0\0STRLING-PRODUCT-VERSION:4.0.0\0",
+    ],
+)
+def test_native_product_mismatch_rejected_before_loading(
+    tmp_path, monkeypatch, payload
+):
     import ctypes
+
     path = tmp_path / "wrong-kernel.so"
     path.write_bytes(payload)
+
     def forbidden_load(*args):
         raise AssertionError("mismatched kernel must never reach CDLL")
+
     monkeypatch.setattr(ctypes, "CDLL", forbidden_load)
     with pytest.raises(NativeLoadError, match="product identity mismatch"):
         NativeClient(path)

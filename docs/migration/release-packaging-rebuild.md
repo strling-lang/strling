@@ -741,3 +741,15 @@ continues to verify the event source separately with the qualified frozen
 verifier. This avoids treating package implementation changes as historical
 compiler closure changes. The original trust policy, H08 bundle, core and
 specification bytes remain unchanged.
+
+Clean source `9a446043271d282b8d893f6827bea2eef71bfa3f` passes all forty
+generated families and fresh security acquisition (54 passed and the existing
+single waiver). Its first whole Local run passes 23 operations, then stops at
+two noncanonical Python source layouts. The canonical Python formatter fixes
+only argument/decorator wrapping and blank lines; AST comparisons prove both
+files retain identical syntax trees. All nine formatter targets required by
+Full pass through the canonical CLI, and fourteen existing native-builder and
+adapter architecture tests pass. Package-pair acquisition was deliberately held
+until whole qualification, so this formatting correction invalidates no claimed
+release-artifact evidence. The stopped Local result remains retained with its
+actual source identity and is not promoted to a pass.

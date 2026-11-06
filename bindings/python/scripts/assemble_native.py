@@ -61,8 +61,10 @@ def assemble(output_directory: Path) -> Path:
         [
             sys.executable,
             str(ROOT / "tooling/native_release_build.py"),
-            "--source-root", str(ROOT),
-            "--target-dir", str(ROOT / "bindings/interop/target"),
+            "--source-root",
+            str(ROOT),
+            "--target-dir",
+            str(ROOT / "bindings/interop/target"),
         ],
         cwd=ROOT,
         env=environment,

@@ -1896,6 +1896,13 @@ jobs:
                   path: .cert/publisher
                   persist-credentials: false
                   fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
+                  persist-credentials: false
+                  fetch-depth: 0
             - name: Checkout certified source as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
@@ -1946,7 +1953,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:c --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/c --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -1954,7 +1961,7 @@ jobs:
                   GITHUB_TOKEN: ${{ github.token }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:c
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/c.json --certification-root .cert/closure
             - name: Retain registry receipt for independent verification
@@ -1996,6 +2003,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2048,7 +2062,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:go --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/go --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -2056,7 +2070,7 @@ jobs:
                   GITHUB_TOKEN: ${{ github.token }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:go
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/go.json --certification-root .cert/closure
             - name: Retain registry receipt for independent verification
@@ -2095,6 +2109,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2147,7 +2168,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:php --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/php --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -2155,7 +2176,7 @@ jobs:
                   GITHUB_TOKEN: ${{ github.token }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:php
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/php.json --certification-root
                   .cert/closure
@@ -2195,6 +2216,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2247,7 +2275,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:r --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/r --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -2255,7 +2283,7 @@ jobs:
                   GITHUB_TOKEN: ${{ github.token }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:r
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/r.json --certification-root .cert/closure
             - name: Retain registry receipt for independent verification
@@ -2294,6 +2322,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2346,7 +2381,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:swift --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/swift --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -2354,7 +2389,7 @@ jobs:
                   GITHUB_TOKEN: ${{ github.token }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:swift
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/swift.json --certification-root
                   .cert/closure
@@ -2391,6 +2426,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2443,7 +2485,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:cpp --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/cpp --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Install pinned data-only Conan client
@@ -2454,7 +2496,7 @@ jobs:
                   CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:cpp
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/cpp.json --certification-root
                   .cert/closure
@@ -2495,6 +2537,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2547,7 +2596,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:csharp
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/csharp --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
@@ -2559,7 +2608,7 @@ jobs:
                   NUGET_KEY: ${{ secrets.NUGET_KEY }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:csharp
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/csharp.json --certification-root
                   .cert/closure
@@ -2603,6 +2652,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2655,7 +2711,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:dart --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/dart --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - uses: dart-lang/setup-dart@65eb853c7ba17dde3be364c3d2858773e7144260
@@ -2665,7 +2721,7 @@ jobs:
               env: {}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:dart
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/dart.json --certification-root
                   .cert/closure
@@ -2704,6 +2760,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2756,7 +2819,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:fsharp
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/fsharp --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
@@ -2768,7 +2831,7 @@ jobs:
                   NUGET_KEY: ${{ secrets.NUGET_KEY }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:fsharp
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/fsharp.json --certification-root
                   .cert/closure
@@ -2808,6 +2871,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2860,7 +2930,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:java --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/java --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -2871,7 +2941,7 @@ jobs:
                   SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:java
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/java.json --certification-root
                   .cert/closure
@@ -2913,6 +2983,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -2965,7 +3042,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:kotlin
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/kotlin --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
@@ -2977,7 +3054,7 @@ jobs:
                   SONATYPE_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:kotlin
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/kotlin.json --certification-root
                   .cert/closure
@@ -3017,6 +3094,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -3069,7 +3153,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:lua --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/lua --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -3077,7 +3161,7 @@ jobs:
                   LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:lua
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/lua.json --certification-root
                   .cert/closure
@@ -3117,6 +3201,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -3169,7 +3260,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:perl --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/perl --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
@@ -3178,7 +3269,7 @@ jobs:
                   PAUSE_USERNAME: ${{ secrets.PAUSE_USERNAME }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:perl
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/perl.json --certification-root
                   .cert/closure
@@ -3223,6 +3314,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -3275,7 +3373,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:python
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/python --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
@@ -3286,7 +3384,7 @@ jobs:
             - name: Retain authenticated PyPI file receipt
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --record-external-upload --artifact-id
-                  release:python --source-root candidate --trust-root .cert/publisher --certification-root .cert/closure
+                  release:python --source-root candidate --trust-root .cert/trusted --certification-root .cert/closure
                   --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/python.json
             - name: Retain registry receipt for independent verification
@@ -3326,6 +3424,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -3378,7 +3483,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:ruby --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/ruby --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: "\U0001F48E Setup Ruby"
@@ -3392,7 +3497,7 @@ jobs:
               env: {}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:ruby
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/ruby.json --certification-root
                   .cert/closure
@@ -3433,6 +3538,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -3485,7 +3597,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:rust --source-root
-                  candidate --trust-root .cert/publisher --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
+                  candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/rust --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Obtain short-lived crates.io identity
@@ -3496,7 +3608,7 @@ jobs:
                   CARGO_REGISTRY_TOKEN: ${{ steps.rust-auth.outputs.token }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:rust
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/rust.json --certification-root
                   .cert/closure
@@ -3538,6 +3650,13 @@ jobs:
               with:
                   ref: ${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}
                   path: .cert/publisher
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
             - name: Checkout certified source as data
@@ -3590,7 +3709,7 @@ jobs:
             - name: Authenticate exact approved handoff
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py handoff --artifact-id release:typescript
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/typescript --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
@@ -3606,7 +3725,7 @@ jobs:
               env: {}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:typescript
-                  --source-root candidate --trust-root .cert/publisher --certification-bundle .cert/certification
+                  --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --receipt .cert/receipts/typescript.json --certification-root
                   .cert/closure
@@ -3649,6 +3768,13 @@ jobs:
                   path: .cert/publisher
                   persist-credentials: false
                   fetch-depth: 0
+            - name: Checkout qualified packaging trust root
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: .cert/trusted
+                  persist-credentials: false
+                  fetch-depth: 0
             - name: Checkout certified source as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
@@ -3679,7 +3805,7 @@ jobs:
             - name: Authenticate signed subjects before remote attestation
               run:
                   python -I .cert/publisher/tooling/release_supply_chain.py certified-checksums --source-root candidate
-                  --trust-root .cert/publisher --certification-root .cert/closure --certification-bundle .cert/certification
+                  --trust-root .cert/trusted --certification-root .cert/closure --certification-bundle .cert/certification
                   --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --output-dir .cert/subjects.sha256 --json
             - name: Attest the exact signed subject identities

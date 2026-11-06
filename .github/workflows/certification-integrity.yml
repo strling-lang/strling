@@ -17,6 +17,50 @@ permissions:
     contents: read
 
 jobs:
+    verify-release-packaging-certification:
+        name: Verify signed packaging certification
+        runs-on: ubuntu-24.04
+        steps:
+            - name: Checkout qualified packaging verifier
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: packaging-trusted
+            - name: Checkout packaging evidence as data
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
+                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  path: packaging-candidate
+            - name: Install verification runtime
+              uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: "3.12"
+            - name: Install pinned schema validators
+              run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
+            - name: Verify packaging source, signature, and evidence
+              shell: bash
+              run: |
+                  mkdir -p artifacts
+                  python -I packaging-trusted/tooling/local_certification_attestation.py \
+                    --repository-root packaging-candidate \
+                    --trust-root packaging-trusted \
+                    --trust-policy release-certification-trust.json \
+                    verify --bundle packaging-candidate/tests/certification/release-packaging/1.0/current \
+                    --json | tee artifacts/packaging-certification-verification.json
+            - name: Retain packaging verification result
+              if: ${{ always() }}
+              continue-on-error: true
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: packaging-certification-verification-${{ github.run_id }}
+                  path: artifacts/packaging-certification-verification.json
+                  if-no-files-found: warn
+                  retention-days: 90
     verify-local-certification:
         name: Verify signed local certification
         runs-on: ubuntu-latest

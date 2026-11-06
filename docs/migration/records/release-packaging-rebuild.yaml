@@ -178,4 +178,5 @@ checkpoints:
     - name: Finalization and readiness
       status: planned
       evidence: []
-commits: []
+commits:
+    - 642cc21f8f5d5ccabde1bb893076e02c624247a7

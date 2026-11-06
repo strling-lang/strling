@@ -645,3 +645,19 @@ waiver or permitted-license category is introduced. Its regression run passes
 88 tests plus 18 subtests. The runner's locked offline metadata inventory and
 the historical performance-artifact integrity check pass without any performance
 execution, calibration, evidence relabeling or new admission requirement.
+
+The implementation is committed at
+`642cc21f8f5d5ccabde1bb893076e02c624247a7`. A detached checkout freezes that
+verifier independently of the packaging source and the eventual evidence
+closure. It verifies the unchanged historical H08 bundle successfully with
+Windows Git. The first WSL invocation could not resolve the Windows worktree's
+Git pointer; that environment failure is retained separately and is not a
+failed historical signature or evidence check.
+
+The integration promotes this immutable verifier in all eighteen protected
+publisher/attester jobs and adds inexpensive, data-only packaging verification
+jobs to CI and certification integrity. Existing H08 verification remains in
+place. The workflow promotion passes 131 focused tests and eighteen subtests;
+the governed content-security check passes all six checks. Full frozen-verifier
+qualification, fresh source-bound artifact acquisition and Full/Release remain
+open until their actual retained results are available.

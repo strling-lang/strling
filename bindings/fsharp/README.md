@@ -16,7 +16,7 @@ compatibility requests.
 
 ## Install and load
 
-The package targets `net9.0`, depends on `STRling 3.0.0` and pinned
+The package targets `net9.0`, depends on `STRling` at the same product version and pinned
 `FSharp.Core 9.0.300`, and currently certifies only the `win-x64` native row.
 Loading requires an explicit absolute native path.
 

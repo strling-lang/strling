@@ -690,3 +690,54 @@ platform-inapplicable skips. All public-contract projections pass after canonica
 regeneration, as do version projection, release policy, release contract and
 reviewed dependency-integrity verification. The corrected source is frozen
 before restarting independent acquisition.
+
+The next complete generated check rejected the migration record's bare commit
+SHA, which the task-record schema requires to be an object with `sha` and
+`subject`. The record now uses that exact schema for all implementation commits.
+This documentation/control defect was found before any whole profile ran.
+Partial acquisition from `c5d464fb9c673ef584c4983d790b3d776d647af4` remains
+diagnostic and will not be relabeled for a different source. The final freeze
+requires full task-record schema validation and the complete generated check.
+
+The frozen verifier qualification is complete: 128 Windows tests pass; Linux
+passes 52 attestation tests and 76 workflow/authorization tests after correcting
+the Git-pointer environment issue. The unchanged H08 bundle passes frozen
+verification. Current-source security acquisition records 54 passed, zero failed,
+zero incomplete, zero unavailable and the single existing VS Code license waiver.
+Those security results identify their original source and are reacquired for the
+final freeze.
+
+The actual scope/architecture preflight then rejected global upload counts after
+the second trusted verification job was added. Retention qualification now checks
+each certification job independently, requires immutable upload actions throughout,
+and confines the new job to fixed verifier code, data-only candidate inputs,
+pinned runtime setup and unconditional non-authoritative evidence retention.
+Negative tests reject branch-based verifier code, candidate execution, added shell
+commands and authoritative retention. The full governance check passes.
+
+The Windows bounded-command regression also exposed a liveness probe using
+`os.kill(pid, 0)`. Python's documented Windows behavior uses
+[`TerminateProcess` for non-console signals](https://docs.python.org/3/library/os.html#os.kill).
+The probe now opens a read-only synchronization handle and queries it with a
+zero-time [Windows wait](https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject).
+The new regression proves a running child survives the probe; the existing
+descendant-cleanup regression passes. The combined governance, public-contract
+and supply-chain suite records 141 passed, one platform skip and 22 subtests.
+One earlier synthetic producer failure did not reproduce; its diagnostics and
+subsequent isolated runs are retained without treating them as live evidence.
+
+The complete generated run checked all forty families. Its only remaining
+failure was a declaration naming unchanged Java and Kotlin API signatures;
+those two unrelated surface entries are removed. The binding READMEs now use
+the canonical JVM assembly helper, state the actual release build scope and
+caller-supplied native dependency, and describe F#'s companion without a stale
+3.0.0 version literal. None of those README paths is a generated-family input.
+
+Historical compiler integrity is now pinned to the preserved
+`2d8d897504663211d3768517f0be9f0e28d0f11e` closure, with the original
+`dd9d7702237ba9c56e1269418d5a9bd5b582b9f0` verifier. That exact source/verifier
+combination passes an independent Windows check. The current packaging job
+continues to verify the event source separately with the qualified frozen
+verifier. This avoids treating package implementation changes as historical
+compiler closure changes. The original trust policy, H08 bundle, core and
+specification bytes remain unchanged.

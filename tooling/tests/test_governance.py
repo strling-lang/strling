@@ -534,6 +534,32 @@ class ArchitectureValidationTests(unittest.TestCase):
         )
         self.assertEqual("failed", self.evaluate(rule).status)
 
+    def test_historical_integrity_requires_both_exact_identities(self) -> None:
+        self.write_profile_workflows()
+        path = self.root / ".github/workflows/certification-integrity.yml"
+        original = path.read_text(encoding="utf-8")
+        event = "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}"
+        repository = "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}"
+        historical = original.replace(event, "b" * 40).replace(
+            repository, "strling-lang/strling"
+        )
+        path.write_text(historical, encoding="utf-8")
+        rule = self.ci_profile_rule()
+        rule["configuration"]["historical_integrity_reference"] = {
+            "source_sha": "b" * 40,
+            "verifier_sha": "a" * 40,
+        }
+        self.assertEqual("passed", self.evaluate(rule).status)
+        for bad in (
+            original,
+            historical.replace("b" * 40, "c" * 40),
+            historical.replace("a" * 40, "c" * 40),
+            historical.replace("strling-lang/strling", "untrusted/repository"),
+        ):
+            with self.subTest(workflow=bad):
+                path.write_text(bad, encoding="utf-8")
+                self.assertEqual("failed", self.evaluate(rule).status)
+
     def test_package_uploads_preserve_certification_retention_boundary(self) -> None:
         self.write_profile_workflows()
         path = self.root / ".github/workflows/cd.yml"
@@ -546,6 +572,47 @@ class ArchitectureValidationTests(unittest.TestCase):
             encoding="utf-8",
         )
         self.assertEqual("failed", self.evaluate(self.ci_profile_rule()).status)
+
+    def test_packaging_verifier_retention_is_independent_and_data_only(self) -> None:
+        self.write_profile_workflows()
+        source = Path(__file__).resolve().parents[2] / ".github/workflows/ci.yml"
+        # Exercise the actual new job, preserving the historical fixture jobs.
+        import yaml
+
+        actual = yaml.safe_load(source.read_text(encoding="utf-8"))["jobs"][
+            "verify-release-packaging-certification"
+        ]
+        for name in ("ci.yml", "certification-integrity.yml"):
+            path = self.root / ".github/workflows" / name
+            original = path.read_text(encoding="utf-8")
+            extra = yaml.safe_dump(
+                {"verify-release-packaging-certification": actual}, sort_keys=False
+            )
+            extra = (
+                "\n".join("  " + line if line else line for line in extra.splitlines())
+                + "\n"
+            )
+            path.write_text(original + extra, encoding="utf-8")
+            self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
+            mutations = (
+                extra.replace("continue-on-error: true", "continue-on-error: false"),
+                extra.replace(
+                    "642cc21f8f5d5ccabde1bb893076e02c624247a7", "refs/heads/dev"
+                ),
+                extra.replace(
+                    "python -I packaging-trusted/", "python -I packaging-candidate/"
+                ),
+                extra.replace(
+                    "--json | tee", "--json; python packaging-candidate/evil.py | tee"
+                ),
+            )
+            for mutated in mutations:
+                with self.subTest(workflow=name, mutation=mutated):
+                    path.write_text(original + mutated, encoding="utf-8")
+                    self.assertEqual(
+                        "failed", self.evaluate(self.ci_profile_rule()).status
+                    )
+            path.write_text(original, encoding="utf-8")
 
     def test_ci_profile_routing_rejects_event_trust_drift(self) -> None:
         cases = (

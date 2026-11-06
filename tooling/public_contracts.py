@@ -155,6 +155,8 @@ def _posix_descendant_pids(root_pid: int) -> list[int]:
 
 
 def _pid_is_running(pid: int) -> bool:
+    if os.name == "nt":
+        return _windows_pid_is_running(pid)
     status_path = Path("/proc") / str(pid) / "status"
     try:
         state = next(
@@ -173,6 +175,37 @@ def _pid_is_running(pid: int) -> bool:
     except PermissionError:
         return True
     return True
+
+
+def _windows_pid_is_running(pid: int) -> bool:
+    """Query a process handle; Windows os.kill(pid, 0) terminates the process."""
+    import ctypes
+    from ctypes import wintypes
+
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.OpenProcess.argtypes = (wintypes.DWORD, wintypes.BOOL, wintypes.DWORD)
+    kernel.OpenProcess.restype = wintypes.HANDLE
+    kernel.WaitForSingleObject.argtypes = (wintypes.HANDLE, wintypes.DWORD)
+    kernel.WaitForSingleObject.restype = wintypes.DWORD
+    kernel.CloseHandle.argtypes = (wintypes.HANDLE,)
+    kernel.CloseHandle.restype = wintypes.BOOL
+    handle = kernel.OpenProcess(0x00100000, False, pid)  # SYNCHRONIZE, read-only
+    if not handle:
+        error = ctypes.get_last_error()
+        if error == 87:  # ERROR_INVALID_PARAMETER: the process no longer exists.
+            return False
+        if error == 5:  # Access denied cannot establish that a process exited.
+            return True
+        raise ctypes.WinError(error)
+    try:
+        state = kernel.WaitForSingleObject(handle, 0)
+        if state == 0:  # WAIT_OBJECT_0: the process exited.
+            return False
+        if state == 258:  # WAIT_TIMEOUT: the process is still running.
+            return True
+        raise ctypes.WinError(ctypes.get_last_error())
+    finally:
+        kernel.CloseHandle(handle)
 
 
 def _signal_process(pid: int, value: signal.Signals) -> None:

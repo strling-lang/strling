@@ -14,19 +14,23 @@ compatibility requests.
 
 ## Build and test
 
-The migration does not publish packages. From a source checkout, install the
-shared bridge into a local Maven repository before building Java:
+Use JDK 11 or 21 for canonical source builds. After preparing the governed SDKs
+and dependency caches with `./strling setup all`, run from the repository root:
 
 ```text
-cd bindings/jvm
-mvn install
-cd ../java
-mvn test
+python tooling/jvm_adapter_package.py --install-product --skip-tests
+./strling build java
+./strling test java
 ```
 
-Both artifacts target Java 11 and are certified on JDK 11, 17, and 21. The
-runtime also needs an explicitly supplied absolute path to a compatible
-`strling.c-abi` v1 native library.
+Both artifacts target Java 11 bytecode. The release-package build scope is
+Windows x86_64 with the governed JDK 21 SDK; see the current
+[release policy](../../docs/release-policy.md). Runtime calls require an absolute
+path to the matching product's `strling.c-abi` v1 library. Build it from the
+authenticated source revision using the [shared bridge instructions](../jvm/README.md);
+the Maven artifacts do not include native classifiers. Historical adapter
+matrices do not expand the current package certification scope. No package
+publication is performed by these source-build commands.
 
 ## Canonical compile
 

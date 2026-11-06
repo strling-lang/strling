@@ -14,17 +14,23 @@ compatibility requests.
 
 ## Build and test
 
-The migration does not publish packages. From a source checkout, first install
-`bindings/jvm` into the configured local Maven repository, then run:
+Use JDK 11 or 21 for canonical source builds. After `./strling setup all` has
+prepared the governed SDKs and dependency caches, run from the repository root:
 
 ```text
-cd bindings/kotlin
-./gradlew test
+python tooling/jvm_adapter_package.py --install-product --skip-tests
+./strling build kotlin
+./strling test kotlin
 ```
 
-The adapter targets Java 11 and is certified on JDK 11, 17, and 21. Runtime
-calls require an explicitly supplied absolute path to a compatible
-`strling.c-abi` v1 native library.
+The adapter targets Java 11 bytecode. Release-package build certification uses
+the governed JDK 21 SDK on Windows x86_64; the current
+[release policy](../../docs/release-policy.md) defines the exact scope. Runtime
+calls require an absolute path to the matching native product. Follow the
+[shared bridge instructions](../jvm/README.md) to build it from the authenticated
+source revision. Canonical JAR installation preserves strict dependency
+verification; plain `mvn install` is not a replacement for that assembly step.
+These source-build commands do not publish packages.
 
 ## Canonical compile
 

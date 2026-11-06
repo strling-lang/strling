@@ -37,6 +37,25 @@ an alternate JNA/JNI/Panama or semantic route.
 No package publication or native distribution is performed by the migration
 certification.
 
+## Build the native runtime and bridge
+
+After preparing the governed toolchains and dependency caches with
+`./strling setup all`, build from the repository root:
+
+```text
+python tooling/native_release_build.py --source-root . --target-dir bindings/interop/target
+python tooling/jvm_adapter_package.py --install-product --skip-tests
+```
+
+The native helper uses locked dependencies and Rust 1.75. The resulting Windows
+library is `bindings/interop/target/release/strling_interop.dll`; pass its absolute
+path to `NativeClient.load`. The shared bridge helper installs the canonical JAR
+bytes required by Kotlin's strict dependency verification. Its reviewed
+source-build compiler identities cover JDK 11 and 21; the release build uses the
+governed JDK 21 Windows x86_64 scope. Obtain the native sources from the exact Git
+revision authenticated by the package provenance. Supplied native bytes remain
+subject to release checksum and signature verification.
+
 ## Product compatibility
 
 Fourth Edition packages require the exact 4.0.0 native product identity in

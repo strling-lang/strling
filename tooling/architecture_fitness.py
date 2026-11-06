@@ -1462,8 +1462,12 @@ def certification_checkout_findings(
                 "github.event.pull_request.head.sha || github.sha }}"
             )
             expected_repository = (
-                "${{ github.event_name == 'pull_request_target' && "
-                "github.event.pull_request.head.repo.full_name || github.repository }}"
+                "strling-lang/strling"
+                if historical_reference is not None
+                else (
+                    "${{ github.event_name == 'pull_request_target' && "
+                    "github.event.pull_request.head.repo.full_name || github.repository }}"
+                )
             )
             if checkouts["candidate"].get("repository") != expected_repository:
                 raise ValueError("candidate repository must follow the event source")
@@ -1478,7 +1482,7 @@ def certification_checkout_findings(
             if "repository" in checkouts["candidate"]:
                 raise ValueError("delivery candidate must use the workflow repository")
         if historical_reference is not None:
-            if pull_request_base or set(historical_reference) != {
+            if set(historical_reference) != {
                 "source_sha",
                 "verifier_sha",
             }:
@@ -1640,7 +1644,7 @@ def ci_profile_routing_findings(
             pull_request_base=pull_request_base,
             historical_reference=configuration.get("historical_delivery_reference")
             if not pull_request_base
-            else None,
+            else configuration.get("historical_integrity_reference"),
         )
         findings.extend(checkout_findings)
         if pin is not None:
@@ -1701,49 +1705,128 @@ def ci_profile_routing_findings(
                     relative,
                 )
             )
-        retention_text = text
-        if relative == ".github/workflows/cd.yml":
-            # Package subject uploads are independently qualified by the release
-            # supply-chain contract. This rule checks certification retention.
-            try:
-                workflow = yaml.safe_load(text)
-                retention_job = workflow["jobs"]["release-certification"]
-                retention_text = yaml.safe_dump(retention_job, sort_keys=False)
-                all_uploads = [
-                    step.get("uses", "")
-                    for job in workflow["jobs"].values()
-                    for step in job.get("steps", [])
-                    if isinstance(step, dict)
-                    and str(step.get("uses", "")).startswith("actions/upload-artifact@")
+        # Count each certification job's retention boundary independently. A
+        # second data-only verifier must not weaken or duplicate the first one.
+        try:
+            workflow = yaml.safe_load(text)
+            jobs = workflow["jobs"]
+            primary = {
+                ".github/workflows/ci.yml": "quality-hardgates",
+                ".github/workflows/cd.yml": "release-certification",
+                ".github/workflows/certification-integrity.yml": "verify-local-certification",
+            }[relative]
+            all_uploads = [
+                step.get("uses", "")
+                for job in jobs.values()
+                for step in job.get("steps", [])
+                if isinstance(step, dict)
+                and str(step.get("uses", "")).startswith("actions/upload-artifact@")
+            ]
+            if any(action != upload_action for action in all_uploads):
+                findings.append(
+                    (
+                        f"{relative}: uploads must use the governed immutable action",
+                        relative,
+                    )
+                )
+            retention_jobs = [jobs[primary]]
+            packaging = jobs.get("verify-release-packaging-certification")
+            if packaging is not None:
+                retention_jobs.append(packaging)
+                steps = packaging["steps"]
+                checkouts = [
+                    step.get("with", {})
+                    for step in steps
+                    if str(step.get("uses", "")).startswith("actions/checkout@")
                 ]
-                if any(action != upload_action for action in all_uploads):
+                trusted = [
+                    row for row in checkouts if row.get("path") == "packaging-trusted"
+                ]
+                candidates = [
+                    row for row in checkouts if row.get("path") == "packaging-candidate"
+                ]
+                commands = [step["run"] for step in steps if "run" in step]
+                expected_command = (
+                    "python -I packaging-trusted/tooling/local_certification_attestation.py "
+                    "--repository-root packaging-candidate --trust-root packaging-trusted "
+                    "--trust-policy release-certification-trust.json "
+                    "verify --bundle packaging-candidate/tests/certification/release-packaging/1.0/current "
+                    "--json | tee artifacts/packaging-certification-verification.json"
+                )
+                script = (
+                    commands[1].strip().split("\n", 1) if len(commands) == 2 else []
+                )
+                verification = script[1].replace("\\\n", "") if len(script) == 2 else ""
+                permitted_actions = {
+                    "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+                    "actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1",
+                    upload_action,
+                }
+                if (
+                    len(steps) != 6
+                    or len(checkouts) != 2
+                    or len(trusted) != 1
+                    or len(candidates) != 1
+                    or re.fullmatch(r"[0-9a-f]{40}", str(trusted[0].get("ref"))) is None
+                    or any(
+                        row.get("persist-credentials") is not False for row in checkouts
+                    )
+                    or candidates[0].get("ref")
+                    != "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}"
+                    or any(
+                        step.get("uses") not in permitted_actions
+                        for step in steps
+                        if "uses" in step
+                    )
+                    or any("working-directory" in step for step in steps)
+                    or packaging.get("defaults") is not None
+                    or workflow.get("defaults", {})
+                    .get("run", {})
+                    .get("working-directory")
+                    is not None
+                    or len(commands) != 2
+                    or commands[0]
+                    != "python -m pip install jsonschema==4.10.3 PyYAML==6.0.1"
+                    or len(script) != 2
+                    or script[0] != "mkdir -p artifacts"
+                    or "\n" in verification
+                    or " ".join(verification.split()) != expected_command
+                    or packaging.get("environment") is not None
+                    or packaging.get("permissions") not in (None, {"contents": "read"})
+                ):
                     findings.append(
                         (
-                            f"{relative}: package uploads must use the governed immutable action",
+                            f"{relative}: packaging verification must execute isolated immutable verifier code only",
                             relative,
                         )
                     )
-            except (KeyError, TypeError, yaml.YAMLError):
-                findings.append(
-                    (f"{relative}: malformed certification retention job", relative)
-                )
-        if retention_text.count(upload_action) != 1:
+            for job in retention_jobs:
+                uploads = [
+                    step
+                    for step in job.get("steps", [])
+                    if str(step.get("uses", "")).startswith("actions/upload-artifact@")
+                ]
+                if len(uploads) != 1 or uploads[0].get("uses") != upload_action:
+                    findings.append(
+                        (
+                            f"{relative}: certification artifact upload must use the governed immutable action",
+                            relative,
+                        )
+                    )
+                elif (
+                    uploads[0].get("if") != "${{ always() }}"
+                    or uploads[0].get("continue-on-error") is not True
+                    or uploads[0].get("with", {}).get("if-no-files-found") != "warn"
+                ):
+                    findings.append(
+                        (
+                            f"{relative}: artifact retention must be unconditional and non-authoritative",
+                            relative,
+                        )
+                    )
+        except (KeyError, TypeError, AttributeError, yaml.YAMLError):
             findings.append(
-                (
-                    f"{relative}: certification artifact upload must use the governed immutable action",
-                    relative,
-                )
-            )
-        if (
-            "if: ${{ always() }}" not in retention_text
-            or "if-no-files-found: warn" not in retention_text
-            or retention_text.count("continue-on-error: true") != 1
-        ):
-            findings.append(
-                (
-                    f"{relative}: artifact retention must be unconditional and non-authoritative",
-                    relative,
-                )
+                (f"{relative}: malformed certification retention job", relative)
             )
 
     cd_path = root / ".github/workflows/cd.yml"

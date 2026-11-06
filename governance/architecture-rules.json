@@ -378,6 +378,10 @@
                 "historical_delivery_reference": {
                     "source_sha": "2d8d897504663211d3768517f0be9f0e28d0f11e",
                     "verifier_sha": "dd9d7702237ba9c56e1269418d5a9bd5b582b9f0"
+                },
+                "historical_integrity_reference": {
+                    "source_sha": "2d8d897504663211d3768517f0be9f0e28d0f11e",
+                    "verifier_sha": "dd9d7702237ba9c56e1269418d5a9bd5b582b9f0"
                 }
             }
         },

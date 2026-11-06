@@ -1,7 +1,8 @@
 # Cheap verification of trusted, authoritative local certification evidence.
 # pull_request_target deliberately executes only the verifier and trust policy
 # from the trusted base revision. Other events use an immutable reviewed verifier;
-# candidate code is treated strictly as data in every event.
+# Preserved compiler evidence uses its historical closure; packaging evidence
+# follows the event source. Candidate code is treated strictly as data.
 name: STRling certification integrity
 
 on:
@@ -85,8 +86,8 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  repository: strling-lang/strling
+                  ref: 2d8d897504663211d3768517f0be9f0e28d0f11e
                   path: candidate
 
             - name: Install verification runtime

@@ -311,6 +311,21 @@
                             "pattern": "^[0-9a-f]{40}$"
                         }
                     }
+                },
+                "historical_integrity_reference": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["source_sha", "verifier_sha"],
+                    "properties": {
+                        "source_sha": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
+                        },
+                        "verifier_sha": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
+                        }
+                    }
                 }
             }
         },

@@ -100,8 +100,6 @@ change_classification:
             - cpp-public-api
             - csharp-public-api
             - fsharp-public-api
-            - java-public-api
-            - kotlin-public-api
             - php-public-api
             - rust-public-api
             - typescript-public-api
@@ -180,4 +178,9 @@ checkpoints:
       status: planned
       evidence: []
 commits:
-    - 642cc21f8f5d5ccabde1bb893076e02c624247a7
+    - sha: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+      subject: Rebuild coordinated 4.0 packages and protected artifact handoff
+    - sha: 3f1d841008522c0a34b2a2fc98fd3bc1cd10374b
+      subject: Pin independent packaging verification for protected publication
+    - sha: c5d464fb9c673ef584c4983d790b3d776d647af4
+      subject: Make package projections stable across clean source checkouts

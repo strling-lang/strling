@@ -659,7 +659,15 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
     def test_offline_producer_emits_complete_deterministic_bundle(self) -> None:
         first = self.produce("evidence-one")
         second = self.produce("evidence-two")
-        self.assertEqual("passed", first["status"])
+        self.assertEqual(
+            "passed",
+            first["status"],
+            [
+                (row["id"], row.get("findings"))
+                for row in first["artifacts"]
+                if row["status"] != "passed"
+            ],
+        )
         self.assertEqual(17, first["summary"]["passed"])
         self.assertFalse(first["publication_authorized"])
         self.assertEqual(first["evidence_fingerprint"], second["evidence_fingerprint"])

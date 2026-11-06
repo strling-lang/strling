@@ -92,19 +92,21 @@ outside Git. A failed verification is repaired by deliberately producing and
 signing fresh same-source evidence, never by cloud fallback or accepting a bare
 hash.
 
-Cloud push and dispatch events, and delivery verification, pin the same
-reviewed verifier commit. `pull_request_target` uses the exact base SHA and
-requires that base to contain the reviewed verifier. Candidate source and
-evidence are checked out separately and read only as data. A base that predates
-the verifier requires separately authorized integration. If the integrity
-workflow exists there, its guard rejects that base; if the workflow itself is
-absent, no integrity run is available. Neither case permits candidate tooling
-as a fallback. A valid signature does not authorize that integration or package
-publication.
+The preserved compiler certification is verified at historical closure
+`2d8d897504663211d3768517f0be9f0e28d0f11e`, using reviewed verifier
+`dd9d7702237ba9c56e1269418d5a9bd5b582b9f0`. Its integrity job uses the exact
+trusted base SHA for `pull_request_target` and requires that base to contain
+the reviewed verifier; other events use the immutable verifier directly.
+New package changes do not become closure changes to that historical evidence.
 
-P20-T02 may build, inspect, and dry-run packages. P20-T04 may prepare and
-certify a candidate. Neither task may use production publication credentials
-or create a public coordinate.
+The separate packaging integrity job verifies the actual event source and its
+new signed bundle with immutable verifier
+`642cc21f8f5d5ccabde1bb893076e02c624247a7`. Protected publishers use that same
+trust checkout independently of their owner-approved publisher implementation.
+Both verification contexts read candidate source and evidence as data. Missing
+trusted base integration cannot fall back to candidate tooling. Local
+certification and a valid signature do not authorize production credentials,
+package publication, or creation of a public coordinate.
 
 ## Immutable candidates and releases
 

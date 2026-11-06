@@ -128,6 +128,19 @@ class PublicContractTests(unittest.TestCase):
             encoding="utf-8",
         )
 
+    def test_process_liveness_check_never_terminates_a_running_process(self) -> None:
+        process = subprocess.Popen(
+            [sys.executable, "-c", "import time; time.sleep(30)"]
+        )
+        try:
+            self.assertTrue(_pid_is_running(process.pid))
+            self.assertIsNone(process.poll())
+        finally:
+            if process.poll() is None:
+                process.terminate()
+            process.wait(timeout=10)
+        self.assertFalse(_pid_is_running(process.pid))
+
     def test_run_command_closes_stdin(self) -> None:
         output = run_command(
             [

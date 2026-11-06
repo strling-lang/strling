@@ -6220,8 +6220,8 @@ task; P20-T02 is paused.
 
 ## V4-H08 - Hardened-core recertification and attested local evidence
 
--   Status: In progress — the d041a697 campaign and trusted verification pass,
-    but signed-bundle formatting and hygiene policy require a new candidate.
+-   Status: Complete — deterministic same-source campaigns, restricted signing,
+    and hosted immutable verification passed at `fdcdea27bcbabd8cb54a9d93dd5302e6032215ee`.
 -   Starting checkpoint: `61338f1581e8ecf436fc59acbfae28a603a90382`
     on clean `dev`, identical to `origin/dev`.
 -   Historical deterministic candidate:

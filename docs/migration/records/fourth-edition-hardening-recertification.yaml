@@ -1,6 +1,6 @@
 record_version: 2.0.0
 title: Fourth Edition hardened-core recertification
-status: in_progress
+status: complete
 objective: Certify the complete hardened Fourth Edition core through deterministic, authoritative local Full, and independent no-reuse Release profiles; sign one exact-source evidence root; prove cheap cloud integrity verification; then hand that baseline to publication preparation without beginning publication work.
 scope:
     diff:
@@ -2683,6 +2683,23 @@ checkpoints:
           - check: Owner-authorized bounded continuation and unchanged closure contract
             result: passed
             details: Owner authorizes only the demonstrated linker-construction and Git-index blockers initially. No source-guard relaxation, workload/sample/security/waiver change, optional optimization or measurement redesign. Three-pin campaign substitution equivalence was not established or approved. After both corrections are independently verified, create a clean corrected candidate and execute its required fresh canonical preparation,prerequisites,complete campaigns,independent no-reuse Releases,signing,actual hosted verification and guarded closure. October27 18:00CDT is a mandatory report,not a forced interruption. Further genuine terminal failures are preserved and reported before new remediation. H08 OPEN.
+    - name: Final deterministic authoritative closure
+      status: passed
+      evidence:
+          - check:
+                Two source-distinct campaigns, restricted signature and hosted immutable
+                verification
+            result: passed
+            details:
+                "Deterministic contract strling-deterministic-certification-v1: verifier
+                dd9d7702237ba9c56e1269418d5a9bd5b582b9f0 qualified in the first campaign, then
+                pin-only promotion produced fdcdea27bcbabd8cb54a9d93dd5302e6032215ee. Fresh
+                Local 37/37, PR 79/79, Full 123 passed plus one scoped waiver, and independent
+                no-reuse Release 123 passed plus the same waiver. No failed, unavailable or
+                incomplete operations. Signed root 53a33c548f269a52fc78f16c70823cb669b5f2f46f59080b8712c421523007fa;
+                hosted immutable verification run42198353642 passed at evidence commit e1284b7367fd6676c7e97795afe0710d4ca984cf.
+                Performance diagnostics remain non-gating; historical failed Full and64248 consumed
+                samples preserved."
 commits:
     - sha: 285ed7609cff5e2f3789e66bead25d8687c15b60
       subject: "fix(performance): retire owned compiler helpers safely"
@@ -2824,7 +2841,35 @@ commits:
       subject: "fix(certification): isolate kernel peak RSS"
     - sha: b7b741bebd9232e72e1834479d900dd1943d6035
       subject: "fix(security): replace affected build tooling graph"
+completion:
+    accomplished:
+        - Hardened core recertified under the versioned deterministic contract.
+        - Two source-distinct campaigns completed with independent Release and restricted
+          signing.
+    verified:
+        - "Deterministic contract strling-deterministic-certification-v1: verifier dd9d7702237ba9c56e1269418d5a9bd5b582b9f0
+          qualified in the first campaign, then pin-only promotion produced fdcdea27bcbabd8cb54a9d93dd5302e6032215ee.
+          Fresh Local 37/37, PR 79/79, Full 123 passed plus one scoped waiver, and independent
+          no-reuse Release 123 passed plus the same waiver. No failed, unavailable or incomplete
+          operations. Signed root 53a33c548f269a52fc78f16c70823cb669b5f2f46f59080b8712c421523007fa;
+          hosted immutable verification run42198353642 passed at evidence commit e1284b7367fd6676c7e97795afe0710d4ca984cf.
+          Performance diagnostics remain non-gating; historical failed Full and64248 consumed
+          samples preserved."
+    behavior_changed: Certification scope and evidence tooling; no new language semantics.
+    intentional_behavior_changes:
+        - Quantitative performance acceptance removed under owner-authorized deterministic
+          contract.
+    preserved_behavior:
+        - Functional/resource safety, semantic, security, dependency/license, architecture,
+          source and evidence integrity requirements.
+        - Sole scoped WVR-SEC-VSCE-LICENSE-001 waiver and all historical evidence.
+    transitional_architecture: []
+    deferred_work:
+        - CLI latency and normalization variability investigations remain non-gating.
+        - Package publication and public release tags remain separate.
 readiness:
-    status: BLOCKED
+    status: READY
     next_task: P20-T02 — Rebuild package manifests and publication pipelines
-    rationale: "H08 remains OPEN. Accepted ca0d359a Full is preserved, but its independent Release failed before sampling on native harness construction and Git-index mutation. Owner-authorized bounded corrections are under focused verification; no corrected-source whole profile, signature, promotion or hosted closure is accepted. Publication readiness remains BLOCKED; October 27 18:00 CDT is a mandatory status checkpoint and healthy execution may continue."
+    rationale:
+        Deterministic H08 campaign and hosted immutable evidence verified; publication
+        has not begun.

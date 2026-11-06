@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(strling_c VERSION 3.0.0 LANGUAGES C)
+project(strling_c VERSION 4.0.0 LANGUAGES C)
+
+if(MSVC)
+    # MSVC otherwise records the absolute object path even without /Zi.
+    get_filename_component(STRLING_NATIVE_BUILD_ROOT "${CMAKE_BINARY_DIR}/.." ABSOLUTE)
+    file(TO_NATIVE_PATH "${STRLING_NATIVE_BUILD_ROOT}" STRLING_NATIVE_BUILD_ROOT_WINDOWS)
+    add_compile_options(/Brepro /experimental:deterministic "/pathmap:${STRLING_NATIVE_BUILD_ROOT_WINDOWS}=Z:/strling-build")
+    string(APPEND CMAKE_STATIC_LINKER_FLAGS " /Brepro")
+endif()
 
 include(CTest)
 include(GNUInstallDirs)
@@ -18,6 +26,7 @@ find_program(
     HINTS "$ENV{USERPROFILE}/.cargo/bin" "$ENV{HOME}/.cargo/bin"
     REQUIRED
 )
+find_package(Python3 3.12 COMPONENTS Interpreter REQUIRED)
 
 get_filename_component(STRLING_REPOSITORY_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
 set(STRLING_INTEROP_MANIFEST "${STRLING_REPOSITORY_ROOT}/bindings/interop/Cargo.toml")
@@ -56,15 +65,14 @@ set(STRLING_INTEROP_INPUTS
     "${STRLING_REPOSITORY_ROOT}/bindings/interop/Cargo.lock"
     "${STRLING_REPOSITORY_ROOT}/bindings/interop/fuzz/Cargo.toml"
     "${STRLING_REPOSITORY_ROOT}/core/internal/Cargo.toml"
+    "${STRLING_REPOSITORY_ROOT}/tooling/native_release_build.py"
 )
 
 add_custom_command(
     OUTPUT "${STRLING_INTEROP_STATIC_LIBRARY}"
     COMMAND
-        "${STRLING_CARGO_EXECUTABLE}" build
-        --manifest-path "${STRLING_INTEROP_MANIFEST}"
-        --release
-        --locked
+        "${Python3_EXECUTABLE}" "${STRLING_REPOSITORY_ROOT}/tooling/native_release_build.py"
+        --source-root "${STRLING_REPOSITORY_ROOT}"
         --target-dir "${STRLING_INTEROP_TARGET_DIR}"
     DEPENDS ${STRLING_INTEROP_INPUTS}
     WORKING_DIRECTORY "${STRLING_REPOSITORY_ROOT}"
@@ -180,6 +188,13 @@ install(
 install(
     FILES "${STRLING_INTEROP_STATIC_LIBRARY}"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+)
+
+install(
+    FILES
+        "${STRLING_REPOSITORY_ROOT}/LICENSE"
+        "${STRLING_REPOSITORY_ROOT}/bindings/interop/THIRD_PARTY_NOTICES.txt"
+    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/licenses/strling"
 )
 
 set(STRLING_C_ARCHIVE_NAME

@@ -12,11 +12,17 @@ can decide how to handle errors.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
+import os
 import re
+import shutil
+import tempfile
+import tomllib
+import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, List, Optional
 
 try:
     from tooling.lua_rockspec import normalize_lua_rockspec_version
@@ -36,6 +42,18 @@ ROOT_DIR: Path = Path(__file__).resolve().parent.parent
 SOURCE_FILE: Path = ROOT_DIR / "governance/release-policy.json"
 
 
+def unique_json(content: str) -> dict:
+    def pairs(items):
+        document = {}
+        for key, value in items:
+            if key in document:
+                raise ValueError("Duplicate JSON metadata key: " + key)
+            document[key] = value
+        return document
+
+    return json.loads(content, object_pairs_hook=pairs)
+
+
 def get_source_version() -> str:
     """Return the governed repository projection version.
 
@@ -46,14 +64,224 @@ def get_source_version() -> str:
     if not SOURCE_FILE.exists():
         raise FileNotFoundError(f"Source file {SOURCE_FILE} not found.")
 
-    document = json.loads(SOURCE_FILE.read_text(encoding="utf-8"))
+    document = unique_json(SOURCE_FILE.read_text(encoding="utf-8"))
     try:
-        version = document["product"]["repository_projection"]["version"]
+        version = document["product"]["version"]
+        projection = document["product"]["repository_projection"]
     except (KeyError, TypeError) as exc:
         raise ValueError("Could not find the product repository projection") from exc
-    if not isinstance(version, str) or not version:
-        raise ValueError("Product repository projection version must be a string")
+    if (
+        not isinstance(version, str)
+        or re.fullmatch(
+            r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-rc\.[1-9][0-9]*)?",
+            version,
+        )
+        is None
+    ):
+        raise ValueError("Product version must be a governed stable or RC SemVer")
+    if projection != {**projection, "version": version, "status": "active"}:
+        raise ValueError(
+            "Repository projection must be active and equal the product version"
+        )
     return version
+
+
+def projected_contents(root: Path, policy: dict, version: str) -> dict[Path, str]:
+    """Plan every substitution before writing; reject missing or ambiguous probes.
+
+    The policy's closed version inventory, rather than a second updater list,
+    selects product fields. Independent identities are checked but never rewritten.
+    """
+    contents: dict[Path, str] = {}
+    ids: set[str] = set()
+    registered: set[str] = set()
+    for surface in policy["version_surfaces"]:
+        if surface["id"] in ids:
+            raise ValueError("Duplicate version surface: " + surface["id"])
+        ids.add(surface["id"])
+        relative = surface["path"]
+        path = root / relative
+        if not path.resolve().is_relative_to(root.resolve()):
+            raise ValueError("Version surface escapes repository: " + relative)
+        registered.add(relative)
+        content = contents.get(path, path.read_text(encoding="utf-8"))
+        probe = surface["probe"]
+        kind = probe["kind"]
+        if path.suffix == ".json":
+            unique_json(content)
+        expected = (
+            version
+            if probe["expected"] == "repository_projection"
+            else probe["expected"]
+        )
+        if path.suffix == ".toml" or path.name == "Cargo.lock":
+            parsed = tomllib.loads(content)
+            if path.name == "Cargo.toml" and not isinstance(
+                parsed.get("package", {}).get("version"), str
+            ):
+                raise ValueError("Cargo package version is missing: " + relative)
+            if path.name == "pyproject.toml" and not isinstance(
+                parsed.get("project", {}).get("version"), str
+            ):
+                raise ValueError("Python project version is missing: " + relative)
+        if path.suffix in (".xml", ".csproj", ".fsproj"):
+            ET.fromstring(content)
+        if kind == "tag":
+            continue
+        if kind in ("json", "absent"):
+            document = unique_json(content)
+            tokens = probe["pointer"].lstrip("/").split("/")
+            parent = document
+            for token in tokens[:-1]:
+                parent = parent[token.replace("~1", "/").replace("~0", "~")]
+            key = tokens[-1]
+            if kind == "absent":
+                if key in parent:
+                    raise ValueError(
+                        "Non-product manifest declares a version: " + relative
+                    )
+                continue
+            observed = parent[key]
+            if probe["expected"] == "repository_projection":
+                parent[key] = version
+                if observed != version:
+                    indent = re.search(r'\n( +)"', content)
+                    content = (
+                        json.dumps(
+                            document,
+                            indent=len(indent[1]) if indent else 2,
+                            ensure_ascii=False,
+                        )
+                        + "\n"
+                    )
+            elif observed != expected:
+                raise ValueError("Independent version drift: " + surface["id"])
+        else:
+            matches = list(re.finditer(probe["pattern"], content))
+            if len(matches) != 1 or matches[0].lastindex != 1:
+                raise ValueError(
+                    "Version probe must select exactly one field: " + surface["id"]
+                )
+            match = matches[0]
+            if probe["expected"] == "repository_projection":
+                content = content[: match.start(1)] + version + content[match.end(1) :]
+            elif match[1] != expected:
+                raise ValueError("Independent version drift: " + surface["id"])
+        contents[path] = content
+
+    # Detect newly introduced package manifests before silently leaving them out.
+    for pattern in (
+        "bindings/*/pyproject.toml",
+        "bindings/*/package.json",
+        "bindings/*/pubspec.yaml",
+        "bindings/*/pom.xml",
+        "bindings/*/composer.json",
+        "bindings/*/DESCRIPTION",
+        "bindings/*/dist.ini",
+        "bindings/*/Cargo.toml",
+        "bindings/*/go.mod",
+        "bindings/*/Package.swift",
+        "bindings/*/src/*/*.csproj",
+        "bindings/*/src/*/*.fsproj",
+    ):
+        for path in root.glob(pattern):
+            if path.relative_to(root).as_posix() not in registered:
+                raise ValueError(
+                    "Unregistered public manifest: " + path.relative_to(root).as_posix()
+                )
+    composer = root / "bindings/php/composer.json"
+    if composer in contents:
+        lock = composer.with_name("composer.lock")
+        contents[lock] = composer_lock_projection(
+            contents[composer], lock.read_text(encoding="utf-8")
+        )
+    return contents
+
+
+def composer_lock_projection(manifest: str, lock: str) -> str:
+    """Project Composer 2's content hash without resolving any dependency.
+
+    Algorithm authority: composer/composer 2.7.1, Package/Locker::getContentHash.
+    Only the root metadata hash changes; every resolved package record is retained.
+    """
+    document = unique_json(manifest)
+    locked = unique_json(lock)
+    if re.fullmatch(r"[0-9a-f]{32}", str(locked.get("content-hash", ""))) is None:
+        raise ValueError("Composer lock has no unique valid content hash")
+    relevant_keys = {
+        "name",
+        "version",
+        "require",
+        "require-dev",
+        "conflict",
+        "replace",
+        "provide",
+        "minimum-stability",
+        "prefer-stable",
+        "repositories",
+        "extra",
+    }
+    relevant = {key: value for key, value in document.items() if key in relevant_keys}
+    if "platform" in document.get("config", {}):
+        relevant["config"] = {"platform": document["config"]["platform"]}
+
+    def php_arrays(value):
+        if isinstance(value, float):
+            raise ValueError(
+                "Composer resolution metadata cannot contain floating point values"
+            )
+        if isinstance(value, dict):
+            return (
+                {key: php_arrays(child) for key, child in value.items()}
+                if value
+                else []
+            )
+        if isinstance(value, list):
+            return [php_arrays(child) for child in value]
+        return value
+
+    ordered = {key: php_arrays(relevant[key]) for key in sorted(relevant)}
+    encoded = json.dumps(
+        ordered, ensure_ascii=True, separators=(",", ":"), allow_nan=False
+    ).replace("/", "\\/")
+    digest = hashlib.md5(encoded.encode("utf-8"), usedforsecurity=False).hexdigest()
+    if locked["content-hash"] == digest:
+        return lock
+    return re.sub(
+        r'("content-hash"\s*:\s*")[0-9a-f]{32}(\")',
+        lambda match: match[1] + digest + match[2],
+        lock,
+        count=1,
+    )
+
+
+def write_projection(planned: dict[Path, str]) -> None:
+    """Stage all changed files first and roll back a failed multi-file update."""
+    originals: dict[Path, bytes] = {}
+    staged: dict[Path, Path] = {}
+    changed: list[Path] = []
+    try:
+        for path, content in planned.items():
+            if path.read_text(encoding="utf-8") == content:
+                continue
+            originals[path] = path.read_bytes()
+            with tempfile.NamedTemporaryFile(
+                dir=path.parent, delete=False, suffix=".version-sync.new"
+            ) as stream:
+                temporary = Path(stream.name)
+                staged[path] = temporary
+                stream.write(content.encode("utf-8"))
+            shutil.copymode(path, temporary)
+        for path, temporary in staged.items():
+            os.replace(temporary, path)
+            changed.append(path)
+    except OSError:
+        for path in reversed(changed):
+            path.write_bytes(originals[path])
+        raise
+    finally:
+        for temporary in staged.values():
+            temporary.unlink(missing_ok=True)
 
 
 def update_file(
@@ -330,12 +558,13 @@ def rename_lua_rockspec(version: str, dry_run: bool = False) -> bool:
 
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="Sync project version across bindings")
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument(
         "--check",
         action="store_true",
         help="Check if versions are in sync without modifying",
     )
-    parser.add_argument("--write", action="store_true", help="Write changes to files")
+    mode.add_argument("--write", action="store_true", help="Write changes to files")
     args = parser.parse_args(argv)
 
     if not args.check and not args.write:
@@ -350,45 +579,29 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     logger.info("Governed repository projection: %s", version)
 
-    targets: List[Tuple[str, Callable[[str, str, Path], str]]] = [
-        ("Cargo.toml", update_toml_cargo),
-        ("bindings/typescript/package.json", update_json),
-        ("bindings/php/composer.json", update_composer_json),
-        ("bindings/php/src/STRling.php", update_php_source_version),
-        # The RubyGems manifest intentionally keeps a checked-in sentinel. The
-        # release policy requires deterministic substitution during assembly.
-        ("bindings/ruby/lib/strling.rb", update_ruby_version_file),
-        ("bindings/dart/pubspec.yaml", update_yaml_pubspec),
-        ("bindings/csharp/src/STRling/STRling.csproj", update_xml_csproj),
-        ("bindings/fsharp/src/STRling.FSharp/STRling.FSharp.fsproj", update_xml_csproj),
-        ("bindings/java/pom.xml", update_xml_pom),
-        ("bindings/jvm/pom.xml", update_xml_pom),
-        (
-            "bindings/java/src/main/java/com/strling/Strling.java",
-            update_java_source_version,
-        ),
-        ("bindings/kotlin/build.gradle.kts", update_kotlin_gradle),
-        ("bindings/r/DESCRIPTION", update_r_description),
-        ("bindings/perl/lib/STRling.pm", update_perl_pm),
-        ("bindings/cpp/CMakeLists.txt", update_cmake),
+    # Retained updater helpers are compatibility APIs; registry probes own writes.
+    try:
+        policy = unique_json(SOURCE_FILE.read_text(encoding="utf-8"))
+        planned = projected_contents(ROOT_DIR, policy, version)
+    except (OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
+        logger.error("Version projection refused: %s", exc)
+        return 2
+    drift = [
+        path
+        for path, content in planned.items()
+        if path.read_text(encoding="utf-8") != content
     ]
-
-    success = True
-    for path, updater in targets:
-        if not update_file(path, version, dry_run=not args.write, updater_func=updater):
-            success = False
-
-    # The checked-in Lua file is a release template whose VERSION placeholders
-    # are materialized by the release workflow. It is governed separately and
-    # is deliberately not a version-synchronized repository output.
-
-    if args.check and not success:
-        logger.error("Version mismatch detected!")
-        return 3
-
-    if args.write:
-        logger.info("Version sync complete.")
-
+    for path in drift:
+        logger.info(
+            "%s %s", "Updating" if args.write else "Stale", path.relative_to(ROOT_DIR)
+        )
+    if args.check:
+        return 3 if drift else 0
+    try:
+        write_projection(planned)
+    except OSError as exc:
+        logger.error("Version projection write failed: %s", exc)
+        return 2
     return 0
 
 

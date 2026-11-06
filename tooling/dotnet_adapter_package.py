@@ -19,10 +19,13 @@ from typing import Any, Mapping, Sequence
 
 
 ROOT = Path(__file__).resolve().parents[1]
+PRODUCT_VERSION = json.loads(
+    (ROOT / "governance/release-policy.json").read_text(encoding="utf-8")
+)["product"]["version"]
 GRAPH_PATH = ROOT / "tests/adapters/dotnet-3.0/release-graph.json"
 OSV_ENDPOINT = "https://api.osv.dev/v1/querybatch"
 SDK_VERSIONS = ("9.0.120", "9.0.200", "9.0.302")
-INTERNAL_PACKAGES = (("STRling", "3.0.0"), ("STRling.FSharp", "3.0.0"))
+INTERNAL_PACKAGES = (("STRling", PRODUCT_VERSION), ("STRling.FSharp", PRODUCT_VERSION))
 EXTERNAL_PACKAGES = (
     ("coverlet.collector", "6.0.2", "MIT", ("test",)),
     ("FSharp.Core", "9.0.300", "MIT", ("runtime", "test")),
@@ -118,7 +121,7 @@ def _require_project_markers() -> None:
     markers = {
         "bindings/csharp/src/STRling/STRling.csproj": (
             "<PackageId>STRling</PackageId>",
-            "<Version>3.0.0</Version>",
+            f"<Version>{PRODUCT_VERSION}</Version>",
             "<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>",
             'PackagePath="runtimes\\win-x64\\native\\strling_interop.dll"',
             "RequireCertifiedNativeAsset",
@@ -126,9 +129,12 @@ def _require_project_markers() -> None:
         ),
         "bindings/fsharp/src/STRling.FSharp/STRling.FSharp.fsproj": (
             "<PackageId>STRling.FSharp</PackageId>",
-            "<Version>3.0.0</Version>",
+            f"<Version>{PRODUCT_VERSION}</Version>",
             "<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>",
-            '<ProjectReference Include="../../../csharp/src/STRling/STRling.csproj" />',
+            '<ProjectReference Include="../../../csharp/src/STRling/STRling.csproj" Condition="',
+            "'$(STRlingReleasePackage)' != 'true'",
+            '<PackageReference Include="STRling" Version="[$(Version)]" Condition="',
+            "'$(STRlingReleasePackage)' == 'true'",
             '<PackageReference Include="FSharp.Core" Version="9.0.300" />',
         ),
     }
@@ -165,15 +171,19 @@ def build_graph() -> dict[str, Any]:
         for name, version, license_expression, scopes in EXTERNAL_PACKAGES
     )
     roots = {
-        "csharp": ["STRling:3.0.0"],
-        "fsharp": ["FSharp.Core:9.0.300", "STRling:3.0.0", "STRling.FSharp:3.0.0"],
+        "csharp": [f"STRling:{PRODUCT_VERSION}"],
+        "fsharp": [
+            "FSharp.Core:9.0.300",
+            f"STRling:{PRODUCT_VERSION}",
+            f"STRling.FSharp:{PRODUCT_VERSION}",
+        ],
         "csharp-tests": [
-            "STRling:3.0.0",
+            f"STRling:{PRODUCT_VERSION}",
             *(f"{name}:{version}" for name, version in sorted(CSHARP_TEST_PACKAGES)),
         ],
         "fsharp-tests": [
-            "STRling:3.0.0",
-            "STRling.FSharp:3.0.0",
+            f"STRling:{PRODUCT_VERSION}",
+            f"STRling.FSharp:{PRODUCT_VERSION}",
             *(f"{name}:{version}" for name, version in sorted(FSHARP_TEST_PACKAGES)),
         ],
     }
@@ -409,7 +419,7 @@ def _write_consumer_files(work: Path, feed: Path) -> tuple[Path, Path, Path]:
     csharp = work / "csharp-consumer"
     csharp.mkdir()
     (csharp / "Consumer.csproj").write_text(
-        """<Project Sdk="Microsoft.NET.Sdk">
+        f"""<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
@@ -417,7 +427,7 @@ def _write_consumer_files(work: Path, feed: Path) -> tuple[Path, Path, Path]:
     <SelfContained>false</SelfContained>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-  <ItemGroup><PackageReference Include="STRling" Version="3.0.0" /></ItemGroup>
+  <ItemGroup><PackageReference Include="STRling" Version="{PRODUCT_VERSION}" /></ItemGroup>
 </Project>
 """,
         encoding="utf-8",
@@ -429,6 +439,12 @@ using Strling.Native;
 var native = Path.Combine(AppContext.BaseDirectory, "strling_interop.dll");
 using var client = NativeClient.Load(native);
 if (client.Describe().ValueKind != JsonValueKind.Object) throw new Exception("not canonical data");
+var result = new Strling.Compiler(client).Parse("abc", new Strling.SourceCompileOptions {
+    FrontendId = "strling.regex-compat", FrontendVersion = "1.0.0", MediaType = "text/strling-regex"
+});
+if (result.GetProperty("outcome").GetString() != "succeeded" ||
+    result.GetProperty("semantic_result").GetProperty("program").GetProperty("root").GetProperty("text").GetString() != "abc")
+    throw new Exception("canonical compilation did not succeed");
 Console.WriteLine("CSHARP_CONSUMER_PASS");
 """,
         encoding="utf-8",
@@ -437,7 +453,7 @@ Console.WriteLine("CSHARP_CONSUMER_PASS");
     fsharp = work / "fsharp-consumer"
     fsharp.mkdir()
     (fsharp / "Consumer.fsproj").write_text(
-        """<Project Sdk="Microsoft.NET.Sdk">
+        f"""<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
@@ -447,7 +463,7 @@ Console.WriteLine("CSHARP_CONSUMER_PASS");
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Core" Version="9.0.300" />
-    <PackageReference Include="STRling.FSharp" Version="3.0.0" />
+    <PackageReference Include="STRling.FSharp" Version="{PRODUCT_VERSION}" />
   </ItemGroup>
   <ItemGroup><Compile Include="Program.fs" /></ItemGroup>
 </Project>
@@ -464,6 +480,10 @@ let native = Path.Combine(AppContext.BaseDirectory, "strling_interop.dll")
 use client = Api.loadClient native
 if (Api.createCompiler client |> Api.describe).ValueKind <> JsonValueKind.Object then
     failwith "not canonical data"
+let options = { Api.defaultOptions () with FrontendId = "strling.regex-compat"; FrontendVersion = "1.0.0"; MediaType = "text/strling-regex" }
+match Api.parse (Api.createCompiler client) "abc" (Some options) with
+| Succeeded result when result.GetProperty("semantic_result").GetProperty("program").GetProperty("root").GetProperty("text").GetString() = "abc" -> ()
+| _ -> failwith "canonical compilation did not succeed"
 printfn "FSHARP_CONSUMER_PASS"
 """,
         encoding="utf-8",
@@ -473,6 +493,10 @@ printfn "FSHARP_CONSUMER_PASS"
 
 
 def certify_packages(native_library: Path) -> dict[str, Any]:
+    from tooling.release_notices import write_notices
+
+    third_party = ROOT / "target/release-packaging/THIRD_PARTY_NOTICES.txt"
+    write_notices(third_party)
     graph = synchronize(write=False)
     if graph["status"] != "passed":
         raise DotNetPackageCertificationError("release graph does not reproduce")
@@ -497,14 +521,17 @@ def certify_packages(native_library: Path) -> dict[str, Any]:
             *common,
             f"-p:STRlingNativeLibrary={native}",
             "-p:STRlingNativeRid=win-x64",
+            f"-p:STRlingThirdPartyNotices={third_party}",
         ]
     )
     _run([dotnet, "pack", str(PROJECTS["fsharp"]), *common])
-    csharp_package = feed / "STRling.3.0.0.nupkg"
-    fsharp_package = feed / "STRling.FSharp.3.0.0.nupkg"
+    csharp_package = feed / f"STRling.{PRODUCT_VERSION}.nupkg"
+    fsharp_package = feed / f"STRling.FSharp.{PRODUCT_VERSION}.nupkg"
     if not csharp_package.is_file() or not fsharp_package.is_file():
         raise DotNetPackageCertificationError("one or more product packages are absent")
     csharp_names = _archive_names(csharp_package)
+    if "THIRD_PARTY_NOTICES.txt" not in csharp_names:
+        raise DotNetPackageCertificationError("native dependency notices are absent")
     fsharp_names = _archive_names(fsharp_package)
     native_assets = sorted(
         name
@@ -522,9 +549,9 @@ def certify_packages(native_library: Path) -> dict[str, Any]:
     if any(name.startswith("runtimes/") for name in fsharp_names):
         raise DotNetPackageCertificationError("F# package duplicates native assets")
     dependencies = _nuspec_dependencies(fsharp_package)
-    if dependencies.get("STRling") not in {"3.0.0", "[3.0.0, )"}:
+    if dependencies.get("STRling") not in {PRODUCT_VERSION, f"[{PRODUCT_VERSION}, )"}:
         raise DotNetPackageCertificationError(
-            f"F# package does not depend on STRling 3.0.0: {dependencies!r}"
+            f"F# package does not depend on STRling {PRODUCT_VERSION}: {dependencies!r}"
         )
     if dependencies.get("FSharp.Core") not in {"9.0.300", "[9.0.300, )"}:
         raise DotNetPackageCertificationError(

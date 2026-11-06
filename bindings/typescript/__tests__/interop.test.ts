@@ -18,6 +18,31 @@ async function client(): Promise<WasmClient> {
 }
 
 describe("raw strling.wasm-abi adapter", () => {
+    test("rejects manually paired instances before native calls", async () => {
+        const module = await WebAssembly.compile(await readFile(artifact));
+        const instance = await WebAssembly.instantiate(module, {});
+        expect(() => Reflect.construct(WasmClient, [instance, module])).toThrow(
+            /use instantiateWasm/,
+        );
+    });
+    test("rejects a different product kernel before instantiation", async () => {
+        const bytes = Buffer.from(await readFile(artifact));
+        const marker = Buffer.from('"product_version":"4.0.0"');
+        const offset = bytes.indexOf(marker);
+        expect(offset).toBeGreaterThanOrEqual(0);
+        bytes[offset + '"product_version":"'.length] = "3".charCodeAt(0);
+        await expect(instantiateWasm(bytes)).rejects.toThrow(
+            /identity mismatch/,
+        );
+    });
+
+    test("accepts the same sealed precompiled module", async () => {
+        const module = await WebAssembly.compile(await readFile(artifact));
+        const loaded = await instantiateWasm(module);
+        expect(
+            (loaded.describe() as Record<string, unknown>).protocol_version,
+        ).toBe(INTEROP_PROTOCOL_VERSION);
+    });
     test("loads the assembled artifact through the explicit Node entrypoint", async () => {
         const loaded = await loadWasmFile(artifact);
         const description = loaded.describe() as Record<string, unknown>;

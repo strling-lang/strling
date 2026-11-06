@@ -31,7 +31,7 @@
         "path": "governance/certification-evidence-dependency-graph.json",
         "sha256": "b2bbaf5123b86b81c9c4f8793fabd8ee8f78dfc669d69892c383611901467617"
     },
-    "evidence_fingerprint": "74fabb4bcf820653c4f336851ed4d68170deab85a1fed63acef3f09e42c76db3",
+    "evidence_fingerprint": "675da91aa9a76859d48de325914f3ed2a39cbc52e980cdbda52de81de49bbfb4",
     "evidence_role": "identity-only",
     "producer": {
         "path": "tooling/profile_source_identity.py",
@@ -49,20 +49,20 @@
             "id": "pull-request"
         },
         {
-            "definition_fingerprint": "3838262ebd8b7af770a8147259fc83789e43701b07aff8a05c87a2e7e4fe965e",
-            "definition_version": "1.30.0",
+            "definition_fingerprint": "af0f6dd2b87c0db5005fa60edb1e5d2e2b3d6a7f1f638811e55624c2ccfad4fb",
+            "definition_version": "1.31.0",
             "id": "full"
         },
         {
-            "definition_fingerprint": "565570fe7fd43182770edfbdc848a0ef0e72477e181e5448064bab1bc9db0afa",
-            "definition_version": "1.30.0",
+            "definition_fingerprint": "6c9ae9dcda8e4b3e99ce6bba792995fcc97993ae1846c73748fa6fdd44036362",
+            "definition_version": "1.31.0",
             "id": "release"
         }
     ],
     "registry": {
         "operation_registry_fingerprint": "df0d43a63c7ff4971ac52a836818945ef5921fa3116216f8af07bbc49c9a10e9",
         "path": "toolchain.json",
-        "profile_registry_fingerprint": "fc7d7a147228b9257203a3fc75becb9a01f19707935d90b29ac920c9ac59bba7",
+        "profile_registry_fingerprint": "8fa52819b7e378a0821b6327ea3207dafd53a6d305d3d662f861cb5a6a0280f0",
         "schema_version": 1
     },
     "schema_version": "1.0.0"

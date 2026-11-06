@@ -1,5 +1,7 @@
 /** Thin host adapter for the governed strling.wasm-abi v1 boundary. */
 
+import { PRODUCT_VERSION } from "./product_version.js";
+
 export const INTEROP_PROTOCOL_VERSION = "1.0.0" as const;
 export const WASM_ABI_VERSION = 1 as const;
 export const MAX_INTEROP_REQUEST_BYTES = 10_485_760 as const;
@@ -95,12 +97,19 @@ export class InteropProtocolError extends WasmAdapterError {
     }
 }
 
+const WASM_CONSTRUCTION_TOKEN = Symbol("verified STRling module");
+
 /** One instance-scoped synchronous client. Independent instances may run concurrently. */
 export class WasmClient {
     private readonly wasm: WasmExports;
     private active = false;
 
-    public constructor(instance: WebAssembly.Instance) {
+    private constructor(instance: WebAssembly.Instance, token: symbol) {
+        if (token !== WASM_CONSTRUCTION_TOKEN) {
+            throw new WasmAdapterError(
+                "use instantiateWasm to bind the verified module and instance",
+            );
+        }
         this.wasm = validateExports(instance.exports);
         if (this.wasm.strling_wasm_abi_version_v1() !== WASM_ABI_VERSION) {
             throw new WasmAdapterError("unsupported strling.wasm-abi version");
@@ -235,6 +244,16 @@ export class WasmClient {
         }
     }
 
+    public static async fromModule(
+        module: WebAssembly.Module,
+    ): Promise<WasmClient> {
+        requireProductIdentity(module);
+        return new WasmClient(
+            await WebAssembly.instantiate(module, {}),
+            WASM_CONSTRUCTION_TOKEN,
+        );
+    }
+
     public describe(): JsonValue {
         return this.completedResult({
             interop_protocol_version: INTEROP_PROTOCOL_VERSION,
@@ -342,11 +361,47 @@ export class WasmClient {
 export async function instantiateWasm(
     source: BufferSource | WebAssembly.Module,
 ): Promise<WasmClient> {
-    if (source instanceof WebAssembly.Module) {
-        return new WasmClient(await WebAssembly.instantiate(source, {}));
+    const module =
+        source instanceof WebAssembly.Module
+            ? source
+            : await WebAssembly.compile(source);
+    requireProductIdentity(module);
+    return WasmClient.fromModule(module);
+}
+
+function requireProductIdentity(module: WebAssembly.Module): void {
+    if (WebAssembly.Module.imports(module).length !== 0) {
+        throw new WasmAdapterError(
+            "the canonical compiler module must import nothing",
+        );
     }
-    const result = await WebAssembly.instantiate(source, {});
-    return new WasmClient(result.instance);
+    const sections = WebAssembly.Module.customSections(
+        module,
+        "strling.product",
+    );
+    if (sections.length !== 1) {
+        throw new WasmAdapterError(
+            "missing or ambiguous packaged compiler identity",
+        );
+    }
+    let identity: string;
+    try {
+        identity = new TextDecoder("utf-8", { fatal: true }).decode(
+            sections[0],
+        );
+    } catch {
+        throw new WasmAdapterError("invalid packaged compiler identity");
+    }
+    if (
+        identity !==
+        JSON.stringify({
+            abi_major: WASM_ABI_VERSION,
+            product_version: PRODUCT_VERSION,
+            protocol_version: INTEROP_PROTOCOL_VERSION,
+        })
+    ) {
+        throw new WasmAdapterError("packaged compiler identity mismatch");
+    }
 }
 
 export async function instantiateWasmResponse(

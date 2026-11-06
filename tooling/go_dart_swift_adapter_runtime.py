@@ -66,7 +66,8 @@ static const uint8_t response[] =
 #endif
 
 STRLING_EXPORT uint32_t strling_interop_abi_version_v1(void) {
-    return STRLING_PROBE_ABI;
+    static volatile const char product[] = "\0STRLING-PRODUCT-VERSION:STRLING_PROBE_PRODUCT_VERSION\0";
+    return STRLING_PROBE_ABI + (uint32_t)(product[1] - 'S');
 }
 
 STRLING_EXPORT uint32_t strling_interop_execute_v1(
@@ -251,7 +252,16 @@ def _build_probe(
     compiler: str, root: Path, name: str, definitions: Sequence[str]
 ) -> Path:
     source = root / f"{name}.c"
-    source.write_text(PROBE_SOURCE, encoding="utf-8", newline="\n")
+    source.write_text(
+        PROBE_SOURCE.replace(
+            "STRLING_PROBE_PRODUCT_VERSION",
+            json.loads((ROOT / "governance/release-policy.json").read_text())[
+                "product"
+            ]["version"],
+        ),
+        encoding="utf-8",
+        newline="\n",
+    )
     if sys.platform == "win32":
         output = root / f"{name}.dll"
         command = [

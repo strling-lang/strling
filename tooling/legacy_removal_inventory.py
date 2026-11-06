@@ -846,14 +846,20 @@ def _write_outputs() -> dict[str, Any]:
     manifest = _read_json(MANIFEST_PATH)
     evidence = _build_evidence(manifest=manifest)
     EVIDENCE_ROOT.mkdir(parents=True, exist_ok=True)
-    with EVIDENCE_PATH.open("w", encoding="utf-8", newline="\n") as stream:
-        stream.write(
-            _prettier_format(
+    try:
+        from tooling.sync_versions import write_projection
+    except ModuleNotFoundError:
+        from sync_versions import write_projection
+    write_projection(
+        {
+            EVIDENCE_PATH: _prettier_format(
                 json.dumps(evidence, ensure_ascii=False, indent=4) + "\n", "json"
-            )
-        )
-    with REPORT_PATH.open("w", encoding="utf-8", newline="\n") as stream:
-        stream.write(_prettier_format(_render_report(manifest, evidence), "markdown"))
+            ),
+            REPORT_PATH: _prettier_format(
+                _render_report(manifest, evidence), "markdown"
+            ),
+        }
+    )
     return evidence
 
 

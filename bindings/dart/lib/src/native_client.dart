@@ -8,6 +8,8 @@ import 'package:path/path.dart' as path;
 
 const interopProtocolVersion = '1.0.0';
 const nativeAbiVersion = 1;
+// Generated product projection; tooling/sync_versions.py owns this value.
+const _productVersion = '4.0.0';
 const maxInteropRequestBytes = 10485760;
 const maxInteropResponseBytes = 33554432;
 
@@ -77,6 +79,18 @@ class NativeClient {
       );
     }
     try {
+      final file = File(normalized);
+      if (file.lengthSync() > 128 * 1024 * 1024) {
+        throw NativeAdapterException(
+            NativeErrorKind.load, 'native library exceeds package limit');
+      }
+      final bytes = latin1.decode(file.readAsBytesSync());
+      const prefix = '\u0000STRLING-PRODUCT-VERSION:';
+      if (prefix.allMatches(bytes).length != 1 ||
+          !bytes.contains('$prefix$_productVersion\u0000')) {
+        throw NativeAdapterException(
+            NativeErrorKind.load, 'native STRling product identity mismatch');
+      }
       final library = DynamicLibrary.open(normalized);
       final abi = library.lookupFunction<_AbiNative, _AbiDart>(
         'strling_interop_abi_version_v1',

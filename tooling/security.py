@@ -12,6 +12,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import tomllib
 import urllib.error
 import urllib.request
@@ -31,6 +32,67 @@ POLICY_PATH = ROOT / "governance/security-policy.json"
 POLICY_SCHEMA_PATH = ROOT / "governance/schemas/security-policy.schema.json"
 ENGINE_NAME = "strling-repository-security"
 ENGINE_VERSION = "1.2.0"
+
+
+def nuget_scan_document(content: bytes) -> bytes:
+    """Resolve only local literal Version and exact NuGet ranges for OSV input.
+
+    The pinned scanner does not evaluate MSBuild properties. Keep the union of
+    all declared conditional dependencies, and never execute MSBuild or resolve
+    a floating/ranged version while preparing read-only vulnerability queries.
+    """
+    project = ET.fromstring(content)
+    versions = [
+        node.text.strip()
+        for group in project
+        if group.tag.rsplit("}", 1)[-1] == "PropertyGroup"
+        for node in group
+        if node.tag.rsplit("}", 1)[-1] == "Version" and node.text
+    ]
+    for element in project.iter():
+        if element.tag.rsplit("}", 1)[-1] != "PackageReference":
+            continue
+        children = [
+            node for node in element if node.tag.rsplit("}", 1)[-1] == "Version"
+        ]
+        if len(children) > 1 or (children and element.get("Version") is not None):
+            raise ValueError("NuGet scan has duplicate dependency versions")
+        child = children[0] if children else None
+        value = element.get("Version") or (child.text if child is not None else None)
+        if value is None:
+            raise ValueError("NuGet scan requires an explicit dependency version")
+        if "$(Version)" in value:
+            if (
+                len(versions) != 1
+                or re.fullmatch(
+                    r"[0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?", versions[0]
+                )
+                is None
+            ):
+                raise ValueError(
+                    "NuGet scan has an ambiguous or nonliteral project version"
+                )
+            value = value.replace("$(Version)", versions[0])
+        exact = re.fullmatch(r"\[([^,\[\]]+)\]", value)
+        if exact:
+            value = exact[1]
+        if (
+            re.fullmatch(
+                r"[0-9]+\.[0-9]+(?:\.[0-9]+){0,2}(?:[-+][0-9A-Za-z.-]+)?", value
+            )
+            is None
+        ):
+            raise ValueError(
+                "NuGet scan cannot select an unresolved or floating version"
+            )
+        if "Version" in element.attrib:
+            element.set("Version", value)
+        else:
+            assert child is not None
+            child.text = value
+    return ET.tostring(project, encoding="utf-8", xml_declaration=True)
+
+
 KNOWN_LOCK_NAMES = frozenset(
     {
         "package-lock.json",
@@ -1570,9 +1632,41 @@ class SecurityEngine:
         ]
         if license_allowlist:
             command.append(f"--licenses={','.join(license_allowlist)}")
-        for relative in scan_inputs:
-            command.extend(["--lockfile", relative])
-        scan_result, scan_error = self._invoke(command, self.root)
+        with tempfile.TemporaryDirectory(prefix="strling-osv-input-") as temporary:
+            for relative in scan_inputs:
+                selected = relative
+                if ecosystem == "nuget" and Path(relative).suffix in {
+                    ".csproj",
+                    ".fsproj",
+                }:
+                    try:
+                        selected_path = Path(temporary) / relative
+                        selected_path.parent.mkdir(parents=True, exist_ok=True)
+                        original = (self.root / relative).read_bytes()
+                        projected = nuget_scan_document(original)
+                        selected_path.write_bytes(projected)
+                        selected = str(selected_path)
+                        scanner.setdefault("input_projections", []).append(
+                            {
+                                "source": relative,
+                                "source_sha256": hashlib.sha256(original).hexdigest(),
+                                "scan_sha256": hashlib.sha256(projected).hexdigest(),
+                                "kind": "nuget-literal-exact-version-v1",
+                            }
+                        )
+                    except (OSError, ValueError, ET.ParseError) as error:
+                        reason = (
+                            "NuGet dependency input could not be resolved exactly: "
+                            + str(error)
+                        )
+                        return tuple(
+                            self._risk_incomplete(
+                                root_id, category, ecosystem, inputs, reason, scanner
+                            )
+                            for category in ("vulnerability", "license")
+                        )
+                command.extend(["--lockfile", selected])
+            scan_result, scan_error = self._invoke(command, self.root)
         if scan_result is None:
             reason = scan_error or "OSV-Scanner execution failed"
             return (

@@ -113,15 +113,32 @@ static void sl_close(sl_native_state *state) {
 import "C"
 
 import (
+	"bytes"
 	"fmt"
+	"io"
+	"os"
 	"unsafe"
 )
+
+// Generated product projection; tooling/sync_versions.py owns this value.
+const productVersion = "4.0.0"
 
 type nativeState struct {
 	pointer *C.sl_native_state
 }
 
 func loadNativeState(path string) (*nativeState, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, &NativeError{Kind: ErrorLoad, Detail: "cannot read native STRling library"}
+	}
+	data, err := io.ReadAll(io.LimitReader(file, (128<<20)+1))
+	file.Close()
+	prefix := []byte("\x00STRLING-PRODUCT-VERSION:")
+	want := append(append([]byte{}, prefix...), []byte(productVersion+"\x00")...)
+	if err != nil || len(data) > 128<<20 || bytes.Count(data, prefix) != 1 || bytes.Count(data, want) != 1 {
+		return nil, &NativeError{Kind: ErrorLoad, Detail: "native STRling product identity mismatch"}
+	}
 	cPath := C.CString(path)
 	defer C.free(unsafe.Pointer(cPath))
 	errorBuffer := (*C.char)(C.calloc(512, 1))

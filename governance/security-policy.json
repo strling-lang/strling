@@ -535,7 +535,10 @@
     "vulnerability_policy": {
         "network_mode": "certification_only",
         "blocking_severities": ["high", "critical"],
-        "advisory_sources": { "npm": "npm-registry", "cargo": "rustsec" }
+        "advisory_sources": {
+            "npm": "npm-registry",
+            "cargo": "rustsec"
+        }
     },
     "license_policy": {
         "evidence_manifest": "governance/dependency-license-evidence.json",
@@ -777,9 +780,18 @@
                     "manifest": "bindings/r/DESCRIPTION",
                     "lock": "bindings/r/renv.lock",
                     "path": [
-                        { "package": "testthat", "version": "3.3.2" },
-                        { "package": "waldo", "version": "0.6.2" },
-                        { "package": "diffobj", "version": "0.3.8" }
+                        {
+                            "package": "testthat",
+                            "version": "3.3.2"
+                        },
+                        {
+                            "package": "waldo",
+                            "version": "0.6.2"
+                        },
+                        {
+                            "package": "diffobj",
+                            "version": "0.3.8"
+                        }
                     ]
                 },
                 "evidence": "Program Owner disposition on 2026-08-24 approves this exact diffobj package only through the locked DESCRIPTION Suggests testthat -> waldo -> diffobj development path; any Imports, LinkingTo, runtime, consumer, package-payload, native, WASM, or other distributed reachability is a blocking scope violation."
@@ -800,8 +812,14 @@
                     "release_manifest": "tests/certification/release-supply-chain/1.0/manifest.json",
                     "release_surface": "release:perl",
                     "path": [
-                        { "package": "FFI-Platypus", "version": "2.11" },
-                        { "package": "FFI-CheckLib", "version": "0.31" }
+                        {
+                            "package": "FFI-Platypus",
+                            "version": "2.11"
+                        },
+                        {
+                            "package": "FFI-CheckLib",
+                            "version": "0.31"
+                        }
                     ]
                 },
                 "license_material": {
@@ -828,7 +846,12 @@
                     "lock": "bindings/perl/cpanfile.snapshot",
                     "release_manifest": "tests/certification/release-supply-chain/1.0/manifest.json",
                     "release_surface": "release:perl",
-                    "path": [{ "package": "FFI-Platypus", "version": "2.11" }]
+                    "path": [
+                        {
+                            "package": "FFI-Platypus",
+                            "version": "2.11"
+                        }
+                    ]
                 },
                 "license_material": {
                     "manifest": "governance/dependency-license-evidence.json",
@@ -855,9 +878,18 @@
                     "release_manifest": "tests/certification/release-supply-chain/1.0/manifest.json",
                     "release_surface": "release:perl",
                     "path": [
-                        { "package": "FFI-Platypus", "version": "2.11" },
-                        { "package": "FFI-CheckLib", "version": "0.31" },
-                        { "package": "File-Which", "version": "1.27" }
+                        {
+                            "package": "FFI-Platypus",
+                            "version": "2.11"
+                        },
+                        {
+                            "package": "FFI-CheckLib",
+                            "version": "0.31"
+                        },
+                        {
+                            "package": "File-Which",
+                            "version": "1.27"
+                        }
                     ]
                 },
                 "license_material": {
@@ -888,14 +920,14 @@
             {
                 "ecosystem": "maven",
                 "package": "com.strling:strling-jvm",
-                "version": "3.0.0",
+                "version": "4.0.0",
                 "license": "Apache-2.0",
                 "evidence": "The governed local bindings/jvm/pom.xml declares Apache License 2.0; this package is unavailable from the public resolver during the coordinated dry run."
             },
             {
                 "ecosystem": "gradle",
                 "package": "com.strling:strling-jvm",
-                "version": "3.0.0",
+                "version": "4.0.0",
                 "license": "Apache-2.0",
                 "evidence": "The governed local bindings/jvm/pom.xml declares Apache License 2.0; the Kotlin build consumes this exact locally installed package rather than public registry metadata."
             },
@@ -968,6 +1000,13 @@
                 "version": "1.10.1",
                 "license": "EPL-2.0",
                 "evidence": "The exact Maven Central POM declares Eclipse Public License v2.0; OSV/deps.dev reports non-standard."
+            },
+            {
+                "ecosystem": "nuget",
+                "package": "STRling",
+                "version": "4.0.0",
+                "license": "Apache-2.0",
+                "evidence": "The coordinated local STRling companion is built from bindings/csharp/src/STRling/STRling.csproj with PackageLicenseExpression Apache-2.0 and the repository LICENSE. Its product version is projected from release-policy.json; this is first-party metadata, not evidence of public registry publication."
             }
         ],
         "unknown_is_blocking": true
@@ -976,17 +1015,14 @@
         "credential_marker_policy": "governance/repository-hygiene.json"
     },
     "workflow_policy": {
-        "default_permissions": { "contents": "read" },
+        "default_permissions": {
+            "contents": "read"
+        },
         "immutable_action_references": true,
         "validation_secrets_prohibited": true,
         "shell_secret_interpolation_prohibited": true,
         "privileged_jobs": {
             ".github/workflows/cd.yml": {
-                "certify-release-supply-chain": [
-                    "artifact-metadata",
-                    "attestations",
-                    "id-token"
-                ],
                 "publish-go": ["contents"],
                 "publish-php": ["contents"],
                 "publish-r": ["contents"],
@@ -995,16 +1031,17 @@
                 "publish-python": ["id-token"],
                 "publish-ruby": ["id-token"],
                 "publish-rust": ["id-token"],
-                "publish-typescript": ["id-token"]
+                "publish-typescript": ["id-token"],
+                "attest-release-subjects": [
+                    "artifact-metadata",
+                    "attestations",
+                    "id-token"
+                ],
+                "publish-c": ["contents"]
             }
         },
         "credential_persistence_jobs": {
-            ".github/workflows/cd.yml": [
-                "publish-go",
-                "publish-php",
-                "publish-r",
-                "publish-swift"
-            ]
+            ".github/workflows/cd.yml": []
         }
     }
 }

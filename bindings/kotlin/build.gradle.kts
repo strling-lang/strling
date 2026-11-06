@@ -7,7 +7,11 @@ plugins {
 }
 
 group = "com.strling"
-version = providers.gradleProperty("version").orElse("3.0.0").get()
+val productVersion = "4.0.0"
+require(providers.gradleProperty("version").orElse(productVersion).get() == productVersion) {
+    "Release version override must equal the governed product coordinate"
+}
+version = productVersion
 
 repositories {
     providers.environmentVariable("STRLING_MAVEN_REPOSITORY").orNull?.let {
@@ -18,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    api("com.strling:strling-jvm:3.0.0")
+    api("com.strling:strling-jvm:4.0.0") { version { strictly(productVersion) } }
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation(kotlin("test"))
 }
@@ -46,8 +50,14 @@ tasks.test {
     })
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 kotlin {
     compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         allWarningsAsErrors = true
     }
 }
@@ -64,6 +74,26 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
+            pom {
+                name.set("STRling Kotlin adapter")
+                description.set("Thin Kotlin adapter for the canonical STRling compiler")
+                url.set("https://github.com/strling-lang/strling")
+                licenses { license { name.set("Apache License 2.0"); url.set("https://www.apache.org/licenses/LICENSE-2.0") } }
+                developers { developer { id.set("strling-lang"); name.set("STRling Team") } }
+                scm {
+                    connection.set("scm:git:https://github.com/strling-lang/strling.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/strling-lang/strling.git")
+                    url.set("https://github.com/strling-lang/strling")
+                    tag.set("v$version")
+                }
+            }
         }
     }
 }
+
+tasks.withType<AbstractArchiveTask>().configureEach {
+    isPreserveFileTimestamps = false
+    isReproducibleFileOrder = true
+}
+
+tasks.jar { from(rootProject.file("../../LICENSE")) { into("META-INF") } }

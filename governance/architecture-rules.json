@@ -345,7 +345,21 @@
                     },
                     {
                         "path": "bindings/python/scripts/assemble_native.py",
-                        "markers": ["+1.75.0", "--locked", "--offline"]
+                        "markers": [
+                            "native_release_build.py",
+                            "--source-root",
+                            "--target-dir"
+                        ]
+                    },
+                    {
+                        "path": "tooling/native_release_build.py",
+                        "markers": [
+                            "+1.75.0",
+                            "--locked",
+                            "--offline",
+                            "strling-interop",
+                            "stage_workspace"
+                        ]
                     }
                 ]
             }
@@ -360,7 +374,11 @@
                     ".github/workflows/ci.yml",
                     ".github/workflows/cd.yml",
                     ".github/workflows/certification-integrity.yml"
-                ]
+                ],
+                "historical_delivery_reference": {
+                    "source_sha": "2d8d897504663211d3768517f0be9f0e28d0f11e",
+                    "verifier_sha": "dd9d7702237ba9c56e1269418d5a9bd5b582b9f0"
+                }
             }
         },
         {
@@ -575,6 +593,10 @@
                     {
                         "path": "bindings/typescript/src/STRling/simply/static.ts",
                         "names": ["lower", "notLower"]
+                    },
+                    {
+                        "path": "bindings/cpp/conanfile.py",
+                        "names": ["validate"]
                     }
                 ],
                 "excluded_path_parts": [
@@ -872,7 +894,7 @@
                     },
                     {
                         "path": "bindings/kotlin/build.gradle.kts",
-                        "markers": ["api(\"com.strling:strling-jvm:3.0.0\")"]
+                        "markers": ["api(\"com.strling:strling-jvm:"]
                     },
                     {
                         "path": "bindings/jvm/pom.xml",

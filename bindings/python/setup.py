@@ -14,8 +14,15 @@ from setuptools.command.sdist import sdist
 from wheel.bdist_wheel import bdist_wheel
 
 
-REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+PACKAGE_ROOT = Path(__file__).resolve().parent
+REPOSITORY_ROOT = (
+    PACKAGE_ROOT / "_native_source"
+    if (PACKAGE_ROOT / "_native_source").is_dir()
+    else PACKAGE_ROOT.parents[1]
+)
 NATIVE_SOURCE_PATHS = (
+    Path("tooling/native_release_build.py"),
+    Path("tooling/release_notices.py"),
     Path("bindings/interop/Cargo.lock"),
     Path("bindings/interop/Cargo.toml"),
     Path("bindings/interop/fuzz/Cargo.toml"),
@@ -44,7 +51,10 @@ class SdistWithNativeSource(sdist):
     def make_release_tree(self, base_dir: str, files: list[str]) -> None:
         super().make_release_tree(base_dir, files)
         release_root = Path(base_dir)
-        shutil.copy2(REPOSITORY_ROOT / "LICENSE", release_root / "LICENSE")
+        license_path = PACKAGE_ROOT / "LICENSE"
+        if not license_path.is_file():
+            license_path = REPOSITORY_ROOT / "LICENSE"
+        shutil.copy2(license_path, release_root / "LICENSE")
         native_root = release_root / "_native_source"
         for relative in NATIVE_SOURCE_PATHS:
             source = REPOSITORY_ROOT / relative
@@ -77,7 +87,7 @@ class PlatformInteropWheel(bdist_wheel):
         self.root_is_pure = False
 
     def get_tag(self):
-        return "py3", "none", sysconfig.get_platform().replace("-", "_")
+        return "cp312", "none", sysconfig.get_platform().replace("-", "_")
 
 
 setup(

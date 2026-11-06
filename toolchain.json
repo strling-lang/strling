@@ -958,7 +958,7 @@
                 ]
             },
             "full": {
-                "definition_version": "1.30.0",
+                "definition_version": "1.31.0",
                 "purpose": "Broad repository certification.",
                 "network_policy": "allowed",
                 "operations": [
@@ -1200,7 +1200,7 @@
                 ]
             },
             "release": {
-                "definition_version": "1.30.0",
+                "definition_version": "1.31.0",
                 "purpose": "Highest currently implemented pre-release envelope.",
                 "network_policy": "allowed",
                 "operations": [
@@ -1464,10 +1464,11 @@
         "python3": {
             "resolution": {
                 "model": "constrained",
-                "version": ">=3.8,<4.0"
+                "version": ">=3.11,<4.0"
             },
             "version_command": ["python3", "--version"],
-            "version_pattern": "Python ([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "Python ([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": ">=3.12,<3.13"
         },
         "prettier": {
             "resolution": {
@@ -1515,7 +1516,8 @@
                 "reason": "No portable version floor is declared by the existing Makefiles or CI."
             },
             "version_command": ["make", "--version"],
-            "version_pattern": "Make ([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "Make ([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": ">=4.3,<5"
         },
         "gcc": {
             "resolution": {
@@ -1544,7 +1546,7 @@
         "cmake": {
             "resolution": {
                 "model": "constrained",
-                "version": ">=3.15,<4.0"
+                "version": ">=3.20,<4.0"
             },
             "version_command": ["cmake", "--version"],
             "version_pattern": "cmake version ([0-9]+(?:\\.[0-9]+){1,2})"
@@ -1563,7 +1565,8 @@
                 "version": ">=9.0,<10.0"
             },
             "version_command": ["dotnet", "--version"],
-            "version_pattern": "([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": "9.0.302"
         },
         "dart": {
             "resolution": {
@@ -1587,7 +1590,8 @@
                 "version": ">=11,<22"
             },
             "version_command": ["java", "-version"],
-            "version_pattern": "version \"([0-9]+(?:\\.[0-9]+){0,2})"
+            "version_pattern": "version \"([0-9]+(?:\\.[0-9]+){0,2})",
+            "release_constraint": ">=21.0.12,<21.0.13"
         },
         "mvn": {
             "resolution": {
@@ -1595,7 +1599,8 @@
                 "reason": "The Java binding has no Maven wrapper or declared Maven version."
             },
             "version_command": ["mvn", "--version"],
-            "version_pattern": "Apache Maven ([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "Apache Maven ([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": ">=3.8.7,<4"
         },
         "lua": {
             "resolution": {
@@ -1619,7 +1624,8 @@
                 "reason": "No LuaRocks version is declared and setup installs unconstrained test rocks."
             },
             "version_command": ["luarocks", "--version"],
-            "version_pattern": "LuaRocks ([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "LuaRocks ([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": ">=3.8,<4"
         },
         "perl": {
             "resolution": {
@@ -1652,16 +1658,18 @@
         },
         "python-build": {
             "resolution": {
-                "model": "deferred",
-                "reason": "requirements.txt declares build without a version constraint or lock file."
+                "model": "repository_managed",
+                "file": "bindings/python/requirements.lock.txt",
+                "file_pattern": "(?m)^build==([0-9]+(?:\\.[0-9]+){1,2})"
             },
             "version_command": ["python3", "-m", "build", "--version"],
             "version_pattern": "build ([0-9]+(?:\\.[0-9]+){1,2})"
         },
         "python-pytest": {
             "resolution": {
-                "model": "deferred",
-                "reason": "requirements.txt declares pytest without a version constraint or lock file."
+                "model": "repository_managed",
+                "file": "bindings/python/requirements.lock.txt",
+                "file_pattern": "(?m)^pytest==([0-9]+(?:\\.[0-9]+){1,2})"
             },
             "version_command": ["python3", "-m", "pytest", "--version"],
             "version_pattern": "pytest ([0-9]+(?:\\.[0-9]+){1,2})"
@@ -1680,7 +1688,8 @@
                 "reason": "composer.lock pins packages, but the Composer executable version is not declared."
             },
             "version_command": ["composer", "--version"],
-            "version_pattern": "Composer version ([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "Composer version ([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": ">=2.7.1,<3"
         },
         "Rscript": {
             "resolution": {
@@ -1729,7 +1738,8 @@
                 "version": ">=1.70,<2.0"
             },
             "version_command": ["cargo", "--version"],
-            "version_pattern": "cargo ([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "cargo ([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": "1.75.0"
         },
         "clippy": {
             "resolution": {
@@ -1745,7 +1755,8 @@
                 "version": ">=1.70,<2.0"
             },
             "version_command": ["rustc", "--version"],
-            "version_pattern": "rustc ([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "rustc ([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": "1.75.0"
         },
         "rustfmt": {
             "resolution": {
@@ -1779,7 +1790,16 @@
                 "reason": "npm ci honors the repository lock, but no npm executable version is declared."
             },
             "version_command": ["npm", "--version"],
-            "version_pattern": "([0-9]+(?:\\.[0-9]+){1,2})"
+            "version_pattern": "([0-9]+(?:\\.[0-9]+){1,2})",
+            "release_constraint": ">=10.9,<11"
+        },
+        "conan": {
+            "resolution": {
+                "model": "exact",
+                "version": "2.31.2"
+            },
+            "version_command": ["conan", "--version"],
+            "version_pattern": "Conan version ([0-9]+(?:\\.[0-9]+){1,2})"
         }
     },
     "components": {
@@ -1941,7 +1961,7 @@
                 "format": ["prettier", "ruff"],
                 "format_check": ["prettier", "ruff"],
                 "lint": ["ruff"],
-                "test": ["python3"]
+                "test": ["python3", "python-pytest"]
             },
             "format": ["python3", "tooling/formatting.py", "repository"],
             "format_check": [
@@ -1952,16 +1972,7 @@
             ],
             "hygiene": ["python3", "tooling/hygiene.py"],
             "lint": ["python3", "tooling/static_analysis.py", "repository"],
-            "test": [
-                "python3",
-                "-m",
-                "unittest",
-                "discover",
-                "-s",
-                "tooling/tests",
-                "-p",
-                "test_*.py"
-            ]
+            "test": ["python3", "-m", "pytest", "-q", "tooling/tests"]
         },
         "lsp": {
             "path": "tooling/lsp-server",
@@ -2441,9 +2452,18 @@
             },
             "setup": [],
             "lint": ["mvn", "install", "-DskipTests"],
-            "build": ["mvn", "install", "-DskipTests"],
+            "build": [
+                "python3",
+                "../../tooling/jvm_adapter_package.py",
+                "--install-product",
+                "--skip-tests"
+            ],
             "clean": ["mvn", "clean"],
-            "test": ["mvn", "install"]
+            "test": [
+                "python3",
+                "../../tooling/jvm_adapter_package.py",
+                "--install-product"
+            ]
         },
         "kotlin": {
             "path": "bindings/kotlin",
@@ -2634,12 +2654,12 @@
             "language": "Python",
             "runtime": "python3",
             "dependency_resolution": {
-                "model": "deferred",
-                "reason": "requirements.txt names tools and dependencies without version constraints or a lock file."
+                "model": "repository_managed",
+                "reason": "requirements.lock.txt pins Python build/test tools with hashes; the canonical native kernel uses the interop Cargo lock."
             },
             "files": {
                 "manifests": ["pyproject.toml", "requirements.txt"],
-                "locks": [],
+                "locks": ["requirements.lock.txt"],
                 "configs": ["../../pytest.ini"]
             },
             "capabilities": {
@@ -2687,7 +2707,15 @@
                 "winget": ["Python.Python.3.12"],
                 "choco": ["python"]
             },
-            "setup": ["pip", "install", "-r", "requirements.txt"],
+            "setup": [
+                "python3",
+                "-m",
+                "pip",
+                "install",
+                "--require-hashes",
+                "-r",
+                "requirements.lock.txt"
+            ],
             "build": ["python3", "-m", "build"],
             "clean": ["rm", "-rf", "build", "dist", "src/STRling.egg-info"],
             "test": ["python3", "-m", "pytest", "-v", "-W", "error"]

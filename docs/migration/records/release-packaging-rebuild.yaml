@@ -1,0 +1,181 @@
+record_version: 2.0.0
+title: Fourth Edition reproducible packages and protected publication
+status: in_progress
+objective:
+    Activate canonical 4.0.0 package projections and implement reproducible, independently verified distribution
+    assembly and exact-artifact publication without executing publication.
+scope:
+    diff:
+        base: 2d8d897504663211d3768517f0be9f0e28d0f11e
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/**
+        - Cargo.toml
+        - Cargo.lock
+        - bindings/**
+        - docs/releasing.md
+        - docs/release-policy.md
+        - docs/toolchains.md
+        - docs/migration/release-packaging-rebuild.md
+        - docs/migration/records/release-packaging-rebuild.yaml
+        - docs/migration/ledger.md
+        - governance/change-control.json
+        - governance/release-policy.json
+        - governance/security-policy.json
+        - governance/repository-hygiene.json
+        - governance/formatting.json
+        - governance/release-certification-trust.json
+        - governance/generated-artifacts.json
+        - governance/dependency-lock-verification.json
+        - governance/contracts/snapshots/**
+        - governance/schemas/release-supply-chain-certification.schema.json
+        - governance/schemas/release-policy.schema.json
+        - governance/schemas/architecture-rules.schema.json
+        - tests/adapters/**
+        - tests/architecture/**
+        - tests/certification/**
+        - toolchain.json
+        - tooling/**
+        - governance/architecture-rules.json
+    forbidden_paths:
+        - core/src/**
+        - spec/**
+        - governance/local-certification-trust.json
+        - tests/certification/hardened-core/1.0/current/**
+    permitted_generated_changes:
+        - public-contract-snapshots
+        - dynamic-language-adapter-release-graphs
+        - jvm-adapter-release-graph
+        - dotnet-adapter-release-graph
+        - version-synchronized-metadata
+        - package-manager-lockfiles
+        - lua-release-rockspec
+        - lsp-extension-payload
+        - binding-support-certification-evidence
+        - profile-source-definitions
+        - deep-quality-source-identities
+        - target-adapter-certification-matrices
+        - semantic-authority-retirement-evidence
+        - legacy-removal-inventory-evidence
+        - release-policy-documentation
+        - release-supply-chain-contract-fixture
+        - release-certification-trust
+        - native-kernel-third-party-notices
+        - kotlin-product-verification
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+        - certification
+    bounded_exemptions:
+        - WVR-SEC-VSCE-LICENSE-001
+    expected_files:
+        - governance/release-policy.json
+        - governance/release-certification-trust.json
+        - tests/certification/release-supply-chain/1.0/manifest.json
+        - tooling/sync_versions.py
+        - tooling/release_supply_chain.py
+        - tooling/release_packaging.py
+        - tooling/publish_certified_artifact.py
+        - tooling/release_consumers.py
+        - tests/certification/release-supply-chain/1.0/spdx-2.3.schema.json
+        - .github/workflows/cd.yml
+        - docs/migration/release-packaging-rebuild.md
+        - docs/migration/records/release-packaging-rebuild.yaml
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Canonical compiler semantics and all versioned language contracts are preserved.
+    public_api_change:
+        level: breaking
+        evidence:
+            - The ratified major product version activates 4.0.0 package constants and dependency coordinates; adapters
+              reject older or mismatched product kernels. WASM direct instance construction is retired in favor of
+              factories that bind verified modules to instances.
+        affected_surfaces:
+            - c-public-api
+            - cpp-public-api
+            - csharp-public-api
+            - fsharp-public-api
+            - java-public-api
+            - kotlin-public-api
+            - php-public-api
+            - typescript-public-api
+    schema_change:
+        level: breaking
+        evidence:
+            - Release manifest and build receipts advance to 2.0.0 with mandatory distribution scope, version binding,
+              and package payload contracts. Historical H08 contracts remain unchanged.
+        affected_surfaces: []
+    diagnostic_change:
+        level: none
+        evidence:
+            - Canonical diagnostic codes and payloads are unchanged.
+    target_behavior_change:
+        level: none
+        evidence:
+            - No target profile or runtime support guarantee is expanded.
+    architecture_change:
+        level: compatible
+        evidence:
+            - Host adapters retain one canonical compiler. Product compatibility data adds no native export or protocol
+              field. The independent packaging trust context preserves the original H08 trust policy and bundle.
+    generated_output_change:
+        level: compatible
+        evidence:
+            - Registered version, package graph, policy, source identity and contract projections require canonical
+              regeneration; reviewed dependency catalog refresh remains an explicit integrity-authority change.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Focused package and publication boundaries
+      command:
+          python3 -m pytest -q tooling/tests/test_sync_versions.py tooling/tests/test_release_supply_chain.py
+          tooling/tests/test_release_publication_authorization.py tooling/tests/test_release_packaging_security.py
+          tooling/tests/test_release_payload.py
+      expected_result:
+          Metadata, artifact substitution, unsafe archives, wrong source/version/owner, untrusted context
+          and missing Release evidence fail closed.
+    - name: Fresh clean-source deterministic certification
+      command: ./strling profile full --json && ./strling profile release --json
+      expected_result:
+          Fresh Full and independent no-reuse Release pass on frozen source; packaging subjects have
+          complete reproducibility and consumer evidence; publication remains disabled.
+checkpoints:
+    - name: Scope and contract lock
+      status: passed
+      evidence:
+          - check: Baseline identity
+            result: passed
+            details:
+                Started on clean dev at 2d8d897504663211d3768517f0be9f0e28d0f11e; seventeen distribution surfaces
+                and exact support tiers recorded in the implementation report.
+    - name: Contracts and verification design
+      status: passed
+      evidence:
+          - check: Adversarial guards
+            result: passed
+            details:
+                Schema 2.0 locks all seventeen distribution identities, twenty-one platform build rows, forty-two
+                receipts and ninety-five tool coordinates. Exact source, owner/run/destination approval, hidden-file
+                artifact handoff and protected credential isolation are validated. Historical H08 authority and deterministic
+                profile boundaries remain preserved.
+    - name: Implementation and targeted proof
+      status: in_progress
+      evidence:
+          - check: Local package proof
+            result: passed
+            details:
+                Pinned CPython 3.12 Linux sdist/wheel content inspection, Dart dry-run with zero warnings, Windows
+                C#/F# packages and two isolated consumers, Node 22 WASM tests, and governed Linux Go/Dart/Swift parity/probes
+                pass. These are engineering observations, not public installations or clean-source certification.
+    - name: Full integration and certification
+      status: planned
+      evidence: []
+    - name: Finalization and readiness
+      status: planned
+      evidence: []
+commits: []

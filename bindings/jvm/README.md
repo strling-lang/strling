@@ -1,6 +1,6 @@
 # STRling shared JVM bridge
 
-`com.strling:strling-jvm:3.0.0` is the single semantic-free JVM bridge used by
+`com.strling:strling-jvm:4.0.0` is the single semantic-free JVM bridge used by
 the Java and Kotlin adapters. It maps the governed `strling.c-abi` v1 through
 JNA and projects strict JSON values into immutable Java collections.
 
@@ -36,3 +36,13 @@ an alternate JNA/JNI/Panama or semantic route.
 
 No package publication or native distribution is performed by the migration
 certification.
+
+## Product compatibility
+
+Fourth Edition packages require the exact 4.0.0 native product identity in
+addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
+product marker before loading; installed CMake packages check their static
+archive during configuration. Unmarked older kernels and mismatched product
+versions fail closed. This package check does not authenticate arbitrary local
+files; release checksums and signed evidence authenticate distribution bytes.
+The compiler semantics and versioned ABI/protocol are unchanged.

@@ -1,5 +1,5 @@
 {
-    "schema_version": "1.0.0",
+    "schema_version": "2.0.0",
     "document_kind": "release-supply-chain-manifest",
     "manifest_id": "strling-release-supply-chain-4.0",
     "standards": {
@@ -38,7 +38,9 @@
     },
     "workflow_policy": {
         "path": ".github/workflows/cd.yml",
-        "default_permissions": { "contents": "read" },
+        "default_permissions": {
+            "contents": "read"
+        },
         "protected_environment": "release",
         "manual_authorization_input": "dry_run",
         "manual_authorization_default": true,
@@ -66,15 +68,39 @@
             "dependency_roots": ["c-system", "interop-cargo"],
             "compile_job": "compile-c",
             "publish_job": "publish-c",
-            "working_directory": "bindings/c",
-            "build_command": ["make"],
-            "toolchain_refs": ["cc", "make"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:c"
+            ],
+            "toolchain_refs": [
+                "cargo",
+                "cc",
+                "cmake",
+                "make",
+                "python",
+                "rustc"
+            ],
             "artifact_policy": {
                 "subject_kind": "source-tree",
-                "patterns": ["bindings/c"],
+                "patterns": [
+                    "bindings/c",
+                    "bindings/interop",
+                    "core",
+                    "spec",
+                    "LICENSE",
+                    "tests/conformance/ecmascript-runtime-certification.json",
+                    "tests/conformance/pcre2-runtime-certification.json",
+                    "tests/conformance/python-re-runtime-certification.json",
+                    "tooling/native_release_build.py",
+                    "tooling/release_notices.py"
+                ],
                 "checksum_required": false,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 1
+                "maximum_subjects": 10
             },
             "sbom_policy": {
                 "required": true,
@@ -98,7 +124,46 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:c",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64", "linux-x86_64"],
+                "scope": "windows-x86_64 and linux-x86_64 interop routes",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "CMake installed source archive",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*include/strling.h"],
+                    ["*src/strling.c"],
+                    ["*bindings/interop/src/product_version.rs"],
+                    ["LICENSE"],
+                    ["tests/conformance/ecmascript-runtime-certification.json"],
+                    ["tests/conformance/pcre2-runtime-certification.json"],
+                    ["tests/conformance/python-re-runtime-certification.json"],
+                    ["*tooling/native_release_build.py"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "git-reference",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "release:cpp",
@@ -111,15 +176,42 @@
             "dependency_roots": ["c-system", "cpp-cmake", "interop-cargo"],
             "compile_job": "compile-cpp",
             "publish_job": "publish-cpp",
-            "working_directory": "bindings/cpp",
-            "build_command": ["conan", "create", ".", "--version", "VERSION"],
-            "toolchain_refs": ["cmake", "conan", "cxx"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:cpp"
+            ],
+            "toolchain_refs": [
+                "cargo",
+                "cc",
+                "cmake",
+                "conan",
+                "cxx",
+                "python",
+                "rustc"
+            ],
             "artifact_policy": {
-                "subject_kind": "registry-assembled",
-                "patterns": ["bindings/cpp"],
+                "subject_kind": "file",
+                "patterns": [
+                    "bindings/cpp/dist/strling-VERSION-*.tgz",
+                    "bindings/cpp/dist/strling-VERSION-*.upload.zip"
+                ],
                 "checksum_required": true,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 1
+                "maximum_subjects": 4,
+                "platform_patterns": {
+                    "windows-x86_64": [
+                        "bindings/cpp/dist/strling-VERSION-windows-x86_64.tgz",
+                        "bindings/cpp/dist/strling-VERSION-windows-x86_64.upload.zip"
+                    ],
+                    "linux-x86_64": [
+                        "bindings/cpp/dist/strling-VERSION-linux-x86_64.tgz",
+                        "bindings/cpp/dist/strling-VERSION-linux-x86_64.upload.zip"
+                    ]
+                }
             },
             "sbom_policy": {
                 "required": true,
@@ -143,7 +235,41 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:cpp",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64", "linux-x86_64"],
+                "scope": "windows-x86_64 and linux-x86_64 interop routes",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Conan package with canonical native dependency",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/*/licenses/LICENSE"],
+                    ["*!/*/licenses/THIRD_PARTY_NOTICES.txt"],
+                    ["*.upload.zip!/upload.json"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "conan-data-only-transport",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "release:csharp",
@@ -156,9 +282,15 @@
             "dependency_roots": ["csharp-nuget", "interop-cargo"],
             "compile_job": "compile-csharp",
             "publish_job": "publish-csharp",
-            "working_directory": "bindings/csharp",
-            "build_command": ["dotnet", "pack", "-c", "Release"],
-            "toolchain_refs": ["cargo", "dotnet", "rustc"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:csharp"
+            ],
+            "toolchain_refs": ["cargo", "cc", "dotnet", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": ["bindings/csharp/src/STRling/bin/Release/*.nupkg"],
@@ -188,7 +320,40 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:csharp",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64"],
+                "scope": "windows-x86_64 clean-consumer native assets",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/lib/net9.0/STRling.dll"],
+                    ["*!/*.nuspec"],
+                    ["*!/THIRD_PARTY_NOTICES.txt"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64"]
         },
         {
             "id": "release:dart",
@@ -201,12 +366,18 @@
             "dependency_roots": ["dart-pub"],
             "compile_job": "compile-dart",
             "publish_job": "publish-dart",
-            "working_directory": "bindings/dart",
-            "build_command": ["dart", "pub", "publish", "--dry-run"],
-            "toolchain_refs": ["dart"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:dart"
+            ],
+            "toolchain_refs": ["cargo", "cc", "dart", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "registry-assembled",
-                "patterns": ["bindings/dart"],
+                "patterns": ["target/release-packaging/dart"],
                 "checksum_required": true,
                 "checksum_algorithm": "sha256",
                 "maximum_subjects": 1
@@ -233,7 +404,41 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:dart",
+                "tier": "Supported",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*/pubspec.yaml"],
+                    ["*/lib/strling.dart"],
+                    ["*/LICENSE"],
+                    ["*/CHANGELOG.md"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "directory-byte-copy",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:fsharp",
@@ -246,15 +451,15 @@
             "dependency_roots": ["fsharp-nuget"],
             "compile_job": "compile-fsharp",
             "publish_job": "publish-fsharp",
-            "working_directory": "bindings/fsharp",
+            "working_directory": ".",
             "build_command": [
-                "dotnet",
-                "pack",
-                "src/STRling.FSharp/STRling.FSharp.fsproj",
-                "-c",
-                "Release"
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:fsharp"
             ],
-            "toolchain_refs": ["dotnet"],
+            "toolchain_refs": ["cargo", "cc", "dotnet", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": [
@@ -286,7 +491,39 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:fsharp",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64"],
+                "scope": "windows-x86_64 clean-consumer native assets",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/lib/net9.0/STRling.FSharp.dll"],
+                    ["*!/*.nuspec"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64"]
         },
         {
             "id": "release:go",
@@ -299,15 +536,32 @@
             "dependency_roots": ["go-binding"],
             "compile_job": "compile-go",
             "publish_job": "publish-go",
-            "working_directory": "bindings/go",
-            "build_command": ["go", "build", "./..."],
-            "toolchain_refs": ["go"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:go"
+            ],
+            "toolchain_refs": ["cargo", "cc", "go", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "source-tree",
-                "patterns": ["bindings/go"],
+                "patterns": [
+                    "bindings/go",
+                    "bindings/interop",
+                    "core",
+                    "spec",
+                    "LICENSE",
+                    "tests/conformance/ecmascript-runtime-certification.json",
+                    "tests/conformance/pcre2-runtime-certification.json",
+                    "tests/conformance/python-re-runtime-certification.json",
+                    "tooling/native_release_build.py",
+                    "tooling/release_notices.py"
+                ],
                 "checksum_required": false,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 1
+                "maximum_subjects": 10
             },
             "sbom_policy": {
                 "required": true,
@@ -331,7 +585,44 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:go",
+                "tier": "Supported",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64 with cgo",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Git module, cgo and canonical native installation",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*/go.mod"],
+                    ["*/native_cgo.go"],
+                    ["LICENSE"],
+                    ["tests/conformance/ecmascript-runtime-certification.json"],
+                    ["tests/conformance/pcre2-runtime-certification.json"],
+                    ["tests/conformance/python-re-runtime-certification.json"],
+                    ["*tooling/native_release_build.py"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "git-reference",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:java",
@@ -344,14 +635,29 @@
             "dependency_roots": ["java-maven", "jvm-maven"],
             "compile_job": "compile-java",
             "publish_job": "publish-java",
-            "working_directory": "bindings/java",
-            "build_command": ["mvn", "-B", "-DskipTests", "package"],
-            "toolchain_refs": ["java", "maven"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:java"
+            ],
+            "toolchain_refs": [
+                "cargo",
+                "cc",
+                "java",
+                "maven",
+                "python",
+                "rustc"
+            ],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": [
-                    "bindings/java/target/*.jar",
-                    "bindings/java/pom.xml"
+                    "bindings/java/target/strling-VERSION*.jar",
+                    "bindings/java/pom.xml",
+                    "bindings/jvm/target/strling-jvm-VERSION*.jar",
+                    "bindings/jvm/pom.xml"
                 ],
                 "checksum_required": true,
                 "checksum_algorithm": "sha256",
@@ -387,7 +693,50 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:java",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64"],
+                "scope": "windows-x86_64 with caller-supplied absolute native path",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Maven artifact plus canonical native payload at absolute path",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source",
+                    "Confirm Central Publisher Portal user-token credentials and com.strling namespace ownership",
+                    "Confirm the owner-approved PGP signing fingerprint and public-key availability"
+                ],
+                "native_runtime_prerequisites": [
+                    "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/com/strling/Strling.class"],
+                    ["*!/*LICENSE*", "*/pom.xml!/pom.xml"],
+                    ["*-sources.jar!/com/strling/Strling.java"],
+                    ["*strling-VERSION-javadoc.jar!/index.html"],
+                    [
+                        "*strling-jvm-VERSION.jar!/com/strling/jvm/NativeClient.class"
+                    ],
+                    [
+                        "*strling-jvm-VERSION-sources.jar!/com/strling/jvm/NativeClient.java"
+                    ],
+                    ["*strling-jvm-VERSION-javadoc.jar!/index.html"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "maven-signed-envelope",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64"]
         },
         {
             "id": "release:kotlin",
@@ -400,17 +749,27 @@
             "dependency_roots": ["jvm-maven", "kotlin-gradle"],
             "compile_job": "compile-kotlin",
             "publish_job": "publish-kotlin",
-            "working_directory": "bindings/kotlin",
+            "working_directory": ".",
             "build_command": [
-                "./gradlew",
-                "publishToMavenLocal",
-                "-Pversion=VERSION"
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:kotlin"
             ],
-            "toolchain_refs": ["gradle", "java"],
+            "toolchain_refs": [
+                "cargo",
+                "cc",
+                "gradle",
+                "java",
+                "maven",
+                "python",
+                "rustc"
+            ],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": [
-                    "bindings/kotlin/build/libs/*.jar",
+                    "bindings/kotlin/build/libs/strling-kotlin-VERSION*.jar",
                     "bindings/kotlin/build/publications/*/pom-default.xml"
                 ],
                 "checksum_required": true,
@@ -437,12 +796,53 @@
             },
             "credential_policy": {
                 "mode": "long-lived-secret",
-                "secret_names": ["GPG_KEY", "MAVEN_PASSWORD", "MAVEN_USERNAME"],
+                "secret_names": [
+                    "GPG_KEY",
+                    "GPG_PASSPHRASE",
+                    "MAVEN_PASSWORD",
+                    "MAVEN_USERNAME"
+                ],
                 "trusted_publishing": false,
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:kotlin",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64"],
+                "scope": "windows-x86_64 with caller-supplied absolute native path",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Maven artifact plus canonical native payload at absolute path",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source",
+                    "Confirm Central Publisher Portal user-token credentials and com.strling namespace ownership",
+                    "Confirm the owner-approved PGP signing fingerprint and public-key availability"
+                ],
+                "native_runtime_prerequisites": [
+                    "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/strling/STRling.class"],
+                    ["*pom-default.xml!/pom-default.xml"],
+                    ["*-sources.jar!/strling/STRling.kt"],
+                    ["*-javadoc.jar!/index.html"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "maven-signed-envelope",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64"]
         },
         {
             "id": "release:lua",
@@ -455,15 +855,25 @@
             "dependency_roots": ["lua-luarocks"],
             "compile_job": "compile-lua",
             "publish_job": "publish-lua",
-            "working_directory": "bindings/lua",
-            "build_command": ["luarocks", "make", "strling-VERSION-1.rockspec"],
-            "toolchain_refs": ["lua", "luarocks"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:lua",
+                "--preview"
+            ],
+            "toolchain_refs": ["lua", "luarocks", "python"],
             "artifact_policy": {
-                "subject_kind": "registry-assembled",
-                "patterns": ["bindings/lua/strling-VERSION-1.rockspec"],
+                "subject_kind": "file",
+                "patterns": [
+                    "bindings/lua/strling-VERSION-1.rockspec",
+                    "bindings/lua/strling-VERSION-1.src.rock"
+                ],
                 "checksum_required": true,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 1
+                "maximum_subjects": 2
             },
             "sbom_policy": {
                 "required": true,
@@ -487,7 +897,41 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:lua",
+                "tier": "Preview",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "preview-only-explicit-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*.rockspec!/*.rockspec"],
+                    ["*.src.rock!/*"],
+                    ["*.src.rock!/strling/bindings/lua/src/adapter.lua"],
+                    ["*.src.rock!/strling/bindings/lua/LICENSE"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:perl",
@@ -500,9 +944,16 @@
             "dependency_roots": ["perl-cpan"],
             "compile_job": "compile-perl",
             "publish_job": "publish-perl",
-            "working_directory": "bindings/perl",
-            "build_command": ["make", "dist"],
-            "toolchain_refs": ["make", "perl"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:perl",
+                "--preview"
+            ],
+            "toolchain_refs": ["make", "perl", "python"],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": ["bindings/perl/STRling-VERSION.tar.gz"],
@@ -532,7 +983,39 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:perl",
+                "tier": "Preview",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "preview-only-explicit-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/*/lib/STRling.pm"],
+                    ["*!/*/LICENSE"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:php",
@@ -545,20 +1028,33 @@
             "dependency_roots": ["php-composer"],
             "compile_job": "compile-php",
             "publish_job": "publish-php",
-            "working_directory": "bindings/php",
+            "working_directory": ".",
             "build_command": [
-                "composer",
-                "validate",
-                "--no-check-publish",
-                "--no-check-lock"
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:php",
+                "--preview"
             ],
-            "toolchain_refs": ["composer", "php"],
+            "toolchain_refs": ["composer", "php", "python"],
             "artifact_policy": {
                 "subject_kind": "source-tree",
-                "patterns": ["bindings/php"],
+                "patterns": [
+                    "bindings/php",
+                    "bindings/interop",
+                    "core",
+                    "spec",
+                    "LICENSE",
+                    "tests/conformance/ecmascript-runtime-certification.json",
+                    "tests/conformance/pcre2-runtime-certification.json",
+                    "tests/conformance/python-re-runtime-certification.json",
+                    "tooling/native_release_build.py",
+                    "tooling/release_notices.py"
+                ],
                 "checksum_required": false,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 1
+                "maximum_subjects": 10
             },
             "sbom_policy": {
                 "required": true,
@@ -582,7 +1078,44 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:php",
+                "tier": "Preview",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64 with caller-owned native payload discovery",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "preview-only-explicit-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*/composer.json"],
+                    ["*/src/STRling.php"],
+                    ["LICENSE"],
+                    ["tests/conformance/ecmascript-runtime-certification.json"],
+                    ["tests/conformance/pcre2-runtime-certification.json"],
+                    ["tests/conformance/python-re-runtime-certification.json"],
+                    ["*tooling/native_release_build.py"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "git-reference",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:python",
@@ -595,18 +1128,33 @@
             "dependency_roots": ["interop-cargo", "python-binding"],
             "compile_job": "compile-python",
             "publish_job": "publish-python",
-            "working_directory": "bindings/python",
-            "build_command": ["python", "-m", "build"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:python"
+            ],
             "toolchain_refs": ["cargo", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": [
-                    "bindings/python/dist/*.tar.gz",
-                    "bindings/python/dist/*.whl"
+                    "bindings/python/dist/strling-VERSION.tar.gz",
+                    "bindings/python/dist/strling-VERSION-*.whl"
                 ],
                 "checksum_required": true,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 4
+                "maximum_subjects": 4,
+                "platform_patterns": {
+                    "linux-x86_64": [
+                        "bindings/python/dist/strling-VERSION.tar.gz",
+                        "bindings/python/dist/strling-VERSION-cp312-none-linux_x86_64.whl"
+                    ],
+                    "windows-x86_64": [
+                        "bindings/python/dist/strling-VERSION-cp312-none-win_amd64.whl"
+                    ]
+                }
             },
             "sbom_policy": {
                 "required": true,
@@ -630,28 +1178,79 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:python",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64", "linux-x86_64"],
+                "scope": "windows-x86_64 and linux-x86_64 with CPython 3.12 evidence",
+                "registry_owner": "strling-lang PyPI organization",
+                "ownership_status": "externally-pending",
+                "installation": "Platform wheel or governed source distribution",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/*STRling/_native/THIRD_PARTY_NOTICES.txt"],
+                    ["*!/*LICENSE*"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "release:r",
             "surface": "r",
             "ecosystem": "r-package",
-            "package_name": "STRling",
+            "package_name": "strling",
             "delivery_kind": "source-tag",
             "registry": "github-tag:r-vVERSION",
             "package_root": "bindings/r",
             "dependency_roots": ["r-package"],
             "compile_job": "compile-r",
             "publish_job": "publish-r",
-            "working_directory": "bindings/r",
-            "build_command": ["R", "CMD", "build", "."],
-            "toolchain_refs": ["R"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:r",
+                "--preview"
+            ],
+            "toolchain_refs": ["R", "python"],
             "artifact_policy": {
                 "subject_kind": "source-tree",
-                "patterns": ["bindings/r"],
+                "patterns": [
+                    "bindings/r",
+                    "bindings/interop",
+                    "core",
+                    "spec",
+                    "LICENSE",
+                    "tests/conformance/ecmascript-runtime-certification.json",
+                    "tests/conformance/pcre2-runtime-certification.json",
+                    "tests/conformance/python-re-runtime-certification.json",
+                    "tooling/native_release_build.py",
+                    "tooling/release_notices.py"
+                ],
                 "checksum_required": false,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 1
+                "maximum_subjects": 10
             },
             "sbom_policy": {
                 "required": true,
@@ -675,7 +1274,43 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:r",
+                "tier": "Preview",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "preview-only-explicit-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*/DESCRIPTION"],
+                    ["LICENSE"],
+                    ["tests/conformance/ecmascript-runtime-certification.json"],
+                    ["tests/conformance/pcre2-runtime-certification.json"],
+                    ["tests/conformance/python-re-runtime-certification.json"],
+                    ["*tooling/native_release_build.py"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "git-reference",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:ruby",
@@ -688,9 +1323,16 @@
             "dependency_roots": ["ruby-bundler"],
             "compile_job": "compile-ruby",
             "publish_job": "publish-ruby",
-            "working_directory": "bindings/ruby",
-            "build_command": ["gem", "build", "strling.gemspec"],
-            "toolchain_refs": ["bundler", "ruby"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:ruby",
+                "--preview"
+            ],
+            "toolchain_refs": ["bundler", "python", "ruby"],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": ["bindings/ruby/strling-VERSION.gem"],
@@ -720,7 +1362,39 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:ruby",
+                "tier": "Preview",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "preview-only-explicit-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/data.tar.gz!/lib/strling.rb"],
+                    ["*!/data.tar.gz!/LICENSE"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:rust",
@@ -734,8 +1408,14 @@
             "compile_job": "compile-rust",
             "publish_job": "publish-rust",
             "working_directory": ".",
-            "build_command": ["cargo", "package", "--locked"],
-            "toolchain_refs": ["cargo", "rustc"],
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:rust"
+            ],
+            "toolchain_refs": ["cargo", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": ["target/package/strling-VERSION.crate"],
@@ -765,7 +1445,36 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:rust",
+                "tier": "Supported",
+                "platforms": ["windows-x86_64", "linux-x86_64"],
+                "scope": "windows-x86_64 and linux-x86_64 reference kernel/facade",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "Governed registry artifact or source-tag route",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/*/LICENSE"],
+                    ["*!/*/core/src/lib_public.rs"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "release:swift",
@@ -778,15 +1487,32 @@
             "dependency_roots": ["swift-binding"],
             "compile_job": "compile-swift",
             "publish_job": "publish-swift",
-            "working_directory": "bindings/swift",
-            "build_command": ["swift", "build", "-c", "release"],
-            "toolchain_refs": ["swift"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:swift"
+            ],
+            "toolchain_refs": ["cargo", "cc", "python", "rustc", "swift"],
             "artifact_policy": {
                 "subject_kind": "source-tree",
-                "patterns": ["bindings/swift"],
+                "patterns": [
+                    "bindings/swift",
+                    "bindings/interop",
+                    "core",
+                    "spec",
+                    "LICENSE",
+                    "tests/conformance/ecmascript-runtime-certification.json",
+                    "tests/conformance/pcre2-runtime-certification.json",
+                    "tests/conformance/python-re-runtime-certification.json",
+                    "tooling/native_release_build.py",
+                    "tooling/release_notices.py"
+                ],
                 "checksum_required": false,
                 "checksum_algorithm": "sha256",
-                "maximum_subjects": 1
+                "maximum_subjects": 10
             },
             "sbom_policy": {
                 "required": true,
@@ -810,7 +1536,44 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:swift",
+                "tier": "Supported",
+                "platforms": ["linux-x86_64"],
+                "scope": "linux-x86_64",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "SwiftPM Git source and canonical native installation",
+                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ],
+                "native_runtime_prerequisites": [
+                    "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*/Package.swift"],
+                    ["*/Sources/STRling/NativeClient.swift"],
+                    ["LICENSE"],
+                    ["tests/conformance/ecmascript-runtime-certification.json"],
+                    ["tests/conformance/pcre2-runtime-certification.json"],
+                    ["tests/conformance/python-re-runtime-certification.json"],
+                    ["*tooling/native_release_build.py"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "git-reference",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         },
         {
             "id": "release:typescript",
@@ -823,8 +1586,15 @@
             "dependency_roots": ["interop-cargo", "typescript-npm"],
             "compile_job": "compile-typescript",
             "publish_job": "publish-typescript",
-            "working_directory": "bindings/typescript",
-            "build_command": ["npm", "pack", "--json"],
+            "working_directory": ".",
+            "build_command": [
+                "python",
+                "-m",
+                "tooling.release_packaging",
+                "--artifact-id",
+                "release:typescript",
+                "--preview"
+            ],
             "toolchain_refs": ["cargo", "node", "npm", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "file",
@@ -857,7 +1627,36 @@
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
                 "publication_authorization": "explicit-non-dry-run"
-            }
+            },
+            "distribution_contract": {
+                "support_claim": "binding:typescript",
+                "tier": "Preview",
+                "platforms": [],
+                "scope": "Windows Node 24 observation and Chrome browser WASM certification harness",
+                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                "ownership_status": "externally-pending",
+                "installation": "npm archive with canonical WASM payload",
+                "publication_eligibility": "preview-only-explicit-authorization",
+                "external_prerequisites": [
+                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm protected release environment reviewers and approved workflow source"
+                ]
+            },
+            "payload_contract": {
+                "format_version": "1.0.0",
+                "required_file_groups": [
+                    ["*!/package/dist/THIRD_PARTY_NOTICES.txt"],
+                    ["*!/package/LICENSE", "*!/package/dist/LICENSE"]
+                ],
+                "inspection": "bounded-nonexecuting-metadata-and-complete-file-graph"
+            },
+            "upload_contract": {
+                "mode": "exact-file",
+                "rebuild_forbidden": true,
+                "certified_file_bytes_preserved": true,
+                "post_publication_verification_required": true
+            },
+            "build_platforms": ["linux-x86_64"]
         }
     ]
 }

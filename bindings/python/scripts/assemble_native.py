@@ -3,9 +3,14 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
+import os
+import platform
 import shutil
 import subprocess
 import sys
+import tomllib
 from pathlib import Path
 
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
@@ -30,6 +35,13 @@ def cargo() -> str:
 
 
 def library_name() -> str:
+    if platform.machine().lower() not in {"amd64", "x86_64"} or sys.platform not in {
+        "win32",
+        "linux",
+    }:
+        raise RuntimeError(
+            "Only Windows/Linux x86_64 has a certified native package row"
+        )
     if sys.platform == "win32":
         return "strling_interop.dll"
     if sys.platform == "darwin":
@@ -38,20 +50,22 @@ def library_name() -> str:
 
 
 def assemble(output_directory: Path) -> Path:
+    environment = dict(os.environ)
+    # An sdist builds from its embedded source root, which may differ from the
+    # caller's checkout. Remap the actual compiler inputs, not that caller path.
+    environment["RUSTFLAGS"] = "--remap-path-prefix=" + str(ROOT) + "=/strling"
+    if sys.platform == "win32":
+        environment["RUSTFLAGS"] += " -Clink-arg=/Brepro -Clink-arg=/DEBUG:NONE"
+    environment["CARGO_INCREMENTAL"] = "0"
     completed = subprocess.run(
         [
-            cargo(),
-            "+1.75.0",
-            "build",
-            "--manifest-path",
-            str(MANIFEST),
-            "-p",
-            "strling-interop",
-            "--release",
-            "--locked",
-            "--offline",
+            sys.executable,
+            str(ROOT / "tooling/native_release_build.py"),
+            "--source-root", str(ROOT),
+            "--target-dir", str(ROOT / "bindings/interop/target"),
         ],
         cwd=ROOT,
+        env=environment,
         check=False,
     )
     if completed.returncode != 0:
@@ -62,6 +76,30 @@ def assemble(output_directory: Path) -> Path:
     output_directory.mkdir(parents=True, exist_ok=True)
     output = output_directory / library_name()
     shutil.copyfile(source, output)
+    subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "tooling/release_notices.py"),
+            "--output",
+            str(output_directory / "THIRD_PARTY_NOTICES.txt"),
+        ],
+        check=True,
+    )
+    # Bind this wheel to its exact native payload; ABI compatibility alone does
+    # not identify the compiler build embedded in a coordinated product package.
+    version = tomllib.loads(
+        (PACKAGE_ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    )["project"]["version"]
+    identity = {
+        "product_version": version,
+        "native_sha256": hashlib.sha256(output.read_bytes()).hexdigest(),
+        "protocol_version": "1.0.0",
+        "abi_major": 1,
+        "platform": "windows-x86_64" if sys.platform == "win32" else "linux-x86_64",
+    }
+    (output_directory / "kernel-identity.json").write_text(
+        json.dumps(identity, sort_keys=True) + "\n", encoding="utf-8"
+    )
     print("assembled {}".format(output.resolve()))
     return output
 

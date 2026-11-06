@@ -24,9 +24,9 @@ from tooling.release_supply_chain import (
     _dependency_resolution,
     _spdx_document,
     _surface_members,
-    _workflow_artifact_name,
-    _workflow_rebuild_name,
-    _workflow_receipt_name,
+    artifact_scopes,
+    scoped_artifact,
+    _surface_identity,
     authenticate_source,
     capture_build_receipt,
     document_fingerprint,
@@ -42,6 +42,7 @@ from tooling.release_supply_chain import (
     validate_manifest,
     validate_schema,
     verify_bundle,
+    canonical_json,
 )
 
 
@@ -53,7 +54,41 @@ def write_json(path: Path, value: object) -> None:
 def write_archive(path: Path, *, variant: int) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     lowered = path.name.lower()
-    if lowered.endswith((".jar", ".nupkg", ".whl", ".zip")):
+    if "/bindings/cpp/" in path.as_posix():
+        recipe, binary = f"recipe{variant}", f"b/binary{variant}/p"
+        pkglist = {
+            "strling/1.0.0": {
+                "revisions": {
+                    "recipe-revision": {
+                        "timestamp": variant,
+                        "recipe_folder": recipe,
+                        "packages": {
+                            "package-id": {
+                                "info": {"settings": {"arch": "x86_64"}},
+                                "revisions": {
+                                    "package-revision": {
+                                        "timestamp": variant,
+                                        "package_folder": binary,
+                                    }
+                                },
+                            }
+                        },
+                    }
+                }
+            }
+        }
+        entries = {
+            "pkglist.json": json.dumps(pkglist).encode(),
+            recipe + "/export/conanfile.py": b"fixture recipe",
+            binary + "/lib/libstrling.a": b"fixture static library",
+            binary + "/conanmanifest.txt": f"{variant}\nfile: exact-digest\n".encode(),
+        }
+        with tarfile.open(path, "w:gz") as archive:
+            for name, payload in entries.items():
+                info = tarfile.TarInfo(name)
+                info.size, info.mtime = len(payload), variant
+                archive.addfile(info, io.BytesIO(payload))
+    elif lowered.endswith((".jar", ".nupkg", ".whl", ".zip")):
         with zipfile.ZipFile(path, "w") as archive:
             info = zipfile.ZipInfo("payload.txt")
             info.date_time = (2020 + variant, 1, 1, 0, 0, 0)
@@ -79,7 +114,13 @@ def materialize_artifacts(
         )
         (root / artifact["package_root"]).mkdir(parents=True, exist_ok=True)
         (root / artifact["working_directory"]).mkdir(parents=True, exist_ok=True)
-        for pattern in artifact["artifact_policy"]["patterns"]:
+        patterns = artifact["artifact_policy"].get("platform_patterns")
+        patterns = (
+            sorted({p for rows in patterns.values() for p in rows})
+            if patterns
+            else artifact["artifact_policy"]["patterns"]
+        )
+        for pattern in patterns:
             relative = pattern.replace("VERSION", "1.0.0").replace("*", "fixture")
             path = root / relative
             if (
@@ -91,104 +132,68 @@ def materialize_artifacts(
                     "governed source tree\n", encoding="utf-8", newline="\n"
                 )
             else:
-                write_archive(path, variant=artifact_variant)
+                if artifact["id"] == "release:cpp" and path.name.endswith(".tgz"):
+                    path.parent.mkdir(parents=True, exist_ok=True)
+                    alias = "recipe" + str(artifact_variant)
+                    package_list = {
+                        "strling/1.0.0": {
+                            "revisions": {
+                                "a" * 32: {
+                                    "recipe_folder": alias,
+                                    "timestamp": artifact_variant,
+                                    "packages": {},
+                                }
+                            }
+                        }
+                    }
+                    with tarfile.open(path, "w") as archive:
+                        for name, payload in {
+                            "pkglist.json": json.dumps(package_list).encode(),
+                            alias + "/conanmanifest.txt": str(artifact_variant).encode()
+                            + b"\nconanfile.py: exact\n",
+                            alias + "/conanfile.py": b"fixture recipe data",
+                        }.items():
+                            entry = tarfile.TarInfo(name)
+                            entry.size = len(payload)
+                            entry.mtime = artifact_variant
+                            archive.addfile(entry, io.BytesIO(payload))
+                else:
+                    write_archive(
+                        path,
+                        variant=0
+                        if path.name.endswith(".upload.zip")
+                        else artifact_variant,
+                    )
 
 
 def write_workflow(root: Path, manifest: dict[str, Any]) -> None:
-    lines = [
-        "name: governed fixture",
-        "on:",
-        "    workflow_dispatch:",
-        "permissions:",
-        "    contents: read",
-        "jobs:",
-        "    verify-release:",
-        "        needs: release-certification",
-        "        runs-on: ubuntu-latest",
-        "        steps:",
-        "            - run: echo verify",
-        "    certify-release-supply-chain:",
-        "        needs:",
-        "            - verify-release",
-        *[
-            f"            - {artifact['compile_job']}"
-            for artifact in manifest["artifacts"]
-        ],
-        "        runs-on: ubuntu-latest",
-        "        environment: release",
-        "        permissions:",
-        "            contents: read",
-        "            id-token: write",
-        "            attestations: write",
-        "            artifact-metadata: write",
-        "        steps:",
-        f"            - uses: actions/attest@{'3' * 40}",
-        "            - run: |",
-        "                  python -m tooling.release_supply_chain security",
-        "                  python -m tooling.release_supply_chain produce",
-        "                  python -m tooling.release_supply_chain verify",
-        "    release-certification:",
-        "        runs-on: ubuntu-latest",
-        "        steps:",
-        "            - run: ./strling profile release",
-    ]
-    upload_sha = "1" * 40
-    download_sha = "2" * 40
-    for artifact in manifest["artifacts"]:
-        compile_job = artifact["compile_job"]
-        publish_job = artifact["publish_job"]
-        name = _workflow_artifact_name(artifact)
-        rebuild_name = _workflow_rebuild_name(artifact)
-        receipt_name = _workflow_receipt_name(artifact)
-        slug = artifact["id"].removeprefix("release:")
-        paths = [
-            path.replace("VERSION", "${{ needs.verify-release.outputs.version }}")
-            for path in artifact["artifact_policy"]["patterns"]
-        ]
-        lines.extend(
-            [
-                f"    {compile_job}:",
-                "        runs-on: ubuntu-latest",
-                "        steps:",
-                f"            - uses: actions/upload-artifact@{upload_sha}",
-                "              with:",
-                f"                  name: {name}",
-                "                  path: |",
-                *[f"                      {path}" for path in paths],
-                "                  if-no-files-found: error",
-                f"            - uses: actions/upload-artifact@{upload_sha}",
-                "              with:",
-                f"                  name: {rebuild_name}",
-                "                  path: |",
-                *[f"                      .rebuild/{path}" for path in paths],
-                "                  if-no-files-found: error",
-                f"            - uses: actions/upload-artifact@{upload_sha}",
-                "              with:",
-                f"                  name: {receipt_name}",
-                "                  path: |",
-                f"                      artifacts/build-receipts/{slug}-first.json",
-                f"                      artifacts/build-receipts/{slug}-second.json",
-                "                  if-no-files-found: error",
-                f"    {publish_job}:",
-                "        runs-on: ubuntu-latest",
-                "        environment: release",
-                f"        needs: [verify-release, {compile_job}, certify-release-supply-chain, release-certification]",
-                "        if: needs.verify-release.outputs.is_dry_run == 'false'",
-                "        steps:",
-                f"            - uses: actions/download-artifact@{download_sha}",
-                "              with:",
-                f"                  name: {name}",
-                f"                  path: {artifact['package_root']}",
-            ]
-        )
+    import shutil
+
     path = root / manifest["workflow_policy"]["path"]
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+    shutil.copyfile(
+        Path(MANIFEST_PATH).parents[4] / manifest["workflow_policy"]["path"], path
+    )
 
 
 def prepare_producer_root(
     root: Path, manifest: dict[str, Any], *, variant: int
 ) -> None:
+    write_json(
+        root / "governance/release-policy.json",
+        {
+            "product": {"version": "1.0.0"},
+            "support_claims": [
+                {
+                    "id": a["distribution_contract"]["support_claim"],
+                    "tier": a["distribution_contract"]["tier"],
+                    "scope": a["distribution_contract"]["scope"],
+                    "platforms": a["distribution_contract"]["platforms"],
+                }
+                for a in manifest["artifacts"]
+            ],
+        },
+    )
     dependency_ids = sorted(
         {
             dependency
@@ -259,10 +264,7 @@ class ReleaseSupplyChainContractTests(unittest.TestCase):
         first = document_fingerprint(self.manifest)
         second = document_fingerprint(load_json(MANIFEST_PATH))
         self.assertEqual(first, second)
-        self.assertEqual(
-            "962277776e90764882783f29a382c10d0eeddc0635660128f7d016b001785f5a",
-            first,
-        )
+        self.assertEqual(self.fixture["manifest_fingerprint"], first)
 
     def test_exact_artifact_denominator_is_required(self) -> None:
         missing = copy.deepcopy(self.manifest)
@@ -540,16 +542,18 @@ class ReleaseSupplyChainContractTests(unittest.TestCase):
         )
 
     def test_full_profile_without_artifacts_certifies_only_the_contract(self) -> None:
-        result = run_profile_certification(profile="full", evidence_path=None)
-        self.assertEqual("passed", result["status"])
-        self.assertEqual("contract", result["evidence_authority"])
+        self.assert_rejected(
+            lambda: run_profile_certification(profile="full", evidence_path=None),
+            "evidence-required",
+        )
 
     def test_release_profile_without_artifacts_certifies_only_the_contract(
         self,
     ) -> None:
-        result = run_profile_certification(profile="release", evidence_path=None)
-        self.assertEqual("passed", result["status"])
-        self.assertEqual("contract", result["evidence_authority"])
+        self.assert_rejected(
+            lambda: run_profile_certification(profile="release", evidence_path=None),
+            "evidence-required",
+        )
 
     def test_fixture_inputs_are_not_modified(self) -> None:
         manifest_bytes = Path(MANIFEST_PATH).read_bytes()
@@ -560,6 +564,60 @@ class ReleaseSupplyChainContractTests(unittest.TestCase):
 
 
 class ReleaseSupplyChainProducerTests(unittest.TestCase):
+    def test_resigned_sbom_cannot_describe_another_coordinate(self) -> None:
+        import hashlib
+
+        evidence = self.produce()
+        bundle = Path(self.temporary.name) / "evidence"
+        path = bundle / "sbom/python.spdx.json"
+        sbom = load_json(path)
+        sbom["packages"][0]["name"] = "unapproved-package"
+        write_json(path, sbom)
+        row = next(
+            row for row in evidence["artifacts"] if row["id"] == "release:python"
+        )
+        row["sbom"]["sha256"] = hashlib.sha256(canonical_json(sbom)).hexdigest()
+        evidence["evidence_fingerprint"] = document_fingerprint(
+            evidence, "evidence_fingerprint"
+        )
+        write_json(bundle / "release-supply-chain-evidence.json", evidence)
+        with self.assertRaises(ReleaseSupplyChainError) as raised:
+            verify_bundle(
+                root=self.first,
+                evidence_path=bundle / "release-supply-chain-evidence.json",
+                manifest=self.manifest,
+            )
+        self.assertEqual("sbom-metadata", raised.exception.code)
+
+    def test_resigned_provenance_cannot_change_product_version(self) -> None:
+        import hashlib
+
+        evidence = self.produce()
+        bundle = Path(self.temporary.name) / "evidence"
+        path = bundle / "provenance/python.intoto.json"
+        provenance = load_json(path)
+        provenance["predicate"]["buildDefinition"]["externalParameters"][
+            "productVersion"
+        ] = "3.0.0"
+        write_json(path, provenance)
+        row = next(
+            row for row in evidence["artifacts"] if row["id"] == "release:python"
+        )
+        row["provenance"]["predicate_sha256"] = hashlib.sha256(
+            canonical_json(provenance)
+        ).hexdigest()
+        evidence["evidence_fingerprint"] = document_fingerprint(
+            evidence, "evidence_fingerprint"
+        )
+        write_json(bundle / "release-supply-chain-evidence.json", evidence)
+        with self.assertRaises(ReleaseSupplyChainError) as raised:
+            verify_bundle(
+                root=self.first,
+                evidence_path=bundle / "release-supply-chain-evidence.json",
+                manifest=self.manifest,
+            )
+        self.assertEqual("provenance-metadata", raised.exception.code)
+
     def setUp(self) -> None:
         self.manifest = load_json(MANIFEST_PATH)
         self.temporary = tempfile.TemporaryDirectory()
@@ -604,10 +662,6 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
         self.assertEqual("passed", first["status"])
         self.assertEqual(17, first["summary"]["passed"])
         self.assertFalse(first["publication_authorized"])
-        self.assertEqual(
-            "cc1280cd03478b6c79db069ab35c95c4ee2b8e00401af76d9726b6f90e2307b6",
-            first["evidence_fingerprint"],
-        )
         self.assertEqual(first["evidence_fingerprint"], second["evidence_fingerprint"])
 
         first_root = Path(self.temporary.name) / "evidence-one"
@@ -762,18 +816,72 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
         self.assertEqual("source-rebuild", drift.exception.code)
 
     def test_build_receipts_bind_each_artifact_toolchain_and_rebuild(self) -> None:
+        from tooling.release_consumers import CONSUMER_FIXTURES
+        import hashlib
+
         receipts = Path(self.temporary.name) / "receipts"
         toolchains = {row["id"]: row for row in self.toolchains}
+        for root in (self.first, self.second):
+            for relative in CONSUMER_FIXTURES.values():
+                target = root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(b"consumer fixture")
 
-        def probe(
-            root: Path,
-            *,
-            artifact_id: str,
-            toolchain_id: str,
-            policy_sha256: str,
-        ) -> dict[str, Any]:
-            del root, policy_sha256
-            return copy.deepcopy(toolchains[f"{artifact_id}:{toolchain_id}"])
+        def probe(root, *, artifact_id, toolchain_id, policy_sha256, scope):
+            return copy.deepcopy(toolchains[f"{artifact_id}:{scope}:{toolchain_id}"])
+
+        def consumer(artifact_id, *, root, native):
+            artifact = next(
+                a for a in self.manifest["artifacts"] if a["id"] == artifact_id
+            )
+            members = _surface_members(
+                root, scoped_artifact(artifact, active_scope), "1.0.0"
+            )
+            result = dict(
+                status="passed",
+                source_outcome="succeeded",
+                target_pattern="abc",
+                kernel_mismatch_rejected=True,
+            )
+            if artifact_id == "release:rust":
+                result.update(
+                    linked_package_version="1.0.0",
+                    target_profile_mismatch_rejected=True,
+                )
+            companion = {
+                "release:fsharp": "release:csharp",
+                "release:kotlin": "release:java",
+            }.get(artifact_id)
+            if companion:
+                contract = next(
+                    a for a in self.manifest["artifacts"] if a["id"] == companion
+                )
+                result["companion_subject_sha256"] = _surface_identity(
+                    _surface_members(
+                        root, scoped_artifact(contract, active_scope), "1.0.0"
+                    )
+                )[1]
+            receipt = dict(
+                schema_version="2.0.0",
+                document_kind="release-consumer-receipt",
+                artifact_id=artifact_id,
+                product_version="1.0.0",
+                scope=active_scope,
+                source=self.source,
+                engineering=False,
+                publication_authorized=False,
+                subject_sha256=_surface_identity(members)[1],
+                manifest_fingerprint=document_fingerprint(self.manifest),
+                fixture_sha256={
+                    r: hashlib.sha256((root / r).read_bytes()).hexdigest()
+                    for r in CONSUMER_FIXTURES.values()
+                },
+                result=result,
+            )
+            receipt["receipt_fingerprint"] = document_fingerprint(
+                receipt, "receipt_fingerprint"
+            )
+            return receipt
 
         with (
             patch(
@@ -781,56 +889,60 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
                 return_value=self.source,
             ),
             patch("tooling.release_supply_chain._probe_toolchain", side_effect=probe),
+            patch("tooling.release_supply_chain._validate_toolchain_version"),
+            patch(
+                "tooling.release_supply_chain.inspect_release_payload", return_value=[]
+            ),
+            patch("tooling.release_consumers.verify_consumer", side_effect=consumer),
         ):
             for artifact in self.manifest["artifacts"]:
                 slug = artifact["id"].removeprefix("release:")
-                capture_build_receipt(
+                for active_scope in artifact_scopes(artifact):
+                    with patch(
+                        "tooling.release_packaging.host_scope",
+                        return_value=active_scope,
+                    ):
+                        for label, root in (
+                            ("first", self.first),
+                            ("second", self.second),
+                        ):
+                            capture_build_receipt(
+                                root=root,
+                                artifact_id=artifact["id"],
+                                version="1.0.0",
+                                output_path=receipts
+                                / f"{slug}-{active_scope}-{label}.json",
+                                manifest=self.manifest,
+                            )
+            observed, first_source, second_source, captured = load_build_receipts(
+                receipt_dir=receipts,
+                root=self.first,
+                second_root=self.second,
+                manifest=self.manifest,
+                version="1.0.0",
+            )
+            self.assertEqual(self.toolchains, observed)
+            self.assertEqual(self.source, first_source)
+            self.assertEqual(self.source, second_source)
+            self.assertEqual(42, len(captured))
+            drift_path = receipts / "rust-linux-x86_64-second.json"
+            drift = load_json(drift_path)
+            drift["build_instance_id"] = load_json(
+                receipts / "rust-linux-x86_64-first.json"
+            )["build_instance_id"]
+            drift["receipt_fingerprint"] = document_fingerprint(
+                drift, "receipt_fingerprint"
+            )
+            write_json(drift_path, drift)
+            with self.assertRaises(ReleaseSupplyChainError) as raised:
+                load_build_receipts(
+                    receipt_dir=receipts,
                     root=self.first,
-                    artifact_id=artifact["id"],
-                    version="1.0.0",
-                    output_path=receipts / f"{slug}-first.json",
+                    second_root=self.second,
                     manifest=self.manifest,
-                )
-                capture_build_receipt(
-                    root=self.second,
-                    artifact_id=artifact["id"],
                     version="1.0.0",
-                    output_path=receipts / f"{slug}-second.json",
-                    manifest=self.manifest,
                 )
-            observed, first_source, second_source = load_build_receipts(
-                receipt_dir=receipts,
-                root=self.first,
-                second_root=self.second,
-                manifest=self.manifest,
-                version="1.0.0",
-            )
-        self.assertEqual(self.toolchains, observed)
-        self.assertEqual(self.source, first_source)
-        self.assertEqual(self.source, second_source)
-
-        drift_path = receipts / "rust-second.json"
-        drift = json.loads(drift_path.read_text(encoding="utf-8"))
-        drift["toolchains"][0]["version"] = "drifted"
-        drift["receipt_fingerprint"] = document_fingerprint(
-            drift, "receipt_fingerprint"
-        )
-        write_json(drift_path, drift)
-        with (
-            patch(
-                "tooling.release_supply_chain.authenticate_source",
-                return_value=self.source,
-            ),
-            self.assertRaises(ReleaseSupplyChainError) as raised,
-        ):
-            load_build_receipts(
-                receipt_dir=receipts,
-                root=self.first,
-                second_root=self.second,
-                manifest=self.manifest,
-                version="1.0.0",
-            )
-        self.assertEqual("toolchain-rebuild", raised.exception.code)
+            self.assertEqual("source-rebuild", raised.exception.code)
 
     def test_verifier_rejects_tampered_companion_document(self) -> None:
         self.produce("tampered")

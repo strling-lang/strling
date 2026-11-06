@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import shutil
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -36,18 +37,12 @@ def cargo() -> str:
 def main() -> int:
     completed = subprocess.run(
         [
-            cargo(),
-            "+1.75.0",
-            "build",
-            "--manifest-path",
-            str(MANIFEST),
-            "-p",
-            "strling-interop",
+            sys.executable,
+            str(ROOT / "tooling/native_release_build.py"),
+            "--source-root", str(ROOT),
+            "--target-dir", str(ROOT / "bindings/interop/target"),
             "--target",
             "wasm32-unknown-unknown",
-            "--release",
-            "--locked",
-            "--offline",
         ],
         cwd=ROOT,
         check=False,
@@ -57,14 +52,25 @@ def main() -> int:
 
     if str(ROOT) not in sys.path:
         sys.path.insert(0, str(ROOT))
-    from tooling.interop_wasm import inspect_module, seal_module
+    from tooling.interop_wasm import (
+        attach_product_identity,
+        inspect_module,
+        seal_module,
+    )
+    from tooling.release_notices import write_notices
 
     sealed = seal_module(RAW_WASM.read_bytes())
+    version = json.loads((BINDING / "package.json").read_text(encoding="utf-8"))[
+        "version"
+    ]
+    sealed = attach_product_identity(sealed, version)
     exports = inspect_module(sealed)
     if len(exports) != 6:
         raise RuntimeError("sealed strling.wasm-abi artifact has unexpected exports")
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_bytes(sealed)
+    write_notices(OUTPUT.with_name("THIRD_PARTY_NOTICES.txt"))
+    shutil.copyfile(ROOT / "LICENSE", OUTPUT.with_name("LICENSE"))
     print(f"assembled {OUTPUT.relative_to(ROOT).as_posix()}")
     return 0
 

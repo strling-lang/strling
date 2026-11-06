@@ -1,6 +1,6 @@
 {
     "name": "strling/strling",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "description": "Thin PHP FFI adapter for the canonical STRling compiler",
     "type": "library",
     "license": "Apache-2.0",

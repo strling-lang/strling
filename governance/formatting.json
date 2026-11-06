@@ -4,7 +4,13 @@
     "dispositions": [
         "ready_for_integration",
         "not_applicable",
-        "not_yet_enforceable"
+        "not_yet_enforceable",
+        {
+            "paths": ["tests/certification/release-packaging/1.0/current/**"],
+            "disposition": "not_applicable",
+            "strategy": "Signed release-packaging attestation producer",
+            "reason": "The closure bundle is deterministically serialized, rooted and signed by the existing attestation producer; formatting these bytes would invalidate its evidence root and signature."
+        }
     ],
     "formatters": {
         "dart-format": {

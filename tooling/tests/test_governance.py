@@ -513,6 +513,40 @@ class ArchitectureValidationTests(unittest.TestCase):
         self.write_profile_workflows()
         self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
 
+    def test_historical_delivery_requires_both_exact_identities(self) -> None:
+        self.write_profile_workflows()
+        path = self.root / ".github/workflows/cd.yml"
+        original = path.read_text(encoding="utf-8")
+        event = "${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}"
+        self.assertIn(event, original)
+        path.write_text(original.replace(event, "b" * 40), encoding="utf-8")
+        rule = self.ci_profile_rule()
+        rule["configuration"]["historical_delivery_reference"] = {
+            "source_sha": "b" * 40,
+            "verifier_sha": "a" * 40,
+        }
+        self.assertEqual("passed", self.evaluate(rule).status)
+        path.write_text(original.replace(event, "c" * 40), encoding="utf-8")
+        self.assertEqual("failed", self.evaluate(rule).status)
+        path.write_text(original.replace(event, "b" * 40), encoding="utf-8")
+        rule["configuration"]["historical_delivery_reference"]["verifier_sha"] = (
+            "c" * 40
+        )
+        self.assertEqual("failed", self.evaluate(rule).status)
+
+    def test_package_uploads_preserve_certification_retention_boundary(self) -> None:
+        self.write_profile_workflows()
+        path = self.root / ".github/workflows/cd.yml"
+        original = path.read_text(encoding="utf-8")
+        extra = "  compile-package:\n    steps:\n      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a\n"
+        path.write_text(original + extra, encoding="utf-8")
+        self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
+        path.write_text(
+            original + extra.replace("043fb46d1a93c77aae656e7c1c64a875d1fc6a0a", "v7"),
+            encoding="utf-8",
+        )
+        self.assertEqual("failed", self.evaluate(self.ci_profile_rule()).status)
+
     def test_ci_profile_routing_rejects_event_trust_drift(self) -> None:
         cases = (
             ("certification-integrity.yml", "base.sha", "head.sha", "base SHA"),

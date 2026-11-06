@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(strling_cpp VERSION 3.0.0 LANGUAGES CXX)
+project(strling_cpp VERSION 4.0.0 LANGUAGES CXX)
+
+if(MSVC)
+    get_filename_component(STRLING_NATIVE_BUILD_ROOT "${CMAKE_BINARY_DIR}/.." ABSOLUTE)
+    file(TO_NATIVE_PATH "${STRLING_NATIVE_BUILD_ROOT}" STRLING_NATIVE_BUILD_ROOT_WINDOWS)
+    add_compile_options(/Brepro /experimental:deterministic "/pathmap:${STRLING_NATIVE_BUILD_ROOT_WINDOWS}=Z:/strling-build")
+    string(APPEND CMAKE_STATIC_LINKER_FLAGS " /Brepro")
+endif()
 
 include(CTest)
 include(GNUInstallDirs)

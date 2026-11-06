@@ -2,25 +2,25 @@
     "schema_version": "jvm-release-graph-v1",
     "roots": {
         "java": [
-            "com.strling:strling:3.0.0",
-            "com.strling:strling-jvm:3.0.0",
+            "com.strling:strling:4.0.0",
+            "com.strling:strling-jvm:4.0.0",
             "net.java.dev.jna:jna:5.19.1",
             "com.fasterxml.jackson.core:jackson-databind:2.18.11",
             "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
             "com.fasterxml.jackson.core:jackson-core:2.18.11"
         ],
         "jvm": [
-            "com.strling:strling-jvm:3.0.0",
+            "com.strling:strling-jvm:4.0.0",
             "net.java.dev.jna:jna:5.19.1",
             "com.fasterxml.jackson.core:jackson-databind:2.18.11",
             "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
             "com.fasterxml.jackson.core:jackson-core:2.18.11"
         ],
         "kotlin": [
-            "com.strling:strling-kotlin:3.0.0",
+            "com.strling:strling-kotlin:4.0.0",
             "org.jetbrains.kotlin:kotlin-stdlib:2.0.20",
             "org.jetbrains:annotations:13.0",
-            "com.strling:strling-jvm:3.0.0",
+            "com.strling:strling-jvm:4.0.0",
             "net.java.dev.jna:jna:5.19.1",
             "com.fasterxml.jackson.core:jackson-databind:2.18.11",
             "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
@@ -50,19 +50,19 @@
             "license_disposition": "permitted"
         },
         {
-            "coordinate": "com.strling:strling-jvm:3.0.0",
+            "coordinate": "com.strling:strling-jvm:4.0.0",
             "ecosystem": "Maven",
             "internal": true,
             "license": "Apache-2.0"
         },
         {
-            "coordinate": "com.strling:strling-kotlin:3.0.0",
+            "coordinate": "com.strling:strling-kotlin:4.0.0",
             "ecosystem": "Maven",
             "internal": true,
             "license": "Apache-2.0"
         },
         {
-            "coordinate": "com.strling:strling:3.0.0",
+            "coordinate": "com.strling:strling:4.0.0",
             "ecosystem": "Maven",
             "internal": true,
             "license": "Apache-2.0"
@@ -94,5 +94,5 @@
         "load_mode": "caller-supplied absolute path",
         "reason": "P17-T04 certifies only the locally executed Windows x86_64 native row; no unexecuted classifier is advertised."
     },
-    "fingerprint": "sha256:3e84fdf7c12c8cce084800f34c9e1d0b707106b50dadc92b9a08730b44833547"
+    "fingerprint": "sha256:37a2d13ca6ea2c026fec30b03c39e48e1e636a22d637eb83c361a2f20f39b767"
 }

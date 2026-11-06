@@ -10,14 +10,14 @@ package com.strling;
  *
  * <p>Main public entry point for the STRling library.</p>
  *
- * @version 3.0.0
+ * @version 4.0.0
  * @author STRling Team
  */
 public class Strling {
     /**
      * Library version.
      */
-    public static final String VERSION = "3.0.0";
+    public static final String VERSION = "4.0.0";
 
     /**
      * Private constructor to prevent instantiation.

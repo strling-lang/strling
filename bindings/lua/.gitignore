@@ -1,0 +1,2 @@
+# Release-only source rocks are governed by the supply-chain manifest.
+*.src.rock

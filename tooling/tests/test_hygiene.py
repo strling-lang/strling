@@ -120,6 +120,57 @@ class HygieneScannerTests(unittest.TestCase):
                     rules(scan(policy, [Entry(name, "100644")], root)),
                 )
 
+    def test_packaging_evidence_size_rules_preserve_neighbor_and_secret_checks(
+        self,
+    ) -> None:
+        repository_policy = load_policy()
+        self.assertEqual(1048576, repository_policy["maximum_file_size_bytes"])
+        prefix = "tests/certification/release-packaging/1.0/current/evidence/"
+        exceptions = [
+            item
+            for item in repository_policy["allowed_intentional_artifacts"]
+            if item["path"].startswith(prefix)
+        ]
+        self.assertEqual(8, len(exceptions))
+        self.assertTrue(
+            all(
+                item["rule"] == "maximum-file-size" and "*" not in item["path"]
+                for item in exceptions
+            )
+        )
+        policy = fixture_policy()
+        policy["maximum_file_size_bytes"] = 16
+        policy["allowed_intentional_artifacts"] = exceptions
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for item in exceptions:
+                path = root / item["path"]
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('{"evidence":"' + "x" * 32 + '"}\n', encoding="utf-8")
+                self.assertNotIn(
+                    "maximum-file-size",
+                    rules(scan(policy, [Entry(item["path"], "100644")], root)),
+                )
+                neighbor = path.with_name("unregistered-object.json")
+                neighbor.write_bytes(path.read_bytes())
+                self.assertIn(
+                    "maximum-file-size",
+                    rules(
+                        scan(
+                            policy,
+                            [Entry(neighbor.relative_to(root).as_posix(), "100644")],
+                            root,
+                        )
+                    ),
+                )
+                path.write_text(
+                    policy["private_key_markers"][0] + "\n", encoding="utf-8"
+                )
+                self.assertIn(
+                    "private-key-marker",
+                    rules(scan(policy, [Entry(item["path"], "100644")], root)),
+                )
+
     def test_prohibited_temporary_file_fails(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

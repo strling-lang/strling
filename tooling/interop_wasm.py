@@ -165,6 +165,26 @@ def seal_module(module: bytes) -> bytes:
 
 
 def inspect_module(module: bytes) -> list[Export]:
+    memory_sections = [
+        payload for section_id, payload in sections(module) if section_id == 5
+    ]
+    if len(memory_sections) != 1:
+        raise WasmContractError("expected one defined 32-bit memory")
+    count, offset = decode_u32(memory_sections[0], 0)
+    flags, offset = decode_u32(memory_sections[0], offset)
+    minimum, offset = decode_u32(memory_sections[0], offset)
+    maximum = 65_536
+    if flags == 1:
+        maximum, offset = decode_u32(memory_sections[0], offset)
+    if (
+        count != 1
+        or flags not in {0, 1}
+        or not 0 < minimum <= maximum <= 65_536
+        or offset != len(memory_sections[0])
+    ):
+        raise WasmContractError(
+            "unsupported shared, 64-bit, or invalid memory contract"
+        )
     export_sections = [
         payload for section_id, payload in sections(module) if section_id == 7
     ]
@@ -177,7 +197,39 @@ def inspect_module(module: bytes) -> list[Export]:
                 raise WasmContractError("raw interop module must import nothing")
     exports = parse_exports(export_sections[0])
     validate_exports(exports, allow_linker_metadata=False)
+    if next(export for export in exports if export.name == "memory").index != 0:
+        raise WasmContractError("memory export must identify the sole defined memory")
     return exports
+
+
+def attach_product_identity(module: bytes, version: str) -> bytes:
+    inspect_module(module)
+    for section_id, payload in sections(module):
+        if section_id == 0 and decode_name(payload, 0)[0] == "strling.product":
+            raise WasmContractError("product identity section already exists")
+    identity = {"product_version": version, "protocol_version": "1.0.0", "abi_major": 1}
+    payload = (
+        encode_name("strling.product")
+        + json.dumps(identity, sort_keys=True, separators=(",", ":")).encode()
+    )
+    return module + b"\x00" + encode_u32(len(payload)) + payload
+
+
+def verify_product_identity(module: bytes, version: str) -> None:
+    inspect_module(module)
+    identities = []
+    for section_id, payload in sections(module):
+        if section_id == 0:
+            name, offset = decode_name(payload, 0)
+            if name == "strling.product":
+                identities.append(payload[offset:])
+    expected = json.dumps(
+        {"product_version": version, "protocol_version": "1.0.0", "abi_major": 1},
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode()
+    if identities != [expected]:
+        raise WasmContractError("WebAssembly product identity mismatch")
 
 
 def main(argv: list[str] | None = None) -> int:

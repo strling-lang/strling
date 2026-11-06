@@ -1,9 +1,9 @@
 [package]
 name = "strling"
-version = "3.0.0"
+version = "4.0.0"
 authors = ["STRling Team"]
 edition = "2021"
-rust-version = "1.70"
+rust-version = "1.75"
 license = "Apache-2.0"
 description = "STRling portable regex-intent compiler for Rust"
 homepage = "https://github.com/strling-lang/strling"
@@ -27,12 +27,14 @@ include = [
     "/core/src/normalization.rs",
     "/core/src/portability_diagnostics.rs",
     "/core/src/portability_planning.rs",
+    "/core/src/post_lowering_requirements.rs",
     "/core/src/python_re_lowering.rs",
     "/core/src/python_re_serialization.rs",
     "/core/src/regex_frontend.rs",
     "/core/src/safety_analysis.rs",
     "/core/src/semantic_analysis.rs",
     "/core/src/semantic_conversion.rs",
+    "/core/src/semantic_compatibility.rs",
     "/core/src/semantic_frontend.rs",
     "/core/src/semantic_rewrite.rs",
     "/core/src/simply.rs",

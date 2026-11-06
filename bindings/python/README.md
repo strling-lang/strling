@@ -7,7 +7,8 @@ or standard-library implementation.
 
 ## Installation and runtime
 
-Python 3.8 and later remain the declared support range. Platform wheels embed
+The Supported distribution scope is CPython 3.12 on Windows/Linux x86_64.
+Platform wheels embed
 the exact native interop library assembled from the governed Rust source. The
 adapter never downloads a library, searches `PATH`, selects a semantic target,
 or falls back to the historical Python compiler.
@@ -60,3 +61,13 @@ loading, bounded borrowed-input transfer, same-descriptor response release,
 strict UTF-8/JSON projection, exceptions, package mechanics, and ergonomic
 Simply recipes. Language semantics, diagnostics, portability, lowering,
 serialization, and helper meaning remain in the canonical Rust kernel.
+
+## Product compatibility
+
+Fourth Edition packages require the exact 4.0.0 native product identity in
+addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
+product marker before loading; installed CMake packages check their static
+archive during configuration. Unmarked older kernels and mismatched product
+versions fail closed. This package check does not authenticate arbitrary local
+files; release checksums and signed evidence authenticate distribution bytes.
+The compiler semantics and versioned ABI/protocol are unchanged.

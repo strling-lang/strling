@@ -71,7 +71,7 @@ fn simply_facade_builds_canonical_semantics() {
     let mut builder =
         SimplyBuilder::new("rust.facade.test", specification, SimplyOptions::default())
             .expect("builder");
-    let value = builder.literal("literal", "🦀").expect("literal");
+    let value = builder.literal("literal", "ðŸ¦€").expect("literal");
     let program = builder.finish_program(&value).expect("canonical program");
     assert_eq!(
         "node:simply/rust.facade.test/literal",
@@ -113,5 +113,5 @@ fn facade_exports_requested_output_contracts() {
         vec![RequestedOutput::Semantic, RequestedOutput::Analysis],
         request.requested_outputs
     );
-    assert_eq!("3.0.0", strling::version());
+    assert_eq!(env!("CARGO_PKG_VERSION"), strling::version());
 }

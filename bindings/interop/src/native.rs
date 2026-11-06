@@ -36,6 +36,8 @@ impl Default for StrlingInteropOwnedBytesV1 {
 #[no_mangle]
 #[cfg(not(target_arch = "wasm32"))]
 pub extern "C" fn strling_interop_abi_version_v1() -> u32 {
+    // Retain package identity data without adding an ABI export or protocol field.
+    std::hint::black_box(crate::product_version::PRODUCT_MARKER);
     1
 }
 

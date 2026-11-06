@@ -29,11 +29,15 @@ let result = compile(&request, Some(&profile))?;
 registered validation level; current helpers are lexical shapes, not semantic
 validators.
 
+The public crate requires Rust 1.75, matching the tested release toolchain.
+Supported packaging and consumer evidence covers Windows and Linux x86_64.
+
 The package version, compiler version, contract version, semantic
 specification, Simply protocol, and target-profile versions are independent.
 The internal `core/internal/Cargo.toml` package remains unpublished for repository CLI,
 interop, fuzz, and performance consumers; it compiles the same source files and
-is not a second distribution artifact. Selecting the next public package
-version and publishing the crate remain outside this task.
+is not a second distribution artifact. Public package versions are coordinated
+by the product release policy. Publication requires
+separate explicit owner authorization through the protected release workflow.
 
 See [`docs/api_reference.md`](docs/api_reference.md) for the facade layout.

@@ -1,6 +1,6 @@
 # STRling TypeScript adapter
 
-This package is the supported TypeScript host adapter for the canonical STRling
+This package is the Preview TypeScript host adapter for the canonical STRling
 compiler. It sends versioned JSON requests through the governed
 `strling.wasm-abi` v1 boundary; it does not contain a parser, validator, target
 emitter, or independent standard-library implementation.
@@ -11,7 +11,9 @@ emitter, or independent standard-library implementation.
 npm install @strling-lang/strling
 ```
 
-Node 22 is the governed runtime. The package is ESM-only.
+Node 22 is the declared runtime. The package is ESM-only. The ratified support
+tier remains Preview: historical Windows Node 24 evidence falls outside that
+range, and browser harness evidence does not establish general browser support.
 
 ## Node use
 
@@ -82,3 +84,11 @@ retired because this adapter does not simulate target-engine execution.
 Historical `./core` and `./emitters/pcre2` entrypoints are intentionally
 removed. Canonical language and target contracts live in the main STRling
 repository under `spec/`.
+
+## Fourth Edition loader compatibility
+
+Use `instantiateWasm(bytes)` or `instantiateWasm(precompiledModule)` to create a
+client. Direct `new WasmClient(instance)` construction is retired: the factory
+checks the exact product metadata before instantiating that same module. ABI 1,
+protocol 1.0.0, and the six-export WASM boundary remain unchanged. This intentional
+4.0 compatibility change prevents pairing an instance with unrelated metadata.

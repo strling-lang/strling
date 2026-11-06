@@ -75,6 +75,18 @@ public sealed class NativeClient : IDisposable
         nint handle = 0;
         try
         {
+            if (new FileInfo(normalized).Length > 128L * 1024 * 1024)
+                throw new NativeLoadException("native library exceeds package limit");
+            var bytes = Encoding.Latin1.GetString(File.ReadAllBytes(normalized));
+            const string prefix = "\0STRLING-PRODUCT-VERSION:";
+            var marker = bytes.IndexOf(prefix, StringComparison.Ordinal);
+            var version = typeof(NativeClient).Assembly
+                .GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), false)
+                .Cast<System.Reflection.AssemblyInformationalVersionAttribute>().Single()
+                .InformationalVersion.Split('+')[0];
+            if (marker < 0 || bytes.IndexOf(prefix, marker + 1, StringComparison.Ordinal) >= 0
+                || !bytes.AsSpan(marker).StartsWith((prefix + version + "\0").AsSpan(), StringComparison.Ordinal))
+                throw new NativeLoadException("native STRling product identity mismatch");
             handle = NativeLibrary.Load(normalized);
             var abi = Resolve<AbiVersion>(handle, "strling_interop_abi_version_v1");
             var execute = Resolve<ExecuteNative>(handle, "strling_interop_execute_v1");

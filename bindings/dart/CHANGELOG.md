@@ -1,9 +1,5 @@
-# Changelog
+# 4.0.0
 
-## 3.0.0
-
-Records the package version already present in the governed manifest.
-
-Public release-version relationships and support policy are ratified separately
-under the governed release process. This package source does not preselect a
-Fourth Edition release version.
+Canonical compiler adapter with explicit native loading, strict ABI/protocol
+checks, and exact native product identity verification. Supported scope remains
+Linux x86_64 with the governed Dart runtime; web support is not implied.

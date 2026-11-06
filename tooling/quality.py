@@ -17,29 +17,52 @@ import uuid
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from certification import (
-    CertificationError,
-    aggregate_profile_exit,
-    aggregate_profile_status,
-    build_certification_artifact,
-    render_certification_summary,
-    repository_state,
-    write_certification_artifact,
-)
-from structured_operation_execution import (
-    StructuredExecutionError,
-    atomic_write_stream,
-    execution_context,
-    recover_progress,
-    validate_result_directory,
-)
-from profile_composition import (
-    ProfileCompositionError,
-    profile_prefix,
-    resolve_profile,
-)
-
 from typing import Callable, Iterable, Mapping, Sequence, TextIO, cast
+
+if __package__:
+    from .certification import (
+        CertificationError,
+        aggregate_profile_exit,
+        aggregate_profile_status,
+        build_certification_artifact,
+        render_certification_summary,
+        repository_state,
+        write_certification_artifact,
+    )
+    from .structured_operation_execution import (
+        StructuredExecutionError,
+        atomic_write_stream,
+        execution_context,
+        recover_progress,
+        validate_result_directory,
+    )
+    from .profile_composition import (
+        ProfileCompositionError,
+        profile_prefix,
+        resolve_profile,
+    )
+else:
+    from certification import (
+        CertificationError,
+        aggregate_profile_exit,
+        aggregate_profile_status,
+        build_certification_artifact,
+        render_certification_summary,
+        repository_state,
+        write_certification_artifact,
+    )
+    from structured_operation_execution import (
+        StructuredExecutionError,
+        atomic_write_stream,
+        execution_context,
+        recover_progress,
+        validate_result_directory,
+    )
+    from profile_composition import (
+        ProfileCompositionError,
+        profile_prefix,
+        resolve_profile,
+    )
 
 
 QUALITY_OPERATIONS = (
@@ -848,6 +871,13 @@ class Toolchain:
                     )
             elif not isinstance(resolution.get("reason"), str):
                 raise ConfigurationError(f"deferred tool {name} must declare a reason")
+            release_constraint = raw_tool.get("release_constraint")
+            if release_constraint is not None:
+                if not isinstance(release_constraint, str):
+                    raise ConfigurationError(
+                        f"tool {name} release_constraint must be a string"
+                    )
+                version_satisfies("0", release_constraint)
         orchestration = self.data["orchestration"]
         assert isinstance(orchestration, dict)
         for field_name in ("shell", "runtime"):

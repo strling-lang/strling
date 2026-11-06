@@ -36,6 +36,13 @@ Every entry in `tools` uses one resolution model:
 -   `deferred`: the environment currently supplies the capability and the
     absence of a defensible version contract is recorded with a rationale.
 
+Release receipts additionally enforce each tool's optional `release_constraint`.
+They reject transitional runtimes and deferred tools without a release constraint.
+Native compiler families come from the registered Conan profiles, and Gradle's
+version and distribution checksum come from its wrapper. Receipts preserve the
+actual executable digest and version. The repository unit command uses pytest
+for both unittest classes and function-based security regressions.
+
 An executable being present on `PATH` is not itself a version policy.
 Constrained and exact entries are checked before governed commands execute.
 Repository-managed dependencies must be installed with the command already
@@ -265,7 +272,7 @@ exact source SHA, timestamp and full registered input identities, so an
 engineering commit requires canonical assembly before that SHA can pass the
 gate. Certification never repairs a stale frozen candidate.
 
-The inventory declares all 35 required families independently of individual
+The inventory declares all 40 required families independently of individual
 entries, their governed output patterns, and closed generated directories.
 This detects removed families, missing/malformed/stale outputs, undeclared
 generated siblings, and tracked/nonignored unmanaged locks. It is a closed
@@ -338,22 +345,13 @@ sanitizer, and complete mutation execution. The three structured result
 identities remain distinct, so product certification can prove that every
 cost tier actually ran instead of inferring a deeper pass from a shallower one.
 
-Performance/resource certification follows the same cumulative routing. Local
-validates the authored contract without timing, Pull Request adds the
-deterministic resource-limit and controlled-regression proofs, and Full and
-Release add live optimized comparison only when the producer can authenticate
-an environment matching the active baseline. Native bare-metal Linux and
-Windows x86_64 are eligible. Windows authority requires an exact hard
-process-affinity mask and CPU-set assignment on the same authenticated logical
-processor, fixed processor-frequency and HighQoS policy, unlimited CPU quota,
-timer/toolchain/artifact fingerprints, a one-shot bounded quiescence check, and
-the unchanged five-repetition stability gates. Core Reservation flags are
-recorded when exposed, but are not required because the documented native
-client API can query but cannot create that reservation. WSL2 and other guests
-without attested physical placement fail closed. The operation registry invokes
-the one producer, so
-workflow YAML cannot substitute a weaker host check or a second measurement
-implementation.
+The active deterministic certification contract requires correctness, bounded
+resource safety, security, architecture, and evidence integrity. Quantitative
+performance diagnostics remain standalone engineering operations. Their historical
+measurement and host-conditioning procedures retain their original meaning in
+older evidence. They do not add timing, sampling, affinity, frequency, or host-idle
+admission to Local, Pull Request, Full, or Release. See the controlling
+[deterministic certification contract](../governance/deterministic-certification.md).
 
 The ordered `policy.profiles` definitions are execution policies over that
 registry:
@@ -510,3 +508,16 @@ refusal, writes source/profile/runtime/artifact/subject-bound evidence, and
 fails closed on missing or mismatched runtimes, rejections, divergences, or
 unaccounted observations. Full and Release inherit the same operation; Local
 keeps only the deterministic offline ratchet.
+
+Release-only SDK constraints supplement developer runtime floors: CPython 3.12,
+Rust/Cargo 1.75.0, JDK 21.0.12, .NET SDK 9.0.302, and Conan 2.31.2. The manifest
+records exact platform-qualified SDK executable hashes and version banners for
+each independent pair. The .NET pin retains the reviewed FSharp.Core 9.0.300
+SDK feed; JVM artifacts continue to target Java 11 bytecode.
+
+Native installation prerequisites are recorded in each distribution contract.
+The observed GNU builds use Ubuntu 24.04/glibc 2.39; other GNU environments and
+musl do not inherit that observation. Windows native packages require the x64
+Visual C++ v14 runtime matching the registered MSVC profile. Packaged native
+inspection rejects undeclared library search paths and dependencies outside the
+system-runtime allowlist.

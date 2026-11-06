@@ -1,14 +1,14 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools==84.0.0", "wheel==0.48.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "STRling"
-version = "3.0.0"
+version = "4.0.0"
 description = "Python native adapter for the canonical STRling compiler"
 readme = "README.md"
-requires-python = ">=3.8"
-license = { text = "Apache-2.0" }
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
 authors = [{ name = "STRling Team" }]
 keywords = [
     "strling",
@@ -26,7 +26,6 @@ keywords = [
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: Apache Software License",
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Compilers",

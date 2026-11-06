@@ -37,6 +37,8 @@ public final class NativeClient implements AutoCloseable {
     public static final long MAX_INTEROP_RESPONSE_BYTES = 33_554_432L;
 
     private static final int STATUS_RESPONSE_WRITTEN = 0;
+    // Generated product projection; tooling/sync_versions.py owns this value.
+    private static final String PRODUCT_VERSION = "4.0.0";
     private static final ObjectMapper JSON = new ObjectMapper(
             JsonFactory.builder().enable(StreamReadFeature.STRICT_DUPLICATE_DETECTION).build())
             .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
@@ -71,11 +73,21 @@ public final class NativeClient implements AutoCloseable {
             throw new NativeLoadException("native STRling library not found: " + normalized);
         }
         try {
+            if (Files.size(normalized) > 128L * 1024 * 1024) {
+                throw new NativeLoadException("native library exceeds package limit");
+            }
+            String bytes = new String(Files.readAllBytes(normalized), StandardCharsets.ISO_8859_1);
+            String prefix = "\0STRLING-PRODUCT-VERSION:";
+            int marker = bytes.indexOf(prefix);
+            if (marker < 0 || bytes.indexOf(prefix, marker + 1) >= 0
+                    || !bytes.startsWith(prefix + PRODUCT_VERSION + "\0", marker)) {
+                throw new NativeLoadException("native STRling product identity mismatch");
+            }
             InteropLibrary loaded = Native.load(normalized.toString(), InteropLibrary.class);
             return new NativeClient(normalized, loaded);
         } catch (AbiMismatchException exception) {
             throw exception;
-        } catch (LinkageError | RuntimeException exception) {
+        } catch (IOException | LinkageError | RuntimeException exception) {
             throw new NativeLoadException("cannot load native STRling library: " + normalized,
                     exception);
         }

@@ -30,7 +30,7 @@
         "native.hpp :: namespace strling :: class response final :: response(const response &) = delete": "response(const response &) = delete",
         "native.hpp :: namespace strling :: class response final :: response(response &&other) noexcept": "response(response &&other) noexcept",
         "native.hpp :: namespace strling :: class response final :: ~response() noexcept": "~response() noexcept",
-        "native.hpp :: namespace strling :: inline constexpr std::string_view package_version = \"3.0.0\"": "inline constexpr std::string_view package_version = \"3.0.0\"",
+        "native.hpp :: namespace strling :: inline constexpr std::string_view package_version = \"4.0.0\"": "inline constexpr std::string_view package_version = \"4.0.0\"",
         "simply.hpp :: namespace strling::simply": "namespace strling::simply",
         "simply.hpp :: namespace strling::simply :: [[nodiscard]] pattern any_of(std::string_view characters)": "[[nodiscard]] pattern any_of(std::string_view characters)",
         "simply.hpp :: namespace strling::simply :: [[nodiscard]] pattern capture(pattern value)": "[[nodiscard]] pattern capture(pattern value)",

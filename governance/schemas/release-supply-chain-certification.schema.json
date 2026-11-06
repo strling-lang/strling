@@ -3,9 +3,18 @@
     "$id": "https://strling.dev/governance/release-supply-chain-certification.schema.json",
     "title": "STRling release supply-chain certification contract",
     "oneOf": [
-        { "$ref": "#/$defs/manifest" },
-        { "$ref": "#/$defs/contractFixture" },
-        { "$ref": "#/$defs/evidence" }
+        {
+            "$ref": "#/$defs/manifest"
+        },
+        {
+            "$ref": "#/$defs/contractFixture"
+        },
+        {
+            "$ref": "#/$defs/evidence"
+        },
+        {
+            "$ref": "#/$defs/publicationAuthorization"
+        }
     ],
     "$defs": {
         "sha256": {
@@ -25,27 +34,44 @@
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
-            "items": { "type": "string", "minLength": 1 }
+            "items": {
+                "type": "string",
+                "minLength": 1
+            }
         },
         "stringList": {
             "type": "array",
             "uniqueItems": true,
-            "items": { "type": "string", "minLength": 1 }
+            "items": {
+                "type": "string",
+                "minLength": 1
+            }
         },
         "command": {
             "type": "array",
             "minItems": 1,
-            "items": { "type": "string", "minLength": 1 }
+            "items": {
+                "type": "string",
+                "minLength": 1
+            }
         },
         "standardPolicy": {
             "type": "object",
             "additionalProperties": false,
             "required": ["checksum", "sbom", "statement", "provenance"],
             "properties": {
-                "checksum": { "const": "sha256" },
-                "sbom": { "const": "SPDX-2.3-json" },
-                "statement": { "const": "https://in-toto.io/Statement/v1" },
-                "provenance": { "const": "https://slsa.dev/provenance/v1" }
+                "checksum": {
+                    "const": "sha256"
+                },
+                "sbom": {
+                    "const": "SPDX-2.3-json"
+                },
+                "statement": {
+                    "const": "https://in-toto.io/Statement/v1"
+                },
+                "provenance": {
+                    "const": "https://slsa.dev/provenance/v1"
+                }
             }
         },
         "sourcePolicy": {
@@ -58,10 +84,18 @@
                 "publication_authorized"
             ],
             "properties": {
-                "exact_commit_required": { "const": true },
-                "clean_tree_required": { "const": true },
-                "submodules_forbidden": { "const": true },
-                "publication_authorized": { "const": false }
+                "exact_commit_required": {
+                    "const": true
+                },
+                "clean_tree_required": {
+                    "const": true
+                },
+                "submodules_forbidden": {
+                    "const": true
+                },
+                "publication_authorized": {
+                    "const": false
+                }
             }
         },
         "profilePolicy": {
@@ -69,10 +103,18 @@
             "additionalProperties": false,
             "required": ["local", "pull-request", "full", "release"],
             "properties": {
-                "local": { "$ref": "#/$defs/profileRule" },
-                "pull-request": { "$ref": "#/$defs/profileRule" },
-                "full": { "$ref": "#/$defs/profileRule" },
-                "release": { "$ref": "#/$defs/profileRule" }
+                "local": {
+                    "$ref": "#/$defs/profileRule"
+                },
+                "pull-request": {
+                    "$ref": "#/$defs/profileRule"
+                },
+                "full": {
+                    "$ref": "#/$defs/profileRule"
+                },
+                "release": {
+                    "$ref": "#/$defs/profileRule"
+                }
             }
         },
         "profileRule": {
@@ -80,9 +122,15 @@
             "additionalProperties": false,
             "required": ["network", "build_artifacts", "publication"],
             "properties": {
-                "network": { "enum": ["offline", "allowed"] },
-                "build_artifacts": { "type": "boolean" },
-                "publication": { "const": false }
+                "network": {
+                    "enum": ["offline", "allowed"]
+                },
+                "build_artifacts": {
+                    "type": "boolean"
+                },
+                "publication": {
+                    "const": false
+                }
             }
         },
         "workflowPolicy": {
@@ -101,19 +149,37 @@
                 "release_ref_policy"
             ],
             "properties": {
-                "path": { "$ref": "#/$defs/repositoryPath" },
+                "path": {
+                    "$ref": "#/$defs/repositoryPath"
+                },
                 "default_permissions": {
                     "type": "object",
                     "additionalProperties": false,
                     "required": ["contents"],
-                    "properties": { "contents": { "const": "read" } }
+                    "properties": {
+                        "contents": {
+                            "const": "read"
+                        }
+                    }
                 },
-                "protected_environment": { "const": "release" },
-                "manual_authorization_input": { "const": "dry_run" },
-                "manual_authorization_default": { "const": true },
-                "actions_immutable": { "const": true },
-                "untrusted_credentials_forbidden": { "const": true },
-                "certified_artifact_handoff_required": { "const": true },
+                "protected_environment": {
+                    "const": "release"
+                },
+                "manual_authorization_input": {
+                    "const": "dry_run"
+                },
+                "manual_authorization_default": {
+                    "const": true
+                },
+                "actions_immutable": {
+                    "const": true
+                },
+                "untrusted_credentials_forbidden": {
+                    "const": true
+                },
+                "certified_artifact_handoff_required": {
+                    "const": true
+                },
                 "attestation_permissions": {
                     "type": "array",
                     "minItems": 2,
@@ -126,7 +192,9 @@
                         ]
                     }
                 },
-                "release_ref_policy": { "const": "certified-exact-sha" }
+                "release_ref_policy": {
+                    "const": "certified-exact-sha"
+                }
             }
         },
         "artifactPolicy": {
@@ -147,14 +215,36 @@
                     "type": "array",
                     "minItems": 1,
                     "uniqueItems": true,
-                    "items": { "$ref": "#/$defs/repositoryPath" }
+                    "items": {
+                        "$ref": "#/$defs/repositoryPath"
+                    }
                 },
-                "checksum_required": { "type": "boolean" },
-                "checksum_algorithm": { "const": "sha256" },
+                "checksum_required": {
+                    "type": "boolean"
+                },
+                "checksum_algorithm": {
+                    "const": "sha256"
+                },
                 "maximum_subjects": {
                     "type": "integer",
                     "minimum": 1,
                     "maximum": 32
+                },
+                "platform_patterns": {
+                    "type": "object",
+                    "minProperties": 1,
+                    "maxProperties": 2,
+                    "propertyNames": {
+                        "enum": ["windows-x86_64", "linux-x86_64"]
+                    },
+                    "additionalProperties": {
+                        "type": "array",
+                        "minItems": 1,
+                        "uniqueItems": true,
+                        "items": {
+                            "$ref": "#/$defs/repositoryPath"
+                        }
+                    }
                 }
             }
         },
@@ -168,8 +258,12 @@
                 "dependency_resolution"
             ],
             "properties": {
-                "required": { "const": true },
-                "format": { "const": "SPDX-2.3-json" },
+                "required": {
+                    "const": true
+                },
+                "format": {
+                    "const": "SPDX-2.3-json"
+                },
                 "scope": {
                     "enum": ["artifact", "source-tree", "registry-package"]
                 },
@@ -187,11 +281,15 @@
             "additionalProperties": false,
             "required": ["required", "statement_type", "predicate_type"],
             "properties": {
-                "required": { "const": true },
+                "required": {
+                    "const": true
+                },
                 "statement_type": {
                     "const": "https://in-toto.io/Statement/v1"
                 },
-                "predicate_type": { "const": "https://slsa.dev/provenance/v1" }
+                "predicate_type": {
+                    "const": "https://slsa.dev/provenance/v1"
+                }
             }
         },
         "reproducibilityPolicy": {
@@ -243,10 +341,18 @@
                         "pattern": "^[A-Z][A-Z0-9_]+$"
                     }
                 },
-                "trusted_publishing": { "type": "boolean" },
-                "release_environment": { "const": "release" },
-                "untrusted_context_forbidden": { "const": true },
-                "publication_authorization": { "const": "explicit-non-dry-run" }
+                "trusted_publishing": {
+                    "type": "boolean"
+                },
+                "release_environment": {
+                    "const": "release"
+                },
+                "untrusted_context_forbidden": {
+                    "const": true
+                },
+                "publication_authorization": {
+                    "const": "explicit-non-dry-run"
+                }
             }
         },
         "releaseArtifact": {
@@ -270,17 +376,42 @@
                 "sbom_policy",
                 "provenance_policy",
                 "reproducibility",
-                "credential_policy"
+                "credential_policy",
+                "distribution_contract",
+                "payload_contract",
+                "upload_contract",
+                "build_platforms"
             ],
             "properties": {
-                "id": { "type": "string", "pattern": "^release:[a-z0-9-]+$" },
-                "surface": { "type": "string", "pattern": "^[a-z0-9+#.-]+$" },
-                "ecosystem": { "type": "string", "minLength": 1 },
-                "package_name": { "type": "string", "minLength": 1 },
-                "delivery_kind": { "enum": ["package-archive", "source-tag"] },
-                "registry": { "type": "string", "minLength": 1 },
-                "package_root": { "$ref": "#/$defs/repositoryPath" },
-                "dependency_roots": { "$ref": "#/$defs/nonEmptyStringList" },
+                "id": {
+                    "type": "string",
+                    "pattern": "^release:[a-z0-9-]+$"
+                },
+                "surface": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9+#.-]+$"
+                },
+                "ecosystem": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "package_name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "delivery_kind": {
+                    "enum": ["package-archive", "source-tag"]
+                },
+                "registry": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "package_root": {
+                    "$ref": "#/$defs/repositoryPath"
+                },
+                "dependency_roots": {
+                    "$ref": "#/$defs/nonEmptyStringList"
+                },
                 "compile_job": {
                     "type": "string",
                     "pattern": "^compile-[a-z0-9-]+$"
@@ -289,14 +420,102 @@
                     "type": "string",
                     "pattern": "^publish-[a-z0-9-]+$"
                 },
-                "working_directory": { "$ref": "#/$defs/repositoryPath" },
-                "build_command": { "$ref": "#/$defs/command" },
-                "toolchain_refs": { "$ref": "#/$defs/nonEmptyStringList" },
-                "artifact_policy": { "$ref": "#/$defs/artifactPolicy" },
-                "sbom_policy": { "$ref": "#/$defs/sbomPolicy" },
-                "provenance_policy": { "$ref": "#/$defs/provenancePolicy" },
-                "reproducibility": { "$ref": "#/$defs/reproducibilityPolicy" },
-                "credential_policy": { "$ref": "#/$defs/credentialPolicy" }
+                "working_directory": {
+                    "$ref": "#/$defs/repositoryPath"
+                },
+                "build_command": {
+                    "$ref": "#/$defs/command"
+                },
+                "toolchain_refs": {
+                    "$ref": "#/$defs/nonEmptyStringList"
+                },
+                "artifact_policy": {
+                    "$ref": "#/$defs/artifactPolicy"
+                },
+                "sbom_policy": {
+                    "$ref": "#/$defs/sbomPolicy"
+                },
+                "provenance_policy": {
+                    "$ref": "#/$defs/provenancePolicy"
+                },
+                "reproducibility": {
+                    "$ref": "#/$defs/reproducibilityPolicy"
+                },
+                "credential_policy": {
+                    "$ref": "#/$defs/credentialPolicy"
+                },
+                "distribution_contract": {
+                    "$ref": "#/$defs/distributionContract"
+                },
+                "payload_contract": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "format_version",
+                        "required_file_groups",
+                        "inspection"
+                    ],
+                    "properties": {
+                        "format_version": {
+                            "const": "1.0.0"
+                        },
+                        "inspection": {
+                            "const": "bounded-nonexecuting-metadata-and-complete-file-graph"
+                        },
+                        "required_file_groups": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": {
+                                "type": "array",
+                                "minItems": 1,
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "string",
+                                    "minLength": 1
+                                }
+                            }
+                        }
+                    }
+                },
+                "upload_contract": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                        "mode",
+                        "rebuild_forbidden",
+                        "certified_file_bytes_preserved",
+                        "post_publication_verification_required"
+                    ],
+                    "properties": {
+                        "mode": {
+                            "enum": [
+                                "git-reference",
+                                "maven-signed-envelope",
+                                "conan-data-only-transport",
+                                "directory-byte-copy",
+                                "exact-file"
+                            ]
+                        },
+                        "rebuild_forbidden": {
+                            "const": true
+                        },
+                        "certified_file_bytes_preserved": {
+                            "const": true
+                        },
+                        "post_publication_verification_required": {
+                            "const": true
+                        }
+                    }
+                },
+                "build_platforms": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                        "enum": ["windows-x86_64", "linux-x86_64"]
+                    }
+                }
             }
         },
         "manifest": {
@@ -315,14 +534,30 @@
                 "artifacts"
             ],
             "properties": {
-                "schema_version": { "const": "1.0.0" },
-                "document_kind": { "const": "release-supply-chain-manifest" },
-                "manifest_id": { "const": "strling-release-supply-chain-4.0" },
-                "standards": { "$ref": "#/$defs/standardPolicy" },
-                "source_policy": { "$ref": "#/$defs/sourcePolicy" },
-                "profile_policy": { "$ref": "#/$defs/profilePolicy" },
-                "workflow_policy": { "$ref": "#/$defs/workflowPolicy" },
-                "toolchain_authority": { "const": "toolchain.json" },
+                "schema_version": {
+                    "const": "2.0.0"
+                },
+                "document_kind": {
+                    "const": "release-supply-chain-manifest"
+                },
+                "manifest_id": {
+                    "const": "strling-release-supply-chain-4.0"
+                },
+                "standards": {
+                    "$ref": "#/$defs/standardPolicy"
+                },
+                "source_policy": {
+                    "$ref": "#/$defs/sourcePolicy"
+                },
+                "profile_policy": {
+                    "$ref": "#/$defs/profilePolicy"
+                },
+                "workflow_policy": {
+                    "$ref": "#/$defs/workflowPolicy"
+                },
+                "toolchain_authority": {
+                    "const": "toolchain.json"
+                },
                 "security_policy": {
                     "const": "governance/security-policy.json"
                 },
@@ -330,7 +565,9 @@
                     "type": "array",
                     "minItems": 17,
                     "maxItems": 17,
-                    "items": { "$ref": "#/$defs/releaseArtifact" }
+                    "items": {
+                        "$ref": "#/$defs/releaseArtifact"
+                    }
                 }
             }
         },
@@ -339,9 +576,15 @@
             "additionalProperties": false,
             "required": ["commit", "dirty", "tree_sha256"],
             "properties": {
-                "commit": { "$ref": "#/$defs/gitSha" },
-                "dirty": { "const": false },
-                "tree_sha256": { "$ref": "#/$defs/sha256" }
+                "commit": {
+                    "$ref": "#/$defs/gitSha"
+                },
+                "dirty": {
+                    "const": false
+                },
+                "tree_sha256": {
+                    "$ref": "#/$defs/sha256"
+                }
             }
         },
         "workflowEvidence": {
@@ -356,11 +599,21 @@
                 "attestation_permissions"
             ],
             "properties": {
-                "workflow_sha256": { "$ref": "#/$defs/sha256" },
-                "default_read_only": { "const": true },
-                "protected_environment": { "const": "release" },
-                "untrusted_context_isolated": { "const": true },
-                "exact_artifact_handoff": { "const": true },
+                "workflow_sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "default_read_only": {
+                    "const": true
+                },
+                "protected_environment": {
+                    "const": "release"
+                },
+                "untrusted_context_isolated": {
+                    "const": true
+                },
+                "exact_artifact_handoff": {
+                    "const": true
+                },
                 "attestation_permissions": {
                     "$ref": "#/$defs/nonEmptyStringList"
                 }
@@ -380,24 +633,54 @@
                 "runner_os",
                 "runner_arch",
                 "policy_sha256",
-                "findings"
+                "findings",
+                "scope"
             ],
             "properties": {
-                "id": { "type": "string", "minLength": 1 },
+                "id": {
+                    "type": "string",
+                    "minLength": 1
+                },
                 "artifact_id": {
                     "type": "string",
                     "pattern": "^release:[a-z0-9-]+$"
                 },
-                "toolchain_id": { "type": "string", "minLength": 1 },
-                "status": { "enum": ["passed", "unavailable", "incomplete"] },
-                "version": { "type": ["string", "null"], "minLength": 1 },
-                "executable": { "type": ["string", "null"], "minLength": 1 },
-                "executable_sha256": {
-                    "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }]
+                "toolchain_id": {
+                    "type": "string",
+                    "minLength": 1
                 },
-                "runner_os": { "type": "string", "minLength": 1 },
-                "runner_arch": { "type": "string", "minLength": 1 },
-                "policy_sha256": { "$ref": "#/$defs/sha256" },
+                "status": {
+                    "enum": ["passed", "unavailable", "incomplete"]
+                },
+                "version": {
+                    "type": ["string", "null"],
+                    "minLength": 1
+                },
+                "executable": {
+                    "type": ["string", "null"],
+                    "minLength": 1
+                },
+                "executable_sha256": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/sha256"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "runner_os": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "runner_arch": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "policy_sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
                 "findings": {
                     "type": "array",
                     "items": {
@@ -409,9 +692,15 @@
                                 "type": "string",
                                 "pattern": "^SUPPLY-[A-Z0-9-]+$"
                             },
-                            "message": { "type": "string", "minLength": 1 }
+                            "message": {
+                                "type": "string",
+                                "minLength": 1
+                            }
                         }
                     }
+                },
+                "scope": {
+                    "enum": ["windows-x86_64", "linux-x86_64"]
                 }
             }
         },
@@ -420,12 +709,20 @@
             "additionalProperties": false,
             "required": ["name", "kind", "sha256", "bytes"],
             "properties": {
-                "name": { "type": "string", "minLength": 1 },
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
                 "kind": {
                     "enum": ["file", "source-tree", "registry-assembled"]
                 },
-                "sha256": { "$ref": "#/$defs/sha256" },
-                "bytes": { "type": ["integer", "null"], "minimum": 1 }
+                "sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "bytes": {
+                    "type": ["integer", "null"],
+                    "minimum": 1
+                }
             }
         },
         "checksumEvidence": {
@@ -433,8 +730,12 @@
             "additionalProperties": false,
             "required": ["algorithm", "digest"],
             "properties": {
-                "algorithm": { "const": "sha256" },
-                "digest": { "$ref": "#/$defs/sha256" }
+                "algorithm": {
+                    "const": "sha256"
+                },
+                "digest": {
+                    "$ref": "#/$defs/sha256"
+                }
             }
         },
         "sbomEvidence": {
@@ -449,12 +750,28 @@
                 "unresolved_components"
             ],
             "properties": {
-                "spdx_version": { "const": "SPDX-2.3" },
-                "document_namespace": { "type": "string", "format": "uri" },
-                "sha256": { "$ref": "#/$defs/sha256" },
-                "component_count": { "type": "integer", "minimum": 1 },
-                "relationship_count": { "type": "integer", "minimum": 0 },
-                "unresolved_components": { "type": "integer", "minimum": 0 }
+                "spdx_version": {
+                    "const": "SPDX-2.3"
+                },
+                "document_namespace": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "component_count": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "relationship_count": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "unresolved_components": {
+                    "type": "integer",
+                    "minimum": 0
+                }
             }
         },
         "provenanceEvidence": {
@@ -474,13 +791,29 @@
                 "statement_type": {
                     "const": "https://in-toto.io/Statement/v1"
                 },
-                "predicate_type": { "const": "https://slsa.dev/provenance/v1" },
-                "subject_name": { "type": "string", "minLength": 1 },
-                "subject_sha256": { "$ref": "#/$defs/sha256" },
-                "source_commit": { "$ref": "#/$defs/gitSha" },
-                "builder_id": { "type": "string", "format": "uri" },
-                "build_command_sha256": { "$ref": "#/$defs/sha256" },
-                "predicate_sha256": { "$ref": "#/$defs/sha256" }
+                "predicate_type": {
+                    "const": "https://slsa.dev/provenance/v1"
+                },
+                "subject_name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "subject_sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "source_commit": {
+                    "$ref": "#/$defs/gitSha"
+                },
+                "builder_id": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "build_command_sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "predicate_sha256": {
+                    "$ref": "#/$defs/sha256"
+                }
             }
         },
         "reproducibilityEvidence": {
@@ -498,13 +831,28 @@
                 "mode": {
                     "enum": ["byte-for-byte", "normalized", "source-identity"]
                 },
-                "status": { "enum": ["passed", "failed", "unavailable"] },
-                "first_sha256": { "$ref": "#/$defs/sha256" },
-                "second_sha256": { "$ref": "#/$defs/sha256" },
-                "normalized_sha256": {
-                    "oneOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }]
+                "status": {
+                    "enum": ["passed", "failed", "unavailable"]
                 },
-                "normalized_fields": { "$ref": "#/$defs/stringList" }
+                "first_sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "second_sha256": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "normalized_sha256": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/sha256"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "normalized_fields": {
+                    "$ref": "#/$defs/stringList"
+                }
             }
         },
         "credentialEvidence": {
@@ -534,9 +882,16 @@
                         "pattern": "^[A-Z][A-Z0-9_]+$"
                     }
                 },
-                "oidc_issuer": { "type": ["string", "null"], "format": "uri" },
-                "environment": { "const": "release" },
-                "untrusted_context_forbidden": { "const": true }
+                "oidc_issuer": {
+                    "type": ["string", "null"],
+                    "format": "uri"
+                },
+                "environment": {
+                    "const": "release"
+                },
+                "untrusted_context_forbidden": {
+                    "const": true
+                }
             }
         },
         "artifactEvidence": {
@@ -554,18 +909,31 @@
                 "findings"
             ],
             "properties": {
-                "id": { "type": "string", "pattern": "^release:[a-z0-9-]+$" },
+                "id": {
+                    "type": "string",
+                    "pattern": "^release:[a-z0-9-]+$"
+                },
                 "status": {
                     "enum": ["passed", "failed", "unavailable", "incomplete"]
                 },
-                "subject": { "$ref": "#/$defs/subjectEvidence" },
-                "checksum": { "$ref": "#/$defs/checksumEvidence" },
-                "sbom": { "$ref": "#/$defs/sbomEvidence" },
-                "provenance": { "$ref": "#/$defs/provenanceEvidence" },
+                "subject": {
+                    "$ref": "#/$defs/subjectEvidence"
+                },
+                "checksum": {
+                    "$ref": "#/$defs/checksumEvidence"
+                },
+                "sbom": {
+                    "$ref": "#/$defs/sbomEvidence"
+                },
+                "provenance": {
+                    "$ref": "#/$defs/provenanceEvidence"
+                },
                 "reproducibility": {
                     "$ref": "#/$defs/reproducibilityEvidence"
                 },
-                "credential": { "$ref": "#/$defs/credentialEvidence" },
+                "credential": {
+                    "$ref": "#/$defs/credentialEvidence"
+                },
                 "findings": {
                     "type": "array",
                     "items": {
@@ -577,7 +945,10 @@
                                 "type": "string",
                                 "pattern": "^SUPPLY-[A-Z0-9-]+$"
                             },
-                            "message": { "type": "string", "minLength": 1 }
+                            "message": {
+                                "type": "string",
+                                "minLength": 1
+                            }
                         }
                     }
                 }
@@ -594,11 +965,25 @@
                 "total"
             ],
             "properties": {
-                "passed": { "type": "integer", "minimum": 0 },
-                "failed": { "type": "integer", "minimum": 0 },
-                "unavailable": { "type": "integer", "minimum": 0 },
-                "incomplete": { "type": "integer", "minimum": 0 },
-                "total": { "const": 17 }
+                "passed": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "failed": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "unavailable": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "incomplete": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "total": {
+                    "const": 17
+                }
             }
         },
         "contractFixture": {
@@ -617,15 +1002,27 @@
                 "disclaimer"
             ],
             "properties": {
-                "schema_version": { "const": "certification-result-v1" },
-                "evidence_kind": { "const": "synthetic-contract-fixture" },
+                "schema_version": {
+                    "const": "certification-result-v1"
+                },
+                "evidence_kind": {
+                    "const": "synthetic-contract-fixture"
+                },
                 "operation_id": {
                     "const": "certification.release-supply-chain-contract"
                 },
-                "profile": { "const": "contract" },
-                "status": { "const": "passed" },
-                "publication_authorized": { "const": false },
-                "manifest_fingerprint": { "$ref": "#/$defs/sha256" },
+                "profile": {
+                    "const": "contract"
+                },
+                "status": {
+                    "const": "passed"
+                },
+                "publication_authorized": {
+                    "const": false
+                },
+                "manifest_fingerprint": {
+                    "$ref": "#/$defs/sha256"
+                },
                 "checks": {
                     "type": "array",
                     "minItems": 1,
@@ -637,7 +1034,9 @@
                             "id": {
                                 "const": "contract:release-supply-chain-manifest"
                             },
-                            "status": { "const": "passed" },
+                            "status": {
+                                "const": "passed"
+                            },
                             "details": {
                                 "type": "object",
                                 "additionalProperties": false,
@@ -647,16 +1046,27 @@
                                     "publication_authority"
                                 ],
                                 "properties": {
-                                    "synthetic": { "const": true },
-                                    "live_artifact": { "const": false },
-                                    "publication_authority": { "const": false }
+                                    "synthetic": {
+                                        "const": true
+                                    },
+                                    "live_artifact": {
+                                        "const": false
+                                    },
+                                    "publication_authority": {
+                                        "const": false
+                                    }
                                 }
                             }
                         }
                     }
                 },
-                "evidence_fingerprint": { "$ref": "#/$defs/sha256" },
-                "disclaimer": { "type": "string", "minLength": 1 }
+                "evidence_fingerprint": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "disclaimer": {
+                    "type": "string",
+                    "minLength": 1
+                }
             }
         },
         "evidence": {
@@ -677,39 +1087,269 @@
                 "toolchains",
                 "artifacts",
                 "summary",
-                "evidence_fingerprint"
+                "evidence_fingerprint",
+                "build_receipts"
             ],
             "properties": {
-                "schema_version": { "const": "1.0.0" },
-                "document_kind": { "const": "release-supply-chain-evidence" },
+                "schema_version": {
+                    "const": "2.0.0"
+                },
+                "document_kind": {
+                    "const": "release-supply-chain-evidence"
+                },
                 "operation_id": {
                     "const": "certification.release-supply-chain"
                 },
-                "profile": { "enum": ["contract", "full", "release"] },
+                "profile": {
+                    "enum": ["contract", "full", "release"]
+                },
                 "status": {
                     "enum": ["passed", "failed", "unavailable", "incomplete"]
                 },
                 "evidence_authority": {
                     "enum": ["synthetic-contract", "live-dry-run"]
                 },
-                "publication_authorized": { "const": false },
-                "manifest_fingerprint": { "$ref": "#/$defs/sha256" },
-                "source": { "$ref": "#/$defs/sourceEvidence" },
-                "rebuild_source": { "$ref": "#/$defs/sourceEvidence" },
-                "workflow": { "$ref": "#/$defs/workflowEvidence" },
+                "publication_authorized": {
+                    "const": false
+                },
+                "manifest_fingerprint": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "source": {
+                    "$ref": "#/$defs/sourceEvidence"
+                },
+                "rebuild_source": {
+                    "$ref": "#/$defs/sourceEvidence"
+                },
+                "workflow": {
+                    "$ref": "#/$defs/workflowEvidence"
+                },
                 "toolchains": {
                     "type": "array",
                     "minItems": 1,
-                    "items": { "$ref": "#/$defs/toolchainEvidence" }
+                    "items": {
+                        "$ref": "#/$defs/toolchainEvidence"
+                    }
                 },
                 "artifacts": {
                     "type": "array",
                     "minItems": 17,
                     "maxItems": 17,
-                    "items": { "$ref": "#/$defs/artifactEvidence" }
+                    "items": {
+                        "$ref": "#/$defs/artifactEvidence"
+                    }
                 },
-                "summary": { "$ref": "#/$defs/summary" },
-                "evidence_fingerprint": { "$ref": "#/$defs/sha256" }
+                "summary": {
+                    "$ref": "#/$defs/summary"
+                },
+                "evidence_fingerprint": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "build_receipts": {
+                    "type": "array",
+                    "maxItems": 42,
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["label", "receipt"],
+                        "properties": {
+                            "label": {
+                                "enum": ["first", "second"]
+                            },
+                            "receipt": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "distributionContract": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "support_claim",
+                "tier",
+                "platforms",
+                "scope",
+                "registry_owner",
+                "ownership_status",
+                "installation",
+                "publication_eligibility",
+                "external_prerequisites"
+            ],
+            "properties": {
+                "support_claim": {
+                    "type": "string",
+                    "pattern": "^binding:[a-z]+$"
+                },
+                "tier": {
+                    "enum": ["Supported", "Preview", "Legacy"]
+                },
+                "platforms": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "enum": ["windows-x86_64", "linux-x86_64"]
+                    }
+                },
+                "scope": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "registry_owner": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "ownership_status": {
+                    "enum": ["externally-pending", "verified"]
+                },
+                "installation": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "publication_eligibility": {
+                    "enum": [
+                        "requires-supported-evidence-and-owner-authorization",
+                        "preview-only-explicit-authorization",
+                        "ineligible"
+                    ]
+                },
+                "external_prerequisites": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "native_runtime_prerequisites": {
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                }
+            }
+        },
+        "publicationAuthorization": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "document_kind",
+                "repository",
+                "version",
+                "source_sha",
+                "workflow_sha",
+                "run_id",
+                "run_attempt",
+                "environment",
+                "channel",
+                "certification_evidence_root",
+                "evidence_fingerprint",
+                "manifest_fingerprint",
+                "destinations",
+                "artifact_run_id",
+                "certification_ref"
+            ],
+            "properties": {
+                "document_kind": {
+                    "const": "release-publication-authorization"
+                },
+                "repository": {
+                    "const": "strling-lang/strling"
+                },
+                "version": {
+                    "type": "string"
+                },
+                "source_sha": {
+                    "$ref": "#/$defs/gitSha"
+                },
+                "workflow_sha": {
+                    "$ref": "#/$defs/gitSha"
+                },
+                "run_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                },
+                "run_attempt": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                },
+                "environment": {
+                    "const": "release"
+                },
+                "channel": {
+                    "enum": ["stable", "release-candidate"]
+                },
+                "certification_evidence_root": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "evidence_fingerprint": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "manifest_fingerprint": {
+                    "$ref": "#/$defs/sha256"
+                },
+                "destinations": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                            "artifact_id",
+                            "registry",
+                            "package_name",
+                            "registry_owner",
+                            "tier",
+                            "subject_sha256"
+                        ],
+                        "properties": {
+                            "artifact_id": {
+                                "type": "string"
+                            },
+                            "registry": {
+                                "type": "string"
+                            },
+                            "package_name": {
+                                "type": "string"
+                            },
+                            "registry_owner": {
+                                "type": "string"
+                            },
+                            "tier": {
+                                "enum": ["Supported", "Preview", "Legacy"]
+                            },
+                            "subject_sha256": {
+                                "$ref": "#/$defs/sha256"
+                            },
+                            "preview_acknowledged": {
+                                "type": "boolean"
+                            },
+                            "signing_key_fingerprint": {
+                                "type": "string",
+                                "pattern": "^[A-F0-9]{40}$"
+                            },
+                            "registry_endpoint": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "registry_user_id": {
+                                "type": "integer",
+                                "minimum": 1
+                            }
+                        }
+                    }
+                },
+                "artifact_run_id": {
+                    "type": "string",
+                    "pattern": "^[1-9][0-9]*$"
+                },
+                "certification_ref": {
+                    "$ref": "#/$defs/gitSha"
+                }
             }
         }
     }

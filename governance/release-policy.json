@@ -1,14 +1,14 @@
 {
-    "policy_version": "1.0.0",
+    "policy_version": "1.2.0",
     "product": {
         "name": "STRling",
         "version": "4.0.0",
         "version_authority": "governance/release-policy.json#/product/version",
         "repository_projection": {
-            "version": "3.0.0",
-            "status": "preparation",
+            "version": "4.0.0",
+            "status": "active",
             "activation_owner": "P20-T02",
-            "activation_rule": "P20-T02 must change this projection to 4.0.0 and regenerate every coordinated manifest in one governed change; no current manifest value is product-version authority."
+            "activation_rule": "The active projection must equal product/version; every coordinated surface is generated atomically from that authority."
         },
         "semver_rules": {
             "breaking_semantic_or_api_change": "Increment MAJOR when a Supported semantic guarantee, source API, machine contract, or compatibility promise is removed or incompatibly changed.",
@@ -80,7 +80,7 @@
             "id": "rust-public-crate",
             "surface": "Public same-source strling Rust crate",
             "path": "Cargo.toml",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -97,7 +97,7 @@
             "id": "python-package",
             "surface": "Python package",
             "path": "bindings/python/pyproject.toml",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -114,7 +114,7 @@
             "id": "typescript-package",
             "surface": "TypeScript/JavaScript package",
             "path": "bindings/typescript/package.json",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -131,7 +131,7 @@
             "id": "php-package",
             "surface": "PHP Composer package",
             "path": "bindings/php/composer.json",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -148,7 +148,7 @@
             "id": "php-runtime-constant",
             "surface": "PHP public version constant",
             "path": "bindings/php/src/STRling.php",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Generated product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -165,7 +165,7 @@
             "id": "ruby-runtime-constant",
             "surface": "Ruby public version constant",
             "path": "bindings/ruby/lib/strling.rb",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Generated product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -199,7 +199,7 @@
             "id": "dart-package",
             "surface": "Dart package",
             "path": "bindings/dart/pubspec.yaml",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -216,7 +216,7 @@
             "id": "csharp-package",
             "surface": "C# NuGet package",
             "path": "bindings/csharp/src/STRling/STRling.csproj",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -233,7 +233,7 @@
             "id": "fsharp-package",
             "surface": "F# NuGet package",
             "path": "bindings/fsharp/src/STRling.FSharp/STRling.FSharp.fsproj",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -250,7 +250,7 @@
             "id": "java-package",
             "surface": "Java Maven artifact",
             "path": "bindings/java/pom.xml",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -267,7 +267,7 @@
             "id": "jvm-bridge-module",
             "surface": "Shared JVM native bridge module",
             "path": "bindings/jvm/pom.xml",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": false,
             "coordinates_with_product": true,
@@ -284,7 +284,7 @@
             "id": "java-runtime-constant",
             "surface": "Java public runtime version constant",
             "path": "bindings/java/src/main/java/com/strling/Strling.java",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Generated product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -301,7 +301,7 @@
             "id": "kotlin-package-default",
             "surface": "Kotlin Maven artifact default",
             "path": "bindings/kotlin/build.gradle.kts",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection; release property must equal the certified coordinate",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -310,7 +310,7 @@
             "disposition": "The checked-in default and any release-time override must equal the product projection.",
             "probe": {
                 "kind": "regex",
-                "pattern": "orElse\\(\"([^\"]+)\"\\)",
+                "pattern": "val productVersion = \"([^\"]+)\"",
                 "expected": "repository_projection"
             }
         },
@@ -318,7 +318,7 @@
             "id": "r-package",
             "surface": "R package",
             "path": "bindings/r/DESCRIPTION",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -335,7 +335,7 @@
             "id": "perl-module",
             "surface": "Perl module version",
             "path": "bindings/perl/lib/STRling.pm",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -352,7 +352,7 @@
             "id": "perl-distribution",
             "surface": "Perl distribution metadata",
             "path": "bindings/perl/dist.ini",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -369,7 +369,7 @@
             "id": "c-cmake-project",
             "surface": "C CMake project",
             "path": "bindings/c/CMakeLists.txt",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -386,7 +386,7 @@
             "id": "c-public-header",
             "surface": "C public package-version macro",
             "path": "bindings/c/include/strling.h",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -403,7 +403,7 @@
             "id": "cpp-cmake-project",
             "surface": "C++ package project",
             "path": "bindings/cpp/CMakeLists.txt",
-            "current_version": "3.0.0",
+            "current_version": "4.0.0",
             "authority": "Product repository projection",
             "consumer_visible": true,
             "coordinates_with_product": true,
@@ -444,7 +444,10 @@
             "independently_versioned": false,
             "publication_destination": "github-tag:go-vVERSION",
             "disposition": "Go has no embedded package version; the immutable tag must map exactly to the product release and certified source.",
-            "probe": { "kind": "tag", "expected": "go-vPRODUCT_VERSION" }
+            "probe": {
+                "kind": "tag",
+                "expected": "go-vPRODUCT_VERSION"
+            }
         },
         {
             "id": "swift-package",
@@ -457,7 +460,10 @@
             "independently_versioned": false,
             "publication_destination": "github-tag:swift-vVERSION",
             "disposition": "SwiftPM has no embedded package version; the immutable tag maps exactly to the product release and certified source.",
-            "probe": { "kind": "tag", "expected": "swift-vPRODUCT_VERSION" }
+            "probe": {
+                "kind": "tag",
+                "expected": "swift-vPRODUCT_VERSION"
+            }
         },
         {
             "id": "interop-transport-crate",
@@ -509,6 +515,380 @@
                 "pointer": "/version",
                 "expected": "1.0.0"
             }
+        },
+        {
+            "id": "cpp-public-header",
+            "surface": "cpp public header",
+            "path": "bindings/cpp/include/strling/native.hpp",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "package_version\\s*=\\s*\"([^\"]+)\""
+            }
+        },
+        {
+            "id": "java-bridge-dependency",
+            "surface": "java bridge dependency",
+            "path": "bindings/java/pom.xml",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "(?s)<artifactId>strling-jvm</artifactId>\\s*<version>([^<]+)</version>"
+            }
+        },
+        {
+            "id": "kotlin-bridge-dependency",
+            "surface": "kotlin bridge dependency",
+            "path": "bindings/kotlin/build.gradle.kts",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "api\\(\"com\\.strling:strling-jvm:([^\"\\s]+)\"\\)"
+            }
+        },
+        {
+            "id": "kotlin-locked-bridge",
+            "surface": "kotlin locked bridge",
+            "path": "bindings/kotlin/gradle.lockfile",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "(?m)^com\\.strling:strling-jvm:([^=\\s]+)="
+            }
+        },
+        {
+            "id": "rust-lock-self",
+            "surface": "rust lock self",
+            "path": "Cargo.lock",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "(?m)^name = \"strling\"\\nversion = \"([^\"]+)\""
+            }
+        },
+        {
+            "id": "typescript-lock-root",
+            "surface": "typescript lock root",
+            "path": "bindings/typescript/package-lock.json",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "json",
+                "expected": "repository_projection",
+                "pointer": "/version"
+            }
+        },
+        {
+            "id": "typescript-lock-package",
+            "surface": "typescript lock package",
+            "path": "bindings/typescript/package-lock.json",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "json",
+                "expected": "repository_projection",
+                "pointer": "/packages//version"
+            }
+        },
+        {
+            "id": "editor-product-compatibility",
+            "surface": "editor product compatibility",
+            "path": "tooling/lsp-server/package.json",
+            "current_version": ">=4.0.0 <5.0.0",
+            "authority": "Independent editor compatibility declaration",
+            "consumer_visible": true,
+            "coordinates_with_product": false,
+            "independently_versioned": true,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "json",
+                "expected": ">=4.0.0 <5.0.0",
+                "pointer": "/strling/productCompatibility"
+            }
+        },
+        {
+            "id": "csharp-cli-version",
+            "surface": "Non-packable C# CLI assembly",
+            "path": "bindings/csharp/src/STRling.Cli/STRling.Cli.csproj",
+            "current_version": "4.0.0",
+            "authority": "Product repository projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion CLI assembly",
+            "disposition": "Must equal the active product projection.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "<Version>([^<]+)</Version>",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "kotlin-runtime-constant",
+            "surface": "kotlin runtime constant",
+            "path": "bindings/kotlin/src/main/kotlin/strling/STRling.kt",
+            "current_version": "4.0.0",
+            "authority": "Generated product repository projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Java Maven artifact payload",
+            "disposition": "The public constant and Javadoc version must match the Java artifact coordinate and product projection.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "fun version\\(\\): String = \"([^\"]+)\"",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "swift-runtime-constant",
+            "surface": "swift runtime constant",
+            "path": "bindings/swift/Sources/STRling/Version.swift",
+            "current_version": "4.0.0",
+            "authority": "Generated product repository projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Java Maven artifact payload",
+            "disposition": "The public constant and Javadoc version must match the Java artifact coordinate and product projection.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "public static let version = \"([^\"]+)\"",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "java-api-documentation-version",
+            "surface": "java api documentation version",
+            "path": "bindings/java/src/main/java/com/strling/Strling.java",
+            "current_version": "4.0.0",
+            "authority": "Generated product repository projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Java Maven artifact payload",
+            "disposition": "The public constant and Javadoc version must match the Java artifact coordinate and product projection.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "@version ([^\\s]+)",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "typescript-runtime-identity",
+            "surface": "TypeScript packaged compiler compatibility identity",
+            "path": "bindings/typescript/src/STRling/product_version.ts",
+            "current_version": "4.0.0",
+            "authority": "Generated product repository projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Java Maven artifact payload",
+            "disposition": "The public constant and Javadoc version must match the Java artifact coordinate and product projection.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "PRODUCT_VERSION = \"([^\"]+)\"",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "native-binary-product-marker",
+            "surface": "Native package compatibility identity",
+            "path": "bindings/interop/src/product_version.rs",
+            "current_version": "4.0.0",
+            "authority": "Product repository projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Embedded package identity",
+            "disposition": "Generated product compatibility only; ABI and protocol retain independent identities.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "STRLING-PRODUCT-VERSION:([^\\\\]+)\\\\0",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "python-native-product-identity",
+            "surface": "Native package compatibility identity",
+            "path": "bindings/python/src/STRling/_product_version.py",
+            "current_version": "4.0.0",
+            "authority": "Product repository projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Embedded package identity",
+            "disposition": "Generated product compatibility only; ABI and protocol retain independent identities.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "PRODUCT_VERSION = \"([^\"]+)\"",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "go-native-product-identity",
+            "surface": "Native package compatibility identity",
+            "path": "bindings/go/native_cgo.go",
+            "current_version": "4.0.0",
+            "authority": "Product repository projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Embedded package identity",
+            "disposition": "Generated product compatibility only; ABI and protocol retain independent identities.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "const productVersion = \"([^\"]+)\"",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "dart-native-product-identity",
+            "surface": "Native package compatibility identity",
+            "path": "bindings/dart/lib/src/native_client.dart",
+            "current_version": "4.0.0",
+            "authority": "Product repository projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Embedded package identity",
+            "disposition": "Generated product compatibility only; ABI and protocol retain independent identities.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "const _productVersion = '([^']+)'",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "jvm-native-product-identity",
+            "surface": "Native package compatibility identity",
+            "path": "bindings/jvm/src/main/java/com/strling/jvm/NativeClient.java",
+            "current_version": "4.0.0",
+            "authority": "Product repository projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Embedded package identity",
+            "disposition": "Generated product compatibility only; ABI and protocol retain independent identities.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "private static final String PRODUCT_VERSION = \"([^\"]+)\"",
+                "expected": "repository_projection"
+            }
+        },
+        {
+            "id": "performance-runner-product-dependency",
+            "surface": "Product crate dependency in independently versioned performance tooling",
+            "path": "tests/certification/performance-resource/1.0/runner/Cargo.lock",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "(?m)^name = \"strling\"\\nversion = \"([^\"]+)\""
+            }
+        },
+        {
+            "id": "maven-local-license-version",
+            "surface": "Coordinated first-party license metadata: maven",
+            "path": "governance/security-policy.json",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"maven\",\\s*\"package\"\\s*:\\s*\"com\\.strling:strling\\-jvm\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
+            }
+        },
+        {
+            "id": "gradle-local-license-version",
+            "surface": "Coordinated first-party license metadata: gradle",
+            "path": "governance/security-policy.json",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"gradle\",\\s*\"package\"\\s*:\\s*\"com\\.strling:strling\\-jvm\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
+            }
+        },
+        {
+            "id": "nuget-local-license-version",
+            "surface": "Coordinated first-party license metadata: nuget",
+            "path": "governance/security-policy.json",
+            "current_version": "4.0.0",
+            "authority": "Generated product projection",
+            "consumer_visible": false,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "Companion package metadata",
+            "disposition": "Exact field projection; unrelated contract and dependency versions remain independent.",
+            "probe": {
+                "kind": "regex",
+                "expected": "repository_projection",
+                "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"nuget\",\\s*\"package\"\\s*:\\s*\"STRling\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
+            }
         }
     ],
     "support_tiers": [
@@ -559,7 +939,8 @@
             ],
             "limitations": [
                 "Other platforms and architectures are unsupported until registered and certified."
-            ]
+            ],
+            "platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "binding:cpp",
@@ -574,7 +955,8 @@
             ],
             "limitations": [
                 "Wrapper-level Linux sanitizer execution and other platforms are unclaimed."
-            ]
+            ],
+            "platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "binding:csharp",
@@ -587,7 +969,8 @@
                 "tests/adapters/binding-support-4.0/evidence.json",
                 "dotnet adapter certification"
             ],
-            "limitations": ["Other runtime identifiers are unsupported."]
+            "limitations": ["Other runtime identifiers are unsupported."],
+            "platforms": ["windows-x86_64"]
         },
         {
             "id": "binding:dart",
@@ -602,7 +985,8 @@
             ],
             "limitations": [
                 "Web, Windows, Apple, and alternate architectures are unsupported."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "binding:fsharp",
@@ -615,7 +999,8 @@
                 "tests/adapters/binding-support-4.0/evidence.json",
                 "dotnet adapter certification"
             ],
-            "limitations": ["Other runtime identifiers are unsupported."]
+            "limitations": ["Other runtime identifiers are unsupported."],
+            "platforms": ["windows-x86_64"]
         },
         {
             "id": "binding:go",
@@ -630,7 +1015,8 @@
             ],
             "limitations": [
                 "No-cgo fails closed; Windows, Apple, and alternate architectures are unsupported."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "binding:java",
@@ -643,7 +1029,8 @@
                 "tests/adapters/binding-support-4.0/evidence.json",
                 "JVM adapter certification"
             ],
-            "limitations": ["Classifiers and other platforms are unsupported."]
+            "limitations": ["Classifiers and other platforms are unsupported."],
+            "platforms": ["windows-x86_64"]
         },
         {
             "id": "binding:kotlin",
@@ -656,7 +1043,8 @@
                 "tests/adapters/binding-support-4.0/evidence.json",
                 "JVM adapter certification"
             ],
-            "limitations": ["Classifiers and other platforms are unsupported."]
+            "limitations": ["Classifiers and other platforms are unsupported."],
+            "platforms": ["windows-x86_64"]
         },
         {
             "id": "binding:python",
@@ -671,7 +1059,8 @@
             ],
             "limitations": [
                 "Other declared interpreter/platform rows are known-compatible only when explicitly reported and are not Supported."
-            ]
+            ],
+            "platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "binding:rust",
@@ -686,7 +1075,8 @@
             ],
             "limitations": [
                 "The Rust crate implements specification semantics; it is not independent semantic authority."
-            ]
+            ],
+            "platforms": ["windows-x86_64", "linux-x86_64"]
         },
         {
             "id": "binding:swift",
@@ -701,7 +1091,8 @@
             ],
             "limitations": [
                 "Apple and Windows platforms are unsupported until certified."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "binding:typescript",
@@ -716,7 +1107,8 @@
             ],
             "limitations": [
                 "The governed Node >=22 <23 runtime row is unexecuted while the observed Node 24 host is outside that range; no Node or moving-browser runtime is Supported until P20 packaging evidence resolves the mismatch."
-            ]
+            ],
+            "platforms": []
         },
         {
             "id": "binding:lua",
@@ -728,7 +1120,8 @@
             "evidence": ["tests/adapters/binding-support-4.0/evidence.json"],
             "limitations": [
                 "Dependency locking and authoritative vulnerability/license scanning are unavailable."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "binding:perl",
@@ -740,7 +1133,8 @@
             "evidence": ["tests/adapters/binding-support-4.0/evidence.json"],
             "limitations": [
                 "Dependency locking and governed advisory scanning are incomplete."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "binding:php",
@@ -752,7 +1146,8 @@
             "evidence": ["tests/adapters/binding-support-4.0/evidence.json"],
             "limitations": [
                 "Other platforms and automatic native discovery are unsupported."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "binding:r",
@@ -764,7 +1159,8 @@
             "evidence": ["tests/adapters/binding-support-4.0/evidence.json"],
             "limitations": [
                 "Dependency locking and authoritative advisory scanning are incomplete."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "binding:ruby",
@@ -776,7 +1172,8 @@
             "evidence": ["tests/adapters/binding-support-4.0/evidence.json"],
             "limitations": [
                 "Dependency locking and authoritative advisory scanning are incomplete."
-            ]
+            ],
+            "platforms": ["linux-x86_64"]
         },
         {
             "id": "target:ecmascript-2024",
@@ -1144,12 +1541,13 @@
             "Dependency graph and license integrity",
             "Supply-chain packaging contract and clean-checkout reproducibility",
             "SBOMs, checksums, provenance statements, and credential-boundary checks",
-            "Required Full and no-reuse Release certification with governed performance/resource evidence",
+            "Required Full and no-reuse Release certification under strling-deterministic-certification-v1 with functional resource-safety evidence",
             "Exact target, binding, platform, runtime, and support-claim evidence",
             "Exact package/version coordination and immutable coordinate availability",
             "Clean consumer installation and public API/CLI smoke plans",
             "Every accepted waiver, scope, justification, review/expiry, and disposition",
-            "Explicit owner publication authorization separate from certification"
+            "Explicit owner publication authorization separate from certification",
+            "Quantitative performance diagnostics are non-gating and are not certification prerequisites (governance/deterministic-certification.md)."
         ],
         "release_candidate": {
             "notation": "4.0.0-rc.N for Fourth Edition candidates",
@@ -1212,7 +1610,7 @@
             "Failed, unavailable, skipped, incomplete, or not-yet-enforceable required operation without an applicable accepted waiver",
             "Generated-artifact, dependency, license, vulnerability, SBOM, provenance, checksum, reproducibility, or credential-boundary failure",
             "Package/version mismatch, coordinate collision, mutable-artifact attempt, or unpublished dependency",
-            "Missing required Full/Release or governed performance/resource evidence",
+            "Missing required Full/Release or deterministic functional resource-safety evidence",
             "Unregistered support claim or unsupported expansion of target/runtime/platform scope",
             "Missing explicit owner publication authorization",
             "Expired or undisclosed waiver"

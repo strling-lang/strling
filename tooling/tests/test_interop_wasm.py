@@ -9,6 +9,9 @@ from tooling.interop_wasm import (
     encode_u32,
     inspect_module,
     seal_module,
+    attach_product_identity,
+    sections,
+    decode_name,
 )
 
 
@@ -17,6 +20,7 @@ def module_with(exports: list[Export], imports: int = 0) -> bytes:
     if imports:
         payload = encode_u32(imports)
         module.extend(b"\x02" + encode_u32(len(payload)) + payload)
+    module.extend(b"\x05\x03\x01\x00\x01")
     payload = encode_exports(exports)
     module.extend(b"\x07" + encode_u32(len(payload)) + payload)
     return bytes(module)
@@ -34,6 +38,28 @@ def governed_exports() -> list[Export]:
 
 
 class InteropWasmTests(unittest.TestCase):
+    def test_product_seal_preserves_protocol_exports_and_rejects_duplicates(
+        self,
+    ) -> None:
+        source = module_with(governed_exports())
+        sealed = attach_product_identity(source, "4.0.0")
+        self.assertEqual(governed_exports(), inspect_module(sealed))
+        identities = [
+            decode_name(payload, 0) for kind, payload in sections(sealed) if kind == 0
+        ]
+        self.assertEqual("strling.product", identities[0][0])
+        with self.assertRaisesRegex(WasmContractError, "already exists"):
+            attach_product_identity(sealed, "4.0.0")
+
+    def test_missing_and_shared_memory_are_rejected(self) -> None:
+        source = module_with(governed_exports())
+        for modified in (
+            source.replace(b"\x05\x03\x01\x00\x01", b""),
+            source.replace(b"\x05\x03\x01\x00\x01", b"\x05\x03\x01\x02\x01"),
+        ):
+            with self.assertRaises(WasmContractError):
+                inspect_module(modified)
+
     def test_seal_removes_only_known_linker_metadata_exports(self) -> None:
         source = module_with(
             governed_exports()

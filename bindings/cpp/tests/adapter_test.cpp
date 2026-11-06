@@ -186,7 +186,7 @@ void test_native_and_host_refusals()
 
 int main()
 {
-    assert(strling::version() == "3.0.0");
+    assert(strling::version() == strling::package_version);
     test_raii_move_once();
     test_canonical_results_and_profiles();
     test_simply_registry_and_unicode();

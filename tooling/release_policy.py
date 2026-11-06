@@ -133,13 +133,13 @@ def _observed_surface_version(root: Path, surface: Mapping[str, object]) -> str 
             f"declare {probe['pointer']} in {surface['path']}"
         )
     pattern = re.compile(str(probe["pattern"]))
-    match = pattern.search(path.read_text(encoding="utf-8"))
-    if match is None or match.lastindex != 1:
+    matches = list(pattern.finditer(path.read_text(encoding="utf-8")))
+    if len(matches) != 1 or matches[0].lastindex != 1:
         raise ReleasePolicyError(
             f"RP-VERSION-003 {surface['id']}: probe did not select exactly one version "
             f"from {surface['path']}"
         )
-    return match.group(1)
+    return matches[0].group(1)
 
 
 def _validate_versions(
@@ -452,6 +452,14 @@ def validate_policy(
                 "canonical product-version authority"
             )
     _validate_versions(root, policy, findings)
+    try:
+        try:
+            from tooling.sync_versions import projected_contents
+        except ModuleNotFoundError:
+            from sync_versions import projected_contents
+        projected_contents(root, dict(policy), str(policy["product"]["version"]))
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        findings.append(f"RP-VERSION-011 projection inventory: {exc}")
     _validate_support(root, policy, findings)
     _validate_lifecycle(policy, findings)
     _validate_supply_chain(root, policy, findings)

@@ -74,3 +74,13 @@ results and diagnostics rather than being rewritten as host semantics.
 
 See the repository [specification](../../spec/README.md) and
 [architecture](../../governance/architecture.md) for normative contracts.
+
+## Product compatibility
+
+Fourth Edition packages require the exact 4.0.0 native product identity in
+addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
+product marker before loading; installed CMake packages check their static
+archive during configuration. Unmarked older kernels and mismatched product
+versions fail closed. This package check does not authenticate arbitrary local
+files; release checksums and signed evidence authenticate distribution bytes.
+The compiler semantics and versioned ABI/protocol are unchanged.

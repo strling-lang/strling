@@ -34,7 +34,9 @@
         "optional_paths": {
             "type": "array",
             "uniqueItems": true,
-            "items": { "$ref": "#/$defs/path" }
+            "items": {
+                "$ref": "#/$defs/path"
+            }
         },
         "marker_requirement": {
             "type": "object",
@@ -60,12 +62,17 @@
             "additionalProperties": false,
             "required": ["path", "names"],
             "properties": {
-                "path": { "$ref": "#/$defs/path" },
+                "path": {
+                    "$ref": "#/$defs/path"
+                },
                 "names": {
                     "type": "array",
                     "minItems": 1,
                     "uniqueItems": true,
-                    "items": { "type": "string", "minLength": 1 }
+                    "items": {
+                        "type": "string",
+                        "minLength": 1
+                    }
                 }
             }
         },
@@ -74,12 +81,18 @@
             "additionalProperties": false,
             "required": ["path", "forbidden_dependencies", "lockfiles"],
             "properties": {
-                "path": { "$ref": "#/$defs/path" },
-                "forbidden_dependencies": { "$ref": "#/$defs/paths" },
+                "path": {
+                    "$ref": "#/$defs/path"
+                },
+                "forbidden_dependencies": {
+                    "$ref": "#/$defs/paths"
+                },
                 "lockfiles": {
                     "type": "array",
                     "uniqueItems": true,
-                    "items": { "$ref": "#/$defs/path" }
+                    "items": {
+                        "$ref": "#/$defs/path"
+                    }
                 }
             }
         },
@@ -179,7 +192,9 @@
                 "permitted_declarations": {
                     "type": "array",
                     "uniqueItems": true,
-                    "items": { "$ref": "#/$defs/declaration_allowance" }
+                    "items": {
+                        "$ref": "#/$defs/declaration_allowance"
+                    }
                 },
                 "excluded_path_parts": {
                     "$ref": "#/$defs/paths"
@@ -187,18 +202,32 @@
                 "required_rule_ids": {
                     "$ref": "#/$defs/paths"
                 },
-                "toolchain": { "$ref": "#/$defs/path" },
-                "allowed_transports": { "$ref": "#/$defs/paths" },
-                "global_rule_ids": { "$ref": "#/$defs/paths" },
+                "toolchain": {
+                    "$ref": "#/$defs/path"
+                },
+                "allowed_transports": {
+                    "$ref": "#/$defs/paths"
+                },
+                "global_rule_ids": {
+                    "$ref": "#/$defs/paths"
+                },
                 "dependency_manifests": {
                     "type": "array",
                     "minItems": 1,
                     "uniqueItems": true,
-                    "items": { "$ref": "#/$defs/dependency_manifest" }
+                    "items": {
+                        "$ref": "#/$defs/dependency_manifest"
+                    }
                 },
-                "producer_manifest": { "$ref": "#/$defs/path" },
-                "required_operations": { "$ref": "#/$defs/paths" },
-                "registered_paths": { "$ref": "#/$defs/optional_paths" },
+                "producer_manifest": {
+                    "$ref": "#/$defs/path"
+                },
+                "required_operations": {
+                    "$ref": "#/$defs/paths"
+                },
+                "registered_paths": {
+                    "$ref": "#/$defs/optional_paths"
+                },
                 "artifact_ids": {
                     "$ref": "#/$defs/paths"
                 },
@@ -267,6 +296,21 @@
                 },
                 "forbidden_extensions": {
                     "$ref": "#/$defs/paths"
+                },
+                "historical_delivery_reference": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["source_sha", "verifier_sha"],
+                    "properties": {
+                        "source_sha": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
+                        },
+                        "verifier_sha": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
+                        }
+                    }
                 }
             }
         },
@@ -338,7 +382,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "semantic-island-placement" }
+                            "kind": {
+                                "const": "semantic-island-placement"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -404,7 +450,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "binding-route-coverage" }
+                            "kind": {
+                                "const": "binding-route-coverage"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -424,7 +472,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "retired-dependency-boundary" }
+                            "kind": {
+                                "const": "retired-dependency-boundary"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -439,20 +489,26 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "retired-path-boundary" }
+                            "kind": {
+                                "const": "retired-path-boundary"
+                            }
                         },
                         "required": ["kind"]
                     },
                     "then": {
                         "properties": {
-                            "configuration": { "required": ["forbidden_paths"] }
+                            "configuration": {
+                                "required": ["forbidden_paths"]
+                            }
                         }
                     }
                 },
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "profile-operation-coverage" }
+                            "kind": {
+                                "const": "profile-operation-coverage"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -471,7 +527,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "jvm-adapter-boundary" }
+                            "kind": {
+                                "const": "jvm-adapter-boundary"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -491,7 +549,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "dotnet-adapter-boundary" }
+                            "kind": {
+                                "const": "dotnet-adapter-boundary"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -536,7 +596,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "ci-profile-routing" }
+                            "kind": {
+                                "const": "ci-profile-routing"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -677,7 +739,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "forbidden-import" }
+                            "kind": {
+                                "const": "forbidden-import"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -692,7 +756,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "schema-reference-boundary" }
+                            "kind": {
+                                "const": "schema-reference-boundary"
+                            }
                         },
                         "required": ["kind"]
                     },
@@ -710,7 +776,9 @@
                 {
                     "if": {
                         "properties": {
-                            "kind": { "const": "semantic-island-placement" }
+                            "kind": {
+                                "const": "semantic-island-placement"
+                            }
                         },
                         "required": ["kind"]
                     },

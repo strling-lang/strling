@@ -4,7 +4,7 @@
     "surface": "c-public-api",
     "symbols": {
         "#define STRLING_C_ADAPTER_ABI_VERSION 1": "#define STRLING_C_ADAPTER_ABI_VERSION 1",
-        "#define STRLING_C_PACKAGE_VERSION \"3.0.0\"": "#define STRLING_C_PACKAGE_VERSION \"3.0.0\"",
+        "#define STRLING_C_PACKAGE_VERSION \"4.0.0\"": "#define STRLING_C_PACKAGE_VERSION \"4.0.0\"",
         "#define STRLING_INTEROP_API __attribute__((visibility(\"default\")))": "#define STRLING_INTEROP_API __attribute__((visibility(\"default\")))",
         "#define STRLING_INTEROP_API __declspec(dllexport)": "#define STRLING_INTEROP_API __declspec(dllexport)",
         "#define STRLING_INTEROP_API __declspec(dllimport)": "#define STRLING_INTEROP_API __declspec(dllimport)",

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ctypes
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -61,6 +62,47 @@ class NativeClient:
         path = Path(library_path).resolve()
         if not path.is_file():
             raise NativeLoadError("native STRling library not found: {}".format(path))
+        identity_path = Path(__file__).with_name("_native") / "kernel-identity.json"
+        from importlib.metadata import PackageNotFoundError, distribution
+
+        try:
+            installed = distribution("STRling")
+            packaged = any(
+                str(item).endswith(".dist-info/RECORD")
+                for item in installed.files or []
+            )
+        except PackageNotFoundError:
+            installed, packaged = None, False
+        if packaged and not identity_path.is_file():
+            raise NativeLoadError("packaged native identity is missing")
+        if packaged and identity_path.is_file():
+            try:
+                identity = json.loads(identity_path.read_text(encoding="utf-8"))
+                if (
+                    installed is None
+                    or identity["product_version"] != installed.version
+                    or identity["native_sha256"]
+                    != hashlib.sha256(path.read_bytes()).hexdigest()
+                    or identity["protocol_version"] != INTEROP_PROTOCOL_VERSION
+                    or identity["abi_major"] != NATIVE_ABI_VERSION
+                ):
+                    raise ValueError("incompatible packaged compiler identity")
+            except (KeyError, ValueError, OSError) as error:
+                raise NativeLoadError(
+                    "packaged native identity mismatch: {}".format(error)
+                ) from error
+        from ._product_version import PRODUCT_VERSION
+
+        with path.open("rb") as native_file:
+            native_bytes = native_file.read(128 * 1024 * 1024 + 1)
+        prefix = b"\0STRLING-PRODUCT-VERSION:"
+        expected = prefix + PRODUCT_VERSION.encode("ascii") + b"\0"
+        if (
+            len(native_bytes) > 128 * 1024 * 1024
+            or native_bytes.count(prefix) != 1
+            or native_bytes.count(expected) != 1
+        ):
+            raise NativeLoadError("native STRling product identity mismatch")
         try:
             library = ctypes.CDLL(str(path))
         except OSError as error:

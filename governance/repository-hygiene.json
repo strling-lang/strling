@@ -255,6 +255,46 @@
             "path": "tests/certification/hardened-core/1.0/current/evidence/execution-release/stdout.txt",
             "rule": "maximum-file-size",
             "rationale": "This signed closure object preserves the complete invocation-bound performance execution result or exact producer stdout required by the hardened-core attestation verifier. All other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/product-release/product-certification-release.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed packaging-closure evidence object retains complete source-bound Full/Release and deterministic execution proof. All other hygiene and credential checks remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/profile-full/profile-full.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed packaging-closure evidence object retains complete source-bound Full/Release and deterministic execution proof. All other hygiene and credential checks remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/profile-release/profile-release.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed packaging-closure evidence object retains complete source-bound Full/Release and deterministic execution proof. All other hygiene and credential checks remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/execution-full/result.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed packaging-closure evidence object retains complete source-bound Full/Release and deterministic execution proof. All other hygiene and credential checks remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/execution-full/stdout.txt",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed packaging-closure evidence object retains complete source-bound Full/Release and deterministic execution proof. All other hygiene and credential checks remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/execution-release/result.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed packaging-closure evidence object retains complete source-bound Full/Release and deterministic execution proof. All other hygiene and credential checks remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/execution-release/stdout.txt",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed packaging-closure evidence object retains complete source-bound Full/Release and deterministic execution proof. All other hygiene and credential checks remain enforced."
+        },
+        {
+            "path": "tests/certification/release-packaging/1.0/current/evidence/release-supply-chain/release-supply-chain-evidence.json",
+            "rule": "maximum-file-size",
+            "rationale": "The signed packaging evidence retains all 42 independent build and consumer receipts for 21 platform rows; no other path or hygiene rule is exempted."
         }
     ],
     "generated_paths": [

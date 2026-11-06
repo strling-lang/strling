@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import fnmatch
 import hashlib
 import json
 import os
@@ -13,20 +14,32 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 import zipfile
+import urllib.parse
+import uuid
 from pathlib import Path
 from typing import Any, Mapping, Sequence, cast
 
 import yaml
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft7Validator, Draft202012Validator, FormatChecker
 from jsonschema.exceptions import best_match
 
 
 ROOT = Path(__file__).resolve().parents[1]
+# Isolated script invocations import helpers only from this reviewed checkout.
+# The separately supplied artifact/source root is never added to sys.path.
+if not __package__:
+    sys.path.insert(0, str(ROOT))
+if __name__ == "__main__":
+    sys.modules.setdefault("tooling.release_supply_chain", sys.modules[__name__])
 SCHEMA_PATH = ROOT / "governance/schemas/release-supply-chain-certification.schema.json"
 MANIFEST_PATH = ROOT / "tests/certification/release-supply-chain/1.0/manifest.json"
 VALID_FIXTURE_PATH = (
     ROOT / "tests/certification/release-supply-chain/1.0/fixtures/valid-evidence.json"
+)
+SPDX_SCHEMA_PATH = (
+    ROOT / "tests/certification/release-supply-chain/1.0/spdx-2.3.schema.json"
 )
 SECURITY_POLICY_PATH = ROOT / "governance/security-policy.json"
 TOOLCHAIN_PATH = ROOT / "toolchain.json"
@@ -114,8 +127,23 @@ def load_json(path: Path) -> dict[str, Any]:
     except ValueError:
         display_path = path
     try:
-        loaded = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as error:
+
+        def unique_pairs(items):
+            document = {}
+            for key, value in items:
+                if key in document:
+                    raise ValueError("duplicate JSON field: " + key)
+                document[key] = value
+            return document
+
+        loaded = json.loads(
+            path.read_text(encoding="utf-8"),
+            object_pairs_hook=unique_pairs,
+            parse_constant=lambda value: (_ for _ in ()).throw(
+                ValueError("non-finite JSON value")
+            ),
+        )
+    except (OSError, ValueError) as error:
         raise ReleaseSupplyChainError(
             "malformed-json", f"cannot load {display_path}: {error}"
         ) from error
@@ -172,6 +200,25 @@ def _artifact_rows(manifest: Mapping[str, object]) -> list[dict[str, Any]]:
     return cast(list[dict[str, Any]], manifest["artifacts"])
 
 
+def artifact_scopes(artifact: Mapping[str, Any]) -> list[str]:
+    """Registered build rows; these never promote the public support tier."""
+    return list(artifact["build_platforms"])
+
+
+def scoped_artifact(artifact: Mapping[str, Any], scope: str) -> dict[str, Any]:
+    if scope not in artifact_scopes(artifact):
+        raise ReleaseSupplyChainError(
+            "artifact-scope", "unregistered artifact build scope"
+        )
+    selected = copy.deepcopy(dict(artifact))
+    policy = selected["artifact_policy"]
+    if "platform_patterns" in policy:
+        policy["patterns"] = policy["platform_patterns"][scope]
+        policy["maximum_subjects"] = len(policy["patterns"])
+    selected["assembly_scope"] = scope
+    return selected
+
+
 def _toolchain_ids(manifest: Mapping[str, object]) -> list[str]:
     return sorted(
         {
@@ -184,8 +231,9 @@ def _toolchain_ids(manifest: Mapping[str, object]) -> list[str]:
 
 def _toolchain_evidence_ids(manifest: Mapping[str, object]) -> list[str]:
     return sorted(
-        f"{artifact['id']}:{toolchain}"
+        f"{artifact['id']}:{scope}:{toolchain}"
         for artifact in _artifact_rows(manifest)
+        for scope in artifact_scopes(artifact)
         for toolchain in cast(list[str], artifact["toolchain_refs"])
     )
 
@@ -212,6 +260,8 @@ def validate_manifest(
             raise ReleaseSupplyChainError("artifact-denominator", f"duplicate {label}")
 
     security_policy = load_json(root / cast(str, manifest["security_policy"]))
+    release_policy = load_json(root / "governance/release-policy.json")
+    support_claims = {claim["id"]: claim for claim in release_policy["support_claims"]}
     load_json(root / cast(str, manifest["toolchain_authority"]))
     dependency_ids = {
         item["id"]
@@ -227,6 +277,49 @@ def validate_manifest(
 
     for artifact in artifacts:
         artifact_id = cast(str, artifact["id"])
+        distribution = artifact["distribution_contract"]
+        claim = support_claims.get(distribution["support_claim"])
+        if (
+            claim is None
+            or distribution["support_claim"]
+            != artifact_id.replace("release:", "binding:")
+            or distribution["tier"] != claim["tier"]
+            or distribution["scope"] != claim["scope"]
+            or distribution["platforms"] != claim.get("platforms")
+        ):
+            raise ReleaseSupplyChainError(
+                "distribution-support", f"{artifact_id} contradicts ratified support"
+            )
+        if (
+            distribution["tier"] != "Supported"
+            and distribution["publication_eligibility"]
+            != "preview-only-explicit-authorization"
+        ):
+            raise ReleaseSupplyChainError(
+                "distribution-support",
+                f"{artifact_id} cannot inherit Supported guarantees",
+            )
+        expected_builds = distribution["platforms"] or ["linux-x86_64"]
+        if artifact_scopes(artifact) != expected_builds:
+            raise ReleaseSupplyChainError(
+                "artifact-scope", "build rows differ from the registered bounded scope"
+            )
+        platform_patterns = artifact["artifact_policy"].get("platform_patterns")
+        if platform_patterns is not None and (
+            set(platform_patterns) != set(expected_builds)
+            or any(
+                not any(
+                    fnmatch.fnmatchcase(pattern, declared)
+                    for declared in artifact["artifact_policy"]["patterns"]
+                )
+                for patterns in platform_patterns.values()
+                for pattern in patterns
+            )
+        ):
+            raise ReleaseSupplyChainError(
+                "artifact-scope",
+                "platform subjects escape the registered artifact patterns",
+            )
         package_root = root / cast(str, artifact["package_root"])
         working_directory = root / cast(str, artifact["working_directory"])
         if not package_root.is_dir() or not working_directory.is_dir():
@@ -425,6 +518,31 @@ def validate_evidence(
         raise ReleaseSupplyChainError(
             "source-rebuild", "rebuild source identity differs from primary source"
         )
+    if authority == "live-dry-run":
+        if source != authenticate_source(root):
+            raise ReleaseSupplyChainError(
+                "source-rebuild",
+                "live evidence is not bound to this clean exact source",
+            )
+        recorded_tools = _validate_retained_builds(
+            root=root,
+            manifest=manifest,
+            source=source,
+            captured=evidence["build_receipts"],
+            version=load_json(root / "governance/release-policy.json")["product"][
+                "version"
+            ],
+            verify_subjects=False,
+        )
+        if recorded_tools != evidence["toolchains"]:
+            raise ReleaseSupplyChainError(
+                "toolchain-rebuild",
+                "retained build environments differ from provenance toolchains",
+            )
+    elif evidence["build_receipts"]:
+        raise ReleaseSupplyChainError(
+            "evidence-authority", "synthetic fixture cannot carry live build authority"
+        )
     aggregate_statuses: list[str] = []
     artifact_statuses: list[str] = []
     toolchains = cast(list[dict[str, Any]], evidence["toolchains"])
@@ -438,7 +556,20 @@ def validate_evidence(
         load_json(root / cast(str, manifest["toolchain_authority"]))
     )
     for toolchain in toolchains:
-        expected_id = f"{toolchain['artifact_id']}:{toolchain['toolchain_id']}"
+        expected_id = f"{toolchain['artifact_id']}:{toolchain['scope']}:{toolchain['toolchain_id']}"
+        if toolchain["scope"] not in artifact_scopes(
+            contracts[toolchain["artifact_id"]]
+        ):
+            raise ReleaseSupplyChainError(
+                "toolchain-denominator", "toolchain has an unregistered build scope"
+            )
+        if authority == "live-dry-run" and toolchain["status"] == "passed":
+            _validate_toolchain_version(
+                root,
+                toolchain["toolchain_id"],
+                toolchain["version"],
+                scope=toolchain["scope"],
+            )
         if toolchain["id"] != expected_id:
             raise ReleaseSupplyChainError(
                 "toolchain-denominator",
@@ -584,23 +715,28 @@ def synthetic_evidence(manifest: Mapping[str, object]) -> dict[str, Any]:
         load_json(ROOT / cast(str, manifest["toolchain_authority"]))
     )
     toolchains = []
-    for contract in _artifact_rows(manifest):
+    for contract, scope in [
+        (row, scope)
+        for row in _artifact_rows(manifest)
+        for scope in artifact_scopes(row)
+    ]:
         artifact_id = cast(str, contract["id"])
         for toolchain_id in cast(list[str], contract["toolchain_refs"]):
-            coordinate = f"{artifact_id}:{toolchain_id}"
+            coordinate = f"{artifact_id}:{scope}:{toolchain_id}"
             toolchains.append(
                 {
                     "id": coordinate,
                     "artifact_id": artifact_id,
                     "toolchain_id": toolchain_id,
+                    "scope": scope,
                     "status": "passed",
                     "version": "fixture",
                     "executable": f"fixture/{coordinate}",
                     "executable_sha256": hashlib.sha256(
                         f"{coordinate}:executable".encode()
                     ).hexdigest(),
-                    "runner_os": "fixture-os",
-                    "runner_arch": "fixture-arch",
+                    "runner_os": "Windows" if scope == "windows-x86_64" else "Linux",
+                    "runner_arch": "x86_64",
                     "policy_sha256": toolchain_policy_sha256,
                     "findings": [],
                 }
@@ -677,7 +813,7 @@ def synthetic_evidence(manifest: Mapping[str, object]) -> dict[str, Any]:
             }
         )
     evidence: dict[str, Any] = {
-        "schema_version": "1.0.0",
+        "schema_version": "2.0.0",
         "document_kind": "release-supply-chain-evidence",
         "operation_id": "certification.release-supply-chain",
         "profile": "contract",
@@ -708,6 +844,7 @@ def synthetic_evidence(manifest: Mapping[str, object]) -> dict[str, Any]:
             ],
         },
         "toolchains": toolchains,
+        "build_receipts": [],
         "artifacts": rows,
         "summary": {
             "passed": 17,
@@ -734,11 +871,24 @@ def _sha256_file(path: Path) -> str:
 
 def _write_json(path: Path, document: Mapping[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
-        json.dumps(document, ensure_ascii=False, sort_keys=True, indent=4) + "\n",
-        encoding="utf-8",
-        newline="\n",
-    )
+    content = json.dumps(document, ensure_ascii=False, sort_keys=True, indent=4) + "\n"
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            newline="\n",
+            dir=path.parent,
+            prefix="." + path.name + ".",
+            suffix=".tmp",
+            delete=False,
+        ) as stream:
+            temporary = Path(stream.name)
+            stream.write(content)
+        os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
 
 
 def _relative_path(root: Path, path: Path) -> str:
@@ -981,7 +1131,7 @@ def _workflow_artifact_name(artifact: Mapping[str, object]) -> str:
     slug = re.sub(
         r"[^a-z0-9]+", "-", cast(str, artifact["id"]).removeprefix("release:")
     ).strip("-")
-    return f"release-{slug}-${{{{ needs.verify-release.outputs.release_ref }}}}"
+    return f"certified-{slug}-${{{{ needs.verify-release.outputs.release_ref }}}}"
 
 
 def _workflow_rebuild_name(artifact: Mapping[str, object]) -> str:
@@ -1013,12 +1163,44 @@ def qualify_workflow(root: Path, manifest: Mapping[str, object]) -> dict[str, ob
     if not isinstance(workflow, dict) or not isinstance(workflow.get("jobs"), dict):
         raise ReleaseSupplyChainError("workflow", "release workflow has no job map")
     jobs = cast(dict[str, dict[str, Any]], workflow["jobs"])
+    if any(not isinstance(job, dict) for job in jobs.values()):
+        raise ReleaseSupplyChainError(
+            "workflow", "malformed workflow job configuration"
+        )
+    if "secrets." in yaml.safe_dump(workflow.get("env", {})):
+        raise ReleaseSupplyChainError(
+            "workflow-credentials", "global publication credentials are forbidden"
+        )
+    publish_jobs = {item["publish_job"] for item in _artifact_rows(manifest)}
+    for job_name, job in jobs.items():
+        if job_name in publish_jobs or job_name == "attest-release-subjects":
+            continue
+        permissions = job.get("permissions", {"contents": "read"})
+        if (
+            not isinstance(permissions, dict)
+            or any(value not in {"read", "none"} for value in permissions.values())
+            or job.get("environment") == "release"
+            or "secrets." in yaml.safe_dump(job)
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-credentials",
+                "build or verification job can receive publication credentials",
+            )
     triggers = workflow.get("on", workflow.get(True))
     if not isinstance(triggers, dict) or any(
         event in triggers for event in ("pull_request", "pull_request_target")
     ):
         raise ReleaseSupplyChainError(
             "workflow-trigger", "release workflow is callable from untrusted code"
+        )
+    dispatch = triggers.get("workflow_dispatch")
+    if (
+        not isinstance(dispatch, dict)
+        or dispatch.get("inputs", {}).get("dry_run", {}).get("default") is not True
+    ):
+        raise ReleaseSupplyChainError(
+            "workflow-authorization",
+            "dry-run must be the explicit safe dispatch default",
         )
     if workflow.get("permissions") != {"contents": "read"}:
         raise ReleaseSupplyChainError(
@@ -1033,21 +1215,28 @@ def qualify_workflow(root: Path, manifest: Mapping[str, object]) -> dict[str, ob
             "workflow-certification",
             "release workflow lacks the common certification job",
         )
-    certify_environment = certify.get("environment")
-    certify_environment_name = (
-        certify_environment.get("name")
-        if isinstance(certify_environment, dict)
-        else certify_environment
-    )
-    if certify_environment_name != policy["protected_environment"]:
+    if certify.get("environment") is not None or _permission_set(
+        certify.get("permissions")
+    ) != {"contents: read"}:
         raise ReleaseSupplyChainError(
-            "workflow-environment",
-            "certification job is outside the release environment",
+            "workflow-credentials",
+            "artifact build verification must not receive protected publication authority",
         )
-    certify_permissions = _permission_set(certify.get("permissions"))
-    if not required_permissions.issubset(certify_permissions):
+    attester = jobs.get("attest-release-subjects")
+    if (
+        not isinstance(attester, dict)
+        or attester.get("environment") != "release-attestation"
+    ):
         raise ReleaseSupplyChainError(
-            "workflow-permissions", "certification job lacks attestation permissions"
+            "workflow-attestation", "an isolated attestation environment is required"
+        )
+    if _permission_set(attester.get("permissions")) != required_permissions | {
+        "contents: read",
+        "actions: read",
+    }:
+        raise ReleaseSupplyChainError(
+            "workflow-permissions",
+            "isolated attestation job lacks attestation permissions",
         )
     certify_needs = certify.get("needs", [])
     if isinstance(certify_needs, str):
@@ -1062,11 +1251,31 @@ def qualify_workflow(root: Path, manifest: Mapping[str, object]) -> dict[str, ob
             "certification job does not consume the exact compile denominator",
         )
     certify_steps = cast(list[dict[str, Any]], certify.get("steps", []))
+    attester_steps = attester.get("steps", [])
     if not any(
-        "actions/attest@" in str(step.get("uses", "")) for step in certify_steps
+        "actions/attest@" in str(step.get("uses", "")) for step in attester_steps
     ):
         raise ReleaseSupplyChainError(
-            "workflow-certification", "certification job lacks artifact attestation"
+            "workflow-certification",
+            "attestation must use an immutable attestation action",
+        )
+    attester_commands = [step["run"] for step in attester_steps if "run" in step]
+    if (
+        len(attester_commands) != 2
+        or attester_commands[0]
+        != "python -m pip install jsonschema==4.10.3 PyYAML==6.0.1"
+        or not attester_commands[1].startswith(
+            "python -I .cert/publisher/tooling/release_supply_chain.py certified-checksums "
+        )
+    ):
+        raise ReleaseSupplyChainError(
+            "workflow-certification",
+            "attestation may execute only pinned runtime setup and isolated signed-subject verification",
+        )
+    if set(attester.get("needs", [])) != {"verify-release", "release-certification"}:
+        raise ReleaseSupplyChainError(
+            "workflow-rebuild",
+            "remote attestation cannot replace signed primary subjects with cloud rebuilds",
         )
     certify_commands = "\n".join(
         str(step.get("run", "")) for step in certify_steps if "run" in step
@@ -1096,9 +1305,13 @@ def qualify_workflow(root: Path, manifest: Mapping[str, object]) -> dict[str, ob
         for step in cast(list[dict[str, Any]], release_certification.get("steps", []))
         if "run" in step
     )
-    if "strling profile release" not in release_commands:
+    if (
+        "local_certification_attestation.py" not in release_commands
+        or "--trust-root trusted" not in release_commands
+    ):
         raise ReleaseSupplyChainError(
-            "workflow-certification", "release job does not run the canonical profile"
+            "workflow-certification",
+            "release job must use isolated trusted verification of signed local evidence",
         )
     verify_release = jobs.get("verify-release")
     if not isinstance(verify_release, dict) or verify_release.get("needs") != (
@@ -1128,7 +1341,16 @@ def qualify_workflow(root: Path, manifest: Mapping[str, object]) -> dict[str, ob
                 f"{publish_job} is outside the release environment",
             )
         condition = str(publish_config.get("if", ""))
-        if "is_dry_run == 'false'" not in condition:
+        if not all(
+            term in condition
+            for term in (
+                "is_dry_run == 'false'",
+                "RELEASE_PUBLICATION_ENABLED",
+                "RELEASE_APPROVED_WORKFLOW_SHA",
+                "RELEASE_AUTHORIZED_RUN_ID",
+                "RELEASE_AUTHORIZED_RUN_ATTEMPT",
+            )
+        ):
             raise ReleaseSupplyChainError(
                 "workflow-credentials",
                 f"{publish_job} can receive publication authority during dry-run",
@@ -1136,91 +1358,193 @@ def qualify_workflow(root: Path, manifest: Mapping[str, object]) -> dict[str, ob
         needs = publish_config.get("needs", [])
         if isinstance(needs, str):
             needs = [needs]
-        if (
-            compile_job not in needs
-            or "certify-release-supply-chain" not in needs
-            or "release-certification" not in needs
-        ):
+        expected_publish_needs = {"verify-release", "release-certification"}
+        companion_publish = {
+            "release:fsharp": "publish-csharp",
+            "release:kotlin": "publish-java",
+        }.get(artifact["id"])
+        if companion_publish:
+            expected_publish_needs.add(companion_publish)
+        if set(needs) != expected_publish_needs:
             raise ReleaseSupplyChainError(
                 "workflow-handoff",
-                f"{publish_job} does not consume certified build identity",
+                "publication must consume previously certified assets independently of dry-run builds",
             )
         compile_steps = cast(list[dict[str, Any]], compile_config.get("steps", []))
         publish_steps = cast(list[dict[str, Any]], publish_config.get("steps", []))
-        uploads = [
-            step
-            for step in compile_steps
-            if "actions/upload-artifact@" in str(step.get("uses", ""))
+        matrix = compile_config.get("strategy", {}).get("matrix", {}).get("include")
+        expected_matrix = [
+            {
+                "scope": scope,
+                "runner": "windows-2022"
+                if scope == "windows-x86_64"
+                else "ubuntu-24.04",
+            }
+            for scope in artifact_scopes(artifact)
         ]
-        downloads = [
-            step
-            for step in publish_steps
-            if "actions/download-artifact@" in str(step.get("uses", ""))
-        ]
-        if len(uploads) != 3:
-            raise ReleaseSupplyChainError(
-                "workflow-handoff",
-                f"{compile_job} does not upload its artifact, rebuild, and receipts",
-            )
-        if len(downloads) != 1:
-            raise ReleaseSupplyChainError(
-                "workflow-handoff",
-                f"{publish_job} does not download its exact artifact",
-            )
-        download_with = downloads[0].get("with")
-        expected_name = _workflow_artifact_name(artifact)
-        expected_rebuild_name = _workflow_rebuild_name(artifact)
-        expected_receipt_name = _workflow_receipt_name(artifact)
-        expected_paths = [
-            str(path).replace("VERSION", "${{ needs.verify-release.outputs.version }}")
-            for path in cast(dict[str, Any], artifact["artifact_policy"])["patterns"]
-        ]
-        expected_rebuild_paths = [f".rebuild/{path}" for path in expected_paths]
-        slug = cast(str, artifact["id"]).removeprefix("release:")
-        expected_receipt_paths = [
-            f"artifacts/build-receipts/{slug}-first.json",
-            f"artifacts/build-receipts/{slug}-second.json",
-        ]
-        uploads_by_name = {
-            cast(str, step["with"]["name"]): cast(dict[str, Any], step["with"])
-            for step in uploads
-            if isinstance(step.get("with"), dict)
-            and isinstance(step["with"].get("name"), str)
-        }
-        if set(uploads_by_name) != {
-            expected_name,
-            expected_rebuild_name,
-            expected_receipt_name,
-        }:
-            raise ReleaseSupplyChainError(
-                "workflow-handoff", f"{artifact['id']} upload names changed"
-            )
-        for name, paths in (
-            (expected_name, expected_paths),
-            (expected_rebuild_name, expected_rebuild_paths),
-            (expected_receipt_name, expected_receipt_paths),
+        if (
+            matrix != expected_matrix
+            or compile_config.get("runs-on") != "${{ matrix.runner }}"
         ):
-            upload_with = uploads_by_name[name]
-            observed_paths = [
-                line.strip() for line in str(upload_with.get("path", "")).splitlines()
-            ]
+            raise ReleaseSupplyChainError(
+                "workflow-scope",
+                "build matrix differs from the exact registered platform denominator",
+            )
+        if (
+            compile_config.get("if")
+            != "needs.verify-release.outputs.is_dry_run == 'true'"
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-rebuild",
+                "publication execution must not create replacement artifacts",
+            )
+        slug = artifact["id"].removeprefix("release:")
+        suffix = "${{ matrix.scope }}-${{ needs.verify-release.outputs.release_ref }}"
+        uploads = [
+            step["with"]
+            for step in compile_steps
+            if str(step.get("uses", "")).startswith("actions/upload-artifact@")
+        ]
+        expected_uploads = {}
+        for label, prefix in (("first", "release"), ("second", "rebuild")):
+            expected_uploads[f"{prefix}-{slug}-{suffix}"] = (
+                f".cert/uploads/{slug}-${{{{ matrix.scope }}}}-{label}",
+                True,
+            )
+        expected_uploads[f"release-build-receipt-{slug}-{suffix}"] = (
+            "\n".join(
+                f"artifacts/build-receipts/{slug}-${{{{ matrix.scope }}}}-{label}.json"
+                for label in ("first", "second")
+            ),
+            False,
+        )
+        if len(uploads) != 3 or {row.get("name") for row in uploads} != set(
+            expected_uploads
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-handoff", "artifact upload denominator changed"
+            )
+        for row in uploads:
+            upload_path, hidden = expected_uploads[row["name"]]
             if (
-                observed_paths != paths
-                or upload_with.get("if-no-files-found") != "error"
+                row.get("path") != upload_path
+                or row.get("if-no-files-found") != "error"
+                or (hidden and row.get("include-hidden-files") is not True)
             ):
                 raise ReleaseSupplyChainError(
                     "workflow-handoff",
-                    f"{artifact['id']} {name} upload paths changed",
+                    "upload is not the exact staged graph, including hidden package files",
                 )
+        build_commands = "\n".join(str(step.get("run", "")) for step in compile_steps)
+        assembly = [
+            (step.get("working-directory"), step.get("run"))
+            for step in compile_steps
+            if step.get("name")
+            in {"Assemble first clean source", "Assemble second clean source"}
+        ]
+        if assembly != [
+            (".", " ".join(artifact["build_command"])),
+            (".rebuild", " ".join(artifact["build_command"])),
+        ]:
+            raise ReleaseSupplyChainError(
+                "workflow-handoff",
+                "workflow assembly differs from the receipt's governed build command",
+            )
         if (
-            not isinstance(download_with, dict)
-            or download_with.get("name") != expected_name
-            or download_with.get("path") != artifact["package_root"]
+            "release_supply_chain prepare-upload" not in build_commands
+            or "release_supply_chain capture" not in build_commands
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-handoff", "build lacks authenticated graph staging"
+            )
+        companion = {
+            "release:fsharp": "compile-csharp",
+            "release:kotlin": "compile-java",
+        }.get(artifact["id"])
+        if companion and (
+            companion not in compile_config.get("needs", [])
+            or "release_supply_chain restore-upload" not in build_commands
         ):
             raise ReleaseSupplyChainError(
                 "workflow-handoff",
-                f"{artifact['id']} artifact name or path handoff changed",
+                "companion was not restored from the primary certified build",
             )
+        downloads = [
+            step.get("with", {})
+            for step in publish_steps
+            if str(step.get("uses", "")).startswith("actions/download-artifact@")
+        ]
+        package = [
+            row
+            for row in downloads
+            if row.get("name") == _workflow_artifact_name(artifact)
+        ]
+        if (
+            len(package) != 1
+            or package[0].get("path") != ".cert/downloads/" + slug
+            or not any(
+                str(row.get("name", "")).startswith("signed-release-")
+                for row in downloads
+            )
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-handoff",
+                "publication must download the separately retained certified package and signed root",
+            )
+        if any(
+            row.get("repository") != "strling-lang/strling"
+            or row.get("run-id")
+            != "${{ inputs.certified_run_id || vars.RELEASE_CERTIFIED_RUN_ID }}"
+            for row in downloads
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-handoff",
+                "certified asset transport is not bound to its authorized repository and run",
+            )
+        if "RELEASE_AUTHORIZED_DESTINATIONS" not in condition:
+            raise ReleaseSupplyChainError(
+                "workflow-authorization",
+                "unselected destination can receive publication authority",
+            )
+        publish_commands = "\n".join(str(step.get("run", "")) for step in publish_steps)
+        if "release_supply_chain.py handoff" not in publish_commands:
+            raise ReleaseSupplyChainError(
+                "workflow-handoff",
+                "publication lacks immediate trusted artifact verification",
+            )
+        allowed_secrets = set(artifact["credential_policy"]["secret_names"])
+        used_secrets = set(
+            re.findall(r"secrets\.([A-Za-z0-9_]+)", yaml.safe_dump(publish_config))
+        )
+        if used_secrets - allowed_secrets:
+            raise ReleaseSupplyChainError(
+                "workflow-credentials",
+                "publication references an unregistered persistent credential",
+            )
+        if not any(
+            step.get("with", {}).get("ref")
+            == "${{ vars.RELEASE_APPROVED_WORKFLOW_SHA }}"
+            and step.get("with", {}).get("path") == ".cert/publisher"
+            and step.get("with", {}).get("persist-credentials") is False
+            for step in publish_steps
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-candidate-execution",
+                "publisher code is not isolated at the approved immutable source",
+            )
+        if re.search(
+            r"\b(?:npm (?:ci|run build|pack)|cargo publish|dotnet pack|gem build|make dist|mvn (?:deploy|package)|gradlew)\b",
+            publish_commands,
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-rebuild", "publication must not rebuild certified payloads"
+            )
+        for step in publish_steps:
+            if "run" in step and "working-directory" in step:
+                raise ReleaseSupplyChainError(
+                    "workflow-candidate-execution",
+                    "publication may not execute candidate working-directory scripts",
+                )
 
     workflow_text = path.read_text(encoding="utf-8")
     for action in re.findall(r"\buses:\s*([^\s#]+)", workflow_text):
@@ -1247,16 +1571,91 @@ def probe_toolchains(
     rows: list[dict[str, object]] = []
     for artifact in _artifact_rows(manifest):
         artifact_id = cast(str, artifact["id"])
-        for toolchain_id in cast(list[str], artifact["toolchain_refs"]):
-            rows.append(
-                _probe_toolchain(
-                    root,
-                    artifact_id=artifact_id,
-                    toolchain_id=toolchain_id,
-                    policy_sha256=policy_sha256,
+        for scope in artifact_scopes(artifact):
+            for toolchain_id in cast(list[str], artifact["toolchain_refs"]):
+                rows.append(
+                    _probe_toolchain(
+                        root,
+                        artifact_id=artifact_id,
+                        toolchain_id=toolchain_id,
+                        policy_sha256=policy_sha256,
+                        scope=scope,
+                    )
                 )
-            )
     return sorted(rows, key=lambda row: cast(str, row["id"]))
+
+
+def _validate_toolchain_version(
+    root: Path, toolchain_id: str, banner: str, *, scope: str | None = None
+) -> None:
+    """Enforce the same version authority as profiles, plus release constraints.
+
+    Transitional developer runtimes are never admitted to release receipts.
+    Native families come from their registered Conan profiles; Gradle comes
+    from the checksummed wrapper rather than a second version constant.
+    """
+    from tooling.quality import version_satisfies
+
+    windows = scope == "windows-x86_64" if scope is not None else os.name == "nt"
+    if toolchain_id in {"cc", "cxx"}:
+        profile = (
+            root
+            / "bindings/cpp/profiles"
+            / ("windows-x86_64" if windows else "linux-x86_64")
+        )
+        text = profile.read_text(encoding="utf-8")
+        family = re.search(r"(?m)^compiler.version=(\d+)$", text)
+        if family is None:
+            raise ValueError("missing release compiler family")
+        if windows:
+            update = re.search(r"(?m)^compiler.update=(\d+)$", text)
+            if (
+                update is None
+                or re.search(
+                    r"Compiler Version 19\." + family[1][-1] + update[1] + r"\.", banner
+                )
+                is None
+            ):
+                raise ValueError("native compiler differs from the release profile")
+        else:
+            match = re.search(r"(\d+)(?:\.\d+){1,2}", banner)
+            if match is None or match[1] != family[1]:
+                raise ValueError("native compiler differs from the release profile")
+        return
+    if toolchain_id == "gradle":
+        wrapper = (
+            root / "bindings/kotlin/gradle/wrapper/gradle-wrapper.properties"
+        ).read_text(encoding="utf-8")
+        expected = re.search(r"gradle-(\d+(?:\.\d+){1,2})-bin\.zip", wrapper)
+        actual = re.search(r"Gradle (\d+(?:\.\d+){1,2})", banner)
+        if expected is None or actual is None or actual[1] != expected[1]:
+            raise ValueError("Gradle differs from the repository wrapper")
+        return
+    alias = {"python": "python3", "maven": "mvn", "bundler": "bundle"}.get(
+        toolchain_id, toolchain_id
+    )
+    tool = load_json(root / "toolchain.json")["tools"][alias]
+    match = re.search(tool["version_pattern"], banner, re.IGNORECASE)
+    if match is None:
+        raise ValueError("tool banner does not match its governed version pattern")
+    actual = match[1]
+    resolution = tool["resolution"]
+    constraint = resolution.get("version")
+    if resolution["model"] == "repository_managed":
+        content = (root / resolution["file"]).read_text(encoding="utf-8")
+        governed = re.search(resolution["file_pattern"], content)
+        if governed is None:
+            raise ValueError("repository-managed tool version cannot be resolved")
+        constraint = governed[1]
+    if constraint is not None and not version_satisfies(actual, constraint):
+        raise ValueError("tool version violates its declared constraint")
+    release_constraint = tool.get("release_constraint")
+    if resolution["model"] == "deferred" and release_constraint is None:
+        raise ValueError("release tool has no governed version constraint")
+    if release_constraint is not None and not version_satisfies(
+        actual, release_constraint
+    ):
+        raise ValueError("tool version violates its release constraint")
 
 
 def _probe_toolchain(
@@ -1265,19 +1664,107 @@ def _probe_toolchain(
     artifact_id: str,
     toolchain_id: str,
     policy_sha256: str,
+    scope: str | None = None,
 ) -> dict[str, object]:
     candidates, version_args = TOOLCHAIN_PROBES[toolchain_id]
-    coordinate = f"{artifact_id}:{toolchain_id}"
-    runner = {"runner_os": platform.system(), "runner_arch": platform.machine()}
+    expected_cl_version = None
+    host = {"Windows": "windows-x86_64", "Linux": "linux-x86_64"}.get(platform.system())
+    scope = scope or host
+    coordinate = f"{artifact_id}:{scope}:{toolchain_id}"
+    runner = {
+        "scope": scope,
+        "runner_os": platform.system(),
+        "runner_arch": platform.machine(),
+    }
+    if scope != host or platform.machine().lower() not in {"amd64", "x86_64"}:
+        return {
+            "id": coordinate,
+            "artifact_id": artifact_id,
+            "toolchain_id": toolchain_id,
+            "status": "unavailable",
+            "version": None,
+            "executable": None,
+            "executable_sha256": None,
+            **runner,
+            "policy_sha256": policy_sha256,
+            "findings": [
+                {
+                    "code": "SUPPLY-TOOLCHAIN-UNAVAILABLE",
+                    "message": "this host cannot certify the requested build scope",
+                }
+            ],
+        }
     repository_candidates: list[Path] = []
     if artifact_id == "release:kotlin" and toolchain_id == "gradle":
-        repository_candidates.extend(
-            [root / "bindings/kotlin/gradlew", root / "bindings/kotlin/gradlew.bat"]
+        repository_candidates.append(
+            root / "bindings/kotlin" / ("gradlew.bat" if os.name == "nt" else "gradlew")
         )
     executable = next(
         (str(path) for path in repository_candidates if path.is_file()),
         None,
     ) or next((shutil.which(name) for name in candidates if shutil.which(name)), None)
+    if toolchain_id == "python":
+        executable = sys.executable
+    if toolchain_id in {"cc", "cxx"}:
+        if os.name != "nt":
+            executable = shutil.which("gcc-13" if toolchain_id == "cc" else "g++-13")
+        else:
+            vswhere = (
+                Path(os.environ.get("ProgramFiles(x86)", "C:/Program Files (x86)"))
+                / "Microsoft Visual Studio/Installer/vswhere.exe"
+            )
+            try:
+                profile = (root / "bindings/cpp/profiles/windows-x86_64").read_text(
+                    encoding="utf-8"
+                )
+                compiler = re.search(r"(?m)^compiler.version=(\d+)$", profile)
+                update = re.search(r"(?m)^compiler.update=(\d+)$", profile)
+                if compiler is None or update is None:
+                    raise ValueError("an exact native compiler family is required")
+                prefix = "14." + compiler[1][-1] + update[1]
+                expected_cl_version = "19." + compiler[1][-1] + update[1]
+                located = subprocess.run(
+                    [
+                        str(vswhere),
+                        "-latest",
+                        "-products",
+                        "*",
+                        "-property",
+                        "installationPath",
+                    ],
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                    timeout=20,
+                ).stdout.strip()
+                tools = sorted(
+                    (Path(located) / "VC/Tools/MSVC").glob(
+                        prefix + ".*/bin/Hostx64/x64/cl.exe"
+                    )
+                )
+                executable = str(tools[-1]) if tools else None
+                version_args = ()
+            except (OSError, ValueError, subprocess.SubprocessError):
+                executable = None
+    if executable is not None and toolchain_id in {"cargo", "rustc"}:
+        rustup = shutil.which("rustup") or str(
+            Path(executable).parent / ("rustup.exe" if os.name == "nt" else "rustup")
+        )
+        try:
+            resolved = subprocess.run(
+                [rustup, "which", "--toolchain", "1.75.0", toolchain_id],
+                cwd=root,
+                env=_canonical_subprocess_environment(),
+                capture_output=True,
+                text=True,
+                check=True,
+                timeout=20,
+            )
+            executable = resolved.stdout.strip()
+            if not Path(executable).is_file():
+                executable = None
+        except (OSError, subprocess.SubprocessError):
+            executable = None
     if executable is None:
         return {
             "id": coordinate,
@@ -1296,12 +1783,19 @@ def _probe_toolchain(
                 }
             ],
         }
+    executable_path = Path(executable).resolve()
+    executable_identity = (
+        "repository:" + executable_path.relative_to(root.resolve()).as_posix()
+        if executable_path.is_relative_to(root.resolve())
+        and executable_path in [path.resolve() for path in repository_candidates]
+        else executable_path.as_posix()
+    )
     try:
         completed = subprocess.run(
             [executable, *version_args],
             cwd=root,
             env=_canonical_subprocess_environment(),
-            check=True,
+            check=False,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             timeout=20,
@@ -1310,15 +1804,26 @@ def _probe_toolchain(
             errors="replace",
         )
         version = " ".join(completed.stdout.split())
+        cl_banner = (
+            os.name == "nt"
+            and toolchain_id in {"cc", "cxx"}
+            and expected_cl_version is not None
+            and re.search(
+                r"Compiler Version " + re.escape(expected_cl_version) + r"\.", version
+            )
+        )
+        if completed.returncode and not (completed.returncode == 2 and cl_banner):
+            raise ValueError("governed tool version probe failed")
         if not version:
             raise ValueError("empty version output")
+        _validate_toolchain_version(root, toolchain_id, version, scope=scope)
         return {
             "id": coordinate,
             "artifact_id": artifact_id,
             "toolchain_id": toolchain_id,
             "status": "passed",
             "version": version,
-            "executable": Path(executable).resolve().as_posix(),
+            "executable": executable_identity,
             "executable_sha256": _sha256_file(Path(executable)),
             **runner,
             "policy_sha256": policy_sha256,
@@ -1336,7 +1841,7 @@ def _probe_toolchain(
             "toolchain_id": toolchain_id,
             "status": "incomplete",
             "version": None,
-            "executable": Path(executable).resolve().as_posix(),
+            "executable": executable_identity,
             "executable_sha256": _sha256_file(Path(executable)),
             **runner,
             "policy_sha256": policy_sha256,
@@ -1379,14 +1884,26 @@ def capture_build_receipt(
             "output-exists", "build receipt output must not already exist"
         )
     validate_manifest(manifest, root=root)
+    if (
+        version
+        != load_json(root / "governance/release-policy.json")["product"]["version"]
+    ):
+        raise ReleaseSupplyChainError(
+            "product-version", "build version differs from canonical product authority"
+        )
     contracts = {cast(str, row["id"]): row for row in _artifact_rows(manifest)}
     if artifact_id not in contracts:
         raise ReleaseSupplyChainError(
             "artifact-denominator", f"unknown release artifact: {artifact_id}"
         )
     artifact = contracts[artifact_id]
+    from tooling.release_packaging import host_scope
+
+    scope = host_scope()
+    artifact = scoped_artifact(artifact, scope)
     source = authenticate_source(root)
     members = _surface_members(root, artifact, version)
+    inspect_release_payload(root, artifact, version, members)
     subject_name, subject_sha256, subject_bytes = _surface_identity(members)
     policy_sha256 = document_fingerprint(
         load_json(root / cast(str, manifest["toolchain_authority"]))
@@ -1397,11 +1914,26 @@ def capture_build_receipt(
             artifact_id=artifact_id,
             toolchain_id=toolchain_id,
             policy_sha256=policy_sha256,
+            scope=scope,
         )
         for toolchain_id in cast(list[str], artifact["toolchain_refs"])
     ]
     toolchains.sort(key=lambda row: cast(str, row["id"]))
     reproducibility = cast(dict[str, Any], artifact["reproducibility"])
+    consumer = None
+    if artifact["distribution_contract"]["tier"] == "Supported":
+        from tooling.release_consumers import verify_consumer
+
+        native = (
+            root
+            / "bindings/interop/target/release"
+            / (
+                "strling_interop.dll"
+                if scope == "windows-x86_64"
+                else "libstrling_interop.so"
+            )
+        )
+        consumer = verify_consumer(artifact_id, root=root, native=native)
     normalized_sha256 = (
         _normalized_surface_sha256(
             root,
@@ -1412,10 +1944,14 @@ def capture_build_receipt(
         else None
     )
     receipt: dict[str, Any] = {
-        "schema_version": "1.0.0",
+        "schema_version": "2.0.0",
         "document_kind": "release-build-receipt",
         "operation_id": "certification.release-build-capture",
         "artifact_id": artifact_id,
+        "product_version": version,
+        "scope": scope,
+        "build_instance_id": uuid.uuid4().hex,
+        "build_root_sha256": hashlib.sha256(str(root.resolve()).encode()).hexdigest(),
         "source": source,
         "build_command_sha256": hashlib.sha256(
             canonical_json(artifact["build_command"])
@@ -1428,6 +1964,7 @@ def capture_build_receipt(
             "normalized_sha256": normalized_sha256,
         },
         "toolchains": toolchains,
+        "consumer": consumer,
         "publication_authorized": False,
         "receipt_fingerprint": "0" * 64,
     }
@@ -1439,7 +1976,8 @@ def capture_build_receipt(
         root=root,
         artifact=artifact,
         version=version,
-        require_passed_toolchains=False,
+        manifest=manifest,
+        require_passed_toolchains=True,
     )
     _write_json(output_path, receipt)
     return receipt
@@ -1451,30 +1989,48 @@ def _validate_build_receipt(
     root: Path,
     artifact: Mapping[str, object],
     version: str,
+    manifest: Mapping[str, object],
     require_passed_toolchains: bool,
+    expected_source: Mapping[str, object] | None = None,
+    verify_subjects: bool = True,
 ) -> dict[str, Any]:
     required = {
         "schema_version",
         "document_kind",
         "operation_id",
         "artifact_id",
+        "product_version",
+        "scope",
+        "build_instance_id",
+        "build_root_sha256",
         "source",
         "build_command_sha256",
         "subject",
         "toolchains",
+        "consumer",
         "publication_authorized",
         "receipt_fingerprint",
     }
     artifact_id = cast(str, artifact["id"])
+    artifact = scoped_artifact(artifact, cast(str, receipt.get("scope")))
+    if (
+        re.fullmatch(r"[0-9a-f]{32}", str(receipt.get("build_instance_id", ""))) is None
+        or re.fullmatch(r"[0-9a-f]{64}", str(receipt.get("build_root_sha256", "")))
+        is None
+    ):
+        raise ReleaseSupplyChainError(
+            "build-receipt", "independent build identity is absent"
+        )
     if set(receipt) != required:
         raise ReleaseSupplyChainError(
             "build-receipt", f"{artifact_id} build receipt fields changed"
         )
     if (
-        receipt["schema_version"] != "1.0.0"
+        receipt["schema_version"] != "2.0.0"
         or receipt["document_kind"] != "release-build-receipt"
         or receipt["operation_id"] != "certification.release-build-capture"
         or receipt["artifact_id"] != artifact_id
+        or receipt["product_version"] != version
         or receipt["publication_authorized"] is not False
     ):
         raise ReleaseSupplyChainError(
@@ -1486,7 +2042,11 @@ def _validate_build_receipt(
         raise ReleaseSupplyChainError(
             "build-receipt", f"{artifact_id} build receipt changed"
         )
-    if receipt["source"] != authenticate_source(root):
+    if receipt["source"] != (
+        dict(expected_source)
+        if expected_source is not None
+        else authenticate_source(root)
+    ):
         raise ReleaseSupplyChainError(
             "source-rebuild", f"{artifact_id} build receipt source changed"
         )
@@ -1497,20 +2057,30 @@ def _validate_build_receipt(
         raise ReleaseSupplyChainError(
             "provenance-command", f"{artifact_id} build receipt command changed"
         )
-    observed_members = _surface_members(root, artifact, version)
+    subject = receipt["subject"]
+    if not isinstance(subject, dict):
+        raise ReleaseSupplyChainError("build-receipt", "build subject is malformed")
+    observed_members = (
+        _surface_members(root, artifact, version)
+        if verify_subjects
+        else _receipt_members(subject, artifact, version)
+    )
     observed_name, observed_sha256, observed_bytes = _surface_identity(observed_members)
     reproducibility = cast(dict[str, Any], artifact["reproducibility"])
-    subject = receipt["subject"]
     if not isinstance(subject, dict) or subject != {
         "name": observed_name,
         "sha256": observed_sha256,
         "bytes": observed_bytes,
         "members": observed_members,
         "normalized_sha256": (
-            _normalized_surface_sha256(
-                root,
-                observed_members,
-                cast(list[str], reproducibility["allowed_normalizations"]),
+            (
+                _normalized_surface_sha256(
+                    root,
+                    observed_members,
+                    cast(list[str], reproducibility["allowed_normalizations"]),
+                )
+                if verify_subjects
+                else subject["normalized_sha256"]
             )
             if reproducibility["mode"] == "normalized"
             else None
@@ -1523,11 +2093,82 @@ def _validate_build_receipt(
     if not isinstance(toolchains, list) or _exact_ids(
         cast(list[Mapping[str, object]], toolchains), label="build receipt toolchain"
     ) != sorted(
-        f"{artifact_id}:{toolchain}"
+        f"{artifact_id}:{receipt['scope']}:{toolchain}"
         for toolchain in cast(list[str], artifact["toolchain_refs"])
     ):
         raise ReleaseSupplyChainError(
             "toolchain-denominator", f"{artifact_id} build receipt toolchains changed"
+        )
+    for row in toolchains:
+        if (
+            row.get("scope") != receipt["scope"]
+            or row.get("artifact_id") != artifact_id
+        ):
+            raise ReleaseSupplyChainError(
+                "toolchain-denominator", "build receipt toolchain scope changed"
+            )
+        if row.get("status") == "passed":
+            expected_os = "Windows" if receipt["scope"] == "windows-x86_64" else "Linux"
+            if row.get("runner_os") != expected_os or str(
+                row.get("runner_arch")
+            ).lower() not in {"amd64", "x86_64"}:
+                raise ReleaseSupplyChainError(
+                    "toolchain-scope", "toolchain did not run on its claimed platform"
+                )
+            _validate_toolchain_version(
+                root, row["toolchain_id"], row["version"], scope=receipt["scope"]
+            )
+    consumer = receipt["consumer"]
+    if artifact["distribution_contract"]["tier"] == "Supported":
+        from tooling.release_consumers import CONSUMER_FIXTURES
+
+        expected_fixtures = {
+            relative: _sha256_file(root / relative)
+            for relative in CONSUMER_FIXTURES.values()
+        }
+        if not isinstance(consumer, dict) or (
+            consumer.get("schema_version") != "2.0.0"
+            or consumer.get("document_kind") != "release-consumer-receipt"
+            or consumer.get("artifact_id") != artifact_id
+            or consumer.get("product_version") != version
+            or consumer.get("scope") != receipt["scope"]
+            or consumer.get("source") != receipt["source"]
+            or consumer.get("engineering") is not False
+            or consumer.get("publication_authorized") is not False
+            or consumer.get("subject_sha256") != observed_sha256
+            or consumer.get("manifest_fingerprint") != document_fingerprint(manifest)
+            or consumer.get("fixture_sha256") != expected_fixtures
+            or consumer.get("receipt_fingerprint")
+            != document_fingerprint(consumer, "receipt_fingerprint")
+        ):
+            raise ReleaseSupplyChainError(
+                "consumer-receipt",
+                "Supported build has no exact-source isolated consumer proof",
+            )
+        result = consumer.get("result", {})
+        if not isinstance(result, dict):
+            raise ReleaseSupplyChainError(
+                "consumer-receipt", "consumer result is malformed"
+            )
+        compatibility = (
+            result.get("linked_package_version") == version
+            and result.get("target_profile_mismatch_rejected") is True
+            if artifact_id == "release:rust"
+            else result.get("kernel_mismatch_rejected") is True
+        )
+        if (
+            result.get("status") != "passed"
+            or result.get("source_outcome") != "succeeded"
+            or result.get("target_pattern") != "abc"
+            or not compatibility
+        ):
+            raise ReleaseSupplyChainError(
+                "consumer-receipt",
+                "Supported consumer did not prove canonical success and compatibility refusal",
+            )
+    elif consumer is not None:
+        raise ReleaseSupplyChainError(
+            "consumer-receipt", "Preview build cannot claim a Supported consumer proof"
         )
     if require_passed_toolchains and any(
         row.get("status") != "passed"
@@ -1539,6 +2180,96 @@ def _validate_build_receipt(
     return cast(dict[str, Any], receipt)
 
 
+def _receipt_members(
+    subject: Mapping[str, Any], artifact: Mapping[str, Any], version: str
+) -> list[dict]:
+    """Validate retained rebuild metadata without executing candidate inputs."""
+    members = subject.get("members")
+    if (
+        not isinstance(members, list)
+        or not members
+        or len(members) > artifact["artifact_policy"]["maximum_subjects"]
+    ):
+        raise ReleaseSupplyChainError(
+            "build-receipt", "invalid retained rebuild member set"
+        )
+    names = []
+    for member in members:
+        if not isinstance(member, dict) or set(member) not in (
+            {"name", "sha256", "bytes"},
+            {"name", "sha256", "bytes", "files"},
+        ):
+            raise ReleaseSupplyChainError(
+                "build-receipt", "invalid retained rebuild member"
+            )
+        name = member["name"]
+        if not isinstance(name, str) or not any(
+            fnmatch.fnmatchcase(name, pattern.replace("VERSION", version))
+            for pattern in artifact["artifact_policy"]["patterns"]
+        ):
+            raise ReleaseSupplyChainError(
+                "build-receipt", "retained rebuild member escapes its registered scope"
+            )
+        if (
+            type(member["bytes"]) is not int
+            or member["bytes"] < 0
+            or re.fullmatch(r"[0-9a-f]{64}", str(member["sha256"])) is None
+        ):
+            raise ReleaseSupplyChainError(
+                "build-receipt", "invalid retained member digest or size"
+            )
+        nested = member.get("files", [member])
+        if not isinstance(nested, list) or not nested:
+            raise ReleaseSupplyChainError(
+                "build-receipt", "empty retained source member"
+            )
+        file_names = []
+        for row in nested:
+            path = row.get("name") if isinstance(row, dict) else None
+            if (
+                not isinstance(path, str)
+                or "\\" in path
+                or ":" in path
+                or "\0" in path
+                or Path(path).is_absolute()
+                or any(part in {"", ".", ".."} for part in path.split("/"))
+                or ("files" in member and not path.startswith(name + "/"))
+                or ("files" in member and set(row) != {"name", "sha256", "bytes"})
+                or re.fullmatch(r"[0-9a-f]{64}", str(row.get("sha256", ""))) is None
+                or type(row.get("bytes")) is not int
+                or row["bytes"] < 0
+            ):
+                raise ReleaseSupplyChainError(
+                    "build-receipt", "unsafe retained source file identity"
+                )
+            file_names.append(path)
+        if file_names != sorted(set(file_names)):
+            raise ReleaseSupplyChainError(
+                "build-receipt", "duplicate or unordered retained source files"
+            )
+        if "files" in member and (
+            hashlib.sha256(canonical_json(nested)).hexdigest() != member["sha256"]
+            or sum(row["bytes"] for row in nested) != member["bytes"]
+        ):
+            raise ReleaseSupplyChainError(
+                "build-receipt", "retained source member digest differs"
+            )
+        names.append(name)
+    if names != sorted(set(names)):
+        raise ReleaseSupplyChainError(
+            "build-receipt", "duplicate or unordered retained members"
+        )
+    normalized = subject.get("normalized_sha256")
+    if (
+        artifact["reproducibility"]["mode"] == "normalized"
+        and re.fullmatch(r"[0-9a-f]{64}", str(normalized)) is None
+    ):
+        raise ReleaseSupplyChainError(
+            "build-receipt", "missing retained normalization identity"
+        )
+    return members
+
+
 def load_build_receipts(
     *,
     receipt_dir: Path,
@@ -1546,47 +2277,431 @@ def load_build_receipts(
     second_root: Path,
     manifest: Mapping[str, object],
     version: str,
-) -> tuple[list[dict[str, object]], dict[str, object], dict[str, object]]:
-    toolchains: list[dict[str, object]] = []
-    first_source: dict[str, object] | None = None
-    second_source: dict[str, object] | None = None
+) -> tuple[
+    list[dict[str, object]],
+    dict[str, object],
+    dict[str, object],
+    list[dict[str, object]],
+]:
+    """Require two authenticated builds for every one of the 21 build rows."""
+    if root.resolve() == second_root.resolve():
+        raise ReleaseSupplyChainError(
+            "source-rebuild", "independent builds require separate source workspaces"
+        )
+    expected_files = {
+        f"{artifact['id'].removeprefix('release:')}-{scope}-{label}.json"
+        for artifact in _artifact_rows(manifest)
+        for scope in artifact_scopes(artifact)
+        for label in ("first", "second")
+    }
+    observed_files = set()
+    for path in receipt_dir.rglob("*"):
+        if path.is_symlink():
+            raise ReleaseSupplyChainError("build-receipt", "symlink in receipt set")
+        if path.is_file():
+            observed_files.add(path.relative_to(receipt_dir).as_posix())
+    if observed_files != expected_files:
+        raise ReleaseSupplyChainError(
+            "build-receipt", "missing or unregistered platform build receipts"
+        )
+    toolchains, captured = [], []
+    sources = {}
     for artifact in _artifact_rows(manifest):
         artifact_id = cast(str, artifact["id"])
         slug = artifact_id.removeprefix("release:")
-        first = _validate_build_receipt(
-            load_json(receipt_dir / f"{slug}-first.json"),
-            root=root,
-            artifact=artifact,
-            version=version,
-            require_passed_toolchains=True,
-        )
-        second = _validate_build_receipt(
-            load_json(receipt_dir / f"{slug}-second.json"),
-            root=second_root,
-            artifact=artifact,
-            version=version,
-            require_passed_toolchains=True,
-        )
-        if first["toolchains"] != second["toolchains"]:
-            raise ReleaseSupplyChainError(
-                "toolchain-rebuild",
-                f"{artifact_id} rebuild toolchain fingerprint changed",
+        for scope in artifact_scopes(artifact):
+            pair = {}
+            for label, subject_root in (("first", root), ("second", second_root)):
+                receipt = _validate_build_receipt(
+                    load_json(receipt_dir / f"{slug}-{scope}-{label}.json"),
+                    root=subject_root,
+                    artifact=artifact,
+                    version=version,
+                    manifest=manifest,
+                    require_passed_toolchains=True,
+                )
+                if receipt["scope"] != scope:
+                    raise ReleaseSupplyChainError(
+                        "build-receipt", "platform receipt is assigned to the wrong row"
+                    )
+                pair[label] = receipt
+                if label in sources and sources[label] != receipt["source"]:
+                    raise ReleaseSupplyChainError(
+                        "source-rebuild",
+                        "platform builds do not share one exact source",
+                    )
+                sources[label] = receipt["source"]
+                captured.append({"label": label, "receipt": receipt})
+            if pair["first"]["toolchains"] != pair["second"]["toolchains"]:
+                raise ReleaseSupplyChainError(
+                    "toolchain-rebuild",
+                    "platform rebuild toolchain fingerprint changed",
+                )
+            if any(
+                pair["first"][field] == pair["second"][field]
+                for field in ("build_instance_id", "build_root_sha256")
+            ):
+                raise ReleaseSupplyChainError(
+                    "source-rebuild",
+                    "rebuild reused the primary invocation or workspace",
+                )
+            policy = artifact["reproducibility"]
+            first_subject, second_subject = (
+                pair["first"]["subject"],
+                pair["second"]["subject"],
             )
-        if first_source is None:
-            first_source = cast(dict[str, object], first["source"])
-            second_source = cast(dict[str, object], second["source"])
-        elif first["source"] != first_source or second["source"] != second_source:
-            raise ReleaseSupplyChainError(
-                "source-rebuild", "build receipts do not share one source identity"
-            )
-        toolchains.extend(cast(list[dict[str, object]], first["toolchains"]))
-    if first_source is None or second_source is None:
-        raise ReleaseSupplyChainError("build-receipt", "build receipt set is empty")
+            key = "normalized_sha256" if policy["mode"] == "normalized" else "sha256"
+            if first_subject[key] is None or first_subject[key] != second_subject[key]:
+                raise ReleaseSupplyChainError(
+                    "reproducibility", "independent platform artifacts differ"
+                )
+            toolchains.extend(pair["first"]["toolchains"])
+    if sources.get("first") != sources.get("second") or not captured:
+        raise ReleaseSupplyChainError(
+            "source-rebuild", "independent source identities differ"
+        )
+    by_coordinate = {
+        (row["receipt"]["artifact_id"], row["receipt"]["scope"], row["label"]): row[
+            "receipt"
+        ]
+        for row in captured
+    }
+    for row in captured:
+        receipt = row["receipt"]
+        companion = {
+            "release:fsharp": "release:csharp",
+            "release:kotlin": "release:java",
+        }.get(receipt["artifact_id"])
+        if companion is not None:
+            expected = by_coordinate[(companion, receipt["scope"], row["label"])][
+                "subject"
+            ]["sha256"]
+            if (
+                receipt["consumer"]["result"].get("companion_subject_sha256")
+                != expected
+            ):
+                raise ReleaseSupplyChainError(
+                    "consumer-companion",
+                    "consumer used an unpublished or substituted companion",
+                )
     return (
-        sorted(toolchains, key=lambda row: cast(str, row["id"])),
-        first_source,
-        second_source,
+        sorted(toolchains, key=lambda row: row["id"]),
+        sources["first"],
+        sources["second"],
+        sorted(
+            captured,
+            key=lambda row: (
+                row["receipt"]["artifact_id"],
+                row["receipt"]["scope"],
+                row["label"],
+            ),
+        ),
     )
+
+
+def _validate_retained_builds(
+    *,
+    root: Path,
+    manifest: Mapping[str, object],
+    source: Mapping[str, object],
+    captured: Sequence[Mapping[str, Any]],
+    version: str,
+    verify_subjects: bool,
+) -> list[dict]:
+    contracts = {row["id"]: row for row in _artifact_rows(manifest)}
+    expected = sorted(
+        (row["id"], scope, label)
+        for row in _artifact_rows(manifest)
+        for scope in artifact_scopes(row)
+        for label in ("first", "second")
+    )
+    coordinates, receipts = [], {}
+    for entry in captured:
+        if (
+            not isinstance(entry, dict)
+            or set(entry) != {"label", "receipt"}
+            or not isinstance(entry["receipt"], dict)
+        ):
+            raise ReleaseSupplyChainError(
+                "build-receipt", "retained build record is malformed"
+            )
+        receipt = entry["receipt"]
+        coordinate = (receipt.get("artifact_id"), receipt.get("scope"), entry["label"])
+        if coordinate not in expected or coordinate in receipts:
+            raise ReleaseSupplyChainError(
+                "build-receipt", "unregistered or duplicate retained build row"
+            )
+        _validate_build_receipt(
+            receipt,
+            root=root,
+            artifact=contracts[coordinate[0]],
+            version=version,
+            manifest=manifest,
+            require_passed_toolchains=True,
+            expected_source=source,
+            verify_subjects=verify_subjects and entry["label"] == "first",
+        )
+        coordinates.append(coordinate)
+        receipts[coordinate] = receipt
+    if coordinates != expected:
+        raise ReleaseSupplyChainError(
+            "build-receipt",
+            "every platform requires two ordered build and consumer records",
+        )
+    toolchains = []
+    for artifact in _artifact_rows(manifest):
+        artifact_id = artifact["id"]
+        for scope in artifact_scopes(artifact):
+            first, second = (
+                receipts[(artifact_id, scope, label)] for label in ("first", "second")
+            )
+            if first["toolchains"] != second["toolchains"]:
+                raise ReleaseSupplyChainError(
+                    "toolchain-rebuild",
+                    "retained independent toolchain identities differ",
+                )
+            if any(
+                first[field] == second[field]
+                for field in ("build_instance_id", "build_root_sha256")
+            ):
+                raise ReleaseSupplyChainError(
+                    "source-rebuild",
+                    "retained rebuild reused its primary workspace or invocation",
+                )
+
+            def shape(receipt):
+                return [
+                    (row["name"], "files" in row)
+                    for row in receipt["subject"]["members"]
+                ]
+
+            key = (
+                "normalized_sha256"
+                if artifact["reproducibility"]["mode"] == "normalized"
+                else "sha256"
+            )
+            if (
+                shape(first) != shape(second)
+                or first["subject"][key] is None
+                or first["subject"][key] != second["subject"][key]
+            ):
+                raise ReleaseSupplyChainError(
+                    "reproducibility", "retained independent build subjects differ"
+                )
+            toolchains.extend(first["toolchains"])
+            companion = {
+                "release:fsharp": "release:csharp",
+                "release:kotlin": "release:java",
+            }.get(artifact_id)
+            if companion is not None:
+                for label, receipt in (("first", first), ("second", second)):
+                    expected_companion = receipts[(companion, scope, label)]["subject"][
+                        "sha256"
+                    ]
+                    if (
+                        receipt["consumer"]["result"].get("companion_subject_sha256")
+                        != expected_companion
+                    ):
+                        raise ReleaseSupplyChainError(
+                            "consumer-companion",
+                            "retained consumer used a different companion",
+                        )
+    return sorted(toolchains, key=lambda row: row["id"])
+
+
+def _upload_members(members: Sequence[Mapping[str, Any]]) -> tuple[Path, list[dict]]:
+    concrete = [
+        dict(row) for member in members for row in member.get("files", [member])
+    ]
+    names = [row.get("name") for row in concrete]
+    if (
+        not names
+        or any(
+            not isinstance(name, str)
+            or "\\" in name
+            or ":" in name
+            or "\0" in name
+            or Path(name).is_absolute()
+            or any(part in {"", ".", ".."} for part in name.split("/"))
+            for name in names
+        )
+        or len(names) != len(set(names))
+    ):
+        raise ReleaseSupplyChainError(
+            "artifact-path", "upload contains unsafe or duplicate member paths"
+        )
+    if len(members) == 1 and "files" in members[0]:
+        base = Path(members[0]["name"])
+    else:
+        base = Path(os.path.commonpath([str(Path(name).parent) for name in names]))
+    return base, concrete
+
+
+def prepare_artifact_upload(
+    *, root: Path, receipt_path: Path, output: Path, manifest: Mapping[str, object]
+) -> dict:
+    """Serialize only the authenticated file graph into workflow transport."""
+    if output.exists():
+        raise ReleaseSupplyChainError(
+            "output-exists", "upload staging directory already exists"
+        )
+    receipt = load_json(receipt_path)
+    artifact = next(
+        (
+            row
+            for row in _artifact_rows(manifest)
+            if row["id"] == receipt.get("artifact_id")
+        ),
+        None,
+    )
+    if artifact is None:
+        raise ReleaseSupplyChainError("build-receipt", "unknown upload artifact")
+    version = load_json(root / "governance/release-policy.json")["product"]["version"]
+    _validate_build_receipt(
+        receipt,
+        root=root,
+        artifact=artifact,
+        version=version,
+        manifest=manifest,
+        require_passed_toolchains=True,
+    )
+    base, concrete = _upload_members(receipt["subject"]["members"])
+    planned = []
+    for row in concrete:
+        source = root / row["name"]
+        target = output / Path(row["name"]).relative_to(base)
+        if (
+            source.is_symlink()
+            or not source.resolve().is_relative_to(root.resolve())
+            or not target.resolve().is_relative_to(output.resolve())
+            or _sha256_file(source) != row["sha256"]
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-handoff",
+                "upload staging bytes differ from their captured subject",
+            )
+        planned.append((source, target))
+    for source, target in planned:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
+    return {
+        "status": "passed",
+        "artifact_id": artifact["id"],
+        "scope": receipt["scope"],
+        "staged_files": len(planned),
+        "publication_authorized": False,
+    }
+
+
+def prepare_certified_upload(
+    *,
+    root: Path,
+    evidence_path: Path,
+    output: Path,
+    artifact_id: str,
+    manifest: Mapping[str, object],
+) -> dict:
+    """Export verified primary bytes for a future immutable owner-approved handoff.
+
+    This creates local transport only. It neither uploads an Actions artifact nor
+    grants publication authority; the publisher revalidates the signed root.
+    """
+    if output.exists():
+        raise ReleaseSupplyChainError(
+            "output-exists", "certified transport directory already exists"
+        )
+    evidence = verify_bundle(root=root, evidence_path=evidence_path, manifest=manifest)
+    if (
+        evidence["evidence_authority"] != "live-dry-run"
+        or evidence["profile"] != "release"
+        or evidence["status"] != "passed"
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-evidence",
+            "only passing exact-source Release subjects can be exported",
+        )
+    contract = next(
+        (row for row in _artifact_rows(manifest) if row["id"] == artifact_id), None
+    )
+    if contract is None:
+        raise ReleaseSupplyChainError(
+            "artifact-denominator", "unknown certified transport"
+        )
+    version = load_json(root / "governance/release-policy.json")["product"]["version"]
+    members = _surface_members(root, contract, version)
+    base, concrete = _upload_members(members)
+    for row in concrete:
+        source = root / row["name"]
+        target = output / Path(row["name"]).relative_to(base)
+        if (
+            source.is_symlink()
+            or not source.resolve().is_relative_to(root.resolve())
+            or not target.resolve().is_relative_to(output.resolve())
+            or _sha256_file(source) != row["sha256"]
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-substitution", "certified bytes changed during export"
+            )
+    for row in concrete:
+        target = output / Path(row["name"]).relative_to(base)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(root / row["name"], target)
+    return {
+        "status": "passed",
+        "artifact_id": artifact_id,
+        "artifact_name": "certified-"
+        + artifact_id.removeprefix("release:")
+        + "-"
+        + evidence["source"]["commit"],
+        "subject_sha256": _surface_identity(members)[1],
+        "staged_files": len(concrete),
+        "publication_authorized": False,
+    }
+
+
+def restore_artifact_upload(
+    *, artifact_root: Path, target_root: Path, receipt: Mapping[str, Any]
+) -> int:
+    base, concrete = _upload_members(receipt["subject"]["members"])
+    expected = {Path(row["name"]).relative_to(base).as_posix() for row in concrete}
+    observed = set()
+    for path in artifact_root.rglob("*"):
+        if path.is_symlink():
+            raise ReleaseSupplyChainError(
+                "workflow-handoff", "symlink in downloaded artifact"
+            )
+        if path.is_file():
+            observed.add(path.relative_to(artifact_root).as_posix())
+    if observed != expected:
+        raise ReleaseSupplyChainError(
+            "workflow-handoff", "download has missing or unregistered files"
+        )
+    planned = []
+    for row in concrete:
+        source = artifact_root / Path(row["name"]).relative_to(base)
+        destination = target_root / row["name"]
+        if (
+            source.is_symlink()
+            or destination.is_symlink()
+            or not source.resolve().is_relative_to(artifact_root.resolve())
+            or not destination.resolve().is_relative_to(target_root.resolve())
+            or _sha256_file(source) != row["sha256"]
+        ):
+            raise ReleaseSupplyChainError(
+                "workflow-handoff", "downloaded subject changed or escaped its root"
+            )
+        if destination.exists():
+            if not destination.is_file() or _sha256_file(destination) != row["sha256"]:
+                raise ReleaseSupplyChainError(
+                    "workflow-handoff",
+                    "platforms supplied conflicting bytes for one subject path",
+                )
+        else:
+            planned.append((source, destination))
+    for source, destination in planned:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+    return len(concrete)
 
 
 def stage_downloaded_artifacts(
@@ -1598,60 +2713,38 @@ def stage_downloaded_artifacts(
     release_ref: str,
     manifest: Mapping[str, object],
 ) -> dict[str, object]:
-    """Restore immutable workflow uploads at their governed repository paths."""
-
+    """Restore every exact scope into independent primary/rebuild source trees."""
+    if (
+        re.fullmatch(r"[0-9a-f]{40}", release_ref) is None
+        or first_root.resolve() == second_root.resolve()
+    ):
+        raise ReleaseSupplyChainError(
+            "source-rebuild", "staging requires an exact source and separate workspaces"
+        )
     staged = 0
     for artifact in _artifact_rows(manifest):
-        artifact_id = cast(str, artifact["id"])
-        slug = artifact_id.removeprefix("release:")
-        for label, target_root, artifact_name in (
-            ("first", first_root, f"release-{slug}-{release_ref}"),
-            ("second", second_root, f"rebuild-{slug}-{release_ref}"),
-        ):
-            receipt = load_json(receipt_dir / f"{slug}-{label}.json")
-            subject = receipt.get("subject")
-            if not isinstance(subject, dict) or not isinstance(
-                subject.get("members"), list
+        slug = artifact["id"].removeprefix("release:")
+        for scope in artifact_scopes(artifact):
+            for label, target, prefix in (
+                ("first", first_root, "release"),
+                ("second", second_root, "rebuild"),
             ):
-                raise ReleaseSupplyChainError(
-                    "build-receipt", f"{artifact_id} {label} receipt has no members"
-                )
-            members = cast(list[dict[str, Any]], subject["members"])
-            concrete = [
-                cast(dict[str, Any], nested)
-                for member in members
-                for nested in (
-                    cast(list[dict[str, Any]], member["files"])
-                    if "files" in member
-                    else [member]
-                )
-            ]
-            member_paths = [Path(cast(str, member["name"])) for member in concrete]
-            if len(members) == 1 and "files" in members[0]:
-                upload_root = Path(cast(str, members[0]["name"]))
-            else:
-                upload_root = Path(
-                    os.path.commonpath([str(path.parent) for path in member_paths])
-                )
-            artifact_root = download_root / artifact_name
-            for member, member_path in zip(concrete, member_paths, strict=True):
-                try:
-                    download_relative = member_path.relative_to(upload_root)
-                except ValueError as error:
+                receipt = load_json(receipt_dir / f"{slug}-{scope}-{label}.json")
+                if (
+                    receipt.get("artifact_id") != artifact["id"]
+                    or receipt.get("scope") != scope
+                    or receipt.get("source", {}).get("commit") != release_ref
+                ):
                     raise ReleaseSupplyChainError(
-                        "artifact-path",
-                        f"{artifact_id} upload root does not contain {member_path}",
-                    ) from error
-                source = artifact_root / download_relative
-                destination = target_root / member_path
-                if not source.is_file() or _sha256_file(source) != member["sha256"]:
-                    raise ReleaseSupplyChainError(
-                        "workflow-handoff",
-                        f"{artifact_id} downloaded {label} subject changed: {member_path}",
+                        "build-receipt",
+                        "download receipt has the wrong source or scope",
                     )
-                destination.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(source, destination)
-                staged += 1
+                staged += restore_artifact_upload(
+                    artifact_root=download_root
+                    / f"{prefix}-{slug}-{scope}-{release_ref}",
+                    target_root=target,
+                    receipt=receipt,
+                )
     return {
         "schema_version": "certification-result-v1",
         "operation_id": "certification.release-artifact-stage",
@@ -1662,8 +2755,118 @@ def stage_downloaded_artifacts(
     }
 
 
+def _normalized_conan_sha256(path: Path) -> str:
+    """Normalize only Conan cache aliases and its recorded creation timestamps.
+
+    Package/recipe revisions, settings, native bytes, modes, source content,
+    dependencies, and manifest file digests remain exact comparison inputs.
+    """
+    from tooling.release_payload import archive_files
+
+    try:
+        bounded_files = archive_files(path)
+    except (OSError, ValueError, tarfile.TarError) as error:
+        raise ReleaseSupplyChainError(
+            "reproducibility", "unsafe or unbounded Conan cache"
+        ) from error
+    with tarfile.open(path, "r:*") as archive:
+        names = [entry.name for entry in archive.getmembers()]
+        if len(names) != len(set(names)) or any(
+            Path(name).is_absolute() or ".." in Path(name).parts for name in names
+        ):
+            raise ReleaseSupplyChainError(
+                "reproducibility", "unsafe Conan cache members"
+            )
+        pkglist_file = archive.extractfile("pkglist.json")
+        if pkglist_file is None:
+            raise ReleaseSupplyChainError(
+                "reproducibility", "Conan cache has no package list"
+            )
+        pkglist = json.loads(pkglist_file.read())
+        aliases: dict[str, str] = {}
+        for ref, recipe in pkglist.items():
+            for revision, record in recipe["revisions"].items():
+                base = ref + "/" + revision
+                aliases[record["recipe_folder"]] = "recipe/" + base
+                record["recipe_folder"] = "recipe/" + base
+                record.pop("timestamp", None)
+                for package_id, package in record.get("packages", {}).items():
+                    for package_revision, binary in package["revisions"].items():
+                        package_base = (
+                            "package/"
+                            + base
+                            + "/"
+                            + package_id
+                            + "/"
+                            + package_revision
+                        )
+                        for key in ("package_folder", "metadata_folder"):
+                            if key in binary:
+                                normalized = package_base + (
+                                    "/metadata"
+                                    if key == "metadata_folder"
+                                    else "/payload"
+                                )
+                                aliases[binary[key]] = normalized
+                                binary[key] = normalized
+                        binary.pop("timestamp", None)
+        rows = []
+        for entry in archive.getmembers():
+            if entry.isdir():
+                continue
+            if not entry.isfile():
+                raise ReleaseSupplyChainError(
+                    "reproducibility", "Conan cache contains a non-regular payload"
+                )
+            data_file = archive.extractfile(entry)
+            assert data_file is not None
+            data = bounded_files[entry.name]
+            if entry.name == "pkglist.json":
+                name, data = entry.name, canonical_json(pkglist)
+            else:
+                alias = next(
+                    (
+                        prefix
+                        for prefix in sorted(aliases, key=len, reverse=True)
+                        if entry.name.startswith(prefix + "/")
+                    ),
+                    None,
+                )
+                if alias is None:
+                    raise ReleaseSupplyChainError(
+                        "reproducibility", "unregistered Conan cache layout member"
+                    )
+                name = aliases[alias] + entry.name[len(alias) :]
+                if entry.name.endswith("/conanmanifest.txt"):
+                    first, separator, rest = data.partition(b"\n")
+                    if (
+                        not separator
+                        or re.fullmatch(rb"[0-9]+(?:\.[0-9]+)?", first) is None
+                    ):
+                        raise ReleaseSupplyChainError(
+                            "reproducibility",
+                            "unknown Conan manifest timestamp encoding",
+                        )
+                    data = b"0\n" + rest
+            rows.append(
+                {
+                    "name": name,
+                    "mode": entry.mode,
+                    "uid": entry.uid,
+                    "gid": entry.gid,
+                    "bytes": len(data),
+                    "sha256": hashlib.sha256(data).hexdigest(),
+                }
+            )
+        return hashlib.sha256(
+            canonical_json(sorted(rows, key=lambda item: item["name"]))
+        ).hexdigest()
+
+
 def _normalized_file_sha256(path: Path, fields: Sequence[str]) -> str:
     lowered = path.name.lower()
+    if "registry-generated-metadata" in fields and lowered.endswith(".tgz"):
+        return _normalized_conan_sha256(path)
     if "archive-entry-timestamp" in fields and (
         lowered.endswith((".tar.gz", ".tgz", ".crate", ".gem"))
     ):
@@ -1677,6 +2880,15 @@ def _normalized_file_sha256(path: Path, fields: Sequence[str]) -> str:
                         "mode": member.mode,
                         "size": member.size,
                         "linkname": member.linkname,
+                        "uid": member.uid,
+                        "gid": member.gid,
+                        "uname": member.uname,
+                        "gname": member.gname,
+                        "pax_headers": {
+                            key: value
+                            for key, value in member.pax_headers.items()
+                            if key not in {"mtime", "atime", "ctime"}
+                        },
                     }
                     if member.isfile():
                         extracted = archive.extractfile(member)
@@ -1699,6 +2911,10 @@ def _normalized_file_sha256(path: Path, fields: Sequence[str]) -> str:
         try:
             with zipfile.ZipFile(path) as archive:
                 rows = []
+                if len(archive.namelist()) != len(set(archive.namelist())):
+                    raise ReleaseSupplyChainError(
+                        "reproducibility", "duplicate ZIP member"
+                    )
                 for name in sorted(archive.namelist()):
                     upper = name.upper()
                     if "signature" in fields and (
@@ -1710,6 +2926,12 @@ def _normalized_file_sha256(path: Path, fields: Sequence[str]) -> str:
                         {
                             "name": name,
                             "sha256": hashlib.sha256(archive.read(name)).hexdigest(),
+                            "external_attr": archive.getinfo(name).external_attr,
+                            "internal_attr": archive.getinfo(name).internal_attr,
+                            "create_system": archive.getinfo(name).create_system,
+                            "compress_type": archive.getinfo(name).compress_type,
+                            "comment": archive.getinfo(name).comment.hex(),
+                            "extra": archive.getinfo(name).extra.hex(),
                         }
                     )
             return hashlib.sha256(canonical_json(rows)).hexdigest()
@@ -1797,6 +3019,11 @@ def _dependency_resolution(
             "inventory_only",
         )
         resolved_components: list[dict[str, object]] = []
+        reachable = None
+        if dependency_id == "interop-cargo" and policy.get("ecosystem") == "cargo":
+            from tooling.release_notices import locked_packages
+
+            reachable = {(row["name"], row["version"]) for row in locked_packages(root)}
         evidence_hash: str | None = None
         if risk_evidence is not None:
             vulnerability = risk_checks.get(f"security.vulnerability.{dependency_id}")
@@ -1820,9 +3047,17 @@ def _dependency_resolution(
                 else:
                     for component in raw_components:
                         if (
+                            reachable is not None
+                            and isinstance(component, dict)
+                            and (component.get("name"), component.get("version"))
+                            not in reachable
+                        ):
+                            continue
+                        if (
                             not isinstance(component, dict)
                             or not all(
                                 isinstance(component.get(field), str)
+                                and bool(component[field].strip())
                                 for field in (
                                     "name",
                                     "version",
@@ -1833,6 +3068,18 @@ def _dependency_resolution(
                             )
                             or component.get("classification")
                             not in ("permitted", "scoped_permitted")
+                            or component.get("reported_license")
+                            in {"NOASSERTION", "NONE"}
+                            or (
+                                "selected_license" in component
+                                and (
+                                    not isinstance(component["selected_license"], str)
+                                    or not component["selected_license"].strip()
+                                    or component["selected_license"]
+                                    in {"NOASSERTION", "NONE"}
+                                )
+                            )
+                            or re.search(r"[<>=*]", component.get("version", ""))
                         ):
                             unresolved += 1
                             continue
@@ -1843,6 +3090,12 @@ def _dependency_resolution(
                         )
                     ).hexdigest()
         elif not resolved_without_external:
+            unresolved += 1
+        if (
+            reachable is not None
+            and {(row["name"], row["version"]) for row in resolved_components}
+            != reachable
+        ):
             unresolved += 1
         components.append(
             {
@@ -1861,11 +3114,49 @@ def _dependency_resolution(
     return components, unresolved
 
 
+def inspect_release_payload(
+    root: Path, artifact: Mapping[str, object], version: str, members: list
+) -> list:
+    try:
+        from tooling.release_payload import inspect_payload
+
+        return inspect_payload(root, dict(artifact), version, members)
+    except (
+        ValueError,
+        OSError,
+        KeyError,
+        tarfile.TarError,
+        zipfile.BadZipFile,
+    ) as error:
+        raise ReleaseSupplyChainError("artifact-payload", str(error)) from error
+
+
+def _validate_spdx(document: Mapping[str, object]) -> None:
+    """Validate against the attributed, semantically unchanged official schema."""
+    schema = load_json(SPDX_SCHEMA_PATH)
+    identity = load_json(SPDX_SCHEMA_PATH.with_name("spdx-schema-source.json"))
+    if identity["vendored_sha256"] != _sha256_file(SPDX_SCHEMA_PATH) or identity[
+        "semantic_sha256"
+    ] != document_fingerprint(schema):
+        raise ReleaseSupplyChainError(
+            "sbom-schema",
+            "vendored SPDX schema differs from its reviewed upstream identity",
+        )
+    Draft7Validator.check_schema(schema)
+    error = best_match(Draft7Validator(schema).iter_errors(document))
+    if error is not None:
+        raise ReleaseSupplyChainError(
+            "sbom-schema", "invalid SPDX 2.3 document: " + error.message
+        )
+
+
 def _spdx_document(
     artifact: Mapping[str, object],
     members: Sequence[Mapping[str, object]],
     subject_digest: str,
     dependencies: Sequence[Mapping[str, object]],
+    version: str = "unspecified",
+    content_files: Sequence[Mapping[str, object]] | None = None,
 ) -> dict[str, object]:
     artifact_id = cast(str, artifact["id"])
     surface = cast(str, artifact["surface"])
@@ -1885,6 +3176,17 @@ def _spdx_document(
             flattened.extend(cast(list[Mapping[str, object]], nested))
         else:
             flattened.append(member)
+    if content_files is not None:
+        flattened = list(content_files)
+    if content_files is not None and any(
+        re.fullmatch(r"[0-9a-f]{40}", str(member.get("sha1", ""))) is None
+        for member in flattened
+    ):
+        raise ReleaseSupplyChainError(
+            "sbom-files",
+            "analyzed SPDX files require actual SHA-1 compatibility digests",
+        )
+    analyzed = bool(flattened) and all("sha1" in member for member in flattened)
     for index, member in enumerate(flattened, start=1):
         spdx_id = f"SPDXRef-File-{index}"
         files.append(
@@ -1892,9 +3194,15 @@ def _spdx_document(
                 "SPDXID": spdx_id,
                 "fileName": member["name"],
                 "checksums": [
-                    {"algorithm": "SHA256", "checksumValue": member["sha256"]}
+                    {"algorithm": "SHA256", "checksumValue": member["sha256"]},
+                    *(
+                        [{"algorithm": "SHA1", "checksumValue": member["sha1"]}]
+                        if analyzed
+                        else []
+                    ),
                 ],
-                "licenseConcluded": "Apache-2.0",
+                "licenseConcluded": "NOASSERTION",
+                "licenseInfoInFiles": ["NOASSERTION"],
                 "copyrightText": "NOASSERTION",
             }
         )
@@ -1917,10 +3225,25 @@ def _spdx_document(
     packages: list[dict[str, object]] = [
         {
             "name": cast(str, artifact["package_name"]),
+            "versionInfo": version,
             "SPDXID": "SPDXRef-Package",
             "downloadLocation": "NOASSERTION",
-            "filesAnalyzed": True,
-            "licenseConcluded": "Apache-2.0",
+            "filesAnalyzed": analyzed,
+            **(
+                {
+                    "packageVerificationCode": {
+                        "packageVerificationCodeValue": hashlib.sha1(
+                            "".join(
+                                sorted(str(member["sha1"]) for member in flattened)
+                            ).encode("ascii"),
+                            usedforsecurity=False,
+                        ).hexdigest()
+                    }
+                }
+                if analyzed
+                else {}
+            ),
+            "licenseConcluded": "NOASSERTION",
             "licenseDeclared": "Apache-2.0",
             "copyrightText": "NOASSERTION",
             "checksums": [{"algorithm": "SHA256", "checksumValue": subject_digest}],
@@ -2048,6 +3371,7 @@ def _provenance_statement(
     manifest_fingerprint: str,
     toolchains: Sequence[Mapping[str, object]],
     dependencies: Sequence[Mapping[str, object]],
+    version: str = "unspecified",
 ) -> dict[str, object]:
     artifact_id = cast(str, artifact["id"])
     required_toolchains = set(cast(list[str], artifact["toolchain_refs"]))
@@ -2074,6 +3398,9 @@ def _provenance_statement(
                 "externalParameters": {
                     "artifactId": artifact_id,
                     "buildCommand": artifact["build_command"],
+                    "productVersion": version,
+                    "registry": artifact["registry"],
+                    "support": artifact["distribution_contract"],
                 },
                 "internalParameters": {
                     "manifestSha256": manifest_fingerprint,
@@ -2191,6 +3518,7 @@ def produce_bundle(
     evidence_authority: str,
     risk_evidence: Mapping[str, object] | None = None,
     rebuild_source: Mapping[str, object] | None = None,
+    build_receipts: Sequence[Mapping[str, object]] | None = None,
 ) -> dict[str, Any]:
     """Produce deterministic evidence over two already-prepared artifact trees."""
 
@@ -2207,7 +3535,20 @@ def produce_bundle(
         raise ReleaseSupplyChainError(
             "source-rebuild", "rebuild source identity differs from primary source"
         )
+    if evidence_authority == "live-dry-run" and build_receipts is None:
+        raise ReleaseSupplyChainError(
+            "build-receipt",
+            "live evidence requires every independent platform build receipt",
+        )
     validate_manifest(manifest, root=root)
+    if (
+        version
+        != load_json(root / "governance/release-policy.json")["product"]["version"]
+    ):
+        raise ReleaseSupplyChainError(
+            "product-version",
+            "artifact version differs from canonical product authority",
+        )
     expected_toolchains = _toolchain_evidence_ids(manifest)
     if _exact_ids(toolchains, label="producer toolchain") != expected_toolchains:
         raise ReleaseSupplyChainError(
@@ -2215,7 +3556,11 @@ def produce_bundle(
         )
     manifest_fingerprint = document_fingerprint(manifest)
     toolchain_by_id = {
-        (cast(str, row["artifact_id"]), cast(str, row["toolchain_id"])): row
+        (
+            cast(str, row["artifact_id"]),
+            cast(str, row["scope"]),
+            cast(str, row["toolchain_id"]),
+        ): row
         for row in toolchains
     }
     rows: list[dict[str, object]] = []
@@ -2227,6 +3572,12 @@ def produce_bundle(
         try:
             first_members = _surface_members(root, artifact, version)
             second_members = _surface_members(second_root, artifact, version)
+            content_files = None
+            if evidence_authority == "live-dry-run":
+                content_files = inspect_release_payload(
+                    root, artifact, version, first_members
+                )
+                inspect_release_payload(second_root, artifact, version, second_members)
         except ReleaseSupplyChainError as error:
             rows.append(_missing_artifact_row(artifact, source, str(error)))
             continue
@@ -2278,9 +3629,10 @@ def produce_bundle(
             )
         required_toolchains = cast(list[str], artifact["toolchain_refs"])
         unavailable_toolchains = [
-            item
+            f"{scope}:{item}"
+            for scope in artifact_scopes(artifact)
             for item in required_toolchains
-            if toolchain_by_id[(artifact_id, item)]["status"] != "passed"
+            if toolchain_by_id[(artifact_id, scope, item)]["status"] != "passed"
         ]
         if unavailable_toolchains:
             findings.append(
@@ -2290,7 +3642,14 @@ def produce_bundle(
                 }
             )
 
-        spdx = _spdx_document(artifact, first_members, subject_digest, dependencies)
+        spdx = _spdx_document(
+            artifact,
+            first_members,
+            subject_digest,
+            dependencies,
+            version,
+            content_files,
+        )
         provenance = _provenance_statement(
             artifact,
             first_members,
@@ -2298,7 +3657,9 @@ def produce_bundle(
             manifest_fingerprint,
             toolchains,
             dependencies,
+            version,
         )
+        _validate_spdx(spdx)
         spdx_sha256 = hashlib.sha256(canonical_json(spdx)).hexdigest()
         provenance_sha256 = hashlib.sha256(canonical_json(provenance)).hexdigest()
         checksum_lines = [f"# surface-sha256 {subject_digest}"]
@@ -2379,7 +3740,7 @@ def produce_bundle(
         [*artifact_statuses, *[cast(str, row["status"]) for row in toolchains]]
     )
     evidence: dict[str, Any] = {
-        "schema_version": "1.0.0",
+        "schema_version": "2.0.0",
         "document_kind": "release-supply-chain-evidence",
         "operation_id": "certification.release-supply-chain",
         "profile": profile,
@@ -2391,6 +3752,7 @@ def produce_bundle(
         "rebuild_source": authenticated_rebuild,
         "workflow": dict(workflow),
         "toolchains": [dict(row) for row in toolchains],
+        "build_receipts": [dict(row) for row in (build_receipts or [])],
         "artifacts": rows,
         "summary": {
             status: artifact_statuses.count(status) for status in STATUS_PRECEDENCE
@@ -2423,6 +3785,17 @@ def verify_bundle(
     verify_subjects: bool = True,
 ) -> dict[str, Any]:
     evidence = validate_evidence(load_json(evidence_path), manifest, root=root)
+    if verify_subjects and evidence["evidence_authority"] == "live-dry-run":
+        _validate_retained_builds(
+            root=root,
+            manifest=manifest,
+            source=evidence["source"],
+            captured=evidence["build_receipts"],
+            version=load_json(root / "governance/release-policy.json")["product"][
+                "version"
+            ],
+            verify_subjects=True,
+        )
     bundle_root = evidence_path.parent
     contracts = {row["id"]: row for row in _artifact_rows(manifest)}
     for row in cast(list[dict[str, Any]], evidence["artifacts"]):
@@ -2488,11 +3861,62 @@ def verify_bundle(
             raise ReleaseSupplyChainError(
                 "sbom-document", f"{surface} SPDX document changed"
             )
+        _validate_spdx(sbom)
         packages = sbom.get("packages")
         if not isinstance(packages, list) or not packages:
             raise ReleaseSupplyChainError(
                 "sbom-document", f"{surface} SPDX package is absent"
             )
+        product_version = load_json(root / "governance/release-policy.json")["product"][
+            "version"
+        ]
+        if (
+            sbom.get("spdxVersion") != "SPDX-2.3"
+            or sbom.get("dataLicense") != "CC0-1.0"
+            or packages[0].get("name") != contracts[row["id"]]["package_name"]
+            or packages[0].get("versionInfo") != product_version
+            or packages[0].get("licenseDeclared") != "Apache-2.0"
+            or not sbom.get("files")
+        ):
+            raise ReleaseSupplyChainError(
+                "sbom-metadata",
+                f"{surface} SPDX identity, version, license, or file graph is inconsistent",
+            )
+        if verify_subjects and evidence["evidence_authority"] == "live-dry-run":
+            content = inspect_release_payload(
+                root, contracts[row["id"]], product_version, members
+            )
+            expected_files = [
+                (item["name"], item["sha256"], item["sha1"]) for item in content
+            ]
+            observed_files = [
+                (item.get("fileName"), item.get("checksums")) for item in sbom["files"]
+            ]
+            if observed_files != [
+                (
+                    name,
+                    [
+                        {"algorithm": "SHA256", "checksumValue": digest},
+                        {"algorithm": "SHA1", "checksumValue": sha1},
+                    ],
+                )
+                for name, digest, sha1 in expected_files
+            ]:
+                raise ReleaseSupplyChainError(
+                    "sbom-files", "SPDX content graph differs from actual package files"
+                )
+        if verify_subjects and evidence["evidence_authority"] == "live-dry-run":
+            expected_verification = hashlib.sha1(
+                "".join(sorted(item["sha1"] for item in content)).encode("ascii"),
+                usedforsecurity=False,
+            ).hexdigest()
+            if packages[0].get("filesAnalyzed") is not True or packages[0].get(
+                "packageVerificationCode"
+            ) != {"packageVerificationCodeValue": expected_verification}:
+                raise ReleaseSupplyChainError(
+                    "sbom-files",
+                    "SPDX package verification code differs from actual content",
+                )
         package_checksums = packages[0].get("checksums")
         if package_checksums != [
             {"algorithm": "SHA256", "checksumValue": row["subject"]["sha256"]}
@@ -2518,6 +3942,32 @@ def verify_bundle(
             raise ReleaseSupplyChainError(
                 "provenance-document", f"{surface} provenance subjects changed"
             )
+        contract = contracts[row["id"]]
+        definition = provenance.get("predicate", {}).get("buildDefinition", {})
+        expected_parameters = {
+            "artifactId": row["id"],
+            "buildCommand": contract["build_command"],
+            "productVersion": product_version,
+            "registry": contract["registry"],
+            "support": contract["distribution_contract"],
+        }
+        dependencies = definition.get("resolvedDependencies", [])
+        if (
+            definition.get("externalParameters") != expected_parameters
+            or definition.get("internalParameters", {}).get("manifestSha256")
+            != evidence["manifest_fingerprint"]
+            or not dependencies
+            or dependencies[0]
+            != {
+                "uri": "git+https://github.com/strling-lang/strling@"
+                + evidence["source"]["commit"],
+                "digest": {"gitCommit": evidence["source"]["commit"]},
+            }
+        ):
+            raise ReleaseSupplyChainError(
+                "provenance-metadata",
+                f"{surface} SLSA source or release metadata is inconsistent",
+            )
     return evidence
 
 
@@ -2525,6 +3975,11 @@ def run_profile_certification(
     *, profile: str, evidence_path: Path | None, root: Path = ROOT
 ) -> dict[str, Any]:
     if evidence_path is None:
+        if profile in {"full", "release"}:
+            raise ReleaseSupplyChainError(
+                "evidence-required",
+                "Full/Release packaging certification requires exact-source live artifact and consumer evidence",
+            )
         contract = run_contract_check()
         status = cast(str, contract["status"])
         fingerprint = cast(str, contract["manifest_fingerprint"])
@@ -2553,6 +4008,499 @@ def run_profile_certification(
         "evidence_authority": evidence_authority,
         "evidence_fingerprint": fingerprint,
     }
+
+
+def verify_publication_authorization(
+    *,
+    authorization: Mapping[str, Any],
+    expected_sha256: str,
+    evidence: Mapping[str, Any],
+    manifest: Mapping[str, Any],
+    context: Mapping[str, str],
+    certified_source_sha: str,
+    certified_evidence_root: str,
+) -> dict[str, Any]:
+    """Bind future owner approval to exact verified bytes and a protected run.
+
+    The expected digest and reviewed workflow SHA must come from the protected
+    environment, never dispatch inputs or candidate executable output. This
+    verifier grants no registry credentials and performs no external writes.
+    """
+    validate_schema(authorization, label="publication authorization")
+    if (
+        not re.fullmatch(r"[0-9a-f]{64}", expected_sha256 or "")
+        or hashlib.sha256(canonical_json(authorization)).hexdigest() != expected_sha256
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-authorization", "missing or unapproved owner authorization"
+        )
+    event = context.get("event_name")
+    allowed_ref = (
+        "refs/heads/main"
+        if event == "workflow_dispatch"
+        else "refs/tags/v" + authorization["version"]
+    )
+    if (
+        event not in {"workflow_dispatch", "push"}
+        or context.get("repository") != "strling-lang/strling"
+        or context.get("ref") != allowed_ref
+        or context.get("environment") != "release"
+        or not re.fullmatch(r"[0-9a-f]{40}", context.get("reviewed_workflow_sha", ""))
+        or context.get("workflow_sha") != context.get("reviewed_workflow_sha")
+        or context.get("dry_run") != "false"
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-context",
+            "publication requires the reviewed workflow and protected owner-authorized run",
+        )
+    for field in ("repository", "workflow_sha", "run_id", "run_attempt", "environment"):
+        if authorization[field] != context.get(field):
+            raise ReleaseSupplyChainError(
+                "publication-context", f"authorization {field} does not match this run"
+            )
+    for field in ("artifact_run_id", "certification_ref"):
+        if authorization[field] != context.get(field):
+            raise ReleaseSupplyChainError(
+                "publication-context",
+                "certified artifact transport differs from owner approval",
+            )
+    if (
+        evidence.get("profile") != "release"
+        or evidence.get("evidence_authority") != "live-dry-run"
+        or evidence.get("status") != "passed"
+        or authorization["source_sha"] != evidence["source"]["commit"]
+        or authorization["source_sha"] != certified_source_sha
+        or authorization["certification_evidence_root"] != certified_evidence_root
+        or authorization["evidence_fingerprint"] != evidence["evidence_fingerprint"]
+        or authorization["manifest_fingerprint"] != document_fingerprint(manifest)
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-evidence",
+            "authorization lacks exact same-source certified Release evidence",
+        )
+    version = authorization["version"]
+    if not re.fullmatch(r"4\.0\.0(?:-rc\.[1-9][0-9]*)?", version):
+        raise ReleaseSupplyChainError(
+            "publication-version",
+            "authorization version is outside the ratified release line",
+        )
+    if (authorization["channel"] == "stable") != (version == "4.0.0"):
+        raise ReleaseSupplyChainError(
+            "publication-version", "release channel and coordinate disagree"
+        )
+    contracts = {item["id"]: item for item in manifest["artifacts"]}
+    subjects = {item["id"]: item for item in evidence["artifacts"]}
+    approved = authorization["destinations"]
+    ids = [item["artifact_id"] for item in approved]
+    if len(ids) != len(set(ids)):
+        raise ReleaseSupplyChainError(
+            "publication-destination", "duplicate authorized destination"
+        )
+    for item in approved:
+        contract = contracts.get(item["artifact_id"])
+        row = subjects.get(item["artifact_id"])
+        if contract is None or row is None:
+            raise ReleaseSupplyChainError(
+                "publication-destination", "unknown destination"
+            )
+        distribution = contract["distribution_contract"]
+        if (
+            item["artifact_id"] in {"release:java", "release:kotlin"}
+            and re.fullmatch(r"[A-F0-9]{40}", item.get("signing_key_fingerprint", ""))
+            is None
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-signing",
+                "an exact owner-approved PGP signing fingerprint is required",
+            )
+        if item["artifact_id"] == "release:lua" and (
+            type(item.get("registry_user_id")) is not int
+            or item["registry_user_id"] <= 0
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-destination",
+                "LuaRocks requires the exact owner-approved numeric uploader identity",
+            )
+        if item["artifact_id"] == "release:cpp":
+            endpoint = urllib.parse.urlparse(item.get("registry_endpoint", ""))
+            if (
+                endpoint.scheme != "https"
+                or not endpoint.hostname
+                or endpoint.username
+                or endpoint.password
+                or endpoint.query
+                or endpoint.fragment
+            ):
+                raise ReleaseSupplyChainError(
+                    "publication-destination",
+                    "Conan requires an owner-approved HTTPS registry endpoint without embedded credentials",
+                )
+        if distribution["ownership_status"] == "verified" and distribution[
+            "registry_owner"
+        ].startswith("existing "):
+            raise ReleaseSupplyChainError(
+                "publication-destination",
+                "pending registry owner placeholders cannot be verified owners",
+            )
+        if item["artifact_id"] == "release:dart" and event != "push":
+            raise ReleaseSupplyChainError(
+                "publication-context",
+                "pub.dev trusted publishing requires a protected version-tag push",
+            )
+        if (
+            item["registry"] != contract["registry"]
+            or item["package_name"] != contract["package_name"]
+            or item["registry_owner"] != distribution["registry_owner"]
+            or item["tier"] != distribution["tier"]
+            or distribution["ownership_status"] != "verified"
+            or distribution["tier"] == "Legacy"
+            or (
+                distribution["tier"] == "Preview"
+                and item.get("preview_acknowledged") is not True
+            )
+            or row["status"] != "passed"
+            or row["subject"]["sha256"] != item["subject_sha256"]
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-destination",
+                "wrong registry, owner, support classification, or artifact identity",
+            )
+    return {
+        "status": "passed",
+        "publication_authorized": True,
+        "authorization_sha256": expected_sha256,
+        "destinations": ids,
+    }
+
+
+def certified_subject_checksums(
+    *,
+    root: Path,
+    trust_root: Path,
+    certification_root: Path,
+    certification_bundle: Path,
+    evidence_path: Path,
+    output: Path,
+) -> dict:
+    """Export metadata-only attestation subjects after isolated signed verification."""
+    if output.exists():
+        raise ReleaseSupplyChainError(
+            "output-exists", "attestation subject list already exists"
+        )
+    checked = subprocess.run(
+        [
+            sys.executable,
+            "-I",
+            str(trust_root / "tooling/local_certification_attestation.py"),
+            "--repository-root",
+            str(certification_root),
+            "--trust-root",
+            str(trust_root),
+            "--trust-policy",
+            "release-certification-trust.json",
+            "verify",
+            "--bundle",
+            str(certification_bundle),
+            "--json",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if checked.returncode:
+        raise ReleaseSupplyChainError(
+            "publication-certification",
+            "independent signed Release verification failed",
+        )
+    result = json.loads(checked.stdout)
+    if result.get("status") != "passed":
+        raise ReleaseSupplyChainError(
+            "publication-certification", "independent verifier did not pass"
+        )
+    signed = load_json(certification_bundle / "attestation.json")["signed_payload"]
+    if not any(
+        row["role"] == "release-supply-chain"
+        and row["sha256"] == _sha256_file(evidence_path)
+        for row in signed["evidence_files"]
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-certification",
+            "artifact evidence is outside the signed Release root",
+        )
+    manifest = load_json(root / MANIFEST_PATH.relative_to(ROOT))
+    evidence = verify_bundle(
+        root=root, evidence_path=evidence_path, manifest=manifest, verify_subjects=False
+    )
+    if (
+        evidence["profile"] != "release"
+        or evidence["evidence_authority"] != "live-dry-run"
+        or evidence["status"] != "passed"
+        or evidence["source"]["commit"]
+        != result["checks"][0]["evidence"]["certified_source_sha"]
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-certification",
+            "attestation subjects differ from the signed certified source",
+        )
+    text = "".join(
+        row["subject"]["sha256"] + "  " + row["id"].replace(":", "-") + "\n"
+        for row in evidence["artifacts"]
+    )
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(text, encoding="utf-8", newline="\n")
+    return {
+        "status": "passed",
+        "subjects": len(evidence["artifacts"]),
+        "publication_authorized": False,
+    }
+
+
+def verify_publication_handoff(
+    *,
+    root: Path,
+    trust_root: Path,
+    certification_bundle: Path,
+    evidence_path: Path,
+    authorization_path: Path,
+    artifact_id: str,
+    download_root: Path | None = None,
+    certification_root: Path | None = None,
+) -> dict[str, Any]:
+    """Reverify signed certification and exact restored subject before upload."""
+    manifest = load_json(root / MANIFEST_PATH.relative_to(ROOT))
+    evidence = verify_bundle(
+        root=root, evidence_path=evidence_path, manifest=manifest, verify_subjects=False
+    )
+    authorization = load_json(authorization_path)
+    product = load_json(root / "governance/release-policy.json")["product"]
+    if authorization.get("version") != product["version"]:
+        raise ReleaseSupplyChainError(
+            "publication-version",
+            "authorization differs from product-version authority",
+        )
+    checked = subprocess.run(
+        [
+            sys.executable,
+            "-I",
+            str(trust_root / "tooling/local_certification_attestation.py"),
+            "--repository-root",
+            str(certification_root or root),
+            "--trust-root",
+            str(trust_root),
+            "--trust-policy",
+            "release-certification-trust.json",
+            "verify",
+            "--bundle",
+            str(certification_bundle),
+            "--json",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if checked.returncode:
+        raise ReleaseSupplyChainError(
+            "publication-certification", "trusted signed Release verification failed"
+        )
+    result = json.loads(checked.stdout)
+    if result.get("status") != "passed":
+        raise ReleaseSupplyChainError(
+            "publication-certification", "trusted verifier did not pass"
+        )
+    certified = result["checks"][0]["evidence"]
+    attestation = load_json(certification_bundle / "attestation.json")["signed_payload"]
+    if not any(
+        item["sha256"] == _sha256_file(evidence_path)
+        and item["role"] == "release-supply-chain"
+        for item in attestation["evidence_files"]
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-certification",
+            "artifact evidence is absent from the signed Release root",
+        )
+    context = {
+        field: os.environ.get(env, "")
+        for field, env in {
+            "event_name": "GITHUB_EVENT_NAME",
+            "repository": "GITHUB_REPOSITORY",
+            "ref": "GITHUB_REF",
+            "workflow_sha": "GITHUB_WORKFLOW_SHA",
+            "reviewed_workflow_sha": "RELEASE_APPROVED_WORKFLOW_SHA",
+            "run_id": "GITHUB_RUN_ID",
+            "run_attempt": "GITHUB_RUN_ATTEMPT",
+            "environment": "RELEASE_ENVIRONMENT",
+            "dry_run": "RELEASE_DRY_RUN",
+            "artifact_run_id": "RELEASE_CERTIFIED_RUN_ID",
+            "certification_ref": "RELEASE_CERTIFICATION_REF",
+        }.items()
+    }
+    if (
+        certification_root is None
+        or _git_output(certification_root, ["rev-parse", "HEAD"]).decode().strip()
+        != context["certification_ref"]
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-context",
+            "signed evidence closure is not the exact owner-approved commit",
+        )
+    approval = verify_publication_authorization(
+        authorization=authorization,
+        expected_sha256=os.environ.get("RELEASE_AUTHORIZATION_SHA256", ""),
+        evidence=evidence,
+        manifest=manifest,
+        context=context,
+        certified_source_sha=certified["certified_source_sha"],
+        certified_evidence_root=certified["evidence_root_sha256"],
+    )
+    if (
+        _git_output(ROOT, ["rev-parse", "HEAD"]).decode().strip()
+        != context["reviewed_workflow_sha"]
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-context",
+            "publisher code is not the approved immutable checkout",
+        )
+    if artifact_id not in approval["destinations"]:
+        raise ReleaseSupplyChainError(
+            "publication-destination", "this artifact is not authorized"
+        )
+    artifact = next(item for item in manifest["artifacts"] if item["id"] == artifact_id)
+    row = next(item for item in evidence["artifacts"] if item["id"] == artifact_id)
+    if (
+        download_root is not None
+        and artifact["artifact_policy"]["subject_kind"] != "source-tree"
+    ):
+        restore_certified_subject(
+            root=root,
+            download_root=download_root,
+            checksum_path=evidence_path.parent
+            / "checksums"
+            / (artifact["surface"] + ".sha256"),
+            artifact=artifact,
+            version=authorization["version"],
+        )
+    members = _surface_members(root, artifact, authorization["version"])
+    name, digest, size = _surface_identity(members)
+    if (name, digest, size) != (
+        row["subject"]["name"],
+        row["subject"]["sha256"],
+        row["subject"]["bytes"],
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-substitution",
+            "restored artifact differs from the exact certified subject",
+        )
+    return {
+        **approval,
+        "artifact_id": artifact_id,
+        "subject_sha256": digest,
+        "source_sha": authorization["source_sha"],
+    }
+
+
+def restore_certified_subject(
+    *,
+    root: Path,
+    download_root: Path,
+    checksum_path: Path,
+    artifact: Mapping[str, Any],
+    version: str,
+) -> None:
+    """Restore an approved upload's files at their original governed paths."""
+    entries = []
+    patterns = [
+        pattern.replace("VERSION", version)
+        for pattern in artifact["artifact_policy"]["patterns"]
+    ]
+    for line in checksum_path.read_text(encoding="utf-8").splitlines()[1:]:
+        match = re.fullmatch(r"([0-9a-f]{64})  (.+)", line)
+        if match is None:
+            raise ReleaseSupplyChainError(
+                "publication-restore", "malformed certified checksum entry"
+            )
+        digest, name = match.groups()
+        path = Path(name)
+        if (
+            path.is_absolute()
+            or ".." in path.parts
+            or ".git" in path.parts
+            or "\\" in name
+            or not any(fnmatch.fnmatchcase(name, pattern) for pattern in patterns)
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-restore",
+                "subject is outside its governed archive patterns",
+            )
+        entries.append((path, digest))
+    directory_subject = (
+        artifact["artifact_policy"]["subject_kind"] == "registry-assembled"
+    )
+    if directory_subject:
+        if (
+            len(patterns) != 1
+            or len(entries) != 1
+            or entries[0][0].as_posix() != patterns[0]
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-restore", "unsupported assembled directory layout"
+            )
+        sbom = load_json(
+            checksum_path.parent.parent / "sbom" / (artifact["surface"] + ".spdx.json")
+        )
+        entries = []
+        for row in sbom["files"]:
+            name = row["fileName"]
+            path = Path(name)
+            if (
+                path.is_absolute()
+                or ".." in path.parts
+                or ".git" in path.parts
+                or "\\" in name
+                or not name.startswith(patterns[0] + "/")
+                or len(row["checksums"]) != 2
+                or row["checksums"][0]["algorithm"] != "SHA256"
+                or row["checksums"][1]["algorithm"] != "SHA1"
+                or re.fullmatch(
+                    r"[0-9a-f]{64}", str(row["checksums"][0].get("checksumValue", ""))
+                )
+                is None
+                or re.fullmatch(
+                    r"[0-9a-f]{40}", str(row["checksums"][1].get("checksumValue", ""))
+                )
+                is None
+            ):
+                raise ReleaseSupplyChainError(
+                    "publication-restore", "assembled SBOM has an unsafe file identity"
+                )
+            entries.append((path, row["checksums"][0]["checksumValue"]))
+    if not entries or len(entries) != len({path for path, _ in entries}):
+        raise ReleaseSupplyChainError(
+            "publication-restore", "missing or duplicate certified subject"
+        )
+    upload_root = (
+        Path(patterns[0])
+        if directory_subject
+        else Path(os.path.commonpath([str(path.parent) for path, _ in entries]))
+    )
+    planned = []
+    for path, digest in entries:
+        source, target = download_root / path.relative_to(upload_root), root / path
+        if (
+            source.is_symlink()
+            or target.is_symlink()
+            or not source.resolve().is_relative_to(download_root.resolve())
+            or not target.resolve().is_relative_to(root.resolve())
+            or not source.is_file()
+            or _sha256_file(source) != digest
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-substitution",
+                "downloaded subject does not match its certified checksum",
+            )
+        planned.append((source, target))
+    for source, target in planned:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
 
 
 def run_governed_security_evidence(*, root: Path, risk_output: Path) -> dict[str, Any]:
@@ -2604,17 +4552,17 @@ def run_live_producer(
     manifest_path = root / MANIFEST_PATH.relative_to(ROOT)
     manifest = validate_manifest(load_json(manifest_path), root=root)
     if build_receipt_dir is None:
-        toolchains = probe_toolchains(root, manifest)
-        source = authenticate_source(root)
-        rebuild_source = authenticate_source(second_root)
-    else:
-        toolchains, source, rebuild_source = load_build_receipts(
-            receipt_dir=build_receipt_dir,
-            root=root,
-            second_root=second_root,
-            manifest=manifest,
-            version=version,
+        raise ReleaseSupplyChainError(
+            "build-receipt",
+            "live multi-platform certification requires authenticated build receipts",
         )
+    toolchains, source, rebuild_source, captured = load_build_receipts(
+        receipt_dir=build_receipt_dir,
+        root=root,
+        second_root=second_root,
+        manifest=manifest,
+        version=version,
+    )
     return produce_bundle(
         root=root,
         second_root=second_root,
@@ -2628,6 +4576,7 @@ def run_live_producer(
         evidence_authority="live-dry-run",
         risk_evidence=load_json(risk_evidence_path),
         rebuild_source=rebuild_source,
+        build_receipts=captured,
     )
 
 
@@ -2648,6 +4597,30 @@ def run_contract_check() -> dict[str, Any]:
     }
 
 
+def write_contract_fixture() -> None:
+    """Renew only the explicitly synthetic fixture's input identity."""
+    fixture = load_json(VALID_FIXTURE_PATH)
+    fixture["manifest_fingerprint"] = document_fingerprint(load_json(MANIFEST_PATH))
+    fixture["evidence_fingerprint"] = document_fingerprint(
+        fixture, "evidence_fingerprint"
+    )
+    validate_contract_fixture(fixture, load_json(MANIFEST_PATH))
+    _write_json(VALID_FIXTURE_PATH, fixture)
+
+
+def release_trust_document() -> dict[str, Any]:
+    trust = load_json(ROOT / "governance/local-certification-trust.json")
+    trust["bundle_path"] = "tests/certification/release-packaging/1.0/current"
+    trust["closure_paths"] = [
+        "tests/certification/release-packaging/1.0/current/**",
+        "docs/migration/release-packaging-rebuild.md",
+        "docs/migration/records/release-packaging-rebuild.yaml",
+        "docs/migration/ledger.md",
+        "governance/change-control.json",
+    ]
+    return trust
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Produce and validate STRling release supply-chain evidence."
@@ -2656,6 +4629,14 @@ def _parser() -> argparse.ArgumentParser:
         "command",
         choices=[
             "capture",
+            "prepare-upload",
+            "prepare-certified-upload",
+            "certified-checksums",
+            "restore-upload",
+            "handoff",
+            "write-contract-fixture",
+            "write-release-trust",
+            "check-release-trust",
             "check",
             "produce",
             "profile",
@@ -2673,11 +4654,16 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--evidence", type=Path)
     parser.add_argument("--risk-evidence", type=Path)
     parser.add_argument("--artifact-id")
+    parser.add_argument("--receipt", type=Path)
     parser.add_argument("--source-root", type=Path)
     parser.add_argument("--build-receipt-dir", type=Path)
     parser.add_argument("--download-root", type=Path)
     parser.add_argument("--first-root", type=Path)
     parser.add_argument("--release-ref")
+    parser.add_argument("--trust-root", type=Path)
+    parser.add_argument("--certification-bundle", type=Path)
+    parser.add_argument("--certification-root", type=Path)
+    parser.add_argument("--authorization", type=Path)
     parser.add_argument("--json", action="store_true")
     return parser
 
@@ -2685,7 +4671,155 @@ def _parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
-        if args.command == "capture":
+        if args.command in {"write-release-trust", "check-release-trust"}:
+            document = release_trust_document()
+            path = ROOT / "governance/release-certification-trust.json"
+            if args.command == "write-release-trust":
+                _write_json(path, document)
+            elif not path.is_file() or load_json(path) != document:
+                raise ReleaseSupplyChainError(
+                    "release-trust", "release trust projection is stale"
+                )
+            result = {"status": "passed", "publication_authorized": False}
+        elif args.command == "handoff":
+            if not all(
+                (
+                    args.trust_root,
+                    args.certification_bundle,
+                    args.evidence,
+                    args.authorization,
+                    args.artifact_id,
+                )
+            ):
+                raise ReleaseSupplyChainError(
+                    "arguments",
+                    "handoff requires trust root, signed certification, evidence, authorization, and artifact ID",
+                )
+            result = verify_publication_handoff(
+                root=(args.source_root or ROOT).resolve(),
+                trust_root=args.trust_root.resolve(),
+                certification_bundle=args.certification_bundle.resolve(),
+                evidence_path=args.evidence.resolve(),
+                authorization_path=args.authorization.resolve(),
+                artifact_id=args.artifact_id,
+                certification_root=args.certification_root.resolve()
+                if args.certification_root
+                else None,
+                download_root=args.download_root.resolve()
+                if args.download_root
+                else None,
+            )
+            if args.output_dir:
+                if args.output_dir.exists():
+                    raise ReleaseSupplyChainError(
+                        "output-exists", "handoff intent receipt already exists"
+                    )
+                _write_json(
+                    args.output_dir,
+                    {**result, "status": "handoff-verified-upload-not-observed"},
+                )
+        elif args.command == "write-contract-fixture":
+            write_contract_fixture()
+            result = run_contract_check()
+        elif args.command == "certified-checksums":
+            if not all(
+                (
+                    args.evidence,
+                    args.output_dir,
+                    args.certification_root,
+                    args.certification_bundle,
+                    args.trust_root,
+                )
+            ):
+                raise ReleaseSupplyChainError(
+                    "arguments",
+                    "signed subject export requires source, trust, closure, bundle, evidence, and output",
+                )
+            result = certified_subject_checksums(
+                root=(args.source_root or ROOT).resolve(),
+                trust_root=args.trust_root.resolve(),
+                certification_root=args.certification_root.resolve(),
+                certification_bundle=args.certification_bundle.resolve(),
+                evidence_path=args.evidence.resolve(),
+                output=args.output_dir.resolve(),
+            )
+        elif args.command == "prepare-certified-upload":
+            if not all((args.evidence, args.output_dir, args.artifact_id)):
+                raise ReleaseSupplyChainError(
+                    "arguments",
+                    "certified export requires evidence, artifact ID, and output directory",
+                )
+            source_root = (args.source_root or ROOT).resolve()
+            manifest = load_json(source_root / MANIFEST_PATH.relative_to(ROOT))
+            result = prepare_certified_upload(
+                root=source_root,
+                evidence_path=args.evidence.resolve(),
+                output=args.output_dir.resolve(),
+                artifact_id=args.artifact_id,
+                manifest=manifest,
+            )
+        elif args.command in {"prepare-upload", "restore-upload"}:
+            if args.receipt is None:
+                raise ReleaseSupplyChainError(
+                    "arguments", "upload transport requires a captured receipt"
+                )
+            source_root = (args.source_root or ROOT).resolve()
+            manifest = validate_manifest(
+                load_json(source_root / MANIFEST_PATH.relative_to(ROOT)),
+                root=source_root,
+            )
+            if args.command == "prepare-upload":
+                if args.output_dir is None:
+                    raise ReleaseSupplyChainError(
+                        "arguments", "upload preparation requires an output directory"
+                    )
+                result = prepare_artifact_upload(
+                    root=source_root,
+                    receipt_path=args.receipt.resolve(),
+                    output=args.output_dir.resolve(),
+                    manifest=manifest,
+                )
+            else:
+                if args.download_root is None:
+                    raise ReleaseSupplyChainError(
+                        "arguments", "upload restoration requires a download directory"
+                    )
+                receipt = load_json(args.receipt.resolve())
+                artifact = next(
+                    (
+                        row
+                        for row in _artifact_rows(manifest)
+                        if row["id"] == receipt.get("artifact_id")
+                    ),
+                    None,
+                )
+                if artifact is None:
+                    raise ReleaseSupplyChainError(
+                        "build-receipt", "unknown restored artifact"
+                    )
+                _validate_build_receipt(
+                    receipt,
+                    root=source_root,
+                    artifact=artifact,
+                    version=load_json(source_root / "governance/release-policy.json")[
+                        "product"
+                    ]["version"],
+                    manifest=manifest,
+                    require_passed_toolchains=True,
+                    expected_source=authenticate_source(source_root),
+                    verify_subjects=False,
+                )
+                count = restore_artifact_upload(
+                    artifact_root=args.download_root.resolve(),
+                    target_root=source_root,
+                    receipt=receipt,
+                )
+                result = {
+                    "status": "passed",
+                    "staged_files": count,
+                    "publication_authorized": False,
+                }
+        elif args.command == "capture":
             if not all((args.artifact_id, args.version, args.output_dir)):
                 raise ReleaseSupplyChainError(
                     "arguments",

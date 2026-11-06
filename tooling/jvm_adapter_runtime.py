@@ -186,7 +186,13 @@ def execute(native_library: Path, repeat_runs: int) -> RuntimeReport:
     evidence_root.mkdir(parents=True)
 
     _run(
-        [maven, "-o", "-B", "-q", maven_repository_argument, "install"],
+        [
+            sys.executable,
+            str(ROOT / "tooling/jvm_adapter_package.py"),
+            "--install-product",
+            "--maven-repository",
+            maven_repository_argument.split("=", 1)[1],
+        ],
         cwd=ROOT / "bindings/jvm",
         environment=environment,
     )

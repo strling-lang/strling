@@ -430,9 +430,9 @@
             ],
             "package": {
                 "path": "bindings/python",
-                "dependency_model": "deferred",
+                "dependency_model": "repository_managed",
                 "manifests": ["pyproject.toml", "requirements.txt"],
-                "locks": [],
+                "locks": ["requirements.lock.txt"],
                 "configured_operations": [
                     "build",
                     "format",
@@ -751,5 +751,5 @@
         "status": "ready",
         "blocking_requirements": []
     },
-    "fingerprint": "sha256:5d3edcbafaf5e9cd084c113a92afc8cbd03fb8894be0eb45db55950ea3ab109e"
+    "fingerprint": "sha256:d61dfc9fc4a84e8bcf091764d26a311cb275cad1d164be0c66bedd8d76433c2d"
 }

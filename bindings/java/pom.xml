@@ -7,7 +7,7 @@
     <!-- Maven GAV (GroupId, ArtifactId, Version) -->
     <groupId>com.strling</groupId>
     <artifactId>strling</artifactId>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
     <packaging>jar</packaging>
 
     <!-- Project Metadata -->
@@ -44,6 +44,7 @@
         <!-- Java version -->
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.outputTimestamp>2000-01-01T00:00:00Z</project.build.outputTimestamp>
 
         <!-- Dependency versions -->
         <junit.version>5.10.1</junit.version>
@@ -53,7 +54,7 @@
         <dependency>
             <groupId>com.strling</groupId>
             <artifactId>strling-jvm</artifactId>
-            <version>3.0.0</version>
+            <version>4.0.0</version>
         </dependency>
 
         <!-- JUnit 5 for testing -->
@@ -78,6 +79,13 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>../..</directory>
+                <includes><include>LICENSE</include></includes>
+                <targetPath>META-INF</targetPath>
+            </resource>
+        </resources>
         <plugins>
             <!-- Maven Compiler Plugin -->
             <plugin>

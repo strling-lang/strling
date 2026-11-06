@@ -1,0 +1,13 @@
+[settings]
+os=Windows
+arch=x86_64
+compiler=msvc
+compiler.version=194
+compiler.update=4
+compiler.runtime=dynamic
+compiler.runtime_type=Release
+compiler.cppstd=17
+build_type=Release
+
+[conf]
+tools.microsoft.msbuild:vs_version=17

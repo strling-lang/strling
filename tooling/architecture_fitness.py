@@ -1394,7 +1394,11 @@ def artifact_authority_findings(
 
 
 def certification_checkout_findings(
-    text: str, relative: str, *, pull_request_base: bool
+    text: str,
+    relative: str,
+    *,
+    pull_request_base: bool,
+    historical_reference: Mapping[str, object] | None = None,
 ) -> tuple[list[Finding], str | None]:
     """Inspect checkout data rather than accepting trust labels in comments."""
     findings: list[Finding] = []
@@ -1473,6 +1477,22 @@ def certification_checkout_findings(
             )
             if "repository" in checkouts["candidate"]:
                 raise ValueError("delivery candidate must use the workflow repository")
+        if historical_reference is not None:
+            if pull_request_base or set(historical_reference) != {
+                "source_sha",
+                "verifier_sha",
+            }:
+                raise ValueError("invalid historical reference verification context")
+            if any(
+                re.fullmatch(r"[0-9a-f]{40}", str(value)) is None
+                for value in historical_reference.values()
+            ):
+                raise ValueError("historical reference identities must be immutable")
+            if pin != historical_reference["verifier_sha"]:
+                raise ValueError(
+                    "historical reference must retain its approved verifier"
+                )
+            expected_candidate = historical_reference["source_sha"]
         if checkouts["candidate"].get("ref") != expected_candidate:
             raise ValueError("candidate checkout must use the exact event source SHA")
         verification_steps = [
@@ -1615,7 +1635,12 @@ def ci_profile_routing_findings(
         (".github/workflows/certification-integrity.yml", integrity_text, True),
     ):
         checkout_findings, pin = certification_checkout_findings(
-            text, relative, pull_request_base=pull_request_base
+            text,
+            relative,
+            pull_request_base=pull_request_base,
+            historical_reference=configuration.get("historical_delivery_reference")
+            if not pull_request_base
+            else None,
         )
         findings.extend(checkout_findings)
         if pin is not None:
@@ -1676,7 +1701,33 @@ def ci_profile_routing_findings(
                     relative,
                 )
             )
-        if text.count(upload_action) != 1:
+        retention_text = text
+        if relative == ".github/workflows/cd.yml":
+            # Package subject uploads are independently qualified by the release
+            # supply-chain contract. This rule checks certification retention.
+            try:
+                workflow = yaml.safe_load(text)
+                retention_job = workflow["jobs"]["release-certification"]
+                retention_text = yaml.safe_dump(retention_job, sort_keys=False)
+                all_uploads = [
+                    step.get("uses", "")
+                    for job in workflow["jobs"].values()
+                    for step in job.get("steps", [])
+                    if isinstance(step, dict)
+                    and str(step.get("uses", "")).startswith("actions/upload-artifact@")
+                ]
+                if any(action != upload_action for action in all_uploads):
+                    findings.append(
+                        (
+                            f"{relative}: package uploads must use the governed immutable action",
+                            relative,
+                        )
+                    )
+            except (KeyError, TypeError, yaml.YAMLError):
+                findings.append(
+                    (f"{relative}: malformed certification retention job", relative)
+                )
+        if retention_text.count(upload_action) != 1:
             findings.append(
                 (
                     f"{relative}: certification artifact upload must use the governed immutable action",
@@ -1684,9 +1735,9 @@ def ci_profile_routing_findings(
                 )
             )
         if (
-            "if: ${{ always() }}" not in text
-            or "if-no-files-found: warn" not in text
-            or text.count("continue-on-error: true") != 1
+            "if: ${{ always() }}" not in retention_text
+            or "if-no-files-found: warn" not in retention_text
+            or retention_text.count("continue-on-error: true") != 1
         ):
             findings.append(
                 (

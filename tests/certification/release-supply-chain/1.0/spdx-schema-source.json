@@ -1,0 +1,11 @@
+{
+    "source": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.3/schemas/spdx-schema.json",
+    "license": "CC-BY-3.0",
+    "purpose": "Offline SPDX 2.3 JSON schema, formatted by the canonical repository formatter with unchanged schema semantics; package verification codes and exact file relationships are additionally enforced by the release producer.",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "attribution": "SPDX Specification contributors; SPDX 2.3 JSON Schema",
+    "upstream_license": "https://github.com/spdx/spdx-spec/blob/v2.3/LICENSE",
+    "upstream_sha256": "239208b7ac287b3cf5d9a9af23f9d69863971102a5e1587a27a398b43490b89b",
+    "vendored_sha256": "d1c22d931cd88437413cbf1bfe4ed29d7301e1f95a22a3b6ea4e047bd3c12e0b",
+    "semantic_sha256": "dd8a3526822f12bc69b76e03c3ada535f7c164fa633f87514f8498b1168534e6"
+}

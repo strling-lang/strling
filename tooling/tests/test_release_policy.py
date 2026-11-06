@@ -41,7 +41,7 @@ class ReleasePolicyTests(unittest.TestCase):
             "governance/release-policy.json#/product/version",
             product["version_authority"],
         )
-        self.assertEqual("preparation", product["repository_projection"]["status"])
+        self.assertEqual("active", product["repository_projection"]["status"])
 
     def test_duplicate_version_surface_is_rejected(self) -> None:
         policy = self.mutated()

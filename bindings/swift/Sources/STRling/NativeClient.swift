@@ -57,6 +57,21 @@ public final class NativeClient: @unchecked Sendable {
             )
         }
         self.libraryPath = libraryPath
+        let url = URL(fileURLWithPath: libraryPath)
+        guard let size = try url.resourceValues(forKeys: [.fileSizeKey]).fileSize,
+              size <= 128 * 1024 * 1024
+        else {
+            throw NativeAdapterError(kind: .load, detail: "native library exceeds package limit")
+        }
+        let bytes = try Data(contentsOf: url)
+        let prefix = Data("\0STRLING-PRODUCT-VERSION:".utf8)
+        let expected = Data("\0STRLING-PRODUCT-VERSION:\(STRling.version)\0".utf8)
+        guard let marker = bytes.range(of: prefix),
+              bytes.range(of: prefix, in: marker.upperBound..<bytes.endIndex) == nil,
+              bytes.range(of: expected)?.lowerBound == marker.lowerBound
+        else {
+            throw NativeAdapterError(kind: .load, detail: "native STRling product identity mismatch")
+        }
         var error = [CChar](repeating: 0, count: 512)
         let opened = libraryPath.withCString { pointer in
             error.withUnsafeMutableBufferPointer { buffer in

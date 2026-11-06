@@ -5,7 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <PackageId>STRling.FSharp</PackageId>
-        <Version>3.0.0</Version>
+        <Version>4.0.0</Version>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -14,7 +14,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="../../../csharp/src/STRling/STRling.csproj" />
+        <ProjectReference Include="../../../csharp/src/STRling/STRling.csproj" Condition="'$(STRlingReleasePackage)' != 'true'" />
+        <PackageReference Include="STRling" Version="[$(Version)]" Condition="'$(STRlingReleasePackage)' == 'true'" />
         <PackageReference Include="FSharp.Core" Version="9.0.300" />
     </ItemGroup>
 

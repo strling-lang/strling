@@ -22,47 +22,75 @@
         "waivers"
     ],
     "properties": {
-        "policy_version": { "$ref": "#/$defs/semver" },
-        "product": { "$ref": "#/$defs/product" },
+        "policy_version": {
+            "$ref": "#/$defs/semver"
+        },
+        "product": {
+            "$ref": "#/$defs/product"
+        },
         "version_kinds": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/$defs/versionKind" }
+            "items": {
+                "$ref": "#/$defs/versionKind"
+            }
         },
         "version_surfaces": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/$defs/versionSurface" }
+            "items": {
+                "$ref": "#/$defs/versionSurface"
+            }
         },
         "support_tiers": {
             "type": "array",
             "minItems": 3,
-            "items": { "$ref": "#/$defs/supportTier" }
+            "items": {
+                "$ref": "#/$defs/supportTier"
+            }
         },
         "support_claims": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/$defs/supportClaim" }
+            "items": {
+                "$ref": "#/$defs/supportClaim"
+            }
         },
-        "target_profile_policy": { "$ref": "#/$defs/targetProfilePolicy" },
-        "runtime_platform_policy": { "$ref": "#/$defs/runtimePlatformPolicy" },
+        "target_profile_policy": {
+            "$ref": "#/$defs/targetProfilePolicy"
+        },
+        "runtime_platform_policy": {
+            "$ref": "#/$defs/runtimePlatformPolicy"
+        },
         "release_channels": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/$defs/releaseChannel" }
+            "items": {
+                "$ref": "#/$defs/releaseChannel"
+            }
         },
         "excluded_release_channels": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/$defs/excludedReleaseChannel" }
+            "items": {
+                "$ref": "#/$defs/excludedReleaseChannel"
+            }
         },
-        "compatibility": { "$ref": "#/$defs/compatibility" },
-        "release_lifecycle": { "$ref": "#/$defs/releaseLifecycle" },
-        "publication": { "$ref": "#/$defs/publication" },
+        "compatibility": {
+            "$ref": "#/$defs/compatibility"
+        },
+        "release_lifecycle": {
+            "$ref": "#/$defs/releaseLifecycle"
+        },
+        "publication": {
+            "$ref": "#/$defs/publication"
+        },
         "post_publication_verification": {
             "$ref": "#/$defs/postPublicationVerification"
         },
-        "waivers": { "$ref": "#/$defs/waivers" }
+        "waivers": {
+            "$ref": "#/$defs/waivers"
+        }
     },
     "$defs": {
         "id": {
@@ -74,11 +102,16 @@
             "minLength": 1,
             "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
         },
-        "nonEmptyString": { "type": "string", "minLength": 1 },
+        "nonEmptyString": {
+            "type": "string",
+            "minLength": 1
+        },
         "nonEmptyStrings": {
             "type": "array",
             "minItems": 1,
-            "items": { "$ref": "#/$defs/nonEmptyString" }
+            "items": {
+                "$ref": "#/$defs/nonEmptyString"
+            }
         },
         "semver": {
             "type": "string",
@@ -95,8 +128,12 @@
                 "semver_rules"
             ],
             "properties": {
-                "name": { "const": "STRling" },
-                "version": { "$ref": "#/$defs/semver" },
+                "name": {
+                    "const": "STRling"
+                },
+                "version": {
+                    "$ref": "#/$defs/semver"
+                },
                 "version_authority": {
                     "const": "governance/release-policy.json#/product/version"
                 },
@@ -110,18 +147,26 @@
                         "activation_rule"
                     ],
                     "properties": {
-                        "version": { "$ref": "#/$defs/semver" },
-                        "status": { "enum": ["preparation", "active"] },
+                        "version": {
+                            "$ref": "#/$defs/semver"
+                        },
+                        "status": {
+                            "enum": ["preparation", "active"]
+                        },
                         "activation_owner": {
                             "$ref": "#/$defs/nonEmptyString"
                         },
-                        "activation_rule": { "$ref": "#/$defs/nonEmptyString" }
+                        "activation_rule": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        }
                     }
                 },
                 "semver_rules": {
                     "type": "object",
                     "minProperties": 7,
-                    "additionalProperties": { "$ref": "#/$defs/nonEmptyString" }
+                    "additionalProperties": {
+                        "$ref": "#/$defs/nonEmptyString"
+                    }
                 }
             }
         },
@@ -135,10 +180,18 @@
                 "product_version_effect"
             ],
             "properties": {
-                "id": { "$ref": "#/$defs/id" },
-                "authority": { "$ref": "#/$defs/nonEmptyString" },
-                "semantics": { "$ref": "#/$defs/nonEmptyString" },
-                "product_version_effect": { "$ref": "#/$defs/nonEmptyString" }
+                "id": {
+                    "$ref": "#/$defs/id"
+                },
+                "authority": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "semantics": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "product_version_effect": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "probe": {
@@ -156,9 +209,16 @@
                         "absent"
                     ]
                 },
-                "pointer": { "type": "string", "pattern": "^/" },
-                "pattern": { "$ref": "#/$defs/nonEmptyString" },
-                "expected": { "$ref": "#/$defs/nonEmptyString" }
+                "pointer": {
+                    "type": "string",
+                    "pattern": "^/"
+                },
+                "pattern": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "expected": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "versionSurface": {
@@ -178,17 +238,39 @@
                 "probe"
             ],
             "properties": {
-                "id": { "$ref": "#/$defs/id" },
-                "surface": { "$ref": "#/$defs/nonEmptyString" },
-                "path": { "$ref": "#/$defs/path" },
-                "current_version": { "type": ["string", "null"] },
-                "authority": { "$ref": "#/$defs/nonEmptyString" },
-                "consumer_visible": { "type": "boolean" },
-                "coordinates_with_product": { "type": "boolean" },
-                "independently_versioned": { "type": "boolean" },
-                "publication_destination": { "$ref": "#/$defs/nonEmptyString" },
-                "disposition": { "$ref": "#/$defs/nonEmptyString" },
-                "probe": { "$ref": "#/$defs/probe" }
+                "id": {
+                    "$ref": "#/$defs/id"
+                },
+                "surface": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "path": {
+                    "$ref": "#/$defs/path"
+                },
+                "current_version": {
+                    "type": ["string", "null"]
+                },
+                "authority": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "consumer_visible": {
+                    "type": "boolean"
+                },
+                "coordinates_with_product": {
+                    "type": "boolean"
+                },
+                "independently_versioned": {
+                    "type": "boolean"
+                },
+                "publication_destination": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "disposition": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "probe": {
+                    "$ref": "#/$defs/probe"
+                }
             }
         },
         "supportTier": {
@@ -196,10 +278,18 @@
             "additionalProperties": false,
             "required": ["id", "definition", "requirements", "change_rule"],
             "properties": {
-                "id": { "enum": ["Supported", "Preview", "Legacy"] },
-                "definition": { "$ref": "#/$defs/nonEmptyString" },
-                "requirements": { "$ref": "#/$defs/nonEmptyStrings" },
-                "change_rule": { "$ref": "#/$defs/nonEmptyString" }
+                "id": {
+                    "enum": ["Supported", "Preview", "Legacy"]
+                },
+                "definition": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "requirements": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                },
+                "change_rule": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "supportClaim": {
@@ -216,7 +306,9 @@
                 "limitations"
             ],
             "properties": {
-                "id": { "$ref": "#/$defs/id" },
+                "id": {
+                    "$ref": "#/$defs/id"
+                },
                 "dimension": {
                     "enum": [
                         "binding",
@@ -226,8 +318,12 @@
                         "api"
                     ]
                 },
-                "subject": { "$ref": "#/$defs/nonEmptyString" },
-                "tier": { "enum": ["Supported", "Preview", "Legacy"] },
+                "subject": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "tier": {
+                    "enum": ["Supported", "Preview", "Legacy"]
+                },
                 "certification_status": {
                     "enum": [
                         "certified",
@@ -236,13 +332,40 @@
                         "legacy-evidence"
                     ]
                 },
-                "scope": { "$ref": "#/$defs/nonEmptyString" },
-                "evidence": { "$ref": "#/$defs/nonEmptyStrings" },
+                "scope": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "evidence": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                },
                 "limitations": {
                     "type": "array",
-                    "items": { "$ref": "#/$defs/nonEmptyString" }
+                    "items": {
+                        "$ref": "#/$defs/nonEmptyString"
+                    }
+                },
+                "platforms": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "enum": ["windows-x86_64", "linux-x86_64"]
+                    }
                 }
-            }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "dimension": {
+                                "const": "binding"
+                            }
+                        }
+                    },
+                    "then": {
+                        "required": ["platforms"]
+                    }
+                }
+            ]
         },
         "releaseChannel": {
             "type": "object",
@@ -264,10 +387,18 @@
                         "stable"
                     ]
                 },
-                "public": { "type": "boolean" },
-                "version_notation": { "$ref": "#/$defs/nonEmptyString" },
-                "immutability": { "$ref": "#/$defs/nonEmptyString" },
-                "semantics": { "$ref": "#/$defs/nonEmptyString" }
+                "public": {
+                    "type": "boolean"
+                },
+                "version_notation": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "immutability": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "semantics": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "excludedReleaseChannel": {
@@ -275,8 +406,12 @@
             "additionalProperties": false,
             "required": ["id", "reason"],
             "properties": {
-                "id": { "enum": ["alpha", "beta"] },
-                "reason": { "$ref": "#/$defs/nonEmptyString" }
+                "id": {
+                    "enum": ["alpha", "beta"]
+                },
+                "reason": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "targetProfilePolicy": {
@@ -293,16 +428,30 @@
                 "uncertainty"
             ],
             "properties": {
-                "broad_family_claims": { "const": false },
+                "broad_family_claims": {
+                    "const": false
+                },
                 "minimum_supported_versions": {
                     "$ref": "#/$defs/nonEmptyString"
                 },
-                "tested_ranges": { "$ref": "#/$defs/nonEmptyString" },
-                "newer_versions": { "$ref": "#/$defs/nonEmptyString" },
-                "eol_versions": { "$ref": "#/$defs/nonEmptyString" },
-                "prerelease_engines": { "$ref": "#/$defs/nonEmptyString" },
-                "profile_revisions": { "$ref": "#/$defs/nonEmptyString" },
-                "uncertainty": { "$ref": "#/$defs/nonEmptyString" }
+                "tested_ranges": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "newer_versions": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "eol_versions": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "prerelease_engines": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "profile_revisions": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "uncertainty": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "runtimePlatformPolicy": {
@@ -318,15 +467,27 @@
                 "deferred_toolchains"
             ],
             "properties": {
-                "constraint_authority": { "const": "toolchain.json#/tools" },
-                "supported": { "$ref": "#/$defs/nonEmptyString" },
+                "constraint_authority": {
+                    "const": "toolchain.json#/tools"
+                },
+                "supported": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
                 "known_compatible_uncertified": {
                     "$ref": "#/$defs/nonEmptyString"
                 },
-                "preview": { "$ref": "#/$defs/nonEmptyString" },
-                "unsupported": { "$ref": "#/$defs/nonEmptyString" },
-                "architectures": { "$ref": "#/$defs/nonEmptyString" },
-                "deferred_toolchains": { "$ref": "#/$defs/nonEmptyString" }
+                "preview": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "unsupported": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "architectures": {
+                    "$ref": "#/$defs/nonEmptyString"
+                },
+                "deferred_toolchains": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "compatibility": {
@@ -343,7 +504,9 @@
                         "serialization",
                         "cli"
                     ],
-                    "additionalProperties": { "$ref": "#/$defs/nonEmptyString" }
+                    "additionalProperties": {
+                        "$ref": "#/$defs/nonEmptyString"
+                    }
                 },
                 "surfaces": {
                     "type": "array",
@@ -353,8 +516,12 @@
                         "additionalProperties": false,
                         "required": ["id", "guarantees"],
                         "properties": {
-                            "id": { "$ref": "#/$defs/id" },
-                            "guarantees": { "$ref": "#/$defs/nonEmptyStrings" }
+                            "id": {
+                                "$ref": "#/$defs/id"
+                            },
+                            "guarantees": {
+                                "$ref": "#/$defs/nonEmptyStrings"
+                            }
                         }
                     }
                 },
@@ -369,11 +536,21 @@
                         "emergency"
                     ],
                     "properties": {
-                        "notice": { "$ref": "#/$defs/nonEmptyString" },
-                        "minimum_window": { "$ref": "#/$defs/nonEmptyString" },
-                        "replacement": { "$ref": "#/$defs/nonEmptyString" },
-                        "removal": { "$ref": "#/$defs/nonEmptyString" },
-                        "emergency": { "$ref": "#/$defs/nonEmptyString" }
+                        "notice": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "minimum_window": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "replacement": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "removal": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "emergency": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        }
                     }
                 }
             }
@@ -383,9 +560,15 @@
             "additionalProperties": false,
             "required": ["from", "to", "requirements"],
             "properties": {
-                "from": { "$ref": "#/$defs/id" },
-                "to": { "$ref": "#/$defs/id" },
-                "requirements": { "$ref": "#/$defs/nonEmptyStrings" }
+                "from": {
+                    "$ref": "#/$defs/id"
+                },
+                "to": {
+                    "$ref": "#/$defs/id"
+                },
+                "requirements": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                }
             }
         },
         "releaseLifecycle": {
@@ -406,17 +589,25 @@
                         "additionalProperties": false,
                         "required": ["id", "meaning"],
                         "properties": {
-                            "id": { "$ref": "#/$defs/id" },
-                            "meaning": { "$ref": "#/$defs/nonEmptyString" }
+                            "id": {
+                                "$ref": "#/$defs/id"
+                            },
+                            "meaning": {
+                                "$ref": "#/$defs/nonEmptyString"
+                            }
                         }
                     }
                 },
                 "transitions": {
                     "type": "array",
                     "minItems": 5,
-                    "items": { "$ref": "#/$defs/transition" }
+                    "items": {
+                        "$ref": "#/$defs/transition"
+                    }
                 },
-                "stable_evidence": { "$ref": "#/$defs/nonEmptyStrings" },
+                "stable_evidence": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                },
                 "release_candidate": {
                     "type": "object",
                     "additionalProperties": false,
@@ -430,13 +621,27 @@
                         "evidence_binding"
                     ],
                     "properties": {
-                        "notation": { "$ref": "#/$defs/nonEmptyString" },
-                        "public_coordinates": { "type": "boolean" },
-                        "replaceable": { "const": false },
-                        "promotion": { "$ref": "#/$defs/nonEmptyString" },
-                        "source_identity": { "$ref": "#/$defs/nonEmptyString" },
-                        "change_rule": { "$ref": "#/$defs/nonEmptyString" },
-                        "evidence_binding": { "$ref": "#/$defs/nonEmptyString" }
+                        "notation": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "public_coordinates": {
+                            "type": "boolean"
+                        },
+                        "replaceable": {
+                            "const": false
+                        },
+                        "promotion": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "source_identity": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "change_rule": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        },
+                        "evidence_binding": {
+                            "$ref": "#/$defs/nonEmptyString"
+                        }
                     }
                 }
             }
@@ -454,13 +659,27 @@
                 "tooling_guard"
             ],
             "properties": {
-                "certification_authorizes_publication": { "const": false },
-                "owner_authorization_required": { "const": true },
-                "authorized_task": { "const": "P20-T05" },
-                "credentials_forbidden_before_authorization": { "const": true },
-                "published_versions_immutable": { "const": true },
-                "covered_actions": { "$ref": "#/$defs/nonEmptyStrings" },
-                "tooling_guard": { "$ref": "#/$defs/nonEmptyString" }
+                "certification_authorizes_publication": {
+                    "const": false
+                },
+                "owner_authorization_required": {
+                    "const": true
+                },
+                "authorized_task": {
+                    "const": "P20-T05"
+                },
+                "credentials_forbidden_before_authorization": {
+                    "const": true
+                },
+                "published_versions_immutable": {
+                    "const": true
+                },
+                "covered_actions": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                },
+                "tooling_guard": {
+                    "$ref": "#/$defs/nonEmptyString"
+                }
             }
         },
         "postPublicationVerification": {
@@ -473,10 +692,18 @@
                 "failure_handling"
             ],
             "properties": {
-                "owner_task": { "const": "P20-T03" },
-                "independent_public_fetch": { "const": true },
-                "checks": { "$ref": "#/$defs/nonEmptyStrings" },
-                "failure_handling": { "$ref": "#/$defs/nonEmptyStrings" }
+                "owner_task": {
+                    "const": "P20-T03"
+                },
+                "independent_public_fetch": {
+                    "const": true
+                },
+                "checks": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                },
+                "failure_handling": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                }
             }
         },
         "waivers": {
@@ -492,8 +719,12 @@
                     },
                     "uniqueItems": true
                 },
-                "requirements": { "$ref": "#/$defs/nonEmptyStrings" },
-                "stable_release_blockers": { "$ref": "#/$defs/nonEmptyStrings" }
+                "requirements": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                },
+                "stable_release_blockers": {
+                    "$ref": "#/$defs/nonEmptyStrings"
+                }
             }
         }
     }

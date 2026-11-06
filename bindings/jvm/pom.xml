@@ -6,7 +6,7 @@
 
     <groupId>com.strling</groupId>
     <artifactId>strling-jvm</artifactId>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
     <packaging>jar</packaging>
 
     <name>STRling JVM bridge</name>
@@ -21,6 +21,13 @@
         </license>
     </licenses>
 
+    <developers><developer><id>strling-lang</id><name>STRling Team</name></developer></developers>
+    <scm>
+        <connection>scm:git:https://github.com/strling-lang/strling.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/strling-lang/strling.git</developerConnection>
+        <url>https://github.com/strling-lang/strling</url>
+        <tag>v${project.version}</tag>
+    </scm>
     <properties>
         <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -50,6 +57,13 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>../..</directory>
+                <includes><include>LICENSE</include></includes>
+                <targetPath>META-INF</targetPath>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -9,7 +9,7 @@
 
 namespace strling {
 
-inline constexpr std::string_view package_version = "3.0.0";
+inline constexpr std::string_view package_version = "4.0.0";
 
 class response final {
 public:

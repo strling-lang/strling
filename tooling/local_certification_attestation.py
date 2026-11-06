@@ -168,8 +168,15 @@ def _public_key_fingerprint(public_key: str) -> str:
     return f"SHA256:{encoded.rstrip('=')}"
 
 
-def load_trust_policy(trust_root: Path) -> dict[str, Any]:
-    path = trust_root / "governance/local-certification-trust.json"
+def load_trust_policy(
+    trust_root: Path, policy_name: str = "local-certification-trust.json"
+) -> dict[str, Any]:
+    if policy_name not in {
+        "local-certification-trust.json",
+        "release-certification-trust.json",
+    }:
+        raise AttestationError("unknown certification trust context")
+    path = trust_root / "governance" / policy_name
     trust = _load_json(path)
     _validate_schema(
         trust,
@@ -196,8 +203,12 @@ def load_trust_policy(trust_root: Path) -> dict[str, Any]:
     return trust
 
 
-def validate_contract(repository_root: Path, trust_root: Path) -> dict[str, Any]:
-    trust = load_trust_policy(trust_root)
+def validate_contract(
+    repository_root: Path,
+    trust_root: Path,
+    policy_name: str = "local-certification-trust.json",
+) -> dict[str, Any]:
+    trust = load_trust_policy(trust_root, policy_name)
     toolchain = _load_json(repository_root / "toolchain.json")
     try:
         profiles = _helper_module("profile_composition").resolve_profiles(
@@ -236,9 +247,13 @@ def _result(
     }
 
 
-def contract_result(repository_root: Path, trust_root: Path) -> dict[str, object]:
+def contract_result(
+    repository_root: Path,
+    trust_root: Path,
+    policy_name: str = "local-certification-trust.json",
+) -> dict[str, object]:
     try:
-        trust = validate_contract(repository_root, trust_root)
+        trust = validate_contract(repository_root, trust_root, policy_name)
     except AttestationError as exc:
         return _result(
             CONTRACT_OPERATION,
@@ -1844,10 +1859,11 @@ def create_attestation(
     private_key: Path,
     certifier_id: str,
     invocation_id: str,
+    policy_name: str = "local-certification-trust.json",
 ) -> dict[str, Any]:
     repository_root = repository_root.resolve()
     trust_root = trust_root.resolve()
-    trust = validate_contract(repository_root, trust_root)
+    trust = validate_contract(repository_root, trust_root, policy_name)
     if not re.fullmatch(r"[0-9a-f]{32}", invocation_id):
         raise AttestationError(
             "certification invocation ID must be 32 lowercase hex characters"
@@ -2003,6 +2019,7 @@ def create_attestation(
             repository_root=repository_root,
             trust_root=trust_root,
             bundle_dir=output_dir,
+            policy_name=policy_name,
         )
         return attestation
     except Exception:
@@ -2099,12 +2116,16 @@ def _verify_evidence_files(
 
 
 def verify_attestation(
-    *, repository_root: Path, trust_root: Path, bundle_dir: Path
+    *,
+    repository_root: Path,
+    trust_root: Path,
+    bundle_dir: Path,
+    policy_name: str = "local-certification-trust.json",
 ) -> dict[str, Any]:
     repository_root = repository_root.resolve()
     trust_root = trust_root.resolve()
     bundle_dir = bundle_dir.resolve()
-    trust = validate_contract(repository_root, trust_root)
+    trust = validate_contract(repository_root, trust_root, policy_name)
     attestation = _load_json(bundle_dir / "attestation.json")
     _validate_schema(
         attestation,
@@ -2257,13 +2278,17 @@ def verify_attestation(
 
 
 def verification_result(
-    repository_root: Path, trust_root: Path, bundle_dir: Path
+    repository_root: Path,
+    trust_root: Path,
+    bundle_dir: Path,
+    policy_name: str = "local-certification-trust.json",
 ) -> dict[str, object]:
     try:
         evidence = verify_attestation(
             repository_root=repository_root,
             trust_root=trust_root,
             bundle_dir=bundle_dir,
+            policy_name=policy_name,
         )
     except AttestationError as exc:
         return _result(
@@ -2301,6 +2326,11 @@ def _parser() -> argparse.ArgumentParser:
         "--repository-root", type=Path, default=Path(__file__).resolve().parents[1]
     )
     parser.add_argument("--trust-root", type=Path)
+    parser.add_argument(
+        "--trust-policy",
+        choices=["local-certification-trust.json", "release-certification-trust.json"],
+        default="local-certification-trust.json",
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
     contract = subparsers.add_parser("contract")
     contract.add_argument("--json", action="store_true")
@@ -2324,7 +2354,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     repository_root = arguments.repository_root.resolve()
     trust_root = (arguments.trust_root or repository_root).resolve()
     if arguments.command == "contract":
-        result = contract_result(repository_root, trust_root)
+        result = contract_result(repository_root, trust_root, arguments.trust_policy)
     elif arguments.command == "attest":
         try:
             attestation = create_attestation(
@@ -2339,6 +2369,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 private_key=arguments.private_key,
                 certifier_id=arguments.certifier_id,
                 invocation_id=arguments.invocation_id,
+                policy_name=arguments.trust_policy,
             )
         except AttestationError as exc:
             print(f"Error: {exc}", file=sys.stderr)
@@ -2361,9 +2392,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         return 0
     else:
-        trust = load_trust_policy(trust_root)
+        trust = load_trust_policy(trust_root, arguments.trust_policy)
         bundle = arguments.bundle or repository_root / trust["bundle_path"]
-        result = verification_result(repository_root, trust_root, bundle)
+        result = verification_result(
+            repository_root, trust_root, bundle, arguments.trust_policy
+        )
     print(
         json.dumps(result, sort_keys=True)
         if arguments.json

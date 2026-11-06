@@ -2,42 +2,46 @@
     "registry_version": 1,
     "inventory": {
         "required_families": [
-            "deep-quality-source-identities",
-            "public-contract-snapshots",
-            "interop-c-header",
             "adapter-migration-baseline",
-            "typescript-python-adapter-migration-baseline",
+            "adversarial-semantic-observations",
+            "binding-support-certification-evidence",
+            "deep-quality-source-identities",
+            "dependency-license-evidence",
             "dotnet-adapter-migration-baseline",
-            "go-dart-swift-adapter-migration-baseline",
+            "dotnet-adapter-release-graph",
+            "dotnet-stdlib-surface-projections",
             "dynamic-language-adapter-migration-baseline",
-            "dynamic-language-stdlib-surface-projections",
             "dynamic-language-adapter-release-graphs",
+            "dynamic-language-stdlib-surface-projections",
+            "explanation-rendering-fixtures",
+            "go-dart-swift-adapter-migration-baseline",
+            "go-dart-swift-stdlib-surface-projections",
+            "initial-portability-matrix",
+            "interop-c-header",
             "jvm-adapter-migration-baseline",
             "jvm-adapter-release-graph",
-            "dotnet-adapter-release-graph",
-            "version-synchronized-metadata",
-            "package-manager-lockfiles",
-            "lua-release-rockspec",
-            "lsp-extension-payload",
-            "shared-cross-engine-observations",
-            "initial-portability-matrix",
-            "stdlib-runtime-observations",
-            "stdlib-compatibility-projections",
-            "stdlib-surface-projections",
             "jvm-stdlib-surface-projections",
-            "go-dart-swift-stdlib-surface-projections",
-            "dotnet-stdlib-surface-projections",
-            "explanation-rendering-fixtures",
-            "binding-support-certification-evidence",
+            "kotlin-product-verification",
+            "legacy-removal-inventory-evidence",
+            "lsp-extension-payload",
+            "lua-release-rockspec",
+            "native-kernel-third-party-notices",
+            "package-manager-lockfiles",
+            "performance-resource-source-identities",
             "profile-source-definitions",
-            "target-adapter-certification-matrices",
-            "dependency-license-evidence",
+            "public-contract-snapshots",
+            "release-certification-trust",
+            "release-policy-documentation",
+            "release-supply-chain-contract-fixture",
             "rewrite-strategy-identity-projections",
             "semantic-authority-retirement-evidence",
-            "legacy-removal-inventory-evidence",
-            "release-policy-documentation",
-            "performance-resource-source-identities",
-            "adversarial-semantic-observations"
+            "shared-cross-engine-observations",
+            "stdlib-compatibility-projections",
+            "stdlib-runtime-observations",
+            "stdlib-surface-projections",
+            "target-adapter-certification-matrices",
+            "typescript-python-adapter-migration-baseline",
+            "version-synchronized-metadata"
         ],
         "governed_output_patterns": [
             "tests/certification/deep-quality/1.0/manifest.json",
@@ -945,28 +949,51 @@
             "category": "version-synchronized-metadata",
             "description": "Binding package and runtime version fields projected from the single governed product repository projection.",
             "authoritative_sources": ["governance/release-policy.json"],
-            "generator_inputs": ["governance/release-policy.json"],
+            "generator_inputs": [
+                "governance/release-policy.json",
+                "tooling/sync_versions.py"
+            ],
             "generator": {
                 "implementation_paths": ["tooling/sync_versions.py"],
                 "command": ["python3", "tooling/sync_versions.py", "--write"],
                 "working_directory": "."
             },
             "outputs": [
+                "Cargo.lock",
+                "Cargo.toml",
+                "bindings/c/CMakeLists.txt",
+                "bindings/c/include/strling.h",
                 "bindings/cpp/CMakeLists.txt",
+                "bindings/cpp/include/strling/native.hpp",
+                "bindings/csharp/src/STRling.Cli/STRling.Cli.csproj",
                 "bindings/csharp/src/STRling/STRling.csproj",
+                "bindings/dart/lib/src/native_client.dart",
                 "bindings/dart/pubspec.yaml",
                 "bindings/fsharp/src/STRling.FSharp/STRling.FSharp.fsproj",
+                "bindings/go/native_cgo.go",
+                "bindings/interop/src/product_version.rs",
                 "bindings/java/pom.xml",
                 "bindings/java/src/main/java/com/strling/Strling.java",
                 "bindings/jvm/pom.xml",
+                "bindings/jvm/src/main/java/com/strling/jvm/NativeClient.java",
                 "bindings/kotlin/build.gradle.kts",
+                "bindings/kotlin/gradle.lockfile",
+                "bindings/kotlin/src/main/kotlin/strling/STRling.kt",
+                "bindings/perl/dist.ini",
                 "bindings/perl/lib/STRling.pm",
                 "bindings/php/composer.json",
+                "bindings/php/composer.lock",
                 "bindings/php/src/STRling.php",
+                "bindings/python/pyproject.toml",
+                "bindings/python/src/STRling/_product_version.py",
                 "bindings/r/DESCRIPTION",
                 "bindings/ruby/lib/strling.rb",
-                "Cargo.toml",
-                "bindings/typescript/package.json"
+                "bindings/swift/Sources/STRling/Version.swift",
+                "bindings/typescript/package-lock.json",
+                "bindings/typescript/package.json",
+                "bindings/typescript/src/STRling/product_version.ts",
+                "governance/security-policy.json",
+                "tests/certification/performance-resource/1.0/runner/Cargo.lock"
             ],
             "determinism": "verified",
             "checked_in": true,
@@ -981,9 +1008,9 @@
                     [
                         "python3",
                         "-m",
-                        "unittest",
-                        "tooling.tests.test_sync_versions",
-                        "-q"
+                        "pytest",
+                        "-q",
+                        "tooling/tests/test_sync_versions.py"
                     ]
                 ]
             },
@@ -2288,6 +2315,211 @@
             "preparation": {
                 "automatic_regeneration": "governed-refresh",
                 "direct_dependents": []
+            },
+            "enforcement": "enforced"
+        },
+        {
+            "id": "release-supply-chain-contract-fixture",
+            "category": "audit-certification-output",
+            "description": "Synthetic release supply-chain fixture input identities; never live artifact or publication evidence.",
+            "authoritative_sources": [
+                "tests/certification/release-supply-chain/1.0/manifest.json"
+            ],
+            "generator_inputs": [
+                "tests/certification/release-supply-chain/1.0/manifest.json",
+                "governance/schemas/release-supply-chain-certification.schema.json",
+                "tooling/release_supply_chain.py"
+            ],
+            "generator": {
+                "implementation_paths": ["tooling/release_supply_chain.py"],
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.release_supply_chain",
+                    "write-contract-fixture"
+                ],
+                "working_directory": "."
+            },
+            "outputs": [
+                "tests/certification/release-supply-chain/1.0/fixtures/valid-evidence.json"
+            ],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "operational-projection",
+            "verification": {
+                "method": "command-check",
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.release_supply_chain",
+                    "check",
+                    "--json"
+                ]
+            },
+            "preparation": {
+                "automatic_regeneration": "canonical",
+                "direct_dependents": [
+                    [
+                        "python3",
+                        "-m",
+                        "unittest",
+                        "tooling.tests.test_release_supply_chain",
+                        "-q"
+                    ]
+                ]
+            },
+            "enforcement": "enforced"
+        },
+        {
+            "id": "release-certification-trust",
+            "category": "version-synchronized-metadata",
+            "description": "Separate release packaging evidence namespace using the existing certifiers, keys, required profiles, and waiver authority; historical H08 trust remains unchanged.",
+            "authoritative_sources": [
+                "governance/local-certification-trust.json"
+            ],
+            "generator_inputs": [
+                "governance/local-certification-trust.json",
+                "tooling/release_supply_chain.py"
+            ],
+            "generator": {
+                "implementation_paths": ["tooling/release_supply_chain.py"],
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.release_supply_chain",
+                    "write-release-trust"
+                ],
+                "working_directory": "."
+            },
+            "outputs": ["governance/release-certification-trust.json"],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "operational-projection",
+            "verification": {
+                "method": "command-check",
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.release_supply_chain",
+                    "check-release-trust"
+                ]
+            },
+            "preparation": {
+                "automatic_regeneration": "canonical",
+                "direct_dependents": [
+                    [
+                        "python3",
+                        "-m",
+                        "unittest",
+                        "tooling.tests.test_local_certification_attestation",
+                        "-q"
+                    ]
+                ]
+            },
+            "enforcement": "enforced"
+        },
+        {
+            "id": "native-kernel-third-party-notices",
+            "category": "generated-documentation",
+            "description": "Offline notices assembled only from source archives authenticated by the canonical interop Cargo lock; packaged copies are bound by distribution checksums.",
+            "authoritative_sources": [
+                "bindings/interop/Cargo.lock",
+                "bindings/interop/Cargo.toml"
+            ],
+            "generator_inputs": [
+                "bindings/interop/Cargo.lock",
+                "tooling/release_notices.py",
+                "bindings/interop/Cargo.toml"
+            ],
+            "generator": {
+                "implementation_paths": ["tooling/release_notices.py"],
+                "command": [
+                    "python3",
+                    "tooling/release_notices.py",
+                    "--output",
+                    "bindings/interop/THIRD_PARTY_NOTICES.txt"
+                ],
+                "working_directory": "."
+            },
+            "outputs": ["bindings/interop/THIRD_PARTY_NOTICES.txt"],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "operational-projection",
+            "verification": {
+                "method": "command-check",
+                "command": [
+                    "python3",
+                    "tooling/release_notices.py",
+                    "--output",
+                    "bindings/interop/THIRD_PARTY_NOTICES.txt",
+                    "--check"
+                ],
+                "integrity_command": [
+                    "python3",
+                    "tooling/release_notices.py",
+                    "--output",
+                    "bindings/interop/THIRD_PARTY_NOTICES.txt",
+                    "--check"
+                ]
+            },
+            "preparation": {
+                "automatic_regeneration": "canonical",
+                "direct_dependents": []
+            },
+            "enforcement": "enforced"
+        },
+        {
+            "id": "kotlin-product-verification",
+            "category": "package-manager-metadata",
+            "description": "Only the local STRling JVM dependency verification hashes projected from a canonical offline Maven build; third-party verification entries remain reviewed authority.",
+            "authoritative_sources": [
+                "bindings/jvm/pom.xml",
+                "bindings/jvm/src/main/**",
+                "governance/release-policy.json"
+            ],
+            "generator_inputs": [
+                "bindings/jvm/pom.xml",
+                "bindings/jvm/src/main/**",
+                "governance/release-policy.json",
+                "tooling/jvm_adapter_package.py",
+                "tooling/maven_release.py",
+                "tooling/release_payload.py"
+            ],
+            "generator": {
+                "implementation_paths": [
+                    "tooling/jvm_adapter_package.py",
+                    "tooling/maven_release.py"
+                ],
+                "command": [
+                    "python3",
+                    "tooling/jvm_adapter_package.py",
+                    "--write-product-verification"
+                ],
+                "working_directory": "."
+            },
+            "outputs": ["bindings/kotlin/gradle/verification-metadata.xml"],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "operational-projection",
+            "verification": {
+                "method": "command-check",
+                "command": [
+                    "python3",
+                    "tooling/jvm_adapter_package.py",
+                    "--check-product-verification"
+                ]
+            },
+            "preparation": {
+                "automatic_regeneration": "canonical",
+                "direct_dependents": [
+                    [
+                        "python3",
+                        "-m",
+                        "pytest",
+                        "-q",
+                        "tooling/tests/test_kotlin_product_verification.py"
+                    ]
+                ]
             },
             "enforcement": "enforced"
         }

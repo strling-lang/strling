@@ -1,13 +1,32 @@
 from __future__ import annotations
 
 import copy
+import tempfile
 import unittest
+import xml.etree.ElementTree as ET
+from pathlib import Path
 from unittest.mock import patch
 
 from tooling import dotnet_adapter_package as package
 
 
 class DotNetAdapterPackageTests(unittest.TestCase):
+    def test_consumer_coordinates_use_product_version(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            _, csharp, fsharp = package._write_consumer_files(root, root / "feed")
+            for project in (csharp, fsharp):
+                tree = ET.fromstring(project.read_text())
+                refs = [
+                    node.attrib["Version"]
+                    for node in tree.iter("PackageReference")
+                    if node.attrib["Include"].startswith("STRling")
+                ]
+                self.assertTrue(refs)
+                self.assertEqual({package.PRODUCT_VERSION}, set(refs))
+        graph = package.build_graph()
+        self.assertNotIn("{PRODUCT_VERSION}", str(graph))
+
     def test_release_graph_is_exact_and_certifies_one_native_rid(self) -> None:
         graph = package.build_graph()
 

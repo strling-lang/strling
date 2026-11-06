@@ -1,7 +1,7 @@
 Package: strling
 Type: Package
 Title: Thin R Adapter for the Canonical STRling Compiler
-Version: 3.0.0
+Version: 4.0.0
 Authors@R: person(given = "STRling", family = "Project", role = c("aut", "cre"), email = "noreply@example.com")
 Description: Projects canonical request and result data through a caller-selected
     strling.c-abi version 1 library. The package owns host projection and native

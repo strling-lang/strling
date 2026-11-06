@@ -2025,7 +2025,12 @@ def extract_java_class_api(
     javap = _jdk_tool("javap")
     if component == "java":
         run_command(
-            [maven, "-o", "-B", "-q", "-DskipTests", "install"],
+            [
+                sys.executable,
+                str(root / "tooling/jvm_adapter_package.py"),
+                "--install-product",
+                "--skip-tests",
+            ],
             cwd=root / "bindings/jvm",
             runner=runner,
         )
@@ -2161,9 +2166,13 @@ def extract_kotlin_binary_api(
         else _required_tool("STRLING_GRADLE", ("gradle", "gradle.bat"))
     )
     javap = _jdk_tool("javap")
-    maven = _required_tool("STRLING_MAVEN", ("mvn", "mvn.cmd"))
     run_command(
-        [maven, "-o", "-B", "-q", "-DskipTests", "install"],
+        [
+            sys.executable,
+            str(root / "tooling/jvm_adapter_package.py"),
+            "--install-product",
+            "--skip-tests",
+        ],
         cwd=root / "bindings/jvm",
         runner=runner,
     )

@@ -1,22 +1,22 @@
 {
-    "schema_version": "certification-result-v1",
-    "evidence_kind": "synthetic-contract-fixture",
-    "operation_id": "certification.release-supply-chain-contract",
-    "profile": "contract",
-    "status": "passed",
-    "publication_authorized": false,
-    "manifest_fingerprint": "962277776e90764882783f29a382c10d0eeddc0635660128f7d016b001785f5a",
     "checks": [
         {
-            "id": "contract:release-supply-chain-manifest",
-            "status": "passed",
             "details": {
-                "synthetic": true,
                 "live_artifact": false,
-                "publication_authority": false
-            }
+                "publication_authority": false,
+                "synthetic": true
+            },
+            "id": "contract:release-supply-chain-manifest",
+            "status": "passed"
         }
     ],
-    "evidence_fingerprint": "23ad78abe66856682111fab16627e24e9d447e91c65cf62abf84f6a1651ffb44",
-    "disclaimer": "Synthetic contract fixture only; this is not live artifact evidence and cannot authorize publication."
+    "disclaimer": "Synthetic contract fixture only; this is not live artifact evidence and cannot authorize publication.",
+    "evidence_fingerprint": "f2e286da98d8e9c54faebd2b23db7c2521e4dcf9a4c9417a3021ab4f010cae3b",
+    "evidence_kind": "synthetic-contract-fixture",
+    "manifest_fingerprint": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+    "operation_id": "certification.release-supply-chain-contract",
+    "profile": "contract",
+    "publication_authorized": false,
+    "schema_version": "certification-result-v1",
+    "status": "passed"
 }

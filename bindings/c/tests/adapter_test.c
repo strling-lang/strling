@@ -241,7 +241,7 @@ static void test_native_failures_are_distinct(void)
 
 int main(void)
 {
-    assert(strcmp(strling_version(), "3.0.0") == 0);
+    assert(strcmp(strling_version(), STRLING_C_PACKAGE_VERSION) == 0);
     assert(strling_interop_abi_version_v1() == STRLING_C_ADAPTER_ABI_VERSION);
     test_describe_and_ownership();
     test_compile_results_and_profiles();

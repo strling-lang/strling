@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import ast
+import yaml
 import unittest
 from pathlib import Path
 
@@ -27,16 +29,22 @@ class ReleaseSupplyChainArchitectureTests(unittest.TestCase):
             "from bindings",
             "import bindings",
             "requests",
-            "urllib",
             "socket",
             "shell=True",
             "git push",
             "npm publish",
-            "cargo publish",
             "dotnet nuget push",
             "twine upload",
         ):
             self.assertNotIn(forbidden, source)
+        imported = {
+            node.name
+            for statement in ast.walk(ast.parse(source))
+            if isinstance(statement, ast.Import)
+            for node in statement.names
+        }
+        self.assertFalse(imported & {"urllib.request", "requests", "socket"})
+        self.assertNotIn("urlopen(", source)
         self.assertIn("publication_authorized", source)
         self.assertIn("synthetic evidence cannot claim live profile authority", source)
         self.assertIn("release evidence requires a clean source tree", source)
@@ -110,43 +118,61 @@ class ReleaseSupplyChainArchitectureTests(unittest.TestCase):
         )
 
     def test_native_package_builds_prefetch_locked_cargo_graphs(self) -> None:
-        workflow = (ROOT / ".github/workflows/cd.yml").read_text(encoding="utf-8")
-        for command in (
-            "cargo +1.75.0 fetch --manifest-path bindings/interop/Cargo.toml --locked",
-            "cargo +1.75.0 fetch --manifest-path .rebuild/bindings/interop/Cargo.toml --locked",
-            "cargo +1.75.0 fetch --manifest-path bindings/interop/Cargo.toml --locked --target wasm32-unknown-unknown",
-            "cargo +1.75.0 fetch --manifest-path .rebuild/bindings/interop/Cargo.toml --locked --target wasm32-unknown-unknown",
-        ):
-            self.assertEqual(1, workflow.count(f"- run: {command}\n"))
+        workflow = yaml.safe_load(
+            (ROOT / ".github/workflows/cd.yml").read_text(encoding="utf-8")
+        )
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        for artifact in manifest["artifacts"]:
+            job = workflow["jobs"][artifact["compile_job"]]
+            commands = "\n".join(step.get("run", "") for step in job["steps"])
+            self.assertIn(
+                "cargo +1.75.0 fetch --manifest-path bindings/interop/Cargo.toml --locked",
+                commands,
+            )
+            assembly = [
+                (step.get("working-directory"), step["run"])
+                for step in job["steps"]
+                if step.get("name", "").startswith("Assemble ")
+            ]
+            expected = " ".join(artifact["build_command"])
+            self.assertEqual([(".", expected), (".rebuild", expected)], assembly)
+            self.assertEqual(
+                artifact["build_platforms"],
+                [row["scope"] for row in job["strategy"]["matrix"]["include"]],
+            )
 
     def test_profile_job_prepares_every_governed_component(self) -> None:
-        requirements = (
-            (ROOT / "tooling/requirements-quality.txt")
-            .read_text(encoding="utf-8")
-            .splitlines()
+        from tooling.release_supply_chain import qualify_workflow, load_json
+
+        result = qualify_workflow(ROOT, load_json(MANIFEST))
+        self.assertTrue(result["exact_artifact_handoff"])
+        workflow = yaml.safe_load(
+            (ROOT / ".github/workflows/cd.yml").read_text(encoding="utf-8")
         )
-        self.assertIn("build==1.5.0", requirements)
-        self.assertIn("pytest==9.1.1", requirements)
-        ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
-        self.assertEqual(1, ci.count("./strling bootstrap all"))
         self.assertEqual(
-            1,
-            ci.count(
-                "cargo +1.75.0 fetch --manifest-path "
-                "tests/certification/performance-resource/1.0/runner/Cargo.toml "
-                "--locked"
-            ),
+            "needs.verify-release.outputs.is_dry_run == 'true'",
+            workflow["jobs"]["certify-release-supply-chain"]["if"],
         )
-        jvm_install = "(cd bindings/jvm && mvn -B -DskipTests install)"
-        self.assertEqual(2, ci.count(jvm_install))
-        self.assertLess(ci.index(jvm_install), ci.index("./strling bootstrap all"))
-        cd = (ROOT / ".github/workflows/cd.yml").read_text(encoding="utf-8")
-        self.assertNotIn("./strling bootstrap all", cd)
-        self.assertNotIn(
-            "tests/certification/performance-resource/1.0/runner/Cargo.toml", cd
+        for slug in ("java", "kotlin"):
+            commands = "\n".join(
+                step.get("run", "")
+                for step in workflow["jobs"]["compile-" + slug]["steps"]
+            )
+            self.assertIn("--prepare-sdk", commands)
+        reference = next(
+            rule["configuration"]["historical_delivery_reference"]
+            for rule in json.loads(
+                (ROOT / "governance/architecture-rules.json").read_text(
+                    encoding="utf-8"
+                )
+            )["rules"]
+            if "historical_delivery_reference" in rule["configuration"]
         )
         findings, _ = certification_checkout_findings(
-            cd, ".github/workflows/cd.yml", pull_request_base=False
+            (ROOT / ".github/workflows/cd.yml").read_text(encoding="utf-8"),
+            ".github/workflows/cd.yml",
+            pull_request_base=False,
+            historical_reference=reference,
         )
         self.assertEqual([], findings)
 

@@ -2,6 +2,24 @@
 
 include(CMakeFindDependencyMacro)
 
+# Reject an archive accidentally paired with another product package. The
+# product marker is package data; it does not add an ABI symbol or protocol field.
+file(SIZE "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@/@STRLING_INTEROP_ARCHIVE_NAME@" _strling_archive_size)
+if(_strling_archive_size GREATER 134217728)
+    message(FATAL_ERROR "Native STRling archive exceeds the package size limit")
+endif()
+unset(_strling_archive_size)
+file(STRINGS "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@/@STRLING_INTEROP_ARCHIVE_NAME@"
+    _strling_product_markers REGEX "^STRLING-PRODUCT-VERSION:" LIMIT_INPUT 134217729)
+list(LENGTH _strling_product_markers _strling_marker_count)
+if(NOT _strling_marker_count EQUAL 1 OR
+   NOT _strling_product_markers STREQUAL "STRLING-PRODUCT-VERSION:@PROJECT_VERSION@")
+    message(FATAL_ERROR "Native STRling archive product identity mismatch")
+endif()
+unset(_strling_product_markers)
+unset(_strling_marker_count)
+
+
 if(NOT WIN32)
     find_dependency(Threads)
 endif()

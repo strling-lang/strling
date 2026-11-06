@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>STRling</PackageId>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -21,11 +21,15 @@
   <ItemGroup Condition="'$(STRlingNativeLibrary)' != ''">
     <None Include="$(STRlingNativeLibrary)" Pack="true" PackagePath="runtimes\win-x64\native\strling_interop.dll" />
   </ItemGroup>
+  <ItemGroup Condition="'$(STRlingThirdPartyNotices)' != ''">
+    <None Include="$(STRlingThirdPartyNotices)" Pack="true" PackagePath="THIRD_PARTY_NOTICES.txt" />
+  </ItemGroup>
 
   <Target Name="RequireCertifiedNativeAsset" BeforeTargets="GenerateNuspec">
     <Error Condition="'$(STRlingNativeLibrary)' == ''" Text="STRlingNativeLibrary must identify the governed native build for packing." />
     <Error Condition="'$(STRlingNativeRid)' != 'win-x64'" Text="Only the locally certified win-x64 native asset may be packed." />
     <Error Condition="!Exists('$(STRlingNativeLibrary)')" Text="The governed native STRling library does not exist." />
+    <Error Condition="'$(STRlingThirdPartyNotices)' == '' Or !Exists('$(STRlingThirdPartyNotices)')" Text="Checksum-verified native dependency notices are required for packing." />
   </Target>
 
 </Project>

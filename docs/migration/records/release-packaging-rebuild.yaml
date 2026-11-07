@@ -194,3 +194,5 @@ commits:
       subject: Canonicalize release archive metadata before artifact capture
     - sha: 40d9f5bf4886037c3650ef5299e73b29ec67b669
       subject: Finalize NuGet artifacts relative to their binding projects
+    - sha: e3d0ec87f8b5d745d8f885ba8c38748f62bada2a
+      subject: Accept nullable security license selections in release SBOMs

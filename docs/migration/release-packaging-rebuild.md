@@ -853,3 +853,25 @@ The corrected focused supply-chain, publication-authorization and packaging-
 security suite passes 114 tests and four subtests on each host. Both registered
 release contract and trust projections regenerate without a tracked diff and
 their registered verification commands pass.
+
+Source `e3d0ec87f8b5d745d8f885ba8c38748f62bada2a` passes all forty generated
+families, fresh security acquisition (54 passed and the existing VSCE waiver),
+and all 37 Local operations in 13m15s. All twenty-one first captures and eleven
+second Linux captures complete, for thirty-two retained receipts. Pull Request
+qualification and the remaining acquisitions are explicitly interrupted when
+the final evidence-size preflight identifies a missing closure-path allowance.
+Their partial raw results and task-owned cancellation records remain retained;
+there is no completed PR, Full or Release claim for this source.
+
+The actual complete C++ SPDX graph is 2,072,161 bytes. Its final signed evidence
+path was missing from the existing size-only allowance list. A ninth exact-path
+allowance preserves this full graph without truncation, compression, changes to
+SPDX content or a larger global threshold. This supersedes the earlier
+eight-path inventory. All thirteen hygiene tests pass on both hosts, including
+oversized neighboring-file and private-key-marker rejection for every allowed
+path. No registered generated family matches these policy/test/document paths.
+Fresh committed-source acquisition and certification remain required.
+The complete-inventory preflight passes with all 2,492 tracked files plus all
+52 actual supply-chain files at their intended signed-closure paths. Both
+oversized supply-chain objects are retained intact, and there are no hygiene
+findings. The registered repository hygiene check also passes all 2,492 files.

@@ -131,7 +131,11 @@ class HygieneScannerTests(unittest.TestCase):
             for item in repository_policy["allowed_intentional_artifacts"]
             if item["path"].startswith(prefix)
         ]
-        self.assertEqual(8, len(exceptions))
+        self.assertEqual(9, len(exceptions))
+        self.assertIn(
+            prefix + "release-supply-chain/sbom/c++.spdx.json",
+            {item["path"] for item in exceptions},
+        )
         self.assertTrue(
             all(
                 item["rule"] == "maximum-file-size" and "*" not in item["path"]

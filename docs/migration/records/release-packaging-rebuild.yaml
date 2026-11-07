@@ -190,3 +190,5 @@ commits:
       subject: Apply canonical Python package formatting
     - sha: 575062382dd3c49acb7d311fd9bc239ae5de4be6
       subject: Bind JVM certification inputs to the governed product version
+    - sha: a7cfd50841dabd4223416fd2b6180dafeec5f252
+      subject: Canonicalize release archive metadata before artifact capture

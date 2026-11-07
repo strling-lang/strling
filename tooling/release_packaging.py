@@ -653,7 +653,7 @@ def build(
             "-p:PathMap=" + str(ROOT) + "=/_/",
             *release_options,
         )
-        packages = list((ROOT / project).parent.glob("bin/Release/*.nupkg"))
+        packages = list((binding / project).parent.glob("bin/Release/*.nupkg"))
         if len(packages) != 1:
             raise ReleaseSupplyChainError(
                 "packaging-archive", "one exact NuGet output is required"

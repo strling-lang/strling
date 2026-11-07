@@ -91,3 +91,45 @@ def test_nuget_assembly_rejects_sealed_or_ambiguous_packages(
     package(source, "a" * 32, signed=signed, duplicate=duplicate)
     with pytest.raises(ReleaseSupplyChainError):
         canonical_nuget_archive(source, target)
+
+
+def test_assembly_finalizes_the_package_under_the_binding_directory(
+    monkeypatch, tmp_path
+):
+    from tooling import release_packaging as packaging
+
+    original = packaging.ROOT
+    policy = tmp_path / "governance/release-policy.json"
+    policy.parent.mkdir()
+    policy.write_bytes((original / "governance/release-policy.json").read_bytes())
+    binding = tmp_path / "bindings/csharp"
+    binding.mkdir(parents=True)
+    expected = binding / "src/STRling/bin/Release/STRling.4.0.0.nupkg"
+
+    def sdk_run(arguments, *, cwd, **_options):
+        if arguments[0] == "dotnet":
+            assert cwd == binding
+            expected.parent.mkdir(parents=True)
+            package(expected, "c" * 32)
+
+    def notices(path):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("verified notices")
+
+    monkeypatch.setattr(packaging, "ROOT", tmp_path)
+    monkeypatch.setattr(packaging, "projected_contents", lambda *_args: {})
+    monkeypatch.setattr(packaging, "host_scope", lambda: "windows-x86_64")
+    monkeypatch.setattr(packaging, "build_environment", lambda *_args: {"PATH": "sdk"})
+    monkeypatch.setattr(
+        packaging.subprocess, "check_output", lambda *_args, **_kwargs: "1770000000"
+    )
+    monkeypatch.setattr(packaging.subprocess, "run", sdk_run)
+    monkeypatch.setattr(packaging.shutil, "which", lambda name, **_kwargs: name)
+    monkeypatch.setattr(
+        packaging, "inspect_release_payload", lambda *_args: {"fixture": b"payload"}
+    )
+    monkeypatch.setattr("tooling.release_notices.write_notices", notices)
+    result = packaging.build("release:csharp", engineering=True)
+    assert result["status"] == "passed"
+    assert expected.is_file()
+    assert "c" * 32 not in " ".join(archive_files(expected))

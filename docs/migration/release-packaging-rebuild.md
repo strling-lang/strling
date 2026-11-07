@@ -806,3 +806,19 @@ Python sdist build/install passes and reconstructs exactly the native-library
 SHA-256 in the release wheel. These targeted repairs and observations precede
 the next clean source freeze; fresh acquisition, Full and independent production
 Release remain required.
+
+Source `a7cfd50841dabd4223416fd2b6180dafeec5f252` again passes all forty
+generated families, fresh security acquisition and all 37 Local operations.
+Its Windows C# assembly exposes an integration lookup using the repository root
+for a project path relative to the binding directory. The corrected lookup now
+finds and canonicalizes the SDK's actual output. A regression models that
+binding-relative SDK layout, and complete corrected C#/F# assembly plus two
+isolated consumers pass in an explicitly engineering-only diagnostic fixture.
+The diagnostic receipt-reader mistake is also retained; it does not change a
+producer result. Superseded Pull Request and Linux acquisition processes are
+explicitly interrupted with their raw partial results preserved. No PR, Full,
+Release or complete package set is claimed for this source. The next committed
+source requires fresh profiles and artifact receipts.
+The final focused routing/archive/profile suite passes 172 tests and 23 subtests
+on each host, and the routing correction changes neither artifact payloads nor
+verification normalizations.

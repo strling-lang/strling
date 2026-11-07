@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import io
 import json
+import os
 import subprocess
 import tarfile
 import tempfile
@@ -10,6 +11,7 @@ import unittest
 import zipfile
 from pathlib import Path
 from typing import Any
+from contextlib import redirect_stdout
 from unittest.mock import patch
 
 from jsonschema import Draft202012Validator
@@ -573,6 +575,111 @@ class ReleaseSupplyChainContractTests(unittest.TestCase):
         run_contract_check()
         self.assertEqual(manifest_bytes, Path(MANIFEST_PATH).read_bytes())
         self.assertEqual(fixture_bytes, Path(VALID_FIXTURE_PATH).read_bytes())
+
+    def test_nested_contract_cli_ignores_inherited_live_evidence(self) -> None:
+        from tooling import release_supply_chain as supply
+
+        for profile in ("local", "pull-request"):
+            with (
+                self.subTest(profile=profile),
+                patch.dict(
+                    os.environ,
+                    {"STRLING_RELEASE_SUPPLY_CHAIN_EVIDENCE": "must-not-open.json"},
+                ),
+                patch.object(
+                    supply,
+                    "verify_bundle",
+                    side_effect=AssertionError(
+                        "contract subprofiles must stay offline"
+                    ),
+                ),
+                redirect_stdout(io.StringIO()) as output,
+            ):
+                self.assertEqual(
+                    0, supply.main(["profile", "--profile", profile, "--json"])
+                )
+                result = json.loads(output.getvalue())
+                self.assertEqual("contract", result["evidence_authority"])
+                self.assertEqual(profile, result["profile"])
+                self.assertFalse(result["publication_authorized"])
+
+    def test_live_cli_preserves_environment_selection_and_explicit_precedence(
+        self,
+    ) -> None:
+        from tooling import release_supply_chain as supply
+
+        for profile in ("full", "release"):
+            for explicit in (False, True):
+                with (
+                    self.subTest(profile=profile, explicit=explicit),
+                    patch.dict(
+                        os.environ,
+                        {"STRLING_RELEASE_SUPPLY_CHAIN_EVIDENCE": "inherited.json"},
+                    ),
+                    patch.object(
+                        supply,
+                        "verify_bundle",
+                        return_value={
+                            "profile": profile,
+                            "status": "passed",
+                            "evidence_fingerprint": "a" * 64,
+                        },
+                    ) as verify,
+                    redirect_stdout(io.StringIO()),
+                ):
+                    arguments = ["profile", "--profile", profile, "--json"]
+                    if explicit:
+                        arguments += ["--evidence", "explicit.json"]
+                    self.assertEqual(0, supply.main(arguments))
+                    self.assertEqual(
+                        Path(
+                            "explicit.json" if explicit else "inherited.json"
+                        ).resolve(),
+                        verify.call_args.kwargs["evidence_path"],
+                    )
+                    self.assertFalse(verify.call_args.kwargs["verify_subjects"])
+
+    def test_cli_explicit_mismatched_contract_evidence_still_fails(self) -> None:
+        from tooling import release_supply_chain as supply
+
+        for profile in ("local", "pull-request"):
+            with (
+                self.subTest(profile=profile),
+                patch.object(supply, "verify_bundle", return_value={"profile": "full"}),
+                redirect_stdout(io.StringIO()) as output,
+            ):
+                self.assertEqual(
+                    1,
+                    supply.main(
+                        [
+                            "profile",
+                            "--profile",
+                            profile,
+                            "--evidence",
+                            "explicit.json",
+                            "--json",
+                        ]
+                    ),
+                )
+                self.assertEqual(
+                    "profile", json.loads(output.getvalue())["error"]["code"]
+                )
+
+    def test_cli_live_profiles_without_evidence_still_fail(self) -> None:
+        from tooling import release_supply_chain as supply
+
+        for profile in ("full", "release"):
+            with (
+                self.subTest(profile=profile),
+                patch.dict(os.environ, {}, clear=True),
+                redirect_stdout(io.StringIO()) as output,
+            ):
+                self.assertEqual(
+                    1, supply.main(["profile", "--profile", profile, "--json"])
+                )
+                self.assertEqual(
+                    "evidence-required", json.loads(output.getvalue())["error"]["code"]
+                )
 
 
 class ReleaseSupplyChainProducerTests(unittest.TestCase):

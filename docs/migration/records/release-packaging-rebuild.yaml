@@ -196,3 +196,5 @@ commits:
       subject: Finalize NuGet artifacts relative to their binding projects
     - sha: e3d0ec87f8b5d745d8f885ba8c38748f62bada2a
       subject: Accept nullable security license selections in release SBOMs
+    - sha: 52e9eb4c542afcc657a66331716a7b49feaacdc8
+      subject: Retain the complete C++ SPDX graph in signed release evidence

@@ -875,3 +875,37 @@ The complete-inventory preflight passes with all 2,492 tracked files plus all
 52 actual supply-chain files at their intended signed-closure paths. Both
 oversized supply-chain objects are retained intact, and there are no hygiene
 findings. The registered repository hygiene check also passes all 2,492 files.
+
+Source `52e9eb4c542afcc657a66331716a7b49feaacdc8` passes all forty generated
+families, fresh security acquisition, Local (37/37) and Pull Request (79/79).
+All forty-two actual captures and transports complete. Aggregate restoration
+and all twenty-one independent comparisons pass; both Full-type and
+Release-type live supply-chain bundles pass all seventeen artifacts with
+ninety-five tool coordinates. The uncached offline Python sdist reconstruction
+passes and reproduces the release wheel's native-library hash. All seventeen
+certified exports, restorations and credential-free publication plans pass
+under immutable verifier `642cc21f`. The first additional rehearsal's diagnostic
+assertion expected the wrong error identifier after correct tamper rejection;
+a complete fresh second rehearsal passes, including `publication-substitution`
+rejection. Both original and corrected logs remain retained. No registry write
+or public installation is claimed.
+
+The actual whole Full run then fails its Local supply-chain contract subcheck:
+the inherited live Full evidence variable was applied to every profile CLI
+invocation, including Local and Pull Request contract-only subchecks. Their
+profile mismatch rejection is correct. The bounded correction restricts only
+automatic environment fallback to Full/Release. Explicit evidence still has
+precedence, explicit profile mismatches still fail, and live profiles without
+evidence still fail closed. The failed Full result retains three passed
+operations, the existing single waiver and one failure; no independent Release
+or signing starts.
+
+The correction passes 118 integrated supply-chain, publication-authorization and
+packaging-security tests with fourteen subtests on each host. A real twelve-case
+CLI matrix against unchanged retained evidence confirms all four profile paths,
+explicit overrides, missing-input rejection and mismatched-profile rejection.
+Both affected registered projections regenerate and verify without a diff.
+Additional targeted preflight on clean `52e9eb4c` passes native/WASM interop (77
+cases) and reproducible LSP packaging, runtime and install/upgrade/uninstall
+lifecycle checks. Those diagnostics do not replace fresh certification on the
+next committed source. The approved private key remains unread.

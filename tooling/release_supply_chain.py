@@ -4854,7 +4854,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                 "STRLING_RELEASE_SUPPLY_CHAIN_EVIDENCE"
             )
             evidence_path = args.evidence or (
-                Path(environment_evidence) if environment_evidence else None
+                Path(environment_evidence)
+                if environment_evidence and args.profile in {"full", "release"}
+                else None
             )
             result = run_profile_certification(
                 profile=args.profile,

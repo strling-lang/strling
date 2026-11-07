@@ -769,3 +769,40 @@ and Linux. Actual Linux JDK 11 Java/Kotlin parity passes two repetitions of
 three operations, and the offline Maven probe accepts the prepared 4.0.0 bridge
 and four governed third-party artifacts. This targeted proof does not replace
 fresh whole-profile certification on the next committed source.
+
+Source `575062382dd3c49acb7d311fd9bc239ae5de4be6` passes all forty generated
+families, fresh security acquisition (54 passed and the existing single waiver)
+and the complete Local profile (37 passed). Its Pull Request run passes 71
+operations before the repository suite finds two stale assertions expecting
+Full/Release definition 1.30.0. The effective definitions were already advanced
+to 1.31.0 for live supply-chain admission; the tests now assert that authority.
+The original suite records 2,101 passed, two failed, 25 platform skips and 4,036
+subtests. It remains a failed whole-profile result.
+
+All forty-two actual package captures and transports complete for that source,
+including thirty Supported consumer executions. Aggregate restoration then
+rejects conflicting Windows/Linux Rust archive bytes. Every file and mode is
+identical, but pinned Cargo's host tar implementations use different fixed
+source timestamps. Pair analysis also finds NuGet's random core-properties
+paths and relationship IDs; all managed assemblies, native libraries and other
+package contents are identical. Those captures remain diagnostic and cannot be
+relabeled for a later source.
+
+Assembly now writes canonical Rust tar/gzip headers from the source epoch and
+content-derived NuGet OPC identifiers before capture. This supersedes the
+earlier raw-Cargo-archive retention implementation described above. Both
+serializers verify exact payload preservation; NuGet additionally rejects signed
+inputs and ambiguous relationships. Rust comparison remains byte-for-byte with
+no normalizations, and NuGet comparison still allows only archive timestamps.
+No comparison rule or support scope is broadened.
+
+Real retained Windows and Linux Rust archives produce the same canonical bytes
+under both pinned Python SDKs, and both host Rust consumers pass. Both actual
+C#/F# pairs become byte-for-byte identical; four temporary consumers outside
+the checkout pass canonical compilation and incompatible-kernel rejection.
+The final focused archive, profile-identity, publication-security and payload
+suite passes 171 tests and 23 subtests on each host. An additional isolated
+Python sdist build/install passes and reconstructs exactly the native-library
+SHA-256 in the release wheel. These targeted repairs and observations precede
+the next clean source freeze; fresh acquisition, Full and independent production
+Release remain required.

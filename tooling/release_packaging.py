@@ -7,6 +7,9 @@ authority. Receipts, SBOMs, reproducibility, and approval stay with that produce
 from __future__ import annotations
 
 import argparse
+import gzip
+import hashlib
+import io
 import json
 import os
 import platform
@@ -15,6 +18,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import tarfile
 import uuid
 import zipfile
 import tomllib
@@ -145,6 +149,144 @@ def staged_source(root: Path, relative: str, destination: Path) -> None:
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, target)
     shutil.copyfile(root / "LICENSE", destination / "LICENSE")
+
+
+def canonical_rust_archive(
+    source: Path, destination: Path, *, version: str, epoch: int
+) -> None:
+    """Assemble one portable crate while preserving every Cargo payload byte.
+
+    Cargo 1.75's host tar implementations use different fixed source timestamps.
+    Canonical headers are build output, before capture or exact-byte publication;
+    the registered byte-for-byte comparison admits no normalization.
+    """
+    from tooling.release_payload import archive_files
+
+    if source.resolve() == destination.resolve() or not 0 <= epoch <= 0xFFFFFFFF:
+        raise ReleaseSupplyChainError(
+            "packaging-archive", "invalid crate output or epoch"
+        )
+    files = archive_files(source)
+    prefix = "strling-" + version + "/"
+    with tarfile.open(source, "r:gz") as archive:
+        entries = archive.getmembers()
+        if (
+            not entries
+            or any(
+                not row.isfile() or row.mode not in (0o644, 0o755) for row in entries
+            )
+            or any(not name.startswith(prefix) for name in files)
+            or len(entries) != len(files)
+        ):
+            raise ReleaseSupplyChainError(
+                "packaging-archive", "crate contains an unregistered root, type or mode"
+            )
+        modes = {row.name: row.mode for row in entries}
+    stream = io.BytesIO()
+    with tarfile.open(fileobj=stream, mode="w", format=tarfile.PAX_FORMAT) as archive:
+        for name, data in sorted(files.items()):
+            header = tarfile.TarInfo(name)
+            header.size = len(data)
+            header.mode = modes[name]
+            header.mtime = epoch
+            archive.addfile(header, io.BytesIO(data))
+    with destination.open("wb") as output:
+        with gzip.GzipFile(
+            filename="", fileobj=output, mode="wb", mtime=epoch, compresslevel=9
+        ) as archive:
+            archive.write(stream.getvalue())
+    if archive_files(destination) != files:
+        raise ReleaseSupplyChainError(
+            "packaging-archive", "crate assembly changed Cargo payload bytes"
+        )
+
+
+def canonical_nuget_archive(source: Path, destination: Path) -> None:
+    """Give the unsigned SDK package stable OPC identifiers before capture."""
+    import xml.etree.ElementTree as ET
+
+    from tooling.release_payload import archive_files
+
+    files = archive_files(source)
+    properties = [
+        name
+        for name in files
+        if re.fullmatch(
+            r"package/services/metadata/core-properties/[0-9a-fA-F]{32}\.psmdcp", name
+        )
+    ]
+    if (
+        source.resolve() == destination.resolve()
+        or ".signature.p7s" in files
+        or len(properties) != 1
+    ):
+        raise ReleaseSupplyChainError(
+            "packaging-archive", "one unsigned NuGet core-properties part is required"
+        )
+    old = properties[0]
+    new = (
+        "package/services/metadata/core-properties/"
+        + hashlib.sha256(files[old]).hexdigest()[:32]
+        + ".psmdcp"
+    )
+    namespace = "http://schemas.openxmlformats.org/package/2006/relationships"
+    kind = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
+    relationships = ET.fromstring(files["_rels/.rels"])
+    candidates = [row for row in relationships if row.get("Type") == kind]
+    if (
+        relationships.tag != "{" + namespace + "}Relationships"
+        or any(row.tag != "{" + namespace + "}Relationship" for row in relationships)
+        or len(candidates) != 1
+        or candidates[0].get("Target") != "/" + old
+        or candidates[0].get("TargetMode", "Internal") != "Internal"
+        or len({row.get("Id") for row in relationships}) != len(relationships)
+    ):
+        raise ReleaseSupplyChainError(
+            "packaging-archive", "ambiguous NuGet core-properties relationship"
+        )
+    types = ET.fromstring(files["[Content_Types].xml"])
+    if (
+        any(row.get("PartName") == "/" + old for row in types)
+        or sum(
+            row.get("Extension") == "psmdcp"
+            and row.get("ContentType")
+            == "application/vnd.openxmlformats-package.core-properties+xml"
+            for row in types
+        )
+        != 1
+    ):
+        raise ReleaseSupplyChainError(
+            "packaging-archive", "unsupported NuGet core-properties content type"
+        )
+    candidates[0].set("Target", "/" + new)
+    candidates[0].set("Id", "R" + hashlib.sha256(new.encode()).hexdigest()[:32])
+    if len({row.get("Id") for row in relationships}) != len(relationships):
+        raise ReleaseSupplyChainError(
+            "packaging-archive", "NuGet relationship ID collision"
+        )
+    files[new] = files.pop(old)
+    files["_rels/.rels"] = ET.tostring(
+        relationships, encoding="utf-8", xml_declaration=True
+    )
+    with (
+        zipfile.ZipFile(source) as original,
+        zipfile.ZipFile(
+            destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9
+        ) as archive,
+    ):
+        archive.comment = original.comment
+        for name, data in sorted(files.items()):
+            prior = original.getinfo(old if name == new else name)
+            header = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+            header.create_system = prior.create_system
+            header.external_attr = prior.external_attr
+            header.internal_attr = prior.internal_attr
+            header.comment = prior.comment
+            archive.writestr(header, data, compress_type=zipfile.ZIP_DEFLATED)
+    if archive_files(destination) != files:
+        raise ReleaseSupplyChainError(
+            "packaging-archive", "NuGet package content changed"
+        )
 
 
 def prepare_sdk(artifact_id: str, *, engineering: bool = False) -> dict:
@@ -333,7 +475,7 @@ def build(
 
     if slug == "rust":
         # Cargo verifies the extracted crate in a new filesystem workspace.
-        # Retain the exact archive it produced; no archive rewriting occurs.
+        # Canonicalize only archive headers before any capture or publication.
         with tempfile.TemporaryDirectory(prefix="strling-rust-package-") as temporary:
             run(
                 "cargo",
@@ -350,7 +492,7 @@ def build(
             destination = ROOT / "target/package" / archive.name
             destination.parent.mkdir(parents=True, exist_ok=True)
             staged = destination.with_suffix(".crate.tmp")
-            shutil.copyfile(archive, staged)
+            canonical_rust_archive(archive, staged, version=version, epoch=int(epoch))
             os.replace(staged, destination)
     elif slug == "python":
         if sys.version_info[:2] != (3, 12):
@@ -511,6 +653,14 @@ def build(
             "-p:PathMap=" + str(ROOT) + "=/_/",
             *release_options,
         )
+        packages = list((ROOT / project).parent.glob("bin/Release/*.nupkg"))
+        if len(packages) != 1:
+            raise ReleaseSupplyChainError(
+                "packaging-archive", "one exact NuGet output is required"
+            )
+        canonical = packages[0].with_suffix(".nupkg.tmp")
+        canonical_nuget_archive(packages[0], canonical)
+        os.replace(canonical, packages[0])
     elif slug in {"java", "kotlin"}:
         if slug == "java":
             run(

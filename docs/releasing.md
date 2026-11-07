@@ -221,6 +221,20 @@ The canonical compiler source, crate versions, dependency versions and ABI stay
 unchanged. MSVC uses deterministic compilation and path mapping; native linkage
 omits unshipped PDB paths. These are build inputs, not verifier normalizations.
 
+Rust assembly first lets pinned Cargo verify its produced crate. The assembler
+then writes canonical tar/gzip headers using the source commit epoch, preserving
+all payload bytes and executable modes. Cargo 1.75 uses different source-header
+timestamps on Windows and Linux; this build step produces one portable registry
+subject. Capture, independent builds and publication compare and retain its
+exact final bytes. Rust's comparison policy remains byte-for-byte with no
+allowed normalizations.
+
+NuGet assembly assigns content-derived identifiers to the unsigned SDK package's
+core-properties part and its OPC relationship. Every managed/native payload and
+the properties document remain exact; signed input and ambiguous relationships
+are rejected. Canonical ZIP headers are written before capture. Independent
+verification continues to permit only the registered archive timestamps.
+
 Each protected publisher retains an authenticated attempt receipt before its
 first registry request. A failed multi-file upload remains
 `upload-failed-or-indeterminate`; the receipt does not claim complete upload or

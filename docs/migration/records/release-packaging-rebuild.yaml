@@ -188,3 +188,5 @@ commits:
       subject: Preserve historical certification and qualify current package verification
     - sha: c854b0b18bcece75181eea5985991223cbf6bd78
       subject: Apply canonical Python package formatting
+    - sha: 575062382dd3c49acb7d311fd9bc239ae5de4be6
+      subject: Bind JVM certification inputs to the governed product version

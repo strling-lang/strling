@@ -3071,7 +3071,7 @@ def _dependency_resolution(
                             or component.get("reported_license")
                             in {"NOASSERTION", "NONE"}
                             or (
-                                "selected_license" in component
+                                component.get("selected_license") is not None
                                 and (
                                     not isinstance(component["selected_license"], str)
                                     or not component["selected_license"].strip()

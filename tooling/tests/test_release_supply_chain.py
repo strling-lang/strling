@@ -54,7 +54,7 @@ def write_json(path: Path, value: object) -> None:
 def write_archive(path: Path, *, variant: int) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     lowered = path.name.lower()
-    if "/bindings/cpp/" in path.as_posix():
+    if "/bindings/cpp/" in path.as_posix() and lowered.endswith(".tgz"):
         recipe, binary = f"recipe{variant}", f"b/binary{variant}/p"
         pkglist = {
             "strling/1.0.0": {
@@ -223,6 +223,18 @@ def prepare_producer_root(
 
 
 class ReleaseSupplyChainContractTests(unittest.TestCase):
+    def test_conan_upload_fixture_is_a_stable_zip_across_clocks(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            contents = []
+            for clock in (1000, 2000):
+                path = Path(temporary) / str(clock) / "bindings/cpp/package.upload.zip"
+                with patch("gzip.time.time", return_value=clock):
+                    write_archive(path, variant=0)
+                with zipfile.ZipFile(path) as archive:
+                    self.assertEqual(b"governed payload", archive.read("payload.txt"))
+                contents.append(path.read_bytes())
+            self.assertEqual(contents[0], contents[1])
+
     def setUp(self) -> None:
         self.manifest = load_json(MANIFEST_PATH)
         self.fixture = load_json(VALID_FIXTURE_PATH)
@@ -787,6 +799,60 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
         self.assertTrue(
             all(row["reproducibility"]["status"] == "passed" for row in normalized)
         )
+
+    def test_live_security_nullable_selection_preserves_the_permitted_expression(
+        self,
+    ) -> None:
+        from tooling.security import SecurityEngine
+
+        artifact = next(
+            row for row in self.manifest["artifacts"] if row["id"] == "release:perl"
+        )
+        engine = object.__new__(SecurityEngine)
+        with patch.object(engine, "_scoped_license_disposition", return_value=None):
+            component = engine._license_component_evidence(
+                root_id="perl-cpan",
+                dependency_root={"usage": "runtime"},
+                ecosystem="cpan",
+                package="fixture-dependency",
+                version="1.2.3",
+                expression="MIT OR Apache-2.0",
+                classification="permitted",
+                disposition_id=None,
+            )
+        self.assertIsNone(component["selected_license"])
+        risk = {
+            "operation_id": "security.dependency-risk",
+            "status": "passed",
+            "summary": {"passed": 2, "failed": 0, "incomplete": 0, "unavailable": 0},
+            "checks": [
+                {"check_id": "security.vulnerability.perl-cpan", "status": "passed"},
+                {
+                    "check_id": "security.license.perl-cpan",
+                    "status": "passed",
+                    "scanner": {"components": [component]},
+                },
+            ],
+        }
+        dependencies, unresolved = _dependency_resolution(
+            self.first, self.manifest, artifact, risk
+        )
+        self.assertEqual(0, unresolved)
+        sbom = _spdx_document(
+            artifact,
+            [{"name": "fixture.tar.gz", "sha256": "a" * 64}],
+            "b" * 64,
+            dependencies,
+        )
+        self.assertEqual("MIT OR Apache-2.0", sbom["packages"][1]["licenseDeclared"])
+        self.assertEqual("MIT OR Apache-2.0", sbom["packages"][1]["licenseConcluded"])
+        for invalid in ("", "NOASSERTION", "NONE", 42):
+            with self.subTest(selected_license=invalid):
+                component["selected_license"] = invalid
+                _, unresolved = _dependency_resolution(
+                    self.first, self.manifest, artifact, risk
+                )
+                self.assertGreater(unresolved, 0)
 
     def test_exact_rebuild_mutation_cannot_false_pass(self) -> None:
         target = self.second / "bindings/typescript/strling-lang-strling-1.0.0.tgz"

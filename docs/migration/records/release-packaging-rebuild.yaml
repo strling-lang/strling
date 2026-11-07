@@ -192,3 +192,5 @@ commits:
       subject: Bind JVM certification inputs to the governed product version
     - sha: a7cfd50841dabd4223416fd2b6180dafeec5f252
       subject: Canonicalize release archive metadata before artifact capture
+    - sha: 40d9f5bf4886037c3650ef5299e73b29ec67b669
+      subject: Finalize NuGet artifacts relative to their binding projects

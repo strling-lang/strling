@@ -822,3 +822,34 @@ source requires fresh profiles and artifact receipts.
 The final focused routing/archive/profile suite passes 172 tests and 23 subtests
 on each host, and the routing correction changes neither artifact payloads nor
 verification normalizations.
+
+Source `40d9f5bf4886037c3650ef5299e73b29ec67b669` passes the complete Local
+and Pull Request profiles: 37 and 79 operations respectively, with no failures,
+waivers or incomplete operations. All forty-two actual package captures and
+transports complete; aggregate restoration and all twenty-one independent
+rebuild comparisons pass, covering ninety-five tool coordinates, thirty
+Supported consumer executions and twelve Preview observations. An uncached,
+offline reconstruction from the produced Python sdist also passes its isolated
+consumer and reproduces the release wheel's native-library hash.
+
+The first live Full-type supply-chain producer remains incomplete for fifteen
+distributions because its license consumer rejects the security producer's
+explicit null optional selection. The producer already classifies each full
+reported expression, and the SPDX writer already preserves it when no branch
+is selected. The corrected consumer treats absent and null selection equally;
+invalid explicit selections still fail closed. It changes no license policy,
+classification, waiver or permitted normalization. Expanded validation of all
+seventeen actual SBOMs passes with the original unchanged risk evidence. This
+targeted diagnostic is not a passing Full or Release profile.
+
+The focused Linux run also exposes an intermittent synthetic fixture defect:
+the Conan upload ZIP fixture was written as gzip with a wall-clock header.
+Injected clocks reproduce different compared hashes. The fixture now writes a
+valid deterministic ZIP, with an explicit two-clock regression; production
+artifact comparisons remain unchanged. The original failed run and retry are
+retained. These implementation corrections require another committed source
+freeze and fresh artifact, security and whole-profile evidence.
+The corrected focused supply-chain, publication-authorization and packaging-
+security suite passes 114 tests and four subtests on each host. Both registered
+release contract and trust projections regenerate without a tracked diff and
+their registered verification commands pass.

@@ -614,6 +614,53 @@ class ArchitectureValidationTests(unittest.TestCase):
                     )
             path.write_text(original, encoding="utf-8")
 
+    def test_public_verifier_retention_is_required_and_data_only(self) -> None:
+        import yaml
+
+        self.write_profile_workflows()
+        source = Path(__file__).resolve().parents[2] / ".github/workflows/ci.yml"
+        actual = yaml.safe_load(source.read_text(encoding="utf-8"))["jobs"][
+            "verify-public-distribution-certification"
+        ]
+        extra = yaml.safe_dump(
+            {"verify-public-distribution-certification": actual}, sort_keys=False
+        )
+        extra = (
+            "\n".join("  " + line if line else line for line in extra.splitlines())
+            + "\n"
+        )
+        originals = {}
+        for name in ("ci.yml", "certification-integrity.yml"):
+            path = self.root / ".github/workflows" / name
+            originals[path] = path.read_text(encoding="utf-8")
+            path.write_text(originals[path] + extra, encoding="utf-8")
+        (self.root / "governance").mkdir(exist_ok=True)
+        (
+            self.root / "governance/public-verification-certification-trust.json"
+        ).write_text("{}", encoding="utf-8")
+        evaluated = self.evaluate(self.ci_profile_rule())
+        self.assertEqual("passed", evaluated.status, evaluated.findings)
+        for path, original in originals.items():
+            for mutated in (
+                "",
+                extra.replace(
+                    "080107ed6d7893d60eb011fb83af09ac937eeb89", "refs/heads/dev"
+                ),
+                extra.replace(
+                    "python -I public-trusted/", "python -I public-candidate/"
+                ),
+                extra.replace("continue-on-error: true", "continue-on-error: false"),
+                extra.replace(
+                    "--json | tee", "--json; python public-candidate/evil.py | tee"
+                ),
+            ):
+                with self.subTest(workflow=path.name, mutation=mutated):
+                    path.write_text(original + mutated, encoding="utf-8")
+                    self.assertEqual(
+                        "failed", self.evaluate(self.ci_profile_rule()).status
+                    )
+            path.write_text(original + extra, encoding="utf-8")
+
     def test_ci_profile_routing_rejects_event_trust_drift(self) -> None:
         cases = (
             ("certification-integrity.yml", "base.sha", "head.sha", "base SHA"),

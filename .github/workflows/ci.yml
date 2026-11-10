@@ -19,6 +19,50 @@ permissions:
     contents: read
 
 jobs:
+    verify-public-distribution-certification:
+        name: Verify signed public certification
+        runs-on: ubuntu-24.04
+        steps:
+            - name: Checkout qualified public verifier
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  ref: 080107ed6d7893d60eb011fb83af09ac937eeb89
+                  path: public-trusted
+            - name: Checkout public evidence as data
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
+                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  path: public-candidate
+            - name: Install verification runtime
+              uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: "3.12"
+            - name: Install pinned schema validators
+              run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
+            - name: Verify public source, signature, and evidence
+              shell: bash
+              run: |
+                  mkdir -p artifacts
+                  python -I public-trusted/tooling/local_certification_attestation.py \
+                    --repository-root public-candidate \
+                    --trust-root public-trusted \
+                    --trust-policy public-verification-certification-trust.json \
+                    verify --bundle public-candidate/tests/certification/public-verification/1.0/current \
+                    --json | tee artifacts/public-certification-verification.json
+            - name: Retain public verification result
+              if: ${{ always() }}
+              continue-on-error: true
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: public-certification-verification-${{ github.run_id }}
+                  path: artifacts/public-certification-verification.json
+                  if-no-files-found: warn
+                  retention-days: 90
     verify-release-packaging-certification:
         name: Verify signed packaging certification
         runs-on: ubuntu-24.04
@@ -35,8 +79,8 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  repository: strling-lang/strling
+                  ref: 33e50ac033314dad089717a0ee20c0c7c310dea7
                   path: packaging-candidate
             - name: Install verification runtime
               uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1

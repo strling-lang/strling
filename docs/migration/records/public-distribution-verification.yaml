@@ -116,4 +116,6 @@ checkpoints:
     - name: Independent readiness closure
       status: planned
       evidence: []
-commits: []
+commits:
+    - sha: 080107ed6d7893d60eb011fb83af09ac937eeb89
+      subject: Implement independent public distribution verification

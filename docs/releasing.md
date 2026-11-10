@@ -99,11 +99,14 @@ trusted base SHA for `pull_request_target` and requires that base to contain
 the reviewed verifier; other events use the immutable verifier directly.
 New package changes do not become closure changes to that historical evidence.
 
-The separate packaging integrity job verifies the actual event source and its
-new signed bundle with immutable verifier
+The preserved packaging integrity job verifies closure
+`33e50ac033314dad089717a0ee20c0c7c310dea7` with immutable verifier
 `642cc21f8f5d5ccabde1bb893076e02c624247a7`. Protected publishers use that same
 trust checkout independently of their owner-approved publisher implementation.
-Both verification contexts read candidate source and evidence as data. Missing
+The public-verification certification job checks the event source with immutable
+verifier `080107ed6d7893d60eb011fb83af09ac937eeb89` and the separate
+`public-verification-certification-trust.json` policy. All verification contexts
+read candidate source and evidence as data. Missing
 trusted base integration cannot fall back to candidate tooling. Local
 certification and a valid signature do not authorize production credentials,
 package publication, or creation of a public coordinate.

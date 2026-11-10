@@ -1730,8 +1730,40 @@ def ci_profile_routing_findings(
                     )
                 )
             retention_jobs = [jobs[primary]]
-            packaging = jobs.get("verify-release-packaging-certification")
-            if packaging is not None:
+            for job_name, prefix, policy, bundle, candidate_ref in (
+                (
+                    "verify-release-packaging-certification",
+                    "packaging",
+                    "release-certification-trust.json",
+                    "release-packaging",
+                    "33e50ac033314dad089717a0ee20c0c7c310dea7",
+                ),
+                (
+                    "verify-public-distribution-certification",
+                    "public",
+                    "public-verification-certification-trust.json",
+                    "public-verification",
+                    "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}",
+                ),
+            ):
+                packaging = jobs.get(job_name)
+                if packaging is None:
+                    if (
+                        prefix == "public"
+                        and relative
+                        in {
+                            ".github/workflows/ci.yml",
+                            ".github/workflows/certification-integrity.yml",
+                        }
+                        and (root / "governance" / policy).is_file()
+                    ):
+                        findings.append(
+                            (
+                                f"{relative}: public verification certificate job is required",
+                                relative,
+                            )
+                        )
+                    continue
                 retention_jobs.append(packaging)
                 steps = packaging["steps"]
                 checkouts = [
@@ -1740,18 +1772,18 @@ def ci_profile_routing_findings(
                     if str(step.get("uses", "")).startswith("actions/checkout@")
                 ]
                 trusted = [
-                    row for row in checkouts if row.get("path") == "packaging-trusted"
+                    row for row in checkouts if row.get("path") == prefix + "-trusted"
                 ]
                 candidates = [
-                    row for row in checkouts if row.get("path") == "packaging-candidate"
+                    row for row in checkouts if row.get("path") == prefix + "-candidate"
                 ]
                 commands = [step["run"] for step in steps if "run" in step]
                 expected_command = (
-                    "python -I packaging-trusted/tooling/local_certification_attestation.py "
-                    "--repository-root packaging-candidate --trust-root packaging-trusted "
-                    "--trust-policy release-certification-trust.json "
-                    "verify --bundle packaging-candidate/tests/certification/release-packaging/1.0/current "
-                    "--json | tee artifacts/packaging-certification-verification.json"
+                    f"python -I {prefix}-trusted/tooling/local_certification_attestation.py "
+                    f"--repository-root {prefix}-candidate --trust-root {prefix}-trusted "
+                    f"--trust-policy {policy} "
+                    f"verify --bundle {prefix}-candidate/tests/certification/{bundle}/1.0/current "
+                    f"--json | tee artifacts/{prefix}-certification-verification.json"
                 )
                 script = (
                     commands[1].strip().split("\n", 1) if len(commands) == 2 else []
@@ -1771,8 +1803,11 @@ def ci_profile_routing_findings(
                     or any(
                         row.get("persist-credentials") is not False for row in checkouts
                     )
-                    or candidates[0].get("ref")
-                    != "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}"
+                    or candidates[0].get("ref") != candidate_ref
+                    or (
+                        prefix == "packaging"
+                        and candidates[0].get("repository") != "strling-lang/strling"
+                    )
                     or any(
                         step.get("uses") not in permitted_actions
                         for step in steps
@@ -1796,7 +1831,7 @@ def ci_profile_routing_findings(
                 ):
                     findings.append(
                         (
-                            f"{relative}: packaging verification must execute isolated immutable verifier code only",
+                            f"{relative}: {prefix} verification must execute isolated immutable verifier code only",
                             relative,
                         )
                     )

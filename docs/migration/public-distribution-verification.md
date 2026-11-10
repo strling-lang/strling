@@ -156,3 +156,16 @@ verification will run on the final frozen certification checkout.
 Before verifier freeze, the complete public boundary suite passed 230 tests on
 Linux. Windows passed 244 tests comprising the same public suite, all thirteen
 profile-source identity tests, and the corrected canonical membership test.
+
+Verifier revision `080107ed6d7893d60eb011fb83af09ac937eeb89` is frozen in a
+separate clean checkout. It independently authenticated the preserved packaging
+closure with the original packaging policy and rejected the same certificate
+under the new public-verification policy. This is reader qualification, not a
+rerun or reopening of H08 or packaging campaigns.
+
+The integration preserves both historical certificate jobs and adds a separate
+event-source public-verification certificate job to CI and hosted integrity.
+The new jobs execute only the immutable reader and its new trust policy.
+The public retrieval contract uses the same approved context; candidate request
+data cannot select a different policy or reader. Four targeted workflow tests
+and 29 hostile-mutation subtests passed, followed by repository governance.

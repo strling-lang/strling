@@ -4,13 +4,7 @@
     "dispositions": [
         "ready_for_integration",
         "not_applicable",
-        "not_yet_enforceable",
-        {
-            "paths": ["tests/certification/release-packaging/1.0/current/**"],
-            "disposition": "not_applicable",
-            "strategy": "Signed release-packaging attestation producer",
-            "reason": "The closure bundle is deterministically serialized, rooted and signed by the existing attestation producer; formatting these bytes would invalidate its evidence root and signature."
-        }
+        "not_yet_enforceable"
     ],
     "formatters": {
         "dart-format": {
@@ -280,6 +274,12 @@
     ],
     "generated_or_serialized": [
         {
+            "paths": ["tests/certification/release-packaging/1.0/current/**"],
+            "disposition": "not_applicable",
+            "strategy": "Signed release-packaging attestation producer",
+            "reason": "The closure bundle is deterministically serialized, rooted and signed by the existing attestation producer; formatting these bytes would invalidate its evidence root and signature."
+        },
+        {
             "paths": [
                 "**/package-lock.json",
                 "bindings/dart/pubspec.lock",
@@ -421,6 +421,7 @@
                         "tests/certification/deep-quality/1.0/manifest.json",
                         "tests/certification/deep-quality/1.0/fixtures/valid-evidence.json",
                         "tests/certification/hardened-core/1.0/current/*",
+                        "tests/certification/release-packaging/1.0/current/*",
                         "bindings/python/src/STRling/simply/stdlib_generated.py",
                         "bindings/typescript/src/STRling/simply/stdlib.generated.ts",
                         "docs/reference/standard-library.md",

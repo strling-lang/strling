@@ -89,6 +89,38 @@ class FormattingPolicyTests(unittest.TestCase):
         )
         self.assertEqual([], selected)
 
+    def test_repository_preserves_signed_packaging_bytes_and_formats_neighbors(
+        self,
+    ) -> None:
+        policy = load_policy()
+        enforcement = cast(dict[str, object], policy["enforcement"])
+        targets = cast(dict[str, list[dict[str, object]]], enforcement["targets"])
+        step = targets["repository"][0]
+        bundle = "tests/certification/release-packaging/1.0/current/"
+        signed = [
+            bundle + "attestation.json",
+            bundle + "evidence/profile-full/profile-full.json",
+            bundle + "evidence/product/product-certification-release.md",
+        ]
+        authored = [
+            "docs/migration/release-packaging-rebuild.md",
+            "tests/certification/release-packaging/1.0/neighbor.json",
+        ]
+        self.assertEqual(
+            authored,
+            select_files(
+                signed + authored,
+                cast(list[str], step["include"]),
+                cast(list[str], step["exclude"]),
+            ),
+        )
+        owners = cast(list[dict[str, object]], policy["generated_or_serialized"])
+        self.assertEqual(
+            1,
+            sum(owner["paths"] == [bundle + "**"] for owner in owners),
+        )
+        self.assertTrue(all(isinstance(value, str) for value in policy["dispositions"]))
+
     def test_check_commands_are_non_mutating(self) -> None:
         prettier = build_command(
             "prettier",

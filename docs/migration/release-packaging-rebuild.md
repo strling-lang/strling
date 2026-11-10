@@ -909,3 +909,115 @@ Additional targeted preflight on clean `52e9eb4c` passes native/WASM interop (77
 cases) and reproducible LSP packaging, runtime and install/upgrade/uninstall
 lifecycle checks. Those diagnostics do not replace fresh certification on the
 next committed source. The approved private key remains unread.
+
+## Storage recovery and exact-source completion — 2026-11-09
+
+Recovery started on clean local `dev` at
+`879081506061bb363b5c1563b94d3e32a34676b5`, eleven implementation commits
+ahead of the independently closed H08 source. The remote development branch
+still pointed to `2d8d897504663211d3768517f0be9f0e28d0f11e`. H08 remains
+CLOSED, with its unchanged signed bundle and successful hosted integrity run
+[42204135587](https://github.com/strling-lang/strling/actions/runs/42204135587).
+No historical hardened-core campaign was repeated or trusted verifier promoted.
+
+All three requested storage reports were present and read: the November 9
+cleanup report, deletion/verification manifest, and manual TRIM follow-up under
+`target/storage-cleanup-execution-20261109`. Fresh physical D: admission measured
+327,340,867,584 available bytes, above the unchanged 112 GiB reserve. Ubuntu
+was writable with zero recorded ext4 errors. No storage maintenance was repeated.
+Pinned runtimes, protected inputs, Git identities, worktrees, ownership and
+retained transport hashes were checked before execution. Missing disposable
+compiler caches were rebuilt from governed source and locks.
+
+The original `storage-blocker-87908150.json` records 1,042,149,376 available
+physical bytes, Windows error 112, and Linux Dart SIGBUS/read-only failures.
+Only Local had started; PR, Full and independent Release had not. Twenty-one
+valid receipts and their complete transports were authenticated and retained.
+Only the remaining twenty-one captures were rebuilt, producing all forty-two
+receipts over twenty-one platform rows and ninety-five tool coordinates.
+The interrupted Windows Python sdist directory was hashed and relocated into
+task evidence before retrying its clean-source guard; no protected input was lost.
+
+Recovery Local attempt 2 is a genuine retained failure: 35 passed, one failed
+of 36 executed operations. The interrupted November 7 Rust incremental tree
+contained a 4,128-byte zero-filled object; the compiler also suffered a recorded
+OOM kill. The object's SHA-256 is
+`2e534ef0107d592d1706ac38ad58596b85ef3375d360a6d669f974792df5cb5a`.
+Physical D: remained above 300 GiB and ext4 remained writable. A fresh bounded
+scratch build passed eleven regex-frontend tests and compiled the editor binary
+harness. Subsequent builds used process-local `CARGO_INCREMENTAL=0` and
+`CARGO_BUILD_JOBS=2`; no source, toolchain, dependency lock or supported scope
+changed. The object, failed profile, kernel diagnostic and build-environment
+record remain retained.
+
+Whole accepted results on clean `87908150` were:
+
+| Profile             | Definition | Required | Passed | Waived | Failed / unavailable / incomplete |        Wall seconds |
+| ------------------- | ---------- | -------: | -----: | -----: | --------------------------------- | ------------------: |
+| Local               | 1.16.0     |       37 |     37 |      0 | 0 / 0 / 0                         |             811.989 |
+| Pull Request        | 1.22.0     |       79 |     79 |      0 | 0 / 0 / 0                         |            2685.143 |
+| Full                | 1.31.0     |      124 |    123 |      1 | 0 / 0 / 0                         |            4626.881 |
+| Independent Release | 1.31.0     |      124 |    123 |      1 | 0 / 0 / 0                         | 5611.139 controller |
+
+Full and Release correctly report aggregate `waived`, exit zero, with the sole
+existing `WVR-SEC-VSCE-LICENSE-001`. Their fingerprints are respectively
+`bd3bdef9be2b06c8658ab3391ff5830db866c24b85ea51f24414e7e48107dc0a`
+and `eb83fdf39077ab1eec73a2610fffc5b9f1c98ef69d71bb576590b10c9d6c0cdd`.
+Local fingerprint is
+`6ffe5827cf6ec98786fb660fcce4c0f2c864f8ba569a62f3cb34afaa4450b797`;
+PR fingerprint is
+`07110615d3e155cf4b893152ac754e68c5839f8ce1458edbebc30730fd5f5d88`.
+The production controller ran `--profile release --all --no-reuse` in a fresh
+independent source checkout, prepared all forty registered families, and retained
+its production and execution manifests. No quantitative performance hardgates
+were reintroduced. Every major stage rechecked actual physical D: capacity.
+
+All seventeen Full-type and Release-type live supply-chain artifacts passed
+their registered comparisons, SHA-256, complete SPDX 2.3 graph and in-toto/SLSA
+provenance checks. All twenty-one independent comparisons passed, including
+thirty Supported consumers and twelve Preview captures. Canonical 4.0.0 version
+and release-policy checks passed. An uncached offline Python sdist reconstruction
+reproduced the wheel's native hash. Seventeen exact-artifact handoff and
+credential-free publication plans passed; altered Rust export bytes were rejected
+as `publication-substitution`. No registry requests or production credentials
+were used. Support tiers and operating-system/runtime scopes remain exactly
+those in the inventory above.
+
+Independent key-free reconstruction under qualified immutable verifier
+`642cc21f8f5d5ccabde1bb893076e02c624247a7` passed, followed by signing with
+the original authorized certifier and independent signature verification.
+The retained 152-file, 19,240,650-byte bundle has evidence root
+`52bb868586e758beec165989cb644e9646e46eaefc8805c976da6add0f7134dc`
+and signature SHA-256
+`99a77377939f627fa3ab88784111242f6e3789f7645ee230dfd508b64cf246c6`.
+The original key remains intact; its temporary ext4 copy was removed. This is
+local signed evidence, with no hosted result claimed for this candidate.
+
+The healthy Fortress quality-certificate worker completed normally. Only this
+task's outer controller was deferred while that worker owned large compilation;
+its already-running PR child completed normally. No Fortress process was
+signaled, file removed or staged work changed. Its independent commit advanced
+to `f9815fbad4000fe794b89fc4f9bcb31a0d11d1fe`.
+
+### Signed-closure formatter correction
+
+Final integration exposed a genuine additional defect after the successful
+87908150 campaigns: the serializer ownership declaration was mistakenly placed
+in the disposition-name list, and the executable repository formatter still
+selected signed packaging evidence. A read-only Prettier check rejected the
+actual attestation bytes. Reformatting would invalidate hashes and signatures.
+
+Move the existing ownership declaration into `generated_or_serialized` and
+exclude only `tests/certification/release-packaging/1.0/current/*` from the
+competing repository formatter, matching the existing hardened-core boundary.
+The regression verifies preservation of nested JSON/Markdown evidence while
+neighboring authored files remain selected. All thirteen formatting tests pass.
+The complete closure preflight also identified CRLF in the task-local additional
+build-environment record. Its original signed bytes remain retained; the new
+candidate will serialize its own environment record with governed LF endings
+before reconstruction and signing. No hygiene policy exception is introduced.
+This corrects enforcement of existing ownership; it creates no waiver and
+removes no certification operation. The complete 87908150 signed bundle and
+all successful and failed execution evidence remain historical and immutable.
+A new committed candidate requires fresh source-bound acquisition and whole
+profiles, including a fresh independent no-reuse Release, before final closure.

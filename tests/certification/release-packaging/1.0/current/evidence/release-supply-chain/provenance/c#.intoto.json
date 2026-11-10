@@ -1,0 +1,108 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+        "buildDefinition": {
+            "buildType": "https://strling.dev/build-types/release-supply-chain/v1",
+            "externalParameters": {
+                "artifactId": "release:csharp",
+                "buildCommand": [
+                    "python",
+                    "-m",
+                    "tooling.release_packaging",
+                    "--artifact-id",
+                    "release:csharp"
+                ],
+                "productVersion": "4.0.0",
+                "registry": "nuget.org",
+                "support": {
+                    "external_prerequisites": [
+                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Confirm protected release environment reviewers and approved workflow source"
+                    ],
+                    "installation": "Governed registry artifact or source-tag route",
+                    "native_runtime_prerequisites": [
+                        "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
+                    ],
+                    "ownership_status": "externally-pending",
+                    "platforms": [
+                        "windows-x86_64"
+                    ],
+                    "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "scope": "windows-x86_64 clean-consumer native assets",
+                    "support_claim": "binding:csharp",
+                    "tier": "Supported"
+                }
+            },
+            "internalParameters": {
+                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "toolchains": [
+                    {
+                        "executable_sha256": "7f2357adb9b7dca9f7b6e9eb9a0e0a0b4e7e516c19f34d3a348b298701692c80",
+                        "id": "release:csharp:windows-x86_64:cargo",
+                        "version": "cargo 1.75.0 (1d8b05cdd 2023-11-20)"
+                    },
+                    {
+                        "executable_sha256": "8a547dfca2d7df1b6be1e2d212132c1b3b5a661caf5b2ecce481e21b3c1860a6",
+                        "id": "release:csharp:windows-x86_64:cc",
+                        "version": "Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64 Copyright (C) Microsoft Corporation. All rights reserved. usage: cl [ option... ] filename... [ /link linkoption... ]"
+                    },
+                    {
+                        "executable_sha256": "1e881ec1786c31ba712d052258b4ad4202ac155df5965794030037878abb822f",
+                        "id": "release:csharp:windows-x86_64:dotnet",
+                        "version": "9.0.302"
+                    },
+                    {
+                        "executable_sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+                        "id": "release:csharp:windows-x86_64:python",
+                        "version": "Python 3.12.10"
+                    },
+                    {
+                        "executable_sha256": "9e7863a6ea57c70e875d25c5818e0f836bd8da60b07f64a578298f0064144626",
+                        "id": "release:csharp:windows-x86_64:rustc",
+                        "version": "rustc 1.75.0 (82e1608df 2023-12-21)"
+                    }
+                ]
+            },
+            "resolvedDependencies": [
+                {
+                    "digest": {
+                        "gitCommit": "021239608ffa5066e59bdebde9869e193fbb3eab"
+                    },
+                    "uri": "git+https://github.com/strling-lang/strling@021239608ffa5066e59bdebde9869e193fbb3eab"
+                },
+                {
+                    "digest": {
+                        "sha256": "e69edb95a4aeddbf8d86085fbcaf0f697d551f8119001c947794f23bd64e8c07"
+                    },
+                    "uri": "strling:dependency-root:csharp-nuget"
+                },
+                {
+                    "digest": {
+                        "sha256": "61e239850bc902afb037804954b0bac91e269280d88250810b2d4dce12a9a5d0"
+                    },
+                    "uri": "strling:dependency-root:interop-cargo"
+                }
+            ]
+        },
+        "runDetails": {
+            "builder": {
+                "id": "https://strling.dev/builders/release-supply-chain/v1"
+            },
+            "metadata": {
+                "finishedOn": "1970-01-01T00:00:00Z",
+                "invocationId": "021239608ffa5066e59bdebde9869e193fbb3eab:release:csharp",
+                "startedOn": "1970-01-01T00:00:00Z"
+            }
+        }
+    },
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "subject": [
+        {
+            "digest": {
+                "sha256": "a11dd78db2f0a1f16f40c5390d859b90065ca9a6924e2966ac07a6009e8591ab"
+            },
+            "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg"
+        }
+    ]
+}

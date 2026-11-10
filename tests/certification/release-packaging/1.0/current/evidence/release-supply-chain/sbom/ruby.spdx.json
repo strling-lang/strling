@@ -1,0 +1,548 @@
+{
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "annotations": [
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"ruby-bundler\",\"inputs\":[{\"path\":\"bindings/ruby/Gemfile\",\"sha256\":\"b750708d4d49b479724f609517e5f6e743ff6141071f7e183297284f2a79f1b3\"},{\"path\":\"bindings/ruby/strling.gemspec\",\"sha256\":\"0f7d2521ce2e38abce33b6d93f24dfc56443cfcf9e754e836b92320e63c6dc1a\"},{\"path\":\"bindings/ruby/Gemfile.lock\",\"sha256\":\"78259e4706e6e0adddb94b182f8d099b204355e5b04a9a67db8b1686cfa2be6d\"}],\"policy\":{\"ecosystem\":\"bundler\",\"integrity_mode\":\"presence_and_parse\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"diff-lcs\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-2.0-or-later OR MIT\",\"selected_license\":null,\"version\":\"1.6.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"minitest\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"5.26.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rake\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"13.3.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rspec\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.13.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rspec-core\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.13.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rspec-expectations\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.13.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rspec-mocks\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.13.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rspec-support\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.13.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"strling\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"0.0.0.dev\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"4cf237a95ebfa6d3e9876d056be4b929cc25d565fbf81a69a167323c7aec33fa\"}"
+        }
+    ],
+    "creationInfo": {
+        "created": "1970-01-01T00:00:00Z",
+        "creators": [
+            "Tool: strling-release-supply-chain"
+        ],
+        "licenseListVersion": "3.23"
+    },
+    "dataLicense": "CC0-1.0",
+    "documentDescribes": [
+        "SPDXRef-Package"
+    ],
+    "documentNamespace": "https://strling.dev/sbom/ruby/69e8ee2f80e7f8eaf6a3b8353fcb0840deaace73b9051c32a900a54583aa6e48",
+    "files": [
+        {
+            "SPDXID": "SPDXRef-File-1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ec7da99fcc8fb27f24a75861f27f81ccecf908319991e572c2bfaca3029279c6"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "9212f6457f590941576eeeb91b2343c90c1def20"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/checksums.yaml.gz",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-2",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "618cd868fda9e39a82c2f3c9c75ccf4bcfa88a55a7bad510d3d8da0e91b81bdb"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "449d20e06ba5e10563e5c5b52a2850224a0a1fea"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-3",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-4",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "315b13d6b5cad96252db489e3f0df4c9f494ae83ae383d8e14e7897ce812f467"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8328f8a1aa9dfe91e76ca37bb52f09801edfe09d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/README.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-5",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "a93ef4f8fbe0906ead37fd87762f0440d44e089405d94bedd6bde745dd2dfde2"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "14c1704f23cdf4ee34c631ee1d17476f0303e893"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling.rb",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-6",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c1e56be8c96cdf7b187bd2d82d024d575ec635e7f33337b98f085d858ddba3f8"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "3a68635ffe52d2e21a887adac9d7338682b36966"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling/native_client.rb",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-7",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "0d3a54b77428b45c52d700e48ccc5dc48e200d803640a19a394c7b37f8fcccbd"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "ad9998db869da31d7b65f5c4557f0d3d63aeb739"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling/requests.rb",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-8",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "96a5a1aaff9cc00dac531a1f3142e4f6b8cab2f84c0657166974ed026d26c179"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "676ae8ade7e2ed91efb095236b5b6c26c63b4d2f"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling/stdlib_generated.rb",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-9",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "50ddd01cbbff76db81ae3df74baba5a1e22800eecb57c971e729c593a0fc882d"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "836a7ecf128a373afee52e534df1c467aa1563ae"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/ruby/strling-4.0.0.gem!/metadata.gz",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        }
+    ],
+    "name": "STRling ruby release artifact",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-Package",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "69e8ee2f80e7f8eaf6a3b8353fcb0840deaace73b9051c32a900a54583aa6e48"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "release:ruby",
+                    "referenceType": "strling-release-surface"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "NOASSERTION",
+            "licenseDeclared": "Apache-2.0",
+            "name": "strling",
+            "packageVerificationCode": {
+                "packageVerificationCodeValue": "dff24655b1fc6462cee962b68c81f41df049bfac"
+            },
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-1-049ad4e0c832",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"diff-lcs\",\"version\":\"1.6.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Artistic-1.0-Perl OR GPL-2.0-or-later OR MIT",
+            "licenseDeclared": "Artistic-1.0-Perl OR GPL-2.0-or-later OR MIT",
+            "name": "diff-lcs",
+            "versionInfo": "1.6.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-2-dd91b8ea657d",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"minitest\",\"version\":\"5.26.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "minitest",
+            "versionInfo": "5.26.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-3-db9f676476f2",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"rake\",\"version\":\"13.3.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "rake",
+            "versionInfo": "13.3.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-4-9a0c055857a1",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"rspec\",\"version\":\"3.13.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "rspec",
+            "versionInfo": "3.13.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-5-d0b0782410ba",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"rspec-core\",\"version\":\"3.13.6\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "rspec-core",
+            "versionInfo": "3.13.6"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-6-6076feae6ce9",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"rspec-expectations\",\"version\":\"3.13.5\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "rspec-expectations",
+            "versionInfo": "3.13.5"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-7-28ecfb10f944",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"rspec-mocks\",\"version\":\"3.13.7\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "rspec-mocks",
+            "versionInfo": "3.13.7"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-8-bfc477a47911",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"rspec-support\",\"version\":\"3.13.6\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "rspec-support",
+            "versionInfo": "3.13.6"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-9-50a55fed1cd3",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"ruby-bundler\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"ruby-bundler\",\"ecosystem\":\"bundler\",\"name\":\"strling\",\"version\":\"0.0.0.dev\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "strling",
+            "versionInfo": "0.0.0.dev"
+        }
+    ],
+    "relationships": [
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "DESCRIBES",
+            "spdxElementId": "SPDXRef-DOCUMENT"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-1",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-2",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-3",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-4",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-5",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-6",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-7",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-8",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-9",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-1-049ad4e0c832",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-2-dd91b8ea657d",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-3-db9f676476f2",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-4-9a0c055857a1",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-5-d0b0782410ba",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-6-6076feae6ce9",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-7-28ecfb10f944",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-8-bfc477a47911",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-9-50a55fed1cd3",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        }
+    ],
+    "spdxVersion": "SPDX-2.3"
+}

@@ -1,0 +1,8 @@
+{
+  "source": "021239608ffa5066e59bdebde9869e193fbb3eab",
+  "CARGO_INCREMENTAL": "0",
+  "CARGO_BUILD_JOBS": "2",
+  "reason": "Fresh independent compiled-output trees with bounded concurrency following interrupted-cache diagnostics",
+  "predecessor": "879081506061bb363b5c1563b94d3e32a34676b5",
+  "publication_authorized": false
+}

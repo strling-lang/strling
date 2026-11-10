@@ -1,0 +1,743 @@
+{
+    "artifact_kind": "strling-production-candidate-certification",
+    "deterministic_evidence": {
+        "aggregate": {
+            "failed": 0,
+            "incomplete": 0,
+            "passed": 123,
+            "status": "waived",
+            "total": 124,
+            "unavailable": 0,
+            "waived": 1
+        },
+        "artifact_identities": {
+            "product": {
+                "sha256": "3ce0f07177ad710d1440d6514a8e758d9b1a7733b6dede693097fcb9b8967a66",
+                "size_bytes": 2160928
+            },
+            "product_report": {
+                "sha256": "f5d20b58fd964d8fe3d857c30a63fc2ec5c20931c44b519d94e6291d5126fcfd",
+                "size_bytes": 1177
+            },
+            "profile": {
+                "sha256": "2f8095245e7752fb3c1374be5c4021aeb95fb3ae30d9e7abe4bb51712a27d4a5",
+                "size_bytes": 1058385
+            }
+        },
+        "artifacts": {
+            "product": "/var/tmp/strling-packaging-02123960-certification/artifacts/production-certification/021239608ffa5066e59bdebde9869e193fbb3eab/021239608ffa-20261110T095353Z/product-certification-release.json",
+            "product_report": "/var/tmp/strling-packaging-02123960-certification/artifacts/production-certification/021239608ffa5066e59bdebde9869e193fbb3eab/021239608ffa-20261110T095353Z/product-certification-release.md",
+            "profile": "/var/tmp/strling-packaging-02123960-certification/artifacts/production-certification/021239608ffa5066e59bdebde9869e193fbb3eab/021239608ffa-20261110T095353Z/profile-release.json"
+        },
+        "certification": {
+            "claim_summary": {
+                "claim_count": 4,
+                "claim_counts": {
+                    "failed": 0,
+                    "incomplete": 0,
+                    "passed": 3,
+                    "unavailable": 0,
+                    "waived": 1
+                },
+                "counts": {
+                    "failed": 0,
+                    "incomplete": 0,
+                    "not_applicable": 0,
+                    "not_yet_configured": 0,
+                    "not_yet_enforceable": 0,
+                    "passed": 123,
+                    "skipped": 0,
+                    "unavailable": 0,
+                    "waived": 1
+                },
+                "exit_code": 0,
+                "result_count": 124,
+                "status": "waived"
+            },
+            "evidence_areas": {
+                "adapter-package": {
+                    "passed": 10
+                },
+                "architecture-governance": {
+                    "passed": 7
+                },
+                "canonical-compiler": {
+                    "passed": 1
+                },
+                "contracts-specification": {
+                    "passed": 3
+                },
+                "documentation": {
+                    "passed": 1
+                },
+                "functional-resource": {
+                    "passed": 1
+                },
+                "interop-resilience": {
+                    "passed": 2
+                },
+                "migration": {
+                    "passed": 1
+                },
+                "repository-quality": {
+                    "passed": 85
+                },
+                "security-provenance": {
+                    "passed": 5,
+                    "waived": 1
+                },
+                "target-conformance": {
+                    "passed": 7
+                }
+            },
+            "product_evidence_fingerprint": "8ee626d49f9b55ea223638ea632029e4448a062a63deadea742e6165c5429969",
+            "product_schema_version": "1.0.0",
+            "profile_artifact_schema_version": "2.0.0",
+            "profile_definition_fingerprint": "6c9ae9dcda8e4b3e99ce6bba792995fcc97993ae1846c73748fa6fdd44036362",
+            "profile_definition_version": "1.31.0",
+            "waiver_references": [
+                "WVR-SEC-VSCE-LICENSE-001"
+            ]
+        },
+        "command": "npm run test:all -- --profile release --all --no-reuse --plain",
+        "environment": {
+            "configured_artifacts": {
+                "STRLING_CPYTHON_311_BINARY": {
+                    "path": "/opt/strling-toolchains/install/cpython-3.11.15/bin/python3.11",
+                    "sha256": "89656b63d58055a8f200f46d52986610f944b5bcff076a7b60521fc6068422cc"
+                },
+                "STRLING_NODE_22_BINARY": {
+                    "path": "/usr/local/bin/node",
+                    "sha256": "3517c2df0b2f8cd7f422b4b8450ef81c6889f08eb03e281d6de9079b15e6a327"
+                },
+                "STRLING_OSV_SCANNER": {
+                    "path": "/usr/local/bin/osv-scanner",
+                    "sha256": "15314940c10d26af9c6649f150b8a47c1262e8fc7e17b1d1029b0e479e8ed8a0"
+                },
+                "STRLING_PCRE2_1042_LIBRARY": {
+                    "path": "/opt/pcre2-10.42-build-default/libpcre2-8.so.0.11.2",
+                    "sha256": "fdb00bcb3dd68707ed155927738b454a4281bb664e830d60dd205b10d1a2edd1"
+                },
+                "STRLING_PCRE2_1043_LIBRARY": {
+                    "path": "/opt/pcre2-10.43-build-default/libpcre2-8.so.0.12.0",
+                    "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
+                }
+            },
+            "disk_free_bytes": 579483467776,
+            "exact_runtime_toolchains": {
+                "manifest_sha256": "c79424081e94168fdb394dfe1f258b0cb1644a6d40e2bbb8d95bd0da37a0ff76",
+                "schema_version": "1.0.0",
+                "status": "passed",
+                "toolchains": {
+                    "cpython-3.11.15": {
+                        "identity": {
+                            "implementation": "cpython",
+                            "machine": "x86_64",
+                            "platform": "linux",
+                            "soabi": "cpython-311-x86_64-linux-gnu",
+                            "sysconfig_platform": "linux-x86_64",
+                            "version": "3.11.15"
+                        },
+                        "path": "/opt/strling-toolchains/install/cpython-3.11.15/bin/python3.11",
+                        "sha256": "89656b63d58055a8f200f46d52986610f944b5bcff076a7b60521fc6068422cc"
+                    },
+                    "node-22.23.2": {
+                        "identity": {
+                            "architecture": "x64",
+                            "node": "v22.23.2",
+                            "platform": "linux",
+                            "v8": "12.4.254.21-node.56"
+                        },
+                        "path": "/usr/local/bin/node",
+                        "sha256": "3517c2df0b2f8cd7f422b4b8450ef81c6889f08eb03e281d6de9079b15e6a327"
+                    },
+                    "pcre2-10.42": {
+                        "identity": {
+                            "engine_version": "10.42 2022-12-11"
+                        },
+                        "path": "/opt/pcre2-10.42-build-default/libpcre2-8.so.0.11.2",
+                        "sha256": "fdb00bcb3dd68707ed155927738b454a4281bb664e830d60dd205b10d1a2edd1"
+                    },
+                    "pcre2-10.43": {
+                        "identity": {
+                            "engine_version": "10.43 2024-02-16"
+                        },
+                        "path": "/opt/pcre2-10.43-build-default/libpcre2-8.so.0.12.0",
+                        "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
+                    }
+                }
+            },
+            "java_home": "/opt/temurin-11.0.32+9",
+            "machine": "x86_64",
+            "materialized_governed_inputs": [
+                {
+                    "authority": "hash-bound tracked historical certification evidence",
+                    "path": "tests/architecture/legacy-removal/1.0/source-production-candidate-certification.json",
+                    "sha256": "d4b90eeca9c3d2d5c82a311ea99b7bd3ed1edf9a0310bcb62f3cb5b780544ab3",
+                    "size_bytes": 19968
+                }
+            ],
+            "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+            "preserved_execution_evidence": [
+                {
+                    "path": "adversarial-semantic-runtime/evidence.json",
+                    "sha256": "618213af864198c96b7323d721590a5d62e425a9df0748359f6d486e95da7406",
+                    "size_bytes": 26105
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/alternation-backreference-f2eb0145ee28.json",
+                    "sha256": "50d1f728eadc7fe4817175737806541e2c55fcf5367ffd42f858db72fe5ac8d6",
+                    "size_bytes": 134127
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/ascii-character-set-95ffdc946683.json",
+                    "sha256": "d92316ece4585aa8fb61d88e5c8739a20992db480abcd5eba5b7372c7252bf77",
+                    "size_bytes": 39209
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/before-final-line-terminator-9980a1a54d7d.json",
+                    "sha256": "ec72bd30cd18fbbbd50c4b4b4318eafbf29c301056fb6bd1feaf8d90831f5471",
+                    "size_bytes": 85390
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/bytes-nonascii-literal-36f96a156c72.json",
+                    "sha256": "376b67f5a61d0db2339993a22224188ce927de375c18e1cb1122e49efdb8dc8b",
+                    "size_bytes": 42497
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-capital-sigma-895aceb49564.json",
+                    "sha256": "db124806d01c53bff114dc8b75099db851bf71e25fc747811f28c367e1750bcb",
+                    "size_bytes": 77969
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-dotless-i-5a2911ba2eda.json",
+                    "sha256": "975d41dabf2c4761c40ac90fb4694a3e87a6a2880cdde2a75d4f5cf51d4a12f3",
+                    "size_bytes": 69267
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-dotted-i-934dbc43fcaf.json",
+                    "sha256": "1d0d544113bfb8b3ec9dffb0560303617e23a6351ee98ab5f1eb6e5970dad13e",
+                    "size_bytes": 69232
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-final-sigma-4608a2c005d8.json",
+                    "sha256": "c071d23a1b0bc26783a00f163231f82d934722d898bce5fbc30fc038e8610592",
+                    "size_bytes": 77901
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-i-5dfb30cb2509.json",
+                    "sha256": "9d8ecc72af069c6b09d061f867fdf37d62e21bb540d9b3f26c8d98458d1dc876",
+                    "size_bytes": 67252
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-i-83dd610411ed.json",
+                    "sha256": "9b177bed966cb8c97fbd89c881a937f25133a51bf23dc211a8dbc027bca7f36b",
+                    "size_bytes": 67252
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-k-0a9f573d80c2.json",
+                    "sha256": "147d0c11b5cf50e4d1db7fc56d6bf49ca49cdb049d144ff10f1585168eebadc2",
+                    "size_bytes": 67281
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-k-3fc4137a3873.json",
+                    "sha256": "5dfe048d106cd37b5c2f4f205098573da8e6ecd33f65a338168457a939891f28",
+                    "size_bytes": 67281
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-kelvin-78e2daaeb7b0.json",
+                    "sha256": "22631e8659fb669e2f0ef644827dd79b49d90b4f365a5c1eb00b9cce8a4b622b",
+                    "size_bytes": 78128
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-long-s-51f67ecbbb04.json",
+                    "sha256": "f2712dc94e2de14e0c62621d14d836ff12c4ab3b6a7b9bf623a762a8cf96fba8",
+                    "size_bytes": 78128
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-s-c73caa5f2137.json",
+                    "sha256": "73ce7f60ce4846c47f87c3e0c500c45666415ba73a979ef682b79182f2f26040",
+                    "size_bytes": 67281
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-s-f98eff56df09.json",
+                    "sha256": "7438c7f62ac40c7c7969b74d74fef66da6af525d6fc3d4dabbd78eed742fa288",
+                    "size_bytes": 67281
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/case-fold-sigma-ecf1c5f45d15.json",
+                    "sha256": "5ba6825bbc1edd7a9bdff1c8a5424693096dbc440ba7a991d198ac4d41743a3d",
+                    "size_bytes": 77697
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/final-crlf-interior-5ef4f45ed974.json",
+                    "sha256": "03980bb0936fd6c076c68fbfae5d318570bcae731d37b8bdb8693d0e79b0a343",
+                    "size_bytes": 57642
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/line-crlf-interior-e09de516484e.json",
+                    "sha256": "b823553c0974e46f3743f4c2dddf1cab69d43287cc4a7f221cddb8fcdbbe36cf",
+                    "size_bytes": 54404
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/line-end-c569b5269ceb.json",
+                    "sha256": "0c046693e19323528bd18e785e083d6e8cea2e1819145f3b911ee4f140278efe",
+                    "size_bytes": 81363
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/line-start-3b76b0718202.json",
+                    "sha256": "4735c9ca4a1731f7af4f90f645ee1f1d1c2a9d126b4b2343971224f2a286250e",
+                    "size_bytes": 81539
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/negated-builtin-union-4ab730d41a96.json",
+                    "sha256": "f45f4eb0f7f4d22509caa1c4060b45f9db7a9322dc69e81517822f23d5f6e9e6",
+                    "size_bytes": 60678
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/negated-character-set-a451dc1187ed.json",
+                    "sha256": "590aef921eec80eb0ef6a26f2ed938ffe33435a0fa1fb9e11f87f1d062e2fcb9",
+                    "size_bytes": 57595
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/negated-character-set-anchored-b4a724057103.json",
+                    "sha256": "7f0c94b3e0f053454a77788aaece3c19cdbce50fb12ca2f42c0690f547d2ad7c",
+                    "size_bytes": 98149
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/negative-lookahead-backreference-e857fde91290.json",
+                    "sha256": "549da8fb378da758fae2a60a0350e933bc57183cb7457e4f2bb11360f6ccd251",
+                    "size_bytes": 141425
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/pcre2-large-quantifier-f2905344a306.json",
+                    "sha256": "28b8937256e41d002a9cfd189fe68182363b1b80a86768e17d967f5a966d3f06",
+                    "size_bytes": 35304
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/pcre2-large-quantifier-range-babcd559145c.json",
+                    "sha256": "0842858e4f7c14d2d7e836cf373271f55afbb26d120227161bd16f676d6e44fa",
+                    "size_bytes": 36815
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/pcre2-serialization-limit-2ea79ecc86e6.json",
+                    "sha256": "f5cf1ce8c825ebbfb559436797c4ddce59322d1906ce5e8ee39845c77a77cb2a",
+                    "size_bytes": 34267
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/repetition-capture-observation-1bc35e818590.json",
+                    "sha256": "4e9d852f2fcaa01e83caa94a4fbc82b490715a0d3004affc9dcc788f48d727c5",
+                    "size_bytes": 140435
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/repetition-capture-reset-f8a3a000943a.json",
+                    "sha256": "4249345d53e6fb4b286ee68a2edeafc7f7b1c327e810177cd4d93291444f6493",
+                    "size_bytes": 151015
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/two-capture-alternation-reference-08b2badd4c07.json",
+                    "sha256": "eeaebd0e4be9d05dfe8f9837f2e824095743c5d80738f4bb09b3b7d2c777ac1d",
+                    "size_bytes": 156313
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/unbounded-capture-reset-8f27f62f6d5d.json",
+                    "sha256": "8ce5a43615aa0b0049ee66e151cbf3c187d63948b14121a6ce2283549aa38aae",
+                    "size_bytes": 153077
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/unicode-scalar-character-set-93646ab77a67.json",
+                    "sha256": "82b6e0e334d42db15e0366fbe8c80515c7e83e4d1f429c26ca14f0e94a7dfac0",
+                    "size_bytes": 54484
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/unicode-word-class-1a08f5c472dd.json",
+                    "sha256": "2994f73b316cdae52383483374bed3a1c7d53ccc357df4bf528cf82138f54611",
+                    "size_bytes": 67556
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/unset-backreference-806d0f301554.json",
+                    "sha256": "410c8080011ace34d2192019313001470bc32f04b94e9bc3018dbec08391bd11",
+                    "size_bytes": 127844
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/wildcard-excluding-lines-anchored-1ddeeb6ebd05.json",
+                    "sha256": "ce52e658f56527eb498ea5a77ae9690791e96edc5a81f3060945a2d9dc468ac8",
+                    "size_bytes": 111814
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/wildcard-excluding-lines-e8f959befa9c.json",
+                    "sha256": "7942716e3064452320d494c0d9b86879bad485398bb57ea4bfc5ab15abfe0228",
+                    "size_bytes": 71262
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/wildcard-including-lines-anchored-142c97dbaa06.json",
+                    "sha256": "930dfb466a9d4bd6efe7c92c0f66262e0c74d1c465443341f0329561fd92f922",
+                    "size_bytes": 118916
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/wildcard-including-lines-e5f85e7e2fd6.json",
+                    "sha256": "080a0f02cb267334670306154e317bf8e2dfd000483a58b6a11c1b78715d58f9",
+                    "size_bytes": 80234
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/word-boundary-924426e16b2f.json",
+                    "sha256": "6b6e885a75f7f7680ecfc133a3802286c798689aec8e0ef5c468581b64d6c224",
+                    "size_bytes": 91577
+                },
+                {
+                    "path": "adversarial-semantic-runtime/observations/word-boundary-before-ascii-e09919c6fce6.json",
+                    "sha256": "c4125fa29e658855f71cf958acdf70c8d01c0508b364246869c8f9ffb0a93824",
+                    "size_bytes": 101384
+                },
+                {
+                    "path": "operation-results/d7442984fb084cd496339a5d20aa0c32/result.json",
+                    "sha256": "3981f143a1737a42d1d9cd5e7865c0fda8e624b44b8803cf14d86bd593843a52",
+                    "size_bytes": 47014
+                },
+                {
+                    "path": "operation-results/d7442984fb084cd496339a5d20aa0c32/stderr.txt",
+                    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "size_bytes": 0
+                },
+                {
+                    "path": "operation-results/d7442984fb084cd496339a5d20aa0c32/stdout.txt",
+                    "sha256": "097b0dddb078223ee7d38ba0171ba787e29dfde4307efea1d32d12458ae486ad",
+                    "size_bytes": 40850
+                }
+            ],
+            "probes": {
+                "bash": {
+                    "command": [
+                        "bash",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "GNU bash, version 5.2.21(1)-release (x86_64-pc-linux-gnu)\nCopyright (C) 2022 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\n\nThis is free software; you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law."
+                },
+                "bundler": {
+                    "command": [
+                        "bundle",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "Bundler version 2.4.20"
+                },
+                "cargo": {
+                    "command": [
+                        "cargo",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "cargo 1.75.0 (1d8b05cdd 2023-11-20)"
+                },
+                "cargo_audit": {
+                    "command": [
+                        "cargo-audit",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "cargo-audit 0.22.2"
+                },
+                "cargo_fuzz": {
+                    "command": [
+                        "cargo",
+                        "+nightly-2026-08-01",
+                        "fuzz",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "cargo-fuzz 0.13.2"
+                },
+                "clippy": {
+                    "command": [
+                        "cargo",
+                        "+1.75.0",
+                        "clippy",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "clippy 0.1.75 (82e1608 2023-12-21)"
+                },
+                "cmake": {
+                    "command": [
+                        "cmake",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "cmake version 3.28.3\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+                },
+                "composer": {
+                    "command": [
+                        "composer",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "Composer version 2.7.1 2024-02-09 15:26:28"
+                },
+                "conan": {
+                    "command": [
+                        "conan",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "Conan version 2.31.2"
+                },
+                "cpanm": {
+                    "command": [
+                        "cpanm",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "cpanm (App::cpanminus) version 1.7047 (/usr/bin/cpanm)\nperl version 5.038002 (/usr/bin/perl)\n\n  %Config:\n    archname=x86_64-linux-gnu-thread-multi\n    installsitelib=/usr/local/share/perl/5.38.2\n    installsitebin=/usr/local/bin\n    installman1dir=/usr/share/man/man1\n    installman3dir=/usr/share/man/man3\n    sitearchexp=/usr/local/lib/x86_64-linux-gnu/perl/5.38.2\n    sitelibexp=/usr/local/share/perl/5.38.2\n    vendorarch=/usr/lib/x86_64-linux-gnu/perl5/5.38\n    vendorlibexp=/usr/share/perl5\n    archlibexp=/usr/lib/x86_64-linux-gnu/perl/5.38\n    privlibexp=/usr/share/perl/5.38\n  %ENV:\n  @INC:\n    /etc/perl\n    /usr/local/lib/x86_64-linux-gnu/perl/5.38.2\n    /usr/local/share/perl/5.38.2\n    /usr/lib/x86_64-linux-gnu/perl5/5.38\n    /usr/share/perl5\n    /usr/lib/x86_64-linux-gnu/perl-base\n    /usr/lib/x86_64-linux-gnu/perl/5.38\n    /usr/share/perl/5.38\n    /usr/local/lib/site_perl"
+                },
+                "dart": {
+                    "command": [
+                        "dart",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "Dart SDK version: 3.12.2 (stable) (Tue Jun 9 01:11:39 2026 -0700) on \"linux_x64\""
+                },
+                "docker": {
+                    "command": [
+                        "docker",
+                        "version",
+                        "--format",
+                        "{{json .}}"
+                    ],
+                    "exit_code": 1,
+                    "stderr": "failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.",
+                    "stdout": "{\"Client\":{\"Version\":\"29.9.3\",\"ApiVersion\":\"1.56\",\"DefaultAPIVersion\":\"1.56\",\"GitCommit\":\"5457199\",\"GoVersion\":\"go1.26.10\",\"Os\":\"windows\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Nov  3 21:46:10 2026\",\"Context\":\"desktop-linux\"},\"Server\":null}"
+                },
+                "dotnet": {
+                    "command": [
+                        "dotnet",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "9.0.302"
+                },
+                "gcc": {
+                    "command": [
+                        "gcc",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
+                },
+                "go": {
+                    "command": [
+                        "go",
+                        "version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "go version go1.22.2 linux/amd64"
+                },
+                "java": {
+                    "command": [
+                        "java",
+                        "-version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "openjdk version \"11.0.32\" 2026-07-21\nOpenJDK Runtime Environment Temurin-11.0.32+9 (build 11.0.32+9)\nOpenJDK 64-Bit Server VM Temurin-11.0.32+9 (build 11.0.32+9, mixed mode)",
+                    "stdout": ""
+                },
+                "lua": {
+                    "command": [
+                        "lua",
+                        "-v"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "Lua 5.1.5  Copyright (C) 1994-2012 Lua.org, PUC-Rio",
+                    "stdout": ""
+                },
+                "luarocks": {
+                    "command": [
+                        "luarocks",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "/usr/bin/luarocks 3.8.0\nLuaRocks main command-line interface"
+                },
+                "maven": {
+                    "command": [
+                        "mvn",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "\u001b[1mApache Maven 3.8.7\u001b[m\nMaven home: /usr/share/maven\nJava version: 11.0.32, vendor: Eclipse Adoptium, runtime: /opt/temurin-11.0.32+9\nDefault locale: en, platform encoding: UTF-8\nOS name: \"linux\", version: \"5.15.167.4-microsoft-standard-wsl2\", arch: \"amd64\", family: \"unix\""
+                },
+                "node": {
+                    "command": [
+                        "node",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "v22.23.2"
+                },
+                "npm": {
+                    "command": [
+                        "npm",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "10.9.8"
+                },
+                "osv_scanner": {
+                    "command": [
+                        "osv-scanner",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "osv-scanner version: 2.4.0\nosv-scalibr version: 0.4.5\ncommit: b56b5191101d5f27d4787d5583d8d01e9518a7af\nbuilt at: 2026-06-18T12:55:27Z"
+                },
+                "perl": {
+                    "command": [
+                        "perl",
+                        "-e",
+                        "print $^V"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "v5.38.2"
+                },
+                "php": {
+                    "command": [
+                        "php",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "PHP 8.3.6 (cli) (built: Oct 19 2026 15:16:58) (NTS)\nCopyright (c) The PHP Group\nZend Engine v4.3.6, Copyright (c) Zend Technologies\n    with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies"
+                },
+                "python": {
+                    "command": [
+                        "/usr/bin/python3",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "Python 3.12.3"
+                },
+                "r": {
+                    "command": [
+                        "R",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "R version 4.3.3 (2024-02-29) -- \"Angel Food Cake\"\nCopyright (C) 2024 The R Foundation for Statistical Computing\nPlatform: x86_64-pc-linux-gnu (64-bit)\n\nR is free software and comes with ABSOLUTELY NO WARRANTY.\nYou are welcome to redistribute it under the terms of the\nGNU General Public License versions 2 or 3.\nFor more information about these matters see\nhttps://www.gnu.org/licenses/."
+                },
+                "ruby": {
+                    "command": [
+                        "ruby",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "ruby 3.2.3 (2024-01-18 revision 52bb2ac0a6) [x86_64-linux-gnu]"
+                },
+                "ruff": {
+                    "command": [
+                        "ruff",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "ruff 0.15.21"
+                },
+                "rust_nightly": {
+                    "command": [
+                        "rustc",
+                        "+nightly-2026-08-01",
+                        "-vV"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "rustc 1.99.0-nightly (ad3d0bc14 2026-07-31)\nbinary: rustc\ncommit-hash: ad3d0bc141a02cf446e384136d250a1f6950fed5\ncommit-date: 2026-07-31\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0-nightly\nLLVM version: 22.1.8"
+                },
+                "rustc": {
+                    "command": [
+                        "rustc",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "rustc 1.75.0 (82e1608df 2023-12-21)"
+                },
+                "rustfmt": {
+                    "command": [
+                        "rustfmt",
+                        "+1.75.0",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "rustfmt 1.7.0-stable (82e1608 2023-12-21)"
+                },
+                "swift": {
+                    "command": [
+                        "swift",
+                        "--version"
+                    ],
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-linux-gnu"
+                }
+            },
+            "python_implementation": "CPython",
+            "storage_capacity": {
+                "contract_fingerprint": "bdaedd6454f2a965a113237ca6513e444dbf5d6dab106814b714b24979a34779",
+                "contract_path": "governance/production-certification-capacity.json",
+                "free_bytes": 579483467776,
+                "maximum_expected_transient_bytes": 103079215104,
+                "required_free_bytes": 120259084288,
+                "rounded_workspace_envelope_bytes": 34359738368,
+                "safety_margin_bytes": 17179869184,
+                "simultaneous_workspace_envelopes": 3,
+                "status": "passed"
+            }
+        },
+        "failure": null,
+        "no_reuse": {
+            "clean_detached_worktree": "/var/tmp/strling-packaging-02123960-certification/.cert/production-certification/021239608ffa-20261110T095353Z/source",
+            "final_root_status": "",
+            "final_source_status": "",
+            "generated_artifacts_recreated": true,
+            "honored": true,
+            "initial_source_status": "clean"
+        },
+        "profile": "release",
+        "publication_authorized": false,
+        "source": {
+            "branch": "",
+            "sha": "021239608ffa5066e59bdebde9869e193fbb3eab",
+            "status_porcelain": ""
+        },
+        "status": "passed"
+    },
+    "evidence_fingerprint": "478a95e6fe4fffa3ad9724726382edc232bd4821f19892b64c7b1a5286f3d8a2",
+    "execution_metadata": {
+        "generated_at": "2026-11-10T11:32:56.241391+00:00"
+    },
+    "schema_version": "1.0.0"
+}

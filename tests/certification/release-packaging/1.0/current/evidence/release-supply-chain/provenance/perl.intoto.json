@@ -1,0 +1,93 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+        "buildDefinition": {
+            "buildType": "https://strling.dev/build-types/release-supply-chain/v1",
+            "externalParameters": {
+                "artifactId": "release:perl",
+                "buildCommand": [
+                    "python",
+                    "-m",
+                    "tooling.release_packaging",
+                    "--artifact-id",
+                    "release:perl",
+                    "--preview"
+                ],
+                "productVersion": "4.0.0",
+                "registry": "cpan",
+                "support": {
+                    "external_prerequisites": [
+                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Confirm protected release environment reviewers and approved workflow source"
+                    ],
+                    "installation": "Governed registry artifact or source-tag route",
+                    "native_runtime_prerequisites": [
+                        "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                    ],
+                    "ownership_status": "externally-pending",
+                    "platforms": [
+                        "linux-x86_64"
+                    ],
+                    "publication_eligibility": "preview-only-explicit-authorization",
+                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "scope": "linux-x86_64",
+                    "support_claim": "binding:perl",
+                    "tier": "Preview"
+                }
+            },
+            "internalParameters": {
+                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "toolchains": [
+                    {
+                        "executable_sha256": "d78b8f1d099fbcfb6f2f49ab87223b9b68fb3956642f92d6ec6de812e8afa965",
+                        "id": "release:perl:linux-x86_64:make",
+                        "version": "GNU Make 4.3 Built for x86_64-pc-linux-gnu Copyright (C) 1988-2020 Free Software Foundation, Inc. License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html> This is free software: you are free to change and redistribute it. There is NO WARRANTY, to the extent permitted by law."
+                    },
+                    {
+                        "executable_sha256": "47bdc8a342556c1d140084417ef6cacd79a3362e4b6cc1e4754df55bdf1e3683",
+                        "id": "release:perl:linux-x86_64:perl",
+                        "version": "This is perl 5, version 38, subversion 2 (v5.38.2) built for x86_64-linux-gnu-thread-multi (with 67 registered patches, see perl -V for more detail) Copyright 1987-2023, Larry Wall Perl may be copied only under the terms of either the Artistic License or the GNU General Public License, which may be found in the Perl 5 source kit. Complete documentation for Perl, including FAQ lists, should be found on this system using \"man perl\" or \"perldoc perl\". If you have access to the Internet, point your browser at https://www.perl.org/, the Perl Home Page."
+                    },
+                    {
+                        "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+                        "id": "release:perl:linux-x86_64:python",
+                        "version": "Python 3.12.3"
+                    }
+                ]
+            },
+            "resolvedDependencies": [
+                {
+                    "digest": {
+                        "gitCommit": "021239608ffa5066e59bdebde9869e193fbb3eab"
+                    },
+                    "uri": "git+https://github.com/strling-lang/strling@021239608ffa5066e59bdebde9869e193fbb3eab"
+                },
+                {
+                    "digest": {
+                        "sha256": "fe397d4f16bd945696b3e4e9f5163f29c0ad302d23bb783f586e26b176758d08"
+                    },
+                    "uri": "strling:dependency-root:perl-cpan"
+                }
+            ]
+        },
+        "runDetails": {
+            "builder": {
+                "id": "https://strling.dev/builders/release-supply-chain/v1"
+            },
+            "metadata": {
+                "finishedOn": "1970-01-01T00:00:00Z",
+                "invocationId": "021239608ffa5066e59bdebde9869e193fbb3eab:release:perl",
+                "startedOn": "1970-01-01T00:00:00Z"
+            }
+        }
+    },
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "subject": [
+        {
+            "digest": {
+                "sha256": "4c2d510486e5d14bd85fcf14cf8e0ad6484058bc987e1c24c32b0bc2c39a60b6"
+            },
+            "name": "bindings/perl/STRling-4.0.0.tar.gz"
+        }
+    ]
+}

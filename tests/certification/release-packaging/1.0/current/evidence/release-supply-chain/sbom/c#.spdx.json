@@ -1,0 +1,1034 @@
+{
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "annotations": [
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"csharp-nuget\",\"inputs\":[{\"path\":\"bindings/csharp/src/STRling/STRling.csproj\",\"sha256\":\"baeb59c83365112c1356757143d9e1b898677e01ec4ea95bd2f4ea8bb69e9454\"},{\"path\":\"bindings/csharp/src/STRling.Cli/STRling.Cli.csproj\",\"sha256\":\"672986ab8aa6a0e792b2ed946e80755be546ca1a4af30a6ff25ec00dea27975f\"},{\"path\":\"bindings/csharp/tests/STRling.Tests/STRling.Tests.csproj\",\"sha256\":\"bb50c7778739372348464a0f50abe156cabb5ccfaee8ab8efbb4f17701a2e744\"}],\"policy\":{\"ecosystem\":\"nuget\",\"integrity_mode\":\"inventory_only\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Microsoft.NET.Test.Sdk\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"17.12.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"coverlet.collector\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"6.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.9.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit.runner.visualstudio\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.8.2\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"023f38b551be465af7c22f0b351fae56f196fc860c97addac2adbddbda1eaebd\"}"
+        },
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"567c4d8e5dcb444d4ceab9b109f82fcf1d68cb24bfdae221db0ad60b898195a6\"}"
+        }
+    ],
+    "creationInfo": {
+        "created": "1970-01-01T00:00:00Z",
+        "creators": [
+            "Tool: strling-release-supply-chain"
+        ],
+        "licenseListVersion": "3.23"
+    },
+    "dataLicense": "CC0-1.0",
+    "documentDescribes": [
+        "SPDXRef-Package"
+    ],
+    "documentNamespace": "https://strling.dev/sbom/c#/a11dd78db2f0a1f16f40c5390d859b90065ca9a6924e2966ac07a6009e8591ab",
+    "files": [
+        {
+            "SPDXID": "SPDXRef-File-1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f78c25bc3efe87537330a9fc15381c3221a0f8f4e1bcd456e89dce3d6256a823"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "660fd2f5c7f887dd836e9d5069b35f9cce631f16"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/README.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-2",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "5de2016da1911512807d10f879a376f2efd5062c279519a38300746735c9009e"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "dbb209eefa6c41df91a758037e9a9c72db42d118"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/STRling.nuspec",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-3",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f2d1c861c81244b967209683242c7c7db7b30d7c6e3fb549ecc17c358fb12d05"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "eb789f5bc5782b02df07f08c824b20d78804999f"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/THIRD_PARTY_NOTICES.txt",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-4",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ed2ce12205df18303ce5b1d0133de0d5ab22d70d9c5179e2eb2cca39b1c6ad5c"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5ebf1a94672074da3e775abc7d2a785f797d1b63"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/[Content_Types].xml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-5",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "9c06ba3dfc29f72525f5999ad5f0a2f7725326ad34986249356b1e592837c4ef"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "6cad6322243986e2646d431fbc4e925d6f6bc1d4"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/_rels/.rels",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-6",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "72c22c2a07b774991cbc659a04f02f83cbf82aa502e336c0b13c16eee54f377e"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "dda9e00cfa3b6c054e29ad3f070b7064f47458ec"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/lib/net9.0/STRling.dll",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-7",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "efc81d285d91c4dfeac0c7f780ae4cea1613d079dc3cfef354e279e26aa5fc84"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "d41d7f4447000b8f2560f4c919228108530744e4"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/lib/net9.0/STRling.xml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-8",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e12af4a027bde1f99a37b493a8e96b0adb95135feb15ad330a840d816961a02a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "6fede756448adc6c9cd41aabe3bdc4ad8ea6f705"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/package/services/metadata/core-properties/e12af4a027bde1f99a37b493a8e96b0a.psmdcp",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-9",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "5542b10913723bacc28b0977f95fbdc13f8ee28415007973748a423f17b660f3"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a6e99117765d5a6b441bbc59b6385572f152933c"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/runtimes/win-x64/native/strling_interop.dll",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        }
+    ],
+    "name": "STRling c# release artifact",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-Package",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "a11dd78db2f0a1f16f40c5390d859b90065ca9a6924e2966ac07a6009e8591ab"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "release:csharp",
+                    "referenceType": "strling-release-surface"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "NOASSERTION",
+            "licenseDeclared": "Apache-2.0",
+            "name": "STRling",
+            "packageVerificationCode": {
+                "packageVerificationCodeValue": "c741e18c9bb255c334d2b3a8e81f976534d1872e"
+            },
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-1-b578fc9be75f",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"csharp-nuget\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"csharp-nuget\",\"ecosystem\":\"nuget\",\"name\":\"Microsoft.NET.Test.Sdk\",\"version\":\"17.12.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "Microsoft.NET.Test.Sdk",
+            "versionInfo": "17.12.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-2-bd32788b5095",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"csharp-nuget\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"csharp-nuget\",\"ecosystem\":\"nuget\",\"name\":\"coverlet.collector\",\"version\":\"6.0.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "coverlet.collector",
+            "versionInfo": "6.0.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-3-2fd88ca424fe",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"csharp-nuget\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"csharp-nuget\",\"ecosystem\":\"nuget\",\"name\":\"xunit\",\"version\":\"2.9.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "xunit",
+            "versionInfo": "2.9.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-4-7debb6a6072e",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"csharp-nuget\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"csharp-nuget\",\"ecosystem\":\"nuget\",\"name\":\"xunit.runner.visualstudio\",\"version\":\"2.8.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "xunit.runner.visualstudio",
+            "versionInfo": "2.8.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-5-b0caa67097f1",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"block-buffer\",\"version\":\"0.10.4\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "block-buffer",
+            "versionInfo": "0.10.4"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-6-76c11b547321",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"cfg-if\",\"version\":\"1.0.4\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "cfg-if",
+            "versionInfo": "1.0.4"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-7-8111465e27ee",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"cpufeatures\",\"version\":\"0.2.17\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "cpufeatures",
+            "versionInfo": "0.2.17"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-8-f43a07ea0b3e",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"crypto-common\",\"version\":\"0.1.7\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "crypto-common",
+            "versionInfo": "0.1.7"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-9-2e6d6249a028",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"digest\",\"version\":\"0.10.7\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "digest",
+            "versionInfo": "0.10.7"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-10-d6d29a36b4fd",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"generic-array\",\"version\":\"0.14.7\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "generic-array",
+            "versionInfo": "0.14.7"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-11-b61dab3413b7",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"itoa\",\"version\":\"1.0.18\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "itoa",
+            "versionInfo": "1.0.18"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-12-a1a9b94c94eb",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"libc\",\"version\":\"0.2.189\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "libc",
+            "versionInfo": "0.2.189"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-13-ced9dad4aa94",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"memchr\",\"version\":\"2.8.3\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Unlicense OR MIT",
+            "licenseDeclared": "Unlicense OR MIT",
+            "name": "memchr",
+            "versionInfo": "2.8.3"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-14-d757ddbdc8b8",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"proc-macro2\",\"version\":\"1.0.107\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "proc-macro2",
+            "versionInfo": "1.0.107"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-15-8daff550a421",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"quote\",\"version\":\"1.0.47\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "quote",
+            "versionInfo": "1.0.47"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-16-319c26e76ecd",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"serde\",\"version\":\"1.0.229\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "serde",
+            "versionInfo": "1.0.229"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-17-e03521ca8007",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"serde_core\",\"version\":\"1.0.229\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "serde_core",
+            "versionInfo": "1.0.229"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-18-4078ee0949e2",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"serde_derive\",\"version\":\"1.0.229\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "serde_derive",
+            "versionInfo": "1.0.229"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-19-c3bc0325c7ac",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"serde_json\",\"version\":\"1.0.151\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "serde_json",
+            "versionInfo": "1.0.151"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-20-2e7fb4d699eb",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"sha2\",\"version\":\"0.10.9\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "sha2",
+            "versionInfo": "0.10.9"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-21-14ae62c41a24",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"syn\",\"version\":\"3.0.3\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "syn",
+            "versionInfo": "3.0.3"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-22-7848d0ca1216",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"typenum\",\"version\":\"1.20.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT OR Apache-2.0",
+            "licenseDeclared": "MIT OR Apache-2.0",
+            "name": "typenum",
+            "versionInfo": "1.20.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-23-9d73fb35828d",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"unicode-ident\",\"version\":\"1.0.24\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "(MIT OR Apache-2.0) AND Unicode-3.0",
+            "licenseDeclared": "(MIT OR Apache-2.0) AND Unicode-3.0",
+            "name": "unicode-ident",
+            "versionInfo": "1.0.24"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-24-7eadf126530b",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"version_check\",\"version\":\"0.9.5\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT/Apache-2.0",
+            "licenseDeclared": "MIT/Apache-2.0",
+            "name": "version_check",
+            "versionInfo": "0.9.5"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-25-0d6527d072f9",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"interop-cargo\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"interop-cargo\",\"ecosystem\":\"cargo\",\"name\":\"zmij\",\"version\":\"1.0.23\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "zmij",
+            "versionInfo": "1.0.23"
+        }
+    ],
+    "relationships": [
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "DESCRIBES",
+            "spdxElementId": "SPDXRef-DOCUMENT"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-1",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-2",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-3",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-4",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-5",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-6",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-7",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-8",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-9",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-1-b578fc9be75f",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-2-bd32788b5095",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-3-2fd88ca424fe",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-4-7debb6a6072e",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-5-b0caa67097f1",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-6-76c11b547321",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-7-8111465e27ee",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-8-f43a07ea0b3e",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-9-2e6d6249a028",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-10-d6d29a36b4fd",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-11-b61dab3413b7",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-12-a1a9b94c94eb",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-13-ced9dad4aa94",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-14-d757ddbdc8b8",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-15-8daff550a421",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-16-319c26e76ecd",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-17-e03521ca8007",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-18-4078ee0949e2",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-19-c3bc0325c7ac",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-20-2e7fb4d699eb",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-21-14ae62c41a24",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-22-7848d0ca1216",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-23-9d73fb35828d",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-24-7eadf126530b",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-25-0d6527d072f9",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        }
+    ],
+    "spdxVersion": "SPDX-2.3"
+}

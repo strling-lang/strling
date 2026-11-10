@@ -1,0 +1,494 @@
+{
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "annotations": [
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"perl-cpan\",\"inputs\":[{\"path\":\"bindings/perl/Makefile.PL\",\"sha256\":\"99172efca347ef49f0a1bc58bb01edb81fa35cdd6e368a50f47bad97c63b772a\"},{\"path\":\"bindings/perl/dist.ini\",\"sha256\":\"70a653fb95f2c8badd862adc917652d482e7c84ad0cf4528c58464ddb89dfa97\"},{\"path\":\"bindings/perl/cpanfile\",\"sha256\":\"c63805db07aaeeb167fce9a569ef1db5eee9e0f1f4109ab89c989254aa717b73\"},{\"path\":\"bindings/perl/cpanfile.snapshot\",\"sha256\":\"f3b54b3304b0e9faed6bce49a55f099418bd761cb6e56ab3e8e85e6de740d766\"}],\"policy\":{\"ecosystem\":\"cpan\",\"integrity_mode\":\"carton_snapshot\",\"risk_mode\":\"cpansa_evidence\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Capture-Tiny\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"0.50\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FFI-CHECKLIB-0.31\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"FFI-CheckLib\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"0.31\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FFI-PLATYPUS-2.11\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"FFI-Platypus\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"2.11\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FILE-WHICH-1.27\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"File-Which\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"1.27\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"57f7a0fe9362cdd5552221ed6ef573c0e1dbb24766618898c104b0f325c62d2f\"}"
+        }
+    ],
+    "creationInfo": {
+        "created": "1970-01-01T00:00:00Z",
+        "creators": [
+            "Tool: strling-release-supply-chain"
+        ],
+        "licenseListVersion": "3.23"
+    },
+    "dataLicense": "CC0-1.0",
+    "documentDescribes": [
+        "SPDXRef-Package"
+    ],
+    "documentNamespace": "https://strling.dev/sbom/perl/4c2d510486e5d14bd85fcf14cf8e0ad6484058bc987e1c24c32b0bc2c39a60b6",
+    "files": [
+        {
+            "SPDXID": "SPDXRef-File-1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-2",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "97901dab0bef77b920058a34240d3f557271130379cfd13d1076b2c3745a726d"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5a7f061eea85612029c6cb5f2b117c9effc1a7c2"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/MANIFEST",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-3",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "53b0b1d55e07d74b9c6e7f391bf7957dd545625427a0e5470b0c291e536cb3e4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2dde4d14c7920bc84901f9c22809d0441c8a9dd4"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/META.json",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-4",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8fa42f4b9bd137c9cb553bbc4fda80b843375d954cdb9ab3218ba01153a6b605"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "11699a5af0c0df234f30682ac90eca58b128e2f6"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/META.yml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-5",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "99172efca347ef49f0a1bc58bb01edb81fa35cdd6e368a50f47bad97c63b772a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "e1e3dbc215a9f09664d941ec92212987112fbb95"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/Makefile.PL",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-6",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "66314c731bd2fb25f892c5a2f4211e956e7c9cb842b28fba8039a3afd24468c2"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7b29e32ee86a7516afba2ba0a233e423afbfa988"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/README.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-7",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c63805db07aaeeb167fce9a569ef1db5eee9e0f1f4109ab89c989254aa717b73"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "fa07e4b43b5299d4933a078008a8edf30ca49b2d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/cpanfile",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-8",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "acef9743de75a774e2803187f10bd0b2a941d8b87984aac14f3e5ab6cdf20501"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "472ed2d0a063fd7c5ef87c2a0ea36f20462bea6e"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/lib/STRling.pm",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-9",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c66d9a955c9c26ce49183242c97d1432c34149c9f0d18c77edf75513ef247040"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a34039fd40796517a778d6cc85f4b8714a253e8a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/lib/STRling/NativeClient.pm",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-10",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "68fdff5df03bc77cc619109d6d3c7378458f1a1acead536024ac2bddaf2128c2"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "ba1db0d43fd57d144379cc7960bddab825c076d5"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/lib/STRling/Requests.pm",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-11",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b39591ac3d18e7a204ca551c5d07ed69f6b4451c17181b2945d1505cac009496"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2f4302f2fd17ae5aaa376510c7000eaa1c365dc0"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/lib/STRling/StdlibGenerated.pm",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-12",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "815e4a277efc0b2d6cd51919b3408265faff1c9eea11d887f5ff8356e3c6ab7b"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "55d61e456f5a2f333f956d4599eca1b83a5c5faf"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/lib/STRling/StrictJSON.pm",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-13",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "930c9710e6b2d9f0a14f532dc38aedde5e930ecadc68bae283317c9bede58a2e"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c3cbdc0e878190915f5204498ab9925df4c22e77"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/perl/STRling-4.0.0.tar.gz!/STRling-4.0.0/t/adapter.t",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        }
+    ],
+    "name": "STRling perl release artifact",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-Package",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "4c2d510486e5d14bd85fcf14cf8e0ad6484058bc987e1c24c32b0bc2c39a60b6"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "release:perl",
+                    "referenceType": "strling-release-surface"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "NOASSERTION",
+            "licenseDeclared": "Apache-2.0",
+            "name": "STRling",
+            "packageVerificationCode": {
+                "packageVerificationCodeValue": "636b0fd7633782d3a374c80e3d1f941b1b64b42d"
+            },
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-1-54dd268fcaa7",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"perl-cpan\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"perl-cpan\",\"ecosystem\":\"cpan\",\"name\":\"Capture-Tiny\",\"version\":\"0.50\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "Capture-Tiny",
+            "versionInfo": "0.50"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-2-ead0be39f77d",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"perl-cpan\",\"disposition_id\":\"LIC-CPAN-FFI-CHECKLIB-0.31\",\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"perl-cpan\",\"ecosystem\":\"cpan\",\"name\":\"FFI-CheckLib\",\"version\":\"0.31\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Artistic-1.0-Perl",
+            "licenseDeclared": "Artistic-1.0-Perl OR GPL-1.0-or-later",
+            "name": "FFI-CheckLib",
+            "versionInfo": "0.31"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-3-57cba7c74e62",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"perl-cpan\",\"disposition_id\":\"LIC-CPAN-FFI-PLATYPUS-2.11\",\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"perl-cpan\",\"ecosystem\":\"cpan\",\"name\":\"FFI-Platypus\",\"version\":\"2.11\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Artistic-1.0-Perl",
+            "licenseDeclared": "Artistic-1.0-Perl OR GPL-1.0-or-later",
+            "name": "FFI-Platypus",
+            "versionInfo": "2.11"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-4-eca12e2c639f",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"perl-cpan\",\"disposition_id\":\"LIC-CPAN-FILE-WHICH-1.27\",\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"perl-cpan\",\"ecosystem\":\"cpan\",\"name\":\"File-Which\",\"version\":\"1.27\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Artistic-1.0-Perl",
+            "licenseDeclared": "Artistic-1.0-Perl OR GPL-1.0-or-later",
+            "name": "File-Which",
+            "versionInfo": "1.27"
+        }
+    ],
+    "relationships": [
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "DESCRIBES",
+            "spdxElementId": "SPDXRef-DOCUMENT"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-1",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-2",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-3",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-4",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-5",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-6",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-7",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-8",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-9",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-10",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-11",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-12",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-13",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-1-54dd268fcaa7",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-2-ead0be39f77d",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-3-57cba7c74e62",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-4-eca12e2c639f",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        }
+    ],
+    "spdxVersion": "SPDX-2.3"
+}

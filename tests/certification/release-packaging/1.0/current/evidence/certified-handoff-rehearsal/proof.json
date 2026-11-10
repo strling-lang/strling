@@ -1,0 +1,773 @@
+{
+  "status": "passed-exact-certified-handoff-rehearsal",
+  "source": "021239608ffa5066e59bdebde9869e193fbb3eab",
+  "attempt": 1,
+  "transport_root": "/mnt/d/Projects/strling-lang/strling/target/release-packaging/certified-handoff-02123960",
+  "restoration_root": "/var/tmp/strling-release-02123960-publication-rehearsal",
+  "qualified_verifier": "642cc21f8f5d5ccabde1bb893076e02c624247a7",
+  "distributions": [
+    {
+      "artifact_id": "release:c",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:c",
+        "artifact_name": "certified-c-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "0a67331427ef46298035cbce7e67acfef813fc54800a621f6ac66d116c2b5e23",
+        "staged_files": 457,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "0a67331427ef46298035cbce7e67acfef813fc54800a621f6ac66d116c2b5e23",
+      "plan": {
+        "artifact_id": "release:c",
+        "version": "4.0.0",
+        "registry": "github-tag:c-vVERSION",
+        "package_name": "strling-c",
+        "transport": "github-token",
+        "route": "exact-source-ref",
+        "subjects": [
+          {
+            "name": "LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "name": "bindings/c",
+            "sha256": "7b03119eaceb41a79c4140e042dbd52cb70a5bc7efd56c0980ab276ebe4dd80f"
+          },
+          {
+            "name": "bindings/interop",
+            "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+          },
+          {
+            "name": "core",
+            "sha256": "8d10a7963d585476ed56f2379bbcfcc4e55642311342b109cfcb81afc4a2a30e"
+          },
+          {
+            "name": "spec",
+            "sha256": "5ee0311f5a3f3cf9d5a51420dd6873d3508957df61b0d1e760d78b5f750904c7"
+          },
+          {
+            "name": "tests/conformance/ecmascript-runtime-certification.json",
+            "sha256": "0992af98f1157a17bb382747bb79f9164aadff7a238f4943f52a0f1d707c9ec0"
+          },
+          {
+            "name": "tests/conformance/pcre2-runtime-certification.json",
+            "sha256": "a9f0290f463589f0d0f911980a2d4c3e3254013238874e19987e62d42aa8cf2c"
+          },
+          {
+            "name": "tests/conformance/python-re-runtime-certification.json",
+            "sha256": "ff188090c19049a1628de5d7c0560ea4838974cfb4448b1995888e273a0f9609"
+          },
+          {
+            "name": "tooling/native_release_build.py",
+            "sha256": "3f588d7e18ce57a2dc034c46c3466d20b9cba1482e6a57a1b7f7a22868d8792f"
+          },
+          {
+            "name": "tooling/release_notices.py",
+            "sha256": "0c55e821a6384d157d1c73a5cc88228d72d1de58033d7a7ee3b65968d635668e"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "c"
+      }
+    },
+    {
+      "artifact_id": "release:cpp",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:cpp",
+        "artifact_name": "certified-cpp-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "ef2fef0ce37962754f715348aacb1ba91849e69d9b21b566843914d847d4087c",
+        "staged_files": 4,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "ef2fef0ce37962754f715348aacb1ba91849e69d9b21b566843914d847d4087c",
+      "plan": {
+        "artifact_id": "release:cpp",
+        "version": "4.0.0",
+        "registry": "conan",
+        "package_name": "strling",
+        "transport": "long-lived-secret",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz",
+            "sha256": "1454946500e3d001d7182a292625d9a9d9774e8e19ed2fe8cfbf141522b274f9"
+          },
+          {
+            "name": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.upload.zip",
+            "sha256": "cce5bad4c13fb5223c7c4620639733542b20e2ed1ac903a2b6392d7363ca5ca6"
+          },
+          {
+            "name": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz",
+            "sha256": "2c1296c8ab2a353e53409e2cf0d465547452633ee908fd8f7c4a9552386dc354"
+          },
+          {
+            "name": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.upload.zip",
+            "sha256": "1aa949649ae8e6f7e3219b9d4ca6ea8d492d166633212f089546c5ce8da19841"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "cpp"
+      }
+    },
+    {
+      "artifact_id": "release:csharp",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:csharp",
+        "artifact_name": "certified-csharp-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "a11dd78db2f0a1f16f40c5390d859b90065ca9a6924e2966ac07a6009e8591ab",
+        "staged_files": 1,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "a11dd78db2f0a1f16f40c5390d859b90065ca9a6924e2966ac07a6009e8591ab",
+      "plan": {
+        "artifact_id": "release:csharp",
+        "version": "4.0.0",
+        "registry": "nuget.org",
+        "package_name": "STRling",
+        "transport": "long-lived-secret",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg",
+            "sha256": "a11dd78db2f0a1f16f40c5390d859b90065ca9a6924e2966ac07a6009e8591ab"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "csharp"
+      }
+    },
+    {
+      "artifact_id": "release:dart",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:dart",
+        "artifact_name": "certified-dart-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "51c6c295ce94a7cb0f9eab5635481adfd4ea393f69a882711470aedef0ba6dd7",
+        "staged_files": 9,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "51c6c295ce94a7cb0f9eab5635481adfd4ea393f69a882711470aedef0ba6dd7",
+      "plan": {
+        "artifact_id": "release:dart",
+        "version": "4.0.0",
+        "registry": "pub.dev",
+        "package_name": "strling",
+        "transport": "oidc",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "target/release-packaging/dart",
+            "sha256": "51c6c295ce94a7cb0f9eab5635481adfd4ea393f69a882711470aedef0ba6dd7"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "dart"
+      }
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:fsharp",
+        "artifact_name": "certified-fsharp-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "c29f44b4d8c910c77237c1de8de73f85a4d245de73a437252fffa3470a1470b4",
+        "staged_files": 1,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "c29f44b4d8c910c77237c1de8de73f85a4d245de73a437252fffa3470a1470b4",
+      "plan": {
+        "artifact_id": "release:fsharp",
+        "version": "4.0.0",
+        "registry": "nuget.org",
+        "package_name": "STRling.FSharp",
+        "transport": "long-lived-secret",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg",
+            "sha256": "c29f44b4d8c910c77237c1de8de73f85a4d245de73a437252fffa3470a1470b4"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "fsharp"
+      }
+    },
+    {
+      "artifact_id": "release:go",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:go",
+        "artifact_name": "certified-go-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "6f12c7c305d8efa8fcbfb5220eb2f2e0977a603afe855d1ea28cacaffb894111",
+        "staged_files": 450,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "6f12c7c305d8efa8fcbfb5220eb2f2e0977a603afe855d1ea28cacaffb894111",
+      "plan": {
+        "artifact_id": "release:go",
+        "version": "4.0.0",
+        "registry": "github-tag:go-vVERSION",
+        "package_name": "github.com/strling-lang/strling/bindings/go",
+        "transport": "github-token",
+        "route": "exact-source-ref",
+        "subjects": [
+          {
+            "name": "LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "name": "bindings/go",
+            "sha256": "b43976a8232686e4bca572410f36c8d530ff480547a2f489afd647b5e990326f"
+          },
+          {
+            "name": "bindings/interop",
+            "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+          },
+          {
+            "name": "core",
+            "sha256": "8d10a7963d585476ed56f2379bbcfcc4e55642311342b109cfcb81afc4a2a30e"
+          },
+          {
+            "name": "spec",
+            "sha256": "5ee0311f5a3f3cf9d5a51420dd6873d3508957df61b0d1e760d78b5f750904c7"
+          },
+          {
+            "name": "tests/conformance/ecmascript-runtime-certification.json",
+            "sha256": "0992af98f1157a17bb382747bb79f9164aadff7a238f4943f52a0f1d707c9ec0"
+          },
+          {
+            "name": "tests/conformance/pcre2-runtime-certification.json",
+            "sha256": "a9f0290f463589f0d0f911980a2d4c3e3254013238874e19987e62d42aa8cf2c"
+          },
+          {
+            "name": "tests/conformance/python-re-runtime-certification.json",
+            "sha256": "ff188090c19049a1628de5d7c0560ea4838974cfb4448b1995888e273a0f9609"
+          },
+          {
+            "name": "tooling/native_release_build.py",
+            "sha256": "3f588d7e18ce57a2dc034c46c3466d20b9cba1482e6a57a1b7f7a22868d8792f"
+          },
+          {
+            "name": "tooling/release_notices.py",
+            "sha256": "0c55e821a6384d157d1c73a5cc88228d72d1de58033d7a7ee3b65968d635668e"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "go"
+      }
+    },
+    {
+      "artifact_id": "release:java",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:java",
+        "artifact_name": "certified-java-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "ece1c45f30d42f80de8916e4070336ca0b940b174ca9ac7ecb28da4bff6a38fc",
+        "staged_files": 8,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "ece1c45f30d42f80de8916e4070336ca0b940b174ca9ac7ecb28da4bff6a38fc",
+      "plan": {
+        "artifact_id": "release:java",
+        "version": "4.0.0",
+        "registry": "maven-central",
+        "package_name": "com.strling:strling",
+        "transport": "long-lived-secret",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/java/pom.xml",
+            "sha256": "1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46"
+          },
+          {
+            "name": "bindings/java/target/strling-4.0.0-javadoc.jar",
+            "sha256": "c6018ab4222d79b58f4e27a7571460675d5f976b3e615a63432a22b7f54998b2"
+          },
+          {
+            "name": "bindings/java/target/strling-4.0.0-sources.jar",
+            "sha256": "57f918b0e36115b83ab5bb3254cc79e0d9936bdd535ba6f8fb1843559de5b708"
+          },
+          {
+            "name": "bindings/java/target/strling-4.0.0.jar",
+            "sha256": "584a8ee767af0c13e0d30eb1eea25c164ce96345b877ca3c4b105f947164e2a1"
+          },
+          {
+            "name": "bindings/jvm/pom.xml",
+            "sha256": "6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21"
+          },
+          {
+            "name": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar",
+            "sha256": "0273d518a29466b3d561a520c9b64b593bb7c05018b496fd817d3f30ae97b0f1"
+          },
+          {
+            "name": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar",
+            "sha256": "d298366fb796fbb1ed25f1145f921d32f270cea5d090ba459b81cc1f7061721c"
+          },
+          {
+            "name": "bindings/jvm/target/strling-jvm-4.0.0.jar",
+            "sha256": "1b9861ed7249b7fd572d317d8347f9a950f3658d6c5e3dc1cc59bc1c31cc942a"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "java"
+      }
+    },
+    {
+      "artifact_id": "release:kotlin",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:kotlin",
+        "artifact_name": "certified-kotlin-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "e3d2e41a53881eb5a6e09a4f9cd6157775643f6c3c49fbead145fbb5b6e48438",
+        "staged_files": 4,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "e3d2e41a53881eb5a6e09a4f9cd6157775643f6c3c49fbead145fbb5b6e48438",
+      "plan": {
+        "artifact_id": "release:kotlin",
+        "version": "4.0.0",
+        "registry": "maven-central",
+        "package_name": "com.strling:strling-kotlin",
+        "transport": "long-lived-secret",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-javadoc.jar",
+            "sha256": "8bd1d2013c45e41845be95e80e4a55dd2e94882d594b69f2d4dbd66561566a9c"
+          },
+          {
+            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-sources.jar",
+            "sha256": "489b8c4941c147195177bce019c0b0e7ba7ba49c17ed6a9aeebf93fe97c9f999"
+          },
+          {
+            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar",
+            "sha256": "4788b701ae05e4abd7a3a73e5a4c9268633041cdfbb413c86dd257471b3b9ab9"
+          },
+          {
+            "name": "bindings/kotlin/build/publications/maven/pom-default.xml",
+            "sha256": "b0d3b12cc8b4768faaee797ce8330a66d5865ea20f7aac1c1e45d50e13974b65"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "kotlin"
+      }
+    },
+    {
+      "artifact_id": "release:lua",
+      "tier": "Preview",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:lua",
+        "artifact_name": "certified-lua-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "a52a10a32b12ebb82a33d2b60f0770e6b8b368265f2e41ea9a931622ed17a9f6",
+        "staged_files": 2,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "a52a10a32b12ebb82a33d2b60f0770e6b8b368265f2e41ea9a931622ed17a9f6",
+      "plan": {
+        "artifact_id": "release:lua",
+        "version": "4.0.0",
+        "registry": "luarocks.org",
+        "package_name": "strling",
+        "transport": "long-lived-secret",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/lua/strling-4.0.0-1.rockspec",
+            "sha256": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a"
+          },
+          {
+            "name": "bindings/lua/strling-4.0.0-1.src.rock",
+            "sha256": "462ed808f12e7e0e7665d3a7374a77fa9030311dd09908bc33990ef3dd6872e0"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "lua"
+      }
+    },
+    {
+      "artifact_id": "release:perl",
+      "tier": "Preview",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:perl",
+        "artifact_name": "certified-perl-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "4c2d510486e5d14bd85fcf14cf8e0ad6484058bc987e1c24c32b0bc2c39a60b6",
+        "staged_files": 1,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "4c2d510486e5d14bd85fcf14cf8e0ad6484058bc987e1c24c32b0bc2c39a60b6",
+      "plan": {
+        "artifact_id": "release:perl",
+        "version": "4.0.0",
+        "registry": "cpan",
+        "package_name": "STRling",
+        "transport": "long-lived-secret",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/perl/STRling-4.0.0.tar.gz",
+            "sha256": "4c2d510486e5d14bd85fcf14cf8e0ad6484058bc987e1c24c32b0bc2c39a60b6"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "perl"
+      }
+    },
+    {
+      "artifact_id": "release:php",
+      "tier": "Preview",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:php",
+        "artifact_name": "certified-php-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "af00e0b6aba815e73e7ef046fafbb63c7dee9b10b29765a8a9679f09d351ea86",
+        "staged_files": 454,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "af00e0b6aba815e73e7ef046fafbb63c7dee9b10b29765a8a9679f09d351ea86",
+      "plan": {
+        "artifact_id": "release:php",
+        "version": "4.0.0",
+        "registry": "github-tag:php-vVERSION",
+        "package_name": "strling/strling",
+        "transport": "github-token",
+        "route": "exact-source-ref",
+        "subjects": [
+          {
+            "name": "LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "name": "bindings/interop",
+            "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+          },
+          {
+            "name": "bindings/php",
+            "sha256": "ebd2df1d4e7a14b53b12d6e405c714a2d8975f3ae554ef4d7e01d160e026322b"
+          },
+          {
+            "name": "core",
+            "sha256": "8d10a7963d585476ed56f2379bbcfcc4e55642311342b109cfcb81afc4a2a30e"
+          },
+          {
+            "name": "spec",
+            "sha256": "5ee0311f5a3f3cf9d5a51420dd6873d3508957df61b0d1e760d78b5f750904c7"
+          },
+          {
+            "name": "tests/conformance/ecmascript-runtime-certification.json",
+            "sha256": "0992af98f1157a17bb382747bb79f9164aadff7a238f4943f52a0f1d707c9ec0"
+          },
+          {
+            "name": "tests/conformance/pcre2-runtime-certification.json",
+            "sha256": "a9f0290f463589f0d0f911980a2d4c3e3254013238874e19987e62d42aa8cf2c"
+          },
+          {
+            "name": "tests/conformance/python-re-runtime-certification.json",
+            "sha256": "ff188090c19049a1628de5d7c0560ea4838974cfb4448b1995888e273a0f9609"
+          },
+          {
+            "name": "tooling/native_release_build.py",
+            "sha256": "3f588d7e18ce57a2dc034c46c3466d20b9cba1482e6a57a1b7f7a22868d8792f"
+          },
+          {
+            "name": "tooling/release_notices.py",
+            "sha256": "0c55e821a6384d157d1c73a5cc88228d72d1de58033d7a7ee3b65968d635668e"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "php"
+      }
+    },
+    {
+      "artifact_id": "release:python",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:python",
+        "artifact_name": "certified-python-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "e08a8c88fe036c089a9019a67c219c1555e0ea36ad891a62cf2e6419b7920691",
+        "staged_files": 3,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "e08a8c88fe036c089a9019a67c219c1555e0ea36ad891a62cf2e6419b7920691",
+      "plan": {
+        "artifact_id": "release:python",
+        "version": "4.0.0",
+        "registry": "pypi.org",
+        "package_name": "STRling",
+        "transport": "oidc",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl",
+            "sha256": "175975f78329cc99cca430bb3866f27146465cc2ce03c95f07b02991d4451be0"
+          },
+          {
+            "name": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl",
+            "sha256": "2b2f2094d285b840b8f4755ca1e2a72641c4d2a191877ca80eac87fc33dc06ac"
+          },
+          {
+            "name": "bindings/python/dist/strling-4.0.0.tar.gz",
+            "sha256": "4b45b12cb1359e38269f1677d3a53b0b5a4ed1407be93f241f2a0a6a86c100fa"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "python"
+      }
+    },
+    {
+      "artifact_id": "release:r",
+      "tier": "Preview",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:r",
+        "artifact_name": "certified-r-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "6fd6a4547b1eda379a377468c8a906529311b7bd40ec30de602f766ec7e829cd",
+        "staged_files": 456,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "6fd6a4547b1eda379a377468c8a906529311b7bd40ec30de602f766ec7e829cd",
+      "plan": {
+        "artifact_id": "release:r",
+        "version": "4.0.0",
+        "registry": "github-tag:r-vVERSION",
+        "package_name": "strling",
+        "transport": "github-token",
+        "route": "exact-source-ref",
+        "subjects": [
+          {
+            "name": "LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "name": "bindings/interop",
+            "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+          },
+          {
+            "name": "bindings/r",
+            "sha256": "e43118c3dfb109cff77cdbd9d05f4693aee47191309e911cb19ba5c0fb0bb2f4"
+          },
+          {
+            "name": "core",
+            "sha256": "8d10a7963d585476ed56f2379bbcfcc4e55642311342b109cfcb81afc4a2a30e"
+          },
+          {
+            "name": "spec",
+            "sha256": "5ee0311f5a3f3cf9d5a51420dd6873d3508957df61b0d1e760d78b5f750904c7"
+          },
+          {
+            "name": "tests/conformance/ecmascript-runtime-certification.json",
+            "sha256": "0992af98f1157a17bb382747bb79f9164aadff7a238f4943f52a0f1d707c9ec0"
+          },
+          {
+            "name": "tests/conformance/pcre2-runtime-certification.json",
+            "sha256": "a9f0290f463589f0d0f911980a2d4c3e3254013238874e19987e62d42aa8cf2c"
+          },
+          {
+            "name": "tests/conformance/python-re-runtime-certification.json",
+            "sha256": "ff188090c19049a1628de5d7c0560ea4838974cfb4448b1995888e273a0f9609"
+          },
+          {
+            "name": "tooling/native_release_build.py",
+            "sha256": "3f588d7e18ce57a2dc034c46c3466d20b9cba1482e6a57a1b7f7a22868d8792f"
+          },
+          {
+            "name": "tooling/release_notices.py",
+            "sha256": "0c55e821a6384d157d1c73a5cc88228d72d1de58033d7a7ee3b65968d635668e"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "r"
+      }
+    },
+    {
+      "artifact_id": "release:ruby",
+      "tier": "Preview",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:ruby",
+        "artifact_name": "certified-ruby-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "69e8ee2f80e7f8eaf6a3b8353fcb0840deaace73b9051c32a900a54583aa6e48",
+        "staged_files": 1,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "69e8ee2f80e7f8eaf6a3b8353fcb0840deaace73b9051c32a900a54583aa6e48",
+      "plan": {
+        "artifact_id": "release:ruby",
+        "version": "4.0.0",
+        "registry": "rubygems.org",
+        "package_name": "strling",
+        "transport": "oidc",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/ruby/strling-4.0.0.gem",
+            "sha256": "69e8ee2f80e7f8eaf6a3b8353fcb0840deaace73b9051c32a900a54583aa6e48"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "ruby"
+      }
+    },
+    {
+      "artifact_id": "release:rust",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:rust",
+        "artifact_name": "certified-rust-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "2fe07ef1be5de07795af2d6f7a3abe98d16425bcb1fd95621fbd6711cc83425c",
+        "staged_files": 1,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "2fe07ef1be5de07795af2d6f7a3abe98d16425bcb1fd95621fbd6711cc83425c",
+      "plan": {
+        "artifact_id": "release:rust",
+        "version": "4.0.0",
+        "registry": "crates.io",
+        "package_name": "strling",
+        "transport": "oidc",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "target/package/strling-4.0.0.crate",
+            "sha256": "2fe07ef1be5de07795af2d6f7a3abe98d16425bcb1fd95621fbd6711cc83425c"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "rust"
+      }
+    },
+    {
+      "artifact_id": "release:swift",
+      "tier": "Supported",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:swift",
+        "artifact_name": "certified-swift-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "b2827dd917f5952646fc7523dac32b94d7a9140844421fdfbf34b904bd0d70ac",
+        "staged_files": 451,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "b2827dd917f5952646fc7523dac32b94d7a9140844421fdfbf34b904bd0d70ac",
+      "plan": {
+        "artifact_id": "release:swift",
+        "version": "4.0.0",
+        "registry": "github-tag:swift-vVERSION",
+        "package_name": "STRling",
+        "transport": "github-token",
+        "route": "exact-source-ref",
+        "subjects": [
+          {
+            "name": "LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "name": "bindings/interop",
+            "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+          },
+          {
+            "name": "bindings/swift",
+            "sha256": "7a198784b648f7b6158a553846b9eb6c12f8de6990217f5b3c8617a18727b10a"
+          },
+          {
+            "name": "core",
+            "sha256": "8d10a7963d585476ed56f2379bbcfcc4e55642311342b109cfcb81afc4a2a30e"
+          },
+          {
+            "name": "spec",
+            "sha256": "5ee0311f5a3f3cf9d5a51420dd6873d3508957df61b0d1e760d78b5f750904c7"
+          },
+          {
+            "name": "tests/conformance/ecmascript-runtime-certification.json",
+            "sha256": "0992af98f1157a17bb382747bb79f9164aadff7a238f4943f52a0f1d707c9ec0"
+          },
+          {
+            "name": "tests/conformance/pcre2-runtime-certification.json",
+            "sha256": "a9f0290f463589f0d0f911980a2d4c3e3254013238874e19987e62d42aa8cf2c"
+          },
+          {
+            "name": "tests/conformance/python-re-runtime-certification.json",
+            "sha256": "ff188090c19049a1628de5d7c0560ea4838974cfb4448b1995888e273a0f9609"
+          },
+          {
+            "name": "tooling/native_release_build.py",
+            "sha256": "3f588d7e18ce57a2dc034c46c3466d20b9cba1482e6a57a1b7f7a22868d8792f"
+          },
+          {
+            "name": "tooling/release_notices.py",
+            "sha256": "0c55e821a6384d157d1c73a5cc88228d72d1de58033d7a7ee3b65968d635668e"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "swift"
+      }
+    },
+    {
+      "artifact_id": "release:typescript",
+      "tier": "Preview",
+      "source_identity": "021239608ffa5066e59bdebde9869e193fbb3eab",
+      "export": {
+        "status": "passed",
+        "artifact_id": "release:typescript",
+        "artifact_name": "certified-typescript-021239608ffa5066e59bdebde9869e193fbb3eab",
+        "subject_sha256": "fbed6ab029a0dd06667b9c6ea3421b81d935c81e5db79559b09c3349083ecc56",
+        "staged_files": 1,
+        "publication_authorized": false
+      },
+      "restored_subject_sha256": "fbed6ab029a0dd06667b9c6ea3421b81d935c81e5db79559b09c3349083ecc56",
+      "plan": {
+        "artifact_id": "release:typescript",
+        "version": "4.0.0",
+        "registry": "npmjs.org",
+        "package_name": "@strling-lang/strling",
+        "transport": "oidc",
+        "route": "certified-payload-upload",
+        "subjects": [
+          {
+            "name": "bindings/typescript/strling-lang-strling-4.0.0.tgz",
+            "sha256": "fbed6ab029a0dd06667b9c6ea3421b81d935c81e5db79559b09c3349083ecc56"
+          }
+        ],
+        "publication_authorized": false,
+        "surface": "typescript"
+      }
+    }
+  ],
+  "substitution_negative": {
+    "status": "passed",
+    "rejected_code": "publication-substitution",
+    "original_subject_unchanged": true
+  },
+  "registry_requests": 0,
+  "credentials_read": false,
+  "public_registry_installation": false,
+  "publication_authorized": false
+}

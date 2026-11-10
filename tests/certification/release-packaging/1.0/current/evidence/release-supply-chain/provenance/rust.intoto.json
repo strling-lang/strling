@@ -1,0 +1,105 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+        "buildDefinition": {
+            "buildType": "https://strling.dev/build-types/release-supply-chain/v1",
+            "externalParameters": {
+                "artifactId": "release:rust",
+                "buildCommand": [
+                    "python",
+                    "-m",
+                    "tooling.release_packaging",
+                    "--artifact-id",
+                    "release:rust"
+                ],
+                "productVersion": "4.0.0",
+                "registry": "crates.io",
+                "support": {
+                    "external_prerequisites": [
+                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Confirm protected release environment reviewers and approved workflow source"
+                    ],
+                    "installation": "Governed registry artifact or source-tag route",
+                    "ownership_status": "externally-pending",
+                    "platforms": [
+                        "windows-x86_64",
+                        "linux-x86_64"
+                    ],
+                    "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "scope": "windows-x86_64 and linux-x86_64 reference kernel/facade",
+                    "support_claim": "binding:rust",
+                    "tier": "Supported"
+                }
+            },
+            "internalParameters": {
+                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "toolchains": [
+                    {
+                        "executable_sha256": "b30a9fc475de8b03077f5947e0a20ea59af47733724af215cabd0a72e3722446",
+                        "id": "release:rust:linux-x86_64:cargo",
+                        "version": "cargo 1.75.0 (1d8b05cdd 2023-11-20)"
+                    },
+                    {
+                        "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+                        "id": "release:rust:linux-x86_64:python",
+                        "version": "Python 3.12.3"
+                    },
+                    {
+                        "executable_sha256": "7cd1c64771117a00efd8eb5113e2aed512545441c23436f6923e5deb8c97016c",
+                        "id": "release:rust:linux-x86_64:rustc",
+                        "version": "rustc 1.75.0 (82e1608df 2023-12-21)"
+                    },
+                    {
+                        "executable_sha256": "7f2357adb9b7dca9f7b6e9eb9a0e0a0b4e7e516c19f34d3a348b298701692c80",
+                        "id": "release:rust:windows-x86_64:cargo",
+                        "version": "cargo 1.75.0 (1d8b05cdd 2023-11-20)"
+                    },
+                    {
+                        "executable_sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+                        "id": "release:rust:windows-x86_64:python",
+                        "version": "Python 3.12.10"
+                    },
+                    {
+                        "executable_sha256": "9e7863a6ea57c70e875d25c5818e0f836bd8da60b07f64a578298f0064144626",
+                        "id": "release:rust:windows-x86_64:rustc",
+                        "version": "rustc 1.75.0 (82e1608df 2023-12-21)"
+                    }
+                ]
+            },
+            "resolvedDependencies": [
+                {
+                    "digest": {
+                        "gitCommit": "021239608ffa5066e59bdebde9869e193fbb3eab"
+                    },
+                    "uri": "git+https://github.com/strling-lang/strling@021239608ffa5066e59bdebde9869e193fbb3eab"
+                },
+                {
+                    "digest": {
+                        "sha256": "7c7ae5fbaf74108925f94d3c70da6de6512e742e4710cb3125a08fbcdf2ce797"
+                    },
+                    "uri": "strling:dependency-root:rust-binding-cargo"
+                }
+            ]
+        },
+        "runDetails": {
+            "builder": {
+                "id": "https://strling.dev/builders/release-supply-chain/v1"
+            },
+            "metadata": {
+                "finishedOn": "1970-01-01T00:00:00Z",
+                "invocationId": "021239608ffa5066e59bdebde9869e193fbb3eab:release:rust",
+                "startedOn": "1970-01-01T00:00:00Z"
+            }
+        }
+    },
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "subject": [
+        {
+            "digest": {
+                "sha256": "2fe07ef1be5de07795af2d6f7a3abe98d16425bcb1fd95621fbd6711cc83425c"
+            },
+            "name": "target/package/strling-4.0.0.crate"
+        }
+    ]
+}

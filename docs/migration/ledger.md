@@ -5963,16 +5963,20 @@ failing SHA was not resampled.
 
 ## P20-T02 — Rebuild package manifests and publication pipelines
 
--   Status: Paused pending V4-H08 final hardened-core recertification —
-    implementation not started
+-   Status: Complete — independently certified 4.0.0 distribution infrastructure; publication remains separately authorized
 -   Prerequisite checkpoints: P20-T01 FINAL complete at
     `bd0bf37f7568b80cef9cb3eaa5d582eec2e49278`; pre-Fourth-Edition semantic
     hardening FINAL at verified source checkpoint
     `8058770bcf8ae59d781b1ceff9880f09355e5388`
 -   Objective: Rebuild package manifests and dry-run publication pipelines
     around the canonical core under the ratified release policy
--   Entry boundary: NOT READY — V4-H08 closure policy correction requires a
-    new exact-source campaign
+-   Certified implementation: `021239608ffa5066e59bdebde9869e193fbb3eab`
+-   Signed evidence closure: `6fcc56dc7b1b18a1019817b0b990833fbf73dc3d`
+-   Entry boundary: READY for separately governed release work; H08 remains CLOSED
+-   [Implementation and certification report](release-packaging-rebuild.md)
+-   [Controlled task record](records/release-packaging-rebuild.yaml)
+
+The original pause below is historical and is superseded by this closure.
 
 V4-H05 reactivated P20-T02 after closing its original five-part campaign. The
 subsequent H06/H07 launch-readiness hardening and V4-H08 recertification
@@ -9902,3 +9906,30 @@ all source-bound prerequisites, then fresh whole38/80/126 and independent
 no-reuse Release126 campaigns, source-distinct verifier qualification/promotion,
 signing, trusted cloud verification and guarded closure. No old failure or
 cohort is reused. H08 remains OPEN and the goal ACTIVE.
+
+## Fourth Edition release packaging closure — 2026-11-10
+
+Resumed the storage-interrupted local source 87908150 and preserved all historical
+failures and accepted evidence. A signed-evidence formatter boundary correction
+was frozen as `021239608ffa5066e59bdebde9869e193fbb3eab`; it affects no compiler semantics or support scope.
+All 17 distributions, 42 receipts, 21 platform comparisons and 95 tool coordinates
+verify. Local 37/37 and PR 79/79 pass; Full and fresh independent no-reuse Release
+each retain 123 passed + the sole existing license waiver /124, zero failed,
+unavailable or incomplete. Complete SPDX 2.3/SLSA/checksum graphs, cold offline
+Python sdist reconstruction and 17 exact-artifact handoffs pass.
+
+Immutable source-distinct verifier 642cc21f reconstructs independently, then the
+original approved key signs evidence root `19533d8d1de2248367616df5a6a6782156125efefe6c8e3be47e316ed7c0d2b0`.
+The exact bundle closure `6fcc56dc7b1b18a1019817b0b990833fbf73dc3d` passes both hosted trusted-verification jobs
+at [42810405265](https://github.com/strling-lang/strling/actions/runs/42810405265). Finalization changes are restricted to
+frozen-policy closure documentation. H08 remains CLOSED at 2d8d8975, unchanged.
+The healthy Fortress workers were protected through resource-admission holds;
+no storage maintenance or other-project interruption occurred.
+
+No mandatory packaging implementation or certification obligation remains.
+Registry/account ownership, publisher configuration and all actual publication
+remain external, separately authorized release prerequisites. No registry
+mutation, production tag, GitHub Release, remote main/dev update or production
+publication credential was used. Full details and measured timings are in the
+[packaging report](release-packaging-rebuild.md) and
+[controlled record](records/release-packaging-rebuild.yaml).

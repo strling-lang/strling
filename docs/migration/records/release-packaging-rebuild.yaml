@@ -1,9 +1,9 @@
 record_version: 2.0.0
 title: Fourth Edition reproducible packages and protected publication
-status: in_progress
+status: complete
 objective:
-    Activate canonical 4.0.0 package projections and implement reproducible, independently verified distribution
-    assembly and exact-artifact publication without executing publication.
+    Activate canonical 4.0.0 package projections and implement reproducible, independently verified
+    distribution assembly and exact-artifact publication without executing publication.
 scope:
     diff:
         base: 2d8d897504663211d3768517f0be9f0e28d0f11e
@@ -92,9 +92,9 @@ change_classification:
     public_api_change:
         level: breaking
         evidence:
-            - The ratified major product version activates 4.0.0 package constants and dependency coordinates; adapters
-              reject older or mismatched product kernels. WASM direct instance construction is retired in favor of
-              factories that bind verified modules to instances.
+            - The ratified major product version activates 4.0.0 package constants and dependency coordinates;
+              adapters reject older or mismatched product kernels. WASM direct instance construction is retired
+              in favor of factories that bind verified modules to instances.
         affected_surfaces:
             - c-public-api
             - cpp-public-api
@@ -106,8 +106,8 @@ change_classification:
     schema_change:
         level: breaking
         evidence:
-            - Release manifest and build receipts advance to 2.0.0 with mandatory distribution scope, version binding,
-              and package payload contracts. Historical H08 contracts remain unchanged.
+            - Release manifest and build receipts advance to 2.0.0 with mandatory distribution scope, version
+              binding, and package payload contracts. Historical H08 contracts remain unchanged.
         affected_surfaces: []
     diagnostic_change:
         level: none
@@ -120,8 +120,9 @@ change_classification:
     architecture_change:
         level: compatible
         evidence:
-            - Host adapters retain one canonical compiler. Product compatibility data adds no native export or protocol
-              field. The independent packaging trust context preserves the original H08 trust policy and bundle.
+            - Host adapters retain one canonical compiler. Product compatibility data adds no native export or
+              protocol field. The independent packaging trust context preserves the original H08 trust policy
+              and bundle.
     generated_output_change:
         level: compatible
         evidence:
@@ -136,13 +137,16 @@ required_verification:
           tooling/tests/test_release_publication_authorization.py tooling/tests/test_release_packaging_security.py
           tooling/tests/test_release_payload.py
       expected_result:
-          Metadata, artifact substitution, unsafe archives, wrong source/version/owner, untrusted context
-          and missing Release evidence fail closed.
+          Metadata, artifact substitution, unsafe archives, wrong source/version/owner, untrusted
+          context and missing Release evidence fail closed.
     - name: Fresh clean-source deterministic certification
-      command: ./strling profile full --json && ./strling profile release --json
+      command:
+          ./strling profile full --json && python3 tooling/production_certification.py --profile release
+          --all --no-reuse --plain
       expected_result:
-          Fresh Full and independent no-reuse Release pass on frozen source; packaging subjects have
-          complete reproducibility and consumer evidence; publication remains disabled.
+          Fresh current-source Full and independent no-reuse Release are accepted with 123 passed
+          and the sole existing license waiver out of 124 requirements; all packaging subjects, reconstruction
+          and signatures verify; publication remains disabled.
 checkpoints:
     - name: Scope and contract lock
       status: passed
@@ -150,8 +154,8 @@ checkpoints:
           - check: Baseline identity
             result: passed
             details:
-                Started on clean dev at 2d8d897504663211d3768517f0be9f0e28d0f11e; seventeen distribution surfaces
-                and exact support tiers recorded in the implementation report.
+                Started on clean dev at 2d8d897504663211d3768517f0be9f0e28d0f11e; seventeen distribution
+                surfaces and exact support tiers recorded in the implementation report.
     - name: Contracts and verification design
       status: passed
       evidence:
@@ -160,23 +164,56 @@ checkpoints:
             details:
                 Schema 2.0 locks all seventeen distribution identities, twenty-one platform build rows, forty-two
                 receipts and ninety-five tool coordinates. Exact source, owner/run/destination approval, hidden-file
-                artifact handoff and protected credential isolation are validated. Historical H08 authority and deterministic
-                profile boundaries remain preserved.
+                artifact handoff and protected credential isolation are validated. Historical H08 authority and
+                deterministic profile boundaries remain preserved.
     - name: Implementation and targeted proof
-      status: in_progress
+      status: passed
       evidence:
           - check: Local package proof
             result: passed
             details:
-                Pinned CPython 3.12 Linux sdist/wheel content inspection, Dart dry-run with zero warnings, Windows
-                C#/F# packages and two isolated consumers, Node 22 WASM tests, and governed Linux Go/Dart/Swift parity/probes
-                pass. These are engineering observations, not public installations or clean-source certification.
+                Pinned CPython 3.12 Linux sdist/wheel content inspection, Dart dry-run with zero warnings,
+                Windows C#/F# packages and two isolated consumers, Node 22 WASM tests, and governed Linux Go/Dart/Swift
+                parity/probes pass. These are engineering observations, not public installations or clean-source
+                certification.
+          - check: Complete current-source distribution proof
+            result: passed
+            details:
+                All 17 routes, 21 platform comparisons, 42 unique build receipts, 95 tool coordinates, 30
+                Supported consumers, 12 Preview captures and all exact-artifact handoffs verify at 021239608ffa5066e59bdebde9869e193fbb3eab.
+                Canonical product version 4.0.0 and all forty generated families verify.
     - name: Full integration and certification
-      status: planned
-      evidence: []
+      status: passed
+      evidence:
+          - check: Whole source-bound profiles
+            result: passed
+            details:
+                "At clean 021239608ffa5066e59bdebde9869e193fbb3eab: Local 37/37, PR 79/79, Full and fresh
+                independent Release each 123 passed plus WVR-SEC-VSCE-LICENSE-001 /124, zero failed/unavailable/incomplete.
+                Full/Release aggregate waived, exit zero. Fingerprints and timings are retained in the report and
+                signed bundle."
+          - check: Independent reconstruction and original-key signature
+            result: passed
+            details:
+                Qualified immutable verifier 642cc21f8f5d5ccabde1bb893076e02c624247a7 reconstructs independently
+                before signing. Evidence root 19533d8d1de2248367616df5a6a6782156125efefe6c8e3be47e316ed7c0d2b0;
+                signature SHA-256 2fb3adfae64054a14ddce799db20b161cc58e57c9a9c529af4fed8cc779f15c9; 154 exact copied
+                files, original key preserved and temporary key removed.
     - name: Finalization and readiness
-      status: planned
-      evidence: []
+      status: passed
+      evidence:
+          - check: Hosted source and evidence integrity
+            result: passed
+            details:
+                Both trusted-verification jobs passed at https://github.com/strling-lang/strling/actions/runs/42810405265,
+                exact closure source 6fcc56dc7b1b18a1019817b0b990833fbf73dc3d; candidate code treated as data. Historical
+                H08 remains closed and unchanged.
+          - check: Final source-closure and publication boundary
+            result: passed
+            details:
+                Only frozen-policy closure paths are integrated; signed bytes have independent hygiene/formatter
+                protection. All production publication, registry mutation, production tags and GitHub Releases remain
+                unauthorized.
 commits:
     - sha: 642cc21f8f5d5ccabde1bb893076e02c624247a7
       subject: Rebuild coordinated 4.0 packages and protected artifact handoff
@@ -198,3 +235,52 @@ commits:
       subject: Accept nullable security license selections in release SBOMs
     - sha: 52e9eb4c542afcc657a66331716a7b49feaacdc8
       subject: Retain the complete C++ SPDX graph in signed release evidence
+    - sha: 879081506061bb363b5c1563b94d3e32a34676b5
+      subject: Scope inherited live supply-chain evidence to live profiles
+    - sha: 021239608ffa5066e59bdebde9869e193fbb3eab
+      subject: Preserve signed packaging evidence under canonical formatting
+    - sha: 6fcc56dc7b1b18a1019817b0b990833fbf73dc3d
+      subject: Seal independent Fourth Edition package certification
+completion:
+    accomplished:
+        - Recovered the exact storage-interrupted development state and preserved accepted source-bound evidence,
+          historical failures and closed H08.
+        - Completed all 17 governed 4.0.0 distribution routes with reproducible assembly, complete supply-chain
+          evidence and protected exact-artifact dry-run publication.
+        - Closed fresh current-source Local, PR, Full and independent no-reuse Release, independent reconstruction,
+          original-key signing and hosted integrity.
+    verified:
+        - Local 37/37 and PR 79/79; Full and independent Release each 123 passed and the sole existing waiver
+          /124, with zero failed, unavailable or incomplete requirements.
+        - All 42 receipts, 21 platform comparisons, 95 tool coordinates, 17 exact handoffs, SPDX 2.3/SLSA graphs
+          and offline Python sdist reconstruction verify at 021239608ffa5066e59bdebde9869e193fbb3eab.
+        - Original-key evidence root 19533d8d1de2248367616df5a6a6782156125efefe6c8e3be47e316ed7c0d2b0; hosted
+          integrity https://github.com/strling-lang/strling/actions/runs/42810405265.
+    behavior_changed:
+        Product packages and compatibility metadata project canonical 4.0.0; release automation
+        validates and publishes only owner-authorized exact certified artifacts. Canonical compiler semantics
+        remain unchanged.
+    intentional_behavior_changes:
+        - Fourth Edition package identities require exact matching product kernels.
+        - Direct WASM instance construction is retired in favor of factories binding verified modules to instances.
+    preserved_behavior:
+        - One canonical compiler and reference kernel, specification sovereignty, existing target/runtime scopes
+          and all Supported/Preview distinctions.
+        - Closed H08 evidence and trust authority, deterministic certification and the sole existing WVR-SEC-VSCE-LICENSE-001
+          within its authorized scope.
+        - Certification never authorizes publication; protected owner approval and external registry/account
+          prerequisites remain required.
+    transitional_architecture: []
+    deferred_work:
+        - External account ownership, trusted-publisher and protected production-credential configuration, actual
+          publication, production tags, GitHub Releases and public-registry installation verification belong
+          to separately authorized release work.
+readiness:
+    status: READY
+    next_task:
+        Separately authorized public release process under governance/release-policy.json; this closure
+        does not authorize publication.
+    rationale:
+        All release-packaging implementation and certification obligations are complete at certified
+        implementation 021239608ffa5066e59bdebde9869e193fbb3eab and hosted closure 6fcc56dc7b1b18a1019817b0b990833fbf73dc3d;
+        historical evidence is preserved and no support scope or waiver was expanded.

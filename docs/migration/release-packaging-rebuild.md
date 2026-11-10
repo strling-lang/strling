@@ -107,7 +107,7 @@ separate trust context using the existing authorized certifier keys.
 
 ## Checkpoint 3 — implementation and targeted proof
 
-In progress. Actual engineering proof includes:
+Passed at the current-source closure below. Historical engineering proof includes:
 
 -   Focused version/policy/supply-chain/security/notice tests: 107 of 108 passed,
     followed by correction of the synthetic receipt fixture's payload boundary.
@@ -157,7 +157,7 @@ Kotlin and F# consume staged primary companions, and their publishers verify the
 public companion bytes before releasing dependents. PyPI's immutable trusted
 action has a separate exact-file receipt check; this is not an installation claim.
 
-Remaining work includes publication-route closure checks, canonical generated
+At this historical checkpoint, remaining work included publication-route closure checks, canonical generated
 refresh, source freeze, independent reproducibility and fresh certification.
 The existing approved certifier's local signing-key location has been requested;
 no new certifier, key, or trust authority is introduced.
@@ -264,11 +264,11 @@ verification remains on its original source and verifier pins.
 
 ## Checkpoint 4 — integration and certification
 
-Pending. Existing H08 evidence is historical and does not certify changed source.
+Passed on the independently certified packaging source recorded below. Existing H08 evidence remains historical and does not certify changed source.
 
 ## Checkpoint 5 — finalization and readiness
 
-Pending. Publication remains disabled.
+Passed at the signed and hosted current-source closure below. Publication remains disabled.
 
 ## Generated-artifact impact map
 
@@ -1021,3 +1021,268 @@ removes no certification operation. The complete 87908150 signed bundle and
 all successful and failed execution evidence remain historical and immutable.
 A new committed candidate requires fresh source-bound acquisition and whole
 profiles, including a fresh independent no-reuse Release, before final closure.
+
+## Current-source packaging closure — 2026-11-10
+
+The corrected implementation is frozen at `021239608ffa5066e59bdebde9869e193fbb3eab` on local `dev`.
+Its source-tree SHA-256 is
+`61a6d5207cdc319e7cb82a3dd465a08fddbc4f1dbbbe3ae9a9dbbc37b92610c0`.
+The resume started at `879081506061bb363b5c1563b94d3e32a34676b5`;
+the original implementation campaign started at the closed H08 baseline.
+The exact signed-bundle closure checkpoint is `6fcc56dc7b1b18a1019817b0b990833fbf73dc3d`. Subsequent changes
+are limited to the closure documentation allowed by the frozen trust policy.
+The final repository SHA, clean-index result, hosted result and physical
+capacity are retained in the final operational report under
+`target/release-packaging/recovery-02123960/FINAL-REPORT.md`.
+
+The formatter ownership correction, its thirteen regression tests, and the
+retained predecessor report are the only implementation-source changes in
+this resume. Their generated-artifact impact is zero registered families.
+The new candidate nevertheless acquired its own complete forty-two receipts
+and whole profiles; no predecessor profile or receipt was relabeled.
+All eighteen setup targets and all forty registered generated families passed.
+`python3 tooling/sync_versions.py --check` and
+`python3 tooling/release_policy.py --check` both passed with product 4.0.0.
+Specification, schema, protocol, ABI, toolchain and Preview-extension identities
+remain independently governed. The final `core`, `spec`, historical H08 trust
+policy and historical signed H08 bundle have no diff from the closed baseline.
+
+### Accepted deterministic certification
+
+| Profile             | Definition | Required | Passed | Waived | Failed / unavailable / incomplete |        Wall seconds |
+| ------------------- | ---------- | -------: | -----: | -----: | --------------------------------- | ------------------: |
+| Local               | 1.16.0     |       37 |     37 |      0 | 0 / 0 / 0                         |             858.387 |
+| Pull Request        | 1.22.0     |       79 |     79 |      0 | 0 / 0 / 0                         |            2803.775 |
+| Full                | 1.31.0     |      124 |    123 |      1 | 0 / 0 / 0                         |            4920.257 |
+| Independent Release | 1.31.0     |      124 |    123 |      1 | 0 / 0 / 0                         | 5737.613 controller |
+
+Full and Release aggregate status is `waived`, exit zero, with exactly the
+existing `WVR-SEC-VSCE-LICENSE-001`; neither is described as all passed.
+There are no new waivers, missing operations or quantitative performance
+hardgates. The Release controller used
+`python3 tooling/production_certification.py --profile release --all --no-reuse --plain`
+in its own newly created source worktree, reconstructed generated artifacts,
+retained production/execution manifests and engine identities, and verified
+the final clean source. Accepted Local, PR and Full stages were not rerun.
+
+-   Local: `f515b55e4c72120d045c1600114bb64597451c78017f290e16c1a4051754127a`.
+-   Pull Request: `a1ee1a763d900ab7b0c9f67672efef4a6a2f8096adad29212581d0f1bd9e27f0`.
+-   Full: `1f12e8df2c0b040ffe38a0a0900959036ebdd52a51e75065f36f93e5eec337ca`.
+-   Independent Release: `7bab7a6586cfcf28d7734f6a60b6a4b80a58a67147d6ed70dc2cb848f7095d17`.
+-   Full-type supply chain: `bab8bf28d3da5ad8e1ac5357e62f146bb97aac164173c5b87ed92e625642bb28`.
+-   Release-type supply chain: `1d178e0e3edd8ac7b8bddbe9afbc01c072b919b064167407489a5b89c8fe918a`.
+
+### Current-source distribution outcomes
+
+All rows below passed both independent artifact assembly and the registered
+comparison, metadata, checksum, SPDX 2.3, provenance and exact-handoff checks.
+Build platforms are assembly scope; the ratified runtime/support declarations
+in Checkpoint 1 remain unchanged. Preview captures grant no Supported claim.
+Complete subject hashes and file graphs are retained in the signed
+`evidence/release-supply-chain/release-supply-chain-evidence.json` and its
+`checksums`, `sbom` and `provenance` subdirectories.
+
+| Distribution          | Package                                       | Tier      | Build platforms              | Comparison mode | Outcome |
+| --------------------- | --------------------------------------------- | --------- | ---------------------------- | --------------- | ------- |
+| C                     | `strling-c`                                   | Supported | windows-x86_64, linux-x86_64 | source-identity | Passed  |
+| C++                   | `strling`                                     | Supported | windows-x86_64, linux-x86_64 | normalized      | Passed  |
+| C#                    | `STRling`                                     | Supported | windows-x86_64               | normalized      | Passed  |
+| Dart                  | `strling`                                     | Supported | linux-x86_64                 | normalized      | Passed  |
+| F#                    | `STRling.FSharp`                              | Supported | windows-x86_64               | normalized      | Passed  |
+| Go                    | `github.com/strling-lang/strling/bindings/go` | Supported | linux-x86_64                 | source-identity | Passed  |
+| Java                  | `com.strling:strling`                         | Supported | windows-x86_64               | normalized      | Passed  |
+| Kotlin                | `com.strling:strling-kotlin`                  | Supported | windows-x86_64               | normalized      | Passed  |
+| Lua                   | `strling`                                     | Preview   | linux-x86_64                 | normalized      | Passed  |
+| Perl                  | `STRling`                                     | Preview   | linux-x86_64                 | normalized      | Passed  |
+| PHP                   | `strling/strling`                             | Preview   | linux-x86_64                 | source-identity | Passed  |
+| Python                | `STRling`                                     | Supported | windows-x86_64, linux-x86_64 | normalized      | Passed  |
+| R                     | `strling`                                     | Preview   | linux-x86_64                 | source-identity | Passed  |
+| Ruby                  | `strling`                                     | Preview   | linux-x86_64                 | normalized      | Passed  |
+| Rust                  | `strling`                                     | Supported | windows-x86_64, linux-x86_64 | byte-for-byte   | Passed  |
+| Swift                 | `STRling`                                     | Supported | linux-x86_64                 | source-identity | Passed  |
+| TypeScript/JavaScript | `@strling-lang/strling`                       | Preview   | linux-x86_64                 | byte-for-byte   | Passed  |
+
+All coordinated product versions are 4.0.0. All seventeen routes have
+credential-free publication plans and exact certified-byte handoff proof.
+Registry/account ownership and production publisher configuration remain
+external prerequisites for the separately authorized publication process.
+The handoff rehearsal issued zero registry requests and read no publication
+credentials; dependency acquisition used governed inputs.
+
+### Native, WASM and supply-chain integrity
+
+All twenty-one platform comparisons pass under their registered byte-for-byte,
+normalized or source-identity comparison mode. Forty-two unique build invocations
+cover fifteen Supported platform rows with thirty actual isolated consumer
+proofs, plus twelve captures over six Preview rows. Preview receipts do not
+claim Supported runtime certification. All ninety-five toolchain coordinates
+and exact source/lock inputs are present. Both complete supply-chain bundles
+pass all seventeen artifacts with zero failed, unavailable or incomplete subjects.
+Every applicable subject has SHA-256, an independently validated complete
+SPDX 2.3 graph and in-toto/SLSA provenance. No normalization or waiver was added
+to force agreement; file-level `NOASSERTION` remains distinct from unresolved
+dependency components, of which there are zero.
+
+| Payload               | SHA-256                                                            |
+| --------------------- | ------------------------------------------------------------------ |
+| Linux static kernel   | `fddb9d3bbb67f1ff104049addd25ae6536a068658bd39425ad5335c853be037f` |
+| Windows static kernel | `a1495b749097c20758cb8048e0b29b37f8a5419e6d6a2f04603286881ad4cf98` |
+| Linux shared kernel   | `6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e` |
+| Windows DLL           | `5542b10913723bacc28b0977f95fbdc13f8ee28415007973748a423f17b660f3` |
+| TypeScript WASM       | `1d353fb38bb60c342f0266d42d48c932d3e28f8165624eeac5c737170ac64b1e` |
+
+The uncached, isolated, offline Python sdist rebuild and installed consumer
+pass; its native hash matches the certified Linux wheel. Its rebuilt wheel
+SHA-256 is `af2b9376d28c7d5dde571d9293136b7a9b8057431486095e48da8cd3ae34b288`.
+All seventeen exact certified exports, restorations and credential-free
+publication plans pass. Actual altered Rust export bytes are rejected as
+`publication-substitution`. The rehearsal made zero registry requests, read
+no publication credentials and performed no public installation.
+
+Publication workflows default to dry run, bind owner/run, exact source,
+version, manifest, signed Release root, destination and checksums, and consume
+the certified artifact instead of rebuilding a replacement. Production
+credentials remain behind separately authorized protected boundaries.
+
+### Independent reconstruction, signing and hosted integrity
+
+Source-distinct verifier
+`642cc21f8f5d5ccabde1bb893076e02c624247a7` independently reconstructed
+the complete evidence and artifact graph before any private key was read.
+The first corrected-source unsigned audit failed after 33.918 seconds because
+the task-local helper passed the qualification progress array to an object-only
+JSON loader. Its terminal, original helper and logs remain immutable. Correcting
+only that helper's array parser passed a focused check against the actual two
+qualification entries; the complete second audit then passed. No product source,
+governed input or trusted verifier changed, and accepted profiles were not rerun.
+The existing approved certifier then signed the actual accepted evidence;
+independent original-signature verification passed. Its authorized key
+fingerprint remains `SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA`.
+The original key was preserved and its temporary owner-only ext4 copy removed.
+No verifier implementation or trust identity changed, so no additional
+qualification or promotion was required.
+
+The exact copied bundle has 154 files and 20,043,816
+bytes, evidence root `19533d8d1de2248367616df5a6a6782156125efefe6c8e3be47e316ed7c0d2b0` and signature
+SHA-256 `2fb3adfae64054a14ddce799db20b161cc58e57c9a9c529af4fed8cc779f15c9`. It includes whole Local and PR evidence
+in addition to Full, independent Release, production/execution/engine records,
+the complete release supply chain, offline sdist proof and exact handoff proof.
+The complete closure preflight passed hygiene and confirmed zero signed files
+selected by a competing formatter. Signed bytes were not reformatted.
+
+Hosted integrity passed at
+[42810405265](https://github.com/strling-lang/strling/actions/runs/42810405265) on `codex/release-packaging-certification-20261110`,
+exact closure source `6fcc56dc7b1b18a1019817b0b990833fbf73dc3d`. Both the packaging verification
+job and preserved H08 verification job succeeded. The qualified verifier
+executes independently; event candidate content is treated as data. This is
+hosted signature/source/evidence verification, not a second cloud Release
+campaign. H08 remains CLOSED at
+`2d8d897504663211d3768517f0be9f0e28d0f11e`, with its original hosted run
+42204135587 and historical failures unchanged. The nonproduction review
+branch upload and read-only workflow dispatch implement this resume's required
+hosted verification; the original Checkpoint 1 remote-push prohibition remains
+historical. No `main`/`dev` update, production tag, registry mutation or release
+was performed.
+
+### Resource coordination and measured timing
+
+Every major authoritative stage checked actual physical D: capacity against
+the unchanged 112 GiB reserve and inspected competing work. The independent
+Release admission measured 290,193,010,688 free physical bytes. The Linux
+acquisition and qualification resource holds were respectively 1,319.381 and
+4,674.133 seconds while healthy Fortress certificate workers owned compilation.
+No Fortress process was interrupted, build data removed or source changed by this task.
+Only current missing compiler outputs were rebuilt from governed inputs.
+
+The corrected candidate's first Linux admission attempt started no build:
+legacy Windows PowerShell rejected the unsigned read-only observer. Its genuine
+terminal and transcript remain in `certify-admission-attempt1*`. The existing
+PowerShell 7 runtime executed the same observer successfully under its default
+policy; no execution-policy bypass or change was used. This failed admission
+is preserved as an orchestration failure, not relabeled as a passing operation.
+
+| Stage                                          | Exit | Recorded wall seconds |
+| ---------------------------------------------- | ---: | --------------------: |
+| Windows acquisition                            |    0 |              3633.687 |
+| clean-roots                                    |    0 |                30.017 |
+| canonical-preparation                          |    0 |               305.857 |
+| security                                       |    0 |                20.843 |
+| linux-acquisition                              |    0 |              1595.660 |
+| qualification                                  |    0 |              3665.089 |
+| aggregate-supply-chain                         |    0 |                34.394 |
+| python-sdist                                   |    0 |                88.086 |
+| exact-handoff                                  |    0 |                81.575 |
+| full                                           |    0 |              4921.748 |
+| independent-production-release                 |    0 |              5738.256 |
+| independent-key-free-reconstruction            |    1 |                33.918 |
+| independent-key-free-reconstruction-attempt2   |    0 |                47.867 |
+| Original-key attest                            |    0 |                25.370 |
+| Original-key verify                            |    0 |                10.906 |
+| Complete signing and closure-preflight wrapper |    0 |               225.831 |
+
+The tables distinguish per-profile runner time, production-controller time
+and enclosing orchestration stages; overlapping scopes must not be summed.
+The earlier artifact-only aggregate and handoff were adopted only after
+complete exact-source verification, rather than repeated. Their observed
+outer intervals were 404.305 and 410.986 seconds; these are explicitly observed
+intervals rather than subprocess monotonic measurements. Actual original
+producer timings and adoption timings remain in task execution records.
+As of `2026-11-10T11:50:14.862231+00:00`, elapsed time from this resume's original recovery
+start is 48870.687 seconds, and elapsed time from
+the corrected candidate preparation start is 27820.860
+seconds, including resource holds. Final operational elapsed time and capacity
+are captured after final documentation and hosted verification.
+
+The independently reconstructed real-engine claim records
+41 semantic cases, 95 subjects,
+205 target-profile compiles,
+48 governed refusals,
+1129 cross-profile comparisons and
+1531 runtime executions, with 0
+findings. These are current-source deterministic results, not historical H08
+evidence substituted for the packaging candidate.
+
+### Final completion matrix and reserved publication
+
+Implementation, all seventeen distribution routes, all version projections,
+reproducibility, supply chain, Local, PR, Full, independent no-reuse Release,
+independent reconstruction, signing and hosted integrity are complete.
+No interrupted operation, unresolved implementation defect or required
+packaging-certification obligation remains. All genuine historical failures
+and the successful predecessor evidence remain immutable and source-bound.
+
+External registry/account ownership, trusted-publisher configuration and
+protected production credentials remain prerequisites of the separately
+authorized public release process. Actual publication, production tags,
+GitHub Releases and public-registry installation verification remain reserved
+for that process. This closure supplies no publication authorization.
+
+### External production publisher prerequisites
+
+All rows require verified package/namespace ownership, protected `release`
+environment controls and separate explicit owner authorization. The declared
+secret identifiers below are public policy metadata; no corresponding production secret value was read
+or tested. OIDC rows require the registry-side repository/workflow/environment
+trusted-publisher binding. Governed Git rows require the authorized tag/source
+route and applicable branch/tag protection. Registry/account configuration
+remains unverified and unchanged in this task.
+
+| Route              | Registry / governed source mapping | Publisher boundary                                 | Declared protected secret names                                               |
+| ------------------ | ---------------------------------- | -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| release:c          | `github-tag:c-vVERSION`            | Governed Git owner/tag permission                  | None declared                                                                 |
+| release:cpp        | `conan`                            | Registry account and protected release credentials | `CONAN_PASSWORD`, `CONAN_USERNAME`                                            |
+| release:csharp     | `nuget.org`                        | Registry account and protected release credentials | `NUGET_KEY`                                                                   |
+| release:dart       | `pub.dev`                          | Owner-approved OIDC trusted publisher              | None declared                                                                 |
+| release:fsharp     | `nuget.org`                        | Registry account and protected release credentials | `NUGET_KEY`                                                                   |
+| release:go         | `github-tag:go-vVERSION`           | Governed Git owner/tag permission                  | None declared                                                                 |
+| release:java       | `maven-central`                    | Registry account and protected release credentials | `GPG_PASSPHRASE`, `GPG_PRIVATE_KEY`, `SONATYPE_PASSWORD`, `SONATYPE_USERNAME` |
+| release:kotlin     | `maven-central`                    | Registry account and protected release credentials | `GPG_KEY`, `GPG_PASSPHRASE`, `MAVEN_PASSWORD`, `MAVEN_USERNAME`               |
+| release:lua        | `luarocks.org`                     | Registry account and protected release credentials | `LUAROCKS_API_KEY`                                                            |
+| release:perl       | `cpan`                             | Registry account and protected release credentials | `PAUSE_PASSWORD`, `PAUSE_USERNAME`                                            |
+| release:php        | `github-tag:php-vVERSION`          | Governed Git owner/tag permission                  | None declared                                                                 |
+| release:python     | `pypi.org`                         | Owner-approved OIDC trusted publisher              | None declared                                                                 |
+| release:r          | `github-tag:r-vVERSION`            | Governed Git owner/tag permission                  | None declared                                                                 |
+| release:ruby       | `rubygems.org`                     | Owner-approved OIDC trusted publisher              | None declared                                                                 |
+| release:rust       | `crates.io`                        | Owner-approved OIDC trusted publisher              | None declared                                                                 |
+| release:swift      | `github-tag:swift-vVERSION`        | Governed Git owner/tag permission                  | None declared                                                                 |
+| release:typescript | `npmjs.org`                        | Owner-approved OIDC trusted publisher              | None declared                                                                 |

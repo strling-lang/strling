@@ -31,7 +31,7 @@
         "path": "governance/certification-evidence-dependency-graph.json",
         "sha256": "b2bbaf5123b86b81c9c4f8793fabd8ee8f78dfc669d69892c383611901467617"
     },
-    "evidence_fingerprint": "80f942315a164d249183edc428dbc800d990ccc9113f825f09136338acff645a",
+    "evidence_fingerprint": "ac980b1c70eb336363c2cbf0c4e9e3be024aa87c345815d31762df8eddc50d93",
     "evidence_role": "identity-only",
     "producer": {
         "path": "tooling/profile_source_identity.py",
@@ -39,30 +39,30 @@
     },
     "profiles": [
         {
-            "definition_fingerprint": "59fbaa3be280aa48aa43678a772ed363d50a5b25e331463cdb871771fbc043ab",
-            "definition_version": "1.17.0",
+            "definition_fingerprint": "e4d6f06d3028421c17141c0c325db0f408c8842d23d6ac5371396cd6bca4b10a",
+            "definition_version": "1.18.0",
             "id": "local"
         },
         {
-            "definition_fingerprint": "5fecb6c6c6ef19fc9c46349c19b929ae2500e9be5bbf8e407f572eff47fa4adf",
-            "definition_version": "1.23.0",
+            "definition_fingerprint": "035b4992aa9a6dfa15a212ebc8adb313394df9cb8520c3646bfe519ab584bcff",
+            "definition_version": "1.24.0",
             "id": "pull-request"
         },
         {
-            "definition_fingerprint": "13b19071ec8177884b3e43f57457c968197817673a85998c90133103f495d303",
-            "definition_version": "1.32.0",
+            "definition_fingerprint": "0ed74f964b7b83f27a9912f14bb3bed9decf0264d603606a4827252f2c6f0112",
+            "definition_version": "1.33.0",
             "id": "full"
         },
         {
-            "definition_fingerprint": "ef922c2609d336905ff117c23f33a38763262faaa04491f4810d692d908230c3",
-            "definition_version": "1.32.0",
+            "definition_fingerprint": "cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3",
+            "definition_version": "1.33.0",
             "id": "release"
         }
     ],
     "registry": {
-        "operation_registry_fingerprint": "3e6d6fe597f88f7b50b488c4e8becde6b0097a816f357be149321aa575462c11",
+        "operation_registry_fingerprint": "041151ca181f7e6f39244cbf833e3f71062e186c1c1a365f3646cc3ffa63eac0",
         "path": "toolchain.json",
-        "profile_registry_fingerprint": "c97cde51646711259060906e4a3e603134d8c4ea6e04e8691ec4867ae6ad2f47",
+        "profile_registry_fingerprint": "0ea34ea746e711efcb1d12d0a41c6c3fb1f6a637340c95504cf0bc2a891ac68a",
         "schema_version": 1
     },
     "schema_version": "1.0.0"

@@ -12,6 +12,12 @@ Fresh source-bound certification and independent closure remain pending; see
 [the task report](public-distribution-verification.md) and
 [execution record](records/public-distribution-verification.yaml).
 
+Recovery retained the failed `23760704` Local result (27 passes, repository
+lint failure at operation 28/38) and confirmed successful LSP and generated
+preparation. The successor removes the unused import and requires atomic,
+source-bound public-contract producer evidence in all four profiles. Historical
+certificates and failed build receipts retain their original identities.
+
 ## H08 isolated Release failure and bounded correction — 2026-10-27
 
 Source `ca0d359a` passed Local38, PR80, readiness123 and authoritative Full126

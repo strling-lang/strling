@@ -208,3 +208,27 @@ result contract and the profile denominator. Product authority now validates all
 registered semantic-evidence refresh produced no changed output. A corrected
 source requires its own certification and cannot adopt the former source's build
 receipts.
+
+Recovery on 2026-11-10 established that candidate
+`237607049c849f82621c88885f6348e7804e6c3b` completed all eight preparation
+stages. LSP payload assembly passed in 65.7207 seconds and the complete
+generated check passed all 40 families in 162.0315 seconds. Its subsequent
+Local execution failed after 490.0774 seconds at operation 28 of 38: 27
+operations passed and repository lint found an unused `io` import in the
+protected publication helper. The manifest authority gate passed. WSL was
+stopped at recovery; no healthy continuation worker survived. These terminal
+results remain retained under `target/public-verification/campaign-23760704`.
+
+The unused import was removed. Independent integration review also found that
+the public contract operation needed invocation-bound producer evidence to
+reject a zero exit without execution. It now uses the existing atomic
+structured-result transport with operation identity
+`certification.public-distribution-contract`, clean source admission, exact
+invocation and profile binding, and zero performance samples. The existing
+immutable reader already reconstructs this transport and selects its evidence
+for signing; no signing authority or historical trust policy changed.
+All four profiles require the producer, with unchanged operation denominators
+of 38, 80, 125 and 125. Their definition versions are now 1.18.0, 1.24.0,
+1.33.0 and 1.33.0. Targeted mutations reject missing, duplicated, renamed,
+misbound, incomplete and incorrectly aggregated producer results. A fresh
+source identity and complete independent certification remain required.

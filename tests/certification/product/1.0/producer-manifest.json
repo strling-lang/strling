@@ -84,8 +84,8 @@
             "operation_id": "public_distribution_contract",
             "evidence_area": "security-provenance",
             "requirement": "required",
-            "result_contract": null,
-            "structured_operation_id": null
+            "result_contract": "certification-result-v1",
+            "structured_operation_id": "certification.public-distribution-contract"
         },
         {
             "operation_id": "security_dependency_integrity",

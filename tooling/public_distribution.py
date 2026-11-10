@@ -417,15 +417,10 @@ def strict_json(payload: bytes) -> dict:
     return result
 
 
-def main() -> int:
-    import argparse
+def contract_result(root: Path, *, commit: str, profile: str) -> dict:
     from tooling.public_metadata import verify_readme_commands
     from tooling.release_supply_chain import load_json
 
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", required=True)
-    args = parser.parse_args()
-    root = Path(__file__).resolve().parents[1]
     result = validate_contract(root)
     manifest = load_json(
         root / "tests/certification/release-supply-chain/1.0/manifest.json"
@@ -441,20 +436,108 @@ def main() -> int:
         documentation[artifact["id"]] = verify_readme_commands(
             (root / readme).read_bytes(), artifact, version
         )
-    print(
-        json.dumps(
-            {
-                "status": "passed",
-                "contract": result["contract"],
-                "artifacts": result["artifacts"],
-                "obligations": len(result["obligations"]),
-                "documentation": documentation,
-                "public_release_verified": False,
-                "checked": args.check,
-            },
-            sort_keys=True,
-        )
+    evidence = {
+        "status": "passed",
+        "contract": result["contract"],
+        "artifacts": result["artifacts"],
+        "obligations": len(result["obligations"]),
+        "documentation": documentation,
+        "public_release_verified": False,
+        "checked": True,
+    }
+    return {
+        "schema_version": "certification-result-v1",
+        "operation_id": "certification.public-distribution-contract",
+        "commit": commit,
+        "profile": profile,
+        "status": "passed",
+        "duration_ms": None,
+        "details": evidence,
+        "evidence_fingerprint": hashlib.sha256(canonical_json(evidence)).hexdigest(),
+    }
+
+
+def main(argv=None) -> int:
+    import argparse
+    import subprocess
+    from tooling.structured_operation_execution import (
+        atomic_write_artifact,
+        execution_context,
+        zero_sample_consumption,
     )
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", required=True)
+    parser.add_argument("--json", action="store_true")
+    parser.add_argument("--profile", choices=("local",), default="local")
+    parser.add_argument("--execution-directory", type=Path)
+    parser.add_argument("--certification-invocation-id")
+    parser.add_argument(
+        "--certification-profile", choices=("local", "pull-request", "full", "release")
+    )
+    parser.add_argument("--expected-source-sha")
+    parser.add_argument("--producer-id")
+    args = parser.parse_args(argv)
+    values = (
+        args.execution_directory,
+        args.certification_invocation_id,
+        args.certification_profile,
+        args.expected_source_sha,
+        args.producer_id,
+    )
+    if any(v is not None for v in values) and not all(v is not None for v in values):
+        parser.error("invocation-bound execution arguments must be supplied together")
+    root = Path(__file__).resolve().parents[1]
+
+    def source():
+        return subprocess.check_output(
+            ["git", "--no-optional-locks", "rev-parse", "HEAD"],
+            cwd=root,
+            text=True,
+            timeout=30,
+        ).strip()
+
+    def clean():
+        return not subprocess.check_output(
+            ["git", "--no-optional-locks", "status", "--porcelain"],
+            cwd=root,
+            timeout=120,
+        ).strip()
+
+    before = source()
+    if args.execution_directory and (
+        before != args.expected_source_sha
+        or not clean()
+        or args.producer_id != "public_distribution_contract@repository"
+    ):
+        raise ValueError("public contract source or producer does not match invocation")
+    result = contract_result(root, commit=before, profile=args.profile)
+    if source() != before or (args.execution_directory and not clean()):
+        raise ValueError("source changed during public contract execution")
+    if args.execution_directory:
+        atomic_write_artifact(
+            args.execution_directory / "result.json",
+            {
+                **execution_context(
+                    producer_id=args.producer_id,
+                    operation_id=result["operation_id"],
+                    source_sha=before,
+                    invocation_id=args.certification_invocation_id,
+                    certification_profile=args.certification_profile,
+                    producer_profile=args.profile,
+                ),
+                "artifact_kind": "structured-operation-result",
+                "result_contract": result["schema_version"],
+                "process_exit_code": 0,
+                "terminal_status": result["status"],
+                "environment_identity": None,
+                "performance_evidence_identity": result["evidence_fingerprint"],
+                "sample_consumption": zero_sample_consumption(),
+                "structured_result": result,
+                "integrity_error": None,
+            },
+        )
+    print(json.dumps(result, sort_keys=True))
     return 0
 
 

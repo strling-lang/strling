@@ -11,22 +11,22 @@
                 "profiles": [
                     {
                         "id": "local",
-                        "definition_version": "1.17.0",
+                        "definition_version": "1.18.0",
                         "operation_count": 25
                     },
                     {
                         "id": "pull-request",
-                        "definition_version": "1.23.0",
+                        "definition_version": "1.24.0",
                         "operation_count": 36
                     },
                     {
                         "id": "full",
-                        "definition_version": "1.32.0",
+                        "definition_version": "1.33.0",
                         "operation_count": 50
                     },
                     {
                         "id": "release",
-                        "definition_version": "1.32.0",
+                        "definition_version": "1.33.0",
                         "operation_count": 50
                     }
                 ],
@@ -120,5 +120,5 @@
         "active_generated_oracle_count": 0,
         "semantic_scraping_count": 0
     },
-    "fingerprint": "sha256:0e6c76558648ac0c6c90b3b1e2548238cdc36b7c9ab132187b532fa1f5479ab9"
+    "fingerprint": "sha256:eba4d2f4629a6220d0d23bbdb2ca5811668e49e763e7a8b0a6968c971776dccf"
 }

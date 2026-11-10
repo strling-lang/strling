@@ -119,6 +119,15 @@ checkpoints:
           - check: Required product producer registration
             result: passed
             details: Registered public_distribution_contract in the Full/Release producer graph. Product authority validates 125 result rows; 21 focused tests and 11 mutation subtests pass. Semantic-authority regeneration produced no changed output.
+          - check: Recovered corrected candidate preparation
+            result: passed
+            details: Source 237607049c849f82621c88885f6348e7804e6c3b passed all eight stages, including LSP payload assembly in 65.7207 seconds and 40-family generated verification in 162.0315 seconds. Exact logs and receipt hashes remain in campaign-23760704.
+          - check: Recovered corrected candidate Local
+            result: failed
+            details: Local stopped at lint@repository, operation 28 of 38, after 490.0774 seconds with 27 passed results. An unused io import was the blocking F401 finding. WSL was stopped at recovery; there was no healthy continuation owner. No passing profile was inferred.
+          - check: Invocation-bound public contract evidence
+            result: passed
+            details: Removed the unused import and registered certification.public-distribution-contract using the existing atomic transport. Twenty-two targeted tests reject missing execution, registration mutations, source/profile/invocation substitution, omitted reconstruction evidence, and incorrect status aggregation. Profile counts remain 38/80/125/125; a fresh source-bound campaign is required.
     - name: Independent readiness closure
       status: planned
       evidence: []
@@ -129,3 +138,5 @@ commits:
       subject: Bind public verification to independent certification trust
     - sha: fc0274e9ac4fdbd67a6eb93bc2b31477e860fc68
       subject: Separate public artifact and verifier implementation trust
+    - sha: 237607049c849f82621c88885f6348e7804e6c3b
+      subject: Register public verification in product certification evidence

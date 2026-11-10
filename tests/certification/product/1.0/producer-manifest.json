@@ -81,6 +81,13 @@
             "structured_operation_id": "certification.generated-artifact-integrity"
         },
         {
+            "operation_id": "public_distribution_contract",
+            "evidence_area": "security-provenance",
+            "requirement": "required",
+            "result_contract": null,
+            "structured_operation_id": null
+        },
+        {
             "operation_id": "security_dependency_integrity",
             "evidence_area": "security-provenance",
             "requirement": "required",

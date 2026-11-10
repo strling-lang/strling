@@ -112,10 +112,20 @@ checkpoints:
             details: All 17 artifact routes and all 15 Supported platform consumers passed staged qualification; 22 Windows and 20 Linux toolchain admission rows passed. Failed earlier attempts are preserved. These are engineering results, not public release evidence.
     - name: Integration and certification
       status: in_progress
-      evidence: []
+      evidence:
+          - check: Superseded candidate Local profile
+            result: failed
+            details: Source fc0274e9ac4fdbd67a6eb93bc2b31477e860fc68 stopped at product_certification_authority after 14 passes; 23 Local operations did not execute. PR, Full, Release and signing did not start. Its 42 artifact receipts remain bound to that source.
+          - check: Required product producer registration
+            result: passed
+            details: Registered public_distribution_contract in the Full/Release producer graph. Product authority validates 125 result rows; 21 focused tests and 11 mutation subtests pass. Semantic-authority regeneration produced no changed output.
     - name: Independent readiness closure
       status: planned
       evidence: []
 commits:
     - sha: 080107ed6d7893d60eb011fb83af09ac937eeb89
       subject: Implement independent public distribution verification
+    - sha: 602c1c956e0ad2ed404390cd18238a47782fd562
+      subject: Bind public verification to independent certification trust
+    - sha: fc0274e9ac4fdbd67a6eb93bc2b31477e860fc68
+      subject: Separate public artifact and verifier implementation trust

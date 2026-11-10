@@ -188,3 +188,23 @@ actual local development branch; fabricating a reference in the certification
 clone would not establish that authorization. The trust-separation correction
 passes 74 focused tests, repository governance, and all seven content-security
 checks.
+
+The owner authorized the local `dev` fast-forward to
+`fc0274e9ac4fdbd67a6eb93bc2b31477e860fc68`. That candidate passed complete
+generated preparation (40 families), canonical version checks and security
+integrity. Its 42 build receipts covered 17 routes, 21 build pairs and 95
+toolchain coordinates. The independent receipt comparison and native/WASM
+transport inspection passed. These results remain bound to that candidate.
+
+Its Local profile stopped after 434.43 seconds at operation 15 of 38: 14 passed,
+`product_certification_authority` failed, and 23 did not execute. The Full/Release
+producer manifest was missing the registered `public_distribution_contract`
+operation. PR, Full, independent Release and signing did not start. The original
+profile, terminal output, receipts and admission records are retained under
+`target/public-verification/campaign-fc0274e9`. The correction registers the
+operation as required in the product producer graph, preserving its toolchain
+result contract and the profile denominator. Product authority now validates all
+125 Full/Release results; 21 focused tests and 11 mutation subtests passed. The
+registered semantic-evidence refresh produced no changed output. A corrected
+source requires its own certification and cannot adopt the former source's build
+receipts.

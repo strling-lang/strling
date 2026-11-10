@@ -273,6 +273,9 @@ establish public `VERIFIED`, and a publication receipt is never a verification
 authority. Historical packaging and H08 certificates retain their own trust
 contexts. Verification infrastructure certification uses
 `governance/public-verification-certification-trust.json` and a separate bundle.
+Public package authentication continues to use
+`governance/release-certification-trust.json` and its immutable packaging reader;
+the implementation certificate does not replace a package release certificate.
 
 The protected `public-verification.yml` workflow is manual, defaults to disabled,
 and runs only from the repository's default branch. Its `public-verification`

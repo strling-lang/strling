@@ -308,6 +308,23 @@ def test_public_certification_trust_is_separate_from_historical_bundles():
     public = load_trust_policy(ROOT, "public-verification-certification-trust.json")
     packaging = load_trust_policy(ROOT, "release-certification-trust.json")
     hardened = load_trust_policy(ROOT, "local-certification-trust.json")
+    artifact_contract = json.loads(
+        (ROOT / "governance/public-distribution.json").read_text()
+    )
+    assert (
+        artifact_contract["certification_trust"]
+        == "governance/release-certification-trust.json"
+    )
+    workflow = yaml.load(
+        (ROOT / ".github/workflows/public-verification.yml").read_text(),
+        Loader=yaml.BaseLoader,
+    )
+    artifact_reader = next(
+        step["with"]
+        for step in workflow["jobs"]["verify"]["steps"]
+        if step.get("with", {}).get("path") == "certification-verifier"
+    )
+    assert artifact_reader["ref"] == artifact_contract["certification_verifier"]
     assert (
         len({public["bundle_path"], packaging["bundle_path"], hardened["bundle_path"]})
         == 3

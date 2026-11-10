@@ -166,6 +166,25 @@ rerun or reopening of H08 or packaging campaigns.
 The integration preserves both historical certificate jobs and adds a separate
 event-source public-verification certificate job to CI and hosted integrity.
 The new jobs execute only the immutable reader and its new trust policy.
-The public retrieval contract uses the same approved context; candidate request
-data cannot select a different policy or reader. Four targeted workflow tests
+The public retrieval contract retains the packaging artifact trust context;
+the separate public-verification policy certifies this implementation only.
+Candidate request data cannot select a different policy or reader. Four targeted workflow tests
 and 29 hostile-mutation subtests passed, followed by repository governance.
+
+Candidate `602c1c956e0ad2ed404390cd18238a47782fd562` was superseded before any
+authoritative profile because its public artifact verifier pin had incorrectly
+followed the new implementation-certification context. The correction preserves
+the existing packaging certificate handoff and its immutable reader, independently
+of the new implementation certificate. Its successful source preparation stages
+remain bound to that superseded candidate and are not current certification.
+
+The superseded checkout's complete generated check exited 1 after 78.84 seconds:
+the legacy inventory requires the candidate to equal the authorized local `dev`
+tip, but the detached clone had no local `dev` reference. The seven preceding
+preparation stages passed, including LSP assembly in 68.02 seconds. This is a
+retained orchestration failure, not a passing generated check. No authoritative
+profile started. Integration authorization is required before advancing the
+actual local development branch; fabricating a reference in the certification
+clone would not establish that authorization. The trust-separation correction
+passes 74 focused tests, repository governance, and all seven content-security
+checks.

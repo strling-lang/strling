@@ -232,3 +232,15 @@ of 38, 80, 125 and 125. Their definition versions are now 1.18.0, 1.24.0,
 1.33.0 and 1.33.0. Targeted mutations reject missing, duplicated, renamed,
 misbound, incomplete and incorrectly aggregated producer results. A fresh
 source identity and complete independent certification remain required.
+
+The preparatory successor `b625909a43ec7d13571dc149b2ffdc1d0ef99414`
+passed all eight preparation stages, all 40 generated families, and version
+and release-policy checks. Its LSP assembly took 70.1147 seconds. A broader
+quality-orchestrator diagnostic found four remaining explicit version
+assertions in `test_quality.py`; one test failed at the first stale assertion,
+while 83 tests and 23 subtests passed. The healthy preparation worker finished
+normally, then the supervisor stopped at an explicit engineering hold before
+security acquisition or any authoritative profile. Only the stale assertion
+values were corrected. The preceding source-bound preparation remains
+historical evidence for that preparatory successor; it does not certify the
+replacement source.

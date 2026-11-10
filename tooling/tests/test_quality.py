@@ -794,9 +794,9 @@ class QualityRoutingTests(unittest.TestCase):
             member for member in local_members if member["operation"] == "test"
         )
         self.assertEqual(["core", "interop"], local_test["targets"])
-        self.assertEqual("1.17.0", toolchain.profile("local")["definition_version"])
+        self.assertEqual("1.18.0", toolchain.profile("local")["definition_version"])
         self.assertEqual(
-            "1.23.0", toolchain.profile("pull-request")["definition_version"]
+            "1.24.0", toolchain.profile("pull-request")["definition_version"]
         )
         self.assertEqual(
             ["perl"],
@@ -1241,8 +1241,8 @@ class QualityRoutingTests(unittest.TestCase):
             release_ids.index("stdlib_runtime_certification") + 1,
             release_ids.index("portability_matrix_certification"),
         )
-        self.assertEqual("1.32.0", toolchain.profile("full")["definition_version"])
-        self.assertEqual("1.32.0", toolchain.profile("release")["definition_version"])
+        self.assertEqual("1.33.0", toolchain.profile("full")["definition_version"])
+        self.assertEqual("1.33.0", toolchain.profile("release")["definition_version"])
         self.assertNotIn(
             "security_dependency_risk",
             [member["operation"] for member in local_members],

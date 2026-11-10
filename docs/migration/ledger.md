@@ -17,6 +17,10 @@ lint failure at operation 28/38) and confirmed successful LSP and generated
 preparation. The successor removes the unused import and requires atomic,
 source-bound public-contract producer evidence in all four profiles. Historical
 certificates and failed build receipts retain their original identities.
+The preparatory successor completed all generated preparation, then stopped
+at a safe engineering hold before authoritative profiles when a broader
+diagnostic found stale explicit profile-version assertions. The correction
+changes those assertions only and requires a fresh source identity.
 
 ## H08 isolated Release failure and bounded correction — 2026-10-27
 

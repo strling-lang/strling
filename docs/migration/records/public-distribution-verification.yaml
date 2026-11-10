@@ -128,6 +128,9 @@ checkpoints:
           - check: Invocation-bound public contract evidence
             result: passed
             details: Removed the unused import and registered certification.public-distribution-contract using the existing atomic transport. Twenty-two targeted tests reject missing execution, registration mutations, source/profile/invocation substitution, omitted reconstruction evidence, and incorrect status aggregation. Profile counts remain 38/80/125/125; a fresh source-bound campaign is required.
+          - check: Preparatory successor diagnostic hold
+            result: failed
+            details: Source b625909a43ec7d13571dc149b2ffdc1d0ef99414 passed complete eight-stage preparation and all 40 generated families; LSP assembly took 70.1147 seconds. A quality-orchestrator diagnostic passed 83 tests and 23 subtests but found four stale explicit profile-version assertions. The supervisor let preparation finish and then honored an engineering hold before security acquisition or authoritative profiles. The assertions were corrected for a fresh source identity; no failed or stale certification was adopted.
     - name: Independent readiness closure
       status: planned
       evidence: []
@@ -140,3 +143,5 @@ commits:
       subject: Separate public artifact and verifier implementation trust
     - sha: 237607049c849f82621c88885f6348e7804e6c3b
       subject: Register public verification in product certification evidence
+    - sha: b625909a43ec7d13571dc149b2ffdc1d0ef99414
+      subject: Bind public contract certification to atomic producer evidence

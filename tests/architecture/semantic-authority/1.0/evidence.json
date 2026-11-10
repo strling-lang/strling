@@ -11,23 +11,23 @@
                 "profiles": [
                     {
                         "id": "local",
-                        "definition_version": "1.16.0",
-                        "operation_count": 24
+                        "definition_version": "1.17.0",
+                        "operation_count": 25
                     },
                     {
                         "id": "pull-request",
-                        "definition_version": "1.22.0",
-                        "operation_count": 35
+                        "definition_version": "1.23.0",
+                        "operation_count": 36
                     },
                     {
                         "id": "full",
-                        "definition_version": "1.31.0",
-                        "operation_count": 49
+                        "definition_version": "1.32.0",
+                        "operation_count": 50
                     },
                     {
                         "id": "release",
-                        "definition_version": "1.31.0",
-                        "operation_count": 49
+                        "definition_version": "1.32.0",
+                        "operation_count": 50
                     }
                 ],
                 "operation": {
@@ -106,7 +106,7 @@
             "id": "semantic-scraping-absent",
             "status": "passed",
             "details": {
-                "active_source_count": 88,
+                "active_source_count": 90,
                 "stdout_or_test_name_authority": []
             }
         }
@@ -120,5 +120,5 @@
         "active_generated_oracle_count": 0,
         "semantic_scraping_count": 0
     },
-    "fingerprint": "sha256:ff3a7fa261d3f8830d057238d0eeab3a8440f0490649d9d8888c27303918d7c6"
+    "fingerprint": "sha256:0e6c76558648ac0c6c90b3b1e2548238cdc36b7c9ab132187b532fa1f5479ab9"
 }

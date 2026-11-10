@@ -689,6 +689,17 @@
                 "result_contract": "certification-result-v1",
                 "result_operation_id": "certification.functional-resource",
                 "result_transport": "atomic-artifact-v1"
+            },
+            "public_distribution_contract": {
+                "kind": "repository",
+                "component": "repository",
+                "command": [
+                    "python3",
+                    "-m",
+                    "tooling.public_distribution",
+                    "--check"
+                ],
+                "network": "offline"
             }
         },
         "profile_prefix": [
@@ -698,10 +709,13 @@
         ],
         "profiles": {
             "local": {
-                "definition_version": "1.16.0",
+                "definition_version": "1.17.0",
                 "purpose": "Fast deterministic developer feedback.",
                 "network_policy": "offline",
                 "operations": [
+                    {
+                        "operation": "public_distribution_contract"
+                    },
                     {
                         "operation": "security_dependency_integrity"
                     },
@@ -792,10 +806,13 @@
                 ]
             },
             "pull-request": {
-                "definition_version": "1.22.0",
+                "definition_version": "1.23.0",
                 "purpose": "Deterministic merge confidence.",
                 "network_policy": "offline",
                 "operations": [
+                    {
+                        "operation": "public_distribution_contract"
+                    },
                     {
                         "operation": "security_dependency_integrity"
                     },
@@ -958,10 +975,13 @@
                 ]
             },
             "full": {
-                "definition_version": "1.31.0",
+                "definition_version": "1.32.0",
                 "purpose": "Broad repository certification.",
                 "network_policy": "allowed",
                 "operations": [
+                    {
+                        "operation": "public_distribution_contract"
+                    },
                     {
                         "operation": "security_dependency_integrity"
                     },
@@ -1200,10 +1220,13 @@
                 ]
             },
             "release": {
-                "definition_version": "1.31.0",
+                "definition_version": "1.32.0",
                 "purpose": "Highest currently implemented pre-release envelope.",
                 "network_policy": "allowed",
                 "operations": [
+                    {
+                        "operation": "public_distribution_contract"
+                    },
                     {
                         "operation": "security_dependency_integrity"
                     },

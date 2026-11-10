@@ -1,0 +1,137 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://strling.dev/governance/public-verification-result.schema.json",
+    "title": "Independent public verification aggregate v1",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "contract",
+        "authority",
+        "status",
+        "required",
+        "counts",
+        "partial_publication",
+        "release_transition",
+        "publication_authorized",
+        "registry_mutation_authorized",
+        "observations_sha256",
+        "execution",
+        "source",
+        "observations",
+        "findings",
+        "corrective_action"
+    ],
+    "properties": {
+        "contract": { "const": "strling-public-distribution-v1" },
+        "authority": { "const": "public" },
+        "status": {
+            "enum": ["VERIFIED", "FAILED", "NOT_PUBLISHED", "INDETERMINATE"]
+        },
+        "required": { "type": "integer", "minimum": 1 },
+        "counts": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "NOT_PUBLISHED",
+                "READY",
+                "VERIFYING",
+                "VERIFIED",
+                "FAILED",
+                "INDETERMINATE"
+            ],
+            "properties": {
+                "NOT_PUBLISHED": { "$ref": "#/$defs/count" },
+                "READY": { "const": 0 },
+                "VERIFYING": { "$ref": "#/$defs/count" },
+                "VERIFIED": { "$ref": "#/$defs/count" },
+                "FAILED": { "$ref": "#/$defs/count" },
+                "INDETERMINATE": { "$ref": "#/$defs/count" }
+            }
+        },
+        "partial_publication": { "type": "boolean" },
+        "release_transition": { "enum": [null, "verified"] },
+        "publication_authorized": { "const": false },
+        "registry_mutation_authorized": { "const": false },
+        "observations_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+        },
+        "execution": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "verifier_sha",
+                "request_sha256",
+                "run_id",
+                "run_attempt"
+            ],
+            "properties": {
+                "verifier_sha": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
+                },
+                "request_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                },
+                "run_id": { "type": "string", "pattern": "^[0-9]+$" },
+                "run_attempt": { "type": "string", "pattern": "^[0-9]+$" }
+            }
+        },
+        "source": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "observations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "artifact_id",
+                    "check",
+                    "platform",
+                    "tier",
+                    "authority",
+                    "status"
+                ],
+                "properties": {
+                    "authority": { "const": "public" },
+                    "status": {
+                        "enum": [
+                            "NOT_PUBLISHED",
+                            "VERIFYING",
+                            "VERIFIED",
+                            "FAILED",
+                            "INDETERMINATE"
+                        ]
+                    }
+                }
+            }
+        },
+        "findings": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["category", "detail", "artifact_id"]
+            }
+        },
+        "corrective_action": {
+            "const": "separate-owner-authorization-required"
+        }
+    },
+    "$defs": { "count": { "type": "integer", "minimum": 0 } },
+    "allOf": [
+        {
+            "if": { "properties": { "status": { "const": "VERIFIED" } } },
+            "then": {
+                "properties": {
+                    "release_transition": { "const": "verified" },
+                    "partial_publication": { "const": false },
+                    "findings": { "maxItems": 0 }
+                }
+            },
+            "else": {
+                "properties": { "release_transition": { "const": null } }
+            }
+        }
+    ]
+}

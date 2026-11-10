@@ -1,0 +1,150 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://strling.dev/governance/public-distribution.schema.json",
+    "title": "Independent public distribution contract",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+        "schema_version",
+        "contract",
+        "identity_authority",
+        "artifact_authority",
+        "certification_verifier",
+        "certification_trust",
+        "public_authority",
+        "engineering_authorities",
+        "statuses",
+        "artifact_checks",
+        "supported_consumer_checks",
+        "consumer_toolchains",
+        "failure_categories",
+        "network",
+        "routes",
+        "incident_policy"
+    ],
+    "properties": {
+        "consumer_toolchains": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "type": "string" }
+            }
+        },
+        "schema_version": { "const": "1.0.0" },
+        "contract": { "const": "strling-public-distribution-v1" },
+        "identity_authority": { "const": "governance/release-policy.json" },
+        "artifact_authority": {
+            "const": "tests/certification/release-supply-chain/1.0/manifest.json"
+        },
+        "certification_verifier": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+        },
+        "certification_trust": {
+            "enum": [
+                "governance/release-certification-trust.json",
+                "governance/public-verification-certification-trust.json"
+            ]
+        },
+        "public_authority": { "const": "independently-retrieved-public-bytes" },
+        "engineering_authorities": { "const": ["synthetic", "staged"] },
+        "statuses": {
+            "const": [
+                "NOT_PUBLISHED",
+                "READY",
+                "VERIFYING",
+                "VERIFIED",
+                "FAILED",
+                "INDETERMINATE"
+            ]
+        },
+        "artifact_checks": {
+            "const": [
+                "coordinate",
+                "metadata",
+                "artifact",
+                "source",
+                "sbom",
+                "provenance",
+                "documentation",
+                "scope"
+            ]
+        },
+        "supported_consumer_checks": {
+            "const": [
+                "installation",
+                "public-api",
+                "product-version",
+                "canonical-compiler",
+                "native-wasm",
+                "target-compatibility",
+                "kernel-rejection",
+                "isolation"
+            ]
+        },
+        "failure_categories": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "type": "string", "pattern": "^[a-z][a-z-]+$" }
+        },
+        "network": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "methods",
+                "credentials",
+                "maximum_attempts",
+                "maximum_redirects",
+                "attempt_seconds",
+                "maximum_metadata_bytes",
+                "maximum_payload_bytes",
+                "proxies",
+                "local_fallback"
+            ],
+            "properties": {
+                "methods": { "const": ["GET"] },
+                "credentials": { "const": false },
+                "maximum_attempts": { "const": 3 },
+                "maximum_redirects": { "const": 3 },
+                "attempt_seconds": { "const": 30 },
+                "maximum_metadata_bytes": { "const": 8388608 },
+                "maximum_payload_bytes": { "const": 536870912 },
+                "proxies": { "const": false },
+                "local_fallback": { "const": false }
+            }
+        },
+        "routes": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["origins", "protocol"],
+                "properties": {
+                    "origins": {
+                        "type": "array",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "string",
+                            "pattern": "^https://[a-z0-9.-]+$"
+                        }
+                    },
+                    "protocol": { "type": "string", "pattern": "^https://" }
+                }
+            }
+        },
+        "incident_policy": {
+            "const": {
+                "keep_unverified": true,
+                "preserve_attempts": true,
+                "publication_authorized": false,
+                "registry_mutation_authorized": false,
+                "corrective_action": "separate-owner-authorization-required"
+            }
+        }
+    }
+}

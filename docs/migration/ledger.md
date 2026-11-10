@@ -1,5 +1,17 @@
 # Architecture Migration Ledger
 
+## Independent public distribution verification — active, 2026-11-10
+
+Starting from packaging closure `33e50ac033314dad089717a0ee20c0c7c310dea7`,
+the independent verification task preserves the CLOSED H08 and packaging
+certificates. Seventeen synthetic retrieval routes and all fifteen staged
+Supported platform consumers pass engineering qualification. These establish
+readiness only; they are not public release evidence. The versioned contract
+derives 256 obligations from the registered artifact and consumer inventory.
+Fresh source-bound certification and independent closure remain pending; see
+[the task report](public-distribution-verification.md) and
+[execution record](records/public-distribution-verification.yaml).
+
 ## H08 isolated Release failure and bounded correction — 2026-10-27
 
 Source `ca0d359a` passed Local38, PR80, readiness123 and authoritative Full126

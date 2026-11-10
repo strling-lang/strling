@@ -250,3 +250,83 @@ certified subjects and all build receipts for publication handoff. Retain that
 whole directory under the `release-supply-chain` evidence role when signing.
 A passing Full operation cannot authorize publication, and Release execution
 remains fresh with operation reuse disabled.
+
+## Independent public verification
+
+`governance/public-distribution.json` defines the read-only
+`strling-public-distribution-v1` contract. Product identity and support scope
+remain owned by release policy and the release-supply-chain manifest. The
+current denominator is 17 artifact routes with eight checks each, plus 15
+Supported platform consumers with eight checks each: 256 obligations. Preview
+packages receive artifact, metadata, source, SBOM, provenance, documentation,
+coordinate and scope checks; they do not acquire Supported consumer claims.
+The implementation derives these rows from the manifest rather than storing
+the total as an acceptance constant.
+
+The offline check is `python3 -m tooling.public_distribution --check`. Local,
+Pull Request, Full and Release all include this contract. Offline fixtures and
+certified staged packages can establish engineering `READY` only. They cannot
+establish public `VERIFIED`, and a publication receipt is never a verification
+authority. Historical packaging and H08 certificates retain their own trust
+contexts. Verification infrastructure certification uses
+`governance/public-verification-certification-trust.json` and a separate bundle.
+
+The protected `public-verification.yml` workflow is manual, defaults to disabled,
+and runs only from the repository's default branch. Its `public-verification`
+environment must require owner review and contain these nonsecret approved
+values:
+
+-   `PUBLIC_VERIFICATION_ENABLED=true` for an authorized public verification run.
+-   `PUBLIC_VERIFIER_SHA`, an independently qualified immutable verifier commit.
+-   `PUBLIC_REQUEST_JSON` and `PUBLIC_REQUEST_SHA256`, the approved request and the
+    SHA-256 of its canonical UTF-8 JSON representation (sorted keys, no insignificant
+    whitespace). Dispatch callers cannot replace either value.
+-   `PUBLIC_CERTIFIED_SOURCE_SHA`, `PUBLIC_CERTIFICATION_CLOSURE_SHA`, and
+    `PUBLIC_CERTIFIED_RUN_ID`, identifying the exact signed release and retained
+    `certified-*` and `signed-release-*` artifacts.
+
+The request must satisfy
+`governance/schemas/public-verification-request.schema.json`. It binds the exact
+version/channel, source, signed root, complete manifest, every destination,
+every public evidence/document association, publication receipt correlations,
+and the exact derived obligation list. Registry ownership must already be
+governed as verified. Existing externally-pending account placeholders cannot
+authorize public success. The public lifecycle input must be `published`.
+
+The workflow checks out candidate and closure source as data, executes only the
+approved verifier, authenticates the original signature through the immutable
+packaging verifier, and independently downloads public bytes. Certified exports
+are comparison exemplars only. A failed download never selects an exemplar as
+the consumer payload. Git routes bind tag, commit, tree and selected source
+files; Conan binds recipe/package revisions and all transport files. NuGet
+permits only its registered repository signature addition and verifies that
+signature with the official signing identities. No additional archive
+normalization is introduced.
+
+Fresh consumer environments install only authenticated retrieved files. SDK
+dependencies are separate: Rust uses the governed locks, JVM jars must match
+reviewed verification metadata, Kotlin prepares a fresh compiler-only cache,
+and Dart restores its exact locked runtime prerequisites with lock enforcement.
+No developer initialization script or inherited native-library search path is
+accepted. Caller-supplied native modes use the authenticated host library from
+the independently retrieved Python wheel, with its source and file identity
+retained. The shared canonical consumer contracts exercise compilation and
+incompatible-kernel rejection; they do not implement language semantics.
+
+Both disposable hosted platform jobs must report the same protected request and
+execution identity. Reconciliation rejects missing/duplicate scopes, changed
+denominators, synthetic receipts, other workflow runs and unbound consumer
+results. Only complete public success can return `release_transition=verified`.
+The result follows `governance/schemas/public-verification-result.schema.json`.
+This is evidence for the lifecycle transition, not a registry or repository
+mutation. The workflow has only content/action read permissions, no production
+publication secrets, and no publication operation.
+
+An exact-coordinate HTTP 404 is `NOT_PUBLISHED`; timeouts, throttling and
+unavailable registries are `INDETERMINATE`; incorrect identities, payloads or
+behavior are `FAILED`. Every attempt retains its observed response identity
+and raw bytes. Retries and redirects are bounded. Missing artifacts mixed with
+successful public observations produce an explicit partial-publication result.
+Preserve those observations and require separate owner authorization for any
+repair, replacement version, withdrawal or renewed publication. Never relabel
+an earlier attempt or repair a registry from the verifier.

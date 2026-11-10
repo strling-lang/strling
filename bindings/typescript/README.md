@@ -8,7 +8,7 @@ emitter, or independent standard-library implementation.
 ## Installation
 
 ```bash
-npm install @strling-lang/strling
+npm install @strling-lang/strling@4.0.0
 ```
 
 Node 22 is the declared runtime. The package is ESM-only. The ratified support

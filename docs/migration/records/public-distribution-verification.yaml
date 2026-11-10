@@ -1,0 +1,119 @@
+record_version: 2.0.0
+title: Independent public distribution and clean consumer verification
+status: in_progress
+objective: Implement independent authenticated public retrieval, isolated consumers, explicit synthetic readiness, protected verification, and source-bound certification without publication.
+scope:
+    diff:
+        base: 33e50ac033314dad089717a0ee20c0c7c310dea7
+        head: working-tree
+    allowed_paths:
+        - tooling/**
+        - bindings/typescript/README.md
+        - governance/public-distribution.json
+        - governance/schemas/public-distribution.schema.json
+        - governance/schemas/public-verification-request.schema.json
+        - governance/schemas/public-verification-result.schema.json
+        - governance/change-control.json
+        - governance/generated-artifacts.json
+        - governance/formatting.json
+        - governance/repository-hygiene.json
+        - governance/public-verification-certification-trust.json
+        - toolchain.json
+        - tests/certification/**
+        - tests/architecture/semantic-authority/1.0/evidence.json
+        - .github/workflows/**
+        - docs/releasing.md
+        - docs/migration/public-distribution-verification.md
+        - docs/migration/records/public-distribution-verification.yaml
+        - docs/migration/ledger.md
+    forbidden_paths:
+        - core/src/**
+        - spec/**
+        - governance/local-certification-trust.json
+        - governance/release-certification-trust.json
+        - tests/certification/hardened-core/1.0/current/**
+        - tests/certification/release-packaging/1.0/current/**
+    expected_files:
+        - tooling/public_distribution.py
+        - tooling/public_retrieval.py
+        - tooling/tests/test_public_distribution.py
+        - docs/migration/public-distribution-verification.md
+    permitted_generated_changes:
+        - binding-support-certification-evidence
+        - target-adapter-certification-matrices
+        - semantic-authority-retirement-evidence
+        - profile-source-definitions
+        - deep-quality-source-identities
+        - release-supply-chain-contract-fixture
+    expected_generated_outputs: []
+    required_verification_levels:
+        [contract, unit, integration, quality, certification]
+    bounded_exemptions: [WVR-SEC-VSCE-LICENSE-001]
+change_classification:
+    semantic_change:
+        level: none
+        evidence: [Canonical compiler and language contracts remain unchanged.]
+    public_api_change:
+        level: none
+        evidence: [Package public APIs and product version remain unchanged.]
+    schema_change:
+        level: additive
+        evidence:
+            [Public verification evidence has a distinct versioned authority.]
+        affected_surfaces: []
+    diagnostic_change:
+        level: none
+        evidence: [Product diagnostic contracts remain unchanged.]
+    target_behavior_change:
+        level: none
+        evidence: [Existing Supported and Preview scopes remain unchanged.]
+    architecture_change:
+        level: additive
+        evidence:
+            [
+                Independent public retrieval and isolated consumer verification extend existing supply-chain machinery.,
+            ]
+    generated_output_change:
+        level: compatible
+        evidence:
+            [
+                Profile registration may require registered source identity regeneration.,
+            ]
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Public trust and adversarial contracts
+      command: python3 -m pytest -q tooling/tests/test_public_distribution.py
+      expected_result: Synthetic authority, missing obligations, unsafe payloads, and invalid public identity fail closed.
+    - name: Fresh source-bound certification
+      command: python3 tooling/production_certification.py --profile release --all --no-reuse --plain
+      expected_result: Current-source required profiles and independent reconstruction pass with only the existing scoped waiver.
+checkpoints:
+    - name: Source and contract recovery
+      status: passed
+      evidence:
+          - check: Certified baseline
+            result: passed
+            details: Clean starting source 33e50ac033314dad089717a0ee20c0c7c310dea7; 17 artifacts, 21 build rows, 15 Supported consumer rows, 6 Preview assembly rows. Historical certificates preserved.
+          - check: Independent retained certificate authentication
+            result: passed
+            details: Original immutable verifier and complete supply-chain companion validation passed against distinct clean implementation and closure worktrees; baseline-authentication-05 retains the result.
+    - name: Schemas and trusted boundaries
+      status: passed
+      evidence:
+          - check: Public boundary and protected execution tests
+            result: passed
+            details: 222 focused tests passed; final resolver and workflow corrections passed 100 focused tests. All seven staged content-security checks pass. Synthetic results cannot authorize public verification.
+    - name: Retrieval and consumers
+      status: passed
+      evidence:
+          - check: Authenticated staged retrieval and consumer qualification
+            result: passed
+            details: All 17 artifact routes and all 15 Supported platform consumers passed staged qualification; 22 Windows and 20 Linux toolchain admission rows passed. Failed earlier attempts are preserved. These are engineering results, not public release evidence.
+    - name: Integration and certification
+      status: in_progress
+      evidence: []
+    - name: Independent readiness closure
+      status: planned
+      evidence: []
+commits: []

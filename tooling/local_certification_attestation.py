@@ -174,6 +174,7 @@ def load_trust_policy(
     if policy_name not in {
         "local-certification-trust.json",
         "release-certification-trust.json",
+        "public-verification-certification-trust.json",
     }:
         raise AttestationError("unknown certification trust context")
     path = trust_root / "governance" / policy_name
@@ -2328,7 +2329,11 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--trust-root", type=Path)
     parser.add_argument(
         "--trust-policy",
-        choices=["local-certification-trust.json", "release-certification-trust.json"],
+        choices=[
+            "local-certification-trust.json",
+            "release-certification-trust.json",
+            "public-verification-certification-trust.json",
+        ],
         default="local-certification-trust.json",
     )
     subparsers = parser.add_subparsers(dest="command", required=True)

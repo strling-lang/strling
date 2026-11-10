@@ -14,6 +14,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import tomllib
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -279,14 +280,48 @@ def fixture_files(root: Path, work: Path) -> dict[str, str]:
 
 
 def run_consumer(command: list[str], work: Path, environment: dict[str, str]) -> str:
-    completed = subprocess.run(
-        command,
-        cwd=work,
-        env=environment,
-        capture_output=True,
-        text=True,
-        timeout=900,
-        check=False,
+    index = len(list(work.glob("consumer-command-*.json")))
+    prefix = work / f"consumer-command-{index:04d}"
+    started = time.monotonic()
+    try:
+        completed = subprocess.run(
+            command,
+            cwd=work,
+            env=environment,
+            capture_output=True,
+            text=True,
+            timeout=900,
+            check=False,
+        )
+    except subprocess.TimeoutExpired as error:
+        for suffix, value in (("stdout", error.stdout), ("stderr", error.stderr)):
+            prefix.with_suffix("." + suffix).write_bytes(
+                value if isinstance(value, bytes) else (value or "").encode()
+            )
+        prefix.with_suffix(".json").write_text(
+            json.dumps(
+                {
+                    "command": command,
+                    "status": "timed-out",
+                    "elapsed_seconds": time.monotonic() - started,
+                }
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        raise
+    prefix.with_suffix(".stdout").write_text(completed.stdout, encoding="utf-8")
+    prefix.with_suffix(".stderr").write_text(completed.stderr, encoding="utf-8")
+    prefix.with_suffix(".json").write_text(
+        json.dumps(
+            {
+                "command": command,
+                "exit_code": completed.returncode,
+                "elapsed_seconds": time.monotonic() - started,
+            }
+        )
+        + "\n",
+        encoding="utf-8",
     )
     if completed.returncode:
         # Consumers never receive registry credentials; preserve diagnostics for
@@ -386,6 +421,7 @@ def consume_native(
     version: str,
     environment: dict[str, str],
     members: list[dict],
+    harness_root: Path | None = None,
 ) -> dict:
     from tooling.release_packaging import host_scope
 
@@ -419,7 +455,8 @@ def consume_native(
             "conan",
             "install",
             ".",
-            "--profile:all=" + str(root / "bindings/cpp/profiles" / host_scope()),
+            "--profile:all="
+            + str((harness_root or root) / "bindings/cpp/profiles" / host_scope()),
             "--build=never",
             "--no-remote",
             "--output-folder=" + str(build),
@@ -823,6 +860,7 @@ def consume_jvm(
     members: list[dict],
     manifest: dict,
     native: Path | None,
+    harness_root: Path | None = None,
 ) -> dict:
     from tooling.jvm_adapter_package import EXTERNAL_PACKAGES
     from tooling.release_payload import native_identity
@@ -843,8 +881,9 @@ def consume_jvm(
     repository = Path(
         environment.get("STRLING_MAVEN_REPOSITORY", str(Path.home() / ".m2/repository"))
     )
+    harness_root = harness_root or root
     verification = ET.parse(
-        root / "bindings/kotlin/gradle/verification-metadata.xml"
+        harness_root / "bindings/kotlin/gradle/verification-metadata.xml"
     ).getroot()
     for element in verification.iter():
         element.tag = element.tag.split("}")[-1]
@@ -968,11 +1007,13 @@ def consume_jvm(
         source.write_text(KOTLIN_CONSUMER)
         (work / "gradle").mkdir()
         shutil.copyfile(
-            root / "bindings/kotlin/gradle/verification-metadata.xml",
+            harness_root / "bindings/kotlin/gradle/verification-metadata.xml",
             work / "gradle/verification-metadata.xml",
         )
         wrapper = (
-            root / "bindings/kotlin" / ("gradlew.bat" if os.name == "nt" else "gradlew")
+            harness_root
+            / "bindings/kotlin"
+            / ("gradlew.bat" if os.name == "nt" else "gradlew")
         )
         run_consumer(
             [str(wrapper), "--offline", "--no-daemon", "installDist"], work, environment
@@ -998,6 +1039,324 @@ def consume_jvm(
     if companions:
         result["companion_subject_sha256"] = _surface_identity(companions)[1]
     return result
+
+
+def execute_consumer_contract(
+    artifact_id: str,
+    *,
+    root: Path,
+    fixture_root: Path,
+    work: Path,
+    version: str,
+    environment: dict[str, str],
+    members: list[dict],
+    artifact: dict,
+    manifest: dict,
+    native: Path | None,
+) -> tuple[dict, dict]:
+    """Run the shared semantic-free consumer contract against supplied subjects.
+
+    The caller authenticates subjects and establishes process/filesystem isolation.
+    Public verification supplies a retrieval-only root, never a producer checkout.
+    Fixtures and executable test expectations always come from the trusted harness.
+    """
+    fixtures = fixture_files(fixture_root, work)
+    if artifact_id == "release:python":
+        result = consume_python(root, work, version, environment, members)
+    elif artifact_id in {"release:go", "release:dart", "release:swift"}:
+        result = consume_gds(
+            root, artifact, work, version, environment, members, native
+        )
+    elif artifact_id in {"release:c", "release:cpp"}:
+        result = consume_native(
+            root,
+            artifact,
+            work,
+            version,
+            environment,
+            members,
+            harness_root=fixture_root,
+        )
+    elif artifact_id == "release:rust":
+        result = consume_rust(root, work, version, environment, members)
+    elif artifact_id in {"release:csharp", "release:fsharp"}:
+        result = consume_dotnet(
+            root, artifact, work, version, environment, members, manifest
+        )
+    elif artifact_id in {"release:java", "release:kotlin"}:
+        result = consume_jvm(
+            root,
+            artifact,
+            work,
+            version,
+            environment,
+            members,
+            manifest,
+            native,
+            harness_root=fixture_root,
+        )
+    else:
+        raise ReleaseSupplyChainError(
+            "consumer-unavailable",
+            "isolated consumer is not implemented for " + artifact_id,
+        )
+    compatibility = (
+        result.get("linked_package_version") == version
+        and result.get("target_profile_mismatch_rejected") is True
+        if artifact_id == "release:rust"
+        else result.get("kernel_mismatch_rejected") is True
+    )
+    if (
+        result.get("status") != "passed"
+        or result.get("source_outcome") != "succeeded"
+        or result.get("target_pattern") != "abc"
+        or not compatibility
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-result",
+            "consumer did not prove canonical success and mismatch refusal",
+        )
+    return result, fixtures
+
+
+def public_consumer_environment(
+    work: Path, sdk_environment: dict[str, str]
+) -> dict[str, str]:
+    """Allow only SDK/process prerequisites, with fresh consumer configuration."""
+    allowed = {
+        "PATH",
+        "SystemRoot",
+        "SYSTEMROOT",
+        "WINDIR",
+        "COMSPEC",
+        "PATHEXT",
+        "INCLUDE",
+        "LIB",
+        "LIBPATH",
+        "JAVA_HOME",
+        "DOTNET_ROOT",
+        "RUSTUP_HOME",
+        "CARGO_HOME",
+        "STRLING_MAVEN_REPOSITORY",
+        "STRLING_GRADLE_CACHE",
+        "STRLING_PUB_CACHE",
+        "GOROOT",
+        "PROGRAMDATA",
+        "ProgramData",
+        "ALLUSERSPROFILE",
+        "PROGRAMFILES",
+        "PROGRAMFILES(X86)",
+        "PROGRAMW6432",
+        "COMMONPROGRAMFILES",
+        "COMMONPROGRAMFILES(X86)",
+        "COMMONPROGRAMW6432",
+        "SYSTEMDRIVE",
+    }
+    environment = {
+        key: value
+        for key, value in sdk_environment.items()
+        if key.upper() in {name.upper() for name in allowed}
+    }
+    home = work / "home"
+    home.mkdir()
+    temporary = work / "tmp"
+    temporary.mkdir()
+    environment.update(
+        HOME=str(home),
+        USERPROFILE=str(home),
+        APPDATA=str(home / "appdata"),
+        LOCALAPPDATA=str(home / "localappdata"),
+        TMP=str(temporary),
+        TEMP=str(temporary),
+        TMPDIR=str(temporary),
+        XDG_CONFIG_HOME=str(home / "config"),
+        XDG_CACHE_HOME=str(home / "cache"),
+        PYTHONNOUSERSITE="1",
+        PIP_CONFIG_FILE=os.devnull,
+        PIP_NO_INDEX="1",
+        PIP_DISABLE_PIP_VERSION_CHECK="1",
+        NPM_CONFIG_USERCONFIG=os.devnull,
+        NPM_CONFIG_GLOBALCONFIG=os.devnull,
+        NUGET_PACKAGES=str(home / "nuget"),
+        DOTNET_CLI_HOME=str(home / "dotnet"),
+        DOTNET_CLI_TELEMETRY_OPTOUT="1",
+        DOTNET_SKIP_FIRST_TIME_EXPERIENCE="1",
+        DOTNET_GENERATE_ASPNET_CERTIFICATE="false",
+        DOTNET_ADD_GLOBAL_TOOLS_TO_PATH="false",
+        GIT_CONFIG_NOSYSTEM="1",
+        GIT_CONFIG_GLOBAL=os.devnull,
+        CARGO_INCREMENTAL="0",
+        CARGO_BUILD_JOBS="2",
+        GOWORK="off",
+        TZ="UTC",
+        LC_ALL="C",
+        PYTHONHASHSEED="0",
+    )
+    environment.setdefault("STRLING_MAVEN_REPOSITORY", str(home / "maven"))
+    gradle = Path(environment.pop("STRLING_GRADLE_CACHE", str(home / "gradle")))
+    if any(
+        (gradle / name).exists()
+        for name in ("init.gradle", "init.gradle.kts", "init.d", "gradle.properties")
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-isolation",
+            "Gradle dependency cache contains executable user configuration",
+        )
+    environment["GRADLE_USER_HOME"] = str(gradle)
+    environment["PUB_CACHE"] = environment.pop("STRLING_PUB_CACHE", str(home / "pub"))
+    return environment
+
+
+def verify_retrieved_consumer(
+    artifact_id: str,
+    *,
+    retrieval_root: Path,
+    fixture_root: Path,
+    work: Path,
+    manifest: dict,
+    version: str,
+    sdk_environment: dict[str, str],
+    retrieval_files: dict[str, str],
+    authority: str,
+    native: Path | None = None,
+) -> dict:
+    """Exercise authenticated retrieved subjects using the canonical consumers.
+
+    Live public execution is restricted to disposable hosted verification runners.
+    Staged qualification remains engineering evidence even after successful runs.
+    The orchestrator authenticates every retrieval file before invoking this API.
+    """
+    from tooling.release_packaging import host_scope
+    from tooling.release_supply_chain import _probe_toolchain
+
+    if authority not in {"public", "staged"}:
+        raise ReleaseSupplyChainError(
+            "consumer-authority", "only public or certified staged payloads may execute"
+        )
+    if authority == "public" and (
+        os.environ.get("GITHUB_ACTIONS") != "true"
+        or os.environ.get("RUNNER_ENVIRONMENT") != "github-hosted"
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-isolation",
+            "public packages require disposable hosted verification runners",
+        )
+    retrieval_root, fixture_root, work = (
+        retrieval_root.resolve(),
+        fixture_root.resolve(),
+        work.resolve(),
+    )
+    if (
+        retrieval_root == fixture_root
+        or work.is_relative_to(retrieval_root)
+        or work.is_relative_to(fixture_root)
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-isolation",
+            "retrieved subjects, trusted fixtures and consumer workspace must be separate",
+        )
+    if work.exists():
+        raise ReleaseSupplyChainError(
+            "consumer-isolation", "consumer workspace must be fresh"
+        )
+    artifact = next(
+        (row for row in manifest["artifacts"] if row["id"] == artifact_id), None
+    )
+    scope = host_scope()
+    if (
+        artifact is None
+        or artifact["distribution_contract"]["tier"] != "Supported"
+        or scope not in artifact["distribution_contract"]["platforms"]
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-scope", "consumer is outside the registered Supported scope"
+        )
+    artifact = scoped_artifact(artifact, scope)
+    public_contract = load_json(
+        Path(__file__).resolve().parents[1] / "governance/public-distribution.json"
+    )
+    policy_sha256 = document_fingerprint(load_json(fixture_root / "toolchain.json"))
+    toolchains = [
+        _probe_toolchain(
+            fixture_root,
+            artifact_id=artifact_id,
+            toolchain_id=identity,
+            policy_sha256=policy_sha256,
+            scope=scope,
+        )
+        for identity in public_contract["consumer_toolchains"][artifact_id]
+    ]
+    if any(row["status"] != "passed" for row in toolchains):
+        raise ReleaseSupplyChainError(
+            "consumer-runtime",
+            "governed consumer runtime prerequisites failed: " + json.dumps(toolchains),
+        )
+    for name, digest in retrieval_files.items():
+        relative = Path(name)
+        path = retrieval_root / relative
+        if (
+            relative.is_absolute()
+            or ".." in relative.parts
+            or path.is_symlink()
+            or not path.resolve().is_relative_to(retrieval_root)
+            or hashlib.sha256(path.read_bytes()).hexdigest() != digest
+        ):
+            raise ReleaseSupplyChainError(
+                "consumer-substitution", "retrieved subject changed before installation"
+            )
+    members = _surface_members(retrieval_root, artifact, version)
+    for member in members:
+        for row in member.get("files", [member]):
+            if retrieval_files.get(row["name"]) != row["sha256"]:
+                raise ReleaseSupplyChainError(
+                    "consumer-substitution",
+                    "consumer selected a file without authenticated retrieval",
+                )
+    if native is not None:
+        native = native.resolve()
+        if (
+            not native.is_relative_to(retrieval_root)
+            or retrieval_files.get(native.relative_to(retrieval_root).as_posix())
+            != hashlib.sha256(native.read_bytes()).hexdigest()
+        ):
+            raise ReleaseSupplyChainError(
+                "consumer-native",
+                "caller-provided native runtime lacks authenticated retrieval",
+            )
+    work.mkdir(parents=True)
+    environment = public_consumer_environment(work, sdk_environment)
+    result, fixtures = execute_consumer_contract(
+        artifact_id,
+        root=retrieval_root,
+        fixture_root=fixture_root,
+        work=work,
+        version=version,
+        environment=environment,
+        members=members,
+        artifact=artifact,
+        manifest=manifest,
+        native=native,
+    )
+    receipt = {
+        "document_kind": "retrieved-consumer-receipt",
+        "schema_version": "1.0.0",
+        "artifact_id": artifact_id,
+        "scope": scope,
+        "product_version": version,
+        "authority": authority,
+        "status": "VERIFIED" if authority == "public" else "READY",
+        "retrieval_files_sha256": document_fingerprint(retrieval_files),
+        "fixture_sha256": fixtures,
+        "result": result,
+        "environment_keys": sorted(environment),
+        "toolchains": toolchains,
+        "runner_environment": os.environ.get(
+            "RUNNER_ENVIRONMENT", "local-staged-qualification"
+        ),
+        "publication_authorized": False,
+    }
+    receipt["receipt_fingerprint"] = hashlib.sha256(canonical_json(receipt)).hexdigest()
+    return receipt
 
 
 def verify_consumer(
@@ -1042,45 +1401,17 @@ def verify_consumer(
             raise ReleaseSupplyChainError(
                 "consumer-isolation", "consumer must run outside its source checkout"
             )
-        fixtures = fixture_files(root, work)
-        if artifact_id == "release:python":
-            result = consume_python(root, work, version, environment, members)
-        elif artifact_id in {"release:go", "release:dart", "release:swift"}:
-            result = consume_gds(
-                root, artifact, work, version, environment, members, native
-            )
-        elif artifact_id in {"release:c", "release:cpp"}:
-            result = consume_native(root, artifact, work, version, environment, members)
-        elif artifact_id == "release:rust":
-            result = consume_rust(root, work, version, environment, members)
-        elif artifact_id in {"release:csharp", "release:fsharp"}:
-            result = consume_dotnet(
-                root, artifact, work, version, environment, members, manifest
-            )
-        elif artifact_id in {"release:java", "release:kotlin"}:
-            result = consume_jvm(
-                root, artifact, work, version, environment, members, manifest, native
-            )
-        else:
-            raise ReleaseSupplyChainError(
-                "consumer-unavailable",
-                "isolated consumer is not implemented for " + artifact_id,
-            )
-    compatibility = (
-        result.get("linked_package_version") == version
-        and result.get("target_profile_mismatch_rejected") is True
-        if artifact_id == "release:rust"
-        else result.get("kernel_mismatch_rejected") is True
-    )
-    if (
-        result.get("status") != "passed"
-        or result.get("source_outcome") != "succeeded"
-        or result.get("target_pattern") != "abc"
-        or not compatibility
-    ):
-        raise ReleaseSupplyChainError(
-            "consumer-result",
-            "consumer did not prove canonical success and mismatch refusal",
+        result, fixtures = execute_consumer_contract(
+            artifact_id,
+            root=root,
+            fixture_root=root,
+            work=work,
+            version=version,
+            environment=environment,
+            members=members,
+            artifact=artifact,
+            manifest=manifest,
+            native=native,
         )
     receipt = {
         "schema_version": "2.0.0",

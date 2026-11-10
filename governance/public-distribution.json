@@ -1,0 +1,142 @@
+{
+    "schema_version": "1.0.0",
+    "contract": "strling-public-distribution-v1",
+    "identity_authority": "governance/release-policy.json",
+    "artifact_authority": "tests/certification/release-supply-chain/1.0/manifest.json",
+    "certification_verifier": "642cc21f8f5d5ccabde1bb893076e02c624247a7",
+    "certification_trust": "governance/release-certification-trust.json",
+    "public_authority": "independently-retrieved-public-bytes",
+    "engineering_authorities": ["synthetic", "staged"],
+    "statuses": [
+        "NOT_PUBLISHED",
+        "READY",
+        "VERIFYING",
+        "VERIFIED",
+        "FAILED",
+        "INDETERMINATE"
+    ],
+    "artifact_checks": [
+        "coordinate",
+        "metadata",
+        "artifact",
+        "source",
+        "sbom",
+        "provenance",
+        "documentation",
+        "scope"
+    ],
+    "supported_consumer_checks": [
+        "installation",
+        "public-api",
+        "product-version",
+        "canonical-compiler",
+        "native-wasm",
+        "target-compatibility",
+        "kernel-rejection",
+        "isolation"
+    ],
+    "consumer_toolchains": {
+        "release:c": ["cargo", "cc", "cmake", "python", "rustc"],
+        "release:cpp": ["cmake", "conan", "cxx", "python"],
+        "release:csharp": ["dotnet", "python"],
+        "release:dart": ["dart", "python"],
+        "release:fsharp": ["dotnet", "python"],
+        "release:go": ["cc", "go", "python"],
+        "release:java": ["java", "python"],
+        "release:kotlin": ["gradle", "java", "python"],
+        "release:python": ["python"],
+        "release:rust": ["cargo", "python", "rustc"],
+        "release:swift": ["python", "swift"]
+    },
+    "failure_categories": [
+        "missing-coordinate",
+        "registry-network",
+        "metadata",
+        "artifact-integrity",
+        "source-identity",
+        "dependency-resolution",
+        "installation",
+        "runtime-compatibility",
+        "native-wasm",
+        "functional-behavior",
+        "security",
+        "license",
+        "sbom",
+        "provenance-signature",
+        "documentation",
+        "partial-publication",
+        "contract",
+        "authority",
+        "fixture-missing"
+    ],
+    "network": {
+        "methods": ["GET"],
+        "credentials": false,
+        "maximum_attempts": 3,
+        "maximum_redirects": 3,
+        "attempt_seconds": 30,
+        "maximum_metadata_bytes": 8388608,
+        "maximum_payload_bytes": 536870912,
+        "proxies": false,
+        "local_fallback": false
+    },
+    "routes": {
+        "github-tag": {
+            "origins": [
+                "https://api.github.com",
+                "https://codeload.github.com"
+            ],
+            "protocol": "https://docs.github.com/en/rest/git/refs"
+        },
+        "pypi.org": {
+            "origins": ["https://pypi.org", "https://files.pythonhosted.org"],
+            "protocol": "https://docs.pypi.org/api/json/"
+        },
+        "crates.io": {
+            "origins": ["https://crates.io", "https://static.crates.io"],
+            "protocol": "https://github.com/rust-lang/crates.io"
+        },
+        "npmjs.org": {
+            "origins": ["https://registry.npmjs.org"],
+            "protocol": "https://github.com/npm/registry/blob/main/docs/REGISTRY-API.md"
+        },
+        "nuget.org": {
+            "origins": ["https://api.nuget.org"],
+            "protocol": "https://learn.microsoft.com/en-us/nuget/api/package-base-address-resource"
+        },
+        "maven-central": {
+            "origins": ["https://repo1.maven.org"],
+            "protocol": "https://maven.apache.org/repositories/layout.html"
+        },
+        "pub.dev": {
+            "origins": ["https://pub.dev"],
+            "protocol": "https://pub.dev/help/api"
+        },
+        "rubygems.org": {
+            "origins": ["https://rubygems.org"],
+            "protocol": "https://guides.rubygems.org/rubygems-org-api/"
+        },
+        "cpan": {
+            "origins": [
+                "https://fastapi.metacpan.org",
+                "https://cpan.metacpan.org"
+            ],
+            "protocol": "https://github.com/metacpan/metacpan-api"
+        },
+        "luarocks.org": {
+            "origins": ["https://luarocks.org"],
+            "protocol": "https://github.com/luarocks/luarocks/wiki/Types-of-rocks"
+        },
+        "conan": {
+            "origins": [],
+            "protocol": "https://docs.conan.io/2/reference/commands/download.html"
+        }
+    },
+    "incident_policy": {
+        "keep_unverified": true,
+        "preserve_attempts": true,
+        "publication_authorized": false,
+        "registry_mutation_authorized": false,
+        "corrective_action": "separate-owner-authorization-required"
+    }
+}

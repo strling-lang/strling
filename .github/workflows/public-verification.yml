@@ -1,0 +1,211 @@
+name: Independent public distribution verification
+
+on:
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+concurrency:
+    group: strling-independent-public-verification
+    cancel-in-progress: false
+
+jobs:
+    verify:
+        permissions:
+            contents: read
+            actions: read
+        if: github.repository == 'strling-lang/strling' && github.ref_name == github.event.repository.default_branch
+        environment: public-verification
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - runner: windows-2022
+                      scope: windows-x86_64
+                    - runner: ubuntu-24.04
+                      scope: linux-x86_64
+        runs-on: ${{ matrix.runner }}
+        timeout-minutes: 120
+        env:
+            PUBLIC_VERIFICATION_ENABLED: ${{ vars.PUBLIC_VERIFICATION_ENABLED }}
+            STRLING_PUBLIC_VERIFIER_SHA: ${{ vars.PUBLIC_VERIFIER_SHA }}
+            STRLING_PUBLIC_REQUEST_SHA256: ${{ vars.PUBLIC_REQUEST_SHA256 }}
+            PUBLIC_REQUEST_JSON: ${{ vars.PUBLIC_REQUEST_JSON }}
+            CARGO_HOME: ${{ runner.temp }}/public-cargo
+            STRLING_MAVEN_REPOSITORY: ${{ runner.temp }}/public-jvm/repository
+            STRLING_GRADLE_CACHE: ${{ runner.temp }}/public-kotlin/dependency-cache
+            STRLING_PUB_CACHE: ${{ runner.temp }}/public-dart/dependency-cache
+        defaults:
+            run:
+                shell: bash
+        steps:
+            - name: Require protected activation and immutable verifier identity
+              run: |
+                  python - <<'PY'
+                  import os, re
+                  assert os.environ['PUBLIC_VERIFICATION_ENABLED'] == 'true', 'Public execution is disabled by default'
+                  assert re.fullmatch('[0-9a-f]{40}', os.environ['STRLING_PUBLIC_VERIFIER_SHA'])
+                  assert re.fullmatch('[0-9a-f]{64}', os.environ['STRLING_PUBLIC_REQUEST_SHA256'])
+                  PY
+            - name: Checkout approved verification code
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ vars.PUBLIC_VERIFIER_SHA }}
+                  path: verifier
+                  fetch-depth: 0
+                  persist-credentials: false
+            - name: Checkout immutable certification verifier
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  path: certification-verifier
+                  fetch-depth: 0
+                  persist-credentials: false
+            - name: Checkout certified implementation as data
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ vars.PUBLIC_CERTIFIED_SOURCE_SHA }}
+                  path: candidate
+                  fetch-depth: 0
+                  persist-credentials: false
+            - name: Checkout signed closure as data
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ vars.PUBLIC_CERTIFICATION_CLOSURE_SHA }}
+                  path: closure
+                  fetch-depth: 0
+                  persist-credentials: false
+            - name: Download certified comparison exemplars
+              uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+              with:
+                  pattern: certified-*-${{ vars.PUBLIC_CERTIFIED_SOURCE_SHA }}
+                  path: expectations
+                  repository: strling-lang/strling
+                  run-id: ${{ vars.PUBLIC_CERTIFIED_RUN_ID }}
+                  github-token: ${{ github.token }}
+            - name: Download signed evidence
+              uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+              with:
+                  name: signed-release-${{ vars.PUBLIC_CERTIFIED_SOURCE_SHA }}
+                  path: certification
+                  repository: strling-lang/strling
+                  run-id: ${{ vars.PUBLIC_CERTIFIED_RUN_ID }}
+                  github-token: ${{ github.token }}
+            - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: 3.12.10
+            - uses: dtolnay/rust-toolchain@4360b52568e2003a75bf9bc1d59f33a8e3fc893c
+              with:
+                  toolchain: 1.75.0
+            - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
+              with:
+                  dotnet-version: 9.0.302
+            - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961
+              if: runner.os == 'Windows'
+              with:
+                  distribution: temurin
+                  java-version: 21.0.12
+            - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
+              if: runner.os == 'Linux'
+              with:
+                  cache: false
+                  go-version: 1.22.12
+            - uses: dart-lang/setup-dart@65eb853c7ba17dde3be364c3d2858773e7144260
+              if: runner.os == 'Linux'
+              with:
+                  sdk: 3.12.2
+            - name: Prepare pinned verification and native SDK prerequisites
+              run: |
+                  test "$(git -C verifier rev-parse HEAD)" = "$STRLING_PUBLIC_VERIFIER_SHA"
+                  python -m pip install --requirement verifier/tooling/requirements-quality.txt
+                  python -m pip install conan==2.31.2 cmake==3.31.10
+                  cargo +1.75.0 fetch --manifest-path verifier/bindings/interop/Cargo.toml --locked
+                  python - <<'PY'
+                  import os
+                  from pathlib import Path
+                  Path('request.json').write_text(os.environ['PUBLIC_REQUEST_JSON'], encoding='utf-8')
+                  PY
+            - name: Prepare verified JVM runtime and Kotlin compiler dependencies
+              if: runner.os == 'Windows'
+              working-directory: verifier
+              run: |
+                  python -m tooling.public_consumer_sdk --ecosystem jvm --harness . --output "$RUNNER_TEMP/public-jvm"
+                  python -m tooling.public_consumer_sdk --ecosystem kotlin --harness . --output "$RUNNER_TEMP/public-kotlin"
+            - name: Prepare locked Dart dependencies and check Linux compilers
+              if: runner.os == 'Linux'
+              working-directory: verifier
+              run: |
+                  command -v gcc-13
+                  command -v g++-13
+                  swift --version
+                  python -m tooling.public_consumer_sdk --ecosystem dart --harness . --output "$RUNNER_TEMP/public-dart"
+            - name: Independently retrieve and exercise public packages
+              run: |
+                  python -I verifier/tooling/verify_public_release.py \
+                    --request request.json --implementation-source candidate --closure-source closure \
+                    --trusted-verifier certification-verifier --bundle certification \
+                    --evidence certification/evidence/release-supply-chain/release-supply-chain-evidence.json \
+                    --exports expectations --consumer-work "$RUNNER_TEMP/public-consumers" --output results
+            - name: Preserve all genuine retrieval and consumer evidence
+              if: always()
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: public-verification-${{ matrix.scope }}-${{ github.run_id }}-${{ github.run_attempt }}
+                  path: results
+                  if-no-files-found: warn
+                  retention-days: 90
+    reconcile:
+        needs: verify
+        if: always() && !cancelled() && github.repository == 'strling-lang/strling' && github.ref_name == github.event.repository.default_branch
+        environment: public-verification
+        runs-on: ubuntu-24.04
+        timeout-minutes: 15
+        env:
+            STRLING_PUBLIC_VERIFIER_SHA: ${{ vars.PUBLIC_VERIFIER_SHA }}
+            STRLING_PUBLIC_REQUEST_SHA256: ${{ vars.PUBLIC_REQUEST_SHA256 }}
+            PUBLIC_REQUEST_JSON: ${{ vars.PUBLIC_REQUEST_JSON }}
+        steps:
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ vars.PUBLIC_VERIFIER_SHA }}
+                  path: verifier
+                  persist-credentials: false
+                  fetch-depth: 0
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ vars.PUBLIC_CERTIFIED_SOURCE_SHA }}
+                  path: candidate
+                  persist-credentials: false
+                  fetch-depth: 0
+            - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+              with:
+                  pattern: public-verification-*-${{ github.run_id }}-${{ github.run_attempt }}
+                  path: observations
+            - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: 3.12.10
+            - name: Reconcile the complete public denominator
+              env:
+                  RUN_ID: ${{ github.run_id }}
+                  RUN_ATTEMPT: ${{ github.run_attempt }}
+              run: |
+                  python -m pip install --requirement verifier/tooling/requirements-quality.txt
+                  python - <<'PY'
+                  import os
+                  from pathlib import Path
+                  Path('request.json').write_text(os.environ['PUBLIC_REQUEST_JSON'], encoding='utf-8')
+                  PY
+                  python -I verifier/tooling/public_aggregate.py --request request.json \
+                    --manifest candidate/tests/certification/release-supply-chain/1.0/manifest.json \
+                    --scope-result "observations/public-verification-windows-x86_64-$RUN_ID-$RUN_ATTEMPT/scope-result.json" \
+                    --scope-result "observations/public-verification-linux-x86_64-$RUN_ID-$RUN_ATTEMPT/scope-result.json" \
+                    --output public-verification-result.json
+            - name: Preserve reconciliation result
+              if: always()
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: public-verification-result-${{ github.run_id }}-${{ github.run_attempt }}
+                  path: public-verification-result.json
+                  if-no-files-found: warn
+                  retention-days: 90

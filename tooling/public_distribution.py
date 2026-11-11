@@ -457,36 +457,26 @@ def contract_result(root: Path, *, commit: str, profile: str) -> dict:
     }
 
 
+def validate_certification_result(
+    root: Path, value: dict, *, commit: str, profile: str
+) -> None:
+    """Reconstruct the entire public producer result from its governed inputs."""
+    if value != contract_result(root, commit=commit, profile=profile):
+        raise ValueError(
+            "public contract producer source, profile, status, or evidence differs"
+        )
+
+
 def main(argv=None) -> int:
     import argparse
     import subprocess
-    from tooling.structured_operation_execution import (
-        atomic_write_artifact,
-        execution_context,
-        zero_sample_consumption,
-    )
+    from jsonschema.exceptions import ValidationError
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", required=True)
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--profile", choices=("local",), default="local")
-    parser.add_argument("--execution-directory", type=Path)
-    parser.add_argument("--certification-invocation-id")
-    parser.add_argument(
-        "--certification-profile", choices=("local", "pull-request", "full", "release")
-    )
-    parser.add_argument("--expected-source-sha")
-    parser.add_argument("--producer-id")
     args = parser.parse_args(argv)
-    values = (
-        args.execution_directory,
-        args.certification_invocation_id,
-        args.certification_profile,
-        args.expected_source_sha,
-        args.producer_id,
-    )
-    if any(v is not None for v in values) and not all(v is not None for v in values):
-        parser.error("invocation-bound execution arguments must be supplied together")
     root = Path(__file__).resolve().parents[1]
 
     def source():
@@ -497,48 +487,30 @@ def main(argv=None) -> int:
             timeout=30,
         ).strip()
 
-    def clean():
-        return not subprocess.check_output(
-            ["git", "--no-optional-locks", "status", "--porcelain"],
-            cwd=root,
-            timeout=120,
-        ).strip()
-
     before = source()
-    if args.execution_directory and (
-        before != args.expected_source_sha
-        or not clean()
-        or args.producer_id != "public_distribution_contract@repository"
-    ):
-        raise ValueError("public contract source or producer does not match invocation")
-    result = contract_result(root, commit=before, profile=args.profile)
-    if source() != before or (args.execution_directory and not clean()):
+    try:
+        result = contract_result(root, commit=before, profile=args.profile)
+    except (ValueError, OSError, ValidationError) as error:
+        details = {
+            "status": "failed",
+            "error_type": type(error).__name__,
+            "error": str(error),
+            "public_release_verified": False,
+        }
+        result = {
+            "schema_version": "certification-result-v1",
+            "operation_id": "certification.public-distribution-contract",
+            "commit": before,
+            "profile": args.profile,
+            "status": "failed",
+            "duration_ms": None,
+            "details": details,
+            "evidence_fingerprint": hashlib.sha256(canonical_json(details)).hexdigest(),
+        }
+    if source() != before:
         raise ValueError("source changed during public contract execution")
-    if args.execution_directory:
-        atomic_write_artifact(
-            args.execution_directory / "result.json",
-            {
-                **execution_context(
-                    producer_id=args.producer_id,
-                    operation_id=result["operation_id"],
-                    source_sha=before,
-                    invocation_id=args.certification_invocation_id,
-                    certification_profile=args.certification_profile,
-                    producer_profile=args.profile,
-                ),
-                "artifact_kind": "structured-operation-result",
-                "result_contract": result["schema_version"],
-                "process_exit_code": 0,
-                "terminal_status": result["status"],
-                "environment_identity": None,
-                "performance_evidence_identity": result["evidence_fingerprint"],
-                "sample_consumption": zero_sample_consumption(),
-                "structured_result": result,
-                "integrity_error": None,
-            },
-        )
     print(json.dumps(result, sort_keys=True))
-    return 0
+    return 0 if result["status"] == "passed" else 1
 
 
 if __name__ == "__main__":

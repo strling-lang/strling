@@ -21,6 +21,11 @@ The preparatory successor completed all generated preparation, then stopped
 at a safe engineering hold before authoritative profiles when a broader
 diagnostic found stale explicit profile-version assertions. The correction
 changes those assertions only and requires a fresh source identity.
+The subsequent closure audit added exact ownership for the new signed bundle
+and qualified the public producer through the existing structured-result
+contract, preserving historical readers and functional-resource evidence.
+Positive and hostile reconstruction fixtures pass; source-bound certification
+and formal closure remain pending.
 
 ## H08 isolated Release failure and bounded correction — 2026-10-27
 

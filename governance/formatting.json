@@ -274,6 +274,12 @@
     ],
     "generated_or_serialized": [
         {
+            "paths": ["tests/certification/public-verification/1.0/current/**"],
+            "disposition": "not_applicable",
+            "strategy": "Signed public-verification attestation producer",
+            "reason": "The complete source-bound implementation certificate is serialized, rooted and signed by the governed attestation producer; reformatting these bytes would invalidate its authenticated evidence. Neighboring authored files retain canonical formatting."
+        },
+        {
             "paths": ["tests/certification/release-packaging/1.0/current/**"],
             "disposition": "not_applicable",
             "strategy": "Signed release-packaging attestation producer",
@@ -422,6 +428,7 @@
                         "tests/certification/deep-quality/1.0/fixtures/valid-evidence.json",
                         "tests/certification/hardened-core/1.0/current/*",
                         "tests/certification/release-packaging/1.0/current/*",
+                        "tests/certification/public-verification/1.0/current/*",
                         "bindings/python/src/STRling/simply/stdlib_generated.py",
                         "bindings/typescript/src/STRling/simply/stdlib.generated.ts",
                         "docs/reference/standard-library.md",

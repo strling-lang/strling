@@ -116,7 +116,7 @@ def main() -> int:
         row["elapsed_seconds"] = time.monotonic() - started
         rows.append(row)
         (args.output / (slug + ".json")).write_text(
-            json.dumps(row, indent=2) + "\n", encoding="utf-8"
+            json.dumps(row, indent=2) + "\n", encoding="utf-8", newline="\n"
         )
         print(
             json.dumps({key: value for key, value in row.items() if key != "receipt"}),
@@ -135,7 +135,7 @@ def main() -> int:
         "native_companion_sha256": files[native_name],
     }
     (args.output / "summary.json").write_text(
-        json.dumps(summary, indent=2) + "\n", encoding="utf-8"
+        json.dumps(summary, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     return int(passed != len(rows) or not rows)
 

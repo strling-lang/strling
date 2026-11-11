@@ -187,6 +187,31 @@
     ],
     "allowed_intentional_artifacts": [
         {
+            "path": "tests/certification/public-verification/1.0/current/evidence/product-release/product-certification-release.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact authenticated public-verification certificate subject retains the complete product result. Neighboring files, private-key markers and all other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/public-verification/1.0/current/evidence/profile-full/profile-full.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact authenticated certificate subject retains every required Full producer result. Neighboring files, private-key markers and all other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/public-verification/1.0/current/evidence/profile-release/profile-release.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact authenticated certificate subject retains every required independent Release producer result. Neighboring files, private-key markers and all other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/public-verification/1.0/current/evidence/release-supply-chain/release-supply-chain-evidence.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact authenticated certificate subject retains the complete 17-route supply-chain evidence. Neighboring files, private-key markers and all other hygiene rules remain enforced."
+        },
+        {
+            "path": "tests/certification/public-verification/1.0/current/evidence/release-supply-chain/sbom/c++.spdx.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed SPDX subject retains the complete C++ dependency graph. Neighboring files, private-key markers and all other hygiene rules remain enforced."
+        },
+        {
             "path": "tooling/lsp-server/examples/strling.code-workspace",
             "rule": "editor-state",
             "rationale": "This is a user-facing example workspace, not personal editor state."

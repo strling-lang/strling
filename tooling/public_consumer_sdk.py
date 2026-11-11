@@ -68,7 +68,7 @@ def prepare_jvm(harness: Path, output: Path) -> dict:
         "publication_authorized": False,
     }
     (output / "receipt.json").write_text(
-        json.dumps(receipt, indent=2) + "\n", encoding="utf-8"
+        json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     return receipt
 
@@ -123,7 +123,7 @@ def prepare_dart(harness: Path, output: Path) -> dict:
         "publication_authorized": False,
     }
     (output / "receipt.json").write_text(
-        json.dumps(receipt, indent=2) + "\n", encoding="utf-8"
+        json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     return receipt
 
@@ -174,7 +174,7 @@ def prepare_kotlin(harness: Path, output: Path) -> dict:
         "publication_authorized": False,
     }
     (output / "receipt.json").write_text(
-        json.dumps(receipt, indent=2) + "\n", encoding="utf-8"
+        json.dumps(receipt, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     return receipt
 

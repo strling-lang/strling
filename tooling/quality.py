@@ -1929,6 +1929,33 @@ class QualityRunner:
                             else f"structured operation reported {status}"
                         )
                         structured_result = parsed
+                        if (
+                            operation == "public_distribution_contract"
+                            and status == "passed"
+                        ):
+                            if not __package__:
+                                sys.path.insert(
+                                    0, str(Path(__file__).resolve().parents[1])
+                                )
+                            from tooling.public_distribution import (
+                                validate_certification_result,
+                            )
+
+                            source = repository_state(self.toolchain.root)
+                            try:
+                                if source["dirty"]:
+                                    raise ValueError("public contract source is dirty")
+                                validate_certification_result(
+                                    self.toolchain.root,
+                                    parsed,
+                                    commit=str(source["commit"]),
+                                    profile=invocation[
+                                        invocation.index("--profile") + 1
+                                    ],
+                                )
+                            except (ValueError, KeyError, TypeError, OSError) as error:
+                                status = "incomplete"
+                                reason = f"public contract producer evidence is invalid: {error}"
         else:
             status = "passed" if execution.returncode == 0 else "failed"
             reason = (

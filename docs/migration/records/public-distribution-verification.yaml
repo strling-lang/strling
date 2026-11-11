@@ -131,6 +131,9 @@ checkpoints:
           - check: Preparatory successor diagnostic hold
             result: failed
             details: Source b625909a43ec7d13571dc149b2ffdc1d0ef99414 passed complete eight-stage preparation and all 40 generated families; LSP assembly took 70.1147 seconds. A quality-orchestrator diagnostic passed 83 tests and 23 subtests but found four stale explicit profile-version assertions. The supervisor let preparation finish and then honored an engineering hold before security acquisition or authoritative profiles. The assertions were corrected for a fresh source identity; no failed or stale certification was adopted.
+          - check: Closure integration and transport compatibility
+            result: passed
+            details: Source a07f427952c3699ad5b3a95c0dc70cfaadeee59a completed eight-stage preparation and all 40 generated families, then honored a pre-profile engineering hold. Focused fixtures reproduced missing signed-bundle serialization and large-subject ownership; 50 integration tests passed after correction. The public producer uses the existing required structured-result contract with complete source/profile/evidence reconstruction, preserving the historical reader's single atomic functional-resource invocation. Independent reconstruction using immutable reader-owned helpers passed positive fixtures and nine mutations. The unchanged reader passed 52 tests in 498.76 seconds. A fresh replacement source still requires all authoritative certification.
     - name: Independent readiness closure
       status: planned
       evidence: []
@@ -145,3 +148,5 @@ commits:
       subject: Register public verification in product certification evidence
     - sha: b625909a43ec7d13571dc149b2ffdc1d0ef99414
       subject: Bind public contract certification to atomic producer evidence
+    - sha: a07f427952c3699ad5b3a95c0dc70cfaadeee59a
+      subject: Align quality assertions with public certification profile versions

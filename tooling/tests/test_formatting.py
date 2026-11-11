@@ -121,6 +121,31 @@ class FormattingPolicyTests(unittest.TestCase):
         )
         self.assertTrue(all(isinstance(value, str) for value in policy["dispositions"]))
 
+    def test_repository_preserves_signed_public_bytes_and_formats_neighbors(
+        self,
+    ) -> None:
+        policy = load_policy()
+        step = policy["enforcement"]["targets"]["repository"][0]
+        bundle = "tests/certification/public-verification/1.0/current/"
+        signed = [
+            bundle + "attestation.json",
+            bundle + "evidence/profile-full/profile-full.json",
+        ]
+        authored = [
+            "docs/migration/public-distribution-verification.md",
+            "tests/certification/public-verification/1.0/neighbor.json",
+        ]
+        self.assertEqual(
+            authored, select_files(signed + authored, step["include"], step["exclude"])
+        )
+        self.assertEqual(
+            1,
+            sum(
+                owner["paths"] == [bundle + "**"]
+                for owner in policy["generated_or_serialized"]
+            ),
+        )
+
     def test_check_commands_are_non_mutating(self) -> None:
         prettier = build_command(
             "prettier",

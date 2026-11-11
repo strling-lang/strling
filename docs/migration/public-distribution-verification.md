@@ -244,3 +244,27 @@ security acquisition or any authoritative profile. Only the stale assertion
 values were corrected. The preceding source-bound preparation remains
 historical evidence for that preparatory successor; it does not certify the
 replacement source.
+
+The next preparation-only source,
+`a07f427952c3699ad5b3a95c0dc70cfaadeee59a`, also passed all 40 generated
+families before a controlled hold prevented authoritative profiles. A closure
+audit reproduced missing serialization ownership for the new signed bundle
+and missing exact registrations for its large evidence subjects. The public
+bundle now has one serializer owner and five exact size registrations; the
+1 MiB default, neighboring files, credential checks and all security gates
+remain enforced. Windows consumer and prerequisite reports now write canonical
+LF bytes before authentication and signing.
+
+The preliminary additional atomic transport was not accepted as a certificate:
+the historical immutable packaging reader preserves exactly one atomic resource
+invocation per profile. The public producer instead uses the existing required
+`certification-result-v1` structured-result contract. Its complete source,
+producer profile, status, scope, documentation and evidence fingerprint are
+reconstructed before its result can pass. The functional-resource atomic
+producer and both existing immutable verifier identities remain unchanged.
+The independently implemented pre-signing reconstruction uses only helpers
+from verifier `080107ed6d7893d60eb011fb83af09ac937eeb89`; positive fixtures
+and nine hostile mutations passed qualification. These synthetic fixtures
+claim no profile acceptance or public installation. The existing reader's
+52 regression tests also passed in 498.76 seconds. Fresh authoritative
+certification remains mandatory for the replacement source.

@@ -31,7 +31,7 @@
         "path": "governance/certification-evidence-dependency-graph.json",
         "sha256": "b2bbaf5123b86b81c9c4f8793fabd8ee8f78dfc669d69892c383611901467617"
     },
-    "evidence_fingerprint": "ac980b1c70eb336363c2cbf0c4e9e3be024aa87c345815d31762df8eddc50d93",
+    "evidence_fingerprint": "f859dfa61d1b5ecc99f9a87b0b90eab8a2f765fb5190997ae56632486a16554f",
     "evidence_role": "identity-only",
     "producer": {
         "path": "tooling/profile_source_identity.py",
@@ -60,7 +60,7 @@
         }
     ],
     "registry": {
-        "operation_registry_fingerprint": "041151ca181f7e6f39244cbf833e3f71062e186c1c1a365f3646cc3ffa63eac0",
+        "operation_registry_fingerprint": "b37fd0e49f28f4c4604b5cb37fcdef7bdbf9acd44c016cb071ed782d07e4989e",
         "path": "toolchain.json",
         "profile_registry_fingerprint": "0ea34ea746e711efcb1d12d0a41c6c3fb1f6a637340c95504cf0bc2a891ac68a",
         "schema_version": 1

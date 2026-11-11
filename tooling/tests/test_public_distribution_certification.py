@@ -1,4 +1,4 @@
-"""Public contract certification must retain actual, source-bound execution."""
+"""Public contract certification rejects absent, substituted and stale producers."""
 
 from contextlib import redirect_stdout
 import copy
@@ -10,29 +10,23 @@ from unittest.mock import patch
 import pytest
 
 from tooling import public_distribution as public
-from tooling.local_certification_attestation import (
-    AttestationError,
-    _validate_atomic_evidence,
-)
 from tooling.product_certification import (
     ProductCertificationError,
     validate_producer_manifest,
 )
 from tooling.quality import Execution, QualityRunner, Toolchain
-from tooling.structured_operation_execution import document_fingerprint
 
 
 ROOT = Path(__file__).resolve().parents[2]
 OPERATION = "public_distribution_contract"
+SOURCE = "1" * 40
 
 
 @pytest.fixture(autouse=True)
 def fixture_source(monkeypatch):
-    # Transport tests use a fixed synthetic identity; real source admission is
-    # exercised by the authoritative profiles, without mocking Git.
     monkeypatch.setattr(
         "tooling.quality.repository_state",
-        lambda root: {"commit": "1" * 40, "dirty": False},
+        lambda root: {"commit": SOURCE, "dirty": False},
     )
 
 
@@ -66,27 +60,17 @@ def public_runner(mutate=None, *, execute=True):
     def hardgate(operation, command):
         assert operation == OPERATION
         if not execute:
-            return Execution(0, '{"status":"passed"}', "")
-        source = command[command.index("--expected-source-sha") + 1]
-
-        def git_output(args, **kwargs):
-            assert args[0] == "git"
-            return source if "rev-parse" in args else b""
-
+            return Execution(0, "", "")
         stdout = io.StringIO()
         with (
-            patch("subprocess.check_output", side_effect=git_output),
+            patch("subprocess.check_output", return_value=SOURCE),
             redirect_stdout(stdout),
         ):
             assert public.main(command[3:]) == 0
-        directory = Path(command[command.index("--execution-directory") + 1])
+        document = json.loads(stdout.getvalue())
         if mutate:
-            document = json.loads((directory / "result.json").read_text())
             mutate(document)
-            # Recompute the outer digest so identity checks must reject the mutation.
-            document["artifact_fingerprint"] = document_fingerprint(document)
-            (directory / "result.json").write_text(json.dumps(document))
-        return Execution(0, stdout.getvalue(), "")
+        return Execution(0, json.dumps(document), "")
 
     return toolchain, QualityRunner(toolchain, hardgate_executor=hardgate)
 
@@ -94,42 +78,28 @@ def public_runner(mutate=None, *, execute=True):
 @pytest.mark.parametrize("profile", ["local", "pull-request", "full", "release"])
 def test_public_contract_executes_and_independently_reconstructs(profile):
     toolchain, runner = public_runner()
-    stages = runner._profile_stages(profile, None)
-    assert sum(stage.operation == OPERATION for stage in stages) == 1
+    assert (
+        sum(
+            stage.operation == OPERATION
+            for stage in runner._profile_stages(profile, None)
+        )
+        == 1
+    )
     result = runner.run_repository_operation(
         OPERATION, toolchain.operation(OPERATION), certification_profile=profile
     )
     assert result.status == "passed", result.reason
+    public.validate_certification_result(
+        ROOT, result.structured_result, commit=SOURCE, profile="local"
+    )
     assert result.structured_result["details"]["obligations"] == len(
         public.validate_contract(ROOT)["obligations"]
     )
     assert result.structured_result["details"]["public_release_verified"] is False
-    operation = {
-        "result_id": OPERATION + "@repository",
-        "operation_id": OPERATION,
-        "status": result.status,
-        "structured_evidence": result.structured_result,
-        "execution_integrity": result.execution_integrity,
-    }
-    _validate_atomic_evidence(
-        ROOT,
-        ROOT,
-        result.structured_result["commit"],
-        profile,
-        operation,
-        toolchain.operation(OPERATION),
+    assert (
+        toolchain.operation("functional_resource_certification")["result_transport"]
+        == "atomic-artifact-v1"
     )
-    omitted = copy.deepcopy(operation)
-    omitted.pop("execution_integrity")
-    with pytest.raises(AttestationError, match="invocation-bound"):
-        _validate_atomic_evidence(
-            ROOT,
-            ROOT,
-            result.structured_result["commit"],
-            profile,
-            omitted,
-            toolchain.operation(OPERATION),
-        )
 
 
 def test_zero_exit_without_public_producer_execution_is_incomplete():
@@ -140,33 +110,55 @@ def test_zero_exit_without_public_producer_execution_is_incomplete():
     assert result.status == "incomplete"
 
 
-@pytest.mark.parametrize(
-    "field,value",
-    [
-        ("source_sha", "9" * 40),
-        ("certification_profile", "pull-request"),
-        ("producer_profile", "full"),
-        ("producer_id", "incorrect@repository"),
-        ("operation_id", "certification.incorrect"),
-        ("invocation_id", "9" * 32),
-    ],
-)
-def test_substituted_public_execution_identity_is_rejected(field, value):
-    toolchain, runner = public_runner(lambda document: document.update({field: value}))
-    result = runner.run_repository_operation(
+def test_actual_producer_failure_preserves_failed_aggregation():
+    toolchain = Toolchain.load(ROOT / "toolchain.json")
+
+    def failed(operation, command):
+        output = io.StringIO()
+        with (
+            patch("subprocess.check_output", return_value=SOURCE),
+            patch.object(
+                public,
+                "contract_result",
+                side_effect=ValueError("invalid installation command"),
+            ),
+            redirect_stdout(output),
+        ):
+            assert public.main(command[3:]) == 1
+        return Execution(1, output.getvalue(), "")
+
+    row = QualityRunner(toolchain, hardgate_executor=failed).run_repository_operation(
         OPERATION, toolchain.operation(OPERATION), certification_profile="full"
     )
-    assert result.status == "incomplete"
+    assert row.status == "failed"
+    assert row.structured_result["details"]["error"] == "invalid installation command"
 
 
-def test_missing_public_evidence_is_rejected():
-    toolchain, runner = public_runner(
-        lambda document: document.update(structured_result=None)
+def test_omission_from_independent_product_reconstruction_is_rejected():
+    from tooling.certification import canonical_evidence_fingerprint
+    from tooling.product_certification import build_product_artifact
+    from tooling.tests.test_product_certification import (
+        ProductCertificationImplementationTests as Fixtures,
+        FIXTURE_REPOSITORY,
     )
-    result = runner.run_repository_operation(
-        OPERATION, toolchain.operation(OPERATION), certification_profile="full"
-    )
-    assert result.status == "incomplete"
+
+    Fixtures.setUpClass()
+    profile = copy.deepcopy(Fixtures.profile_artifact)
+    deterministic = profile["deterministic_evidence"]
+    deterministic["operations"] = [
+        row for row in deterministic["operations"] if row["operation_id"] != OPERATION
+    ]
+    deterministic["aggregate"]["operation_count"] -= 1
+    deterministic["aggregate"]["counts"]["passed"] -= 1
+    profile["evidence_fingerprint"] = canonical_evidence_fingerprint(deterministic)
+    with pytest.raises(ProductCertificationError):
+        build_product_artifact(
+            root=ROOT,
+            profile_artifact=profile,
+            manifest=Fixtures.manifest,
+            toolchain=Fixtures.toolchain,
+            resolved_repository_state=FIXTURE_REPOSITORY,
+        )
 
 
 @pytest.mark.parametrize(
@@ -176,17 +168,37 @@ def test_missing_public_evidence_is_rejected():
         ("commit", "9" * 40),
         ("profile", "full"),
         ("operation_id", "certification.incorrect"),
+        ("schema_version", "incorrect-v1"),
         ("evidence_fingerprint", "9" * 64),
+        ("details", {}),
     ],
 )
 def test_public_producer_result_cannot_be_substituted_or_incorrectly_aggregated(
     field, value
 ):
-    def mutate(document):
-        document["structured_result"][field] = value
-
-    toolchain, runner = public_runner(mutate)
+    toolchain, runner = public_runner(lambda document: document.update({field: value}))
     result = runner.run_repository_operation(
         OPERATION, toolchain.operation(OPERATION), certification_profile="full"
     )
     assert result.status == "incomplete"
+
+
+@pytest.mark.parametrize(
+    "mutation", ["missing-evidence", "count", "public-claim", "documentation"]
+)
+def test_independent_reconstruction_rejects_omissions_and_false_claims(mutation):
+    result = public.contract_result(ROOT, commit=SOURCE, profile="local")
+    if mutation == "missing-evidence":
+        result.pop("details")
+    elif mutation == "count":
+        result["details"]["obligations"] -= 1
+    elif mutation == "public-claim":
+        result["details"]["public_release_verified"] = True
+    else:
+        result["details"]["documentation"].pop(
+            next(iter(result["details"]["documentation"]))
+        )
+    with pytest.raises(ValueError):
+        public.validate_certification_result(
+            ROOT, result, commit=SOURCE, profile="local"
+        )

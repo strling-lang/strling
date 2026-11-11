@@ -704,8 +704,7 @@
                 ],
                 "network": "offline",
                 "result_contract": "certification-result-v1",
-                "result_operation_id": "certification.public-distribution-contract",
-                "result_transport": "atomic-artifact-v1"
+                "result_operation_id": "certification.public-distribution-contract"
             }
         },
         "profile_prefix": [

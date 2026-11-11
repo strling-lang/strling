@@ -1,0 +1,169 @@
+record_version: 2.0.0
+scope:
+    diff:
+        base: d284446710c8164efc870d60071eeb5faf542a95
+        head: working-tree
+    allowed_paths:
+        - README.md
+        - CONTRIBUTING.md
+        - docs/**
+        - bindings/**
+        - tooling/**
+        - toolchain.json
+        - governance/change-control.json
+        - governance/generated-artifacts.json
+        - governance/formatting.json
+        - governance/repository-hygiene.json
+        - governance/architecture.md
+        - governance/contracts/snapshots/**
+        - governance/release-candidate-certification-trust.json
+        - tests/documentation/**
+        - tests/certification/release-candidate/**
+        - tests/certification/profile-source/**
+        - tests/certification/deep-quality/**
+        - tests/certification/release-supply-chain/**
+        - tests/adapters/**
+        - tests/architecture/**
+        - tests/stdlib/**
+        - .github/workflows/certification-integrity.yml
+        - governance/certification-evidence-dependency-graph.json
+    forbidden_paths:
+        - core/src/**
+        - spec/**
+        - governance/release-policy.json
+        - governance/local-certification-trust.json
+        - governance/release-certification-trust.json
+        - governance/public-verification-certification-trust.json
+        - tests/certification/hardened-core/1.0/current/**
+        - tests/certification/release-packaging/1.0/current/**
+        - tests/certification/public-verification/1.0/current/**
+    expected_files:
+        - docs/migration/final-release-candidate.md
+        - docs/migration/records/final-release-candidate.yaml
+    permitted_generated_changes:
+        - public-contract-snapshots
+        - binding-support-certification-evidence
+        - profile-source-definitions
+        - target-adapter-certification-matrices
+        - semantic-authority-retirement-evidence
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+        - certification
+    bounded_exemptions:
+        - WVR-SEC-VSCE-LICENSE-001
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
+              responsibility remain unchanged.
+    public_api_change:
+        level: intentional-correction
+        affected_surfaces: []
+        evidence:
+            - Default host source helpers currently emit an unimplemented frontend identity and couple dialect
+              version to the independent specification version. The retained canonical compiler refuses those
+              defaults and accepts the explicit ratified frontend control. Preserve API shapes and explicit unsupported-frontend
+              rejection; classify exact snapshot changes before freeze.
+    schema_change:
+        level: none
+        evidence:
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
+              responsibility remain unchanged.
+    diagnostic_change:
+        level: none
+        evidence:
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
+              responsibility remain unchanged.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
+              responsibility remain unchanged.
+    architecture_change:
+        level: none
+        evidence:
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
+              responsibility remain unchanged.
+    generated_output_change:
+        level: none
+        evidence:
+            - The scope-lock checkpoint changes no generated output. Declare exact generated families when implementation
+              produces them.
+    documentation_only: false
+    internal_implementation: true
+title: Final product candidate preparation and clean-room certification
+status: in_progress
+objective:
+    Prepare accurate product, migration, architecture, example and support documentation; repair
+    confirmed host source-helper defaults; independently certify one reproducible complete product candidate
+    without publication.
+required_verification:
+    - name: Focused source-helper and documentation regressions
+      command: python3 -m pytest -q tooling/tests/test_documentation_integrity.py
+      expected_result:
+          Source-backed examples and scope assertions reject drift; canonical source frontends
+          remain authoritative.
+    - name: Fresh complete-product certification
+      command: python3 tooling/production_certification.py --profile release --all --no-reuse --plain
+      expected_result:
+          Fresh current-source Local, Pull Request, Full and independent no-reuse Release, staged
+          builds/consumers, independent reconstruction, restricted signing and hosted verification all pass.
+checkpoints:
+    - name: CP1 Scope and contract lock
+      status: passed
+      evidence:
+          - check: Exact baseline and historical contexts
+            result: passed
+            details:
+                Clean local dev at d284446710c8164efc870d60071eeb5faf542a95; exact 96/154/218-file historical
+                certificate trees; actual final historical hosted integrity success. Remote dev remains H08 and
+                is not assumed integrated.
+          - check: Source-grounded defect and example inventory
+            result: passed
+            details:
+                40 current-facing documents and 95 fenced blocks inventoried. Default Python factory produces
+                STRL-PROTOCOL-0002; complete source with explicit strling.semantic@1.0.0 succeeds. Fourteen host
+                factories share obsolete default metadata. Five affected generated families mapped.
+          - check: Scope contract validation
+            result: passed
+            details:
+                Task schema, strict governance and repository hygiene accepted. Original temporary-directory
+                and declaration diagnostics are retained; no product/generated change or new certificate is claimed.
+    - name: CP2 Verification contracts
+      status: planned
+      evidence:
+          - check: Source-grounded acceptance
+            result: not_run
+            details:
+                Design source-helper, documentation/example, support matrix, benchmark provenance and candidate
+                handoff contracts with adversarial tests; qualify any genuinely new trusted policy context.
+    - name: CP3 Final implementation and focused proof
+      status: planned
+      evidence:
+          - check: Source-grounded acceptance
+            result: not_run
+            details:
+                Resolve all independent product/documentation defects, execute examples and relevant package
+                tests, synchronize governed outputs and freeze one clean committed candidate.
+    - name: CP4 Fresh integration and certification
+      status: planned
+      evidence:
+          - check: Source-grounded acceptance
+            result: not_run
+            details:
+                Fresh Local, Pull Request, Full, independent no-reuse Release, 42 source-bound builds, applicable
+                consumers, reconstruction, signing and actual immutable hosted acceptance.
+    - name: FINAL Candidate closure and publication readiness
+      status: planned
+      evidence:
+          - check: Source-grounded acceptance
+            result: not_run
+            details:
+                Exact source, artifacts, roots, results, timings and publication handoff; RELEASE CANDIDATE
+                CERTIFIED — PUBLICATION AUTHORIZATION PENDING; clean repository.
+commits: []

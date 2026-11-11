@@ -1,10 +1,10 @@
 # Architecture Migration Ledger
 
-## Independent public distribution verification — local certification sealed; hosted pending, 2026-11-11
+## Independent public distribution verification — complete, 2026-11-11
 
 Implementation `3e7061271d906251cb17c3eb06b6c748ac3068e7` has accepted Local38/38, PR80/80, Full and fresh independent no-reuse Release124 passed plus the sole existing waiver /125. All17 staged artifact routes and15 Supported consumer scopes account for256 registry-derived obligations. Independent reconstruction and original-key signatures passed; public implementation root `89a3ed2ab59f883463fcd5ed36e665d3fe18bdfd8bb2112d5c28a2435e23302e`.
 
-Actual hosted integrity and formal completion remain pending.
+IMPLEMENTATION COMPLETE — PUBLIC EXECUTION PENDING. Actual [immutable hosted integrity](https://github.com/strling-lang/strling/actions/runs/43075532645) passed all three required jobs.
 
 The original missing producer registration, corrected candidate LSP success and later lint failure, readiness denominator regression, SDK recovery and Perl cohort repair retain their exact historical source identities and evidence. No failed or stale profile was adopted. H08 and packaging remain CLOSED and unchanged. See [the completion report](public-distribution-verification.md) and [task record](records/public-distribution-verification.yaml). Public publication and genuine registry verification remain separately authorized work.
 

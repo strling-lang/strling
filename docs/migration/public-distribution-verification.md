@@ -1,6 +1,6 @@
 # Independent public distribution verification
 
-Status: LOCAL CERTIFICATION COMPLETE — HOSTED VERIFICATION PENDING.
+Status: IMPLEMENTATION COMPLETE — PUBLIC EXECUTION PENDING.
 Public execution has not occurred. This report supersedes the earlier in-progress account; historical source identities and failures remain preserved.
 
 The frozen implementation is `3e7061271d906251cb17c3eb06b6c748ac3068e7`.
@@ -29,7 +29,7 @@ staged engineering observations; none establishes a public 4.0.0 download.
 -   `1838ba890f825dd1c01173fcfb5414f88c742bd0` passed Local 38/38 but failed PR
     at operation 73/80 on a stale readiness-test denominator. The narrow successor
     derives membership from the governed registry and explicitly requires the
-    pending public producer; it preserves exact ordered checks.
+    public producer; it preserves exact ordered checks.
 -   Final source `3e706127` passed all eight preparation stages, all 40 generated
     families, and a repository diagnostic with 2377 passes, 25 platform-specific
     skips and 4060 passing subtests. LSP preparation took 64.65627645199129 seconds.
@@ -43,7 +43,7 @@ staged engineering observations; none establishes a public 4.0.0 download.
     build under the exact second-build tool identity restored strict coherence.
     Negative replay still rejects the old mismatched receipt.
 
--   Public reconstruction initially stopped on an operational adapter KeyError: the immutable verifier had returned a passing versioned envelope, while the recovery helper expected top-level fields. The corrected adapter reads the unique integrity check and verifies schema, operation, aggregate, source/head, exact attestation/root/signature, certifier, profiles and waiver inventory. The actual retained response passes and18 adversarial substitutions/omissions fail. The immutable readers and frozen implementation are unchanged. A sole continuation owner resumed only reconstruction/signing, preserving the original package-owner bytes and adding explicit continuation/adapter evidence.
+-   Public reconstruction initially stopped on an operational adapter KeyError: the immutable verifier had returned a passing versioned envelope, while the recovery helper expected top-level fields. The corrected adapter reads the unique integrity check and verifies schema, operation, aggregate, source/head, exact attestation/root/signature, certifier, profiles and waiver inventory. The actual retained response passes and 18 adversarial substitutions/omissions fail. The immutable readers and frozen implementation are unchanged. A sole continuation owner resumed only reconstruction/signing, preserving the original package-owner bytes and adding explicit continuation/adapter evidence.
 
 ## Accepted profiles
 
@@ -81,7 +81,7 @@ preservation checks, not reopened historical certification.
 
 ## Closure acceptance
 
-All local engineering, profiles, reconstruction, signatures and staged qualification have passed. Actual hosted integrity and final documentation closure remain pending.
+All implementation and certification obligations have passed. Real public execution remains separately pending publication.
 
 ## Distribution coverage
 
@@ -117,6 +117,8 @@ Windows SDK diagnostic logs retain their original CRLF bytes. A dedicated transp
 
 The first documentary seal passed cryptographic verification but was rejected by the unchanged hygiene policy for two missing final newlines and two diagnostic log paths. Its exact signed bundle and rejection remain preserved. The accepted replacement carries those supplemental bytes in bounded, lossless JSON archives, reproduces the original package certificate byte for byte, and passes positive and adversarial codec tests. All 256 obligation results and producer bytes remain unchanged. Prospective hygiene passed before signing and again on the signed replacement; no policy exception was added.
 
+The evidence closure was pushed only to the dedicated codex/public-verification-3e706127-closure branch for the read-only certification-integrity workflow, with tag and submodule pushing explicitly disabled. The first commit request had a malformed operational argument vector and exited before running its helper; its terminal evidence is retained, and the corrected request committed the already validated bytes. This did not change the frozen implementation or signed evidence.
+
 ## Independent reconstruction and signed evidence
 
 Both key-free independent reconstructions passed before their signing steps. Local signature verification used the unchanged immutable readers; its generic `CLOUD_VERIFIED` output label is not treated as proof of hosted execution. Actual hosted acceptance is recorded separately below.
@@ -136,7 +138,7 @@ Current-source staged qualification passed 17 artifact routes and all 15 applica
 
 ## Actual hosted acceptance
 
-Pending. No local verification result is substituted for actual hosted acceptance.
+[Trusted integrity run 43075532645](https://github.com/strling-lang/strling/actions/runs/43075532645) passed against closure `bc37d2a70a3336e6be624ea2f5f25c6245f83b9b` and certified implementation `3e7061271d906251cb17c3eb06b6c748ac3068e7`. All three required jobs passed: public implementation, historical packaging, and historical H08. The downloaded public verification result matches the exact attestation, evidence root, signature, source, profile fingerprints and waiver inventory.
 
 ## Recorded execution attempts and timings
 
@@ -187,7 +189,7 @@ Seconds below are recorded wrapper timings. They include admission waiting where
 
 The WSL recovery preserved terminal evidence, then used the explicitly authorized cancellation of the stalled unregister client and controlled service restart. No healthy STRling or Fortress worker was interrupted. Subsequent protected compiler reservations were respected. Physical D: capacity and Linux guest filesystem availability were measured separately; the 112 GiB physical certification admission reserve remained enforced.
 
-Report observation: 2026-11-11T17:43:30.680280+00:00; physical D: free 227.29 GiB. The final operational completion report records the final Git commit, terminal hosted run and final capacity after documentation closure.
+Report observation: 2026-11-11T18:13:22.267636+00:00; physical D: free 227.18 GiB. The final operational completion report records the final Git commit, terminal hosted run and final capacity after documentation closure.
 
 ## Publication boundary and next authorized task
 

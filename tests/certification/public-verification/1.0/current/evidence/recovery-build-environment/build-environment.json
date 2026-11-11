@@ -1,0 +1,9 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "CARGO_BUILD_JOBS": "2",
+  "CARGO_INCREMENTAL": "0",
+  "acquisition_helper_sha256": "05b477b411edad684415d9f22bb3845d0fb6e17030a7bca7284c25e84929db16",
+  "compiled_outputs_reused": false,
+  "dependency_inputs": "preserved pinned caches and governed locks",
+  "publication_authorized": false
+}

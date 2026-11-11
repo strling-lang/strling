@@ -1,0 +1,19 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "previous_source": "1838ba890f825dd1c01173fcfb5414f88c742bd0",
+  "physical_workspace": "/var/tmp/strling-public-1838ba89-certification",
+  "changed_paths": [
+    "docs/migration/ledger.md",
+    "docs/migration/public-distribution-verification.md",
+    "docs/migration/records/public-distribution-verification.yaml",
+    "tooling/tests/test_certification_readiness.py"
+  ],
+  "dependency_inputs_unchanged": true,
+  "canonical_preparation_checks_required": true,
+  "reused_outputs": "ordinary dependency/compiler caches for preparation, Local, PR and Full only",
+  "accepted_profile_evidence_reused": false,
+  "artifact_build_roots_reused": false,
+  "release_no_reuse_unchanged": true,
+  "historical_evidence_index": "/mnt/d/Projects/strling-lang/strling/target/public-verification/campaign-1838ba89/retained-terminal-evidence.json",
+  "publication_authorized": false
+}

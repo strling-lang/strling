@@ -1,0 +1,9 @@
+Processing /var/tmp/strling-public-release-3e706127-first/bindings/python/dist/strling-4.0.0.tar.gz
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: STRling
+  Building wheel for STRling (pyproject.toml): started
+  Building wheel for STRling (pyproject.toml): finished with status 'done'
+  Created wheel for STRling: filename=strling-4.0.0-cp312-none-linux_x86_64.whl size=2773278 sha256=af2b9376d28c7d5dde571d9293136b7a9b8057431486095e48da8cd3ae34b288
+  Stored in directory: /tmp/pip-ephem-wheel-cache-uqhuvn0j/wheels/89/d6/e3/ed4eab618a327d9e32956baa953e429ff09a93cece22fd485f
+Successfully built STRling

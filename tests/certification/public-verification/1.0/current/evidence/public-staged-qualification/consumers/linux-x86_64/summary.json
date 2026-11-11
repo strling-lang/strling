@@ -1,0 +1,11 @@
+{
+  "authority": "staged",
+  "scope": "linux-x86_64",
+  "selected": 7,
+  "passed": 7,
+  "failed": 0,
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "public_release_verified": false,
+  "native_companion_wheel": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl",
+  "native_companion_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e"
+}

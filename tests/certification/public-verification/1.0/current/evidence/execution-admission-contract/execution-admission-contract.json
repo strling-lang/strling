@@ -1,0 +1,334 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "authority": "governance/deterministic-certification.md",
+  "capacity_authority": "governance/production-certification-capacity.json",
+  "physical_d_required_free_bytes": 120259084288,
+  "exclusive_heavy_worker": true,
+  "protected_project_workers_may_be_interrupted": false,
+  "cargo_build_jobs": 2,
+  "cargo_incremental": false,
+  "host_idle_and_quantitative_memory_observations": "informational-only; excluded from authoritative acceptance and transitive prerequisites by the ratified deterministic contract",
+  "bounded_parallel_exception_used": false,
+  "functional_resource_safety": "mandatory unchanged",
+  "waiver_introduced": false,
+  "publication_authorized": false,
+  "cargo_build_jobs_scope": "Outer controller environment and source-profile requests. The governed artifact factory sanitizes CARGO_BUILD_* overrides and uses its own Cargo defaults; no claim of two internal factory jobs is made.",
+  "artifact_factory_independence": "release_packaging.build_environment removes inherited target directories and compiler wrappers; native_release_build supplies an explicit per-root target directory and governed Cargo 1.75.0. Independent acquisition roots remain fresh.",
+  "packaging_review": {
+    "reviewed_utc": "2026-11-11T03:15:01.1414308Z",
+    "previous_contract_sha256": "0df354d8991ceb15783d4ae7a9830789f2d5bc0c23eddd06485cc27371054e57",
+    "source_code_changed": false,
+    "admission_or_required_safety_weakened": false,
+    "required_physical_reserve_unchanged": true,
+    "exclusive_heavy_worker_unchanged": true,
+    "waiver_introduced": false
+  },
+  "noncompiling_transport_admission": {
+    "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+    "qualification": {
+      "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+      "status": "passed",
+      "cases": [
+        "captured-local-transport",
+        "caller-not-owned",
+        "build",
+        "capture",
+        "sdk",
+        "source-substitution",
+        "other-build-instance",
+        "missing-producer",
+        "failed-producer",
+        "duplicate-producer",
+        "stale-stage-cannot-admit-next-build"
+      ],
+      "helper_sha256": "dda73a26fe363c76eb1dec8bcdb303e56cb1a2eb9c0908d1758f5a688869dc37",
+      "compilation_permitted": false,
+      "required_operation_skipped": false,
+      "waiver_introduced": false,
+      "publication_authorized": false
+    },
+    "admission_script_previous_sha256": "7443a48900ee64d1ba9f42e33d6aace52fff5522c3cdea202a3de55a7671eee1",
+    "admission_script_sha256": "4db73732ab3f6066bcf3ccccf843996b6ff66d7154a643e613542b9cec0fb98b",
+    "scope": "Only pending local prepare-upload after passed build/capture, owned native acquisition and unchanged command helper; completed-transport stale state cannot admit another phase",
+    "protected_heavy_reservations_unchanged": true,
+    "physical_reserve_unchanged": true,
+    "compilation_permitted": false,
+    "waiver_introduced": false
+  },
+  "python_sdk_continuation": {
+    "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+    "preparation_sha256": "f2988fa8961cc5182ee65e8edc43d198eb21f0696312f1522da89a0ef675d823",
+    "correction": "Select existing locked CPython3.12.3 packaging SDK; verify imports, RECORD hashes and pip dependencies before retry",
+    "source_change": false,
+    "original_failure_preserved": true,
+    "physical_reserve_unchanged": true,
+    "exclusive_owner_unchanged": true
+  },
+  "perl_toolchain_cohort_repair": {
+    "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+    "status": "passed-fresh-perl-primary-toolchain-cohort-repair",
+    "fresh_root": "/var/tmp/strling-public-release-3e706127-perl-first-repair-1",
+    "original_receipt_sha256": "6bbdc79412e8350589e9c75e7a22e70e05bbe9acde8ca23592db4d04f79c5b9b",
+    "original_receipt_fingerprint": "0b94f4885fa996db5e924ca614f2fd758e35fc201363175e23cf8f38c24850f0",
+    "new_receipt_fingerprint": "8e332822de1d1244d5c7436916ef27a88ec19947bc6bf52dc61066441e1d194a",
+    "second_receipt_fingerprint": "9fd4dff94cd6f611f0cdb504d1684a5b847e68fd2be5b6a5f93495668a6c6f3e",
+    "old_perl": {
+      "artifact_id": "release:perl",
+      "executable": "/usr/bin/perl",
+      "executable_sha256": "47bdc8a342556c1d140084417ef6cacd79a3362e4b6cc1e4754df55bdf1e3683",
+      "findings": [],
+      "id": "release:perl:linux-x86_64:perl",
+      "policy_sha256": "80fa29cd89a30ddf857228934c5c0c5bc3aaf1c3b3330af9a1d593dc372ed71e",
+      "runner_arch": "x86_64",
+      "runner_os": "Linux",
+      "scope": "linux-x86_64",
+      "status": "passed",
+      "toolchain_id": "perl",
+      "version": "This is perl 5, version 38, subversion 2 (v5.38.2) built for x86_64-linux-gnu-thread-multi (with 67 registered patches, see perl -V for more detail) Copyright 1987-2023, Larry Wall Perl may be copied only under the terms of either the Artistic License or the GNU General Public License, which may be found in the Perl 5 source kit. Complete documentation for Perl, including FAQ lists, should be found on this system using \"man perl\" or \"perldoc perl\". If you have access to the Internet, point your browser at https://www.perl.org/, the Perl Home Page."
+    },
+    "current_perl": {
+      "artifact_id": "release:perl",
+      "executable": "/usr/bin/perl",
+      "executable_sha256": "3c035de4fbf090969421d4d5d5ec06ad939e342e79351e4f817906ff7e7e8dc8",
+      "findings": [],
+      "id": "release:perl:linux-x86_64:perl",
+      "policy_sha256": "80fa29cd89a30ddf857228934c5c0c5bc3aaf1c3b3330af9a1d593dc372ed71e",
+      "runner_arch": "x86_64",
+      "runner_os": "Linux",
+      "scope": "linux-x86_64",
+      "status": "passed",
+      "toolchain_id": "perl",
+      "version": "This is perl 5, version 38, subversion 2 (v5.38.2) built for x86_64-linux-gnu-thread-multi (with 68 registered patches, see perl -V for more detail) Copyright 1987-2023, Larry Wall Perl may be copied only under the terms of either the Artistic License or the GNU General Public License, which may be found in the Perl 5 source kit. Complete documentation for Perl, including FAQ lists, should be found on this system using \"man perl\" or \"perldoc perl\". If you have access to the Internet, point your browser at https://www.perl.org/, the Perl Home Page."
+    },
+    "normalized_subject_sha256": "2773b29bfebf9b9c4ee3f207c7a0e8a5c3da9c8cdf21536bb1aefb5f488e22bd",
+    "original_subject_identical": true,
+    "current_receipts": 42,
+    "toolchain_coordinates": 95,
+    "original_mismatched_pair_still_rejected": true,
+    "validator_modified": false,
+    "compiled_outputs_reused": false,
+    "rows": [
+      {
+        "stage": "build",
+        "exit_code": 0,
+        "seconds": 1.509401895999872,
+        "command": [
+          "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+          "-m",
+          "tooling.release_packaging",
+          "--artifact-id",
+          "release:perl",
+          "--preview"
+        ]
+      },
+      {
+        "stage": "capture",
+        "exit_code": 0,
+        "seconds": 1.1020276490003198,
+        "command": [
+          "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+          "-m",
+          "tooling.release_supply_chain",
+          "capture",
+          "--artifact-id",
+          "release:perl",
+          "--version",
+          "4.0.0",
+          "--output-dir",
+          "/mnt/d/Projects/strling-lang/strling/target/public-verification/campaign-3e706127/receipts-3e706127/perl-linux-x86_64-first.json",
+          "--json"
+        ]
+      },
+      {
+        "stage": "transport",
+        "exit_code": 0,
+        "seconds": 0.7577453530002458,
+        "command": [
+          "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+          "-m",
+          "tooling.release_supply_chain",
+          "prepare-upload",
+          "--receipt",
+          "/mnt/d/Projects/strling-lang/strling/target/public-verification/campaign-3e706127/receipts-3e706127/perl-linux-x86_64-first.json",
+          "--output-dir",
+          "/mnt/d/Projects/strling-lang/strling/target/public-verification/campaign-3e706127/downloads-3e706127/release-perl-linux-x86_64-3e7061271d906251cb17c3eb06b6c748ac3068e7",
+          "--json"
+        ]
+      }
+    ],
+    "publication_authorized": false
+  },
+  "sealed_evidence_transport_qualification": {
+    "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+    "classification": "closure byte-transport observation; no profile input or producer result changed",
+    "prior_contract_sha256": "70237050c891880b17ebbc8215a3e020148560d66460ef7dcd150082d9c96870",
+    "report_sha256": "35654d258cc7a9941e60af973b282a63b60be3b451698a9d563ba0afac53d960",
+    "qualification_script_sha256": "8994b697c4d8d729b2887144bfb929a39dfb12f789df104b26743c1b7e6bdab2",
+    "qualification": {
+      "status": "passed-byte-preserving-sealed-evidence-transport-qualification",
+      "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+      "attributes_sha256": "5b6c033be0bd747741bc27609a8cd0093af644409df6d3b97c7717f59876c77f",
+      "fixture_commit": "19ee4027bade52ca65deda217bb026df7a5852a7",
+      "producer_platform": "Windows",
+      "windows_checkout": "passed-exact-bytes-and-clean-checkout",
+      "linux_checkout": {
+        "status": "passed-exact-bytes-and-clean-checkout",
+        "files": 3
+      },
+      "negative_forced_text_crlf_rejected": true,
+      "serialized_files": [
+        {
+          "path": "tests/certification/public-verification/1.0/current/evidence/prerequisites/kotlin/preparation.log",
+          "bytes": 45,
+          "sha256": "5bd4742fab82f867983f9a228de2b58edeab1fc562ef110c235246e10981ff46",
+          "git_oid": "507ba571285e5977a92cb0126b301e34f9a2a84f",
+          "filtered_git_oid": "a4513dec65e73f9f77acfc8f0b5b9213eb53ad3e"
+        },
+        {
+          "path": "tests/certification/public-verification/1.0/current/evidence/prerequisites/kotlin/receipt.json",
+          "bytes": 48,
+          "sha256": "99cceb9e4f5b265235457bb78a744f141dc15412f3c2da869a5eb9bcfea0fe06",
+          "git_oid": "ec4024a9abebd32cd8c499379469453ea8025d90",
+          "filtered_git_oid": "ec4024a9abebd32cd8c499379469453ea8025d90"
+        },
+        {
+          "path": "tests/certification/public-verification/1.0/current/evidence/prerequisites/kotlin/raw.stdout",
+          "bytes": 25,
+          "sha256": "49d2d9def5b2a3acc5cf6cadce025fe82ef9e83234b7f8672aac2808f7b5aeec",
+          "git_oid": "a1402ef5036c034d1af050983d28351277615ddf",
+          "filtered_git_oid": "7d91453217afc429984c4706e8df22aaac47c9ce"
+        }
+      ],
+      "commands": [
+        {
+          "label": "source-head",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "source-status",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "init",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "stage-attributes",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "filtered-0",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "raw-0",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "index-0",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "filtered-1",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "raw-1",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "index-1",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "filtered-2",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "raw-2",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "index-2",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "fixture-clean",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "commit",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "fixture-head",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "windows-clone",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "windows-status",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "linux-clone",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "linux-verify",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "negative-raw",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "negative-index",
+          "exit_code": 0,
+          "expected_exit_code": 0
+        },
+        {
+          "label": "negative-cleanliness-rejected",
+          "exit_code": 1,
+          "expected_exit_code": 1
+        }
+      ],
+      "seconds": 5.577999999979511,
+      "source_modified": false,
+      "signing_material_read": false,
+      "signature_created": false,
+      "authoritative_profile": false,
+      "publication_authorized": false
+    },
+    "required_procedure": [
+      "Keep serializer-owned producer and signed bundle bytes unchanged",
+      "Stage sealed files with git hash-object -w --no-filters and update-index --add --cacheinfo 100644",
+      "Verify every indexed blob SHA256 equals the sealed file SHA256",
+      "Require clean tracked content after commit and exact bytes in a fresh Linux checkout",
+      "Run the unchanged immutable certificate verifier on the closure"
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "status": "passed",
+  "interpreter": "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+  "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "sdk_prefix": "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env",
+  "lock_sha256": "d1b9d2e5f131870c3630be28aac2bdff19ef3c0dc349d02f576b3ce4f58ebe82",
+  "project_sha256": "28b86ea5f2484c60576f787b9b2e23e610b6906a05e76293c8c34733f921a5b0",
+  "packages": [
+    {
+      "name": "setuptools",
+      "version": "84.0.0",
+      "verified_record_files": 344,
+      "module": "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/lib/python3.12/site-packages/setuptools/__init__.py",
+      "record_sha256": "ce455ba55b3a1804f5aa39412c71d5fe4eb4947b5c19e871ddda9cab8ac7731e"
+    },
+    {
+      "name": "wheel",
+      "version": "0.48.0",
+      "verified_record_files": 22,
+      "module": "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/lib/python3.12/site-packages/wheel/__init__.py",
+      "record_sha256": "7100a3754b2932914889ea66aee08b785a25bbdaa5b96f37b7dccb1b01f580e2"
+    },
+    {
+      "name": "build",
+      "version": "1.5.0",
+      "verified_record_files": 21,
+      "module": "/root/.local/lib/python3.12/site-packages/build/__init__.py",
+      "record_sha256": "5c36f9dfcf63eddc90ef256ff8c1217aefe07f7febc54f457a46ae8d980ec702"
+    }
+  ],
+  "pip_check": "No broken requirements found.",
+  "installed_product_outputs_reused": false,
+  "publication_authorized": false
+}

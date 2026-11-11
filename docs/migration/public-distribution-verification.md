@@ -1,290 +1,196 @@
 # Independent public distribution verification
 
-Status: implementation in progress. Public execution has not occurred.
+Status: LOCAL CERTIFICATION COMPLETE — HOSTED VERIFICATION PENDING.
+Public execution has not occurred. This report supersedes the earlier in-progress account; historical source identities and failures remain preserved.
 
-## Recovered authority
+The frozen implementation is `3e7061271d906251cb17c3eb06b6c748ac3068e7`.
+The current registry derives 256 obligations: eight artifact checks for each
+of 17 routes (136), and eight consumer checks for each of 15 Supported platform
+rows (120). Eleven distributions are Supported; six retain Preview boundaries.
+The 42 independently built receipts cover 21 platform rows and 95 toolchain
+coordinates. All 21 reproducibility comparisons pass. These are current-source
+staged engineering observations; none establishes a public 4.0.0 download.
 
-The clean starting source is `33e50ac033314dad089717a0ee20c0c7c310dea7`,
-descended from certified packaging implementation
-`021239608ffa5066e59bdebde9869e193fbb3eab`. The existing packaging root is
-`19533d8d1de2248367616df5a6a6782156125efefe6c8e3be47e316ed7c0d2b0`.
-Its immutable verifier is `642cc21f8f5d5ccabde1bb893076e02c624247a7`.
-Historical H08 and packaging certificates remain preserved.
+## Source and failure reconciliation
 
-The local `dev` branch contains the closure and was clean, fourteen commits
-ahead of `origin/dev`, before this task. No merge, remote development-branch
-update, production tag, publication, or registry mutation is part of this work.
-Existing worktree registrations and prior evidence remain untouched.
+-   Failed candidate `fc0274e9ac4fdbd67a6eb93bc2b31477e860fc68` stopped Local at
+    operation 15/38 because the product producer manifest omitted
+    `public_distribution_contract`. Its 42 receipts remain historical evidence
+    bound to that source and were not adopted for this implementation.
+-   Corrected candidate `237607049c849f82621c88885f6348e7804e6c3b` completed all
+    eight preparation stages and 40 generated families. LSP preparation passed
+    in 65.7207379 seconds. Its Local subsequently failed at operation 28/38 on
+    an unused `io` import, after 27 passes. The apparent LSP interruption was
+    not an LSP failure.
+-   Subsequent focused diagnostics corrected stale profile-version assertions,
+    signed-bundle serialization ownership and five exact large-subject paths.
+    The final public producer uses the existing structured result contract,
+    preserving the historical reader's single atomic functional-resource result.
+-   `1838ba890f825dd1c01173fcfb5414f88c742bd0` passed Local 38/38 but failed PR
+    at operation 73/80 on a stale readiness-test denominator. The narrow successor
+    derives membership from the governed registry and explicitly requires the
+    pending public producer; it preserves exact ordered checks.
+-   Final source `3e706127` passed all eight preparation stages, all 40 generated
+    families, and a repository diagnostic with 2377 passes, 25 platform-specific
+    skips and 4060 passing subtests. LSP preparation took 64.65627645199129 seconds.
+    Targeted mutations reject absent, duplicate, renamed, stale, wrong-profile,
+    incomplete, falsely passing and independently omitted public results.
+-   Current-source acquisition preserved an initial Python SDK mismatch, then
+    used the already prepared locked SDK. All 387 installed RECORD hashes and
+    actual imports/pip consistency passed. No product evidence was reused.
+-   A real Ubuntu Perl patch update made one first/second tool identity pair
+    inconsistent. The old cohort was preserved; a fresh source-only first Perl
+    build under the exact second-build tool identity restored strict coherence.
+    Negative replay still rejects the old mismatched receipt.
 
-## Denominator and implementation gaps
+-   Public reconstruction initially stopped on an operational adapter KeyError: the immutable verifier had returned a passing versioned envelope, while the recovery helper expected top-level fields. The corrected adapter reads the unique integrity check and verifies schema, operation, aggregate, source/head, exact attestation/root/signature, certifier, profiles and waiver inventory. The actual retained response passes and18 adversarial substitutions/omissions fail. The immutable readers and frozen implementation are unchanged. A sole continuation owner resumed only reconstruction/signing, preserving the original package-owner bytes and adding explicit continuation/adapter evidence.
 
-The release-supply-chain manifest owns seventeen distribution artifacts,
-twenty-one platform rows, fifteen Supported consumer rows, and six Preview
-rows. Public verification derives its obligations from those rows: eight
-identity/evidence checks for each distribution and eight functional/isolation
-checks for each Supported platform row, currently 256 obligations. Preview
-rows retain their explicit runtime limitations and do not gain support claims.
+## Accepted profiles
 
-Existing payload inspection, signed supply-chain reconstruction, source
-authentication, and consumer contracts are reused. The packaging consumer
-entrypoint currently reads checkout-local subjects; this cannot by itself
-establish public installation. The new retrieval boundary must authenticate
-actual public bytes before isolated consumer execution. Registry metadata,
-fixtures, staged packages, and publication receipts are not trust roots.
+| Profile             | Version | Result                                | Actual wrapper seconds | Evidence fingerprint                                               |
+| ------------------- | ------- | ------------------------------------- | ---------------------: | ------------------------------------------------------------------ |
+| Local               | 1.18.0  | 38 passed /38                         |      790.9924104749953 | `253edb457681c92366d884c6eceb0e636c00c634ca5a7238c7342c217173c6f1` |
+| Pull Request        | 1.24.0  | 80 passed /80                         |     2621.3474850259954 | `9e4f73466319b9bb7d43e083c9742fd50aaa653902759d6ea1f0716b7cb0bfb4` |
+| Full                | 1.33.0  | 124 passed + 1 authorized waiver /125 |         4893.460244952 | `ee585452192dc615f65ab9053bfe38621c6570eacc491c6afe11c55eb4f99b13` |
+| Independent Release | 1.33.0  | 124 passed + 1 authorized waiver /125 |     5852.0006502609995 | `83f5df9556db988a9c1300b8a76e6ca812c72a995bc7dd6a77c3f540e3c0f719` |
 
-New implementation remains subject to focused mutation tests and fresh
-source-bound certification. Historical profile results do not certify these
-changes. No narrower certification exception has been assumed.
+The sole permitted waiver is `WVR-SEC-VSCE-LICENSE-001`, scoped to the existing
+VSCE license finding. Local and PR have zero waived operations. Full has zero
+failed, unavailable, incomplete, unconfigured, unenforceable or not-applicable
+operations. Its public producer passed with fingerprint
+`2abfbf896407373df28a6b8b19e02a2c72254082364d1363954e4152adb88335`.
+Quantitative performance remains non-gating; functional resource safety passed.
 
-## Checkpoints
+Independent Release completed the canonical `--profile release --all --no-reuse` aggregate in a fresh source worktree. Its production receipt confirms clean detached source, regenerated artifacts, honored no-reuse and clean final source/root state. Original producer objects were retained and reconstructed before signing.
 
-1. Source and contract recovery: baseline and denominator recovered. The
-   unchanged immutable verifier authenticated the original signed source and
-   closure, followed by complete supply-chain companion verification.
-2. Schemas and trusted boundaries: in progress. Credential-free bounded HTTP,
-   synthetic transport separation, exact obligation inventory, and explicit
-   result-state reduction are under adversarial test.
-3. Retrieval and consumers: pending.
-4. Integration and certification: pending.
-5. Independent closure: pending.
+## Trust and historical preservation
 
-Actual public verification remains pending separately authorized publication.
-Engineering fixtures can establish `READY`; they cannot establish `VERIFIED`.
+The packaging reader is `642cc21f8f5d5ccabde1bb893076e02c624247a7`; the public
+implementation certificate reader is `080107ed6d7893d60eb011fb83af09ac937eeb89`.
+These roles are distinct from the future protected public execution pin.
+The existing certifier is `strling-local-release-certifier-2026-01`, public key
+fingerprint `SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA`.
+No new authority or trust-key rotation is authorized.
 
-## Engineering observations
+The preservation audit confirms all 96 H08 certificate files exactly match
+`2d8d897504663211d3768517f0be9f0e28d0f11e`, and all 154 packaging certificate
+files exactly match `33e50ac033314dad089717a0ee20c0c7c310dea7`, including Git
+blob and mode identities. Packaging implementation
+`021239608ffa5066e59bdebde9869e193fbb3eab` remains certified. These are
+preservation checks, not reopened historical certification.
 
--   The focused Windows suite passes 232 tests covering all seventeen retrieval
-    routes, denominator and scope, authority separation, unsafe payloads and
-    locations, network-versus-absence outcomes, consumer contracts, and existing
-    publication security regressions. Further implementation is still in progress.
--   `target/public-verification/baseline-authentication-05/authentication.json`
-    records successful independent baseline authentication. Earlier attempts are
-    retained: Windows temporary-directory permissions, the non-secret
-    `PROGRAMDATA` prerequisite of Windows OpenSSH, and a corrected distinction
-    between implementation and evidence-closure checkouts. No signature or
-    historical evidence was changed.
--   The exact certified Windows CPython 3.12 wheel passed complete file-graph
-    authentication and installation in a fresh consumer environment through the
-    new retrieval-only root. Canonical source and target compilation, expected
-    native DLL SHA-256, and incompatible-kernel rejection passed. This is staged
-    qualification, not public installation evidence. The first sandboxed attempt
-    failed filesystem path resolution and was not relabeled successful.
--   Synthetic Conan revision files reconstructed both Windows and Linux consumer
-    caches, each with 1,094 files, matching the existing registered normalized
-    identities. Executable payload bytes came from the emulated retrieval set;
-    only authenticated cache-layout metadata came from the certified exemplar.
--   No public release coordinate has been verified. Integration, remaining
-    consumer scopes, comprehensive mutations, fresh source-bound profiles,
-    independent reconstruction, and final clean committed closure remain pending.
+## Closure acceptance
 
-The `staged-artifacts-01` and `staged-artifacts-02` runs independently
-authenticated the preserved packaging certificate and passed all 17 artifact
-routes. The second run preserves Conan empty directory headers required by
-the real cache restore operation; normalized payload identity alone had not
-exercised that installation requirement. Both runs are synthetic and record
-zero qualified consumers themselves.
+All local engineering, profiles, reconstruction, signatures and staged qualification have passed. Actual hosted integrity and final documentation closure remain pending.
 
-Separate staged Windows consumers now pass C, C++, C#, F#, Java, Python, and
-Rust. Attempts `staged-consumers-windows-02` and `-03` remain failed evidence:
-Conan directory layout and missing Windows SDK environment prerequisites
-were corrected before fresh attempts. The restrictive environment now retains
-only named nonsecret Windows SDK paths, disables .NET first-run certificate
-generation, and rejects Gradle user initialization scripts. The C and Rust
-consumers took 144.484 and 56.000 seconds respectively in attempt `-05`.
-The protected-execution and request boundary suite separately passes 51 tests.
-These are engineering observations, not current-source profile certification.
+## Distribution coverage
 
-All fifteen registered Supported platform consumers subsequently passed staged
-qualification: eight Windows rows and seven Linux rows. Windows Kotlin passed
-in attempt `-06` using a fresh compiler-only Gradle cache. Linux attempt `-01`
-passed C++, Go, Python, and Swift; its Dart failure remains retained. After
-restoring only the two lockfile-authenticated Dart dependencies into a fresh
-cache, attempt `-02` passed C, Dart, and Rust. No Preview scope was promoted.
-The Linux receipts are retained under
-`target/public-verification/linux-consumer-receipts`; original WSL workspaces
-remain available. Separate runtime admission verified all 22 Windows and 20
-Linux artifact/toolchain rows.
+| Distribution          | Coordinate                                  | Tier      | Governed scope                                                            | Current-source outcome                                                           |
+| --------------------- | ------------------------------------------- | --------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| C                     | strling-c                                   | Supported | windows-x86_64 and linux-x86_64 interop routes                            | windows-x86_64: passed; linux-x86_64: passed                                     |
+| C++                   | strling                                     | Supported | windows-x86_64 and linux-x86_64 interop routes                            | windows-x86_64: passed; linux-x86_64: passed                                     |
+| C#                    | STRling                                     | Supported | windows-x86_64 clean-consumer native assets                               | windows-x86_64: passed                                                           |
+| Dart                  | strling                                     | Supported | linux-x86_64                                                              | linux-x86_64: passed                                                             |
+| F#                    | STRling.FSharp                              | Supported | windows-x86_64 clean-consumer native assets                               | windows-x86_64: passed                                                           |
+| Go                    | github.com/strling-lang/strling/bindings/go | Supported | linux-x86_64 with cgo                                                     | linux-x86_64: passed                                                             |
+| Java                  | com.strling:strling                         | Supported | windows-x86_64 with caller-supplied absolute native path                  | windows-x86_64: passed                                                           |
+| Kotlin                | com.strling:strling-kotlin                  | Supported | windows-x86_64 with caller-supplied absolute native path                  | windows-x86_64: passed                                                           |
+| Lua                   | strling                                     | Preview   | linux-x86_64                                                              | Artifact qualification passed; Preview consumer claims remain bounded/unexecuted |
+| Perl                  | STRling                                     | Preview   | linux-x86_64                                                              | Artifact qualification passed; Preview consumer claims remain bounded/unexecuted |
+| PHP                   | strling/strling                             | Preview   | linux-x86_64 with caller-owned native payload discovery                   | Artifact qualification passed; Preview consumer claims remain bounded/unexecuted |
+| Python                | STRling                                     | Supported | windows-x86_64 and linux-x86_64 with CPython 3.12 evidence                | windows-x86_64: passed; linux-x86_64: passed                                     |
+| R                     | strling                                     | Preview   | linux-x86_64                                                              | Artifact qualification passed; Preview consumer claims remain bounded/unexecuted |
+| Ruby                  | strling                                     | Preview   | linux-x86_64                                                              | Artifact qualification passed; Preview consumer claims remain bounded/unexecuted |
+| Rust                  | strling                                     | Supported | windows-x86_64 and linux-x86_64 reference kernel/facade                   | windows-x86_64: passed; linux-x86_64: passed                                     |
+| Swift                 | STRling                                     | Supported | linux-x86_64                                                              | linux-x86_64: passed                                                             |
+| TypeScript/JavaScript | @strling-lang/strling                       | Preview   | Windows Node 24 observation and Chrome browser WASM certification harness | Artifact qualification passed; Preview consumer claims remain bounded/unexecuted |
 
-The focused public boundary suite passed 222 tests after the endpoint,
-payload, metadata, and protected-execution corrections. A bounded resolver
-control subsequently retrieved the official NuGet repository-signing index
-without credentials. An earlier NUnit repository-signature control passed;
-an author-primary FSharp.Core signature was rejected under the narrower
-registered repository-signature comparison mode. Neither control establishes
-public STRling installation. The broader regression run retains its genuine
-stale profile-version assertion failures; corrected focused assertions pass.
+## Runtime declarations versus tested scope
 
-The shared consumer executor now retains command, timing, exit status, and
-stdout/stderr diagnostics. Public findings bind expected and observed identity,
-environment, and supporting evidence. Canonical profile registration adds one
-offline public contract operation to each profile; generated profile and
-semantic-authority projections have been synchronized. Current-source profile
-execution, independent reconstruction, signing, hosted verification, and clean
-closure remain mandatory and pending.
+The C# and F# packages target net9.0; the observed Windows SDK is9.0.302. Java and Kotlin produce JVM11 bytecode; the observed Windows JDK is21.0.12.1, with Maven3.9.11 and Gradle8.5. Those declarations do not establish additional tested JVM/OS combinations. Python explicitly requires >=3.12,<3.13 and was built with CPython3.12.10 on Windows and3.12.3 on Linux. Dart declares >=3.0.0,<4.0.0 and the registered Linux observation is3.12.2. Swift declares tools5.9 and was observed with6.3.3 on the governed Linux scope; package metadata does not establish macOS certification.
 
-The final focused public suite passes 228 tests, and the staged content-security
-scan passes all seven checks. Missing aggregate scope receipts now retain an
-explicit `INDETERMINATE` incident instead of losing the reconciliation report.
-Additional consumer negatives reject missing native dependencies, unsupported
-architectures, Preview promotion, and changed retrieved bytes before install.
+Native Windows scope requires the MSVC14.44-compatible v14 x64 runtime. Linux native scope is the governed GNU/glibc environment, observed on Ubuntu24.04/glibc2.39; musl and additional architectures/distributions are not certified. Rust/Cargo1.75.0 and Go1.22.2 are the registered observations. Preview assembly observations include Lua5.1.5, Perl5.38.2 (68 registered patches), PHP8.3.6, R4.3.3 and Ruby3.2.3. TypeScript's Linux artifact build used Node22.23.2/npm10.9.8; its existing bounded Windows Node24/Chrome WASM observations remain distinct from Supported public-consumer certification. No runtime or platform support is expanded by these observations.
 
-Complete generated-artifact verification retained two failed attempts. The first
-repository-state guard detected a concurrent task-record edit by this execution
-owner. The source-stable second attempt stopped at the disposable
-LSP payload, which still contained Linux executables on the Windows host. The
-first registered Windows assembly attempt then found Linux esbuild in the
-subtree's disposable dependency cache. A lockfile-preserving Windows `npm ci`
-succeeded; canonical assembly is being rerun. These are preparation failures,
-not historical certificate invalidation or waived checks.
+## Sealed evidence transport
 
-The second Windows LSP assembly passed. The original broad regression run
-completed in 3,059.29 seconds with 405 passed tests, 23 passed subtests, and
-two failed stale profile-version assertions. Both assertions were corrected and
-passed focused reruns; the original run remains failed. The 52 attestation tests
-in that run passed. The authenticator now obtains its approved trust context
-from the immutable verifier contract, allowing this task's separate certificate
-without accepting a candidate-selected policy; both registered contexts reject
-an invalid signature in focused tests.
+Windows SDK diagnostic logs retain their original CRLF bytes. A dedicated transport qualification demonstrated that ordinary Git staging would normalize those bytes. Exact no-filter Git objects and explicit index entries preserved all three serialized fixtures through fresh Windows and Linux/ext4 checkouts, with clean tracked state. A forced-text CRLF JSON negative was rejected. The registered JSON producers already emit LF. Closure must preserve the signed producer bytes and verify every indexed blob against the signed file inventory, then run the unchanged immutable verifier on a fresh checkout. No .gitattributes, source, producer, support or trust-policy change was required. The complete diagnostic qualification is embedded in the existing operational admission evidence; original metadata bytes remain preserved.
 
-The third complete generated check passed 38 families and failed the final
-Kotlin product check because this shell lacked the preserved Maven path. The
-registered focused command then passed with Maven 3.9.11 and the established
-dependency cache; zero third-party verification entries changed. The original
-complete attempt remains failed. Canonical preparation and complete generated
-verification will run on the final frozen certification checkout.
+The first documentary seal passed cryptographic verification but was rejected by the unchanged hygiene policy for two missing final newlines and two diagnostic log paths. Its exact signed bundle and rejection remain preserved. The accepted replacement carries those supplemental bytes in bounded, lossless JSON archives, reproduces the original package certificate byte for byte, and passes positive and adversarial codec tests. All 256 obligation results and producer bytes remain unchanged. Prospective hygiene passed before signing and again on the signed replacement; no policy exception was added.
 
-Before verifier freeze, the complete public boundary suite passed 230 tests on
-Linux. Windows passed 244 tests comprising the same public suite, all thirteen
-profile-source identity tests, and the corrected canonical membership test.
+## Independent reconstruction and signed evidence
 
-Verifier revision `080107ed6d7893d60eb011fb83af09ac937eeb89` is frozen in a
-separate clean checkout. It independently authenticated the preserved packaging
-closure with the original packaging policy and rejected the same certificate
-under the new public-verification policy. This is reader qualification, not a
-rerun or reopening of H08 or packaging campaigns.
+Both key-free independent reconstructions passed before their signing steps. Local signature verification used the unchanged immutable readers; its generic `CLOUD_VERIFIED` output label is not treated as proof of hosted execution. Actual hosted acceptance is recorded separately below.
 
-The integration preserves both historical certificate jobs and adds a separate
-event-source public-verification certificate job to CI and hosted integrity.
-The new jobs execute only the immutable reader and its new trust policy.
-The public retrieval contract retains the packaging artifact trust context;
-the separate public-verification policy certifies this implementation only.
-Candidate request data cannot select a different policy or reader. Four targeted workflow tests
-and 29 hostile-mutation subtests passed, followed by repository governance.
+| Subject                                      | SHA-256                                                            |
+| -------------------------------------------- | ------------------------------------------------------------------ |
+| Package evidence root                        | `b62f592e4fdd3021a98a2c6b08db76cd108bf827f0199ec73ae0212845d78ece` |
+| Package signature                            | `9778384cdc8ae49916cbf138abf1dd11af36ba353b0ac43c9ea2b82dbb2669f2` |
+| Public implementation evidence root          | `89a3ed2ab59f883463fcd5ed36e665d3fe18bdfd8bb2112d5c28a2435e23302e` |
+| Public implementation signature              | `371375de748b807474c889d22523fb7e6838d1eb59855e812f0d90e9cc64f0c2` |
+| package-reconstruction reconstruction record | `5d5512d3d3d64db5522d677390bea3cb0a008ae90c654067c104416bbb34e038` |
+| public-reconstruction reconstruction record  | `dbd74bc217dcbb8ba08b543562f3712e58946f46f90a0d366c91e35af6a50947` |
 
-Candidate `602c1c956e0ad2ed404390cd18238a47782fd562` was superseded before any
-authoritative profile because its public artifact verifier pin had incorrectly
-followed the new implementation-certification context. The correction preserves
-the existing packaging certificate handoff and its immutable reader, independently
-of the new implementation certificate. Its successful source preparation stages
-remain bound to that superseded candidate and are not current certification.
+The complete authenticated file and fingerprint inventory is in [the signed attestation](../../tests/certification/public-verification/1.0/current/attestation.json). It retains all mandatory producer subjects, Full/Release results, Local/PR qualifications, 42 current-source build receipts, supply-chain companions and the exact staged verification evidence. The public producer is required once in every authoritative profile. Its exact result contract, identity, source, documentation and obligation inventory are independently reconstructed; zero-exit execution without its result is incomplete.
 
-The superseded checkout's complete generated check exited 1 after 78.84 seconds:
-the legacy inventory requires the candidate to equal the authorized local `dev`
-tip, but the detached clone had no local `dev` reference. The seven preceding
-preparation stages passed, including LSP assembly in 68.02 seconds. This is a
-retained orchestration failure, not a passing generated check. No authoritative
-profile started. Integration authorization is required before advancing the
-actual local development branch; fabricating a reference in the certification
-clone would not establish that authorization. The trust-separation correction
-passes 74 focused tests, repository governance, and all seven content-security
-checks.
+Current-source staged qualification passed 17 artifact routes and all 15 applicable clean-consumer scopes, accounting for exactly 256 registered obligations. Artifact authority remains synthetic and consumer authority staged; every observation is READY, not public VERIFIED. Native/WASM identity and applicable substituted-kernel/target-profile rejection passed.
 
-The owner authorized the local `dev` fast-forward to
-`fc0274e9ac4fdbd67a6eb93bc2b31477e860fc68`. That candidate passed complete
-generated preparation (40 families), canonical version checks and security
-integrity. Its 42 build receipts covered 17 routes, 21 build pairs and 95
-toolchain coordinates. The independent receipt comparison and native/WASM
-transport inspection passed. These results remain bound to that candidate.
+## Actual hosted acceptance
 
-Its Local profile stopped after 434.43 seconds at operation 15 of 38: 14 passed,
-`product_certification_authority` failed, and 23 did not execute. The Full/Release
-producer manifest was missing the registered `public_distribution_contract`
-operation. PR, Full, independent Release and signing did not start. The original
-profile, terminal output, receipts and admission records are retained under
-`target/public-verification/campaign-fc0274e9`. The correction registers the
-operation as required in the product producer graph, preserving its toolchain
-result contract and the profile denominator. Product authority now validates all
-125 Full/Release results; 21 focused tests and 11 mutation subtests passed. The
-registered semantic-evidence refresh produced no changed output. A corrected
-source requires its own certification and cannot adopt the former source's build
-receipts.
+Pending. No local verification result is substituted for actual hosted acceptance.
 
-Recovery on 2026-11-10 established that candidate
-`237607049c849f82621c88885f6348e7804e6c3b` completed all eight preparation
-stages. LSP payload assembly passed in 65.7207 seconds and the complete
-generated check passed all 40 families in 162.0315 seconds. Its subsequent
-Local execution failed after 490.0774 seconds at operation 28 of 38: 27
-operations passed and repository lint found an unused `io` import in the
-protected publication helper. The manifest authority gate passed. WSL was
-stopped at recovery; no healthy continuation worker survived. These terminal
-results remain retained under `target/public-verification/campaign-23760704`.
+## Recorded execution attempts and timings
 
-The unused import was removed. Independent integration review also found that
-the public contract operation needed invocation-bound producer evidence to
-reject a zero exit without execution. It now uses the existing atomic
-structured-result transport with operation identity
-`certification.public-distribution-contract`, clean source admission, exact
-invocation and profile binding, and zero performance samples. The existing
-immutable reader already reconstructs this transport and selects its evidence
-for signing; no signing authority or historical trust policy changed.
-All four profiles require the producer, with unchanged operation denominators
-of 38, 80, 125 and 125. Their definition versions are now 1.18.0, 1.24.0,
-1.33.0 and 1.33.0. Targeted mutations reject missing, duplicated, renamed,
-misbound, incomplete and incorrectly aggregated producer results. A fresh
-source identity and complete independent certification remain required.
+Seconds below are recorded wrapper timings. They include admission waiting where applicable; the independent Release wrapper also includes fresh isolated preparation. Historical failed operational attempts remain visible and were followed by separately retained accepted recovery results. Timing is observational and non-gating.
 
-The preparatory successor `b625909a43ec7d13571dc149b2ffdc1d0ef99414`
-passed all eight preparation stages, all 40 generated families, and version
-and release-policy checks. Its LSP assembly took 70.1147 seconds. A broader
-quality-orchestrator diagnostic found four remaining explicit version
-assertions in `test_quality.py`; one test failed at the first stale assertion,
-while 83 tests and 23 subtests passed. The healthy preparation worker finished
-normally, then the supervisor stopped at an explicit engineering hold before
-security acquisition or any authoritative profile. Only the stale assertion
-values were corrected. The preceding source-bound preparation remains
-historical evidence for that preparatory successor; it does not certify the
-replacement source.
+| Stage/attempt                | Exit code |   Seconds |
+| ---------------------------- | --------: | --------: |
+| source-roots                 |         0 |    13.169 |
+| windows-source-roots         |         0 |    13.446 |
+| input-identities             |         0 |     0.434 |
+| candidate-registration       |         0 |    41.074 |
+| preparation                  |         0 |   325.314 |
+| accept-preparation           |         0 |     0.181 |
+| version-sync                 |         0 |     0.131 |
+| release-policy               |         0 |     0.289 |
+| repository-diagnostic        |         0 |   747.751 |
+| security                     |         0 |   711.860 |
+| local-pr                     |         0 |  6412.412 |
+| windows-builds               |         0 | 14869.286 |
+| linux-builds                 |         1 |   463.414 |
+| linux-python-build-readiness |         0 |    75.155 |
+| linux-builds                 |         0 |  2265.879 |
+| receipt-pairs                |         1 |     2.396 |
+| perl-toolchain-cohort-repair |         0 |    16.589 |
+| receipt-pairs                |         0 |     1.113 |
+| transport-kernels            |         0 |     1.213 |
+| supply-chain                 |         0 |   300.452 |
+| python-sdist                 |         0 |   107.139 |
+| certified-handoff            |         0 |   350.839 |
+| full-go                      |         0 |     4.557 |
+| full                         |         0 |  5056.856 |
+| independent-release          |         0 |  6114.049 |
+| package-reconstruction       |         0 |    56.101 |
+| package-signing              |         0 |    62.946 |
+| public-artifacts             |         0 |   345.133 |
+| public-kotlin-sdk            |         0 |   160.781 |
+| public-jvm-sdk               |         0 |   369.772 |
+| public-dart-sdk              |         0 |     4.369 |
+| public-windows-consumers     |         0 |   459.340 |
+| public-linux-consumers       |         0 |   763.481 |
+| public-collection            |         0 |   232.839 |
+| public-reconstruction        |         1 |    82.845 |
+| public-reconstruction        |         0 |   115.824 |
+| public-signing               |         0 |   129.033 |
+| public-reconstruction        |         0 |   177.917 |
+| public-signing               |         0 |   234.986 |
+| public-seal-hygiene          |         0 |     9.900 |
 
-The next preparation-only source,
-`a07f427952c3699ad5b3a95c0dc70cfaadeee59a`, also passed all 40 generated
-families before a controlled hold prevented authoritative profiles. A closure
-audit reproduced missing serialization ownership for the new signed bundle
-and missing exact registrations for its large evidence subjects. The public
-bundle now has one serializer owner and five exact size registrations; the
-1 MiB default, neighboring files, credential checks and all security gates
-remain enforced. Windows consumer and prerequisite reports now write canonical
-LF bytes before authentication and signing.
+The WSL recovery preserved terminal evidence, then used the explicitly authorized cancellation of the stalled unregister client and controlled service restart. No healthy STRling or Fortress worker was interrupted. Subsequent protected compiler reservations were respected. Physical D: capacity and Linux guest filesystem availability were measured separately; the 112 GiB physical certification admission reserve remained enforced.
 
-The preliminary additional atomic transport was not accepted as a certificate:
-the historical immutable packaging reader preserves exactly one atomic resource
-invocation per profile. The public producer instead uses the existing required
-`certification-result-v1` structured-result contract. Its complete source,
-producer profile, status, scope, documentation and evidence fingerprint are
-reconstructed before its result can pass. The functional-resource atomic
-producer and both existing immutable verifier identities remain unchanged.
-The independently implemented pre-signing reconstruction uses only helpers
-from verifier `080107ed6d7893d60eb011fb83af09ac937eeb89`; positive fixtures
-and nine hostile mutations passed qualification. These synthetic fixtures
-claim no profile acceptance or public installation. The existing reader's
-52 regression tests also passed in 498.76 seconds. Fresh authoritative
-certification remains mandatory for the replacement source.
+Report observation: 2026-11-11T17:43:30.680280+00:00; physical D: free 227.29 GiB. The final operational completion report records the final Git commit, terminal hosted run and final capacity after documentation closure.
 
-Source `1838ba890f825dd1c01173fcfb5414f88c742bd0` completed fresh
-preparation, all 40 generated families, and Local: 38 of 38 operations passed
-in 866.8212 seconds. Its Local evidence fingerprint is
-`19ca6015408d926dde2ca7436f89ed709ae5e029b0614aed8b28424bc6a4a60d`.
-The subsequent Pull Request profile stopped at operation 73 of 80,
-`test@repository`, after 72 passes; seven operations did not execute. The
-repository suite reported 2,376 passes, 25 platform-applicability skips,
-4,060 passing subtests and one failure. The failure was an obsolete literal
-expectation of 36 pending Local operations after the first result; the
-registered 38-operation profile correctly reported 37. Readiness itself
-continued to reject the incomplete profile.
+## Publication boundary and next authorized task
 
-The regression now derives the pending denominator from governed membership
-and explicitly requires the unexecuted public-contract operation. Its exact
-ordered-membership assertion and fail-closed readiness assertions remain.
-The nine focused tests and twelve subtests pass. The original accepted Local
-and failed PR remain bound to `1838ba89`; neither can certify its successor.
-The terminal supervisor released its lease. Independent unreached PR leaves
-are being checked diagnostically before another frozen source campaign.
+The qualified public-execution implementation is this source, distinct from the immutable certificate readers and the governed artifact source. Future release owners must verify exact namespaces/uploader ownership and configure the protected request, certified artifact/closure/run identities and verifier pin under the existing policy before separately authorized public publication and verification. Those external publication prerequisites remain explicit; Preview is not promoted. No package, production/RC tag, GitHub Release, registry upload, ownership change or production publication credential access occurred.
+
+The earlier account is preserved at [implementation source 3e706127](https://github.com/strling-lang/strling/blob/3e7061271d906251cb17c3eb06b6c748ac3068e7/docs/migration/public-distribution-verification.md). The task record retains all historical checkpoints. Closed H08 and packaging certificate bytes and Git modes remain unchanged.

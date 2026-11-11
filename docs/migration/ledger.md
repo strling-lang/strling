@@ -1,39 +1,12 @@
 # Architecture Migration Ledger
 
-## Independent public distribution verification — active, 2026-11-10
+## Independent public distribution verification — local certification sealed; hosted pending, 2026-11-11
 
-Starting from packaging closure `33e50ac033314dad089717a0ee20c0c7c310dea7`,
-the independent verification task preserves the CLOSED H08 and packaging
-certificates. Seventeen synthetic retrieval routes and all fifteen staged
-Supported platform consumers pass engineering qualification. These establish
-readiness only; they are not public release evidence. The versioned contract
-derives 256 obligations from the registered artifact and consumer inventory.
-Fresh source-bound certification and independent closure remain pending; see
-[the task report](public-distribution-verification.md) and
-[execution record](records/public-distribution-verification.yaml).
+Implementation `3e7061271d906251cb17c3eb06b6c748ac3068e7` has accepted Local38/38, PR80/80, Full and fresh independent no-reuse Release124 passed plus the sole existing waiver /125. All17 staged artifact routes and15 Supported consumer scopes account for256 registry-derived obligations. Independent reconstruction and original-key signatures passed; public implementation root `89a3ed2ab59f883463fcd5ed36e665d3fe18bdfd8bb2112d5c28a2435e23302e`.
 
-Recovery retained the failed `23760704` Local result (27 passes, repository
-lint failure at operation 28/38) and confirmed successful LSP and generated
-preparation. The successor removes the unused import and requires atomic,
-source-bound public-contract producer evidence in all four profiles. Historical
-certificates and failed build receipts retain their original identities.
-The preparatory successor completed all generated preparation, then stopped
-at a safe engineering hold before authoritative profiles when a broader
-diagnostic found stale explicit profile-version assertions. The correction
-changes those assertions only and requires a fresh source identity.
-The subsequent closure audit added exact ownership for the new signed bundle
-and qualified the public producer through the existing structured-result
-contract, preserving historical readers and functional-resource evidence.
-Positive and hostile reconstruction fixtures pass; source-bound certification
-and formal closure remain pending.
+Actual hosted integrity and formal completion remain pending.
 
-Source `1838ba89` passed fresh preparation and Local 38/38. Its PR stopped
-after 72 of 80 operations passed when a readiness test retained the obsolete
-36-pending-operation expectation; the governed Local profile requires 37
-after its first result. The test now derives membership and explicitly checks
-that the public-contract operation remains required. The accepted Local and
-failed PR remain historical evidence for that source. Fresh certification is
-required for the narrow regression correction.
+The original missing producer registration, corrected candidate LSP success and later lint failure, readiness denominator regression, SDK recovery and Perl cohort repair retain their exact historical source identities and evidence. No failed or stale profile was adopted. H08 and packaging remain CLOSED and unchanged. See [the completion report](public-distribution-verification.md) and [task record](records/public-distribution-verification.yaml). Public publication and genuine registry verification remain separately authorized work.
 
 ## H08 isolated Release failure and bounded correction — 2026-10-27
 

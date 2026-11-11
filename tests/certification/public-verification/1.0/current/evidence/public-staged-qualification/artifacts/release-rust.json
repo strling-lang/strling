@@ -1,0 +1,317 @@
+{
+  "artifact_id": "release:rust",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [],
+        "exact_install_commands_found": 0,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "9b97856873ba81b91289543148bd1f349ff324cf0c068c8322fbe8dcbab8111d",
+      "source_path": "bindings/rust/README.md",
+      "url": "https://evidence.example.test/bindings/rust/README.md"
+    },
+    "provenance": {
+      "sha256": "7dc443a6d63b06a6cc0ceb6c3d667094741d7c5b470ccd3195bc519d93d76145",
+      "url": "https://evidence.example.test/release-rust.intoto.json"
+    },
+    "sbom": {
+      "sha256": "fda01f00bcf799c58cbb94df434b1ce4b2fab979b0804cc35c0656d08360cc63",
+      "url": "https://evidence.example.test/release-rust.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.10536112499903538,
+  "metadata": {
+    "fields": [
+      "crate",
+      "description",
+      "documentation",
+      "homepage",
+      "license",
+      "num",
+      "repository",
+      "rust_version"
+    ],
+    "status": "passed"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:rust:coordinate",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:rust:metadata",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:rust:artifact",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:rust:source",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:rust:sbom",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:rust:provenance",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:rust:documentation",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:rust:scope",
+      "platform": null,
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:rust:windows-x86_64:installation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:rust:windows-x86_64:public-api",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:rust:windows-x86_64:product-version",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:rust:windows-x86_64:canonical-compiler",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:rust:windows-x86_64:native-wasm",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:rust:windows-x86_64:target-compatibility",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:rust:windows-x86_64:kernel-rejection",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:rust:windows-x86_64:isolation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:rust:linux-x86_64:installation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:rust:linux-x86_64:public-api",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:rust:linux-x86_64:product-version",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:rust:linux-x86_64:canonical-compiler",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:rust:linux-x86_64:native-wasm",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:rust:linux-x86_64:target-compatibility",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:rust:linux-x86_64:kernel-rejection",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:rust",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:rust:linux-x86_64:isolation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "949f3e4f5ed0419f95e9a8d122bd2f08a305401b99210877d04853e45adf7b29",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "target/package/strling-4.0.0.crate": "77f705ac604bbb51d57be8931ca5d907edb53364bdfb6712c47363ac14bfffe3"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://crates.io/api/v1/crates/strling/4.0.0",
+      "sha256": "45c08f8e14bee65f0889505d6473e41b470dea0a6ffc9375c3b214a70b276093",
+      "size": 442
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://static.crates.io/crates/strling/strling-4.0.0.crate",
+      "sha256": "77f705ac604bbb51d57be8931ca5d907edb53364bdfb6712c47363ac14bfffe3",
+      "size": 295763
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-rust.spdx.json",
+      "sha256": "fda01f00bcf799c58cbb94df434b1ce4b2fab979b0804cc35c0656d08360cc63",
+      "size": 100928
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-rust.intoto.json",
+      "sha256": "7dc443a6d63b06a6cc0ceb6c3d667094741d7c5b470ccd3195bc519d93d76145",
+      "size": 4852
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/rust/README.md",
+      "sha256": "9b97856873ba81b91289543148bd1f349ff324cf0c068c8322fbe8dcbab8111d",
+      "size": 1958
+    }
+  ]
+}

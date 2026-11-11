@@ -1,0 +1,8 @@
+{
+  "purpose": "compiler-prerequisite-only",
+  "status": "passed",
+  "strling_packages": [],
+  "verification_metadata_sha256": "21c8b008c9299abd9f85c41e6bde35f06ca30555cd22db6435363f0ee365d71b",
+  "gradle_cache": "D:\\Projects\\strling-lang\\strling\\target\\k3e706127\\dependency-cache",
+  "publication_authorized": false
+}

@@ -1,0 +1,142 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+        "buildDefinition": {
+            "buildType": "https://strling.dev/build-types/release-supply-chain/v1",
+            "externalParameters": {
+                "artifactId": "release:r",
+                "buildCommand": [
+                    "python",
+                    "-m",
+                    "tooling.release_packaging",
+                    "--artifact-id",
+                    "release:r",
+                    "--preview"
+                ],
+                "productVersion": "4.0.0",
+                "registry": "github-tag:r-vVERSION",
+                "support": {
+                    "external_prerequisites": [
+                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Confirm protected release environment reviewers and approved workflow source"
+                    ],
+                    "installation": "Governed registry artifact or source-tag route",
+                    "native_runtime_prerequisites": [
+                        "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                    ],
+                    "ownership_status": "externally-pending",
+                    "platforms": [
+                        "linux-x86_64"
+                    ],
+                    "publication_eligibility": "preview-only-explicit-authorization",
+                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "scope": "linux-x86_64",
+                    "support_claim": "binding:r",
+                    "tier": "Preview"
+                }
+            },
+            "internalParameters": {
+                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "toolchains": [
+                    {
+                        "executable_sha256": "7e81c985bf0207a38b4a7b9cf407bc7417daec3896a022f5e47fea0f7c6d7cc2",
+                        "id": "release:r:linux-x86_64:R",
+                        "version": "R version 4.3.3 (2024-02-29) -- \"Angel Food Cake\" Copyright (C) 2024 The R Foundation for Statistical Computing Platform: x86_64-pc-linux-gnu (64-bit) R is free software and comes with ABSOLUTELY NO WARRANTY. You are welcome to redistribute it under the terms of the GNU General Public License versions 2 or 3. For more information about these matters see https://www.gnu.org/licenses/."
+                    },
+                    {
+                        "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+                        "id": "release:r:linux-x86_64:python",
+                        "version": "Python 3.12.3"
+                    }
+                ]
+            },
+            "resolvedDependencies": [
+                {
+                    "digest": {
+                        "gitCommit": "3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                    },
+                    "uri": "git+https://github.com/strling-lang/strling@3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                },
+                {
+                    "digest": {
+                        "sha256": "3fdde10ecd19a0734f2143309ca399dfb8eb530b587918a0b05aa8d78f7dce05"
+                    },
+                    "uri": "strling:dependency-root:r-package"
+                }
+            ]
+        },
+        "runDetails": {
+            "builder": {
+                "id": "https://strling.dev/builders/release-supply-chain/v1"
+            },
+            "metadata": {
+                "finishedOn": "1970-01-01T00:00:00Z",
+                "invocationId": "3e7061271d906251cb17c3eb06b6c748ac3068e7:release:r",
+                "startedOn": "1970-01-01T00:00:00Z"
+            }
+        }
+    },
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "subject": [
+        {
+            "digest": {
+                "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+            },
+            "name": "LICENSE"
+        },
+        {
+            "digest": {
+                "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+            },
+            "name": "bindings/interop"
+        },
+        {
+            "digest": {
+                "sha256": "e43118c3dfb109cff77cdbd9d05f4693aee47191309e911cb19ba5c0fb0bb2f4"
+            },
+            "name": "bindings/r"
+        },
+        {
+            "digest": {
+                "sha256": "8d10a7963d585476ed56f2379bbcfcc4e55642311342b109cfcb81afc4a2a30e"
+            },
+            "name": "core"
+        },
+        {
+            "digest": {
+                "sha256": "5ee0311f5a3f3cf9d5a51420dd6873d3508957df61b0d1e760d78b5f750904c7"
+            },
+            "name": "spec"
+        },
+        {
+            "digest": {
+                "sha256": "0992af98f1157a17bb382747bb79f9164aadff7a238f4943f52a0f1d707c9ec0"
+            },
+            "name": "tests/conformance/ecmascript-runtime-certification.json"
+        },
+        {
+            "digest": {
+                "sha256": "a9f0290f463589f0d0f911980a2d4c3e3254013238874e19987e62d42aa8cf2c"
+            },
+            "name": "tests/conformance/pcre2-runtime-certification.json"
+        },
+        {
+            "digest": {
+                "sha256": "ff188090c19049a1628de5d7c0560ea4838974cfb4448b1995888e273a0f9609"
+            },
+            "name": "tests/conformance/python-re-runtime-certification.json"
+        },
+        {
+            "digest": {
+                "sha256": "3f588d7e18ce57a2dc034c46c3466d20b9cba1482e6a57a1b7f7a22868d8792f"
+            },
+            "name": "tooling/native_release_build.py"
+        },
+        {
+            "digest": {
+                "sha256": "0c55e821a6384d157d1c73a5cc88228d72d1de58033d7a7ee3b65968d635668e"
+            },
+            "name": "tooling/release_notices.py"
+        }
+    ]
+}

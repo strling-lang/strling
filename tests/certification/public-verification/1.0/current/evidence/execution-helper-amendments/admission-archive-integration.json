@@ -1,0 +1,42 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "status": "qualified-operational-input-amendment",
+  "reason": "Losslessly preserve unbounded wait journal without exceeding unchanged per-file hygiene limit",
+  "changed_helpers": [
+    {
+      "path": "package_audit_final_evidence.py",
+      "previous_sha256": "07e0314efbc359665f6daad733a23934f84ec98e67c659f007ab0783314930cd",
+      "sha256": "20943a64430f06b4579e26933ec10ac59ca91d433203d1cadc4ddb3981a58de4"
+    },
+    {
+      "path": "package_sign_certified_source.py",
+      "previous_sha256": "56e14eee5fc61fc36e0999005abbb6dab53239d2c258f821647bfb2206127009",
+      "sha256": "2c6b07280c5eda1ac3f727f5e77612cc71da3f26b754d993b2030776b83de200"
+    },
+    {
+      "path": "audit_final_evidence.py",
+      "previous_sha256": "d32d9ab422f2fbec8fe2010586def6e87cfe3888af1fbf41d7bb21de431539c0",
+      "sha256": "33affe278191e46d8018156b7c5a8ba1128518dc5bb96f5d1b2a89c8811db08e"
+    },
+    {
+      "path": "sign_certified_source.py",
+      "previous_sha256": "e86ba647fee2420a588d6cbec58fafd76d8f0641681c2a245e723a6b1cae59ee",
+      "sha256": "5c8bec5287ac0ccaeaf3c19113d777b019e7df8d56a66c62db24b5e99e4a5090"
+    },
+    {
+      "path": "collect_staged_qualification.py",
+      "previous_sha256": "f85334186c74cc68f333b263cadaee6b6e4b672f61276ba88cd968c4ef84e6d2",
+      "sha256": "bfaa95733c5420550a9d0fd6857aeb8b08b0e6bf371805f4a03be189157b1026"
+    }
+  ],
+  "originals": "operational-amendment-originals/admission-archive",
+  "qualified_helper_sha256": "309a7555e6e8544eb5e72540e0cfb0686a6761fa8f4e519e8c81a394ec16c2a3",
+  "immutable_verifier_code_changed": false,
+  "frozen_source_changed": false,
+  "required_producer_results_changed": false,
+  "original_raw_journal_modified": false,
+  "records_discarded": false,
+  "private_key_read": false,
+  "waiver_introduced": false,
+  "publication_authorized": false
+}

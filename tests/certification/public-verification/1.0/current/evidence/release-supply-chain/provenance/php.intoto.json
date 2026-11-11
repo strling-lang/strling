@@ -1,0 +1,147 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+        "buildDefinition": {
+            "buildType": "https://strling.dev/build-types/release-supply-chain/v1",
+            "externalParameters": {
+                "artifactId": "release:php",
+                "buildCommand": [
+                    "python",
+                    "-m",
+                    "tooling.release_packaging",
+                    "--artifact-id",
+                    "release:php",
+                    "--preview"
+                ],
+                "productVersion": "4.0.0",
+                "registry": "github-tag:php-vVERSION",
+                "support": {
+                    "external_prerequisites": [
+                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Confirm protected release environment reviewers and approved workflow source"
+                    ],
+                    "installation": "Governed registry artifact or source-tag route",
+                    "native_runtime_prerequisites": [
+                        "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                    ],
+                    "ownership_status": "externally-pending",
+                    "platforms": [
+                        "linux-x86_64"
+                    ],
+                    "publication_eligibility": "preview-only-explicit-authorization",
+                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "scope": "linux-x86_64 with caller-owned native payload discovery",
+                    "support_claim": "binding:php",
+                    "tier": "Preview"
+                }
+            },
+            "internalParameters": {
+                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "toolchains": [
+                    {
+                        "executable_sha256": "5cf51f9912671912136317d889df7a5b8219f2a77f2b311b9a100989106847e2",
+                        "id": "release:php:linux-x86_64:composer",
+                        "version": "Composer plugins have been disabled for safety in this non-interactive session. Set COMPOSER_ALLOW_SUPERUSER=1 if you want to allow plugins to run as root/super user. Do not run Composer as root/super user! See https://getcomposer.org/root for details Composer version 2.7.1 2024-02-09 15:26:28"
+                    },
+                    {
+                        "executable_sha256": "7f1ac2fe89d267364311651c0e7e6651d32ea006c9a701c0cab68eb2394a67d7",
+                        "id": "release:php:linux-x86_64:php",
+                        "version": "PHP 8.3.6 (cli) (built: Oct 19 2026 15:16:58) (NTS) Copyright (c) The PHP Group Zend Engine v4.3.6, Copyright (c) Zend Technologies with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies"
+                    },
+                    {
+                        "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+                        "id": "release:php:linux-x86_64:python",
+                        "version": "Python 3.12.3"
+                    }
+                ]
+            },
+            "resolvedDependencies": [
+                {
+                    "digest": {
+                        "gitCommit": "3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                    },
+                    "uri": "git+https://github.com/strling-lang/strling@3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                },
+                {
+                    "digest": {
+                        "sha256": "fee424db9a84a9db29bf8e77deff5a588fc8446f1770048ec254450259b4dede"
+                    },
+                    "uri": "strling:dependency-root:php-composer"
+                }
+            ]
+        },
+        "runDetails": {
+            "builder": {
+                "id": "https://strling.dev/builders/release-supply-chain/v1"
+            },
+            "metadata": {
+                "finishedOn": "1970-01-01T00:00:00Z",
+                "invocationId": "3e7061271d906251cb17c3eb06b6c748ac3068e7:release:php",
+                "startedOn": "1970-01-01T00:00:00Z"
+            }
+        }
+    },
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "subject": [
+        {
+            "digest": {
+                "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+            },
+            "name": "LICENSE"
+        },
+        {
+            "digest": {
+                "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+            },
+            "name": "bindings/interop"
+        },
+        {
+            "digest": {
+                "sha256": "ebd2df1d4e7a14b53b12d6e405c714a2d8975f3ae554ef4d7e01d160e026322b"
+            },
+            "name": "bindings/php"
+        },
+        {
+            "digest": {
+                "sha256": "8d10a7963d585476ed56f2379bbcfcc4e55642311342b109cfcb81afc4a2a30e"
+            },
+            "name": "core"
+        },
+        {
+            "digest": {
+                "sha256": "5ee0311f5a3f3cf9d5a51420dd6873d3508957df61b0d1e760d78b5f750904c7"
+            },
+            "name": "spec"
+        },
+        {
+            "digest": {
+                "sha256": "0992af98f1157a17bb382747bb79f9164aadff7a238f4943f52a0f1d707c9ec0"
+            },
+            "name": "tests/conformance/ecmascript-runtime-certification.json"
+        },
+        {
+            "digest": {
+                "sha256": "a9f0290f463589f0d0f911980a2d4c3e3254013238874e19987e62d42aa8cf2c"
+            },
+            "name": "tests/conformance/pcre2-runtime-certification.json"
+        },
+        {
+            "digest": {
+                "sha256": "ff188090c19049a1628de5d7c0560ea4838974cfb4448b1995888e273a0f9609"
+            },
+            "name": "tests/conformance/python-re-runtime-certification.json"
+        },
+        {
+            "digest": {
+                "sha256": "3f588d7e18ce57a2dc034c46c3466d20b9cba1482e6a57a1b7f7a22868d8792f"
+            },
+            "name": "tooling/native_release_build.py"
+        },
+        {
+            "digest": {
+                "sha256": "0c55e821a6384d157d1c73a5cc88228d72d1de58033d7a7ee3b65968d635668e"
+            },
+            "name": "tooling/release_notices.py"
+        }
+    ]
+}

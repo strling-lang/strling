@@ -47,38 +47,43 @@ scope:
         - release-supply-chain-contract-fixture
     expected_generated_outputs: []
     required_verification_levels:
-        [contract, unit, integration, quality, certification]
-    bounded_exemptions: [WVR-SEC-VSCE-LICENSE-001]
+        - contract
+        - unit
+        - integration
+        - quality
+        - certification
+    bounded_exemptions:
+        - WVR-SEC-VSCE-LICENSE-001
 change_classification:
     semantic_change:
         level: none
-        evidence: [Canonical compiler and language contracts remain unchanged.]
+        evidence:
+            - Canonical compiler and language contracts remain unchanged.
     public_api_change:
         level: none
-        evidence: [Package public APIs and product version remain unchanged.]
+        evidence:
+            - Package public APIs and product version remain unchanged.
     schema_change:
         level: additive
         evidence:
-            [Public verification evidence has a distinct versioned authority.]
+            - Public verification evidence has a distinct versioned authority.
         affected_surfaces: []
     diagnostic_change:
         level: none
-        evidence: [Product diagnostic contracts remain unchanged.]
+        evidence:
+            - Product diagnostic contracts remain unchanged.
     target_behavior_change:
         level: none
-        evidence: [Existing Supported and Preview scopes remain unchanged.]
+        evidence:
+            - Existing Supported and Preview scopes remain unchanged.
     architecture_change:
         level: additive
         evidence:
-            [
-                Independent public retrieval and isolated consumer verification extend existing supply-chain machinery.,
-            ]
+            - Independent public retrieval and isolated consumer verification extend existing supply-chain machinery.
     generated_output_change:
         level: compatible
         evidence:
-            [
-                Profile registration may require registered source identity regeneration.,
-            ]
+            - Profile registration may require registered source identity regeneration.
     documentation_only: false
     internal_implementation: true
 required_verification:
@@ -111,7 +116,7 @@ checkpoints:
             result: passed
             details: All 17 artifact routes and all 15 Supported platform consumers passed staged qualification; 22 Windows and 20 Linux toolchain admission rows passed. Failed earlier attempts are preserved. These are engineering results, not public release evidence.
     - name: Integration and certification
-      status: in_progress
+      status: passed
       evidence:
           - check: Superseded candidate Local profile
             result: failed
@@ -138,8 +143,11 @@ checkpoints:
             result: failed
             details: Source 1838ba890f825dd1c01173fcfb5414f88c742bd0 passed fresh preparation, all 40 generated families and Local 38/38 in 866.8212 seconds (evidence fingerprint 19ca6015408d926dde2ca7436f89ed709ae5e029b0614aed8b28424bc6a4a60d). PR stopped at test@repository, operation 73/80, after 72 passes; seven operations did not execute. The repository suite had 2376 passes, 25 platform-applicability skips, 4060 passing subtests and one stale literal expectation (36 pending Local operations instead of 37). The corrected test derives the count from governed selection and explicitly requires the pending public-contract result; exact ordered membership and fail-closed readiness remain enforced. Nine focused tests and twelve subtests pass. Accepted Local and failed PR evidence remain source-bound; the terminal supervisor is not an active worker.
     - name: Independent readiness closure
-      status: planned
-      evidence: []
+      status: in_progress
+      evidence:
+          - check: Current-source independent certification and staged verification
+            result: passed
+            details: "Source 3e7061271d906251cb17c3eb06b6c748ac3068e7: Local38/38, PR80/80, Full and fresh no-reuse Release124 passed plus the sole existing waiver /125. All17 artifact routes,15 Supported consumer scopes and256 derived obligations qualified. Both key-free reconstructions and original-key signatures verified; public evidence root 89a3ed2ab59f883463fcd5ed36e665d3fe18bdfd8bb2112d5c28a2435e23302e. Public release verification remains false."
 commits:
     - sha: 080107ed6d7893d60eb011fb83af09ac937eeb89
       subject: Implement independent public distribution verification
@@ -155,3 +163,5 @@ commits:
       subject: Align quality assertions with public certification profile versions
     - sha: 1838ba890f825dd1c01173fcfb5414f88c742bd0
       subject: Complete public certification result and closure integration
+    - sha: 3e7061271d906251cb17c3eb06b6c748ac3068e7
+      subject: Derive readiness completeness from governed profile membership

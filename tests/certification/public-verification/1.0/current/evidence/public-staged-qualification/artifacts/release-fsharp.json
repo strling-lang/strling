@@ -1,0 +1,234 @@
+{
+  "artifact_id": "release:fsharp",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [],
+        "exact_install_commands_found": 0,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "1f57388bd9c1c51b4b4722ba8326e87d9e98ebe8e47f062da742bfd7c5172b1d",
+      "source_path": "bindings/fsharp/README.md",
+      "url": "https://evidence.example.test/bindings/fsharp/README.md"
+    },
+    "provenance": {
+      "sha256": "e60280ca07f54874e3d030166123e8401fcea761f8f39d4ba2a3aadb39b0e252",
+      "url": "https://evidence.example.test/release-fsharp.intoto.json"
+    },
+    "sbom": {
+      "sha256": "2222847389dd503575cc9e816d014598765a92815bbea02b66092cf46a5452ae",
+      "url": "https://evidence.example.test/release-fsharp.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.1640273819994036,
+  "metadata": {
+    "fields": [],
+    "status": "requires-authenticated-payload-metadata"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:fsharp:coordinate",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:fsharp:metadata",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:fsharp:artifact",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:fsharp:source",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:fsharp:sbom",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:fsharp:provenance",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:fsharp:documentation",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:fsharp:scope",
+      "platform": null,
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:fsharp:windows-x86_64:installation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:fsharp:windows-x86_64:public-api",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:fsharp:windows-x86_64:product-version",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:fsharp:windows-x86_64:canonical-compiler",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:fsharp:windows-x86_64:native-wasm",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:fsharp:windows-x86_64:target-compatibility",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:fsharp:windows-x86_64:kernel-rejection",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:fsharp:windows-x86_64:isolation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "3d9a590bdaacc8562b86a8cc3ed21c7aa547e9c018a940bbac92e22c6db67496",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg": "8df1c0cd0af5c94e102e65de58bfecba7342c10786ec7c9380ad6f05314c41de"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://api.nuget.org/v3/index.json",
+      "sha256": "d8021eef768469972baa3d1628e74dcacec39622517215579dd4db680b06903b",
+      "size": 100
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.0/strling.fsharp.nuspec",
+      "sha256": "f96bc7d1b2a07604f3c910d37be0bc9e26d40d8a856070b7bb34daba48bbfbef",
+      "size": 844
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.0/strling.fsharp.4.0.0.nupkg",
+      "sha256": "8df1c0cd0af5c94e102e65de58bfecba7342c10786ec7c9380ad6f05314c41de",
+      "size": 15526
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-fsharp.spdx.json",
+      "sha256": "2222847389dd503575cc9e816d014598765a92815bbea02b66092cf46a5452ae",
+      "size": 16747
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-fsharp.intoto.json",
+      "sha256": "e60280ca07f54874e3d030166123e8401fcea761f8f39d4ba2a3aadb39b0e252",
+      "size": 4931
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/fsharp/README.md",
+      "sha256": "1f57388bd9c1c51b4b4722ba8326e87d9e98ebe8e47f062da742bfd7c5172b1d",
+      "size": 2460
+    }
+  ]
+}

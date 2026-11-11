@@ -1,0 +1,93 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+        "buildDefinition": {
+            "buildType": "https://strling.dev/build-types/release-supply-chain/v1",
+            "externalParameters": {
+                "artifactId": "release:ruby",
+                "buildCommand": [
+                    "python",
+                    "-m",
+                    "tooling.release_packaging",
+                    "--artifact-id",
+                    "release:ruby",
+                    "--preview"
+                ],
+                "productVersion": "4.0.0",
+                "registry": "rubygems.org",
+                "support": {
+                    "external_prerequisites": [
+                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Confirm protected release environment reviewers and approved workflow source"
+                    ],
+                    "installation": "Governed registry artifact or source-tag route",
+                    "native_runtime_prerequisites": [
+                        "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                    ],
+                    "ownership_status": "externally-pending",
+                    "platforms": [
+                        "linux-x86_64"
+                    ],
+                    "publication_eligibility": "preview-only-explicit-authorization",
+                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "scope": "linux-x86_64",
+                    "support_claim": "binding:ruby",
+                    "tier": "Preview"
+                }
+            },
+            "internalParameters": {
+                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "toolchains": [
+                    {
+                        "executable_sha256": "8cbf945433f05c820c62834de613cca4047a57c2468ab72e54dd11515a8e630b",
+                        "id": "release:ruby:linux-x86_64:bundler",
+                        "version": "Bundler version 2.4.20"
+                    },
+                    {
+                        "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+                        "id": "release:ruby:linux-x86_64:python",
+                        "version": "Python 3.12.3"
+                    },
+                    {
+                        "executable_sha256": "ead53704d7da35c85a28db19070d34e7ecef9461ecf8ae5e9d51ae79125bb731",
+                        "id": "release:ruby:linux-x86_64:ruby",
+                        "version": "ruby 3.2.3 (2024-01-18 revision 52bb2ac0a6) [x86_64-linux-gnu]"
+                    }
+                ]
+            },
+            "resolvedDependencies": [
+                {
+                    "digest": {
+                        "gitCommit": "3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                    },
+                    "uri": "git+https://github.com/strling-lang/strling@3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                },
+                {
+                    "digest": {
+                        "sha256": "b8a08e56038b82fefb1123cb746d38e099aaa77d2b8004a21c87fea9ab56a465"
+                    },
+                    "uri": "strling:dependency-root:ruby-bundler"
+                }
+            ]
+        },
+        "runDetails": {
+            "builder": {
+                "id": "https://strling.dev/builders/release-supply-chain/v1"
+            },
+            "metadata": {
+                "finishedOn": "1970-01-01T00:00:00Z",
+                "invocationId": "3e7061271d906251cb17c3eb06b6c748ac3068e7:release:ruby",
+                "startedOn": "1970-01-01T00:00:00Z"
+            }
+        }
+    },
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "subject": [
+        {
+            "digest": {
+                "sha256": "598c895c995d3a59cfee2a945fdf2baf95462a4ded2f73c64f0aec0ed34befa8"
+            },
+            "name": "bindings/ruby/strling-4.0.0.gem"
+        }
+    ]
+}

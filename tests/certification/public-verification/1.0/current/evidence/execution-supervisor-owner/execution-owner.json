@@ -1,0 +1,27 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "pid": 386,
+  "start_ticks": "328159",
+  "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+  "lease": "/var/tmp/strling-public-verification-controller.lock",
+  "recipe_sha256": "790148886ee341e662235cc3907f6988b10cdc1b5a54553d034a223347173d36",
+  "publication_authorized": false,
+  "continuation_of": {
+    "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+    "pid": 406,
+    "start_ticks": "7206",
+    "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+    "lease": "/var/tmp/strling-public-verification-controller.lock",
+    "recipe_sha256": "ac747801021cd8adbf8b9ae5c24b23d81819bf3fa2a8a3284d8383f6046bf244",
+    "publication_authorized": false,
+    "continuation_of": {
+      "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+      "pid": 97886,
+      "start_ticks": "9385072",
+      "boot_id": "1c91574f-2638-44c3-9443-f15c1b9e4bb8",
+      "lease": "/var/tmp/strling-public-verification-controller.lock",
+      "recipe_sha256": "b636b083b53fd39c496ab9f4f46ac4a811272c615b766bdeffc12b373a520eaf",
+      "publication_authorized": false
+    }
+  }
+}

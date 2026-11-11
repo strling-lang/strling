@@ -1,0 +1,10 @@
+{
+  "status": "passed-lossless-public-evidence-projection",
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "original_proof_sha256": "2cf9b5487e7de0be9ff1334581ae673e6a85675b39044a45dbd60d3fcb1bf6a8",
+  "projected_proof_sha256": "66fa8840a07f9047f5acf91ac327cd3c5765e87ae7c61cd1068e9916a3458a36",
+  "coverage_unchanged": true,
+  "artifact_routes": 17,
+  "consumer_scopes": 15,
+  "obligations": 256
+}

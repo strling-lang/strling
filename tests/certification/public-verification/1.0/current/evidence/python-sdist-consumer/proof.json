@@ -1,0 +1,46 @@
+{
+  "status": "passed-isolated-sdist-source-build-and-install",
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "input_sdist": {
+    "bytes": 334912,
+    "name": "bindings/python/dist/strling-4.0.0.tar.gz",
+    "sha256": "65d9a95401ccb20956f69ec551f18c6a6fdccea1928913037c82ba117041ca4e"
+  },
+  "sdk": {
+    "setuptools": "84.0.0",
+    "wheel": "0.48.0",
+    "build": "1.5.0"
+  },
+  "fixture_sha256": {
+    "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
+    "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
+    "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77",
+    "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8"
+  },
+  "rebuilt_wheel_sha256": "af2b9376d28c7d5dde571d9293136b7a9b8057431486095e48da8cd3ae34b288",
+  "consumer": {
+    "status": "passed",
+    "source_outcome": "succeeded",
+    "target_pattern": "abc",
+    "kernel_mismatch_rejected": true,
+    "native_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e"
+  },
+  "build_command": [
+    "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+    "-m",
+    "pip",
+    "--isolated",
+    "--no-cache-dir",
+    "wheel",
+    "--no-index",
+    "--no-deps",
+    "--no-build-isolation",
+    "--wheel-dir",
+    "/var/tmp/strling-sdist-consumer-3e706127/wheels",
+    "/var/tmp/strling-public-release-3e706127-first/bindings/python/dist/strling-4.0.0.tar.gz"
+  ],
+  "build_exit_code": 0,
+  "checkout_dependency": false,
+  "public_registry_installation": false,
+  "publication_authorized": false
+}

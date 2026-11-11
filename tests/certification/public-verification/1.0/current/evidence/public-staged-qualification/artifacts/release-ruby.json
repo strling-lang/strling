@@ -1,0 +1,154 @@
+{
+  "artifact_id": "release:ruby",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [],
+        "exact_install_commands_found": 0,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "315b13d6b5cad96252db489e3f0df4c9f494ae83ae383d8e14e7897ce812f467",
+      "source_path": "bindings/ruby/README.md",
+      "url": "https://evidence.example.test/bindings/ruby/README.md"
+    },
+    "provenance": {
+      "sha256": "44ccd145eb62ed267d10f3af8a18a7b666d67bbaca26e164a6a33fefc0c5a10c",
+      "url": "https://evidence.example.test/release-ruby.intoto.json"
+    },
+    "sbom": {
+      "sha256": "0ad265cc7e5790fffb226e18a3d5c963b8ad2370a833548681f5516587bf3e76",
+      "url": "https://evidence.example.test/release-ruby.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.1182670149992191,
+  "metadata": {
+    "fields": [
+      "homepage_uri",
+      "info",
+      "licenses",
+      "name",
+      "source_code_uri"
+    ],
+    "status": "passed"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:ruby:coordinate",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:ruby:metadata",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:ruby:artifact",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:ruby:source",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:ruby:sbom",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:ruby:provenance",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:ruby:documentation",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:ruby",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:ruby:scope",
+      "platform": null,
+      "retrieval_sha256": "a173c62441ba3ad9472db723517ee83566ccfb95a130fed142f193c58de435bd",
+      "status": "READY",
+      "tier": "Preview"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/ruby/strling-4.0.0.gem": "598c895c995d3a59cfee2a945fdf2baf95462a4ded2f73c64f0aec0ed34befa8"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.0.json",
+      "sha256": "89996cbe9acd2aca9b92726f5c8d7b4abf7aa4717dfd6acd7372ca657d613d40",
+      "size": 364
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://rubygems.org/downloads/strling-4.0.0.gem",
+      "sha256": "598c895c995d3a59cfee2a945fdf2baf95462a4ded2f73c64f0aec0ed34befa8",
+      "size": 12800
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-ruby.spdx.json",
+      "sha256": "0ad265cc7e5790fffb226e18a3d5c963b8ad2370a833548681f5516587bf3e76",
+      "size": 24385
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-ruby.intoto.json",
+      "sha256": "44ccd145eb62ed267d10f3af8a18a7b666d67bbaca26e164a6a33fefc0c5a10c",
+      "size": 4220
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/ruby/README.md",
+      "sha256": "315b13d6b5cad96252db489e3f0df4c9f494ae83ae383d8e14e7897ce812f467",
+      "size": 1588
+    }
+  ]
+}

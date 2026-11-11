@@ -1,0 +1,83 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "pid": 212219,
+  "start_ticks": "2013385",
+  "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+  "lease": "/var/tmp/strling-public-verification-controller.lock",
+  "recipe_sha256": "afea4010a1c68a6ad990905c5a4325d7cd206c9c901fadb740f920bb66dd2757",
+  "continuation_of": {
+    "pid": 211193,
+    "start_ticks": "1929848",
+    "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+    "lease": "/var/tmp/strling-public-verification-controller.lock",
+    "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+    "recipe_sha256": "c328225a7308f910e30407a91bcfb5481cb8d53722e93de3aa350353ae438b48",
+    "request_sha256": "e42a992dd61aa0d7d3abaaf89a3168cb28c29444f3b6197de32706b5d7d250fe",
+    "continuation_of": {
+      "pid": 210480,
+      "start_ticks": "1872027",
+      "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+      "lease": "/var/tmp/strling-public-verification-controller.lock",
+      "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+      "recipe_sha256": "c328225a7308f910e30407a91bcfb5481cb8d53722e93de3aa350353ae438b48",
+      "request_sha256": "4b1ae45763655cc2d9501b90891ca8dcd1d5795c310afa915ba481eafd3dc52c",
+      "continuation_of": {
+        "pid": 209470,
+        "start_ticks": "1840687",
+        "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+        "lease": "/var/tmp/strling-public-verification-controller.lock",
+        "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+        "recipe_sha256": "c328225a7308f910e30407a91bcfb5481cb8d53722e93de3aa350353ae438b48",
+        "request_sha256": "fab25c22ef92c088d4fed903b6dce2483873cc5a9e4503646345241f4a670194",
+        "continuation_of": {
+          "pid": 209368,
+          "start_ticks": "1833400",
+          "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+          "lease": "/var/tmp/strling-public-verification-controller.lock",
+          "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+          "recipe_sha256": "c328225a7308f910e30407a91bcfb5481cb8d53722e93de3aa350353ae438b48",
+          "request_sha256": "b73b951c3557fb2f30164892d93af79cc09faa17db962aba5d5e15a3db48827b",
+          "continuation_of": {
+            "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+            "pid": 206289,
+            "start_ticks": "1787724",
+            "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+            "lease": "/var/tmp/strling-public-verification-controller.lock",
+            "recipe_sha256": "4a82aae6773075935898b4c90b0640df4d881c3eaf7d3d37e4ff8c04ea7ca8e8",
+            "continuation_of": {
+              "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+              "pid": 386,
+              "start_ticks": "328159",
+              "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+              "lease": "/var/tmp/strling-public-verification-controller.lock",
+              "recipe_sha256": "790148886ee341e662235cc3907f6988b10cdc1b5a54553d034a223347173d36",
+              "publication_authorized": false,
+              "continuation_of": {
+                "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+                "pid": 406,
+                "start_ticks": "7206",
+                "boot_id": "b56f3097-c329-4e0a-a725-7d376d5463da",
+                "lease": "/var/tmp/strling-public-verification-controller.lock",
+                "recipe_sha256": "ac747801021cd8adbf8b9ae5c24b23d81819bf3fa2a8a3284d8383f6046bf244",
+                "publication_authorized": false,
+                "continuation_of": {
+                  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+                  "pid": 97886,
+                  "start_ticks": "9385072",
+                  "boot_id": "1c91574f-2638-44c3-9443-f15c1b9e4bb8",
+                  "lease": "/var/tmp/strling-public-verification-controller.lock",
+                  "recipe_sha256": "b636b083b53fd39c496ab9f4f46ac4a811272c615b766bdeffc12b373a520eaf",
+                  "publication_authorized": false
+                }
+              }
+            },
+            "publication_authorized": false,
+            "record_path": "/mnt/d/Projects/strling-lang/strling/target/public-verification/campaign-3e706127/execution-owner-resume-3.json"
+          }
+        }
+      }
+    }
+  },
+  "publication_authorized": false,
+  "record_path": "/mnt/d/Projects/strling-lang/strling/target/public-verification/campaign-3e706127/execution-owner-resume-4.json"
+}

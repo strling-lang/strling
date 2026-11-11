@@ -1,0 +1,13 @@
+{
+  "source": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+  "status": "passed",
+  "tests_run": 8,
+  "synthetic_raw_bytes": 1893890,
+  "synthetic_archive_bytes": 56054,
+  "helper_sha256": "309a7555e6e8544eb5e72540e0cfb0686a6761fa8f4e519e8c81a394ec16c2a3",
+  "format": "lossless gzip+base64 within canonical JSON; original bytes and every record retained",
+  "default_hygiene_limit_unchanged": true,
+  "source_or_trust_code_changed": false,
+  "private_key_read": false,
+  "publication_authorized": false
+}

@@ -1,0 +1,149 @@
+{
+  "artifact_id": "release:lua",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [],
+        "exact_install_commands_found": 0,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "035d27685a012634669f8c98bf2fae8d08c11574d2c82a9a49bfcb127828e703",
+      "source_path": "bindings/lua/README.md",
+      "url": "https://evidence.example.test/bindings/lua/README.md"
+    },
+    "provenance": {
+      "sha256": "b958db7e9b23957c47259271076ff36cd2f9fd884c103a44b9c04fd45ee5e309",
+      "url": "https://evidence.example.test/release-lua.intoto.json"
+    },
+    "sbom": {
+      "sha256": "c00a38b39e842e316560e3a7c8078b4595a7f7becb6e0191ef85619cfd8df883",
+      "url": "https://evidence.example.test/release-lua.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.19565117499951157,
+  "metadata": {
+    "fields": [],
+    "status": "requires-authenticated-payload-metadata"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:lua:coordinate",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:lua:metadata",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:lua:artifact",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:lua:source",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:lua:sbom",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:lua:provenance",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:lua:documentation",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:lua",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:lua:scope",
+      "platform": null,
+      "retrieval_sha256": "77c34abfd5dc8635b857a80f05afefe48eb4cda13a8f2fdfda8325a446b027c4",
+      "status": "READY",
+      "tier": "Preview"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/lua/strling-4.0.0-1.rockspec": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a",
+    "bindings/lua/strling-4.0.0-1.src.rock": "462ed808f12e7e0e7665d3a7374a77fa9030311dd09908bc33990ef3dd6872e0"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://luarocks.org/manifests/STRLING/strling-4.0.0-1.rockspec",
+      "sha256": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a",
+      "size": 847
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://luarocks.org/manifests/STRLING/strling-4.0.0-1.src.rock",
+      "sha256": "462ed808f12e7e0e7665d3a7374a77fa9030311dd09908bc33990ef3dd6872e0",
+      "size": 11606
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-lua.spdx.json",
+      "sha256": "c00a38b39e842e316560e3a7c8078b4595a7f7becb6e0191ef85619cfd8df883",
+      "size": 10214
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-lua.intoto.json",
+      "sha256": "b958db7e9b23957c47259271076ff36cd2f9fd884c103a44b9c04fd45ee5e309",
+      "size": 4458
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/lua/README.md",
+      "sha256": "035d27685a012634669f8c98bf2fae8d08c11574d2c82a9a49bfcb127828e703",
+      "size": 2597
+    }
+  ]
+}

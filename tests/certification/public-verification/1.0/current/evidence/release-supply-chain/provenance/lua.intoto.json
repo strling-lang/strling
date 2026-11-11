@@ -1,0 +1,99 @@
+{
+    "_type": "https://in-toto.io/Statement/v1",
+    "predicate": {
+        "buildDefinition": {
+            "buildType": "https://strling.dev/build-types/release-supply-chain/v1",
+            "externalParameters": {
+                "artifactId": "release:lua",
+                "buildCommand": [
+                    "python",
+                    "-m",
+                    "tooling.release_packaging",
+                    "--artifact-id",
+                    "release:lua",
+                    "--preview"
+                ],
+                "productVersion": "4.0.0",
+                "registry": "luarocks.org",
+                "support": {
+                    "external_prerequisites": [
+                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Confirm protected release environment reviewers and approved workflow source"
+                    ],
+                    "installation": "Governed registry artifact or source-tag route",
+                    "native_runtime_prerequisites": [
+                        "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
+                    ],
+                    "ownership_status": "externally-pending",
+                    "platforms": [
+                        "linux-x86_64"
+                    ],
+                    "publication_eligibility": "preview-only-explicit-authorization",
+                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "scope": "linux-x86_64",
+                    "support_claim": "binding:lua",
+                    "tier": "Preview"
+                }
+            },
+            "internalParameters": {
+                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "toolchains": [
+                    {
+                        "executable_sha256": "f4c21415ff473d159567589c38d1dd59beaa2d825b1ec8c651bce44c60388409",
+                        "id": "release:lua:linux-x86_64:lua",
+                        "version": "Lua 5.1.5 Copyright (C) 1994-2012 Lua.org, PUC-Rio"
+                    },
+                    {
+                        "executable_sha256": "15661974dbd271b3f8b4430e2c6d024c5addfdebe4e32073969877c23ca831c8",
+                        "id": "release:lua:linux-x86_64:luarocks",
+                        "version": "/usr/bin/luarocks 3.8.0 LuaRocks main command-line interface"
+                    },
+                    {
+                        "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+                        "id": "release:lua:linux-x86_64:python",
+                        "version": "Python 3.12.3"
+                    }
+                ]
+            },
+            "resolvedDependencies": [
+                {
+                    "digest": {
+                        "gitCommit": "3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                    },
+                    "uri": "git+https://github.com/strling-lang/strling@3e7061271d906251cb17c3eb06b6c748ac3068e7"
+                },
+                {
+                    "digest": {
+                        "sha256": "6001dde65b6c9a6745fc4e43717d1f204649e10235bef433fab116aca229a53c"
+                    },
+                    "uri": "strling:dependency-root:lua-luarocks"
+                }
+            ]
+        },
+        "runDetails": {
+            "builder": {
+                "id": "https://strling.dev/builders/release-supply-chain/v1"
+            },
+            "metadata": {
+                "finishedOn": "1970-01-01T00:00:00Z",
+                "invocationId": "3e7061271d906251cb17c3eb06b6c748ac3068e7:release:lua",
+                "startedOn": "1970-01-01T00:00:00Z"
+            }
+        }
+    },
+    "predicateType": "https://slsa.dev/provenance/v1",
+    "subject": [
+        {
+            "digest": {
+                "sha256": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a"
+            },
+            "name": "bindings/lua/strling-4.0.0-1.rockspec"
+        },
+        {
+            "digest": {
+                "sha256": "462ed808f12e7e0e7665d3a7374a77fa9030311dd09908bc33990ef3dd6872e0"
+            },
+            "name": "bindings/lua/strling-4.0.0-1.src.rock"
+        }
+    ]
+}

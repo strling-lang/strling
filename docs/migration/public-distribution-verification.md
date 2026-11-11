@@ -268,3 +268,23 @@ and nine hostile mutations passed qualification. These synthetic fixtures
 claim no profile acceptance or public installation. The existing reader's
 52 regression tests also passed in 498.76 seconds. Fresh authoritative
 certification remains mandatory for the replacement source.
+
+Source `1838ba890f825dd1c01173fcfb5414f88c742bd0` completed fresh
+preparation, all 40 generated families, and Local: 38 of 38 operations passed
+in 866.8212 seconds. Its Local evidence fingerprint is
+`19ca6015408d926dde2ca7436f89ed709ae5e029b0614aed8b28424bc6a4a60d`.
+The subsequent Pull Request profile stopped at operation 73 of 80,
+`test@repository`, after 72 passes; seven operations did not execute. The
+repository suite reported 2,376 passes, 25 platform-applicability skips,
+4,060 passing subtests and one failure. The failure was an obsolete literal
+expectation of 36 pending Local operations after the first result; the
+registered 38-operation profile correctly reported 37. Readiness itself
+continued to reject the incomplete profile.
+
+The regression now derives the pending denominator from governed membership
+and explicitly requires the unexecuted public-contract operation. Its exact
+ordered-membership assertion and fail-closed readiness assertions remain.
+The nine focused tests and twelve subtests pass. The original accepted Local
+and failed PR remain bound to `1838ba89`; neither can certify its successor.
+The terminal supervisor released its lease. Independent unreached PR leaves
+are being checked diagnostically before another frozen source campaign.

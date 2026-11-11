@@ -27,6 +27,14 @@ contract, preserving historical readers and functional-resource evidence.
 Positive and hostile reconstruction fixtures pass; source-bound certification
 and formal closure remain pending.
 
+Source `1838ba89` passed fresh preparation and Local 38/38. Its PR stopped
+after 72 of 80 operations passed when a readiness test retained the obsolete
+36-pending-operation expectation; the governed Local profile requires 37
+after its first result. The test now derives membership and explicitly checks
+that the public-contract operation remains required. The accepted Local and
+failed PR remain historical evidence for that source. Fresh certification is
+required for the narrow regression correction.
+
 ## H08 isolated Release failure and bounded correction — 2026-10-27
 
 Source `ca0d359a` passed Local38, PR80, readiness123 and authoritative Full126

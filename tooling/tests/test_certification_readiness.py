@@ -132,7 +132,12 @@ class CertificationReadinessTests(unittest.TestCase):
             artifact["deterministic_evidence"]["readiness_status"], "failed"
         )
         self.assertEqual(
-            len(artifact["deterministic_evidence"]["unexecuted_result_ids"]), 36
+            len(artifact["deterministic_evidence"]["unexecuted_result_ids"]),
+            len(selection(self.runner, "local")["selected_result_ids"]) - 1,
+        )
+        self.assertIn(
+            "public_distribution_contract@repository",
+            artifact["deterministic_evidence"]["unexecuted_result_ids"],
         )
         self.assertEqual(
             selection(self.runner, "local")["selected_result_ids"][1:],

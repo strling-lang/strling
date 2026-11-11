@@ -134,6 +134,9 @@ checkpoints:
           - check: Closure integration and transport compatibility
             result: passed
             details: Source a07f427952c3699ad5b3a95c0dc70cfaadeee59a completed eight-stage preparation and all 40 generated families, then honored a pre-profile engineering hold. Focused fixtures reproduced missing signed-bundle serialization and large-subject ownership; 50 integration tests passed after correction. The public producer uses the existing required structured-result contract with complete source/profile/evidence reconstruction, preserving the historical reader's single atomic functional-resource invocation. Independent reconstruction using immutable reader-owned helpers passed positive fixtures and nine mutations. The unchanged reader passed 52 tests in 498.76 seconds. A fresh replacement source still requires all authoritative certification.
+          - check: Retained Local acceptance and PR readiness regression
+            result: failed
+            details: Source 1838ba890f825dd1c01173fcfb5414f88c742bd0 passed fresh preparation, all 40 generated families and Local 38/38 in 866.8212 seconds (evidence fingerprint 19ca6015408d926dde2ca7436f89ed709ae5e029b0614aed8b28424bc6a4a60d). PR stopped at test@repository, operation 73/80, after 72 passes; seven operations did not execute. The repository suite had 2376 passes, 25 platform-applicability skips, 4060 passing subtests and one stale literal expectation (36 pending Local operations instead of 37). The corrected test derives the count from governed selection and explicitly requires the pending public-contract result; exact ordered membership and fail-closed readiness remain enforced. Nine focused tests and twelve subtests pass. Accepted Local and failed PR evidence remain source-bound; the terminal supervisor is not an active worker.
     - name: Independent readiness closure
       status: planned
       evidence: []
@@ -150,3 +153,5 @@ commits:
       subject: Bind public contract certification to atomic producer evidence
     - sha: a07f427952c3699ad5b3a95c0dc70cfaadeee59a
       subject: Align quality assertions with public certification profile versions
+    - sha: 1838ba890f825dd1c01173fcfb5414f88c742bd0
+      subject: Complete public certification result and closure integration

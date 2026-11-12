@@ -8,6 +8,7 @@ import subprocess
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from tooling.public_distribution import obligations
 from tooling.release_candidate_evidence import (
@@ -543,6 +544,29 @@ class CandidateEvidenceTests(unittest.TestCase):
         )
         with source_data(ROOT, head) as root:
             self.assertEqual(expected, (root / "README.md").read_bytes())
+
+    def test_source_snapshot_handles_long_evidence_paths_in_a_deep_temp_root(self):
+        head = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+        ).strip()
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory)
+            deep = base / ("x" * max(1, 190 - len(str(base))))
+            deep.mkdir()
+            with patch("tempfile.tempdir", str(deep)):
+                with source_data(ROOT, head) as root:
+                    configured = subprocess.check_output(
+                        ["git", "config", "--local", "core.longpaths"],
+                        cwd=root,
+                        text=True,
+                    ).strip()
+                    self.assertEqual("true", configured)
+                    self.assertEqual(
+                        subprocess.check_output(
+                            ["git", "show", head + ":README.md"], cwd=ROOT
+                        ),
+                        (root / "README.md").read_bytes(),
+                    )
 
 
 if __name__ == "__main__":

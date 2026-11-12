@@ -62,9 +62,11 @@ Essential names select canonical registry helpers. Their current guarantees are
 lexical shape only; the C++ facade does not strengthen them into semantic
 validators.
 
-The printed Simply adapter response has a construction `status` and, on
-success, a nested `compile_result`. Check both `status="success"` and
-`compile_result.outcome="succeeded"` before consuming semantic output.
+The printed response is the native protocol envelope: check
+`interop_protocol_version="1.0.0"`, `operation="simply.compile"`, and
+`status="completed"`. Its nested `result` contains the Simply adapter response.
+Check both `result.status="success"` and
+`result.compile_result.outcome="succeeded"` before consuming semantic output.
 
 See [the API reference](docs/api_reference.md) and the
 [canonical specification](../../spec/README.md).

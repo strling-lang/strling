@@ -370,6 +370,24 @@ def copy_subject_directory(root: Path, member: dict, destination: Path) -> None:
         shutil.copyfile(source, target)
 
 
+def simply_native_result(envelope: dict) -> dict:
+    """Require both native transport and Simply compilation to succeed."""
+    result = envelope.get("result")
+    if (
+        envelope.get("interop_protocol_version") != "1.0.0"
+        or envelope.get("operation") != "simply.compile"
+        or envelope.get("status") != "completed"
+        or not isinstance(result, dict)
+        or result.get("status") != "success"
+        or not isinstance(result.get("compile_result"), dict)
+        or result["compile_result"].get("outcome") != "succeeded"
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-documentation", "C++ documented Simply program failed"
+        )
+    return result
+
+
 def canonical_results(source: dict, target: dict) -> dict:
     if "interop_protocol_version" in source or "interop_protocol_version" in target:
         for envelope in (source, target):
@@ -586,14 +604,9 @@ def consume_native(
             work,
             environment,
         )
-        documented = json.loads(run_consumer([str(executable)], work, environment))
-        if (
-            documented.get("status") != "success"
-            or documented.get("compile_result", {}).get("outcome") != "succeeded"
-        ):
-            raise ReleaseSupplyChainError(
-                "consumer-documentation", "C++ documented Simply program failed"
-            )
+        simply_native_result(
+            json.loads(run_consumer([str(executable)], work, environment))
+        )
     original = native.read_bytes()
     marker = b"\0STRLING-PRODUCT-VERSION:" + version.encode() + b"\0"
     if original.count(marker) != 1:

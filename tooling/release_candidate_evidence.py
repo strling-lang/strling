@@ -370,6 +370,8 @@ def source_data(repository: Path, source_sha: str):
                     "safe.directory=" + str(repository.resolve()),
                     "-c",
                     "core.autocrlf=false",
+                    "-c",
+                    "core.longpaths=true",
                     *arguments,
                 ],
                 env=environment,
@@ -387,6 +389,7 @@ def source_data(repository: Path, source_sha: str):
         )
         git("-C", str(root), "config", "core.hooksPath", str(hooks))
         git("-C", str(root), "config", "core.autocrlf", "false")
+        git("-C", str(root), "config", "core.longpaths", "true")
         git("-C", str(root), "checkout", "--detach", source_sha)
         if git("-C", str(root), "status", "--porcelain", "--untracked-files=all"):
             raise ValueError("source data checkout is not exact and clean")

@@ -5,7 +5,11 @@ import hashlib
 
 import pytest
 
-from tooling.release_consumers import canonical_results, copy_subject_directory
+from tooling.release_consumers import (
+    canonical_results,
+    copy_subject_directory,
+    simply_native_result,
+)
 from tooling.release_supply_chain import ReleaseSupplyChainError
 
 
@@ -35,6 +39,54 @@ def test_consumer_accepts_canonical_values_and_completed_transport():
         canonical_results(envelope(source), envelope(target))["source_outcome"]
         == "succeeded"
     )
+
+
+def simply_envelope():
+    return {
+        "interop_protocol_version": "1.0.0",
+        "operation": "simply.compile",
+        "status": "completed",
+        "result": {"status": "success", "compile_result": {"outcome": "succeeded"}},
+    }
+
+
+def test_cpp_documentation_requires_the_actual_native_simply_envelope():
+    response = simply_envelope()
+    assert simply_native_result(response) is response["result"]
+    with pytest.raises(ReleaseSupplyChainError):
+        simply_native_result(response["result"])
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "protocol",
+        "operation",
+        "transport",
+        "result",
+        "construction",
+        "compile",
+        "outcome",
+    ],
+)
+def test_cpp_documentation_rejects_incomplete_or_failed_native_simply(mutation):
+    response = simply_envelope()
+    if mutation == "protocol":
+        response["interop_protocol_version"] = "2.0.0"
+    elif mutation == "operation":
+        response["operation"] = "compile"
+    elif mutation == "transport":
+        response["status"] = "error"
+    elif mutation == "result":
+        response.pop("result")
+    elif mutation == "construction":
+        response["result"]["status"] = "failed"
+    elif mutation == "compile":
+        response["result"]["compile_result"] = None
+    else:
+        response["result"]["compile_result"]["outcome"] = "failed"
+    with pytest.raises(ReleaseSupplyChainError):
+        simply_native_result(response)
 
 
 @pytest.mark.parametrize(

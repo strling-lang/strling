@@ -165,14 +165,45 @@ checkpoints:
     - name: CP3 Final implementation and focused proof
       status: in_progress
       evidence:
+          - check: Native Simply documentation envelope regression
+            result: passed
+            details:
+                The 25539bf1 Linux acquisition stopped at C++ documentation capture after successful C and C++
+                assembly. Retained native output proves completed transport and successful nested Simply and
+                canonical results. Correct the harness to require both envelope and inner success, and describe
+                the envelope accurately in the README. All 21 focused consumer tests pass, including seven
+                malformed or failed envelope cases. A continuing non-authoritative package diagnostic retains
+                the original failure and does not transfer its receipts to a successor candidate.
           - check: Source-grounded acceptance
             result: not_run
             details:
                 All affected subsystem, lint, format, documentation, architecture and semantic-authority checks pass.
                 Three exact Dart/Kotlin/TypeScript declaration corrections and semantic-authority evidence were
                 regenerated canonically; the other affected projections passed without regeneration. Commit and
-                qualify the source-distinct reader, integrate its immutable workflow pin, then acquire final-source
-                packages and prerequisites before the candidate freeze and authoritative profiles.
+                qualify the successor source-distinct reader after the consumer correction, integrate its
+                immutable workflow pin, then acquire final-source packages and prerequisites before the
+                candidate freeze and authoritative profiles. Canonical preparation at 25539bf1 passed all
+                eight stages and all 42 generated families; its evidence remains bound to that source.
+          - check: Independent reader and Python example scaffolding regressions
+            result: passed
+            details:
+                Reproduced Windows Git filename-length failures in a deep disposable source checkout; explicit
+                command-local and repository-local long-path handling passes the deep-path regression and
+                72 affected consumer, supply-chain and reader tests with 65 subtests. Corrected Python example
+                context imports after the staged-wheel diagnostic exposed function-local import shadowing;
+                the scaffolding control executes all five unchanged reviewed blocks, and the actual retained
+                staged-wheel retry passes all five examples in 3.949366 seconds. Actual successor-source package
+                evidence and reader promotion remain mandatory. Original diagnostics are retained.
+          - check: Complete independent package diagnostic reconciliation
+            result: passed
+            details:
+                All 13 Linux routes completed; the sole Python wrapper failure is preserved and its corrected
+                five-example staged-wheel retry passes. All eight Windows package and consumer scopes pass.
+                The combined diagnostics cover all 17 routes, all 15 Supported consumer scopes and six
+                bounded Preview documentation routes. These prior-source artifacts and hashed engineering
+                harness observations are not successor-source receipts or accepted certification profiles.
+                The three narrow consumer, example-scaffolding and isolated-checkout repairs require a clean
+                successor reader qualification and fresh final candidate certification.
     - name: CP4 Fresh integration and certification
       status: planned
       evidence:
@@ -194,3 +225,5 @@ commits:
       subject: Lock final product candidate scope and recovery evidence
     - sha: 4d53bf1d632196b0627176a77beaff74dc6012de
       subject: Correct source factories and qualify complete-product evidence
+    - sha: 25539bf14e587afd7180864ea67ceda3e15373ef
+      subject: Integrate immutable candidate verification and evidence retention

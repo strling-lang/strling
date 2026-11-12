@@ -90,7 +90,7 @@ def python_program(work: Path) -> str:
     program = [
         "import json, pathlib\nfrom STRling import load_native, bundled_library_path\n"
     ]
-    context = "client = load_native()\ncompile_projection = json.loads(pathlib.Path('request.json').read_text())\ncompile_projection = {key: value for key, value in compile_projection.items() if key in ('target_profile', 'requested_outputs', 'compiler_options')}\nexact_target_profile = json.loads(pathlib.Path('target.json').read_text())\n"
+    context = "import json, pathlib\nfrom STRling import load_native\nclient = load_native()\ncompile_projection = json.loads(pathlib.Path('request.json').read_text())\ncompile_projection = {key: value for key, value in compile_projection.items() if key in ('target_profile', 'requested_outputs', 'compiler_options')}\nexact_target_profile = json.loads(pathlib.Path('target.json').read_text())\n"
     for index, identity in enumerate(PYTHON_EXAMPLES):
         body = context + block(work, identity)
         if identity.endswith("README.md#2"):

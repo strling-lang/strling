@@ -254,3 +254,63 @@ permissions and authoritative retention steps. Signed-byte formatting ownership
 and five exact existing-shape size exceptions preserve neighboring-file and
 private-key checks and the global file-size limit. These remain engineering
 results, not final candidate certification.
+
+The integrated preparation source is
+`25539bf14e587afd7180864ea67ceda3e15373ef`. Its complete canonical preparation
+passed all eight ordered stages and all 42 registered generated families.
+LSP assembly passed in 70.088433 seconds with a source-bound 22-file payload.
+Reader qualification at `4d53bf1d632196b0627176a77beaff74dc6012de` subsequently
+completed: the nine Windows fixture retests and actual documentation retest
+passed with corrected Git isolation and governed Cargo discovery. Original
+failures remain retained. No additional waiver was introduced.
+
+The first fresh Linux acquisition stopped after 379.483009 seconds. The C
+build, consumer capture and local transport passed, and C++ package assembly
+passed. The C++ documentation capture failed because its new harness checked
+the Simply construction status at the top level of the native response.
+A retained reproduction showed the actual response had completed transport,
+successful Simply construction and successful canonical compilation inside
+the protocol envelope. The consumer check now requires the exact native
+protocol, operation and completed transport before checking both inner
+success values; the README explains the same envelope. All 21 focused
+consumer tests pass, including refusal of malformed or failed envelopes.
+These repairs require a successor candidate source and fresh certification.
+The stopped source's evidence is historical and will not be relabeled.
+
+A non-authoritative first-build diagnostic pass now continues across
+independent package and documentation consumers before another candidate is
+frozen. It retains each actual failure and issues no authoritative build
+receipts. Final-source profiles, signing, staged qualification and hosted
+candidate acceptance remain pending.
+
+The wider diagnostic also found two independent harness defects before a
+successor freeze. Windows data-only source reconstruction inherited Git's
+short-path limit, so long retained-evidence names could prevent checkout.
+Long-path support is now explicit for the isolated clone command and its
+local repository configuration, without changing system settings. The actual
+deep-path regression and affected consumer, supply-chain and candidate-reader
+suites pass: 72 tests and 65 subtests. The original access-denied sandbox
+attempt and subsequent actual filename-length failures remain retained.
+
+The Python example wrapper initialized its application context before an
+example's function-local `load_native` import. The real staged-wheel
+diagnostic raised `UnboundLocalError`. The wrapper now establishes its own
+imports first; a focused scaffolding test executes all five unchanged reviewed
+example blocks. The corrected wrapper then executed all five examples against
+the retained staged 4.0.0 wheel in 3.949366 seconds, preserving the original
+failed program and output. The complete Linux diagnostic finished all 13
+applicable routes; its sole Python failure remains recorded separately from
+this successful retry. Windows diagnostics and successor-source certification
+remain mandatory. Neither scaffolding nor these older-source package
+diagnostics substitute for final clean-consumer proof.
+
+The Windows diagnostic completed all eight applicable package and consumer
+scopes successfully, including the corrected Python examples. Together with
+the completed Linux pass and separately retained Python retry, engineering
+diagnostics account for all 17 distribution routes and all 15 Supported
+consumer scopes. All six Preview documentation routes retain their bounded
+classification. These observations use the prior committed artifact source
+and the explicitly hashed repair harness; they are not successor-source build
+receipts, accepted profiles or public retrieval evidence. The three narrow
+repairs are now ready for a clean implementation checkpoint and immutable
+reader qualification before final-source preparation and certification.

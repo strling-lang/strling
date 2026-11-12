@@ -9961,3 +9961,48 @@ mutation, production tag, GitHub Release, remote main/dev update or production
 publication credential was used. Full details and measured timings are in the
 [packaging report](release-packaging-rebuild.md) and
 [controlled record](records/release-packaging-rebuild.yaml).
+
+## Fourth Edition final product candidate — retained Local correction
+
+The first complete-source candidate a541d27d passed its own eight preparation
+stages, all42 generated families, all42 fresh build receipts/21 comparisons,
+95 tool coordinates,17 exact-byte credential-free handoffs and6 bounded Preview
+documentation producers. Its source-bound readiness gate passed after a narrow
+operational repair selected native Windows Git for Windows roots; the original
+cross-platform alternate-object-path failure remains retained.
+
+Authoritative Local rejected that candidate at operation19/38: migration
+explanation requires the F# README's migration-status and compiler-boundary
+markers. Preserve the actual18passed+1failed/19executed profile and authenticated
+producer objects; PR/Full/Release/signing did not start. Restore truthful current
+migration prose without historical task IDs and retain the strict documentation
+denominator. The focused15tests+12negative subtests and canonical14-document
+frontend check pass. No generated family matches the narrow correction paths.
+
+Continue serial independent diagnostics on the unchanged failed source, repair
+all discovered deterministic defects, then commit and freeze a clean successor
+with fresh required preparation, builds and whole certification. No V receipt
+or profile becomes successor acceptance. The qualified candidate reader and
+three closed historical certificates remain unchanged; publication is prohibited.
+
+Continuing independent diagnostics also exposed the direct Lua runtime producer's
+missing checkout-loader argument. Preserve its stale-module assertion failure;
+the six other Lua cases passed. Reuse the component runner's absolute loader in
+the certification command, keep every assertion/probe, and add an ownership
+regression. Seven focused producer tests pass, with no generated-family match.
+Actual corrected five-language runtime execution remains mandatory after the
+current diagnostic owner terminates. The source-distinct evidence reader is
+unchanged; this producer repair requires the successor's fresh certification.
+
+The diagnostic owner completed all107 pending operations in5127.461114seconds;
+with18preceding Local passes it accounts for all125registeredIDs. Its3nonpassing
+operations reduce to the2documented rootcauses, with all14repository test/setup
+errors naming the missing F#marker. Its25skips are exclusively existing native
+Windows API integration cases, independently inventoried as inapplicable onLinux.
+After that terminal, the actual corrected five-language runtime producer passed
+3runs in66.679011seconds;33focused tests+12negative subtests and the actual
+migration producer passed. All4behavioral inputhashes remained stable throughout
+the194.761720second focused owner. These are engineering diagnostics, not a Full
+acceptance or successor-source certificate. Commit a clean successor, regenerate
+all required source-bound preparation/build evidence and execute every mandatory
+profile, reconstruction, original-authority signature and actual hosted check.

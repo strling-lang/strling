@@ -130,6 +130,27 @@ class FrontendConvergenceTests(unittest.TestCase):
         with self.assertRaisesRegex(FrontendConvergenceError, "missing canonical"):
             self.certify(self.valid, documents)
 
+    def test_binding_migration_boundary_markers_are_required(self) -> None:
+        for path in (
+            "bindings/fsharp/README.md",
+            "bindings/java/README.md",
+            "bindings/kotlin/README.md",
+            "bindings/lua/README.md",
+        ):
+            for marker in (
+                "Migration status:",
+                "compatibility evidence",
+                "compiler boundary.",
+            ):
+                with self.subTest(path=path, marker=marker):
+                    documents = copy.deepcopy(self.documents)
+                    self.assertIn(marker, documents[path])
+                    documents[path] = documents[path].replace(marker, "")
+                    with self.assertRaisesRegex(
+                        FrontendConvergenceError, "binding hierarchy marker"
+                    ):
+                        self.certify(self.valid, documents)
+
     def test_tutorial_hierarchy_reordering_fails_closed(self) -> None:
         documents = copy.deepcopy(self.documents)
         tutorial = documents["docs/tutorial/first_contribution.md"]

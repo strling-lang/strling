@@ -289,7 +289,15 @@ def _commands(tools: Mapping[str, str]) -> dict[str, tuple[Path, list[str]]]:
         "perl": (ROOT / "bindings/perl", [tools["prove"], "-lv", "t/adapter.t"]),
         "lua": (
             ROOT / "bindings/lua",
-            [tools["busted"], "-v", "-o", "plainTerminal", "spec/adapter_spec.lua"],
+            [
+                tools["busted"],
+                "--helper",
+                str(ROOT / "bindings/lua/spec/source_loader.lua"),
+                "-v",
+                "-o",
+                "plainTerminal",
+                "spec/adapter_spec.lua",
+            ],
         ),
         "r": (ROOT / "bindings/r", [tools["sh"], "run_tests.sh"]),
     }

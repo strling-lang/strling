@@ -331,3 +331,71 @@ packaging and public-verification jobs retain their exact accepted reader and
 source identities. The next clean integration commit remains unfrozen until
 its own preparation, fresh builds and consumers, Preview documentation and
 readiness gate pass. No final-source profile or signature is claimed here.
+
+## First complete-source readiness and retained Local failure
+
+Integration source `a541d27d7e1e05796a84b17bb1bfc4f17f6a70e6` completed its own
+eight preparation stages and all 42 generated families. LSP preparation passed
+in 68.549998 seconds; the complete preparation owner took 301.066622 seconds.
+Fresh Linux and Windows acquisition completed in 2275.249585 and 2223.260693
+seconds. Independent reconciliation accepted all 42 receipts, 21 build pairs,
+17 routes and 95 tool coordinates for that source. Separate Full/Release
+supply-chain bundles, isolated Python sdist installation, all 17 exact-byte
+handoffs and six bounded Preview documentation producers passed. None of these
+observations is a certificate for a successor source.
+
+The first readiness controller used Linux Git on a native Windows checkout.
+Its retained failure reports an unresolvable Windows alternate-object path.
+The corrected operational checker uses each root's owning-platform Git,
+requires the exact source, empty porcelain and empty stderr, and rejects a
+foreign SHA for all three actual root types. Readiness attempt 2 passed in
+56.870572 seconds and froze the clean source at 2026-11-12T12:35:37Z.
+No Git setting, compiler source or build receipt was changed by that repair.
+
+Fresh authoritative Local then failed at operation 19 of 38,
+`migration_explanation_certification`: the F# README had lost the required
+`Migration status:`, `compatibility evidence` and `compiler boundary.` markers
+when obsolete task-specific prose was removed. The actual profile has 18
+passed and one failed operation, with 19 executed; it is not a 38-operation
+acceptance. Its evidence fingerprint is
+`12315e4e8922f7aa9fd3a2d69b636f381e17b7771831f1430149bcb64d124670`.
+The original profile and authenticated producer objects remain under
+`target/release-candidate/campaign-a541d27d/failed-local-a541d27d`.
+PR, Full, independent Release and signing did not start for this rejected source.
+
+Restore a truthful F# migration-status statement without retired task identifiers;
+retain the existing complete documentation denominator and every refusal check.
+The focused frontend and migration suites pass 26 tests and 12 negative subtests
+covering marker removal from all four governed binding READMEs. The canonical
+14-document frontend contract and actual migration-explanation producer pass. The generated registry maps no family
+to these two changed source paths. The serial, non-authoritative diagnostic pass
+completed all 107 remaining Full-registry operations in 5127.461114 seconds in
+the unchanged failed-source checkout. Together with the 18 preceding passed Local
+operations it accounts for the complete 125-operation registry. Its 103 passed,
+one existing license waiver and three failed diagnostic operations are not an
+authoritative Full result. The three failures are the migration producer,
+repository tests and dynamic-language runtime producer; they reduce to the two
+documented root causes. All three repository-test failures and eleven setup
+errors name the missing F# marker. The 25 skipped unit cases are exclusively
+existing native Windows API integration tests, inapplicable to this Linux run;
+their exact identities and reasons were independently collected. A successor's
+fresh source-bound preparation, builds and all mandatory certification remain
+required. The qualified immutable reader code is unchanged. No approved private
+key or production publication credential has been read.
+
+The continuing diagnostic pass also rejected the dynamic-language runtime
+producer. Its direct Busted command omitted the absolute checkout loader used
+by the Lua component runner. The retained failure is the existing stale-module
+regression's absolute-source assertion; its six peer Lua cases passed. Add the
+same explicit loader to that certification command, keeping the assertion and
+all transport, lifecycle and malformed-kernel probes intact. Seven focused
+runtime-producer tests pass, including the new absolute checkout-loader check.
+The registry maps no generated family to this producer or its test. The corrected
+real five-language runtime producer passed three runs in 66.679011 seconds.
+The combined focused suites passed 33 tests and 12 subtests in 106.00 seconds;
+their wrapper took 108.562000 seconds. The actual migration producer passed in
+15.600101 seconds. All four behavioral input hashes remained unchanged across
+the complete 194.761720-second focused owner. This is explicit working-source
+engineering proof before the clean successor commit, not transferred candidate
+certification or public-registry evidence.
+This changes a certification producer, not the immutable evidence reader.

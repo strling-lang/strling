@@ -209,6 +209,47 @@ checkpoints:
     - name: CP4 Fresh integration and certification
       status: in_progress
       evidence:
+          - check: Retained first complete-source Local failure
+            result: passed
+            details:
+                Rejected a541d27d's actual Local result has 18 passed and one failed of 19 executed,
+                with 38 registered requirements. Migration-explanation operation 19 rejects missing F# migration
+                and compiler-boundary markers. Original profile fingerprint 12315e4e8922f7aa9fd3a2d69b636f381e17b7771831f1430149bcb64d124670
+                and authenticated producer objects are retained. Its 42 build receipts, 21 pairs, 95 tools,
+                eight preparation stages, 42 generated families and six Preview producers passed for that source;
+                no PR, Full, Release or signing accepted it. Do not transfer evidence to a successor.
+          - check: Narrow documentation correction and continuing independent diagnostics
+            result: passed
+            details:
+                Restore truthful F# migration status without old task identifiers; preserve the complete existing
+                frontend documentation contract. All 26 focused tests and 12 marker-removal subtests pass, as do
+                the 14-document canonical check and actual migration-explanation producer. No generated family
+                matches the correction paths. Serial non-authoritative diagnostics completed all 107 remaining
+                Full-registry operations; all three nonpassing operations map to the two documented root causes.
+                Qualified immutable reader code is unchanged. Fresh successor certification remains mandatory.
+          - check: Retained dynamic-language runtime launcher failure and focused repair
+            result: passed
+            details:
+                Continuing diagnostics found the direct Busted runtime-certification command lacked the absolute
+                checkout loader used by the Lua component runner. Preserve the stale-module assertion failure
+                and six passing peer cases. Wire the same loader into certification without weakening that
+                assertion or transport probes. All seven focused producer tests pass, including absolute loader
+                ownership. No generated family matches the producer or test. The actual five-language runtime
+                producer passes three runs in 66.679011 seconds. Combined focused suites pass 33 tests and
+                12 negative subtests; the actual migration producer passes. All four behavioral input hashes
+                remain unchanged across the complete 194.761720-second focused owner. These are engineering
+                observations before a successor commit, not successor certification. The immutable evidence
+                reader is unchanged.
+          - check: Complete diagnostic failure and host-skip reconciliation
+            result: passed
+            details:
+                The 5127.461114-second diagnostic owner executed all 107 pending operations after 18 passed
+                Local operations. Its 103 passed, one existing scoped waiver and three failed operations cover
+                the complete 125-ID registry without constituting Full certification. Repository tests had
+                three failures and eleven setup errors, all traced to the F# marker and covered by the passing
+                corrected suites. All 25 skips are existing native Windows API integration markers, inapplicable
+                on Linux; their exact identities and reasons are retained. No missing dependency or new skip
+                accounts for them. No mandatory successor operation is waived or reused by this reconciliation.
           - check: Source-grounded acceptance
             result: not_run
             details:
@@ -231,3 +272,5 @@ commits:
       subject: Integrate immutable candidate verification and evidence retention
     - sha: bd2295025afce664182b8c4d1e65d65eb3120734
       subject: Repair staged documentation consumers and isolated evidence checkout
+    - sha: a541d27d7e1e05796a84b17bb1bfc4f17f6a70e6
+      subject: Pin the qualified candidate reader and finalize certification integration

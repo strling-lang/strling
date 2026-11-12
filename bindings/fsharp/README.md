@@ -9,8 +9,8 @@ The `STRling.FSharp` package is an idiomatic F# projection over the shared C#
 native transport, parser, compiler, Semantic IR interpretation, target emitter,
 or regex engine.
 
-The adapter delegates to the canonical kernel; historical compatibility fixtures
-do not restore retired compiler APIs.
+> **Migration status:** the canonical native adapter is implemented. Historical
+> fixtures are compatibility evidence, not the compiler boundary.
 
 Semantic STRling is the flagship textual language. Regex-compatible text is an
 import/compatibility surface, not Semantic STRling.

@@ -3,11 +3,23 @@ from __future__ import annotations
 import json
 import os
 import unittest
+from pathlib import Path
 
 from tooling import dynamic_language_adapter_runtime as runtime
 
 
 class DynamicLanguageAdapterRuntimeTests(unittest.TestCase):
+    def test_lua_runtime_uses_the_absolute_checkout_loader(self) -> None:
+        tools = {name: name for name in ("bundle", "prove", "busted", "sh")}
+        directory, command = runtime._commands(tools)["lua"]
+        self.assertEqual(tools["busted"], command[0])
+        helper = Path(command[command.index("--helper") + 1])
+        self.assertTrue(helper.is_absolute())
+        self.assertTrue(helper.is_file())
+        self.assertEqual(
+            (directory / "spec/source_loader.lua").resolve(), helper.resolve()
+        )
+
     def test_governed_version_ranges_accept_certification_rows(self) -> None:
         runtime._assert_versions(
             {

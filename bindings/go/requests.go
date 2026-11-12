@@ -23,13 +23,16 @@ func SourceCompileRequest(source string, options *SourceOptions) map[string]any 
 		prepared.FrontendID = defaultSemanticFrontend
 	}
 	if prepared.FrontendVersion == "" {
-		prepared.FrontendVersion = prepared.SpecificationVersion
+		prepared.FrontendVersion = defaultFrontendVersion
 	}
 	if prepared.SourceID == "" {
 		prepared.SourceID = defaultSourceIdentity
 	}
 	if prepared.MediaType == "" {
 		prepared.MediaType = defaultSourceMediaType
+		if prepared.FrontendID == "strling.regex-compat" {
+			prepared.MediaType = "text/x-strling-regex-compat"
+		}
 	}
 	if len(prepared.RequestedOutputs) == 0 {
 		prepared.RequestedOutputs = []string{"semantic", "analysis"}

@@ -1,5 +1,9 @@
 # STRling Kotlin adapter
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 The Kotlin package is an idiomatic thin facade over the same
 `com.strling:strling-jvm` bridge used by Java. It contains no independent
 parser, compiler, semantic IR, validator, diagnostics, or target emitter.
@@ -34,14 +38,21 @@ These source-build commands do not publish packages.
 
 ## Canonical compile
 
+Pass the absolute authenticated native-library path as the first program argument.
+The program requires that argument; it never searches a developer installation.
+
 ```kotlin
 import com.strling.jvm.NativeClient
 import java.nio.file.Path
 import strling.Compiler
 
-NativeClient.load(Path.of(args[0]).toAbsolutePath()).use { client ->
-    val compiler = Compiler(client)
-    println(compiler.parse("literal \"hello\""))
+fun main(args: Array<String>) {
+    NativeClient.load(Path.of(args[0]).toAbsolutePath()).use { client ->
+        val compiler = Compiler(client)
+        val result = compiler.parse("semantic strling 1.0; case sensitive; pattern text \"hello\";") as Map<*, *>
+        check(result["outcome"] == "succeeded")
+        println(result["outcome"])
+    }
 }
 ```
 
@@ -64,3 +75,13 @@ helpers with local validation.
 See the [Kotlin API reference](docs/api_reference.md), the
 [shared JVM bridge](../jvm/README.md), and the
 [migration certification](../../docs/migration/jvm-adapter-migration.md).
+
+## Proposed public installation
+
+After separately authorized publication, the exact proposed coordinate is:
+
+```bash
+mvn dependency:get -Dartifact=com.strling:strling-kotlin:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2
+```
+
+This proposed command resolves the exact Maven coordinate. Add `implementation("com.strling:strling-kotlin:4.0.0")` to the application dependency block. The application supplies the authenticated native library.

@@ -4,10 +4,10 @@ public typealias SimplyStep = [String: Any]
 
 public struct SourceOptions {
     public var specificationVersion = "1.0-draft.1"
-    public var frontendID = "semantic_strling"
+    public var frontendID = "strling.semantic"
     public var frontendVersion: String?
     public var sourceID = "src:swift.adapter"
-    public var mediaType = "text/strling"
+    public var mediaType = "text/x-strling-semantic"
     public var requestedOutputs = ["semantic", "analysis"]
     public var compilerOptions: [String: Any] = [
         "partial_semantics": "forbid",
@@ -33,12 +33,14 @@ public func sourceCompileRequest(
                 "specification_version": options.specificationVersion,
                 "frontend": [
                     "id": options.frontendID,
-                    "dialect_version": options.frontendVersion ?? options.specificationVersion,
+                    "dialect_version": options.frontendVersion ?? "1.0.0",
                 ],
                 "content": [
                     "kind": "inline",
                     "encoding": "utf-8",
-                    "media_type": options.mediaType,
+                    "media_type": options.frontendID == "strling.regex-compat"
+                        && options.mediaType == "text/x-strling-semantic"
+                        ? "text/x-strling-regex-compat" : options.mediaType,
                     "text": source,
                 ],
                 "provenance": ["kind": "authored"],

@@ -12,7 +12,9 @@ use STRling::StrictJSON ();
 
 my $request = source_compile_request('literal "hello"');
 is($request->{contract_version}, '1.0.0', 'canonical request contract');
-is($request->{input}{document}{frontend}{id}, 'semantic_strling', 'canonical frontend');
+is($request->{input}{document}{frontend}{id}, 'strling.semantic', 'canonical frontend');
+is($request->{input}{document}{frontend}{dialect_version}, '1.0.0', 'independent frontend dialect');
+is($request->{input}{document}{content}{media_type}, 'text/x-strling-semantic', 'semantic media type');
 is(email('root')->{arguments}{helper_id}, 'stdlib.email', 'lexical helper identity');
 ok(exists(uuid('root')->{arguments}{parameters}{version}), 'optional parameter remains explicit');
 

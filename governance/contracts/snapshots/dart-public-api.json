@@ -41,7 +41,7 @@
         "export::maxInteropResponseBytes::getter::maxInteropResponseBytes": "int get maxInteropResponseBytes",
         "export::nativeAbiVersion::getter::nativeAbiVersion": "int get nativeAbiVersion",
         "export::simplyBuilderRequest::function::simplyBuilderRequest": "Map<String, Object?> simplyBuilderRequest(List<Map<String, Object?>> steps, String rootStepId)",
-        "export::sourceCompileRequest::function::sourceCompileRequest": "Map<String, Object?> sourceCompileRequest(String source, {String specificationVersion = _specificationVersion, String frontendId = 'semantic_strling', String? frontendVersion, String sourceId = 'src:dart.adapter', String mediaType = 'text/strling', List<String> requestedOutputs = const ['semantic', 'analysis'], Map<String, Object?>? compilerOptions, Map<String, Object?>? targetProfileReference})",
+        "export::sourceCompileRequest::function::sourceCompileRequest": "Map<String, Object?> sourceCompileRequest(String source, {String specificationVersion = _specificationVersion, String frontendId = 'strling.semantic', String? frontendVersion, String sourceId = 'src:dart.adapter', String mediaType = 'text/x-strling-semantic', List<String> requestedOutputs = const ['semantic', 'analysis'], Map<String, Object?>? compilerOptions, Map<String, Object?>? targetProfileReference})",
         "export::stdlibHelper::function::stdlibHelper": "Map<String, Object?> stdlibHelper(String stepId, String helperId, Map<String, Object?> parameters)",
         "export::stdlibHelperIds::getter::stdlibHelperIds": "List<String> get stdlibHelperIds",
         "export::stdlibRegistryVersion::getter::stdlibRegistryVersion": "String get stdlibRegistryVersion",

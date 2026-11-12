@@ -109,11 +109,11 @@ public final class Simply {
     }
 
     public static Pattern startsWith(Object... values) {
-        return merge(position("start_of_text"), merge(values));
+        return merge(position("input_start"), merge(values));
     }
 
     public static Pattern endsWith(Object... values) {
-        return merge(merge(values), position("end_of_text"));
+        return merge(merge(values), position("input_end"));
     }
 
     public static Pattern followedBy(Object... values) {

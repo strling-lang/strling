@@ -215,6 +215,7 @@ printfn "%s" (JsonSerializer.Serialize({|status="passed";source_outcome="succeed
 """
 
 JAVA_CONSUMER = """import com.strling.Compiler;
+import com.strling.simply.Simply;
 import com.strling.jvm.NativeClient;
 import com.strling.jvm.NativeLoadException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -229,6 +230,8 @@ public class Consumer {
  public static void main(String[] args) throws Exception {
   try(NativeClient client=NativeClient.load(Paths.get(args[0]))) {
    Compiler compiler=new Compiler(client);
+   JsonNode simply=mapper.valueToTree(client.simplyCompile(Simply.merge(Simply.startsWith("a"),Simply.endsWith("a")).buildRequest(Map.of("requested_outputs",java.util.List.of("semantic"),"compiler_options",Map.of("partial_semantics","forbid","diagnostic_policy",Map.of("minimum_severity","hint"))))));
+   if(!simply.path("status").asText().equals("success") || !simply.path("compile_result").path("outcome").asText().equals("succeeded")) throw new IllegalStateException("Simply anchor protocol failed");
    JsonNode source=mapper.valueToTree(compiler.compile(read("source.json")));
    JsonNode target=mapper.valueToTree(compiler.compile(read("request.json"),read("target.json")));
    if(!source.path("outcome").asText().equals("succeeded") || !source.path("semantic_result").path("program").path("root").path("text").asText().equals("a")) throw new IllegalStateException("source compile failed");
@@ -251,11 +254,14 @@ import com.fasterxml.jackson.core.type.TypeReference
 import java.io.File
 import java.nio.file.Paths
 import strling.Compiler
+import strling.Simply
 val mapper=ObjectMapper()
 fun read(name:String):Map<String,Any?> = mapper.readValue(File(name),object:TypeReference<Map<String,Any?>>() {})
 fun main(args:Array<String>) {
  NativeClient.load(Paths.get(args[0])).use { client ->
   val compiler=Compiler(client)
+  val simply:JsonNode=mapper.valueToTree(client.simplyCompile(Simply.merge(Simply.startsWith("a"),Simply.endsWith("a")).buildRequest(mapOf("requested_outputs" to listOf("semantic"),"compiler_options" to mapOf("partial_semantics" to "forbid","diagnostic_policy" to mapOf("minimum_severity" to "hint"))))))
+  check(simply.path("status").asText()=="success" && simply.path("compile_result").path("outcome").asText()=="succeeded")
   val source:JsonNode=mapper.valueToTree(compiler.compile(read("source.json")))
   val target:JsonNode=mapper.valueToTree(compiler.compile(read("request.json"),read("target.json")))
   check(source.path("outcome").asText()=="succeeded" && source.path("semantic_result").path("program").path("root").path("text").asText()=="a")
@@ -271,11 +277,14 @@ fun main(args:Array<String>) {
 
 
 def fixture_files(root: Path, work: Path) -> dict[str, str]:
+    from tooling.documentation_programs import prepare
+
     hashes = {}
     for name, source in CONSUMER_FIXTURES.items():
         data = (root / source).read_bytes()
         (work / name).write_bytes(data)
         hashes[source] = hashlib.sha256(data).hexdigest()
+    prepare(root, work)
     return hashes
 
 
@@ -568,6 +577,23 @@ def consume_native(
         )
     )
     result = canonical_results(source_result, target_result)
+    if slug == "cpp":
+        from tooling.documentation_programs import readme
+
+        (work / "consumer.cpp").write_text(readme(work, "cpp", 4), encoding="utf-8")
+        run_consumer(
+            ["cmake", "--build", str(build), "--config", "Release", "--parallel", "2"],
+            work,
+            environment,
+        )
+        documented = json.loads(run_consumer([str(executable)], work, environment))
+        if (
+            documented.get("status") != "success"
+            or documented.get("compile_result", {}).get("outcome") != "succeeded"
+        ):
+            raise ReleaseSupplyChainError(
+                "consumer-documentation", "C++ documented Simply program failed"
+            )
     original = native.read_bytes()
     marker = b"\0STRLING-PRODUCT-VERSION:" + version.encode() + b"\0"
     if original.count(marker) != 1:
@@ -585,6 +611,9 @@ def consume_native(
         configure[configure.index(str(build))] = str(work / "mismatch-build")
         expect_product_rejection(configure, work, environment)
     result.update(kernel_mismatch_rejected=True, native_sha256=native_hash)
+    from tooling.documentation_programs import completed
+
+    completed(result, work, ("bindings/cpp/README.md#4",) if slug == "cpp" else ())
     return result
 
 
@@ -667,7 +696,36 @@ def consume_gds(
             environment,
         )
     result = json.loads(output)
+    from tooling.documentation_programs import readme
+
+    if slug == "go":
+        (work / "main.go").write_text(readme(work, slug), encoding="utf-8")
+        command = ["go", "run", ".", str(library)]
+    elif slug == "dart":
+        (work / "consumer.dart").write_text(readme(work, slug), encoding="utf-8")
+        command = ["dart", "run", "consumer.dart", str(library)]
+    else:
+        (work / "Sources/Consumer/main.swift").write_text(
+            readme(work, slug), encoding="utf-8"
+        )
+        run_consumer(["swift", "build", "-c", "release"], work, environment)
+        command = [
+            "swift",
+            "run",
+            "--skip-build",
+            "-c",
+            "release",
+            "Consumer",
+            str(library),
+        ]
+    if run_consumer(command, work, environment).strip() != "succeeded":
+        raise ReleaseSupplyChainError(
+            "consumer-documentation", "documented " + slug + " example failed"
+        )
     result["native_sha256"] = hashlib.sha256(data).hexdigest()
+    from tooling.documentation_programs import completed
+
+    completed(result, work, (f"bindings/{slug}/README.md#1",))
     return result
 
 
@@ -715,11 +773,26 @@ def consume_python(
     )
     script = work / "consumer.py"
     script.write_text(PYTHON_CONSUMER, encoding="utf-8")
-    return json.loads(
+    result = json.loads(
         run_consumer(
             [str(python), "-I", str(script), str(work), version], work, environment
         )
     )
+    from tooling.documentation_programs import python_program
+
+    script.write_text(python_program(work), encoding="utf-8")
+    if (
+        not run_consumer([str(python), "-I", str(script)], work, environment)
+        .rstrip()
+        .endswith("documentation passed")
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-documentation", "documented Python examples failed"
+        )
+    from tooling.documentation_programs import completed, PYTHON_EXAMPLES
+
+    completed(result, work, PYTHON_EXAMPLES)
+    return result
 
 
 def consume_rust(
@@ -766,7 +839,22 @@ def consume_rust(
             else "strling-release-consumer"
         )
     )
-    return json.loads(run_consumer([str(executable), version], work, environment))
+    result = json.loads(run_consumer([str(executable), version], work, environment))
+    from tooling.documentation_programs import rust_program
+
+    (work / "src/main.rs").write_text(rust_program(work), encoding="utf-8")
+    run_consumer(["cargo", "+1.75.0", "build", "--offline"], work, environment)
+    if (
+        run_consumer([str(executable)], work, environment).strip()
+        != "documentation passed"
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-documentation", "documented Rust examples failed"
+        )
+    from tooling.documentation_programs import completed
+
+    completed(result, work, ("bindings/rust/README.md#1", "bindings/rust/README.md#2"))
+    return result
 
 
 def consume_dotnet(
@@ -846,6 +934,50 @@ def consume_dotnet(
         environment,
     )
     result = json.loads(output)
+    from tooling.documentation_programs import readme
+
+    slug = artifact["id"].removeprefix("release:")
+    documented = readme(work, slug)
+    if slug == "csharp":
+        documented += "\n" + readme(work, slug, 2)
+    (project.parent / ("Program.cs" if slug == "csharp" else "Program.fs")).write_text(
+        documented, encoding="utf-8"
+    )
+    run_consumer(
+        [dotnet, "build", str(project), "-c", "Release", "--no-restore"],
+        work,
+        environment,
+    )
+    if (
+        run_consumer(
+            [
+                dotnet,
+                "run",
+                "--project",
+                str(project),
+                "-c",
+                "Release",
+                "--no-build",
+                "--no-restore",
+            ],
+            project.parent,
+            environment,
+        ).strip()
+        != "succeeded"
+    ):
+        raise ReleaseSupplyChainError(
+            "consumer-documentation", "documented .NET example failed"
+        )
+    from tooling.documentation_programs import completed
+
+    completed(
+        result,
+        work,
+        tuple(
+            f"bindings/{slug}/README.md#{ordinal}"
+            for ordinal in ((1, 2) if slug == "csharp" else (1,))
+        ),
+    )
     if companion:
         result["companion_subject_sha256"] = _surface_identity(companion)[1]
     return result
@@ -1032,6 +1164,45 @@ def consume_jvm(
             environment,
         )
     result = json.loads(output)
+    from tooling.documentation_programs import readme
+
+    if artifact["id"] == "release:java":
+        (work / "Example.java").write_text(readme(work, "java", 2), encoding="utf-8")
+        run_consumer(
+            ["javac", "--release", "11", "-cp", classpath, "Example.java"],
+            work,
+            environment,
+        )
+        command = [
+            "java",
+            "-cp",
+            str(work) + os.pathsep + classpath,
+            "Example",
+            str(library),
+        ]
+    else:
+        source.write_text(readme(work, "kotlin", 2), encoding="utf-8")
+        run_consumer(
+            [str(wrapper), "--offline", "--no-daemon", "installDist"], work, environment
+        )
+        command = [
+            "java",
+            "-cp",
+            str(work / "build/classes/kotlin/main") + os.pathsep + classpath,
+            "ConsumerKt",
+            str(library),
+        ]
+    if run_consumer(command, work, environment).strip() != "succeeded":
+        raise ReleaseSupplyChainError(
+            "consumer-documentation", "documented JVM example failed"
+        )
+    from tooling.documentation_programs import completed
+
+    completed(
+        result,
+        work,
+        ("bindings/" + artifact["id"].removeprefix("release:") + "/README.md#2",),
+    )
     result.update(
         native_sha256=hashlib.sha256(native_bytes).hexdigest(),
         runtime_dependency_sha256=dependency_hashes,
@@ -1116,6 +1287,9 @@ def execute_consumer_contract(
             "consumer-result",
             "consumer did not prove canonical success and mismatch refusal",
         )
+    from tooling.documentation_programs import verify_proof
+
+    verify_proof(fixture_root, artifact_id.removeprefix("release:"), result)
     return result, fixtures
 
 

@@ -1,5 +1,9 @@
 # STRling Java adapter
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 The Java package is a thin STRling 4.0 facade over the shared
 `com.strling:strling-jvm` bridge. It does not contain a parser, compiler,
 semantic IR, validator, diagnostic engine, or target emitter.
@@ -34,15 +38,24 @@ publication is performed by these source-build commands.
 
 ## Canonical compile
 
+Pass the absolute authenticated native-library path as the first program argument.
+The program requires that argument; it never searches a developer installation.
+
 ```java
 import com.strling.Compiler;
 import com.strling.jvm.NativeClient;
 import java.nio.file.Path;
+import java.util.Map;
 
-try (NativeClient client = NativeClient.load(Path.of(args[0]).toAbsolutePath())) {
-    Compiler compiler = new Compiler(client);
-    Object result = compiler.parse("literal \"hello\"");
-    System.out.println(result);
+public class Example {
+    public static void main(String[] args) throws Exception {
+        try (NativeClient client = NativeClient.load(Path.of(args[0]).toAbsolutePath())) {
+            Compiler compiler = new Compiler(client);
+            Map<?, ?> result = (Map<?, ?>) compiler.parse("semantic strling 1.0; case sensitive; pattern text \"hello\";");
+            if (!"succeeded".equals(result.get("outcome"))) throw new IllegalStateException(result.toString());
+            System.out.println(result.get("outcome"));
+        }
+    }
 }
 ```
 
@@ -66,3 +79,13 @@ valid IP address.
 See the [Java API reference](docs/api_reference.md), the
 [shared JVM bridge](../jvm/README.md), and the
 [migration certification](../../docs/migration/jvm-adapter-migration.md).
+
+## Proposed public installation
+
+After separately authorized publication, the exact proposed coordinate is:
+
+```bash
+mvn dependency:get -Dartifact=com.strling:strling:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2
+```
+
+This proposed command resolves the exact Maven coordinate. Add the same `com.strling:strling:4.0.0` dependency to the application POM and use the shared JVM bridge dependency graph. The application supplies the authenticated native library.

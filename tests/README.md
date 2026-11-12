@@ -10,7 +10,7 @@ For comprehensive testing philosophy, standards, and the complete development wo
 
 ```
 tests/
-├── spec/              # SHARED SPEC SUITE (Single Source of Truth)
+├── spec/              # Data-only historical compatibility fixtures
 │   ├── *.json         # Transitional generated compatibility fixtures
 │   └── README.md      # Details on the spec format
 ├── _design/           # Test Charter documents (human-readable test plans)
@@ -45,15 +45,21 @@ regenerated.
 
 1.  **Authorize**: Declare the controlling specification or contract change
     before changing expected behavior.
-2.  **Generate**: The transitional producer derives fixtures from the
-    TypeScript implementation with `npm run build:specs`.
+2.  **Generate**: Consult `governance/generated-artifacts.json` for the
+    registered family, producer and verification command. The retained
+    compatibility fixtures are data only; retired host compilers are not
+    regeneration authorities.
 3.  **Review and commit**: Review fixture changes against the authoritative
     contract before committing `tests/spec/*.json`.
-4.  **Verify**: Other bindings consume the fixtures as compatibility evidence.
+4.  **Verify**: Run the registered canonical and adapter checks. Historical
+    agreement cannot establish a new language guarantee.
 
 #### Error Fixtures and `expected_hint`
 
-Error fixtures (files with `expected_error`) also contain an `expected_hint` field — the exact pedagogical hint string from the TypeScript HintEngine. Binding conformance runners assert **exact equality** on this field, ensuring consistent error guidance across all 17 language bindings.
+Historical error fixtures (files with `expected_error`) also retain an
+`expected_hint` field from their original producer. These strings preserve
+compatibility observations. Current diagnostics and their guarantees are
+governed by the versioned canonical contracts under `spec/`.
 
 The fixture schema at `spec/schema/conformance-fixture.schema.json` enforces that every error fixture includes `expected_hint`.
 

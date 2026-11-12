@@ -2,10 +2,32 @@ local strling = require("strling")
 local json = require("cjson.safe")
 
 describe("canonical native adapter", function()
+  it("reports the governed product projection as its public module version", function()
+    local handle = assert(io.open("../../governance/release-policy.json", "rb"))
+    local policy = assert(json.decode(handle:read("*a")))
+    handle:close()
+    assert.are.equal(policy.product.repository_projection.version, strling.VERSION)
+  end)
+
+  it("replaces stale preloaded STRling code with the checkout module", function()
+    local root = assert(debug.getinfo(strling.source_compile_request, "S").source:match("^@(.*)/src/adapter.lua$"))
+    local previous = package.loaded["strling"]
+    local stale = { source_compile_request = function() return { stale = true } end }
+    package.loaded["strling"] = stale
+    dofile(root .. "/spec/source_loader.lua")
+    local current = require("strling")
+    local request = current.source_compile_request("source owned by the caller")
+    package.loaded["strling"] = previous
+    assert.are_not.equal(stale, current)
+    assert.are.equal("strling.semantic", request.input.document.frontend.id)
+  end)
+
   it("builds canonical requests and lexical helper steps", function()
     local request = strling.source_compile_request('literal "hello"')
     assert.are.equal("1.0.0", request.contract_version)
-    assert.are.equal("semantic_strling", request.input.document.frontend.id)
+    assert.are.equal("strling.semantic", request.input.document.frontend.id)
+    assert.are.equal("1.0.0", request.input.document.frontend.dialect_version)
+    assert.are.equal("text/x-strling-semantic", request.input.document.content.media_type)
     assert.are.equal("stdlib.email", strling.email("root").arguments.helper_id)
   end)
 

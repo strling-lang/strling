@@ -1,5 +1,25 @@
 # Architecture Migration Ledger
 
+## Final product candidate — preparation in progress
+
+The admitted baseline remains public-verification closure
+`d284446710c8164efc870d60071eeb5faf542a95`. Scope checkpoint
+`5ff18fe59c6dfee907a35522dfe988cf943b3e84` starts the separate complete-product
+candidate task. H08, packaging and public-verification certificates remain
+closed and unchanged.
+
+Product and migration documentation, 61-document/103-example inventory,
+policy-derived support matrix, bounded benchmark report and independent
+candidate evidence contracts are implemented. Confirmed source-factory,
+Simply-anchor, Lua source-isolation and Lua version-projection defects have
+focused regression proof. The affected subsystem batch passes 471 tests and
+161 subtests. These are engineering results, not final candidate certification.
+Source-distinct reader qualification, immutable workflow integration, fresh
+source-bound builds/consumers and all four authoritative profiles remain
+mandatory. Publication remains prohibited. See the
+[candidate record](records/final-release-candidate.yaml) and
+[engineering report](final-release-candidate.md).
+
 ## Independent public distribution verification — complete, 2026-11-11
 
 Implementation `3e7061271d906251cb17c3eb06b6c748ac3068e7` has accepted Local38/38, PR80/80, Full and fresh independent no-reuse Release124 passed plus the sole existing waiver /125. All17 staged artifact routes and15 Supported consumer scopes account for256 registry-derived obligations. Independent reconstruction and original-key signatures passed; public implementation root `89a3ed2ab59f883463fcd5ed36e665d3fe18bdfd8bb2112d5c28a2435e23302e`.

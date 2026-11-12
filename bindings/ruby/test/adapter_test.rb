@@ -8,7 +8,9 @@ class AdapterTest < Minitest::Test
   def test_canonical_request_and_lexical_helper_shapes
     request = Strling.source_compile_request('literal "hello"')
     assert_equal '1.0.0', request['contract_version']
-    assert_equal 'semantic_strling', request.dig('input', 'document', 'frontend', 'id')
+    assert_equal 'strling.semantic', request.dig('input', 'document', 'frontend', 'id')
+    assert_equal '1.0.0', request.dig('input', 'document', 'frontend', 'dialect_version')
+    assert_equal 'text/x-strling-semantic', request.dig('input', 'document', 'content', 'media_type')
     assert_equal 'stdlib.email', Strling.email('root').dig('arguments', 'helper_id')
     assert_nil Strling.uuid('root').dig('arguments', 'parameters', 'version')
   end

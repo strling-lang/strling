@@ -9,7 +9,7 @@ sub source_compile_request {
     my ($source, $options) = @_;
     $options ||= {};
     my $specification = defined($options->{specification_version}) ? "$options->{specification_version}" : '1.0-draft.1';
-    my $frontend = defined($options->{frontend_id}) ? "$options->{frontend_id}" : 'semantic_strling';
+    my $frontend = defined($options->{frontend_id}) ? "$options->{frontend_id}" : 'strling.semantic';
     my $request = {
         contract_version => '1.0.0',
         specification_version => $specification,
@@ -21,11 +21,11 @@ sub source_compile_request {
                 specification_version => $specification,
                 frontend => {
                     id => $frontend,
-                    dialect_version => defined($options->{frontend_version}) ? "$options->{frontend_version}" : $specification,
+                    dialect_version => defined($options->{frontend_version}) ? "$options->{frontend_version}" : '1.0.0',
                 },
                 content => {
                     kind => 'inline', encoding => 'utf-8',
-                    media_type => defined($options->{media_type}) ? "$options->{media_type}" : 'text/strling',
+                    media_type => defined($options->{media_type}) ? "$options->{media_type}" : ($frontend eq 'strling.regex-compat' ? 'text/x-strling-regex-compat' : 'text/x-strling-semantic'),
                     text => "$source",
                 },
                 provenance => { kind => 'authored' },

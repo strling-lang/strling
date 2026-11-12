@@ -2150,6 +2150,14 @@ def _validate_build_receipt(
             raise ReleaseSupplyChainError(
                 "consumer-receipt", "consumer result is malformed"
             )
+        from tooling.documentation_programs import verify_proof
+
+        try:
+            verify_proof(root, artifact_id.removeprefix("release:"), result)
+        except (ValueError, OSError, KeyError) as error:
+            raise ReleaseSupplyChainError(
+                "consumer-documentation", str(error)
+            ) from error
         compatibility = (
             result.get("linked_package_version") == version
             and result.get("target_profile_mismatch_rejected") is True

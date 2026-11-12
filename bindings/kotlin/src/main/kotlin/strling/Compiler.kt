@@ -5,9 +5,13 @@ import com.strling.jvm.NativeClient
 /** Immutable options for constructing canonical source CompileRequests. */
 data class SourceCompileOptions(
     val sourceId: String = "src:kotlin.adapter",
-    val frontendId: String = "semantic_strling",
+    val frontendId: String = "strling.semantic",
     val frontendVersion: String? = null,
-    val mediaType: String = if (frontendId == "legacy_regex") "text/x-regex" else "text/strling",
+    val mediaType: String = when (frontendId) {
+        "strling.regex-compat" -> "text/x-strling-regex-compat"
+        "legacy_regex" -> "text/x-regex"
+        else -> "text/x-strling-semantic"
+    },
     val specificationVersion: String = "1.0-draft.1",
     val requestedOutputs: List<String>? = null,
     val compilerOptions: Map<String, Any?> = defaultCompilerOptions(),
@@ -75,7 +79,7 @@ class Compiler(private val client: NativeClient) {
                     "specification_version" to options.specificationVersion,
                     "frontend" to mapOf(
                         "id" to options.frontendId,
-                        "dialect_version" to (options.frontendVersion ?: options.specificationVersion),
+                        "dialect_version" to (options.frontendVersion ?: "1.0.0"),
                     ),
                     "content" to mapOf(
                         "kind" to "inline",

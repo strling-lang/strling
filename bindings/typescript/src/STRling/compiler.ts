@@ -11,9 +11,17 @@ export type RequestedOutput =
 
 export interface SourceCompileOptions {
     readonly sourceId?: string;
-    readonly frontendId?: "semantic_strling" | "legacy_regex";
+    readonly frontendId?:
+        | "strling.semantic"
+        | "strling.regex-compat"
+        | "semantic_strling"
+        | "legacy_regex";
     readonly frontendVersion?: string;
-    readonly mediaType?: "text/strling" | "text/x-regex";
+    readonly mediaType?:
+        | "text/x-strling-semantic"
+        | "text/x-strling-regex-compat"
+        | "text/strling"
+        | "text/x-regex";
     readonly specificationVersion?: string;
     readonly requestedOutputs?: readonly RequestedOutput[];
     readonly compilerOptions?: JsonObject;
@@ -75,7 +83,7 @@ export function sourceCompileRequest(
     fallbackOutputs: readonly RequestedOutput[] = ["semantic", "analysis"],
 ): JsonObject {
     const specificationVersion = options.specificationVersion ?? "1.0-draft.1";
-    const frontendId = options.frontendId ?? "semantic_strling";
+    const frontendId = options.frontendId ?? "strling.semantic";
     return {
         contract_version: "1.0.0",
         specification_version: specificationVersion,
@@ -87,17 +95,18 @@ export function sourceCompileRequest(
                 specification_version: specificationVersion,
                 frontend: {
                     id: frontendId,
-                    dialect_version:
-                        options.frontendVersion ?? specificationVersion,
+                    dialect_version: options.frontendVersion ?? "1.0.0",
                 },
                 content: {
                     kind: "inline",
                     encoding: "utf-8",
                     media_type:
                         options.mediaType ??
-                        (frontendId === "legacy_regex"
-                            ? "text/x-regex"
-                            : "text/strling"),
+                        (frontendId === "strling.regex-compat"
+                            ? "text/x-strling-regex-compat"
+                            : frontendId === "legacy_regex"
+                              ? "text/x-regex"
+                              : "text/x-strling-semantic"),
                     text: source,
                 },
                 provenance: { kind: "authored" },

@@ -143,7 +143,7 @@ class DocumentationResultContractTests(unittest.TestCase):
         coverage = result["coverage"]
         assert isinstance(coverage, dict)
         self.assertEqual(2, len(coverage["limitations"]))
-        self.assertEqual(2, len(coverage["delegated_operations"]))
+        self.assertEqual(3, len(coverage["delegated_operations"]))
 
 
 if __name__ == "__main__":

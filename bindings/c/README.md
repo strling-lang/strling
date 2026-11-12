@@ -1,5 +1,9 @@
 # STRling for C
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 This package is a thin C adapter over the generated `strling.c-abi` v1
 surface. It owns byte-envelope conveniences, C allocation handles, and Simply
 construction ergonomics; all parsing, validation, portability planning,
@@ -62,3 +66,13 @@ archive during configuration. Unmarked older kernels and mismatched product
 versions fail closed. This package check does not authenticate arbitrary local
 files; release checksums and signed evidence authenticate distribution bytes.
 The compiler semantics and versioned ABI/protocol are unchanged.
+
+## Proposed public installation
+
+After separately authorized publication, the exact proposed coordinate is:
+
+```bash
+git clone --branch c-v4.0.0 --single-branch https://github.com/strling-lang/strling.git
+```
+
+Run the documented CMake build and local-prefix install inside this authenticated checkout. Verify the tag commit against release provenance before building.

@@ -1,5 +1,9 @@
 # STRling TypeScript adapter
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 This package is the Preview TypeScript host adapter for the canonical STRling
 compiler. It sends versioned JSON requests through the governed
 `strling.wasm-abi` v1 boundary; it does not contain a parser, validator, target
@@ -22,17 +26,23 @@ package. Loading is explicit and never downloads an artifact or selects a
 target from the host environment.
 
 ```typescript
-import { Compiler } from "@strling-lang/strling";
+import { Compiler, sourceCompileRequest } from "@strling-lang/strling";
 import { loadBundledWasm } from "@strling-lang/strling/node";
 
 const client = await loadBundledWasm();
 const compiler = new Compiler(client);
 
-// Both values are ordinary objects owned and pinned by the application.
-const result = compiler.compile(compileRequest, exactTargetProfile);
-if (result.outcome === "succeeded") {
-    console.log(result.artifact);
+const source = 'semantic strling 1.0; case sensitive; pattern text "hello";';
+const result = compiler.compile(sourceCompileRequest(source));
+if (
+    result === null ||
+    typeof result !== "object" ||
+    !("outcome" in result) ||
+    result.outcome !== "succeeded"
+) {
+    throw new Error(JSON.stringify(result));
 }
+console.log(result.outcome);
 ```
 
 Canonical compile failures are returned as compile-result values. WebAssembly
@@ -49,8 +59,10 @@ or a previously compiled `WebAssembly.Module`:
 ```typescript
 import { instantiateWasm } from "@strling-lang/strling";
 
-const client = await instantiateWasm(wasmBytes);
-const description = client.describe();
+export async function describePackage(wasmBytes: ArrayBuffer) {
+    const client = await instantiateWasm(wasmBytes);
+    return client.describe();
+}
 ```
 
 Calls on one client instance are serialized. Independent WebAssembly instances
@@ -72,6 +84,12 @@ Standard helpers delegate by canonical registry identity. Helpers declared
 `lexical_shape` remain lexical-shape helpers and may accept semantically invalid
 values. `Pattern.exec`, `Pattern.toRegExp`, and implicit string rendering are
 retired because this adapter does not simulate target-engine execution.
+
+The Simply fragment reuses the preceding `client`; `compileProjection` and
+`exactTargetProfile` are application-owned JSON values with an exact profile
+reference when requesting target output. The source factory defaults to
+`strling.semantic@1.0.0`; select `frontendId: "strling.regex-compat"` explicitly
+for compatibility input. Neither target selection nor source syntax is guessed.
 
 ## Supported entrypoints
 

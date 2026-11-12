@@ -1,16 +1,37 @@
 # STRling Go adapter
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 The Go module is a semantic-free facade over the governed `strling.c-abi` v1.
 It requires a caller-supplied absolute path to the native library and cgo for
 execution. `CGO_ENABLED=0` builds fail closed with `ErrCgoUnavailable`.
 
-```go
-client, err := strling.LoadNative(`/absolute/path/to/libstrling_interop.so`)
-if err != nil { /* handle host loading failure */ }
-defer client.Close()
+Pass the absolute authenticated native-library path as the first program argument.
+The program requires that argument; it never searches a developer installation.
 
-request := strling.SourceCompileRequest("'hello'", nil)
-result, err := client.Compile(request, nil)
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+    strling "github.com/strling-lang/strling/bindings/go"
+)
+
+func main() {
+    client, err := strling.LoadNative(os.Args[1])
+    if err != nil { panic(err) }
+    defer client.Close()
+    request := strling.SourceCompileRequest("semantic strling 1.0; case sensitive; pattern text \"hello\";", nil)
+    raw, err := client.Compile(request, nil)
+    if err != nil { panic(err) }
+    result, ok := raw.(map[string]any)
+    if !ok { panic("invalid canonical result") }
+    if result["outcome"] != "succeeded" { panic(result) }
+    fmt.Println(result["outcome"])
+}
 ```
 
 `Describe`, `Compile`, `InspectTargetProfile`, and `SimplyCompile` preserve the

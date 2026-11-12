@@ -28,8 +28,10 @@
             "native-kernel-third-party-notices",
             "package-manager-lockfiles",
             "performance-resource-source-identities",
+            "product-support-matrix",
             "profile-source-definitions",
             "public-contract-snapshots",
+            "release-candidate-certification-trust",
             "release-certification-trust",
             "release-policy-documentation",
             "release-supply-chain-contract-fixture",
@@ -198,7 +200,9 @@
             "Package.resolved",
             "**/Package.resolved",
             "packages.lock.json",
-            "**/packages.lock.json"
+            "**/packages.lock.json",
+            "docs/support-matrix.md",
+            "governance/release-candidate-certification-trust.json"
         ]
     },
     "artifacts": [
@@ -979,6 +983,7 @@
                 "bindings/kotlin/build.gradle.kts",
                 "bindings/kotlin/gradle.lockfile",
                 "bindings/kotlin/src/main/kotlin/strling/STRling.kt",
+                "bindings/lua/src/adapter.lua",
                 "bindings/perl/dist.ini",
                 "bindings/perl/lib/STRling.pm",
                 "bindings/php/composer.json",
@@ -2520,6 +2525,114 @@
                         "pytest",
                         "-q",
                         "tooling/tests/test_kotlin_product_verification.py"
+                    ]
+                ]
+            },
+            "enforcement": "enforced"
+        },
+        {
+            "id": "product-support-matrix",
+            "category": "generated-documentation",
+            "description": "Consumer-facing product, binding, runtime and target scope projected from governed declarations.",
+            "authoritative_sources": [
+                "governance/release-policy.json",
+                "tests/certification/release-supply-chain/1.0/manifest.json",
+                "toolchain.json",
+                "spec/targets/profiles/*.json"
+            ],
+            "generator_inputs": [
+                "bindings/cpp/profiles/linux-x86_64",
+                "bindings/cpp/profiles/windows-x86_64",
+                "bindings/kotlin/gradle/wrapper/gradle-wrapper.properties",
+                "bindings/python/requirements.lock.txt",
+                "bindings/ruby/Gemfile.lock",
+                "bindings/typescript/package-lock.json",
+                "governance/release-policy.json",
+                "spec/targets/profiles/*.json",
+                "tests/certification/release-supply-chain/1.0/manifest.json",
+                "toolchain.json",
+                "tooling/lsp-server/package-lock.json",
+                "tooling/release_candidate.py"
+            ],
+            "generator": {
+                "implementation_paths": ["tooling/release_candidate.py"],
+                "command": [
+                    "python3",
+                    "tooling/release_candidate.py",
+                    "--write"
+                ],
+                "working_directory": "."
+            },
+            "outputs": ["docs/support-matrix.md"],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "non-normative-projection",
+            "verification": {
+                "method": "command-check",
+                "command": [
+                    "python3",
+                    "tooling/release_candidate.py",
+                    "--check"
+                ]
+            },
+            "preparation": {
+                "automatic_regeneration": "canonical",
+                "direct_dependents": [
+                    [
+                        "python3",
+                        "-m",
+                        "unittest",
+                        "tooling.tests.test_release_candidate",
+                        "-q"
+                    ]
+                ]
+            },
+            "enforcement": "enforced"
+        },
+        {
+            "id": "release-candidate-certification-trust",
+            "category": "version-synchronized-metadata",
+            "description": "Final product candidate evidence namespace preserving the original certifier, keys, profiles and waiver authority.",
+            "authoritative_sources": [
+                "governance/local-certification-trust.json"
+            ],
+            "generator_inputs": [
+                "governance/local-certification-trust.json",
+                "tooling/release_candidate.py"
+            ],
+            "generator": {
+                "implementation_paths": ["tooling/release_candidate.py"],
+                "command": [
+                    "python3",
+                    "tooling/release_candidate.py",
+                    "--write-trust"
+                ],
+                "working_directory": "."
+            },
+            "outputs": [
+                "governance/release-candidate-certification-trust.json"
+            ],
+            "determinism": "verified",
+            "checked_in": true,
+            "authority": "operational-projection",
+            "verification": {
+                "method": "command-check",
+                "command": [
+                    "python3",
+                    "tooling/release_candidate.py",
+                    "--check-trust"
+                ]
+            },
+            "preparation": {
+                "automatic_regeneration": "canonical",
+                "direct_dependents": [
+                    [
+                        "python3",
+                        "-m",
+                        "unittest",
+                        "tooling.tests.test_release_candidate",
+                        "tooling.tests.test_local_certification_attestation",
+                        "-q"
                     ]
                 ]
             },

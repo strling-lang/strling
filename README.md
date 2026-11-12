@@ -11,9 +11,11 @@ PCRE2 wrapper, a TypeScript-centric builder, or an editor-only tool.
 
 This repository is the engineering authority for the STRling language,
 specifications, canonical compiler, host integrations, and developer tooling.
-It is under active pre-release architectural migration: versioned contracts,
-draft specifications, implemented capability, and certified behavior are
-identified separately in the linked authority documents.
+The Fourth Edition implementation is prepublication. Versioned contracts,
+the broader draft specification, implemented capability, and source-bound
+certification are identified separately in the linked authority documents.
+STRling 4.0.0 has not yet been published; installation commands for that version
+describe the proposed public release, not an available public package.
 
 ## Why STRling
 
@@ -94,7 +96,7 @@ compile?” Examples include PCRE2, ECMAScript, and Python `re`.
 Binding count is therefore not target count. Target support is ultimately
 version/profile-sensitive, not a timeless boolean.
 
-## Current transition
+## Current implementation
 
 The canonical Rust kernel accepts Semantic STRling, Simply, source-less Semantic
 IR, and regex-compatible imports through one semantic pipeline. All 17 retained
@@ -105,6 +107,10 @@ history. They cannot feed product generation or certification and are never
 semantic authority.
 
 ## Developer quick start
+
+Start with the [product guide](docs/getting-started.md),
+[support matrix](docs/support-matrix.md) and
+[migration guide](docs/migration-guide.md) for consumer use.
 
 Use the root CLI as the canonical setup and verification entry point:
 

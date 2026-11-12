@@ -88,6 +88,7 @@ Independent version kinds:
 | Coordinated first-party license metadata: maven                         | 4.0.0          | product      | Companion package metadata                                       | Exact field projection; unrelated contract and dependency versions remain independent.                                                                                                                       |
 | Coordinated first-party license metadata: gradle                        | 4.0.0          | product      | Companion package metadata                                       | Exact field projection; unrelated contract and dependency versions remain independent.                                                                                                                       |
 | Coordinated first-party license metadata: nuget                         | 4.0.0          | product      | Companion package metadata                                       | Exact field projection; unrelated contract and dependency versions remain independent.                                                                                                                       |
+| Lua public module version                                               | 4.0.0          | product      | LuaRocks                                                         | The public VERSION field must equal the active product projection; ABI and interop protocol remain independently versioned.                                                                                  |
 
 ## Support tiers
 

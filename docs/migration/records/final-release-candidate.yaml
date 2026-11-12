@@ -18,6 +18,7 @@ scope:
         - governance/contracts/snapshots/**
         - governance/release-candidate-certification-trust.json
         - tests/documentation/**
+        - tests/README.md
         - tests/certification/release-candidate/**
         - tests/certification/profile-source/**
         - tests/certification/deep-quality/**
@@ -26,11 +27,13 @@ scope:
         - tests/architecture/**
         - tests/stdlib/**
         - .github/workflows/certification-integrity.yml
+        - .github/workflows/ci.yml
         - governance/certification-evidence-dependency-graph.json
+        - governance/release-policy.json
+        - core/README.md
     forbidden_paths:
         - core/src/**
         - spec/**
-        - governance/release-policy.json
         - governance/local-certification-trust.json
         - governance/release-certification-trust.json
         - governance/public-verification-certification-trust.json
@@ -46,6 +49,14 @@ scope:
         - profile-source-definitions
         - target-adapter-certification-matrices
         - semantic-authority-retirement-evidence
+        - legacy-removal-inventory-evidence
+        - kotlin-product-verification
+        - version-synchronized-metadata
+        - release-policy-documentation
+        - lua-release-rockspec
+        - release-supply-chain-contract-fixture
+        - product-support-matrix
+        - release-candidate-certification-trust
     expected_generated_outputs: []
     required_verification_levels:
         - contract
@@ -63,12 +74,18 @@ change_classification:
               responsibility remain unchanged.
     public_api_change:
         level: intentional-correction
-        affected_surfaces: []
+        affected_surfaces:
+            - dart-public-api
+            - kotlin-public-api
+            - typescript-public-api
         evidence:
             - Default host source helpers currently emit an unimplemented frontend identity and couple dialect
               version to the independent specification version. The retained canonical compiler refuses those
               defaults and accepts the explicit ratified frontend control. Preserve API shapes and explicit unsupported-frontend
               rejection; classify exact snapshot changes before freeze.
+            - The Lua rock embeds public VERSION3.0.0 unchanged despite its product4.0.0 coordinate. Add the missing
+              inventory row and use the existing generic projection generator; immutable product/channel/support/publication
+              sections are hash-locked and remain unchanged.
     schema_change:
         level: none
         evidence:
@@ -90,10 +107,10 @@ change_classification:
             - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
               responsibility remain unchanged.
     generated_output_change:
-        level: none
+        level: compatible
         evidence:
-            - The scope-lock checkpoint changes no generated output. Declare exact generated families when implementation
-              produces them.
+            - Register the missing Lua public VERSION field and generate it from the unchanged product4.0.0 authority;
+              use the registered generators for all other affected projections.
     documentation_only: false
     internal_implementation: true
 title: Final product candidate preparation and clean-room certification
@@ -135,21 +152,27 @@ checkpoints:
                 Task schema, strict governance and repository hygiene accepted. Original temporary-directory
                 and declaration diagnostics are retained; no product/generated change or new certificate is claimed.
     - name: CP2 Verification contracts
-      status: planned
+      status: passed
       evidence:
-          - check: Source-grounded acceptance
-            result: not_run
+          - check: Complete product and independent evidence contracts
+            result: passed
             details:
-                Design source-helper, documentation/example, support matrix, benchmark provenance and candidate
-                handoff contracts with adversarial tests; qualify any genuinely new trusted policy context.
+                Reviewed 61 product documents and 103 fenced examples; all six bounded Preview routes executed.
+                471 affected subsystem tests and 161 subtests pass, including independent reconstruction,
+                complete operation membership, public verification, consumer compatibility, documentation and
+                source identity adversaries. The original four consumer fixtures remain unchanged; new mandatory
+                documentation evidence uses a separate manifest identity. No certificate or public release is claimed.
     - name: CP3 Final implementation and focused proof
-      status: planned
+      status: in_progress
       evidence:
           - check: Source-grounded acceptance
             result: not_run
             details:
-                Resolve all independent product/documentation defects, execute examples and relevant package
-                tests, synchronize governed outputs and freeze one clean committed candidate.
+                All affected subsystem, lint, format, documentation, architecture and semantic-authority checks pass.
+                Three exact Dart/Kotlin/TypeScript declaration corrections and semantic-authority evidence were
+                regenerated canonically; the other affected projections passed without regeneration. Commit and
+                qualify the source-distinct reader, integrate its immutable workflow pin, then acquire final-source
+                packages and prerequisites before the candidate freeze and authoritative profiles.
     - name: CP4 Fresh integration and certification
       status: planned
       evidence:
@@ -166,4 +189,6 @@ checkpoints:
             details:
                 Exact source, artifacts, roots, results, timings and publication handoff; RELEASE CANDIDATE
                 CERTIFIED — PUBLICATION AUTHORIZATION PENDING; clean repository.
-commits: []
+commits:
+    - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
+      subject: Lock final product candidate scope and recovery evidence

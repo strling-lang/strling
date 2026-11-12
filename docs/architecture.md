@@ -55,9 +55,10 @@ analysis, profile, portability, and artifact contracts live under
 through certified portability planning, structured target-aware explanations,
 pure PCRE2, ECMAScript, and Python `re` lowering stages, and deterministic
 standalone PCRE2, ECMAScript, and Python `re` artifact serialization.
-Exact-engine execution exists only in isolated repository certification;
-product runtime execution and orchestration of those target stages remain
-deliberately absent.
+The single `compile` facade orchestrates these stages through the canonical
+kernel. Execution of an emitted expression in a target regex engine remains
+outside the compiler. Exact-engine execution used as release evidence runs in
+isolated repository certification and does not create a product execution API.
 
 **Semantic analysis** owns target-independent validity, facts, safety findings,
 and canonical diagnostic explanation. Diagnostic generation preserves the five
@@ -266,16 +267,25 @@ source syntax, chooses target capability outcomes, lowers targets, or serializes
 artifacts. Exact target artifacts exposed by the CLI are produced by the same
 kernel lowerer/serializer path used by direct library calls.
 
-## Current versus target state
+## Current implementation and compatibility evidence
 
-Current per-binding parsers, compilers, validators, ASTs, IRs, diagnostics, and
-emitters are transitional. So are TypeScript-derived shared fixtures, shallow
-representation models, incomplete target capability tables, and direct
-LSP-to-binding semantic dependencies.
+The Fourth Edition has one semantic compiler implementation, in Rust. The
+seventeen host routes use its public facade, C ABI or raw WebAssembly ABI.
+They own host types, serialization, lifecycle, packaging and error conversion;
+they do not retain binding-local parsers, normalizers, semantic validators,
+planners or emitters. Architecture and semantic-authority checks enforce this
+retirement and reject reintroduced semantic islands.
 
-These paths remain available until their replacements exist and public behavior
-is preserved under the certified migration obligations. Their presence does not
-change the permanent dependency direction.
+Source frontends may have private parsing structures. Their shared product
+boundary is the canonical Semantic IR, not a host-specific AST. The canonical
+normalizer, analyses, planner, lowerers and serializers retain their separate
+responsibilities. The CLI and LSP use this same implementation.
+
+Exactly 596 TypeScript-derived JSON fixtures remain data-only historical
+migration evidence. They cannot drive product generation, normative expectations
+or certification. Older migration reports describe their own source identities;
+they do not describe the current implementation or confer support on a Preview
+route. See the [migration guide](migration-guide.md) for consumer changes.
 
 ## Specification relationship
 

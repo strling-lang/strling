@@ -1,0 +1,892 @@
+{
+    "schema_version": "1.0.0",
+    "documents": [
+        "CONTRIBUTING.md",
+        "README.md",
+        "SECURITY.md",
+        "bindings/c/README.md",
+        "bindings/c/docs/api_reference.md",
+        "bindings/cpp/README.md",
+        "bindings/cpp/docs/api_reference.md",
+        "bindings/csharp/README.md",
+        "bindings/csharp/docs/api_reference.md",
+        "bindings/dart/CHANGELOG.md",
+        "bindings/dart/README.md",
+        "bindings/dart/doc/api_reference.md",
+        "bindings/fsharp/README.md",
+        "bindings/fsharp/docs/api_reference.md",
+        "bindings/go/README.md",
+        "bindings/go/docs/api_reference.md",
+        "bindings/interop/README.md",
+        "bindings/java/README.md",
+        "bindings/java/docs/api_reference.md",
+        "bindings/jvm/README.md",
+        "bindings/kotlin/README.md",
+        "bindings/kotlin/docs/api_reference.md",
+        "bindings/lua/README.md",
+        "bindings/lua/docs/api_reference.md",
+        "bindings/perl/README.md",
+        "bindings/perl/docs/api_reference.md",
+        "bindings/php/README.md",
+        "bindings/php/docs/api_reference.md",
+        "bindings/python/README.md",
+        "bindings/python/docs/api_reference.md",
+        "bindings/r/README.md",
+        "bindings/r/docs/api_reference.md",
+        "bindings/ruby/README.md",
+        "bindings/ruby/docs/api_reference.md",
+        "bindings/rust/README.md",
+        "bindings/rust/docs/api_reference.md",
+        "bindings/swift/README.md",
+        "bindings/swift/docs/api_reference.md",
+        "bindings/typescript/README.md",
+        "bindings/typescript/docs/api_reference.md",
+        "core/README.md",
+        "docs/architecture.md",
+        "docs/benchmark-report.md",
+        "docs/capability-evaluation.md",
+        "docs/ci_cd_setup.md",
+        "docs/getting-started.md",
+        "docs/guidelines.md",
+        "docs/index.md",
+        "docs/migration-guide.md",
+        "docs/portability-planning.md",
+        "docs/project_architecture_strategy.md",
+        "docs/reference/standard-library.md",
+        "docs/release-policy.md",
+        "docs/releasing.md",
+        "docs/spec_links.md",
+        "docs/support-matrix.md",
+        "docs/testing_design.md",
+        "docs/testing_setup.md",
+        "docs/testing_workflow.md",
+        "docs/toolchains.md",
+        "docs/tutorial/first_contribution.md"
+    ],
+    "examples": [
+        {
+            "id": "CONTRIBUTING.md#1",
+            "language": "bash",
+            "sha256": "3ca3da3067ba5821df034e2a21e09e91d7fd96e7fa9fe3522276ab79b31cdaa5",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "README.md#1",
+            "language": "strling",
+            "sha256": "a926c43446287bbbb073a5190037fdb605d609f206edab81b013e3390613cc8a",
+            "kind": "canonical",
+            "reason": "Complete Semantic program or protocol request; execute unchanged bytes through canonical compilation.",
+            "evidence": "documentation.product-canonical-examples"
+        },
+        {
+            "id": "README.md#2",
+            "language": "text",
+            "sha256": "1b7c88250508392aad7ae2986d56ebf3fa97c1e19dd9f830891e7fc3f0af74b5",
+            "kind": "diagram",
+            "reason": "Informational compiler responsibility or lifecycle diagram; authority remains in the linked contracts.",
+            "evidence": "architecture fitness and semantic-authority certification"
+        },
+        {
+            "id": "README.md#3",
+            "language": "bash",
+            "sha256": "5b68f19e4e1a10bcd6162cd23d1006f48dd7045cde763dda3097b2867ca20ca4",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/c/README.md#1",
+            "language": "text",
+            "sha256": "7ce6213361bf46e1eb6f56a5f72b86d9b47d4221b271572fe6bd6dc4ba2afb0f",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/c/README.md#2",
+            "language": "text",
+            "sha256": "2b0a368b03ff280224d878617354e08d04a7efd4ffcc26799f6304d2f95483b0",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/c/README.md#3",
+            "language": "bash",
+            "sha256": "429ef70f2c4427dda6c0f081fa92fa56392d97a5bb4a80b705f3cebd21f92743",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/cpp/README.md#1",
+            "language": "bash",
+            "sha256": "3ed1e0c3d6fa8de748c625c903ab94dec3f9743a3b52645a5d0da8d654c66903",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/cpp/README.md#2",
+            "language": "bash",
+            "sha256": "2f291b455704e56f0c555d9b2d3a8367fe2190efe70dadf6f32eafb2bb167bbb",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/cpp/README.md#3",
+            "language": "cmake",
+            "sha256": "ac17ba4aa22cecd7cd8ae3474ba15a5b01ba8fb18f993ff44ceb7d1e53e8e2c9",
+            "kind": "fragment",
+            "reason": "Consumer target declaration; installed CMake package configuration is exercised by the isolated native consumer.",
+            "evidence": "release_supply_chain_full_certification"
+        },
+        {
+            "id": "bindings/cpp/README.md#4",
+            "language": "cpp",
+            "sha256": "57460b3ef013134f74f19c3254b1849644405a40af33c497c7121cf5ba403451",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/cpp/README.md#5",
+            "language": "bash",
+            "sha256": "0af121faeb2633eb3df9468379a05916c23b781f357cafa62e08fd2d6775d71c",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/csharp/README.md#1",
+            "language": "csharp",
+            "sha256": "fb51107385086a4feb3089410206e751d17dbe9d6e106405fe0707a2b4796eb7",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/csharp/README.md#2",
+            "language": "csharp",
+            "sha256": "99fb02d8331bf65a815ea301e2aaa69ea9c93e81d0eb6a982b47609cb1906976",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/csharp/README.md#3",
+            "language": "bash",
+            "sha256": "3a3a7c83c4a4627caa89be5739293f39121b305dcf5d951bf468e87495c2f162",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/dart/README.md#1",
+            "language": "dart",
+            "sha256": "7b4ba4f005b672f25ce195b4bfc3a27e86b91b84b8ef5441c337e13aa68017f8",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/dart/README.md#2",
+            "language": "bash",
+            "sha256": "572e5f03d3714ddf5b99aebfd3f1f3b978a0f8ad1745cc14d25240817d9c99cf",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/fsharp/README.md#1",
+            "language": "fsharp",
+            "sha256": "503625339c6f80d4508202f35afae4f7abbd38f6c7790d89a703c43ed64206d0",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/fsharp/README.md#2",
+            "language": "bash",
+            "sha256": "f19019f360395d00c7dc0e0ae2ff53259c148796d414dfab8cbd9fd063992c53",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/go/README.md#1",
+            "language": "go",
+            "sha256": "ad52d6b021bbe4b8d031b0e4559967d4007dd29942d04b7ea15c4f799ee95652",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/go/README.md#2",
+            "language": "sh",
+            "sha256": "67e75fdb45edd4ea502222b00b867f7f0ca5dd2d4262ec1909ef97b2d0176a72",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/interop/README.md#1",
+            "language": "text",
+            "sha256": "9a748be5d803aa49e4998a4949206ee26f20bf7dd517aa9f684683cd49a27b77",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/interop/README.md#2",
+            "language": "text",
+            "sha256": "4a51076c72cfdb717d1ece39857a8530dc5db4d3eb0088e541c66d8c50f6d279",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/interop/README.md#3",
+            "language": "text",
+            "sha256": "08c2ce9283efa9d90ce714fb22457faea6dd2b9ba4b56e16c11d468de397fcd4",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/java/README.md#1",
+            "language": "text",
+            "sha256": "c9cd498842324539097924fd15e8a612767d4f311c860b31c8f83d5316ee19ed",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/java/README.md#2",
+            "language": "java",
+            "sha256": "66a54a7a8e9bc314631dd37b6c57d3de2481c60d32dfc92498d7c196586bec75",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/java/README.md#3",
+            "language": "bash",
+            "sha256": "9ca805ed2f31f6d43f4a4d5415697e7634bff7eb412c3cb529daee77fd9509f3",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/jvm/README.md#1",
+            "language": "java",
+            "sha256": "cfe9af3fbfa08347d07c585c85ac10ad7242ca3151bfa2e38f63cc8a886343c7",
+            "kind": "fragment",
+            "reason": "Explicit stage signature or contextual integration-test fragment; not an independent application.",
+            "evidence": "canonical core and JVM integration tests in Full/Release"
+        },
+        {
+            "id": "bindings/jvm/README.md#2",
+            "language": "text",
+            "sha256": "5cb53786f74b1352f93cd410f572c697ac3b2948661b727c2b68fced7effa3ca",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/kotlin/README.md#1",
+            "language": "text",
+            "sha256": "911286c83bb0ce2ca3f0e7c5d5c661573d2319549294bad6df19496cfdfe2421",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/kotlin/README.md#2",
+            "language": "kotlin",
+            "sha256": "4b809538ed262dcf0aaf7cee33fb843f0b5141d2cfc662bb79ea3a02968cfb4f",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/kotlin/README.md#3",
+            "language": "bash",
+            "sha256": "7d871a19d9c003b641d905f990c1cff0f91c029e5800fb50f7e2e248a9c35524",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/lua/README.md#1",
+            "language": "text",
+            "sha256": "24431c15ee1a1e9b6783fb543df83b230e65ce6113a68ed4b6140aefbaf3e3aa",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "bindings/lua/README.md#2",
+            "language": "lua",
+            "sha256": "dc2f979be55da5996acd8addba0ab800c83c13dad0256d084e64d440b5c62bae",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/lua/README.md#3",
+            "language": "bash",
+            "sha256": "3ebc3cc9d39ea347d6587ce49d58156abf92965771aba67e2511ee149e7c263a",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/perl/README.md#1",
+            "language": "perl",
+            "sha256": "384f696d92aa524e43bd393dca26bd3f460fc10ad1748890acbd595fb548ec01",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/perl/README.md#2",
+            "language": "bash",
+            "sha256": "edb446b1576b22c4540dbe796695b91be52595450d4b6550a8aa755e1f086bb1",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/php/README.md#1",
+            "language": "php",
+            "sha256": "8669cc7431d2467e5d8602142db6c589a0bc16e77628e00db2ecf2cf53ebfd4e",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/php/README.md#2",
+            "language": "bash",
+            "sha256": "d73957976a08eaf3d07ee88da5a59bd6f377ee08c694ac4246a395ad7efc8938",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/python/README.md#1",
+            "language": "python",
+            "sha256": "c148354f33c3477caddf8f7d18aa797c1a5dc69e0a9b674807e55f8c25122efb",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/python/README.md#2",
+            "language": "python",
+            "sha256": "b01ccc177e8be9fee77563f27ccf91bfcd231190bb95b2182d485cdca495e7f6",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/python/README.md#3",
+            "language": "python",
+            "sha256": "d586a120a3cf3a9943f888dc032071ee379e187e852848ffb1bc568f97676de7",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/python/README.md#4",
+            "language": "bash",
+            "sha256": "a6b8d3bf7c1f56673fbe8e730e26be99ad3b8bf386a243e603ccdcf06804c242",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/r/README.md#1",
+            "language": "r",
+            "sha256": "fca5a7c804ac13ee0e69ef990d63763a36df4813b05d647d70f94efb14889317",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/r/README.md#2",
+            "language": "bash",
+            "sha256": "bb4a4277104fd754880fbf254c41ad4992906bbf6d5616b25dbc318b8d5dbfc0",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/ruby/README.md#1",
+            "language": "ruby",
+            "sha256": "40086e70c3fa18a078dedd85942012bdf49f63455c8aace91724933a909ef6e7",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/ruby/README.md#2",
+            "language": "bash",
+            "sha256": "f18644d91c92a0428ddd00860388741dc0ba69bdb4d130953bcda65ed124011a",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/rust/README.md#1",
+            "language": "rust",
+            "sha256": "dacad07f9b6205c9c25edce53c4c91cd68274a0cc87c479179a37a4bc5734e54",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/rust/README.md#2",
+            "language": "rust",
+            "sha256": "736e49f193486f80f20b7502108e56e57a25f2c4fbd42f0ba5b729838ff91dc3",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/rust/README.md#3",
+            "language": "bash",
+            "sha256": "040cbace763d9be8b5501680578fb3db1e2d081700c1c4c355d89619c1936227",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/swift/README.md#1",
+            "language": "swift",
+            "sha256": "dea7fe81a3d4ffa3e6340a41bbf90ef75d56e530ed0d1c7f1dfe006810a79d5d",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/swift/README.md#2",
+            "language": "bash",
+            "sha256": "d8c6a2e58780fa7c3337b76ff97342c27e2fb68d573332ee903163792c399cc9",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/typescript/README.md#1",
+            "language": "bash",
+            "sha256": "e11522f8a34de7513e4eac7bc535fe8ff15e62f0a6735b3d66198967b8cbd0d4",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/typescript/README.md#2",
+            "language": "typescript",
+            "sha256": "f2e9fa797d0ea57bcf715f05ce0df19b79eec7825d63dd01de04d1b6cd408a61",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/typescript/README.md#3",
+            "language": "typescript",
+            "sha256": "21a36e1b8c0e2ac38f8abb65ce5e46e181ec29474d13e810982fd6bdd29e19e3",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "bindings/typescript/README.md#4",
+            "language": "typescript",
+            "sha256": "f15bd829c11818f50cd5dcfa9f6d3e4d3569406442e676caae1123e877615ae7",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "docs/architecture.md#1",
+            "language": "text",
+            "sha256": "11bc13aec5df80827f3fa9d0eacfbe147b1dacb1f3f2ba2e1ca913175b43aa2e",
+            "kind": "diagram",
+            "reason": "Informational compiler responsibility or lifecycle diagram; authority remains in the linked contracts.",
+            "evidence": "architecture fitness and semantic-authority certification"
+        },
+        {
+            "id": "docs/capability-evaluation.md#1",
+            "language": "text",
+            "sha256": "da61451f0652d52acf940618624c4440a07f2515d8d8d9f2499be81ee63032b2",
+            "kind": "diagram",
+            "reason": "Informational compiler responsibility or lifecycle diagram; authority remains in the linked contracts.",
+            "evidence": "architecture fitness and semantic-authority certification"
+        },
+        {
+            "id": "docs/capability-evaluation.md#2",
+            "language": "rust",
+            "sha256": "b385a1f635f1ff5a80404d5d9288e3015a48689849816f751b7da38ba786566b",
+            "kind": "signature",
+            "reason": "Explicit stage signature or contextual integration-test fragment; not an independent application.",
+            "evidence": "canonical core and JVM integration tests in Full/Release"
+        },
+        {
+            "id": "docs/ci_cd_setup.md#1",
+            "language": "bash",
+            "sha256": "b530b24bea8eb878de7f2294117556cdd59df05d5fb533e4f3cda1885f2bb22e",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/getting-started.md#1",
+            "language": "strling",
+            "sha256": "f44849f0d848cc74324715d53c0d6873c0b3a812befac66f2e4f2d93adcb0aeb",
+            "kind": "canonical",
+            "reason": "Complete Semantic program or protocol request; execute unchanged bytes through canonical compilation.",
+            "evidence": "documentation.product-canonical-examples"
+        },
+        {
+            "id": "docs/getting-started.md#2",
+            "language": "bash",
+            "sha256": "ae89a2ba782f70d2b741a57c90940be817f5175fb0d0dedecb516615752d4d86",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/getting-started.md#3",
+            "language": "bash",
+            "sha256": "0de36f01b7534a0bbfc480fd47ab99ec4d5d3648447280b12ae04ca6c9b78331",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/getting-started.md#4",
+            "language": "bash",
+            "sha256": "6b964843338925d5c4abec46a75c2c90c51ed2e3ec51c5d1b5d6768cb013e5bf",
+            "kind": "installation",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "docs/getting-started.md#5",
+            "language": "python",
+            "sha256": "3051dcd049e83a255d145e35295c1e467c73c8504546bc522e73ae4d84e63245",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "docs/guidelines.md#1",
+            "language": "bash",
+            "sha256": "8ea19cdc5a0ae5eb37d546a19224a20ad91becc829be22939c6be69da21e2774",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/migration-guide.md#1",
+            "language": "python",
+            "sha256": "764bd59b3bf8e89aecc42cf1af2b7e113ebc865eceae8d800e96d909a84caa6a",
+            "kind": "historical",
+            "reason": "Explicitly labeled historical interface; verify against its recorded historical source, never execute it as a current API.",
+            "evidence": "docs/migration-guide.md historical source identities"
+        },
+        {
+            "id": "docs/migration-guide.md#2",
+            "language": "python",
+            "sha256": "419cd236b1c7a185bb3d740b25e4851efed7e47380b8a8a5a25f283f6c3eb9cd",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "docs/migration-guide.md#3",
+            "language": "strling",
+            "sha256": "f44849f0d848cc74324715d53c0d6873c0b3a812befac66f2e4f2d93adcb0aeb",
+            "kind": "canonical",
+            "reason": "Complete Semantic program or protocol request; execute unchanged bytes through canonical compilation.",
+            "evidence": "documentation.product-canonical-examples"
+        },
+        {
+            "id": "docs/migration-guide.md#4",
+            "language": "typescript",
+            "sha256": "706ed4009479ccdf684b062d0f7cf2afa7bdeebfa1d35ffac8fb72eee2463e23",
+            "kind": "historical",
+            "reason": "Explicitly labeled historical interface; verify against its recorded historical source, never execute it as a current API.",
+            "evidence": "docs/migration-guide.md historical source identities"
+        },
+        {
+            "id": "docs/migration-guide.md#5",
+            "language": "typescript",
+            "sha256": "a97d2288f11e8e7de2effdbb73bd52cceef75716a68c671d801f8a0563d5022f",
+            "kind": "consumer",
+            "reason": "Current host API example; compile/run the exact block in its declared application context against the staged package and canonical kernel.",
+            "evidence": "release_supply_chain_full_certification and bounded Preview documentation execution"
+        },
+        {
+            "id": "docs/portability-planning.md#1",
+            "language": "text",
+            "sha256": "86a13d1db44e1b5299bf71027ea22f4f972690381f1f8a81d23f15de42a6422e",
+            "kind": "diagram",
+            "reason": "Informational compiler responsibility or lifecycle diagram; authority remains in the linked contracts.",
+            "evidence": "architecture fitness and semantic-authority certification"
+        },
+        {
+            "id": "docs/portability-planning.md#2",
+            "language": "rust",
+            "sha256": "c0406d22a92efa38d60e6952b5bba2b3b3cfdad02f8c46c0e0bdae5aff0b0212",
+            "kind": "signature",
+            "reason": "Explicit stage signature or contextual integration-test fragment; not an independent application.",
+            "evidence": "canonical core and JVM integration tests in Full/Release"
+        },
+        {
+            "id": "docs/project_architecture_strategy.md#1",
+            "language": "text",
+            "sha256": "87e6a5b150677aae040c318ada1ebe8fcdc70697c0384422c3645406d3b337d7",
+            "kind": "diagram",
+            "reason": "Informational compiler responsibility or lifecycle diagram; authority remains in the linked contracts.",
+            "evidence": "architecture fitness and semantic-authority certification"
+        },
+        {
+            "id": "docs/releasing.md#1",
+            "language": "bash",
+            "sha256": "b530b24bea8eb878de7f2294117556cdd59df05d5fb533e4f3cda1885f2bb22e",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/releasing.md#2",
+            "language": "text",
+            "sha256": "f8f4532be329af43d26115d5481497aee938f405acc123d1f71781ff4f6e633f",
+            "kind": "diagram",
+            "reason": "Informational compiler responsibility or lifecycle diagram; authority remains in the linked contracts.",
+            "evidence": "architecture fitness and semantic-authority certification"
+        },
+        {
+            "id": "docs/releasing.md#3",
+            "language": "bash",
+            "sha256": "e6efa097ee2c0610b31dbc2a1e5c4711ab861124c9dfc5eaee6477713d0b016f",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/releasing.md#4",
+            "language": "bash",
+            "sha256": "ea55a168dcdaca5daf6fd5ebbd4491c50e37cca25a3f0b7e37406cc5437ddb9b",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_design.md#1",
+            "language": "bash",
+            "sha256": "d8e3b8eaa7af205b29dee8bbf4243ada3280021e35d532b5c82a7fb1d07df178",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_design.md#2",
+            "language": "bash",
+            "sha256": "aaa745457995170dfb7f90983ec90cd7808dab7de9f4cd8c3e718623b3024b49",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_setup.md#1",
+            "language": "bash",
+            "sha256": "2d37abb02d7e774810a3441f21fdc6c4fa0e667098090c901e5ec0d4fd4e23fb",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_setup.md#2",
+            "language": "bash",
+            "sha256": "f0be34fb1710c3bcf2e01066eb234c0fcfb61bc83380e7a970d55beafe30f93d",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_setup.md#3",
+            "language": "bash",
+            "sha256": "97d27addd2a93baa179551e3fdd0ee2f22dc5d3b36e8490603d9691a09e3e810",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_setup.md#4",
+            "language": "bash",
+            "sha256": "bdea5aaaeffbdf4afabe90ec691fe3380359394109cae2bddb1c7e8518b0ab07",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_workflow.md#1",
+            "language": "bash",
+            "sha256": "9faae589a7c94defda00c8117508a5883bb63b65f4d65c18a075ae7fb5899595",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_workflow.md#2",
+            "language": "bash",
+            "sha256": "85ad980bd2cc9afe10e5f2daa41a9acb3e2233308235dc0cb6ebef32c995fc6b",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_workflow.md#3",
+            "language": "bash",
+            "sha256": "aaa745457995170dfb7f90983ec90cd7808dab7de9f4cd8c3e718623b3024b49",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/testing_workflow.md#4",
+            "language": "bash",
+            "sha256": "78e02d832019f3429442db2b4a3e846834b2049459696833367a3d546fa11320",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#1",
+            "language": "text",
+            "sha256": "882b569f16c13923b18bd869ca911dadbfd52b97e60859b19e923881e4ed2eeb",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#2",
+            "language": "text",
+            "sha256": "aaf7d88026636211b880af87e359fbb2899416c6f2ddd322f898170a0bdb4f41",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#3",
+            "language": "text",
+            "sha256": "f4751add78ee492b7ed2ba6365cad6cdfbda278dec4bb0032d324a17643cd33d",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#4",
+            "language": "bash",
+            "sha256": "a1e7207b320235d37ab57f9f5d3d246f4ae07de81f16b6dd1bab323b4af61c11",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#5",
+            "language": "bash",
+            "sha256": "da1d3675b8f693a954391dd0ed018443ccb9f3aae5b7b2dcc639f2c35e81c33b",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#6",
+            "language": "text",
+            "sha256": "a20f05c34d10078bc1fd45afb9e3a17d3ea7ce18648224eb96bc085e39f4edd0",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#7",
+            "language": "text",
+            "sha256": "0e70b125ddc9bbc1a5e70715d1c555315c145585c62047c850cc4105476420a7",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/toolchains.md#8",
+            "language": "text",
+            "sha256": "4e05f1db840257e8de2e94fa37e88f5e497ff792c3811b26b1e97ab995cdb22d",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/tutorial/first_contribution.md#1",
+            "language": "strling",
+            "sha256": "b8f4f758328db3064a00da55ec8034abcb66e6679a868ba05e0bced8a1941174",
+            "kind": "canonical",
+            "reason": "Complete Semantic program or protocol request; execute unchanged bytes through canonical compilation.",
+            "evidence": "documentation.product-canonical-examples"
+        },
+        {
+            "id": "docs/tutorial/first_contribution.md#2",
+            "language": "json",
+            "sha256": "99d8b112d8cb0961ada10b1d4e8de7161f4b28ac58ee3f91e5a039838a786602",
+            "kind": "canonical",
+            "reason": "Complete Semantic program or protocol request; execute unchanged bytes through canonical compilation.",
+            "evidence": "documentation.product-canonical-examples"
+        },
+        {
+            "id": "docs/tutorial/first_contribution.md#3",
+            "language": "bash",
+            "sha256": "e9230205b5f319927d16fe40b4e6f1d4ffc0944a526c8569b10c8d6deb65fc8f",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/tutorial/first_contribution.md#4",
+            "language": "bash",
+            "sha256": "9153e713572785928554b6738ad8414d845db8d399c0637bd18a71cc83d6c194",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/tutorial/first_contribution.md#5",
+            "language": "rust",
+            "sha256": "de8c2cf348f69eaa3dcdb0d9e40b32374e3e969c180cda57eecc839040c81fc7",
+            "kind": "fragment",
+            "reason": "Explicit stage signature or contextual integration-test fragment; not an independent application.",
+            "evidence": "canonical core and JVM integration tests in Full/Release"
+        },
+        {
+            "id": "docs/tutorial/first_contribution.md#6",
+            "language": "bash",
+            "sha256": "086f8d0f200cf81a4ccea8a23bdac70c5ffd3841d45c3e21172ef2c1d0cefc03",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        },
+        {
+            "id": "docs/tutorial/first_contribution.md#7",
+            "language": "bash",
+            "sha256": "332f018e43411c33d95c703bb003814d49d2b88d8434e236b430d903f0d7dd73",
+            "kind": "procedure",
+            "reason": "Explicit repository engineering command syntax, setup or certification procedure; execute only dependency-ready authorized operations, never blindly evaluate Markdown.",
+            "evidence": "root CLI public contracts and registered certification commands"
+        }
+    ]
+}

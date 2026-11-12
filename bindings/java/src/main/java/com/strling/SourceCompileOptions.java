@@ -23,9 +23,10 @@ public final class SourceCompileOptions {
         sourceId = builder.sourceId;
         frontendId = builder.frontendId;
         frontendVersion = builder.frontendVersion == null
-                ? specificationVersion : builder.frontendVersion;
+                ? "1.0.0" : builder.frontendVersion;
         mediaType = builder.mediaType == null
-                ? ("legacy_regex".equals(frontendId) ? "text/x-regex" : "text/strling")
+                ? ("strling.regex-compat".equals(frontendId) ? "text/x-strling-regex-compat"
+                    : "legacy_regex".equals(frontendId) ? "text/x-regex" : "text/x-strling-semantic")
                 : builder.mediaType;
         requestedOutputs = builder.requestedOutputs == null ? null
                 : Collections.unmodifiableList(new ArrayList<>(builder.requestedOutputs));
@@ -85,7 +86,7 @@ public final class SourceCompileOptions {
     /** Builder with deterministic canonical defaults and no ambient target. */
     public static final class Builder {
         private String sourceId = "src:java.adapter";
-        private String frontendId = "semantic_strling";
+        private String frontendId = "strling.semantic";
         private String frontendVersion;
         private String mediaType;
         private String specificationVersion = "1.0-draft.1";

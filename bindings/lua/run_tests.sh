@@ -7,5 +7,7 @@ set -e
 # Set up luarocks paths
 eval "$(luarocks path --bin)"
 
-# Run busted tests
-exec busted -v "$@"
+# Dependencies use the prepared LuaRocks environment; product code comes from
+# this checkout rather than a previously installed STRling rock.
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+exec busted --helper "${SCRIPT_DIR}/spec/source_loader.lua" -v "$@"

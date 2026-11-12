@@ -1,13 +1,16 @@
 # STRling — F# adapter
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 The `STRling.FSharp` package is an idiomatic F# projection over the shared C#
 `STRling` adapter and the canonical native compiler. It does not own another
 native transport, parser, compiler, Semantic IR interpretation, target emitter,
 or regex engine.
 
-> **Migration status:** canonical native adapter implemented and locally
-> certified by P17-T05. The retired F# implementation remains
-> compatibility evidence, not the compiler boundary.
+The adapter delegates to the canonical kernel; historical compatibility fixtures
+do not restore retired compiler APIs.
 
 Semantic STRling is the flagship textual language. Regex-compatible text is an
 import/compatibility surface, not Semantic STRling.
@@ -31,9 +34,9 @@ use client = Api.loadClient nativePath
 let compiler = Api.createCompiler client
 let options = { Api.defaultOptions () with SourceId = "src:example" }
 
-match Api.parse compiler "literal \"hello\"" (Some options) with
-| Succeeded result
-| Failed result -> printfn "%s" (result.GetProperty("outcome").GetString())
+match Api.parse compiler "semantic strling 1.0; case sensitive; pattern text \"hello\";" (Some options) with
+| Succeeded result -> printfn "%s" (result.GetProperty("outcome").GetString())
+| Failed result -> failwith (result.ToString())
 ```
 
 The `CompileOutcome` union projects the canonical result outcome. Diagnostics,
@@ -58,3 +61,13 @@ second native route or host-owned compiler behavior.
 
 See the repository [specification](../../spec/README.md) and
 [architecture](../../governance/architecture.md) for normative contracts.
+
+## Proposed public installation
+
+After separately authorized publication, the exact proposed coordinate is:
+
+```bash
+dotnet add package STRling.FSharp --version 4.0.0
+```
+
+Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

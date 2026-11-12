@@ -69,7 +69,7 @@ def source_compile_request(
 ) -> dict[str, Any]:
     prepared = dict(options or {})
     specification_version = str(prepared.get("specification_version", "1.0-draft.1"))
-    frontend_id = str(prepared.get("frontend_id", "semantic_strling"))
+    frontend_id = str(prepared.get("frontend_id", "strling.semantic"))
     request = {
         "contract_version": "1.0.0",
         "specification_version": specification_version,
@@ -81,9 +81,7 @@ def source_compile_request(
                 "specification_version": specification_version,
                 "frontend": {
                     "id": frontend_id,
-                    "dialect_version": str(
-                        prepared.get("frontend_version", specification_version)
-                    ),
+                    "dialect_version": str(prepared.get("frontend_version", "1.0.0")),
                 },
                 "content": {
                     "kind": "inline",
@@ -91,9 +89,11 @@ def source_compile_request(
                     "media_type": str(
                         prepared.get(
                             "media_type",
-                            "text/x-regex"
+                            "text/x-strling-regex-compat"
+                            if frontend_id == "strling.regex-compat"
+                            else "text/x-regex"
                             if frontend_id == "legacy_regex"
-                            else "text/strling",
+                            else "text/x-strling-semantic",
                         )
                     ),
                     "text": source,

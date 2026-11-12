@@ -33,9 +33,9 @@ module Api =
 
     let defaultOptions () =
         { SourceId = "src:fsharp.adapter"
-          FrontendId = "semantic_strling"
-          FrontendVersion = "1.0-draft.1"
-          MediaType = "text/strling"
+          FrontendId = "strling.semantic"
+          FrontendVersion = "1.0.0"
+          MediaType = "text/x-strling-semantic"
           SpecificationVersion = "1.0-draft.1"
           RequestedOutputs = None
           CompilerOptions = defaultCompilerOptions ()

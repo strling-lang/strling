@@ -12,7 +12,7 @@ parser, emitter, target selection, or regex execution fallback.
     caller-selected `strling.c-abi` v1 library.
 -   `strling.source_compile_request(source, options)` builds a canonical source
     compile request. Semantic STRling is the default; `frontend_id =
-"legacy_regex"` explicitly selects compatibility syntax.
+"strling.regex-compat"` explicitly selects compatibility syntax.
 -   `strling.stdlib_helper(step_id, helper_id, parameters)` builds one Simply
     standard-library step.
 -   `strling.simply_builder_request(steps, root_step_id, identity_namespace)`

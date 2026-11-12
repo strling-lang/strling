@@ -19,6 +19,27 @@ func TestSourceCompileRequestIsCanonicalData(t *testing.T) {
 	if document["source_id"] != "src:go.adapter" {
 		t.Fatal("unexpected source identity")
 	}
+	frontend := document["frontend"].(map[string]any)
+	if frontend["id"] != "strling.semantic" || frontend["dialect_version"] != "1.0.0" {
+		t.Fatal("source defaults must select the ratified Semantic dialect")
+	}
+	if document["content"].(map[string]any)["media_type"] != "text/x-strling-semantic" {
+		t.Fatal("unexpected Semantic media type")
+	}
+}
+
+func TestSourceFrontendVersionIsIndependentAndExplicitOptionsArePreserved(t *testing.T) {
+	request := SourceCompileRequest("caller-owned source", &SourceOptions{SpecificationVersion: "2.0-draft.1"})
+	document := request["input"].(map[string]any)["document"].(map[string]any)
+	if document["frontend"].(map[string]any)["dialect_version"] != "1.0.0" {
+		t.Fatal("source dialect must not inherit the independent specification version")
+	}
+	request = SourceCompileRequest("caller-owned source", &SourceOptions{FrontendID: "example.unsupported", FrontendVersion: "9.7.3", MediaType: "text/x-example"})
+	document = request["input"].(map[string]any)["document"].(map[string]any)
+	frontend := document["frontend"].(map[string]any)
+	if frontend["id"] != "example.unsupported" || frontend["dialect_version"] != "9.7.3" || document["content"].(map[string]any)["media_type"] != "text/x-example" {
+		t.Fatal("an explicit unsupported request must reach canonical refusal unchanged")
+	}
 }
 
 func TestStdlibHelperRecordsIdentityWithoutSemantics(t *testing.T) {

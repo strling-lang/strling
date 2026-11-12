@@ -28,7 +28,7 @@ failure remains a returned `CompileResult` with structured diagnostics.
 -   `Compiler(client).compile(request, target_profile=None)` delegates to the
     native client; `check` is the same operation.
 -   `source_compile_request(source, options=None, fallback_outputs=(...))` builds
-    a versioned Semantic STRling source request. Use `frontend_id="legacy_regex"`
+    a versioned Semantic STRling source request. Use `frontend_id="strling.regex-compat"`
     only for the explicit compatibility frontend.
 -   `parse(client, source, options=None)` is a compatibility name that requests
     canonical semantic output; it does not return a Python-owned AST.

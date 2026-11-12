@@ -1,89 +1,59 @@
 # STRling canonical compiler kernel
 
-`core/` is the reference Rust implementation of the contracts in
-`spec/contracts/1.0`. The specification remains authoritative; this crate must
-not generate normative expectations.
+`core/src` contains the sole semantic compiler implementation. Versioned
+contracts in `spec/` remain authoritative over this reference implementation;
+agreement with generated fixtures cannot create language meaning.
 
-The kernel is a deterministic library. Its semantic operations do not depend on
-filesystems, networks, command-line interfaces, editor tooling, host-language
-bindings, or legacy compiler implementations. Runtime dependencies are limited
-to serialization and contract fingerprinting support. Tests may read
-specification-authored fixtures.
+The public Rust package is a same-source curated facade assembled from this
+kernel. `core/internal/Cargo.toml` supports repository development and the
+canonical CLI. The internal compiler-description version is independent of
+the product package version 4.0.0.
 
-Current executable scope is deliberately narrow: schema-backed domain types,
-validation, pure canonical Semantic IR normalization through
-`normalization::normalize`, foundational semantic facts through
-`semantic_analysis::analyze`, structural facts through
-`structural_analysis::analyze_structure`, structured target-neutral safety
-evidence through `safety_analysis::analyze_safety`, and canonical contract
-diagnostics through `diagnostic_generation::generate_diagnostics`. The
-diagnostic stage preserves the five certified safety mappings and constructs a
-closed set of proof-backed semantic quality findings from normalized Semantic
-IR plus exact foundational and structural facts; it does not inspect raw regex
-text or target behavior. Pure
-semantic requirements and factual profile support are available through
-`capability_evaluation::extract_requirements` and
-`capability_evaluation::evaluate_capabilities`. Representation decisions are
-available through `portability_planning::plan_portability`, whose certified
-plans preserve exact capability and proof evidence without changing Semantic
-IR. `explanation::explain_semantics` projects completed target-neutral stages
-into the independently versioned semantic-explanation model, and
-`explanation::explain_target` adds exact completed capability and portability
-evidence. These functions do not rerun stages, inspect source syntax, infer
-from emitted patterns, or add explanation data to `CompileResult` 1.0. The
-`no_match_explanation::explain_no_match` producer evaluates an exact semantic
-program plus its corresponding structured explanation against one bounded UTF-8
-subject. It returns only contract-backed `matched`, `no_match`, `unknown`, or
-`unavailable` evidence; it never echoes the subject, executes target artifacts,
-or converts incomplete work into a proof. The evaluator consumes completed
-target status when present and keeps resource exhaustion and unsupported
-semantic cases explicit. The
-`semantic_conversion::convert_semantic_program` projection renders validated
-canonical Semantic IR to Semantic STRling or a direct-operation Simply 1.0
-request, reconstructs through the existing destination frontend, and publishes
-`exact` only when the normalized alpha projection is equal. Missing or invalid
-Semantic STRling capture names remain explicit partial conversions; unsupported
-backreference topology returns no executable output. Optional explanation and
-target evidence is correspondence-checked and cannot influence conversion
-semantics. The
-crate-private target-aware pipeline certifies that planning follows capability
-evaluation, while the existing `CompileResult` projection remains
-target-neutral and produces no portability plan or artifact.
+## Compiler flow
 
-Source compilation is selected only by explicit `SourceDocument.frontend`
-identity. `regex_frontend` preserves the frozen compatibility grammar, while
-`semantic_frontend` implements the ratified `strling.semantic@1.0.0` grammar,
-all 27 frozen `STRL-DSL-*` diagnostics, bounded direct lowering, source spans,
-and canonical formatting. The Semantic formatter retains private syntax
-evidence for comments and authored set order; accepted programs still pass
-through the sole `normalization::normalize` and existing compiler pipeline.
-Neither frontend reads files, selects targets, lowers artifacts, or owns
-runtime behavior.
+Explicit source frontends select `strling.semantic@1.0.0` or
+`strling.regex-compat@1.0.0`. The Semantic frontend parses the ratified DSL;
+regex import preserves its frozen compatibility grammar. `simply` records a
+versioned construction graph and reconstructs canonical semantic values.
+All routes converge on the sole normalization and semantic pipeline.
 
-`SimplyBuilder` is the native Rust construction surface for the immutable
-`strling.simply-builder@1.0.0` protocol and its backward-compatible `1.1.0`
-extension. It stores canonical `semantic::Node` candidates directly, derives
-stable node and capture identities from explicit host keys, enforces immutable
-single-parent values and import provenance, and consumes the graph through
-`normalization::normalize`. The `1.1.0` `stdlib_helper` operation carries only
-a governed helper identity and parameter map; it delegates to the sole
-`stdlib` builders before importing the resulting canonical Semantic IR.
-`finish_program` returns canonical `SemanticProgram`; `finish_request` adds
-only explicit compile routing. Callers then use the existing crate-root
-`compile` facade. The Simply module does not parse regex, model a second AST or
-compiler, select a target, lower, emit, or execute a runtime.
+`kernel::compile` and `compile_with_evidence` orchestrate validation,
+normalization, semantic and structural analysis, safety diagnostics, factual
+capability evaluation, portability planning, target lowering and artifact
+serialization. Private orchestration modules prevent external callers from
+substituting a second pipeline. The canonical AST and Semantic Regex IR are
+versioned contracts, not binding-local compiler implementations.
 
-`decode_simply_builder_request` and `replay_simply_builder_request` provide the
-typed inward edge for the TypeScript and Python Preview adapters. The additive
-`./strling simply [--target-profile PATH]` JSON transport decodes one
-`BuilderRequest`, replays it through `SimplyBuilder`, and returns either stable
-construction errors or the canonical `CompileRequest` plus `CompileResult`.
-The transport owns only bounded I/O and exact profile-file loading; host
-adapters remain protocol serializers and do not discover or implement compiler,
-target, emitter, or runtime behavior.
+PCRE2, ECMAScript and Python `re` lowering and serialization are separate
+target modules. An exact target profile supplies facts; unknown or unsupported
+behavior remains explicit. The kernel neither discovers a target from a host
+language nor executes the target regex engine. Runtime evidence is acquired
+by separately governed conformance tools.
 
-Additional parsing surfaces, rewrite application, general satisfiability or
-language-inclusion solving, style-only warnings, target-specific portability diagnostics,
-exploitability or target-runtime verdicts, capture numbering, lowering,
-emission, editor presentation, non-Preview bindings, and product integrations
-remain deferred to separately contained tasks.
+## Additional semantic operations
+
+Explanation, bounded no-match evidence, semantic conversion and rewrite
+modules consume canonical structures and correspondence-checked evidence.
+Exact conversion requires reconstruction equality. Partial, unsupported and
+resource-exhausted outcomes remain explicit; neither conversion nor no-match
+evidence establishes a general language-inclusion or exploitability proof.
+
+`SimplyBuilder` implements construction protocol 1.0 and its compatible 1.1
+standard-helper extension. Helpers select registered kernel meanings. Host
+adapters serialize these requests; they do not implement an emitter or infer
+target capabilities. Lexical-shape helpers are not complete semantic validators.
+
+## Integration and authority
+
+The kernel forbids unsafe Rust. Its semantic stages do not depend on filesystem
+discovery, networks, editor state or host-binding implementations. Bounded CLI,
+native/WASM interop, LSP and host adapters live at separate integration
+boundaries and delegate to the kernel. Their allocation, loading, package and
+ABI obligations require their own tests; kernel purity alone does not prove
+those obligations.
+
+See [the current architecture](../docs/architecture.md),
+[contract authority](../spec/README.md), [support matrix](../docs/support-matrix.md)
+and [migration guide](../docs/migration-guide.md). Architecture fitness and
+semantic-authority checks reject reintroduced binding-owned compilers and
+retired implementation graphs.

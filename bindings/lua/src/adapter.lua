@@ -3,7 +3,7 @@ local json = require("cjson.safe")
 local native = require("strling_native")
 
 local strling = {
-  VERSION = "3.0.0",
+  VERSION = "4.0.0",
   INTEROP_PROTOCOL_VERSION = "1.0.0",
   NATIVE_ABI_VERSION = 1,
   MAX_INTEROP_REQUEST_BYTES = 10485760,
@@ -159,14 +159,14 @@ end
 function strling.source_compile_request(source, options)
   options = options or {}
   local specification = tostring(options.specification_version or "1.0-draft.1")
-  local frontend = tostring(options.frontend_id or "semantic_strling")
+  local frontend = tostring(options.frontend_id or "strling.semantic")
   local request = {
     contract_version = "1.0.0", specification_version = specification,
     input = { kind = "source", document = {
       contract_version = "1.0.0", source_id = tostring(options.source_id or "src:lua.adapter"),
       specification_version = specification,
-      frontend = { id = frontend, dialect_version = tostring(options.frontend_version or specification) },
-      content = { kind = "inline", encoding = "utf-8", media_type = tostring(options.media_type or "text/strling"), text = source },
+      frontend = { id = frontend, dialect_version = tostring(options.frontend_version or "1.0.0") },
+      content = { kind = "inline", encoding = "utf-8", media_type = tostring(options.media_type or (frontend == "strling.regex-compat" and "text/x-strling-regex-compat" or "text/x-strling-semantic")), text = source },
       provenance = { kind = "authored" },
     } },
     requested_outputs = options.requested_outputs or { "semantic", "analysis" },

@@ -889,6 +889,23 @@
                 "expected": "repository_projection",
                 "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"nuget\",\\s*\"package\"\\s*:\\s*\"STRling\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
             }
+        },
+        {
+            "id": "lua-runtime-module",
+            "surface": "Lua public module version",
+            "path": "bindings/lua/src/adapter.lua",
+            "current_version": "4.0.0",
+            "authority": "Product repository projection",
+            "consumer_visible": true,
+            "coordinates_with_product": true,
+            "independently_versioned": false,
+            "publication_destination": "LuaRocks",
+            "disposition": "The public VERSION field must equal the active product projection; ABI and interop protocol remain independently versioned.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "(?m)^\\s*VERSION\\s*=\\s*\"([^\"]+)\"",
+                "expected": "repository_projection"
+            }
         }
     ],
     "support_tiers": [

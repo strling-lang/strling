@@ -13,17 +13,18 @@ import (
 )
 
 const (
-	InteropProtocolVersion   = "1.0.0"
-	NativeABIVersion         = 1
-	MaxInteropRequestBytes   = 10_485_760
-	MaxInteropResponseBytes  = 33_554_432
-	defaultSpecification     = "1.0-draft.1"
-	defaultSemanticFrontend  = "semantic_strling"
-	defaultSourceMediaType   = "text/strling"
-	defaultSourceIdentity    = "src:go.adapter"
-	defaultSimplyNamespace   = "go.adapter"
-	defaultSimplyProtocol    = "1.1.0"
-	defaultContractVersion   = "1.0.0"
+	InteropProtocolVersion  = "1.0.0"
+	NativeABIVersion        = 1
+	MaxInteropRequestBytes  = 10_485_760
+	MaxInteropResponseBytes = 33_554_432
+	defaultSpecification    = "1.0-draft.1"
+	defaultSemanticFrontend = "strling.semantic"
+	defaultFrontendVersion  = "1.0.0"
+	defaultSourceMediaType  = "text/x-strling-semantic"
+	defaultSourceIdentity   = "src:go.adapter"
+	defaultSimplyNamespace  = "go.adapter"
+	defaultSimplyProtocol   = "1.1.0"
+	defaultContractVersion  = "1.0.0"
 )
 
 var ErrCgoUnavailable = errors.New("strling native adapter requires cgo")

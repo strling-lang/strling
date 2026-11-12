@@ -269,8 +269,8 @@ object Simply {
     fun ref(captureKey: String): Pattern = Pattern {
         it.builder.backreference(it.next("backreference"), captureKey)
     }
-    fun startsWith(vararg values: Any): Pattern = merge(position("start_of_text"), merge(*values))
-    fun endsWith(vararg values: Any): Pattern = merge(merge(*values), position("end_of_text"))
+    fun startsWith(vararg values: Any): Pattern = merge(position("input_start"), merge(*values))
+    fun endsWith(vararg values: Any): Pattern = merge(merge(*values), position("input_end"))
     fun followedBy(vararg values: Any): Pattern = lookaround("ahead", "positive", merge(*values))
     fun notFollowedBy(vararg values: Any): Pattern = lookaround("ahead", "negative", merge(*values))
     fun precededBy(vararg values: Any): Pattern = lookaround("behind", "positive", merge(*values))

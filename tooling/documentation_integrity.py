@@ -9,10 +9,14 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Callable, Iterable, Sequence
 from urllib.parse import unquote, urlsplit
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
 SCHEMA_VERSION = "1.0.0"
@@ -54,7 +58,19 @@ DELEGATED_OPERATIONS = (
         "capability": "generated-documentation-consistency",
         "operation": "generate_check",
     },
+    {
+        "capability": "staged-package-host-examples",
+        "operation": "release_supply_chain_full_certification",
+    },
 )
+
+REQUIRED_CHECKS = {
+    "documentation.links",
+    "documentation.executable-examples",
+    "documentation.product-inventory",
+    "documentation.product-canonical-examples",
+    "documentation.support-matrix",
+}
 
 
 @dataclass(frozen=True)
@@ -415,6 +431,10 @@ def validate_result(result: dict[str, object]) -> list[str]:
             errors.append(f"checks[{index}].findings must be a list")
     if check_ids != sorted(check_ids) or len(check_ids) != len(set(check_ids)):
         errors.append("checks must have unique check_ids in deterministic order")
+    if set(check_ids) != REQUIRED_CHECKS:
+        errors.append(
+            "checks must contain every required documentation producer exactly once"
+        )
     if statuses:
         expected = next(
             candidate
@@ -436,7 +456,27 @@ def validate_result(result: dict[str, object]) -> list[str]:
 
 
 def run(root: Path) -> dict[str, object]:
-    return build_result((check_executable_examples(root), scan_markdown_links(root)))
+    try:
+        from tooling.product_documentation import (
+            check_inventory,
+            check_canonical_examples,
+            check_support_matrix,
+        )
+    except ModuleNotFoundError:
+        from product_documentation import (
+            check_inventory,
+            check_canonical_examples,
+            check_support_matrix,
+        )
+    return build_result(
+        (
+            check_executable_examples(root),
+            scan_markdown_links(root),
+            check_inventory(root),
+            check_canonical_examples(root),
+            check_support_matrix(root),
+        )
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:

@@ -1,7 +1,9 @@
 test_that("canonical requests and lexical helpers are projected", {
   request <- strling_source_compile_request('literal "hello"')
   expect_identical(request$contract_version, "1.0.0")
-  expect_identical(request$input$document$frontend$id, "semantic_strling")
+  expect_identical(request$input$document$frontend$id, "strling.semantic")
+  expect_identical(request$input$document$frontend$dialect_version, "1.0.0")
+  expect_identical(request$input$document$content$media_type, "text/x-strling-semantic")
   expect_identical(sl_email("root")$arguments$helper_id, "stdlib.email")
   expect_true("version" %in% names(sl_uuid("root")$arguments$parameters))
 })

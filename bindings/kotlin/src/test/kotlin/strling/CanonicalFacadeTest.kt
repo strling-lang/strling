@@ -42,6 +42,9 @@ class CanonicalFacadeTest {
         @Suppress("UNCHECKED_CAST")
         val steps = request["steps"] as List<Map<String, Any?>>
         assertTrue(steps.any { it["operation"] == "stdlib_helper" })
+        assertEquals(listOf("input_start", "input_end"), steps
+            .filter { it["operation"] == "position" }
+            .map { (it["arguments"] as Map<*, *>)["position"] })
         assertFailsWith<STRlingError> { pattern.toString() }
         assertFailsWith<STRlingError> { pattern.exec("input") }
     }

@@ -6,9 +6,9 @@ namespace Strling;
 public sealed record SourceCompileOptions
 {
     public string SourceId { get; init; } = "src:csharp.adapter";
-    public string FrontendId { get; init; } = "semantic_strling";
-    public string FrontendVersion { get; init; } = "1.0-draft.1";
-    public string MediaType { get; init; } = "text/strling";
+    public string FrontendId { get; init; } = "strling.semantic";
+    public string FrontendVersion { get; init; } = "1.0.0";
+    public string MediaType { get; init; } = "text/x-strling-semantic";
     public string SpecificationVersion { get; init; } = "1.0-draft.1";
     public IReadOnlyList<string>? RequestedOutputs { get; init; }
     public JsonElement CompilerOptions { get; init; } = Defaults.CompilerOptions();

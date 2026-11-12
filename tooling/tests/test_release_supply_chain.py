@@ -1003,10 +1003,17 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
         receipts = Path(self.temporary.name) / "receipts"
         toolchains = {row["id"]: row for row in self.toolchains}
         for root in (self.first, self.second):
-            for relative in CONSUMER_FIXTURES.values():
+            for relative in (
+                *CONSUMER_FIXTURES.values(),
+                "tests/documentation/1.0/manifest.json",
+            ):
                 target = root / relative
                 target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes(b"consumer fixture")
+                target.write_bytes(
+                    b'{"examples":[]}'
+                    if relative.endswith("documentation/1.0/manifest.json")
+                    else b"consumer fixture"
+                )
 
         def probe(root, *, artifact_id, toolchain_id, policy_sha256, scope):
             return copy.deepcopy(toolchains[f"{artifact_id}:{scope}:{toolchain_id}"])
@@ -1023,6 +1030,10 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
                 source_outcome="succeeded",
                 target_pattern="abc",
                 kernel_mismatch_rejected=True,
+                documentation_examples=[],
+                documentation_manifest_sha256=hashlib.sha256(
+                    (root / "tests/documentation/1.0/manifest.json").read_bytes()
+                ).hexdigest(),
             )
             if artifact_id == "release:rust":
                 result.update(

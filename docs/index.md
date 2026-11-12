@@ -1,5 +1,12 @@
 # STRling Developer Documentation
 
+## Use the product
+
+-   [Getting started](getting-started.md) — complete Semantic, CLI and Python examples.
+-   [Support matrix](support-matrix.md) — exact distribution, runtime and target scope.
+-   [Migration guide](migration-guide.md) — verified 3.x-to-4.0 changes and replacements.
+-   [Benchmark and resource-safety report](benchmark-report.md) — source-backed observations and non-gating performance limitations.
+
 ## Start with authority
 
 -   [`Product Architecture`](../governance/product.md) — authoritative product

@@ -45,6 +45,8 @@ public sealed class Compiler
         ArgumentNullException.ThrowIfNull(source);
         var selected = options ?? new SourceCompileOptions();
         var mediaType = selected.MediaType;
+        if (selected.FrontendId == "strling.regex-compat" && mediaType == "text/x-strling-semantic")
+            mediaType = "text/x-strling-regex-compat";
         if (selected.FrontendId == "legacy_regex" && mediaType == "text/strling") mediaType = "text/x-regex";
         var request = new Dictionary<string, object?>
         {

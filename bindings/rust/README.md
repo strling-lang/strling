@@ -1,5 +1,9 @@
 # STRling for Rust
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 This package is the curated Rust facade over STRling's canonical compiler
 implementation. The publishable `strling` crate is rooted at the repository
 root and compiles the governed `core/src` files directly through
@@ -41,3 +45,13 @@ by the product release policy. Publication requires
 separate explicit owner authorization through the protected release workflow.
 
 See [`docs/api_reference.md`](docs/api_reference.md) for the facade layout.
+
+## Proposed public installation
+
+After separately authorized publication, the exact proposed coordinate is:
+
+```bash
+cargo add strling@=4.0.0
+```
+
+Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

@@ -1,14 +1,26 @@
 # STRling Swift adapter
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 The Swift package is a semantic-free facade over a small C loader target and
 the governed `strling.c-abi` v1. A caller supplies an absolute native library
 path; the package performs no ambient lookup or download.
 
+Pass the absolute authenticated native-library path as the first program argument.
+The program requires that argument; it never searches a developer installation.
+
 ```swift
-let client = try NativeClient(libraryPath: "/absolute/path/to/libstrling_interop.so")
-let request = sourceCompileRequest("'hello'")
-let result = try client.compile(request)
-client.close()
+import Foundation
+import STRling
+
+let client = try NativeClient(libraryPath: CommandLine.arguments[1])
+defer { client.close() }
+let request = sourceCompileRequest("semantic strling 1.0; case sensitive; pattern text \"hello\";")
+let result = try client.compile(request) as! [String: Any]
+precondition(result["outcome"] as? String == "succeeded")
+print(result["outcome"]!)
 ```
 
 `describe`, `compile`, `inspectTargetProfile`, and `simplyCompile` preserve
@@ -38,3 +50,13 @@ package path. A consuming project can reference that checked-out package with
 `.package(path: "/absolute/checkout/bindings/swift")`. The supported execution
 scope is Linux x86_64; the native library is supplied through its explicit
 absolute path.
+
+## Proposed public installation
+
+After separately authorized publication, the exact proposed coordinate is:
+
+```bash
+git clone --branch swift-v4.0.0 --single-branch https://github.com/strling-lang/strling.git
+```
+
+Use `swift build --package-path strling/bindings/swift` for this source route. A consuming SwiftPM project references that authenticated subtree as a local package; the repository root is not a SwiftPM package.

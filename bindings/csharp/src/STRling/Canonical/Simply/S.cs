@@ -59,8 +59,8 @@ public static class S
             context.Next("alternation"), patterns.Select(pattern => pattern.Record(context)).ToArray()));
     }
 
-    public static Pattern Start() => Position("start_of_text");
-    public static Pattern End() => Position("end_of_text");
+    public static Pattern Start() => Position("input_start");
+    public static Pattern End() => Position("input_end");
     public static Pattern StartsWith(params Pattern[] values) => Merge(Start(), Merge(values));
     public static Pattern EndsWith(params Pattern[] values) => Merge(Merge(values), End());
     public static Pattern FollowedBy(params Pattern[] values) => Lookaround("ahead", "positive", Merge(values));

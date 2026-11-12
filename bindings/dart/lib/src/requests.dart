@@ -6,10 +6,10 @@ typedef SimplyStep = Map<String, Object?>;
 Map<String, Object?> sourceCompileRequest(
   String source, {
   String specificationVersion = _specificationVersion,
-  String frontendId = 'semantic_strling',
+  String frontendId = 'strling.semantic',
   String? frontendVersion,
   String sourceId = 'src:dart.adapter',
-  String mediaType = 'text/strling',
+  String mediaType = 'text/x-strling-semantic',
   List<String> requestedOutputs = const ['semantic', 'analysis'],
   Map<String, Object?>? compilerOptions,
   Map<String, Object?>? targetProfileReference,
@@ -25,12 +25,15 @@ Map<String, Object?> sourceCompileRequest(
         'specification_version': specificationVersion,
         'frontend': <String, Object?>{
           'id': frontendId,
-          'dialect_version': frontendVersion ?? specificationVersion,
+          'dialect_version': frontendVersion ?? '1.0.0',
         },
         'content': <String, Object?>{
           'kind': 'inline',
           'encoding': 'utf-8',
-          'media_type': mediaType,
+          'media_type': frontendId == 'strling.regex-compat' &&
+                  mediaType == 'text/x-strling-semantic'
+              ? 'text/x-strling-regex-compat'
+              : mediaType,
           'text': source,
         },
         'provenance': const <String, Object?>{'kind': 'authored'},

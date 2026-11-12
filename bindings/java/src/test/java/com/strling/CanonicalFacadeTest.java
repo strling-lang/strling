@@ -53,6 +53,10 @@ final class CanonicalFacadeTest {
         @SuppressWarnings("unchecked")
         List<Map<String, Object>> steps = (List<Map<String, Object>>) request.get("steps");
         assertTrue(steps.stream().anyMatch(step -> "stdlib_helper".equals(step.get("operation"))));
+        assertEquals(Arrays.asList("input_start", "input_end"), steps.stream()
+                .filter(step -> "position".equals(step.get("operation")))
+                .map(step -> ((Map<?, ?>) step.get("arguments")).get("position"))
+                .collect(java.util.stream.Collectors.toList()));
         assertThrows(STRlingError.class, pattern::toString);
         assertThrows(STRlingError.class, () -> pattern.exec("input"));
     }

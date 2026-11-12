@@ -1,5 +1,9 @@
 # STRling C++ adapter
 
+STRling 4.0.0 is not publicly published. Public installation commands describe
+the proposed separately authorized release. Candidate tests use staged artifacts.
+See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
+
 The C++17 package is an idiomatic RAII facade over the governed STRling C/native
 boundary. It does not contain a parser, compiler, IR, emitter, target model, or
 standard-library regex implementation.
@@ -41,19 +45,26 @@ No publication is performed by these commands.
 ```cpp
 #include "strling/essential.hpp"
 #include "strling/simply.hpp"
+#include <iostream>
 
 using namespace strling::simply;
 
 int main() {
     pattern value = merge(start(), literal("hello").as_capture(), end());
     strling::response result = value.compile();
-    return result.owns_bytes() ? 0 : 1;
+    if (result.transport_status() != STRLING_INTEROP_STATUS_RESPONSE_WRITTEN) return 1;
+    std::cout << result.text() << std::endl;
+    return 0;
 }
 ```
 
 Essential names select canonical registry helpers. Their current guarantees are
 lexical shape only; the C++ facade does not strengthen them into semantic
 validators.
+
+The printed Simply adapter response has a construction `status` and, on
+success, a nested `compile_result`. Check both `status="success"` and
+`compile_result.outcome="succeeded"` before consuming semantic output.
 
 See [the API reference](docs/api_reference.md) and the
 [canonical specification](../../spec/README.md).
@@ -67,3 +78,13 @@ archive during configuration. Unmarked older kernels and mismatched product
 versions fail closed. This package check does not authenticate arbitrary local
 files; release checksums and signed evidence authenticate distribution bytes.
 The compiler semantics and versioned ABI/protocol are unchanged.
+
+## Proposed public installation
+
+After separately authorized publication, the exact proposed coordinate is:
+
+```bash
+conan install --requires=strling/4.0.0 --build=never
+```
+
+Configure only the exact approved public Conan remote and registered host/build profile from the release handoff before this command. No Conan Center availability or alternate ABI/platform is implied. The binary consumer uses `--build=never`.

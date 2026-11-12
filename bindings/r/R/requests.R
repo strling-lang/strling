@@ -2,14 +2,15 @@
 #' @export
 strling_source_compile_request <- function(source, options = list()) {
   specification <- as.character(options$specification_version %||% "1.0-draft.1")
-  frontend <- as.character(options$frontend_id %||% "semantic_strling")
+  frontend <- as.character(options$frontend_id %||% "strling.semantic")
+  default_media_type <- if (identical(frontend, "strling.regex-compat")) "text/x-strling-regex-compat" else "text/x-strling-semantic"
   request <- list(
     contract_version = "1.0.0", specification_version = specification,
     input = list(kind = "source", document = list(
       contract_version = "1.0.0", source_id = as.character(options$source_id %||% "src:r.adapter"),
       specification_version = specification,
-      frontend = list(id = frontend, dialect_version = as.character(options$frontend_version %||% specification)),
-      content = list(kind = "inline", encoding = "utf-8", media_type = as.character(options$media_type %||% "text/strling"), text = as.character(source)),
+      frontend = list(id = frontend, dialect_version = as.character(options$frontend_version %||% "1.0.0")),
+      content = list(kind = "inline", encoding = "utf-8", media_type = as.character(options$media_type %||% default_media_type), text = as.character(source)),
       provenance = list(kind = "authored")
     )),
     requested_outputs = options$requested_outputs %||% c("semantic", "analysis"),

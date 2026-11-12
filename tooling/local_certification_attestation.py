@@ -175,6 +175,7 @@ def load_trust_policy(
         "local-certification-trust.json",
         "release-certification-trust.json",
         "public-verification-certification-trust.json",
+        "release-candidate-certification-trust.json",
     }:
         raise AttestationError("unknown certification trust context")
     path = trust_root / "governance" / policy_name
@@ -1949,6 +1950,15 @@ def create_attestation(
         _verify_execution_objects(
             repository_root, source_sha, output_dir, copied, (full, release)
         )
+        if policy_name == "release-candidate-certification-trust.json":
+            try:
+                _helper_module("release_candidate_evidence").verify_candidate_evidence(
+                    repository_root, source_sha, output_dir, copied
+                )
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                raise AttestationError(
+                    f"invalid candidate evidence: {error}"
+                ) from error
         real_engine, runtimes = _real_engine_claim(
             (full, release), repository_root, source_sha
         )
@@ -2242,6 +2252,13 @@ def verify_attestation(
         payload["evidence_files"],
         artifacts[1],
     )
+    if policy_name == "release-candidate-certification-trust.json":
+        try:
+            _helper_module("release_candidate_evidence").verify_candidate_evidence(
+                repository_root, source_sha, bundle_dir, payload["evidence_files"]
+            )
+        except (ValueError, OSError, KeyError, TypeError) as error:
+            raise AttestationError(f"invalid candidate evidence: {error}") from error
     waivers = _waivers(artifacts)
     if waivers != payload["waiver_inventory"]:
         raise AttestationError("waiver inventory contradicts producer evidence")
@@ -2333,6 +2350,7 @@ def _parser() -> argparse.ArgumentParser:
             "local-certification-trust.json",
             "release-certification-trust.json",
             "public-verification-certification-trust.json",
+            "release-candidate-certification-trust.json",
         ],
         default="local-certification-trust.json",
     )

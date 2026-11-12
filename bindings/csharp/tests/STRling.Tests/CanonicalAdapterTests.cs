@@ -68,6 +68,10 @@ public sealed class CanonicalAdapterTests
         Assert.Equal("1.1.0", request.GetProperty("protocol_version").GetString());
         Assert.Contains(request.GetProperty("steps").EnumerateArray(),
             step => step.GetProperty("operation").GetString() == "stdlib_helper");
+        var positions = request.GetProperty("steps").EnumerateArray()
+            .Where(step => step.GetProperty("operation").GetString() == "position")
+            .Select(step => step.GetProperty("arguments").GetProperty("position").GetString()).ToArray();
+        Assert.Equal(new[] { "input_start", "input_end" }, positions);
         Assert.Throws<STRlingError>(() => pattern.ToString());
         Assert.Throws<STRlingError>(() => pattern.Exec("input"));
     }

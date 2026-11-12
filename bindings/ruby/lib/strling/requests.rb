@@ -6,7 +6,8 @@ module Strling
   def source_compile_request(source, options = {})
     prepared = options.transform_keys(&:to_sym)
     specification = prepared.fetch(:specification_version, '1.0-draft.1').to_s
-    frontend = prepared.fetch(:frontend_id, 'semantic_strling').to_s
+    frontend = prepared.fetch(:frontend_id, 'strling.semantic').to_s
+    default_media_type = frontend == 'strling.regex-compat' ? 'text/x-strling-regex-compat' : 'text/x-strling-semantic'
     request = {
       'contract_version' => '1.0.0',
       'specification_version' => specification,
@@ -18,12 +19,12 @@ module Strling
           'specification_version' => specification,
           'frontend' => {
             'id' => frontend,
-            'dialect_version' => prepared.fetch(:frontend_version, specification).to_s
+            'dialect_version' => prepared.fetch(:frontend_version, '1.0.0').to_s
           },
           'content' => {
             'kind' => 'inline',
             'encoding' => 'utf-8',
-            'media_type' => prepared.fetch(:media_type, 'text/strling').to_s,
+            'media_type' => prepared.fetch(:media_type, default_media_type).to_s,
             'text' => String(source)
           },
           'provenance' => { 'kind' => 'authored' }

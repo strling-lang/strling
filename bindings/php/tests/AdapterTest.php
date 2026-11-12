@@ -16,7 +16,9 @@ final class AdapterTest extends TestCase
     {
         $request = Requests::sourceCompileRequest('literal "hello"');
         self::assertSame('1.0.0', $request['contract_version']);
-        self::assertSame('semantic_strling', $request['input']['document']['frontend']['id']);
+        self::assertSame('strling.semantic', $request['input']['document']['frontend']['id']);
+        self::assertSame('1.0.0', $request['input']['document']['frontend']['dialect_version']);
+        self::assertSame('text/x-strling-semantic', $request['input']['document']['content']['media_type']);
         self::assertSame('stdlib.email', Stdlib::email('root')['arguments']['helper_id']);
         self::assertNull(Stdlib::uuid('root')['arguments']['parameters']['version']);
     }

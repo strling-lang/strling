@@ -12,7 +12,7 @@ final class Requests
     public static function sourceCompileRequest(string $source, array $options = []): array
     {
         $specification = (string) ($options['specification_version'] ?? '1.0-draft.1');
-        $frontend = (string) ($options['frontend_id'] ?? 'semantic_strling');
+        $frontend = (string) ($options['frontend_id'] ?? 'strling.semantic');
         $request = [
             'contract_version' => '1.0.0',
             'specification_version' => $specification,
@@ -24,12 +24,12 @@ final class Requests
                     'specification_version' => $specification,
                     'frontend' => [
                         'id' => $frontend,
-                        'dialect_version' => (string) ($options['frontend_version'] ?? $specification),
+                        'dialect_version' => (string) ($options['frontend_version'] ?? '1.0.0'),
                     ],
                     'content' => [
                         'kind' => 'inline',
                         'encoding' => 'utf-8',
-                        'media_type' => (string) ($options['media_type'] ?? 'text/strling'),
+                        'media_type' => (string) ($options['media_type'] ?? ($frontend === 'strling.regex-compat' ? 'text/x-strling-regex-compat' : 'text/x-strling-semantic')),
                         'text' => $source,
                     ],
                     'provenance' => ['kind' => 'authored'],

@@ -28,7 +28,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: 4d53bf1d632196b0627176a77beaff74dc6012de
+                  ref: bd2295025afce664182b8c4d1e65d65eb3120734
                   path: candidate-trusted
             - name: Checkout candidate evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09

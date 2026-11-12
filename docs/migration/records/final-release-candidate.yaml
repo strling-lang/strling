@@ -163,7 +163,7 @@ checkpoints:
                 source identity adversaries. The original four consumer fixtures remain unchanged; new mandatory
                 documentation evidence uses a separate manifest identity. No certificate or public release is claimed.
     - name: CP3 Final implementation and focused proof
-      status: in_progress
+      status: passed
       evidence:
           - check: Native Simply documentation envelope regression
             result: passed
@@ -175,15 +175,17 @@ checkpoints:
                 malformed or failed envelope cases. A continuing non-authoritative package diagnostic retains
                 the original failure and does not transfer its receipts to a successor candidate.
           - check: Source-grounded acceptance
-            result: not_run
+            result: passed
             details:
                 All affected subsystem, lint, format, documentation, architecture and semantic-authority checks pass.
                 Three exact Dart/Kotlin/TypeScript declaration corrections and semantic-authority evidence were
-                regenerated canonically; the other affected projections passed without regeneration. Commit and
-                qualify the successor source-distinct reader after the consumer correction, integrate its
-                immutable workflow pin, then acquire final-source packages and prerequisites before the
-                candidate freeze and authoritative profiles. Canonical preparation at 25539bf1 passed all
-                eight stages and all 42 generated families; its evidence remains bound to that source.
+                regenerated canonically; the other affected projections passed without regeneration. The clean
+                consumer-correction commit and qualified source-distinct reader are bd229502. Its 20 files passed
+                with Linux 534 tests and 183 subtests; Windows 533 tests, one host-capability skip
+                and 183 subtests, with the skipped Swift command-symlink resolution test executed on Linux. The isolated
+                entrypoint passed. Integrate this immutable pin and acquire final-source packages and
+                prerequisites before freeze and authoritative profiles. Canonical preparation at 25539bf1
+                passed eight stages and 42 generated families; its evidence remains bound to that source.
           - check: Independent reader and Python example scaffolding regressions
             result: passed
             details:
@@ -205,7 +207,7 @@ checkpoints:
                 The three narrow consumer, example-scaffolding and isolated-checkout repairs require a clean
                 successor reader qualification and fresh final candidate certification.
     - name: CP4 Fresh integration and certification
-      status: planned
+      status: in_progress
       evidence:
           - check: Source-grounded acceptance
             result: not_run
@@ -227,3 +229,5 @@ commits:
       subject: Correct source factories and qualify complete-product evidence
     - sha: 25539bf14e587afd7180864ea67ceda3e15373ef
       subject: Integrate immutable candidate verification and evidence retention
+    - sha: bd2295025afce664182b8c4d1e65d65eb3120734
+      subject: Repair staged documentation consumers and isolated evidence checkout

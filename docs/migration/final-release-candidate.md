@@ -314,3 +314,20 @@ and the explicitly hashed repair harness; they are not successor-source build
 receipts, accepted profiles or public retrieval evidence. The three narrow
 repairs are now ready for a clean implementation checkpoint and immutable
 reader qualification before final-source preparation and certification.
+
+The clean repair checkpoint is
+`bd2295025afce664182b8c4d1e65d65eb3120734`. Its source-distinct immutable
+reader qualification passed all 20 test files: Linux 534 tests and 183
+subtests; Windows 533 tests, one host-capability skip, and 183 subtests.
+The skipped Swift command-symlink resolution test executed on Linux. The isolated
+entrypoint passed. The approved production certifier key was not accessed.
+The original pre-test admission failure is retained: the first controller
+started before Linux checkout completed and correctly stopped at clean-source
+identity validation. Completion receipts and per-attempt scratch paths guarded
+the successful retry; no test failure was relabeled.
+
+Both candidate workflow jobs now pin that qualified reader. Historical H08,
+packaging and public-verification jobs retain their exact accepted reader and
+source identities. The next clean integration commit remains unfrozen until
+its own preparation, fresh builds and consumers, Preview documentation and
+readiness gate pass. No final-source profile or signature is claimed here.

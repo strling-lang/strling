@@ -192,3 +192,5 @@ checkpoints:
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
+    - sha: 4d53bf1d632196b0627176a77beaff74dc6012de
+      subject: Correct source factories and qualify complete-product evidence

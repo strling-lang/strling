@@ -2,7 +2,8 @@
 # pull_request_target deliberately executes only the verifier and trust policy
 # from the trusted base revision. Other events use an immutable reviewed verifier;
 # Preserved compiler and packaging evidence use their historical closures.
-# Public-verification certification follows the event source as data only.
+# Historical public-verification evidence retains its fixed accepted closure.
+# The complete-product candidate follows the event source as data only.
 name: STRling certification integrity
 
 on:
@@ -18,6 +19,49 @@ permissions:
     contents: read
 
 jobs:
+    verify-release-candidate-certification:
+        name: Verify complete product candidate
+        runs-on: ubuntu-24.04
+        steps:
+            - name: Checkout qualified candidate verifier
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  ref: 4d53bf1d632196b0627176a77beaff74dc6012de
+                  path: candidate-trusted
+            - name: Checkout candidate evidence as data
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
+                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  path: candidate-candidate
+            - name: Install verification runtime
+              uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: "3.12"
+            - name: Install pinned schema validators
+              run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
+            - name: Verify candidate signature, producers and publication handoff
+              shell: bash
+              run: |
+                  mkdir -p artifacts
+                  python -I candidate-trusted/tooling/candidate_integrity.py \
+                    --repository-root candidate-candidate \
+                    --trust-root candidate-trusted \
+                    --bundle candidate-candidate/tests/certification/release-candidate/1.0/current \
+                    --json | tee artifacts/candidate-certification-verification.json
+            - name: Retain candidate verification result
+              if: ${{ always() }}
+              continue-on-error: true
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: candidate-certification-verification-${{ github.run_id }}
+                  path: artifacts/candidate-certification-verification.json
+                  if-no-files-found: warn
+                  retention-days: 90
     verify-public-distribution-certification:
         name: Verify signed public certification
         runs-on: ubuntu-24.04
@@ -34,8 +78,8 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  repository: strling-lang/strling
+                  ref: d284446710c8164efc870d60071eeb5faf542a95
                   path: public-candidate
             - name: Install verification runtime
               uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1

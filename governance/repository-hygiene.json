@@ -325,6 +325,31 @@
             "path": "tests/certification/release-packaging/1.0/current/evidence/release-supply-chain/sbom/c++.spdx.json",
             "rule": "maximum-file-size",
             "rationale": "The complete signed C++ SPDX file and dependency graph exceeds 1 MiB. This exact evidence path alone retains the full graph; neighboring paths and every credential and content rule remain enforced."
+        },
+        {
+            "path": "tests/certification/release-candidate/1.0/current/evidence/product-release/product-certification-release.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed complete-product certificate subject preserves all required source-bound producer results or the complete SPDX graph. The global size limit, neighboring paths, credential detection and every other hygiene rule remain enforced."
+        },
+        {
+            "path": "tests/certification/release-candidate/1.0/current/evidence/profile-full/profile-full.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed complete-product certificate subject preserves all required source-bound producer results or the complete SPDX graph. The global size limit, neighboring paths, credential detection and every other hygiene rule remain enforced."
+        },
+        {
+            "path": "tests/certification/release-candidate/1.0/current/evidence/profile-release/profile-release.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed complete-product certificate subject preserves all required source-bound producer results or the complete SPDX graph. The global size limit, neighboring paths, credential detection and every other hygiene rule remain enforced."
+        },
+        {
+            "path": "tests/certification/release-candidate/1.0/current/evidence/release-supply-chain/release-supply-chain-evidence.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed complete-product certificate subject preserves all required source-bound producer results or the complete SPDX graph. The global size limit, neighboring paths, credential detection and every other hygiene rule remain enforced."
+        },
+        {
+            "path": "tests/certification/release-candidate/1.0/current/evidence/release-supply-chain/sbom/c++.spdx.json",
+            "rule": "maximum-file-size",
+            "rationale": "This exact signed complete-product certificate subject preserves all required source-bound producer results or the complete SPDX graph. The global size limit, neighboring paths, credential detection and every other hygiene rule remain enforced."
         }
     ],
     "generated_paths": [

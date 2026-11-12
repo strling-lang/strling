@@ -79,6 +79,56 @@ class HygieneScannerTests(unittest.TestCase):
             closure_waivers,
         )
 
+    def test_candidate_size_paths_preserve_neighbors_and_private_key_checks(self):
+        policy = load_policy()
+        self.assertEqual(1048576, policy["maximum_file_size_bytes"])
+        prefix = "tests/certification/release-candidate/1.0/current/"
+        exceptions = [
+            row
+            for row in policy["allowed_intentional_artifacts"]
+            if row["path"].startswith(prefix)
+        ]
+        self.assertEqual(5, len(exceptions))
+        self.assertTrue(
+            all(
+                row["rule"] == "maximum-file-size" and "*" not in row["path"]
+                for row in exceptions
+            )
+        )
+        synthetic = fixture_policy()
+        synthetic["maximum_file_size_bytes"] = 16
+        synthetic["allowed_intentional_artifacts"] = exceptions
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for row in exceptions:
+                name = row["path"]
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('{"subject":"' + "x" * 32 + '"}\n', encoding="utf-8")
+                self.assertNotIn(
+                    "maximum-file-size",
+                    rules(scan(synthetic, [Entry(name, "100644")], root)),
+                )
+                neighbor = path.parent / "unregistered-object.json"
+                neighbor.write_bytes(path.read_bytes())
+                self.assertIn(
+                    "maximum-file-size",
+                    rules(
+                        scan(
+                            synthetic,
+                            [Entry(neighbor.relative_to(root).as_posix(), "100644")],
+                            root,
+                        )
+                    ),
+                )
+                path.write_text(
+                    synthetic["private_key_markers"][0] + "\n", encoding="utf-8"
+                )
+                self.assertIn(
+                    "private-key-marker",
+                    rules(scan(synthetic, [Entry(name, "100644")], root)),
+                )
+
     def test_execution_size_allowances_are_exact_and_preserve_credential_checks(
         self,
     ) -> None:

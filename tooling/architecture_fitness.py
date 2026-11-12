@@ -1743,13 +1743,20 @@ def ci_profile_routing_findings(
                     "public",
                     "public-verification-certification-trust.json",
                     "public-verification",
+                    "d284446710c8164efc870d60071eeb5faf542a95",
+                ),
+                (
+                    "verify-release-candidate-certification",
+                    "candidate",
+                    "release-candidate-certification-trust.json",
+                    "release-candidate",
                     "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}",
                 ),
             ):
                 packaging = jobs.get(job_name)
                 if packaging is None:
                     if (
-                        prefix == "public"
+                        prefix in {"public", "candidate"}
                         and relative
                         in {
                             ".github/workflows/ci.yml",
@@ -1759,7 +1766,7 @@ def ci_profile_routing_findings(
                     ):
                         findings.append(
                             (
-                                f"{relative}: public verification certificate job is required",
+                                f"{relative}: {prefix} verification certificate job is required",
                                 relative,
                             )
                         )
@@ -1785,6 +1792,13 @@ def ci_profile_routing_findings(
                     f"verify --bundle {prefix}-candidate/tests/certification/{bundle}/1.0/current "
                     f"--json | tee artifacts/{prefix}-certification-verification.json"
                 )
+                if prefix == "candidate":
+                    expected_command = (
+                        "python -I candidate-trusted/tooling/candidate_integrity.py "
+                        "--repository-root candidate-candidate --trust-root candidate-trusted "
+                        "--bundle candidate-candidate/tests/certification/release-candidate/1.0/current "
+                        "--json | tee artifacts/candidate-certification-verification.json"
+                    )
                 script = (
                     commands[1].strip().split("\n", 1) if len(commands) == 2 else []
                 )
@@ -1805,8 +1819,15 @@ def ci_profile_routing_findings(
                     )
                     or candidates[0].get("ref") != candidate_ref
                     or (
-                        prefix == "packaging"
+                        prefix in {"packaging", "public"}
                         and candidates[0].get("repository") != "strling-lang/strling"
+                    )
+                    or (
+                        prefix == "candidate"
+                        and (
+                            any(row.get("fetch-depth") != 0 for row in checkouts)
+                            or steps[4].get("shell") != "bash"
+                        )
                     )
                     or any(
                         step.get("uses") not in permitted_actions

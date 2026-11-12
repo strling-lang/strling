@@ -274,6 +274,15 @@
     ],
     "generated_or_serialized": [
         {
+            "paths": [
+                "tests/certification/release-candidate/1.0/current/**",
+                "docs/migration/final-release-candidate-handoff.json"
+            ],
+            "disposition": "not_applicable",
+            "strategy": "Source-bound candidate attestation and publication-handoff producers",
+            "reason": "The immutable verifier owns exact certificate serialization and derives the publication handoff from authenticated evidence; neighboring authored data remains governed by its normal formatter."
+        },
+        {
             "paths": ["tests/certification/public-verification/1.0/current/**"],
             "disposition": "not_applicable",
             "strategy": "Signed public-verification attestation producer",
@@ -452,7 +461,9 @@
                         "tests/conformance/adversarial/1.0/evidence.json",
                         "tests/conformance/adversarial/1.0/observations/*.json",
                         "docs/support-matrix.md",
-                        "governance/release-candidate-certification-trust.json"
+                        "governance/release-candidate-certification-trust.json",
+                        "tests/certification/release-candidate/1.0/current/*",
+                        "docs/migration/final-release-candidate-handoff.json"
                     ]
                 },
                 {

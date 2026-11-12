@@ -235,3 +235,22 @@ The subsequent owned reconciliation checked all 12 affected families. Only the
 three public declaration snapshots and semantic-authority projection needed
 regeneration; exact declaration control subsequently passed governance. A fresh
 complete generated audit remains mandatory in the final clean source checkout.
+
+The implementation checkpoint is `4d53bf1d632196b0627176a77beaff74dc6012de`.
+Its isolated Linux reader qualification passed 523 tests and 161 subtests.
+The retained Windows attempt exposed missing Cargo discovery and temporary
+fixtures inheriting an ancestor repository. An isolated environment control
+reproduced both causes and verified the Git ceiling and governed tool discovery.
+Windows qualification remains pending reconciliation; no verifier promotion or
+candidate freeze is claimed. The proposed candidate workflow reads candidate
+files as data through immutable reader code, while all three historical
+certificate contexts retain their accepted sources and verifier pins.
+
+The proposed closure policy passed 30 formatting and hygiene tests. Workflow
+architecture tests passed 60 tests and 58 subtests, including rejection of
+mutable reader references, candidate-code execution, wrong evidence namespaces,
+missing source history, credential persistence, production environments, write
+permissions and authoritative retention steps. Signed-byte formatting ownership
+and five exact existing-shape size exceptions preserve neighboring-file and
+private-key checks and the global file-size limit. These remain engineering
+results, not final candidate certification.

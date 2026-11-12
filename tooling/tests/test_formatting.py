@@ -22,6 +22,22 @@ from formatting import (  # noqa: E402
 
 
 class FormattingPolicyTests(unittest.TestCase):
+    def test_candidate_serialization_preserves_authored_neighbor_formatting(self):
+        policy = load_policy()
+        targets = policy["enforcement"]["targets"]["repository"]
+        rule = next(
+            row
+            for row in targets
+            if row["formatter"] == "prettier" and "*.json" in row.get("include", [])
+        )
+        serialized = "tests/certification/release-candidate/1.0/current/evidence/profile-full/profile-full.json"
+        handoff = "docs/migration/final-release-candidate-handoff.json"
+        neighbor = "tests/certification/release-candidate/1.0/authored-control.json"
+        selected = select_files(
+            [serialized, handoff, neighbor], rule["include"], rule["exclude"]
+        )
+        self.assertEqual([neighbor], selected)
+
     def test_repository_policy_loads_with_enforcement_targets(self) -> None:
         policy = load_policy()
         enforcement = policy["enforcement"]

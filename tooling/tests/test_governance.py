@@ -661,6 +661,82 @@ class ArchitectureValidationTests(unittest.TestCase):
                     )
             path.write_text(original + extra, encoding="utf-8")
 
+    def test_candidate_verifier_is_required_immutable_and_data_only(self) -> None:
+        import copy
+        import yaml
+
+        self.write_profile_workflows()
+        source = Path(__file__).resolve().parents[2] / ".github/workflows/ci.yml"
+        actual = yaml.safe_load(source.read_text(encoding="utf-8"))["jobs"][
+            "verify-release-candidate-certification"
+        ]
+
+        def serialized(job):
+            if job is None:
+                return ""
+            text = yaml.safe_dump(
+                {"verify-release-candidate-certification": job}, sort_keys=False
+            )
+            return (
+                "\n".join("  " + line if line else line for line in text.splitlines())
+                + "\n"
+            )
+
+        originals = {}
+        for name in ("ci.yml", "certification-integrity.yml"):
+            path = self.root / ".github/workflows" / name
+            originals[path] = path.read_text(encoding="utf-8")
+            path.write_text(originals[path] + serialized(actual), encoding="utf-8")
+        (self.root / "governance").mkdir(exist_ok=True)
+        (
+            self.root / "governance/release-candidate-certification-trust.json"
+        ).write_text("{}", encoding="utf-8")
+        result = self.evaluate(self.ci_profile_rule())
+        self.assertEqual("passed", result.status, result.findings)
+        mutations = {
+            "branch-verifier": lambda job: job["steps"][0]["with"].update(
+                ref="refs/heads/dev"
+            ),
+            "candidate-code": lambda job: job["steps"][4].update(
+                run=job["steps"][4]["run"].replace(
+                    "candidate-trusted/tooling/", "candidate-candidate/tooling/"
+                )
+            ),
+            "added-shell": lambda job: job["steps"][4].update(
+                run=job["steps"][4]["run"] + "\npython candidate-candidate/evil.py\n"
+            ),
+            "wrong-bundle": lambda job: job["steps"][4].update(
+                run=job["steps"][4]["run"].replace(
+                    "release-candidate/1.0/current", "public-verification/1.0/current"
+                )
+            ),
+            "pipeline-shell": lambda job: job["steps"][4].update(shell="sh"),
+            "shallow-history": lambda job: job["steps"][1]["with"].update(
+                {"fetch-depth": 1}
+            ),
+            "checkout-credentials": lambda job: job["steps"][1]["with"].update(
+                {"persist-credentials": True}
+            ),
+            "retention-authority": lambda job: job["steps"][5].update(
+                {"continue-on-error": False}
+            ),
+            "production-environment": lambda job: job.update(environment="release"),
+            "write-permission": lambda job: job.update(
+                permissions={"contents": "write"}
+            ),
+        }
+        for path, original in originals.items():
+            for name, mutate in {"missing-job": None, **mutations}.items():
+                with self.subTest(workflow=path.name, mutation=name):
+                    job = copy.deepcopy(actual) if mutate is not None else None
+                    if mutate is not None:
+                        mutate(job)
+                    path.write_text(original + serialized(job), encoding="utf-8")
+                    self.assertEqual(
+                        "failed", self.evaluate(self.ci_profile_rule()).status
+                    )
+            path.write_text(original + serialized(actual), encoding="utf-8")
+
     def test_ci_profile_routing_rejects_event_trust_drift(self) -> None:
         cases = (
             ("certification-integrity.yml", "base.sha", "head.sha", "base SHA"),

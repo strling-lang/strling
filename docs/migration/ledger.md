@@ -10006,3 +10006,28 @@ the194.761720second focused owner. These are engineering diagnostics, not a Full
 acceptance or successor-source certificate. Commit a clean successor, regenerate
 all required source-bound preparation/build evidence and execute every mandatory
 profile, reconstruction, original-authority signature and actual hosted check.
+
+### Final candidate: attestation API correction
+
+The frozen `d40e267919abc5ae951e561a78ce131984d551be` candidate completed all
+fresh prerequisites, 42 receipts, 21 independent build pairs, 95 tools and four
+profiles: Local38/38, PR80/80, Full124passed+1existingwaiver/125 and fresh no-reuse
+Release124passed+1samewaiver/125. Its signed 184-file package root, 17 staged
+routes, 15 Supported consumers and 256 READY obligations are retained for that
+exact source. Its LSP preparation passed67.602128199seconds.
+
+The final candidate reconstruction rejected a genuine immutable-reader API
+mismatch. `verify_attestation` returns verified certification facts; the new
+candidate caller incorrectly required an operation-result status field. The
+package's real signature independently verified. No candidate signature or hosted
+acceptance was produced. Preserve all accepted source-W results, the failed
+reconstructions and their exact source identity; they are not successor evidence.
+
+The narrow correction requires the actual verified state and matching source and
+evidence root. The focused suite passes11tests+61subtests in98.60seconds, including
+the two new methods and ten negative fact-contract cases. A working-reader
+real-signature diagnostic passes the complete retained W graph, 17 routes,
+256 obligations and six Preview producers in65.513681848seconds. The two changed
+Python paths match no generated family. This is engineering proof. Qualify and
+promote a fresh immutable reader, then prepare and certify a new exact source;
+do not transfer source-W results or reopen the three closed historical milestones.

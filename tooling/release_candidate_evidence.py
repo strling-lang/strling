@@ -396,6 +396,19 @@ def source_data(repository: Path, source_sha: str):
         yield root
 
 
+def _require_nested_verification(
+    verified: dict, source_sha: str, evidence_root_sha256: str
+) -> None:
+    """Require verified source and root facts from the attestation API."""
+    if (
+        not isinstance(verified, dict)
+        or verified.get("certification_state") != "CLOUD_VERIFIED"
+        or verified.get("certified_source_sha") != source_sha
+        or verified.get("evidence_root_sha256") != evidence_root_sha256
+    ):
+        raise ValueError("nested package certificate was not accepted")
+
+
 def verify_candidate_evidence(
     repository: Path, source_sha: str, bundle: Path, entries: list[dict]
 ) -> dict:
@@ -431,8 +444,9 @@ def verify_candidate_evidence(
                 bundle_dir=nested,
                 policy_name="release-certification-trust.json",
             )
-            if verified.get("status") != "passed":
-                raise ValueError("nested package certificate was not accepted")
+            _require_nested_verification(
+                verified, source_sha, nested_payload["evidence_root_sha256"]
+            )
         manifest = load_json(
             root / "tests/certification/release-supply-chain/1.0/manifest.json"
         )

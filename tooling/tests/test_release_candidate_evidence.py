@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 from tooling.public_distribution import obligations
 from tooling.release_candidate_evidence import (
+    _require_nested_verification,
     preview_expected,
     source_data,
     validate_preview_reports,
@@ -30,6 +31,39 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class CandidateEvidenceTests(unittest.TestCase):
+    def test_nested_verification_accepts_attestation_api_facts(self):
+        source, evidence_root = "a" * 40, "b" * 64
+        facts = dict(
+            certification_state="CLOUD_VERIFIED",
+            certified_source_sha=source,
+            evidence_root_sha256=evidence_root,
+        )
+        _require_nested_verification(facts, source, evidence_root)
+
+    def test_nested_verification_refuses_missing_or_substituted_facts(self):
+        source, evidence_root = "a" * 40, "b" * 64
+        valid = dict(
+            certification_state="CLOUD_VERIFIED",
+            certified_source_sha=source,
+            evidence_root_sha256=evidence_root,
+        )
+        invalid = [None, {}, dict(status="passed")]
+        for key, replacement in (
+            ("certification_state", "LOCALLY_CERTIFIED"),
+            ("certification_state", "failed"),
+            ("certified_source_sha", "c" * 40),
+            ("evidence_root_sha256", "d" * 64),
+        ):
+            invalid.append(dict(valid, **{key: replacement}, status="passed"))
+        for key in valid:
+            missing = valid.copy()
+            missing.pop(key)
+            invalid.append(missing)
+        for facts in invalid:
+            with self.subTest(facts=facts):
+                with self.assertRaises(ValueError):
+                    _require_nested_verification(facts, source, evidence_root)
+
     def test_coordinate_preflight_is_complete_and_does_not_reserve_publication(self):
         observations = []
         from tooling.public_registries import coordinate_version

@@ -399,3 +399,66 @@ the complete 194.761720-second focused owner. This is explicit working-source
 engineering proof before the clean successor commit, not transferred candidate
 certification or public-registry evidence.
 This changes a certification producer, not the immutable evidence reader.
+
+## Frozen candidate and nested-verifier API repair
+
+Candidate `d40e267919abc5ae951e561a78ce131984d551be` passed its readiness gate
+at `2026-11-12T17:53:26.423429Z`. Its eight preparation leaves, all 42 generated
+families, 42 fresh build receipts, 21 independent pairs and 95 tool coordinates
+passed. Actual LSP preparation completed in 67.602128199 seconds. All 17 staged
+artifact routes, 15 Supported consumer scopes and 256 derived obligations
+subsequently qualified. The obligation states remain `READY`, with 136 controlled
+registry-fixture observations and 120 staged-consumer observations. No public
+retrieval or publication is claimed.
+
+That source's fresh profiles were accepted: Local 38/38, Pull Request 80/80,
+Full 124 passed plus the sole existing waiver out of 125, and fresh independent
+no-reuse Release 124 passed plus the same waiver out of 125. Their fingerprints
+are, respectively:
+
+-   `b96f1e7f24be6a6c6872fa0dab14b47f6deaf8ba17f673316c338a8d93e8478f`
+-   `743dee7b33f8e7491229241d4a6e4b81dbb24b2a5f6f34b08938297100f5e19b`
+-   `146736d9f2a4d7c0edfdfd682444b57f450b4f18f213c0ae6175b5855a9edd60`
+-   `8c0917f9c70a17278e203db230436fb486d45638054472581e2af64353b817a1`
+
+Its independently reconstructed 184-file package evidence root
+`a19294ceeac50e10b884b03abb652a6906617d4de9ab63792d41979e15cdb135`
+was signed by the original authorized certifier; signature
+`a55d52dd6d3131de4329f9beae0c75894a7b023edbbd6fcf301c2213ad58dc66`
+passed the original packaging verifier and the candidate reader's direct
+package-verification entrypoint. These results retain that exact source identity.
+
+Candidate reconstruction first exposed evidence-selection defects. The strict
+copier rejects zero-byte supplemental files, including successful diagnostic
+streams. Preserve all 27 required Preview JSON records verbatim, with all 42
+diagnostic streams retained through the existing bounded lossless byte codec;
+28 streams are empty. Preserve all 49 Local/PR qualification files, with 48
+verbatim files and one authenticated empty PR stream archived losslessly.
+Independent Local/PR schema, ordered-registry and atomic-producer reconstruction
+passed. Fifteen focused adversarial projection cases passed. The complete
+471-file selection passed prospective hygiene with zero findings. Archive index
+documents use their metadata role; only codec envelopes use the sealed-byte role.
+All original bytes and failing attempts remain retained.
+
+The resulting full-graph diagnostic then found a genuine trusted-reader defect.
+The candidate reader expected `status: passed` from `verify_attestation`, whose
+successful API returns verified certification facts. The package signature itself
+verified successfully. The candidate was rejected before any candidate signature
+or hosted acceptance; it has no final candidate certificate.
+
+The narrow correction requires the actual verified state, exact certified source
+and exact nested evidence root. Tests accept the real API fact shape and reject
+missing facts, substituted source/root, unverified state and a bare passing-status
+claim. Both regression methods and ten negative subtests pass. A real-signature
+working-reader diagnostic accepted the retained candidate graph, all 17 routes,
+256 obligations and six Preview documentation producers in 65.513681848 seconds.
+This is engineering proof for the correction, not immutable-reader qualification
+or certification of another source.
+The complete focused candidate-evidence suite passes 11 tests and 61 subtests
+in 98.60 seconds.
+
+The corrected trusted reader requires fresh immutable qualification and promotion.
+The next candidate must produce its own preparation, build, consumer and mandatory
+profile evidence. None of the rejected candidate's accepted source-bound results
+are relabeled for that successor. Historical H08, packaging and public-verification
+certificates remain closed and unchanged.

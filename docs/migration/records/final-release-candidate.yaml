@@ -250,6 +250,27 @@ checkpoints:
                 corrected suites. All 25 skips are existing native Windows API integration markers, inapplicable
                 on Linux; their exact identities and reasons are retained. No missing dependency or new skip
                 accounts for them. No mandatory successor operation is waived or reused by this reconciliation.
+          - check: Rejected frozen candidate evidence preserved
+            result: passed
+            details:
+                Source d40e267919abc5ae951e561a78ce131984d551be passed readiness, all eight preparation leaves,
+                42 generated families, 42 fresh receipts, 21 independent pairs and 95 tools. Actual LSP passed
+                67.602128199 seconds. Fresh Local 38/38, PR 80/80, Full 124 passed plus one existing waiver of
+                125, and independent no-reuse Release 124 passed plus the same waiver of 125 were accepted
+                for that source. All 17 staged routes, 15 Supported consumers and 256 READY obligations
+                qualified. Its original-authority 184-file package root and signature remain retained.
+                Candidate reconstruction rejected the immutable reader's incorrect expectation of a status
+                field from the attestation API. No candidate signature or hosted acceptance exists. All
+                earlier selection failures and original producer bytes are preserved; none are successor proof.
+          - check: Attestation API regression and real-signature diagnostic
+            result: passed
+            details:
+                Require the actual CLOUD_VERIFIED return facts, exact source and exact nested evidence root.
+                Two focused methods and ten negative subtests pass. The working-reader diagnostic verifies
+                the complete retained signed graph, 17 routes, 256 obligations and six Preview producers in
+                65.513681848 seconds. This remains non-authoritative engineering evidence. The corrected
+                reader needs fresh immutable qualification and promotion, followed by a new exact-source
+                candidate with all required fresh certification. Historical certificates are unchanged.
           - check: Source-grounded acceptance
             result: not_run
             details:
@@ -274,3 +295,5 @@ commits:
       subject: Repair staged documentation consumers and isolated evidence checkout
     - sha: a541d27d7e1e05796a84b17bb1bfc4f17f6a70e6
       subject: Pin the qualified candidate reader and finalize certification integration
+    - sha: d40e267919abc5ae951e561a78ce131984d551be
+      subject: Preserve migration documentation and checkout-owned Lua certification

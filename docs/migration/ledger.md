@@ -10031,3 +10031,14 @@ real-signature diagnostic passes the complete retained W graph, 17 routes,
 Python paths match no generated family. This is engineering proof. Qualify and
 promote a fresh immutable reader, then prepare and certify a new exact source;
 do not transfer source-W results or reopen the three closed historical milestones.
+
+The corrected immutable reader `f8ef1a62be536981927e36a19587f96edb69f911` is now
+qualified. Linux passes536tests/193subtests; Windows passes535tests/193subtests
+with the single existing host symlink-capability skip, confirmed as WinError1314.
+The Linux counterpart executes. Both immutable hosts verify the real signed W
+reference graph,17routes,256obligations,sixPreview producers; the isolated
+entrypoint passes. All10admission/execution leaves exit0. Promote only the two
+candidate-reader pins and migration evidence. Keep the old verifiers/certificates
+unchanged and treat W solely as retained history/reference data. The next clean
+source still needs all fresh preparation, packages, consumers, four profiles,
+reconstruction, signing, actual hosted verification and formal candidate closure.

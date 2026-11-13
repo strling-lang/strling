@@ -271,6 +271,17 @@ checkpoints:
                 65.513681848 seconds. This remains non-authoritative engineering evidence. The corrected
                 reader needs fresh immutable qualification and promotion, followed by a new exact-source
                 candidate with all required fresh certification. Historical certificates are unchanged.
+          - check: Corrected immutable reader qualification
+            result: passed
+            details:
+                Reader f8ef1a62be536981927e36a19587f96edb69f911 passed the complete 20-file cohort on Linux
+                with 536 tests and 193 subtests, and Windows with 535 tests, 193 subtests and the single
+                existing symlink-capability skip. The dedicated diagnostic confirms WinError 1314; the
+                Linux counterpart executes. Both immutable hosts verify the original signed W graph,
+                all 17 routes, 256 obligations and six Preview producers. The isolated entrypoint passes.
+                All ten actual leaves exit zero with exact source, recipe and probe identities. Promote
+                the two candidate workflow refs only. Old W results remain a reference vector and are
+                not fresh certification for the successor. Historical verifiers and certificates stay exact.
           - check: Source-grounded acceptance
             result: not_run
             details:
@@ -297,3 +308,5 @@ commits:
       subject: Pin the qualified candidate reader and finalize certification integration
     - sha: d40e267919abc5ae951e561a78ce131984d551be
       subject: Preserve migration documentation and checkout-owned Lua certification
+    - sha: f8ef1a62be536981927e36a19587f96edb69f911
+      subject: Verify nested package attestation facts before candidate acceptance

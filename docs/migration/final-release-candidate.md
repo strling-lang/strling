@@ -462,3 +462,30 @@ The next candidate must produce its own preparation, build, consumer and mandato
 profile evidence. None of the rejected candidate's accepted source-bound results
 are relabeled for that successor. Historical H08, packaging and public-verification
 certificates remain closed and unchanged.
+
+## Corrected immutable reader qualification and promotion
+
+The corrected reader is `f8ef1a62be536981927e36a19587f96edb69f911`.
+Its complete 20-file qualification cohort passed on Linux with 536 tests and
+193 subtests, and on Windows with 535 tests and 193 subtests. The single existing
+Windows conditional skip is
+`PublicContractTests.test_swift_extractor_follows_the_installed_command_symlink`:
+the host lacks symlink creation privilege (`WinError 1314`). A dedicated diagnostic
+confirmed that reason; the Linux counterpart executed. No support claim or
+security waiver changed.
+
+Both immutable platform checkouts independently accepted the real signed W
+reference graph, including all 17 routes, 256 obligations and six Preview
+documentation producers. The Linux verification took 35.123941658 seconds and the
+Windows verification took 28.781999999890104 seconds. The isolated Python
+entrypoint passed. All ten recorded admission/execution leaves exited zero;
+source, recipe and probe identities remained exact. Qualification retained the
+112 GiB physical storage requirement and protected Fortress work. The initial
+admission wait was 6145.058712477 seconds and produced no verification result.
+
+Promotion changes the two candidate-reader workflow pins and migration evidence.
+Historical verifier pins and certificates remain unchanged. The signed W graph
+is an original test vector; none of its results become certification for the next
+candidate. That candidate requires fresh source-bound preparation, all builds and
+consumers, Local/PR/Full/independent Release, reconstruction, original-authority
+signing, whole-object handoff and actual four-job hosted acceptance.

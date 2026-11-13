@@ -1,8 +1,157 @@
 # Final product candidate preparation and clean-room certification
 
-Status: engineering in progress. No final candidate is frozen or certified.
-Publication is prohibited. The intended terminal state is RELEASE CANDIDATE
-CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
+Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.
+
+Frozen implementation `ea64d59467ef73a90e57bc23412daf78539bf69f` is certified by the signed evidence in evidence-only commit `32efc1d0242a2e5b65ed56606ff09f0c838b97cd`. [Actual hosted integrity run 43492305250](https://github.com/strling-lang/strling/actions/runs/43492305250) accepted all four required jobs for that exact evidence commit. This report, the controlled record and ledger form the subsequent evidence-only closure commit, identifiable directly from Git history and the final operational audit. Closure changes no product source.
+
+STRling remains **4.0.0**. The internal certified artifact coordinate is stable 4.0.0; proposed public `4.0.0-rc.1` is provisional and unreserved. RC-projected artifacts require their own governed certification. Publication, registry mutation and public-release verification remain false.
+
+## Accepted source and scope
+
+The registries derive **17 routes, 11 Supported and six Preview; 15 Supported consumer scopes; 21 independent build pairs; 42 fresh receipts; 95 toolchain coordinates; and 256 public-distribution obligations**. All 136 controlled-fixture artifact observations and 120 staged consumer observations are READY. Linux passed 7/7 and Windows 8/8 consumer scopes. Six bounded Preview documentation producers passed without promotion. These are controlled clean-room results; public-registry installation is not claimed.
+
+Canonical preparation passed all eight stages and all 42 generated families. The exact current LSP preparation passed in **70.17807831597747 seconds**. Fresh owning-platform source identities, locked dependencies, source-distinct builds, isolated Python sdist build/install, generated integrity and the exact 17-route handoff/substitution rehearsal passed before freeze. The 58-input readiness audit accepted the clean candidate at 2026-11-13T09:05:54.345475+00:00.
+
+The [architecture guide](../architecture.md), [getting started](../getting-started.md), [3.x-to-4.0 migration guide](../migration-guide.md), [generated support matrix](../support-matrix.md) and [benchmark report](../benchmark-report.md) are source-bound handoff subjects. The documentation manifest covers 61 entrypoints and 103 fenced blocks with explicit executable, procedural, diagram, contextual and historical classifications.
+
+## Authoritative certification
+
+| Profile      | Accepted results                     | Definition | Recorded execution        |
+| ------------ | ------------------------------------ | ---------- | ------------------------- |
+| local        | 38 passed / 38                       | 1.18.0     | 13.29 min (797.205494 s)  |
+| pull-request | 80 passed / 80                       | 1.24.0     | 49.23 min (2954.066291 s) |
+| full         | 124 passed + 1 existing waiver / 125 | 1.33.0     | 85.48 min (5128.678178 s) |
+| release      | 124 passed + 1 existing waiver / 125 | 1.33.0     | 97.89 min (5873.490847 s) |
+
+Release timing is the complete fresh canonical `python3 tooling/production_certification.py --profile release --all --no-reuse --plain` execution, including its independent preparation. Other timings are recorded profile execution. All mandatory operations passed or have the sole exact authorized `WVR-SEC-VSCE-LICENSE-001` scope in Full/Release. It was valid when used, expires 2026-11-13 inclusively, and was not extended. There are zero unauthorized failures, unavailable/incomplete results or omitted mandatory operations.
+
+**local**: evidence `3af82488c50b4d28f6ade99eb8dc526a57c4a490a1a232cabc6c9335e714422d`; definition `e4d6f06d3028421c17141c0c325db0f408c8842d23d6ac5371396cd6bca4b10a`; original profile JSON SHA256 `03e0e03edf9445411982601005e2e70bea689977281df5c15bdfbebfe7e33093`.
+
+**pull-request**: evidence `0fdc2a8b50c8a24904eff63beff7d1aed8c3045be57da4523454e413756b89d7`; definition `035b4992aa9a6dfa15a212ebc8adb313394df9cb8520c3646bfe519ab584bcff`; original profile JSON SHA256 `3eeb3cb58bd0eca2e10ba1471dd550d7884c21e6115f8add95c31f7c37bf8126`.
+
+**full**: evidence `9d1c16f52b07a93e2969ed13826bd22adb8b51240b30fe741ff4223183b20672`; definition `0ed74f964b7b83f27a9912f14bb3bed9decf0264d603606a4827252f2c6f0112`; original profile JSON SHA256 `fb02d80808e49b7ee98215c5c53a0ef8b345c5fcf0bad2ab99091856ae56916e`.
+
+**release**: evidence `e518f20c529c341cb14973249f1f726cd80a305b3ede5bf78baa83f5c7e0c8f6`; definition `cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3`; original profile JSON SHA256 `27cf0ba7a6cc38f01fb8d9eefcbf0e2ab0c8652efa14d62c8e3458b11a63f695`.
+
+The required `public_distribution_contract` operation is present, executed and independently reconstructed for both Full and Release at this source. Its producer fingerprint is `d2e73497acd25c8e8747327e360a677faff553ec560d9ee9704e2f333fa1a988`; public-release verification remains false. Fresh independent Release used its own source tree and authenticated no-reuse production evidence.
+
+## Independent reconstruction, signatures and handoff
+
+| Subject                          | Accepted identity                                                  |
+| -------------------------------- | ------------------------------------------------------------------ |
+| Package evidence root            | `32c8bb32c861ef0ce2552df0a25baf69d42cdaa26d98cdf6cd01823355080740` |
+| Package signature SHA256         | `5a5d045c65bc082f7a2bcc350601cd06d9eaad57c7cff20162653a8123af6d74` |
+| Candidate evidence root          | `7ec80fb88f10bc36b1b2b5bd60b59c9608c2441ef1922acd46e2168b55ae9562` |
+| Candidate signature SHA256       | `11211ce372e5643975a07e1e0ed8c4fe1f16cf02d46b6488103d11bb81d019e1` |
+| Candidate attestation SHA256     | `70a2dd2ef5434a17f425a0c3428ef615d75e2d555c204f80b6e4666a8f74ea59` |
+| Whole-object handoff fingerprint | `3c89997160e152111e229373cec0189ff217191b49706262a04acd13a283f696` |
+| Qualified candidate verifier     | `f8ef1a62be536981927e36a19587f96edb69f911`                         |
+| Preserved packaging verifier     | `642cc21f8f5d5ccabde1bb893076e02c624247a7`                         |
+
+The original certifier remains `strling-local-release-certifier-2026-01`, public fingerprint `SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA`. Complete key-free reconstructions and fresh input rehashes preceded signing. The original key was preserved and temporary 0700/0600 signing material removed. The complete certificate authenticates 489 evidence files; all 188 original package inputs remain byte-exact, including metadata and producer streams restored through bounded source-checked lossless archives.
+
+The [signed attestation](../../tests/certification/release-candidate/1.0/current/attestation.json) and [generated handoff](final-release-candidate-handoff.json) bind exact subjects, checksums, permitted comparison modes, SPDX SBOM/provenance associations, toolchains, target identities, profiles, destinations and future publication prerequisites. The whole generated handoff was independently rederived and verified; local immutable verification was followed by actual hosted acceptance.
+
+## Actual hosted acceptance
+
+| Hosted job                                                                                                                 | Result  | Execution |
+| -------------------------------------------------------------------------------------------------------------------------- | ------- | --------- |
+| [Verify signed public certification](https://github.com/strling-lang/strling/actions/runs/43492305250/job/132116372498)    | success | 20 s      |
+| [Verify complete product candidate](https://github.com/strling-lang/strling/actions/runs/43492305250/job/132116372916)     | success | 40 s      |
+| [Verify signed local certification](https://github.com/strling-lang/strling/actions/runs/43492305250/job/132116372950)     | success | 22 s      |
+| [Verify signed packaging certification](https://github.com/strling-lang/strling/actions/runs/43492305250/job/132116373069) | success | 22 s      |
+
+The event source is `32efc1d0242a2e5b65ed56606ff09f0c838b97cd`. Candidate code executes only from the immutable qualified reader; evidence is data. Historical jobs retain H08 closure `2d8d897504663211d3768517f0be9f0e28d0f11e`, packaging closure `33e50ac033314dad089717a0ee20c0c7c310dea7` and public-verification closure `d284446710c8164efc870d60071eeb5faf542a95`, with their original verifier pins. The 96/154/218-file certificate trees retain exact modes, blobs and bytes. Their accepted history was preserved rather than substituted for fresh candidate evidence. All four actual hosted JSON artifacts and source/job metadata are retained in task execution evidence.
+
+## Architecture invariants and enforcement
+
+All 33 architecture rules pass. Full and Release enforce the operations below against the frozen source. Product, specification, frontend dialect, ABI/transport and target-profile versions remain independently governed.
+
+| Material claim                                                               | Governing authority                                                                                                     | Implementation boundary                                                                                             | Registered evidence and regression coverage                                                                                                                                   |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Specification and versioned contracts govern behavior.                       | `governance/authority.md`, `spec/README.md`, versioned frontend and public contracts                                    | `core/src/lib_public.rs`; generated fixtures remain derived                                                         | `semantic_authority_check@repository`, `canonical_contracts_check@repository`, `tooling/tests/test_semantic_authority.py`                                                     |
+| Semantic DSL, Simply and regex import converge before analysis and planning. | `spec/frontends/semantic/1.0`, `spec/frontends/simply`, `spec/frontends/legacy-regex/1.0`, `governance/architecture.md` | `core/src/semantic_frontend.rs`, `core/src/simply.rs`, `core/src/compiler_pipeline.rs`, `core/src/normalization.rs` | Enforced `canonical-semantic-ir-route` and frontend-authority rules; `tooling/tests/test_semantic_frontend_architecture.py`, `tooling/tests/test_source_frontend_defaults.py` |
+| Analysis and safety retain separate bounded responsibilities.                | Versioned public contracts; `governance/deterministic-certification.md`; functional resource contract v2                | `core/src/semantic_analysis.rs`, `core/src/structural_analysis.rs`, `core/src/safety_analysis.rs`                   | `core_contracts_check@repository`, registered safety/property/fuzz/sanitizer operations, `tooling/tests/test_functional_resource_certification.py`                            |
+| Planning selects a versioned target before lowering and serialization.       | `spec/targets/profiles`, `spec/contracts/1.0/target-artifact.schema.json`                                               | `core/src/portability_planning.rs`, `core/src/target_lowering.rs`, `core/src/target_serialization.rs`               | Five exact target profiles; canonical route rule and PCRE2/ECMAScript/Python lowering and serialization architecture tests                                                    |
+| One Rust semantic compiler serves all host routes.                           | `governance/architecture.md`, `governance/architecture-rules.json`, interop contracts                                   | `core/src`; `bindings/interop`; thin host adapters under `bindings`                                                 | All 33 architecture rules, semantic-authority retirement, `interop_contract_check@interop`, `interop_certification@interop`, `interop_adversarial_certification@interop`      |
+| CLI, LSP and editor tools delegate to the canonical compiler.                | `spec/cli/1.0`, `spec/interop/1.0`, public surface contracts                                                            | Root CLI transport and `tooling/lsp-server`; shared kernel interface                                                | LSP dependency-boundary rules, `lsp_package_contract_check@lsp`, `lsp_package_certification@lsp`, canonical documentation execution                                           |
+| Unsupported or mismatched inputs refuse explicitly.                          | Versioned request/result and diagnostic contracts; release compatibility policy                                         | Canonical request/result validation and native/WASM loading adapters                                                | Public and interop adversarial certification; mismatch rejection in package consumers; source frontend refusal regressions                                                    |
+| Packages, examples and support claims remain source-bound.                   | `governance/release-policy.json`, release-supply-chain and documentation manifests                                      | Registered packagers, clean consumers, immutable candidate verifier                                                 | `documentation_integrity@repository`, `public_distribution_contract@repository`, all required receipt pairs and staged consumer producers                                     |
+
+The five ratified targets remain ECMAScript 2024, PCRE2 10.42/10.43 and CPython re 3.11 text/bytes. Accepted real-engine evidence records 41 semantic cases, 205 target-profile compiles, 95 subjects, 1531 runtime executions, 1129 cross-profile comparisons, 48 governed refusals and zero findings. Target-engine support does not expand host-binding support.
+
+## Distribution, runtime and consumer outcomes
+
+| Route      | Tier      | Registered consumer scopes               | Observed runtime/tool versions                                                                                                                                                                                                         | Qualification outcome                             |
+| ---------- | --------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| c          | Supported | windows-x86_64, linux-x86_64             | linux-x86_64 cc: gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; windows-x86_64 cc: Compiler Version 19.44.35213 for x64                                                                                                               | 2 Supported consumer scopes passed                |
+| cpp        | Supported | windows-x86_64, linux-x86_64             | linux-x86_64 conan: Conan version 2.31.2; linux-x86_64 cxx: g++-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0; windows-x86_64 conan: Conan version 2.31.2; windows-x86_64 cxx: Compiler Version 19.44.35213 for x64                       | 2 Supported consumer scopes passed                |
+| csharp     | Supported | windows-x86_64                           | windows-x86_64 dotnet: 9.0.302                                                                                                                                                                                                         | 1 Supported consumer scope passed                 |
+| dart       | Supported | linux-x86_64                             | linux-x86_64 dart: Dart SDK version: 3.12.2 (stable) (Tue Jun 9 01:11:39 2026 -0700) on "linux_x64"                                                                                                                                    | 1 Supported consumer scope passed                 |
+| fsharp     | Supported | windows-x86_64                           | windows-x86_64 dotnet: 9.0.302                                                                                                                                                                                                         | 1 Supported consumer scope passed                 |
+| go         | Supported | linux-x86_64                             | linux-x86_64 go: go version go1.22.2 linux/amd64                                                                                                                                                                                       | 1 Supported consumer scope passed                 |
+| java       | Supported | windows-x86_64                           | windows-x86_64 java: openjdk version "21.0.12.1"                                                                                                                                                                                       | 1 Supported consumer scope passed                 |
+| kotlin     | Supported | windows-x86_64                           | windows-x86_64 gradle: Gradle 8.5; windows-x86_64 java: openjdk version "21.0.12.1"                                                                                                                                                    | 1 Supported consumer scope passed                 |
+| lua        | Preview   | Bounded Preview only; no Supported claim | linux-x86_64 lua: Lua 5.1.5; linux-x86_64 luarocks: luarocks 3.8.0                                                                                                                                                                     | Artifact and bounded Preview documentation passed |
+| perl       | Preview   | Bounded Preview only; no Supported claim | linux-x86_64 perl: (v5.38.2)                                                                                                                                                                                                           | Artifact and bounded Preview documentation passed |
+| php        | Preview   | Bounded Preview only; no Supported claim | linux-x86_64 composer: Composer version 2.7.1; linux-x86_64 php: PHP 8.3.6                                                                                                                                                             | Artifact and bounded Preview documentation passed |
+| python     | Supported | windows-x86_64, linux-x86_64             | linux-x86_64 python: Python 3.12.3; windows-x86_64 python: Python 3.12.10                                                                                                                                                              | 2 Supported consumer scopes passed                |
+| r          | Preview   | Bounded Preview only; no Supported claim | linux-x86_64 R: R version 4.3.3                                                                                                                                                                                                        | Artifact and bounded Preview documentation passed |
+| ruby       | Preview   | Bounded Preview only; no Supported claim | linux-x86_64 bundler: Bundler version 2.4.20; linux-x86_64 ruby: ruby 3.2.3 (2024-01-18 revision 52bb2ac0a6) [x86_64-linux-gnu]                                                                                                        | Artifact and bounded Preview documentation passed |
+| rust       | Supported | windows-x86_64, linux-x86_64             | linux-x86_64 cargo: cargo 1.75.0 (1d8b05cdd 2023-11-20); linux-x86_64 rustc: rustc 1.75.0 (82e1608df 2023-12-21); windows-x86_64 cargo: cargo 1.75.0 (1d8b05cdd 2023-11-20); windows-x86_64 rustc: rustc 1.75.0 (82e1608df 2023-12-21) | 2 Supported consumer scopes passed                |
+| swift      | Supported | linux-x86_64                             | linux-x86_64 swift: Swift version 6.3.3                                                                                                                                                                                                | 1 Supported consumer scope passed                 |
+| typescript | Preview   | Bounded Preview only; no Supported claim | linux-x86_64 node: v22.23.2; linux-x86_64 npm: 10.9.8                                                                                                                                                                                  | Artifact and bounded Preview documentation passed |
+
+These are observed runtime/tool versions, not broader compatibility promises. The generated support matrix and authenticated handoff retain exact governed constraints and native prerequisites. Certified consumer platforms are Windows x86_64 and applicable Ubuntu24.04 x86_64 GNU/glibc2.39 scopes. Supported consumers passed installation, canonical compilation, API/version checks, isolation and kernel or target-profile mismatch rejection. Preview package/documentation observations remain bounded; TypeScript Node and browser WASM observations create no Supported host claim.
+
+## Recovery and defect reconciliation
+
+Candidate `a541d27d7e1e05796a84b17bb1bfc4f17f6a70e6` stopped at Local operation 19/38 with 18 passes and one failure among 19 executed operations. Restoring truthful F# migration/compiler-boundary markers and wiring the checkout-owned Lua loader corrected the two reproduced root causes. The original failure and continuing 107-operation diagnostic remain historical evidence, not successor certification.
+
+Source `d40e267919abc5ae951e561a78ce131984d551be` passed its own four profiles, 42 receipts and staged qualification, but candidate reconstruction rejected the reader's incorrect status-field expectation for the nested attestation API. Its original package signature remains source-bound history. Reader `f8ef1a62be536981927e36a19587f96edb69f911` now requires actual CLOUD_VERIFIED facts and exact source/root identity. Immutable qualification passed Linux 536 tests/193 subtests and Windows 535 tests/193 subtests, with the single existing WinError 1314 symlink-capability skip covered by its executed Linux counterpart. Both hosts verified the retained signed W reference graph. No W receipt or profile became current-source acceptance.
+
+The owner-authorized local dev fast-forward integrated the reader promotion at `ea64d594`. Preparation preserved its original generated-check failure caused by a missing matching local dev reference, repaired branch context, accepted the original source-bound npm producer rows through separately hashed lock/manifest identities, and qualified final admission against a protected-worker race. The preparation adapter passed four positive and 23 negative controls; final admission passed eight controls. All original evidence remains retained.
+
+After current profiles and consumers passed, prospective hygiene rejected 323 CRLF endings in supplemental operational metadata. Eighteen controls qualified its existing lossless archive without modifying original signed bytes. Complete candidate reconstruction then passed, but the strict signing adapter refused repeated flat metadata roles. The aborted attempt created no trusted attest subprocess or signature; its authorized temporary key copy followed complete key-free admission and was removed. Twenty-one further controls proved one-role directories preserve all 192 archive/index identities, retain duplicate-role refusal and plan arguments before private-key access. Fresh complete diagnostics and reconstruction accepted the corrected inputs before successful signing attempt 2. Product source, trusted code, governing checks, original package bytes and accepted profiles stayed unchanged.
+
+Quantitative performance remains non-gating. The benchmark report retains 64,248 historical failed-campaign observations and Windows acquisition limitations honestly. Current functional resource-v2, safety, property, fuzz and sanitizer requirements remain mandatory. No latency, throughput, CPU-idle, launch or statistical threshold was introduced.
+
+## Timings, resources and execution continuity
+
+| Accepted stage                      | Recorded elapsed         |
+| ----------------------------------- | ------------------------ |
+| canonical root-npm                  | 0.01 min (0.510849 s)    |
+| canonical lsp-npm                   | 0.07 min (3.946760 s)    |
+| canonical lua-bootstrap-0           | 0.00 min (0.069876 s)    |
+| canonical lua-bootstrap-1           | 0.00 min (0.067454 s)    |
+| canonical setup                     | 0.44 min (26.647570 s)   |
+| canonical interop-debug             | 0.65 min (39.127975 s)   |
+| canonical lsp-payload               | 1.17 min (70.178078 s)   |
+| canonical generated-check           | 2.63 min (157.720635 s)  |
+| staged artifacts linux-x86_64       | 8.58 min (514.971762 s)  |
+| staged collect linux-x86_64         | 0.55 min (33.154474 s)   |
+| staged consumers linux-x86_64       | 11.62 min (696.949224 s) |
+| staged consumers windows-x86_64     | 8.50 min (510.203000 s)  |
+| staged kotlin-sdk windows-x86_64    | 2.74 min (164.578000 s)  |
+| final diagnose-selection dispatcher | 1.96 min (117.578803 s)  |
+| final audit-candidate dispatcher    | 3.77 min (226.190971 s)  |
+| final sign-candidate dispatcher     | 6.93 min (415.927481 s)  |
+| final handoff dispatcher            | 2.22 min (133.197353 s)  |
+| final verify-handoff dispatcher     | 2.41 min (144.352381 s)  |
+
+Closure-preparation audit: 2026-11-13T19:41:04.335705+00:00. Elapsed since original task admission: 2678.70 min (160722.101632 s); since source freeze: 635.17 min (38109.990230 s). Physical D: available capacity: 168.40 GiB (180819709952 bytes), above 112 GiB. Producer and dispatcher timers remain separate; dispatchers include source checks and protected-worker admission. Healthy Fortress workers were preserved through resource holds. No storage maintenance or competing authoritative campaign was introduced.
+
+The final source-bound continuation exited zero through verified handoff, and all four actual hosted jobs accepted the evidence. The evidence commit is clean. This closure changes only the permitted report, task record and ledger; final commit identity, final hosted recheck and clean-Git/capacity measurements are retained in the final operational audit and execution response. No mandatory engineering or certification obligation is deferred.
+
+## Publication handoff and future prerequisites
+
+Lifecycle is certified. Moving to publishable requires separate exact owner authorization naming channel, version, source, artifact subjects, destinations and run. Future publication must reconcile coordinate histories and ownership, the Conan endpoint and owner-specific CPAN/LuaRocks coordinates, trusted-publisher/credential configuration and protected-environment reviewers. Protected verifier activation must use the qualified immutable pin. Protected settings and production publication credentials were not changed or used by this task.
+
+Public 4.0.0-rc.1 remains unreserved and has no certified RC-projected artifact set. Any coordinate projection requires its governed source-bound certification. A published terminal RC and stable promotion must preserve the exact source, permitted coordinate-only generation and fresh required stable certification. After separately authorized publication, execute the qualified public verifier against real coordinates and retain failure/partial-publication outcomes. This task published no public package, release tag or GitHub Release.
+
+## Retained intermediate engineering chronology
+
+The following snapshots preserve their original intermediate source identities and statuses. Their present-tense statements describe those historical checkpoints; the accepted closure above supersedes pending actions.
 
 ## Scope and contract lock
 

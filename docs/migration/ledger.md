@@ -10042,3 +10042,33 @@ candidate-reader pins and migration evidence. Keep the old verifiers/certificate
 unchanged and treat W solely as retained history/reference data. The next clean
 source still needs all fresh preparation, packages, consumers, four profiles,
 reconstruction, signing, actual hosted verification and formal candidate closure.
+
+## Fourth Edition final product candidate — technical closure
+
+RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
+
+Frozen source `ea64d59467ef73a90e57bc23412daf78539bf69f`, evidence-only commit `32efc1d0242a2e5b65ed56606ff09f0c838b97cd`:
+Local 38/38, PR 80/80, Full and fresh independent no-reuse Release 124 passed plus
+the sole existing waiver /125. All 42 receipts/21 independent pairs, 95 tools,
+42 generated families, 17 routes, 15 Supported consumers, six bounded Preview producers
+and 256 registry-derived READY obligations passed. Current LSP preparation passed
+in 70.17807831597747 seconds. V/W and earlier failed evidence remain historical.
+
+Complete key-free reconstructions, original-authority signatures and immutable
+whole-object handoff passed. Candidate root `7ec80fb88f10bc36b1b2b5bd60b59c9608c2441ef1922acd46e2168b55ae9562`,
+signature `11211ce372e5643975a07e1e0ed8c4fe1f16cf02d46b6488103d11bb81d019e1`, qualified verifier
+`f8ef1a62be536981927e36a19587f96edb69f911`.
+[Actual hosted integrity](https://github.com/strling-lang/strling/actions/runs/43492305250) accepted all four jobs for the exact evidence
+commit, preserving the 96/154/218-file historical certificate trees unchanged.
+Metadata CRLF and flat-role signing failures are retained and resolved through
+18 and 21 focused controls, exact-byte archives, unique-role containers and pre-key
+argument planning. Product source stayed frozen and no mandatory requirement
+was waived or deferred.
+
+The [completion report](final-release-candidate.md),
+[controlled record](records/final-release-candidate.yaml) and
+[generated handoff](final-release-candidate-handoff.json) reconcile architecture,
+documentation, migration, support/runtime scope, benchmark limits, signatures,
+timings and future publication prerequisites. This contained task is complete;
+separate publication authorization and genuine public verification remain future
+work. No public package, release tag, GitHub Release or registry mutation occurred.

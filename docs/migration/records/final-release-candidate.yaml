@@ -70,8 +70,8 @@ change_classification:
     semantic_change:
         level: none
         evidence:
-            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
-              responsibility remain unchanged.
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural responsibility
+              remain unchanged.
     public_api_change:
         level: intentional-correction
         affected_surfaces:
@@ -79,9 +79,9 @@ change_classification:
             - kotlin-public-api
             - typescript-public-api
         evidence:
-            - Default host source helpers currently emit an unimplemented frontend identity and couple dialect
-              version to the independent specification version. The retained canonical compiler refuses those
-              defaults and accepts the explicit ratified frontend control. Preserve API shapes and explicit unsupported-frontend
+            - Default host source helpers currently emit an unimplemented frontend identity and couple dialect version
+              to the independent specification version. The retained canonical compiler refuses those defaults and
+              accepts the explicit ratified frontend control. Preserve API shapes and explicit unsupported-frontend
               rejection; classify exact snapshot changes before freeze.
             - The Lua rock embeds public VERSION3.0.0 unchanged despite its product4.0.0 coordinate. Add the missing
               inventory row and use the existing generic projection generator; immutable product/channel/support/publication
@@ -89,23 +89,23 @@ change_classification:
     schema_change:
         level: none
         evidence:
-            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
-              responsibility remain unchanged.
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural responsibility
+              remain unchanged.
     diagnostic_change:
         level: none
         evidence:
-            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
-              responsibility remain unchanged.
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural responsibility
+              remain unchanged.
     target_behavior_change:
         level: none
         evidence:
-            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
-              responsibility remain unchanged.
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural responsibility
+              remain unchanged.
     architecture_change:
         level: none
         evidence:
-            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural
-              responsibility remain unchanged.
+            - Normative compiler semantics, contracts, diagnostic identities, target profiles and architectural responsibility
+              remain unchanged.
     generated_output_change:
         level: compatible
         evidence:
@@ -114,22 +114,21 @@ change_classification:
     documentation_only: false
     internal_implementation: true
 title: Final product candidate preparation and clean-room certification
-status: in_progress
+status: complete
 objective:
-    Prepare accurate product, migration, architecture, example and support documentation; repair
-    confirmed host source-helper defaults; independently certify one reproducible complete product candidate
-    without publication.
+    Prepare accurate product, migration, architecture, example and support documentation; repair confirmed
+    host source-helper defaults; independently certify one reproducible complete product candidate without publication.
 required_verification:
     - name: Focused source-helper and documentation regressions
       command: python3 -m pytest -q tooling/tests/test_documentation_integrity.py
       expected_result:
-          Source-backed examples and scope assertions reject drift; canonical source frontends
-          remain authoritative.
+          Source-backed examples and scope assertions reject drift; canonical source frontends remain
+          authoritative.
     - name: Fresh complete-product certification
       command: python3 tooling/production_certification.py --profile release --all --no-reuse --plain
       expected_result:
-          Fresh current-source Local, Pull Request, Full and independent no-reuse Release, staged
-          builds/consumers, independent reconstruction, restricted signing and hosted verification all pass.
+          Fresh current-source Local, Pull Request, Full and independent no-reuse Release, staged builds/consumers,
+          independent reconstruction, restricted signing and hosted verification all pass.
 checkpoints:
     - name: CP1 Scope and contract lock
       status: passed
@@ -137,20 +136,19 @@ checkpoints:
           - check: Exact baseline and historical contexts
             result: passed
             details:
-                Clean local dev at d284446710c8164efc870d60071eeb5faf542a95; exact 96/154/218-file historical
-                certificate trees; actual final historical hosted integrity success. Remote dev remains H08 and
-                is not assumed integrated.
+                Clean local dev at d284446710c8164efc870d60071eeb5faf542a95; exact 96/154/218-file historical certificate
+                trees; actual final historical hosted integrity success. Remote dev remains H08 and is not assumed integrated.
           - check: Source-grounded defect and example inventory
             result: passed
             details:
-                40 current-facing documents and 95 fenced blocks inventoried. Default Python factory produces
-                STRL-PROTOCOL-0002; complete source with explicit strling.semantic@1.0.0 succeeds. Fourteen host
-                factories share obsolete default metadata. Five affected generated families mapped.
+                40 current-facing documents and 95 fenced blocks inventoried. Default Python factory produces STRL-PROTOCOL-0002;
+                complete source with explicit strling.semantic@1.0.0 succeeds. Fourteen host factories share obsolete
+                default metadata. Five affected generated families mapped.
           - check: Scope contract validation
             result: passed
             details:
-                Task schema, strict governance and repository hygiene accepted. Original temporary-directory
-                and declaration diagnostics are retained; no product/generated change or new certificate is claimed.
+                Task schema, strict governance and repository hygiene accepted. Original temporary-directory and
+                declaration diagnostics are retained; no product/generated change or new certificate is claimed.
     - name: CP2 Verification contracts
       status: passed
       evidence:
@@ -158,10 +156,10 @@ checkpoints:
             result: passed
             details:
                 Reviewed 61 product documents and 103 fenced examples; all six bounded Preview routes executed.
-                471 affected subsystem tests and 161 subtests pass, including independent reconstruction,
-                complete operation membership, public verification, consumer compatibility, documentation and
-                source identity adversaries. The original four consumer fixtures remain unchanged; new mandatory
-                documentation evidence uses a separate manifest identity. No certificate or public release is claimed.
+                471 affected subsystem tests and 161 subtests pass, including independent reconstruction, complete operation
+                membership, public verification, consumer compatibility, documentation and source identity adversaries.
+                The original four consumer fixtures remain unchanged; new mandatory documentation evidence uses a separate
+                manifest identity. No certificate or public release is claimed.
     - name: CP3 Final implementation and focused proof
       status: passed
       evidence:
@@ -169,132 +167,136 @@ checkpoints:
             result: passed
             details:
                 The 25539bf1 Linux acquisition stopped at C++ documentation capture after successful C and C++
-                assembly. Retained native output proves completed transport and successful nested Simply and
-                canonical results. Correct the harness to require both envelope and inner success, and describe
-                the envelope accurately in the README. All 21 focused consumer tests pass, including seven
-                malformed or failed envelope cases. A continuing non-authoritative package diagnostic retains
-                the original failure and does not transfer its receipts to a successor candidate.
+                assembly. Retained native output proves completed transport and successful nested Simply and canonical
+                results. Correct the harness to require both envelope and inner success, and describe the envelope accurately
+                in the README. All 21 focused consumer tests pass, including seven malformed or failed envelope cases.
+                A continuing non-authoritative package diagnostic retains the original failure and does not transfer
+                its receipts to a successor candidate.
           - check: Source-grounded acceptance
             result: passed
             details:
-                All affected subsystem, lint, format, documentation, architecture and semantic-authority checks pass.
-                Three exact Dart/Kotlin/TypeScript declaration corrections and semantic-authority evidence were
-                regenerated canonically; the other affected projections passed without regeneration. The clean
-                consumer-correction commit and qualified source-distinct reader are bd229502. Its 20 files passed
-                with Linux 534 tests and 183 subtests; Windows 533 tests, one host-capability skip
-                and 183 subtests, with the skipped Swift command-symlink resolution test executed on Linux. The isolated
-                entrypoint passed. Integrate this immutable pin and acquire final-source packages and
-                prerequisites before freeze and authoritative profiles. Canonical preparation at 25539bf1
-                passed eight stages and 42 generated families; its evidence remains bound to that source.
+                All affected subsystem, lint, format, documentation, architecture and semantic-authority checks
+                pass. Three exact Dart/Kotlin/TypeScript declaration corrections and semantic-authority evidence were
+                regenerated canonically; the other affected projections passed without regeneration. The clean consumer-correction
+                commit and qualified source-distinct reader are bd229502. Its 20 files passed with Linux 534 tests and
+                183 subtests; Windows 533 tests, one host-capability skip and 183 subtests, with the skipped Swift command-symlink
+                resolution test executed on Linux. The isolated entrypoint passed. Integrate this immutable pin and
+                acquire final-source packages and prerequisites before freeze and authoritative profiles. Canonical
+                preparation at 25539bf1 passed eight stages and 42 generated families; its evidence remains bound to
+                that source.
           - check: Independent reader and Python example scaffolding regressions
             result: passed
             details:
                 Reproduced Windows Git filename-length failures in a deep disposable source checkout; explicit
-                command-local and repository-local long-path handling passes the deep-path regression and
-                72 affected consumer, supply-chain and reader tests with 65 subtests. Corrected Python example
-                context imports after the staged-wheel diagnostic exposed function-local import shadowing;
-                the scaffolding control executes all five unchanged reviewed blocks, and the actual retained
-                staged-wheel retry passes all five examples in 3.949366 seconds. Actual successor-source package
-                evidence and reader promotion remain mandatory. Original diagnostics are retained.
+                command-local and repository-local long-path handling passes the deep-path regression and 72 affected
+                consumer, supply-chain and reader tests with 65 subtests. Corrected Python example context imports after
+                the staged-wheel diagnostic exposed function-local import shadowing; the scaffolding control executes
+                all five unchanged reviewed blocks, and the actual retained staged-wheel retry passes all five examples
+                in 3.949366 seconds. Actual successor-source package evidence and reader promotion remain mandatory.
+                Original diagnostics are retained.
           - check: Complete independent package diagnostic reconciliation
             result: passed
             details:
-                All 13 Linux routes completed; the sole Python wrapper failure is preserved and its corrected
-                five-example staged-wheel retry passes. All eight Windows package and consumer scopes pass.
-                The combined diagnostics cover all 17 routes, all 15 Supported consumer scopes and six
-                bounded Preview documentation routes. These prior-source artifacts and hashed engineering
-                harness observations are not successor-source receipts or accepted certification profiles.
-                The three narrow consumer, example-scaffolding and isolated-checkout repairs require a clean
-                successor reader qualification and fresh final candidate certification.
+                All 13 Linux routes completed; the sole Python wrapper failure is preserved and its corrected five-example
+                staged-wheel retry passes. All eight Windows package and consumer scopes pass. The combined diagnostics
+                cover all 17 routes, all 15 Supported consumer scopes and six bounded Preview documentation routes.
+                These prior-source artifacts and hashed engineering harness observations are not successor-source receipts
+                or accepted certification profiles. The three narrow consumer, example-scaffolding and isolated-checkout
+                repairs require a clean successor reader qualification and fresh final candidate certification.
     - name: CP4 Fresh integration and certification
-      status: in_progress
+      status: passed
       evidence:
           - check: Retained first complete-source Local failure
             result: passed
             details:
-                Rejected a541d27d's actual Local result has 18 passed and one failed of 19 executed,
-                with 38 registered requirements. Migration-explanation operation 19 rejects missing F# migration
-                and compiler-boundary markers. Original profile fingerprint 12315e4e8922f7aa9fd3a2d69b636f381e17b7771831f1430149bcb64d124670
-                and authenticated producer objects are retained. Its 42 build receipts, 21 pairs, 95 tools,
-                eight preparation stages, 42 generated families and six Preview producers passed for that source;
-                no PR, Full, Release or signing accepted it. Do not transfer evidence to a successor.
+                Rejected a541d27d's actual Local result has 18 passed and one failed of 19 executed, with 38 registered
+                requirements. Migration-explanation operation 19 rejects missing F# migration and compiler-boundary
+                markers. Original profile fingerprint 12315e4e8922f7aa9fd3a2d69b636f381e17b7771831f1430149bcb64d124670
+                and authenticated producer objects are retained. Its 42 build receipts, 21 pairs, 95 tools, eight preparation
+                stages, 42 generated families and six Preview producers passed for that source; no PR, Full, Release
+                or signing accepted it. Do not transfer evidence to a successor.
           - check: Narrow documentation correction and continuing independent diagnostics
             result: passed
             details:
                 Restore truthful F# migration status without old task identifiers; preserve the complete existing
-                frontend documentation contract. All 26 focused tests and 12 marker-removal subtests pass, as do
-                the 14-document canonical check and actual migration-explanation producer. No generated family
-                matches the correction paths. Serial non-authoritative diagnostics completed all 107 remaining
-                Full-registry operations; all three nonpassing operations map to the two documented root causes.
-                Qualified immutable reader code is unchanged. Fresh successor certification remains mandatory.
+                frontend documentation contract. All 26 focused tests and 12 marker-removal subtests pass, as do the
+                14-document canonical check and actual migration-explanation producer. No generated family matches the
+                correction paths. Serial non-authoritative diagnostics completed all 107 remaining Full-registry operations;
+                all three nonpassing operations map to the two documented root causes. Qualified immutable reader code
+                is unchanged. Fresh successor certification remains mandatory.
           - check: Retained dynamic-language runtime launcher failure and focused repair
             result: passed
             details:
                 Continuing diagnostics found the direct Busted runtime-certification command lacked the absolute
-                checkout loader used by the Lua component runner. Preserve the stale-module assertion failure
-                and six passing peer cases. Wire the same loader into certification without weakening that
-                assertion or transport probes. All seven focused producer tests pass, including absolute loader
-                ownership. No generated family matches the producer or test. The actual five-language runtime
-                producer passes three runs in 66.679011 seconds. Combined focused suites pass 33 tests and
-                12 negative subtests; the actual migration producer passes. All four behavioral input hashes
-                remain unchanged across the complete 194.761720-second focused owner. These are engineering
-                observations before a successor commit, not successor certification. The immutable evidence
-                reader is unchanged.
+                checkout loader used by the Lua component runner. Preserve the stale-module assertion failure and six
+                passing peer cases. Wire the same loader into certification without weakening that assertion or transport
+                probes. All seven focused producer tests pass, including absolute loader ownership. No generated family
+                matches the producer or test. The actual five-language runtime producer passes three runs in 66.679011
+                seconds. Combined focused suites pass 33 tests and 12 negative subtests; the actual migration producer
+                passes. All four behavioral input hashes remain unchanged across the complete 194.761720-second focused
+                owner. These are engineering observations before a successor commit, not successor certification. The
+                immutable evidence reader is unchanged.
           - check: Complete diagnostic failure and host-skip reconciliation
             result: passed
             details:
-                The 5127.461114-second diagnostic owner executed all 107 pending operations after 18 passed
-                Local operations. Its 103 passed, one existing scoped waiver and three failed operations cover
-                the complete 125-ID registry without constituting Full certification. Repository tests had
-                three failures and eleven setup errors, all traced to the F# marker and covered by the passing
-                corrected suites. All 25 skips are existing native Windows API integration markers, inapplicable
-                on Linux; their exact identities and reasons are retained. No missing dependency or new skip
-                accounts for them. No mandatory successor operation is waived or reused by this reconciliation.
+                The 5127.461114-second diagnostic owner executed all 107 pending operations after 18 passed Local
+                operations. Its 103 passed, one existing scoped waiver and three failed operations cover the complete
+                125-ID registry without constituting Full certification. Repository tests had three failures and eleven
+                setup errors, all traced to the F# marker and covered by the passing corrected suites. All 25 skips
+                are existing native Windows API integration markers, inapplicable on Linux; their exact identities and
+                reasons are retained. No missing dependency or new skip accounts for them. No mandatory successor operation
+                is waived or reused by this reconciliation.
           - check: Rejected frozen candidate evidence preserved
             result: passed
             details:
                 Source d40e267919abc5ae951e561a78ce131984d551be passed readiness, all eight preparation leaves,
-                42 generated families, 42 fresh receipts, 21 independent pairs and 95 tools. Actual LSP passed
-                67.602128199 seconds. Fresh Local 38/38, PR 80/80, Full 124 passed plus one existing waiver of
-                125, and independent no-reuse Release 124 passed plus the same waiver of 125 were accepted
-                for that source. All 17 staged routes, 15 Supported consumers and 256 READY obligations
-                qualified. Its original-authority 184-file package root and signature remain retained.
-                Candidate reconstruction rejected the immutable reader's incorrect expectation of a status
-                field from the attestation API. No candidate signature or hosted acceptance exists. All
-                earlier selection failures and original producer bytes are preserved; none are successor proof.
+                42 generated families, 42 fresh receipts, 21 independent pairs and 95 tools. Actual LSP passed 67.602128199
+                seconds. Fresh Local 38/38, PR 80/80, Full 124 passed plus one existing waiver of 125, and independent
+                no-reuse Release 124 passed plus the same waiver of 125 were accepted for that source. All 17 staged
+                routes, 15 Supported consumers and 256 READY obligations qualified. Its original-authority 184-file
+                package root and signature remain retained. Candidate reconstruction rejected the immutable reader's
+                incorrect expectation of a status field from the attestation API. No candidate signature or hosted acceptance
+                exists. All earlier selection failures and original producer bytes are preserved; none are successor
+                proof.
           - check: Attestation API regression and real-signature diagnostic
             result: passed
             details:
-                Require the actual CLOUD_VERIFIED return facts, exact source and exact nested evidence root.
-                Two focused methods and ten negative subtests pass. The working-reader diagnostic verifies
-                the complete retained signed graph, 17 routes, 256 obligations and six Preview producers in
-                65.513681848 seconds. This remains non-authoritative engineering evidence. The corrected
-                reader needs fresh immutable qualification and promotion, followed by a new exact-source
-                candidate with all required fresh certification. Historical certificates are unchanged.
+                Require the actual CLOUD_VERIFIED return facts, exact source and exact nested evidence root. Two
+                focused methods and ten negative subtests pass. The working-reader diagnostic verifies the complete
+                retained signed graph, 17 routes, 256 obligations and six Preview producers in 65.513681848 seconds.
+                This remains non-authoritative engineering evidence. The corrected reader needs fresh immutable qualification
+                and promotion, followed by a new exact-source candidate with all required fresh certification. Historical
+                certificates are unchanged.
           - check: Corrected immutable reader qualification
             result: passed
             details:
-                Reader f8ef1a62be536981927e36a19587f96edb69f911 passed the complete 20-file cohort on Linux
-                with 536 tests and 193 subtests, and Windows with 535 tests, 193 subtests and the single
-                existing symlink-capability skip. The dedicated diagnostic confirms WinError 1314; the
-                Linux counterpart executes. Both immutable hosts verify the original signed W graph,
-                all 17 routes, 256 obligations and six Preview producers. The isolated entrypoint passes.
-                All ten actual leaves exit zero with exact source, recipe and probe identities. Promote
-                the two candidate workflow refs only. Old W results remain a reference vector and are
-                not fresh certification for the successor. Historical verifiers and certificates stay exact.
+                Reader f8ef1a62be536981927e36a19587f96edb69f911 passed the complete 20-file cohort on Linux with
+                536 tests and 193 subtests, and Windows with 535 tests, 193 subtests and the single existing symlink-capability
+                skip. The dedicated diagnostic confirms WinError 1314; the Linux counterpart executes. Both immutable
+                hosts verify the original signed W graph, all 17 routes, 256 obligations and six Preview producers.
+                The isolated entrypoint passes. All ten actual leaves exit zero with exact source, recipe and probe
+                identities. Promote the two candidate workflow refs only. Old W results remain a reference vector and
+                are not fresh certification for the successor. Historical verifiers and certificates stay exact.
           - check: Source-grounded acceptance
-            result: not_run
+            result: passed
             details:
-                Fresh Local, Pull Request, Full, independent no-reuse Release, 42 source-bound builds, applicable
-                consumers, reconstruction, signing and actual immutable hosted acceptance.
+                "Source ea64d59467ef73a90e57bc23412daf78539bf69f: Local 38/38, PR 80/80, Full and fresh independent
+                Release 124passed plus the sole existing waiver /125. All 42 receipts/21 pairs, 95 tools, 17 routes,
+                15 Supported consumers,six bounded Preview producers and 256 READY obligations accepted. Independent
+                reconstructions, original-authority signatures and immutable handoff passed; root 7ec80fb88f10bc36b1b2b5bd60b59c9608c2441ef1922acd46e2168b55ae9562.
+                Actual four-job hosted acceptance https://github.com/strling-lang/strling/actions/runs/43492305250,
+                evidence commit 32efc1d0242a2e5b65ed56606ff09f0c838b97cd. Historical certificates and failures remain
+                preserved."
     - name: FINAL Candidate closure and publication readiness
-      status: planned
+      status: passed
       evidence:
-          - check: Source-grounded acceptance
-            result: not_run
+          - check: Complete source-bound candidate and publication handoff
+            result: passed
             details:
-                Exact source, artifacts, roots, results, timings and publication handoff; RELEASE CANDIDATE
-                CERTIFIED — PUBLICATION AUTHORIZATION PENDING; clean repository.
+                RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING. Source ea64d59467ef73a90e57bc23412daf78539bf69f;
+                evidence 32efc1d0242a2e5b65ed56606ff09f0c838b97cd; root 7ec80fb88f10bc36b1b2b5bd60b59c9608c2441ef1922acd46e2168b55ae9562;
+                qualified immutable reader f8ef1a62; actual four-job hosted acceptance https://github.com/strling-lang/strling/actions/runs/43492305250.
+                Publication and public verification remain false; closure preserves product source and historical certificates.
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -310,3 +312,49 @@ commits:
       subject: Preserve migration documentation and checkout-owned Lua certification
     - sha: f8ef1a62be536981927e36a19587f96edb69f911
       subject: Verify nested package attestation facts before candidate acceptance
+    - sha: ea64d59467ef73a90e57bc23412daf78539bf69f
+      subject: Promote the qualified nested attestation verifier
+    - sha: 32efc1d0242a2e5b65ed56606ff09f0c838b97cd
+      subject: Seal complete product candidate certification
+completion:
+    accomplished:
+        - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
+        - Completed architecture, product documentation, migration/examples, governed support matrices, benchmark report
+          and independently certified clean-room candidate.
+    verified:
+        - Source ea64d59467ef73a90e57bc23412daf78539bf69f; Local 38/38, PR 80/80, Full/Release 124passed plus the sole
+          authorized waiver /125; zero unauthorized mandatory nonpasses.
+        - All 17 routes, 15 Supported consumers, 42 receipts/21 pairs, 95 tools, 42 generated families, six bounded Preview
+          producers and 256 derived READY obligations.
+        - Package root 32c8bb32c861ef0ce2552df0a25baf69d42cdaa26d98cdf6cd01823355080740; candidate root 7ec80fb88f10bc36b1b2b5bd60b59c9608c2441ef1922acd46e2168b55ae9562;
+          signature 11211ce372e5643975a07e1e0ed8c4fe1f16cf02d46b6488103d11bb81d019e1.
+        - Immutable reader f8ef1a62be536981927e36a19587f96edb69f911; four-job hosted acceptance https://github.com/strling-lang/strling/actions/runs/43492305250,
+          evidence 32efc1d0242a2e5b65ed56606ff09f0c838b97cd.
+    behavior_changed:
+        Corrected obsolete frontend defaults, reconciled package documentation/examples and independently
+        verified the complete-product certificate and publication handoff.
+    intentional_behavior_changes:
+        - Fourteen host factories select actual ratified versioned frontends while preserving API shapes and explicit
+          unsupported-frontend refusal.
+        - The missing Lua public 4.0.0 projection is generated from unchanged authority.
+        - Complete-product evidence, required documentation proof, lossless retention and immutable hosted verification
+          are qualified.
+    preserved_behavior:
+        - Canonical Rust compiler semantics, normative authority, five target claims, diagnostics, ABI/transport and
+          independent version contracts.
+        - Product 4.0.0, existing Supported/Preview classifications, exact runtime/platform scopes and original consumer
+          fixtures.
+        - Closed H08/packaging/public-verification certificates, original signing authority and WVR-SEC-VSCE-LICENSE-001.
+        - Quantitative performance remains non-gating; functional resource safety is mandatory.
+    transitional_architecture: []
+    deferred_work:
+        - Separately authorized publication, owner/publisher/protected-environment prerequisites, coordinate-specific
+          certification and actual post-publication verification. No current engineering or certification requirement
+          is deferred.
+readiness:
+    status: READY
+    next_task: Separately authorized publication using the exact handoff, then actual public-registry verification.
+    rationale:
+        All mandatory complete-product requirements passed at ea64d59467ef73a90e57bc23412daf78539bf69f, with
+        independent reconstruction, original-authority signatures, whole-object handoff and actual four-job hosted
+        acceptance. No public RC or stable release was published.

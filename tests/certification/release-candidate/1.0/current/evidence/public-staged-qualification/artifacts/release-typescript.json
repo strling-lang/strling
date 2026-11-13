@@ -1,0 +1,165 @@
+{
+  "artifact_id": "release:typescript",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [
+          {
+            "command": "npm install @strling-lang/strling@4.0.0",
+            "executed": false,
+            "status": "passed"
+          }
+        ],
+        "exact_install_commands_found": 1,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "3153d0f0ee805f3e7fb6b4be4fb925514f6fe73ce0e9c847387b09dde3132a11",
+      "source_path": "bindings/typescript/README.md",
+      "url": "https://evidence.example.test/bindings/typescript/README.md"
+    },
+    "provenance": {
+      "sha256": "82ffd627cf0f09dcb9aadcf5e2ed25a09f0f85a00a38d97301ff172143f9b375",
+      "url": "https://evidence.example.test/release-typescript.intoto.json"
+    },
+    "sbom": {
+      "sha256": "d96ac93fe405b193d200ce6d294dfd9cb5c77626c68a4bede7814fffd973fb8b",
+      "url": "https://evidence.example.test/release-typescript.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.23044475700589828,
+  "metadata": {
+    "fields": [
+      "dependencies",
+      "description",
+      "engines",
+      "exports",
+      "homepage",
+      "license",
+      "name",
+      "repository",
+      "type",
+      "version"
+    ],
+    "status": "passed"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:typescript:coordinate",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:typescript:metadata",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:typescript:artifact",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:typescript:source",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:typescript:sbom",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:typescript:provenance",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:typescript:documentation",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:typescript",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:typescript:scope",
+      "platform": null,
+      "retrieval_sha256": "66a9a63ce343853f1c84c8c1098edb9252e9b58d0a6ddf2c11807f193eed0776",
+      "status": "READY",
+      "tier": "Preview"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/typescript/strling-lang-strling-4.0.0.tgz": "5789d1d3e9117d9f7b5316a95273958459b9335afdb7cb55af4a6c510150fd6b"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.0",
+      "sha256": "64cf9b5afa8e2f2991157dbbef5a3c0084cfee3b80159691b88ad1baf6138c9f",
+      "size": 1429
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://registry.npmjs.org/@strling-lang/strling/-/strling-4.0.0.tgz",
+      "sha256": "5789d1d3e9117d9f7b5316a95273958459b9335afdb7cb55af4a6c510150fd6b",
+      "size": 1331038
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-typescript.spdx.json",
+      "sha256": "d96ac93fe405b193d200ce6d294dfd9cb5c77626c68a4bede7814fffd973fb8b",
+      "size": 586700
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-typescript.intoto.json",
+      "sha256": "82ffd627cf0f09dcb9aadcf5e2ed25a09f0f85a00a38d97301ff172143f9b375",
+      "size": 4761
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/typescript/README.md",
+      "sha256": "3153d0f0ee805f3e7fb6b4be4fb925514f6fe73ce0e9c847387b09dde3132a11",
+      "size": 4452
+    }
+  ]
+}

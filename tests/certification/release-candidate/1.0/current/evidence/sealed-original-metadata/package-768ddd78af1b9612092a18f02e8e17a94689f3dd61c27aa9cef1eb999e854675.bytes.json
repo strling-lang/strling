@@ -1,0 +1,10 @@
+{
+  "schema_version": "strling-evidence-byte-archive-v1",
+  "document_kind": "supplemental-evidence-bytes",
+  "source": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "original_name": "evidence-768ddd78af1b9612092a18f02e8e17a94689f3dd61c27aa9cef1eb999e854675.bin",
+  "bytes": 396,
+  "sha256": "768ddd78af1b9612092a18f02e8e17a94689f3dd61c27aa9cef1eb999e854675",
+  "encoding": "gzip+base64",
+  "payload": "H4sIAAAAAAACA03QzWrDMAzA8XufIuS8gz8iK+7LBFmWaFjbFNvZYWPvvqQpdEeJPz+Bfk5d19dGba39uesfVKvk/mPf8kX4c99a/5zrshaWvRIKQ4Y4BBRFT9EIYGLnB+syKY7gY9IQ9eVcN3TWWcpUL+Qg7ETIKTlkyTYpGa/DGFLKxAOAz5TJeg3gPIw6EigIp5DR2mi9t1koHjTl27zZy/2/jAhxTOPARIQcrUGPzCQBxHtOKNaA2sTZgkOnnKwHNmTRODNGOOSHFF3Kje4s0/vKuj/n3CldqxxZWZpwkzwVqVK+qG1ZnR7H9IxbWV/tmq4zP4uJ1nZZyvz95k6/pz/+M+jrjAEAAA=="
+}

@@ -1,0 +1,381 @@
+{
+  "artifact_fingerprint": "1d8f0cc15dcc6bd28d11c22eb5b0a24f2cd47a2cb14274becb69be6bbdf127c9",
+  "artifact_kind": "structured-operation-result",
+  "certification_profile": "release",
+  "environment_identity": null,
+  "integrity_error": null,
+  "invocation_id": "42f6252c07ae42c5a2c248b9f4956771",
+  "operation_id": "certification.functional-resource",
+  "performance_evidence_identity": "3839a6112f5928b0fa6d7213c233a2bbc2d7e25cbccd09af998667572d5a117d",
+  "process_exit_code": 0,
+  "producer_id": "functional_resource_certification@repository",
+  "producer_profile": "pull-request",
+  "result_contract": "certification-result-v1",
+  "sample_consumption": {
+    "authenticated_sample_count": 0,
+    "completed_coordinate_ids": [],
+    "completed_sample_count": 0,
+    "coordinates_completed": 0,
+    "coordinates_started": 0,
+    "current_coordinate_id": null,
+    "state": "zero"
+  },
+  "schema_version": "structured-operation-execution-v1",
+  "source_sha": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "structured_result": {
+    "certification_contract": "strling-deterministic-certification-v1",
+    "checks": [
+      {
+        "details": {
+          "steps": [
+            {
+              "command": [
+                "cargo",
+                "+1.75.0",
+                "test",
+                "--manifest-path",
+                "core/internal/Cargo.toml",
+                "--locked",
+                "--offline",
+                "--test",
+                "semantic_frontend",
+                "--test",
+                "semantic_frontend_properties",
+                "--test",
+                "regex_frontend"
+              ],
+              "exit_code": 0,
+              "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 3.42s\n     Running ../tests/regex_frontend.rs (core/internal/target/debug/deps/regex_frontend-bf117a84b1103786)\n     Running ../tests/semantic_frontend.rs (core/internal/target/debug/deps/semantic_frontend-3e064eb24d72b848)\n     Running ../tests/semantic_frontend_properties.rs (core/internal/target/debug/deps/semantic_frontend_properties-653adb42fafb8bfe)\n",
+              "stderr_sha256": "0ebae5de8eb767465deed9c702ae2dff41d948650ed5a134c89bbde25d82769b",
+              "stdout": "\nrunning 11 tests\ntest accepts_the_complete_frozen_positive_corpus_deterministically ... ok\ntest canonically_orders_multiple_builtin_class_members ... ok\ntest covers_the_specification_authored_correspondence_set ... ok\ntest covers_the_specification_authored_provenance_set ... ok\ntest arbitrary_utf8_inputs_do_not_panic ... ok\ntest eof_and_duplicate_definitions_have_canonical_locations ... ok\ntest lowers_global_flags_into_target_neutral_semantics ... ok\ntest preserves_discontiguous_literal_provenance_across_extended_layout ... ok\ntest preserves_multibyte_nested_and_directive_provenance ... ok\ntest rejects_the_complete_frozen_negative_corpus_exactly ... ok\ntest enforces_frozen_resource_limits ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s\n\n\nrunning 4 tests\ntest all_negative_contract_cases_reject_with_exact_identity_and_offset ... ok\ntest canonical_formatter_preserves_comment_order_and_authored_set_order ... ok\ntest resource_and_source_boundaries_are_typed_and_deterministic ... ok\ntest all_positive_contract_cases_parse_format_and_reparse_stably ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 5 tests\ntest comments_align_with_following_constructs_and_enclosing_closures ... ok\ntest deterministic_arbitrary_utf8_inputs_never_panic ... ok\ntest nesting_identifier_and_integer_limits_are_exact ... ok\ntest generated_valid_programs_are_deterministic_idempotent_and_identity_stable ... ok\ntest node_capture_and_set_member_limits_are_exact ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.27s\n\n",
+              "stdout_sha256": "685170022c1bb8206a171acd85ab7c8962ab10efdbd01023be74605df3157aab"
+            }
+          ]
+        },
+        "id": "resource:frontend-limits",
+        "status": "passed"
+      },
+      {
+        "details": {
+          "steps": [
+            {
+              "command": [
+                "cargo",
+                "+1.75.0",
+                "test",
+                "--manifest-path",
+                "core/internal/Cargo.toml",
+                "--locked",
+                "--offline",
+                "--test",
+                "compiler_boundary_resources",
+                "--test",
+                "semantic_analysis",
+                "--test",
+                "structural_analysis",
+                "--test",
+                "safety_analysis",
+                "--test",
+                "capability_evaluation",
+                "--test",
+                "portability_planning"
+              ],
+              "exit_code": 0,
+              "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 8.57s\n     Running ../tests/capability_evaluation.rs (core/internal/target/debug/deps/capability_evaluation-f4332df5e067f848)\n     Running ../tests/compiler_boundary_resources.rs (core/internal/target/debug/deps/compiler_boundary_resources-ccf7c82f69df9de6)\n     Running ../tests/portability_planning.rs (core/internal/target/debug/deps/portability_planning-00be9939c78f110d)\n     Running ../tests/safety_analysis.rs (core/internal/target/debug/deps/safety_analysis-68f65051027f0ba0)\n     Running ../tests/semantic_analysis.rs (core/internal/target/debug/deps/semantic_analysis-d013c9954a9671b1)\n     Running ../tests/structural_analysis.rs (core/internal/target/debug/deps/structural_analysis-decd45ab18c48c62)\n",
+              "stderr_sha256": "4cd707ca0daed6d1067788ea314a19af6737d4f99c7894c721c232a99e19c165",
+              "stdout": "\nrunning 8 tests\ntest bounded_constraint_is_supported_or_violated_from_structural_evidence ... ok\ntest capture_name_shape_and_length_are_profile_constraints ... ok\ntest fixed_alternatives_respect_profile_width_rules ... ok\ntest malformed_and_incompatible_profiles_are_rejected_before_lookup ... ok\ntest lookup_distinguishes_supported_unsupported_and_absent_capabilities ... ok\ntest profile_versions_change_results_without_changing_requirements ... ok\ntest reference_lookup_rejects_revision_and_fingerprint_mismatches ... ok\ntest required_profile_option_satisfies_unicode_property_constraint ... ok\n\ntest result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s\n\n\nrunning 9 tests\ntest caller_semantic_node_limit_accepts_exact_and_rejects_one_over ... ok\ntest certified_structural_limit_is_projected_as_resource_exhaustion ... ok\ntest diagnostic_limit_accepts_exact_and_rejects_one_over_without_truncation ... ok\ntest invalid_zero_caller_limit_remains_a_typed_contract_failure ... ok\ntest capability_requirement_limit_accepts_exact_and_rejects_one_over ... ok\ntest semantic_depth_hard_limit_accepts_exact_and_rejects_one_over ... ok\ntest request_byte_limit_accepts_exact_and_rejects_one_over ... ok\ntest target_profile_byte_limit_accepts_exact_and_rejects_one_over ... ok\ntest semantic_node_hard_limit_accepts_exact_and_rejects_one_over ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.62s\n\n\nrunning 22 tests\ntest exact_program_fingerprint_prevents_cross_program_evidence_reuse ... ok\ntest constraint_violation_without_rewrite_is_proven_unsupported ... ok\ntest failed_literal_body_precondition_keeps_the_rewrite_unavailable ... ok\ntest malformed_program_dependency_index_is_rejected ... ok\ntest mismatched_capability_result_is_rejected ... ok\ntest immutable_profile_reference_path_matches_direct_evaluation_and_planning ... ok\ntest mismatched_profile_is_rejected_without_engine_assumptions ... ok\ntest missing_or_stale_rewrite_certification_cannot_validate_as_equivalent ... ok\ntest mixed_native_and_rewrite_aggregates_to_equivalent_rewrite ... ok\ntest mixed_native_and_unknown_requirements_do_not_claim_final_status ... ok\ntest multiple_requirements_on_one_node_are_planned_independently ... ok\ntest mixed_native_and_unsupported_aggregates_to_unsupported ... ok\ntest multiple_supported_requirements_remain_independent_and_ordered ... ok\ntest program_without_special_requirements_is_natively_portable ... ok\ntest mutated_profile_is_rejected_against_the_validated_evaluation_snapshot ... ok\ntest repeated_planning_is_deterministic_and_inputs_are_immutable ... ok\ntest rewrite_dependency_cycles_are_rejected ... ok\ntest supported_results_become_native_with_exact_evidence ... ok\ntest unknown_capability_remains_unresolved_outside_final_status ... ok\ntest unknown_plus_explicit_unsupported_suppresses_final_program_status ... ok\ntest unproven_possessive_rewrite_candidate_is_not_in_the_registry ... ok\ntest unsupported_atomic_literal_selects_the_certified_equivalent_rewrite ... ok\n\ntest result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s\n\n\nrunning 5 tests\ntest mismatched_foundational_store_is_rejected ... ok\ntest depth_limit_precedes_fact_store_correspondence ... ok\ntest mismatched_structural_store_is_rejected_even_with_matching_versions ... ok\ntest valid_program_has_a_deterministic_empty_framework_result ... ok\ntest node_limit_precedes_fact_store_correspondence ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s\n\n\nrunning 6 tests\ntest duplicate_and_missing_identity_states_do_not_enter_the_fact_store ... ok\ntest fact_iteration_is_deterministic_identity_order ... ok\ntest noncanonical_input_is_rejected_without_normalization ... ok\ntest every_reachable_node_has_one_identity_keyed_fact_record ... ok\ntest returned_facts_own_their_identities_after_the_input_is_dropped ... ok\ntest source_less_and_deeply_nested_programs_are_supported_with_a_safe_limit ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 11 tests\ntest equal_and_distinct_literals_form_canonical_scalar_unions ... ok\ntest backreferences_remain_conservative_and_unknown_prefixes_continue ... ok\ntest leading_literals_use_unicode_scalars_not_encoded_bytes ... ok\ntest every_reachable_variant_has_deterministic_leading_facts ... ok\ntest mismatched_foundational_state_is_a_structured_error ... ok\ntest nested_alternation_unions_are_flattened_only_in_fact_space ... ok\ntest nullable_prefixes_and_assertions_expose_only_outer_consumers ... ok\ntest maximum_depth_preserves_every_fact_and_rejects_the_next_level ... ok\ntest wildcard_and_character_predicates_remain_symbolic ... ok\ntest zero_maximum_repeat_has_no_body_consumption_in_its_outer_leading_set ... ok\ntest relationship_failure_keeps_the_exact_path_after_prior_siblings ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+              "stdout_sha256": "30526477937d81e680828f616001574bceacf871a68121fefd9b75917d108973"
+            }
+          ]
+        },
+        "id": "resource:kernel-limits",
+        "status": "passed"
+      },
+      {
+        "details": {
+          "steps": [
+            {
+              "command": [
+                "cargo",
+                "+1.75.0",
+                "test",
+                "--manifest-path",
+                "core/internal/Cargo.toml",
+                "--locked",
+                "--offline",
+                "--test",
+                "pcre2_lowering",
+                "--test",
+                "ecmascript_lowering",
+                "--test",
+                "python_re_lowering",
+                "--test",
+                "pcre2_serialization",
+                "--test",
+                "ecmascript_serialization",
+                "--test",
+                "python_re_serialization"
+              ],
+              "exit_code": 0,
+              "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 12.51s\n     Running ../tests/ecmascript_lowering.rs (core/internal/target/debug/deps/ecmascript_lowering-5e60c5d4176c3954)\n     Running ../tests/ecmascript_serialization.rs (core/internal/target/debug/deps/ecmascript_serialization-4d7640e85bdb674c)\n     Running ../tests/pcre2_lowering.rs (core/internal/target/debug/deps/pcre2_lowering-b82015e877025cca)\n     Running ../tests/pcre2_serialization.rs (core/internal/target/debug/deps/pcre2_serialization-56440809f0aaf3bd)\n     Running ../tests/python_re_lowering.rs (core/internal/target/debug/deps/python_re_lowering-2915b52ddf9c55d5)\n     Running ../tests/python_re_serialization.rs (core/internal/target/debug/deps/python_re_serialization-4f7ca5a1dfcc7bd5)\n",
+              "stderr_sha256": "9d3c1df924992c08ca3f22adda07ead3c354e9214034f6492c42de18aca72746",
+              "stdout": "\nrunning 9 tests\ntest constructed_plan_validation_detects_capture_slot_corruption ... ok\ntest certified_atomic_literal_rewrite_is_applied_and_retained ... ok\ntest every_semantic_variant_lowers_to_explicit_ecmascript_structure ... ok\ntest invalid_semantic_and_excessive_depth_fail_without_partial_output ... ok\ntest malformed_planner_and_rewrite_evidence_are_rejected ... ok\ntest required_compile_options_remain_typed_data ... ok\ntest stale_mismatched_and_non_ecmascript_inputs_are_rejected_before_lowering ... ok\ntest unresolved_and_unsupported_plans_fail_closed_with_stable_diagnostics ... ok\ntest validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stale ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n\n\nrunning 6 tests\ntest artifact_projects_exact_flags_options_requirements_and_utf8_provenance ... ok\ntest character_sets_use_independent_ascii_unicode_and_mixed_set_spellings ... ok\ntest insensitive_ascii_word_class_fails_instead_of_widening_membership ... ok\ntest certified_atomic_literal_rewrite_projects_without_atomic_syntax ... ok\ntest operation_spellings_preserve_precedence_positions_captures_and_lookarounds ... ok\ntest malformed_plans_and_syntax_data_fail_closed_with_stable_codes ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.74s\n\n\nrunning 9 tests\ntest constructed_plan_validation_detects_capture_slot_corruption ... ok\ntest every_semantic_variant_lowers_to_explicit_pcre2_structure ... ok\ntest certified_atomic_literal_rewrite_is_applied_and_retained ... ok\ntest invalid_semantic_and_excessive_depth_fail_without_partial_output ... ok\ntest profile_default_and_runtime_options_remain_typed_data ... ok\ntest malformed_planner_and_rewrite_evidence_are_rejected ... ok\ntest unresolved_and_unsupported_plans_fail_closed_with_stable_diagnostics ... ok\ntest stale_mismatched_and_non_pcre2_inputs_are_rejected_before_lowering ... ok\ntest validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stale ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n\n\nrunning 6 tests\ntest every_target_operation_serializes_to_one_valid_deterministic_artifact ... ok\ntest certified_rewrite_projects_exact_resolution_without_reapplying_policy ... ok\ntest literals_classes_options_and_utf8_spans_are_unambiguous ... ok\ntest identical_empty_spans_coalesce_sorted_provenance ... ok\ntest malformed_capture_property_bounds_and_plan_fail_closed ... ok\ntest pattern_growth_is_resource_bounded ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.80s\n\n\nrunning 11 tests\ntest atomic_groups_are_native_and_retain_exact_provenance ... ok\ntest bytes_patterns_accept_ascii_and_reject_unicode_semantics ... ok\ntest constructed_plan_validation_detects_capture_slot_corruption ... ok\ntest invalid_semantic_and_excessive_depth_fail_without_partial_output ... ok\ntest every_semantic_variant_lowers_to_explicit_python_re_structure ... ok\ntest malformed_planner_and_rewrite_evidence_are_rejected ... ok\ntest planner_certified_rewrites_are_applied_and_retained ... ok\ntest required_pattern_kind_remains_typed_runtime_data ... ok\ntest stale_mismatched_and_non_python_re_inputs_are_rejected_before_lowering ... ok\ntest unresolved_and_unsupported_plans_fail_closed_with_stable_diagnostics ... ok\ntest validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stale ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n\n\nrunning 6 tests\ntest character_sets_keep_ascii_unicode_and_outer_negation_scoped ... ok\ntest bytes_artifact_uses_its_exact_profile_and_ascii_pattern_source ... ok\ntest literal_scalars_keep_exact_escaping_and_utf8_source_map_boundaries ... ok\ntest operation_spellings_preserve_precedence_positions_captures_and_assertions ... ok\ntest str_artifact_projects_exact_flags_options_requirements_and_utf8_provenance ... ok\ntest malformed_plans_and_python_syntax_limits_fail_closed_with_stable_codes ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.89s\n\n",
+              "stdout_sha256": "d164a90f43d8d5f3323b8af1cc2f5ba859d0839467b7e30d99396dab698b2511"
+            }
+          ]
+        },
+        "id": "resource:target-limits",
+        "status": "passed"
+      },
+      {
+        "details": {
+          "steps": [
+            {
+              "command": [
+                "cargo",
+                "+1.75.0",
+                "test",
+                "--manifest-path",
+                "core/internal/Cargo.toml",
+                "--locked",
+                "--offline",
+                "--test",
+                "editor_intelligence"
+              ],
+              "exit_code": 0,
+              "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 1.57s\n     Running ../tests/editor_intelligence.rs (core/internal/target/debug/deps/editor_intelligence-268a2f52154d6989)\n",
+              "stderr_sha256": "288067d37abafaafe4b4ab27ca2c3fb27c68aee75a6d40686765ef8111ecc520",
+              "stdout": "\nrunning 9 tests\ntest canonical_frontends_match_every_authored_completion_context ... ok\ntest canonical_symbol_trees_and_capture_links_match_authored_identity_evidence ... ok\ntest canonical_frontends_match_every_authored_token_stream ... ok\ntest editor_transport_is_versioned_json_and_rejects_invalid_cursor_boundaries ... ok\ntest editor_action_authority_refuses_unproved_frontends_and_shapes ... ok\ntest formatter_evidence_is_semantic_complete_and_exact ... ok\ntest semantic_editor_actions_match_certified_authored_expectations ... ok\ntest semantic_editor_keyword_catalog_matches_the_authored_language_contract ... ok\ntest large_semantic_projection_skips_inapplicable_rewrite_certification ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.82s\n\n",
+              "stdout_sha256": "b4b428a54a30bd0996bd428d251b06084acc1bb0118316487ae3b1943478ec54"
+            },
+            {
+              "command": [
+                "cargo",
+                "+1.75.0",
+                "test",
+                "--manifest-path",
+                "bindings/interop/Cargo.toml",
+                "--locked",
+                "--offline",
+                "--test",
+                "protocol"
+              ],
+              "exit_code": 0,
+              "stderr": "   Compiling strling-interop v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/bindings/interop)\n    Finished test [unoptimized + debuginfo] target(s) in 1.82s\n     Running tests/protocol.rs (bindings/interop/target/debug/deps/protocol-e34d68d55d2523fd)\n",
+              "stderr_sha256": "7e2ca6f93ec02d64a0b800e82f8037e1c88a445b6f75833fe9e5a6b56a61e4b0",
+              "stdout": "\nrunning 11 tests\ntest compile_preserves_success_and_failed_result_outcomes ... ok\ntest compile_preserves_governed_target_failure_diagnostics ... ok\ntest describe_returns_exact_governed_identity_deterministically ... ok\ntest malformed_boundaries_have_closed_error_identities ... ok\ntest concurrent_valid_and_invalid_calls_are_isolated_and_deterministic ... ok\ntest request_limit_is_checked_before_json_parsing ... ok\ntest profile_inspection_computes_the_exact_reference ... ok\ntest simply_construction_failure_remains_a_completed_adapter_response ... ok\ntest simply_10_and_11_replay_through_the_canonical_builder ... ok\ntest target_neutral_compile_rejects_an_unexpected_profile ... ok\ntest target_aware_compile_requires_the_exact_supplied_profile ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s\n\n",
+              "stdout_sha256": "3576880cfb812e82fc12d01eda062202e6c869c37b0926b02873180067bb62d1"
+            }
+          ]
+        },
+        "id": "resource:editor-interop-limits",
+        "status": "passed"
+      },
+      {
+        "details": {
+          "steps": [
+            {
+              "command": [
+                "cargo",
+                "+1.75.0",
+                "test",
+                "--manifest-path",
+                "core/internal/Cargo.toml",
+                "--locked",
+                "--offline",
+                "--test",
+                "no_match_explanation",
+                "--test",
+                "no_match_explanation_properties"
+              ],
+              "exit_code": 0,
+              "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 3.71s\n     Running ../tests/no_match_explanation.rs (core/internal/target/debug/deps/no_match_explanation-20df3ef5a0783612)\n     Running ../tests/no_match_explanation_properties.rs (core/internal/target/debug/deps/no_match_explanation_properties-7dba5577f69c288a)\n",
+              "stderr_sha256": "70b4e17c84942e585693f0f6e49fb36c99df91bbf8fcf5a23a05814932cfc7b8",
+              "stdout": "\nrunning 5 tests\ntest canonical_verification_corpus_executes_against_the_rust_evaluator ... ok\ntest hard_subject_ceilings_fail_before_evaluation ... ok\ntest invalid_limits_and_mismatched_semantic_explanations_are_structured_errors ... ok\ntest result_identifies_but_never_embeds_subject_text ... ok\ntest bounded_evaluation_is_deterministic_and_no_panic_across_the_corpus_domain ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s\n\n\nrunning 2 tests\ntest bounded_pathological_inputs_never_panic_or_exceed_reported_limits ... ok\ntest serialized_results_are_byte_identical_for_repeated_supported_evaluation ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+              "stdout_sha256": "87c8917b8a32e0955372bc7c7893352d7de48881d53a79a1d56bb1e9ebad9971"
+            }
+          ]
+        },
+        "id": "resource:no-match-limits",
+        "status": "passed"
+      }
+    ],
+    "commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+    "deterministic_evidence": {
+      "certification_contract": "strling-deterministic-certification-v1",
+      "profile": "pull-request",
+      "resources": {
+        "checks": [
+          {
+            "id": "resource:frontend-limits",
+            "steps": [
+              {
+                "command": [
+                  "cargo",
+                  "+1.75.0",
+                  "test",
+                  "--manifest-path",
+                  "core/internal/Cargo.toml",
+                  "--locked",
+                  "--offline",
+                  "--test",
+                  "semantic_frontend",
+                  "--test",
+                  "semantic_frontend_properties",
+                  "--test",
+                  "regex_frontend"
+                ],
+                "exit_code": 0,
+                "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 3.42s\n     Running ../tests/regex_frontend.rs (core/internal/target/debug/deps/regex_frontend-bf117a84b1103786)\n     Running ../tests/semantic_frontend.rs (core/internal/target/debug/deps/semantic_frontend-3e064eb24d72b848)\n     Running ../tests/semantic_frontend_properties.rs (core/internal/target/debug/deps/semantic_frontend_properties-653adb42fafb8bfe)\n",
+                "stderr_sha256": "0ebae5de8eb767465deed9c702ae2dff41d948650ed5a134c89bbde25d82769b",
+                "stdout": "\nrunning 11 tests\ntest accepts_the_complete_frozen_positive_corpus_deterministically ... ok\ntest canonically_orders_multiple_builtin_class_members ... ok\ntest covers_the_specification_authored_correspondence_set ... ok\ntest covers_the_specification_authored_provenance_set ... ok\ntest arbitrary_utf8_inputs_do_not_panic ... ok\ntest eof_and_duplicate_definitions_have_canonical_locations ... ok\ntest lowers_global_flags_into_target_neutral_semantics ... ok\ntest preserves_discontiguous_literal_provenance_across_extended_layout ... ok\ntest preserves_multibyte_nested_and_directive_provenance ... ok\ntest rejects_the_complete_frozen_negative_corpus_exactly ... ok\ntest enforces_frozen_resource_limits ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s\n\n\nrunning 4 tests\ntest all_negative_contract_cases_reject_with_exact_identity_and_offset ... ok\ntest canonical_formatter_preserves_comment_order_and_authored_set_order ... ok\ntest resource_and_source_boundaries_are_typed_and_deterministic ... ok\ntest all_positive_contract_cases_parse_format_and_reparse_stably ... ok\n\ntest result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n\nrunning 5 tests\ntest comments_align_with_following_constructs_and_enclosing_closures ... ok\ntest deterministic_arbitrary_utf8_inputs_never_panic ... ok\ntest nesting_identifier_and_integer_limits_are_exact ... ok\ntest generated_valid_programs_are_deterministic_idempotent_and_identity_stable ... ok\ntest node_capture_and_set_member_limits_are_exact ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.27s\n\n",
+                "stdout_sha256": "685170022c1bb8206a171acd85ab7c8962ab10efdbd01023be74605df3157aab"
+              }
+            ]
+          },
+          {
+            "id": "resource:kernel-limits",
+            "steps": [
+              {
+                "command": [
+                  "cargo",
+                  "+1.75.0",
+                  "test",
+                  "--manifest-path",
+                  "core/internal/Cargo.toml",
+                  "--locked",
+                  "--offline",
+                  "--test",
+                  "compiler_boundary_resources",
+                  "--test",
+                  "semantic_analysis",
+                  "--test",
+                  "structural_analysis",
+                  "--test",
+                  "safety_analysis",
+                  "--test",
+                  "capability_evaluation",
+                  "--test",
+                  "portability_planning"
+                ],
+                "exit_code": 0,
+                "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 8.57s\n     Running ../tests/capability_evaluation.rs (core/internal/target/debug/deps/capability_evaluation-f4332df5e067f848)\n     Running ../tests/compiler_boundary_resources.rs (core/internal/target/debug/deps/compiler_boundary_resources-ccf7c82f69df9de6)\n     Running ../tests/portability_planning.rs (core/internal/target/debug/deps/portability_planning-00be9939c78f110d)\n     Running ../tests/safety_analysis.rs (core/internal/target/debug/deps/safety_analysis-68f65051027f0ba0)\n     Running ../tests/semantic_analysis.rs (core/internal/target/debug/deps/semantic_analysis-d013c9954a9671b1)\n     Running ../tests/structural_analysis.rs (core/internal/target/debug/deps/structural_analysis-decd45ab18c48c62)\n",
+                "stderr_sha256": "4cd707ca0daed6d1067788ea314a19af6737d4f99c7894c721c232a99e19c165",
+                "stdout": "\nrunning 8 tests\ntest bounded_constraint_is_supported_or_violated_from_structural_evidence ... ok\ntest capture_name_shape_and_length_are_profile_constraints ... ok\ntest fixed_alternatives_respect_profile_width_rules ... ok\ntest malformed_and_incompatible_profiles_are_rejected_before_lookup ... ok\ntest lookup_distinguishes_supported_unsupported_and_absent_capabilities ... ok\ntest profile_versions_change_results_without_changing_requirements ... ok\ntest reference_lookup_rejects_revision_and_fingerprint_mismatches ... ok\ntest required_profile_option_satisfies_unicode_property_constraint ... ok\n\ntest result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s\n\n\nrunning 9 tests\ntest caller_semantic_node_limit_accepts_exact_and_rejects_one_over ... ok\ntest certified_structural_limit_is_projected_as_resource_exhaustion ... ok\ntest diagnostic_limit_accepts_exact_and_rejects_one_over_without_truncation ... ok\ntest invalid_zero_caller_limit_remains_a_typed_contract_failure ... ok\ntest capability_requirement_limit_accepts_exact_and_rejects_one_over ... ok\ntest semantic_depth_hard_limit_accepts_exact_and_rejects_one_over ... ok\ntest request_byte_limit_accepts_exact_and_rejects_one_over ... ok\ntest target_profile_byte_limit_accepts_exact_and_rejects_one_over ... ok\ntest semantic_node_hard_limit_accepts_exact_and_rejects_one_over ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 7.62s\n\n\nrunning 22 tests\ntest exact_program_fingerprint_prevents_cross_program_evidence_reuse ... ok\ntest constraint_violation_without_rewrite_is_proven_unsupported ... ok\ntest failed_literal_body_precondition_keeps_the_rewrite_unavailable ... ok\ntest malformed_program_dependency_index_is_rejected ... ok\ntest mismatched_capability_result_is_rejected ... ok\ntest immutable_profile_reference_path_matches_direct_evaluation_and_planning ... ok\ntest mismatched_profile_is_rejected_without_engine_assumptions ... ok\ntest missing_or_stale_rewrite_certification_cannot_validate_as_equivalent ... ok\ntest mixed_native_and_rewrite_aggregates_to_equivalent_rewrite ... ok\ntest mixed_native_and_unknown_requirements_do_not_claim_final_status ... ok\ntest multiple_requirements_on_one_node_are_planned_independently ... ok\ntest mixed_native_and_unsupported_aggregates_to_unsupported ... ok\ntest multiple_supported_requirements_remain_independent_and_ordered ... ok\ntest program_without_special_requirements_is_natively_portable ... ok\ntest mutated_profile_is_rejected_against_the_validated_evaluation_snapshot ... ok\ntest repeated_planning_is_deterministic_and_inputs_are_immutable ... ok\ntest rewrite_dependency_cycles_are_rejected ... ok\ntest supported_results_become_native_with_exact_evidence ... ok\ntest unknown_capability_remains_unresolved_outside_final_status ... ok\ntest unknown_plus_explicit_unsupported_suppresses_final_program_status ... ok\ntest unproven_possessive_rewrite_candidate_is_not_in_the_registry ... ok\ntest unsupported_atomic_literal_selects_the_certified_equivalent_rewrite ... ok\n\ntest result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s\n\n\nrunning 5 tests\ntest mismatched_foundational_store_is_rejected ... ok\ntest depth_limit_precedes_fact_store_correspondence ... ok\ntest mismatched_structural_store_is_rejected_even_with_matching_versions ... ok\ntest valid_program_has_a_deterministic_empty_framework_result ... ok\ntest node_limit_precedes_fact_store_correspondence ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s\n\n\nrunning 6 tests\ntest duplicate_and_missing_identity_states_do_not_enter_the_fact_store ... ok\ntest fact_iteration_is_deterministic_identity_order ... ok\ntest noncanonical_input_is_rejected_without_normalization ... ok\ntest every_reachable_node_has_one_identity_keyed_fact_record ... ok\ntest returned_facts_own_their_identities_after_the_input_is_dropped ... ok\ntest source_less_and_deeply_nested_programs_are_supported_with_a_safe_limit ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n\nrunning 11 tests\ntest equal_and_distinct_literals_form_canonical_scalar_unions ... ok\ntest backreferences_remain_conservative_and_unknown_prefixes_continue ... ok\ntest leading_literals_use_unicode_scalars_not_encoded_bytes ... ok\ntest every_reachable_variant_has_deterministic_leading_facts ... ok\ntest mismatched_foundational_state_is_a_structured_error ... ok\ntest nested_alternation_unions_are_flattened_only_in_fact_space ... ok\ntest nullable_prefixes_and_assertions_expose_only_outer_consumers ... ok\ntest maximum_depth_preserves_every_fact_and_rejects_the_next_level ... ok\ntest wildcard_and_character_predicates_remain_symbolic ... ok\ntest zero_maximum_repeat_has_no_body_consumption_in_its_outer_leading_set ... ok\ntest relationship_failure_keeps_the_exact_path_after_prior_siblings ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+                "stdout_sha256": "30526477937d81e680828f616001574bceacf871a68121fefd9b75917d108973"
+              }
+            ]
+          },
+          {
+            "id": "resource:target-limits",
+            "steps": [
+              {
+                "command": [
+                  "cargo",
+                  "+1.75.0",
+                  "test",
+                  "--manifest-path",
+                  "core/internal/Cargo.toml",
+                  "--locked",
+                  "--offline",
+                  "--test",
+                  "pcre2_lowering",
+                  "--test",
+                  "ecmascript_lowering",
+                  "--test",
+                  "python_re_lowering",
+                  "--test",
+                  "pcre2_serialization",
+                  "--test",
+                  "ecmascript_serialization",
+                  "--test",
+                  "python_re_serialization"
+                ],
+                "exit_code": 0,
+                "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 12.51s\n     Running ../tests/ecmascript_lowering.rs (core/internal/target/debug/deps/ecmascript_lowering-5e60c5d4176c3954)\n     Running ../tests/ecmascript_serialization.rs (core/internal/target/debug/deps/ecmascript_serialization-4d7640e85bdb674c)\n     Running ../tests/pcre2_lowering.rs (core/internal/target/debug/deps/pcre2_lowering-b82015e877025cca)\n     Running ../tests/pcre2_serialization.rs (core/internal/target/debug/deps/pcre2_serialization-56440809f0aaf3bd)\n     Running ../tests/python_re_lowering.rs (core/internal/target/debug/deps/python_re_lowering-2915b52ddf9c55d5)\n     Running ../tests/python_re_serialization.rs (core/internal/target/debug/deps/python_re_serialization-4f7ca5a1dfcc7bd5)\n",
+                "stderr_sha256": "9d3c1df924992c08ca3f22adda07ead3c354e9214034f6492c42de18aca72746",
+                "stdout": "\nrunning 9 tests\ntest constructed_plan_validation_detects_capture_slot_corruption ... ok\ntest certified_atomic_literal_rewrite_is_applied_and_retained ... ok\ntest every_semantic_variant_lowers_to_explicit_ecmascript_structure ... ok\ntest invalid_semantic_and_excessive_depth_fail_without_partial_output ... ok\ntest malformed_planner_and_rewrite_evidence_are_rejected ... ok\ntest required_compile_options_remain_typed_data ... ok\ntest stale_mismatched_and_non_ecmascript_inputs_are_rejected_before_lowering ... ok\ntest unresolved_and_unsupported_plans_fail_closed_with_stable_diagnostics ... ok\ntest validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stale ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n\n\nrunning 6 tests\ntest artifact_projects_exact_flags_options_requirements_and_utf8_provenance ... ok\ntest character_sets_use_independent_ascii_unicode_and_mixed_set_spellings ... ok\ntest insensitive_ascii_word_class_fails_instead_of_widening_membership ... ok\ntest certified_atomic_literal_rewrite_projects_without_atomic_syntax ... ok\ntest operation_spellings_preserve_precedence_positions_captures_and_lookarounds ... ok\ntest malformed_plans_and_syntax_data_fail_closed_with_stable_codes ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.74s\n\n\nrunning 9 tests\ntest constructed_plan_validation_detects_capture_slot_corruption ... ok\ntest every_semantic_variant_lowers_to_explicit_pcre2_structure ... ok\ntest certified_atomic_literal_rewrite_is_applied_and_retained ... ok\ntest invalid_semantic_and_excessive_depth_fail_without_partial_output ... ok\ntest profile_default_and_runtime_options_remain_typed_data ... ok\ntest malformed_planner_and_rewrite_evidence_are_rejected ... ok\ntest unresolved_and_unsupported_plans_fail_closed_with_stable_diagnostics ... ok\ntest stale_mismatched_and_non_pcre2_inputs_are_rejected_before_lowering ... ok\ntest validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stale ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n\n\nrunning 6 tests\ntest every_target_operation_serializes_to_one_valid_deterministic_artifact ... ok\ntest certified_rewrite_projects_exact_resolution_without_reapplying_policy ... ok\ntest literals_classes_options_and_utf8_spans_are_unambiguous ... ok\ntest identical_empty_spans_coalesce_sorted_provenance ... ok\ntest malformed_capture_property_bounds_and_plan_fail_closed ... ok\ntest pattern_growth_is_resource_bounded ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.80s\n\n\nrunning 11 tests\ntest atomic_groups_are_native_and_retain_exact_provenance ... ok\ntest bytes_patterns_accept_ascii_and_reject_unicode_semantics ... ok\ntest constructed_plan_validation_detects_capture_slot_corruption ... ok\ntest invalid_semantic_and_excessive_depth_fail_without_partial_output ... ok\ntest every_semantic_variant_lowers_to_explicit_python_re_structure ... ok\ntest malformed_planner_and_rewrite_evidence_are_rejected ... ok\ntest planner_certified_rewrites_are_applied_and_retained ... ok\ntest required_pattern_kind_remains_typed_runtime_data ... ok\ntest stale_mismatched_and_non_python_re_inputs_are_rejected_before_lowering ... ok\ntest unresolved_and_unsupported_plans_fail_closed_with_stable_diagnostics ... ok\ntest validated_profile_reference_lowering_is_equivalent_and_fails_closed_when_stale ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s\n\n\nrunning 6 tests\ntest character_sets_keep_ascii_unicode_and_outer_negation_scoped ... ok\ntest bytes_artifact_uses_its_exact_profile_and_ascii_pattern_source ... ok\ntest literal_scalars_keep_exact_escaping_and_utf8_source_map_boundaries ... ok\ntest operation_spellings_preserve_precedence_positions_captures_and_assertions ... ok\ntest str_artifact_projects_exact_flags_options_requirements_and_utf8_provenance ... ok\ntest malformed_plans_and_python_syntax_limits_fail_closed_with_stable_codes ... ok\n\ntest result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.89s\n\n",
+                "stdout_sha256": "d164a90f43d8d5f3323b8af1cc2f5ba859d0839467b7e30d99396dab698b2511"
+              }
+            ]
+          },
+          {
+            "id": "resource:editor-interop-limits",
+            "steps": [
+              {
+                "command": [
+                  "cargo",
+                  "+1.75.0",
+                  "test",
+                  "--manifest-path",
+                  "core/internal/Cargo.toml",
+                  "--locked",
+                  "--offline",
+                  "--test",
+                  "editor_intelligence"
+                ],
+                "exit_code": 0,
+                "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 1.57s\n     Running ../tests/editor_intelligence.rs (core/internal/target/debug/deps/editor_intelligence-268a2f52154d6989)\n",
+                "stderr_sha256": "288067d37abafaafe4b4ab27ca2c3fb27c68aee75a6d40686765ef8111ecc520",
+                "stdout": "\nrunning 9 tests\ntest canonical_frontends_match_every_authored_completion_context ... ok\ntest canonical_symbol_trees_and_capture_links_match_authored_identity_evidence ... ok\ntest canonical_frontends_match_every_authored_token_stream ... ok\ntest editor_transport_is_versioned_json_and_rejects_invalid_cursor_boundaries ... ok\ntest editor_action_authority_refuses_unproved_frontends_and_shapes ... ok\ntest formatter_evidence_is_semantic_complete_and_exact ... ok\ntest semantic_editor_actions_match_certified_authored_expectations ... ok\ntest semantic_editor_keyword_catalog_matches_the_authored_language_contract ... ok\ntest large_semantic_projection_skips_inapplicable_rewrite_certification ... ok\n\ntest result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.82s\n\n",
+                "stdout_sha256": "b4b428a54a30bd0996bd428d251b06084acc1bb0118316487ae3b1943478ec54"
+              },
+              {
+                "command": [
+                  "cargo",
+                  "+1.75.0",
+                  "test",
+                  "--manifest-path",
+                  "bindings/interop/Cargo.toml",
+                  "--locked",
+                  "--offline",
+                  "--test",
+                  "protocol"
+                ],
+                "exit_code": 0,
+                "stderr": "   Compiling strling-interop v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/bindings/interop)\n    Finished test [unoptimized + debuginfo] target(s) in 1.82s\n     Running tests/protocol.rs (bindings/interop/target/debug/deps/protocol-e34d68d55d2523fd)\n",
+                "stderr_sha256": "7e2ca6f93ec02d64a0b800e82f8037e1c88a445b6f75833fe9e5a6b56a61e4b0",
+                "stdout": "\nrunning 11 tests\ntest compile_preserves_success_and_failed_result_outcomes ... ok\ntest compile_preserves_governed_target_failure_diagnostics ... ok\ntest describe_returns_exact_governed_identity_deterministically ... ok\ntest malformed_boundaries_have_closed_error_identities ... ok\ntest concurrent_valid_and_invalid_calls_are_isolated_and_deterministic ... ok\ntest request_limit_is_checked_before_json_parsing ... ok\ntest profile_inspection_computes_the_exact_reference ... ok\ntest simply_construction_failure_remains_a_completed_adapter_response ... ok\ntest simply_10_and_11_replay_through_the_canonical_builder ... ok\ntest target_neutral_compile_rejects_an_unexpected_profile ... ok\ntest target_aware_compile_requires_the_exact_supplied_profile ... ok\n\ntest result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s\n\n",
+                "stdout_sha256": "3576880cfb812e82fc12d01eda062202e6c869c37b0926b02873180067bb62d1"
+              }
+            ]
+          },
+          {
+            "id": "resource:no-match-limits",
+            "steps": [
+              {
+                "command": [
+                  "cargo",
+                  "+1.75.0",
+                  "test",
+                  "--manifest-path",
+                  "core/internal/Cargo.toml",
+                  "--locked",
+                  "--offline",
+                  "--test",
+                  "no_match_explanation",
+                  "--test",
+                  "no_match_explanation_properties"
+                ],
+                "exit_code": 0,
+                "stderr": "   Compiling strling-kernel v0.1.0 (/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source/core/internal)\n    Finished test [unoptimized + debuginfo] target(s) in 3.71s\n     Running ../tests/no_match_explanation.rs (core/internal/target/debug/deps/no_match_explanation-20df3ef5a0783612)\n     Running ../tests/no_match_explanation_properties.rs (core/internal/target/debug/deps/no_match_explanation_properties-7dba5577f69c288a)\n",
+                "stderr_sha256": "70b4e17c84942e585693f0f6e49fb36c99df91bbf8fcf5a23a05814932cfc7b8",
+                "stdout": "\nrunning 5 tests\ntest canonical_verification_corpus_executes_against_the_rust_evaluator ... ok\ntest hard_subject_ceilings_fail_before_evaluation ... ok\ntest invalid_limits_and_mismatched_semantic_explanations_are_structured_errors ... ok\ntest result_identifies_but_never_embeds_subject_text ... ok\ntest bounded_evaluation_is_deterministic_and_no_panic_across_the_corpus_domain ... ok\n\ntest result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s\n\n\nrunning 2 tests\ntest bounded_pathological_inputs_never_panic_or_exceed_reported_limits ... ok\ntest serialized_results_are_byte_identical_for_repeated_supported_evaluation ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s\n\n",
+                "stdout_sha256": "87c8917b8a32e0955372bc7c7893352d7de48881d53a79a1d56bb1e9ebad9971"
+              }
+            ]
+          }
+        ],
+        "contract": "strling-functional-resource-v2"
+      },
+      "status": "passed"
+    },
+    "duration_ms": null,
+    "evidence_fingerprint": "3839a6112f5928b0fa6d7213c233a2bbc2d7e25cbccd09af998667572d5a117d",
+    "operation_id": "certification.functional-resource",
+    "profile": "pull-request",
+    "schema_version": "certification-result-v1",
+    "status": "passed"
+  },
+  "terminal_status": "passed"
+}

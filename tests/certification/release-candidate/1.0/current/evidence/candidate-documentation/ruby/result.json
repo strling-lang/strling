@@ -1,0 +1,64 @@
+{
+  "artifact_id": "release:ruby",
+  "authority": "bounded-preview-documentation",
+  "command_evidence": [
+    {
+      "command": [
+        "gem",
+        "install",
+        "--local",
+        "--ignore-dependencies",
+        "--no-document",
+        "--install-dir",
+        "/tmp/strling-preview-documentation-65bo_5e5/gems",
+        "/var/tmp/strling-public-release-ea64d594-aggregate-first/bindings/ruby/strling-4.0.0.gem"
+      ],
+      "exit_code": 0,
+      "metadata": "cdb4ee2aea69-consumer-command-0000.json",
+      "metadata_sha256": "811d3fb4f26509cb1c86d67d60cd65d4aafb0ab25e127cb6699955a96f9bf818"
+    },
+    {
+      "command": [
+        "ruby",
+        "/tmp/strling-preview-documentation-65bo_5e5/example.rb",
+        "/tmp/strling-preview-documentation-65bo_5e5/libstrling_interop.so"
+      ],
+      "exit_code": 0,
+      "metadata": "cdb4ee2aea69-consumer-command-0001.json",
+      "metadata_sha256": "2fe0c08ba390e8c01ecda78f1b1be467a8987ded325bd6a31e4b8351e69da983"
+    }
+  ],
+  "documentation_examples": [
+    {
+      "id": "bindings/ruby/README.md#1",
+      "sha256": "40086e70c3fa18a078dedd85942012bdf49f63455c8aace91724933a909ef6e7",
+      "status": "passed"
+    }
+  ],
+  "documentation_manifest_sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e",
+  "engineering": false,
+  "evidence_fingerprint": "92b7d8c44f2db34b3cdc0bfccc79901de7259e28ff5cf8aed4c14aec398ca9ce",
+  "fixture_sha256": {
+    "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
+    "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
+    "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
+    "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
+  },
+  "invocation_id": "be9e6591115d48b59a9cc3969a1d87c5",
+  "limitations": [
+    "Preview policy and dependency-locking limits remain unchanged.",
+    "Browser-safe factory execution on Node is not an actual browser support claim."
+  ],
+  "native_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e",
+  "product_version": "4.0.0",
+  "public_retrieval": false,
+  "runner_scope": "linux-x86_64",
+  "source": {
+    "commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+    "dirty": false,
+    "tree_sha256": "1019fd23108ac67a265307730bc888bfaf56f598405fadc7de021d7f740ab951"
+  },
+  "status": "passed",
+  "subject_sha256": "d47970503f7e1e66a5c4659111ce86a415abf1824b5362bad23d06d476a733bf",
+  "supported_claim": false
+}

@@ -1,0 +1,2996 @@
+{
+  "source": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "status": "passed-current-source-staged-qualification",
+  "artifact_routes": 17,
+  "supported_consumer_scopes": 15,
+  "public_obligations": 256,
+  "consumers": [
+    {
+      "artifact_id": "release:c",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "seconds": 249.73499999986961
+    },
+    {
+      "artifact_id": "release:cpp",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "seconds": 25.469000000040978
+    },
+    {
+      "artifact_id": "release:csharp",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "seconds": 14.593000000109896
+    },
+    {
+      "artifact_id": "release:fsharp",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "seconds": 15.171999999787658
+    },
+    {
+      "artifact_id": "release:java",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "seconds": 5.8600000001024455
+    },
+    {
+      "artifact_id": "release:kotlin",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "seconds": 91.93699999991804
+    },
+    {
+      "artifact_id": "release:python",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "seconds": 10.063000000081956
+    },
+    {
+      "artifact_id": "release:rust",
+      "scope": "windows-x86_64",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "seconds": 96.2180000001099
+    },
+    {
+      "artifact_id": "release:c",
+      "scope": "linux-x86_64",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "seconds": 327.88460159499664
+    },
+    {
+      "artifact_id": "release:cpp",
+      "scope": "linux-x86_64",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "seconds": 61.171490290988004
+    },
+    {
+      "artifact_id": "release:dart",
+      "scope": "linux-x86_64",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "seconds": 27.55521251700702
+    },
+    {
+      "artifact_id": "release:go",
+      "scope": "linux-x86_64",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "seconds": 68.25282190498547
+    },
+    {
+      "artifact_id": "release:python",
+      "scope": "linux-x86_64",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "seconds": 66.08809802102041
+    },
+    {
+      "artifact_id": "release:rust",
+      "scope": "linux-x86_64",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "seconds": 69.95407075498952
+    },
+    {
+      "artifact_id": "release:swift",
+      "scope": "linux-x86_64",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "seconds": 64.24633212099434
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "artifacts/qualification.json",
+      "bytes": 3213,
+      "sha256": "a3cb50f6e4d7cd405ab7560c73c6f8181e41ae3e7dd13f3ffcd8be389303be21"
+    },
+    {
+      "path": "artifacts/release-c.json",
+      "bytes": 66576,
+      "sha256": "b4bf3deb630ea13aa93c685c6bc053f085ed09e15f1611481e17db048598c529"
+    },
+    {
+      "path": "artifacts/release-cpp.json",
+      "bytes": 17128,
+      "sha256": "5e7297dcc06424a02624831fbb6370affc5b559cf7f8cbd712e592d853f96af4"
+    },
+    {
+      "path": "artifacts/release-csharp.json",
+      "bytes": 8265,
+      "sha256": "9856aa97f2a0a5dd0fc2157b2bac3ed99ed3c162d950d01574cb25e21b3eba44"
+    },
+    {
+      "path": "artifacts/release-dart.json",
+      "bytes": 8935,
+      "sha256": "c2da14c8169f24d6e01673eb9ef53ca738117497adb57a10432d6d04dde76468"
+    },
+    {
+      "path": "artifacts/release-fsharp.json",
+      "bytes": 8313,
+      "sha256": "6a0af1266f9b705510f04651c141e83e843893461325ae7f0258b068abc17e07"
+    },
+    {
+      "path": "artifacts/release-go.json",
+      "bytes": 62971,
+      "sha256": "37572f8c87e48a15f19da94910b4938540ae82755d882d684beafe937f95f7c8"
+    },
+    {
+      "path": "artifacts/release-java.json",
+      "bytes": 10388,
+      "sha256": "55a9b5db72eef603e74080c8a829b685ea3ef1882eceee2499309f2d6c777e5b"
+    },
+    {
+      "path": "artifacts/release-kotlin.json",
+      "bytes": 9097,
+      "sha256": "68fd6777d44143a7fdcb7d3e4202f7b40dbf8576d43132bf5c2b290f33e3e7d1"
+    },
+    {
+      "path": "artifacts/release-lua.json",
+      "bytes": 5143,
+      "sha256": "38351d245ee7d766b2488b38a4a9a7df9921441321bedd4350f9792930362e80"
+    },
+    {
+      "path": "artifacts/release-perl.json",
+      "bytes": 5052,
+      "sha256": "dbda4c9cc1c3176e0729a20dc18133eed50d8e4f7feecf7f18cb43e3afde700c"
+    },
+    {
+      "path": "artifacts/release-php.json",
+      "bytes": 60701,
+      "sha256": "cf7ed61aeed6a6295fad3ceaaf2abf28ba5bed41f0dc8dc5ebc1ca0f07c47fae"
+    },
+    {
+      "path": "artifacts/release-python.json",
+      "bytes": 11766,
+      "sha256": "f019e8420de38d858bfa76a0ac42fa0b926caf0c83d44beee7fca6e2d2be2320"
+    },
+    {
+      "path": "artifacts/release-r.json",
+      "bytes": 60778,
+      "sha256": "35fcd1adf59d2f8eccf9a96ba5c81547791decbdc353f327128ad33756e2a23c"
+    },
+    {
+      "path": "artifacts/release-ruby.json",
+      "bytes": 5101,
+      "sha256": "98c261b7f746c98166cb03b5bc62f4e2de38d791cb6fdf391a789f9dbc72e3f0"
+    },
+    {
+      "path": "artifacts/release-rust.json",
+      "bytes": 10851,
+      "sha256": "fb4124a65865d4537dbef553d9b3eff08e0286e052a497c0361f0419b647d56e"
+    },
+    {
+      "path": "artifacts/release-swift.json",
+      "bytes": 63467,
+      "sha256": "c54bb3e209ec5d6905f5c80cacbb9b0c2a635ac099de66d58187430d57cd5e20"
+    },
+    {
+      "path": "artifacts/release-typescript.json",
+      "bytes": 5368,
+      "sha256": "fdd3514a7152e8930a0183cabc0fc3c3b26e13dda28d69befeda282652e8511c"
+    },
+    {
+      "path": "consumers/windows-x86_64/summary.json",
+      "bytes": 384,
+      "sha256": "3db32b4e22e80acc31f0c40d9a47dbf5d63539e932ad1e034f6d0e385247df68"
+    },
+    {
+      "path": "consumers/windows-x86_64/c.json",
+      "bytes": 6239,
+      "sha256": "fd947763b112ab86d6a674f2c814e951c003aa298bac43c1897424ab6cfaf9af"
+    },
+    {
+      "path": "consumers/windows-x86_64/cpp.json",
+      "bytes": 5846,
+      "sha256": "09a94f3ad341dd11ac806a9af42772251a7f026a2c8af80dc1a0653cab19cf28"
+    },
+    {
+      "path": "consumers/windows-x86_64/csharp.json",
+      "bytes": 4327,
+      "sha256": "77fe1bfffaab9a7c2965e74c4a89d08068c49a21dc9c3d29d4a4b43c4a22b2c2"
+    },
+    {
+      "path": "consumers/windows-x86_64/fsharp.json",
+      "bytes": 4244,
+      "sha256": "9f34b64d72d65f0b0164c14914b7cfecdb18f8bd3c1f652d94164f1517aee8f7"
+    },
+    {
+      "path": "consumers/windows-x86_64/java.json",
+      "bytes": 4994,
+      "sha256": "96da3bca04d004679aec2c89a447a26aa5e0266457d604204d8e419032838da2"
+    },
+    {
+      "path": "consumers/windows-x86_64/kotlin.json",
+      "bytes": 6301,
+      "sha256": "189227038e73afee70427613eb7534797ea20fd09029ccf4df55d36d76ad61c9"
+    },
+    {
+      "path": "consumers/windows-x86_64/python.json",
+      "bytes": 4393,
+      "sha256": "cb013e00dd81dcd8b016d2ad840a152ea37bbf806f18981b8a7acbbe940a8991"
+    },
+    {
+      "path": "consumers/windows-x86_64/rust.json",
+      "bytes": 5068,
+      "sha256": "162d4f6d73931364c0fbe887ced32954a25c75a365bcd8d399e8ca7ab264f74b"
+    },
+    {
+      "path": "consumers/linux-x86_64/summary.json",
+      "bytes": 385,
+      "sha256": "0eac5409b1a02d018ae920eb5169afdc7c954c8e69f081587c7fd454f699e53b"
+    },
+    {
+      "path": "consumers/linux-x86_64/c.json",
+      "bytes": 5693,
+      "sha256": "68f809aacbb4bd9f84e50e90e9be77469bd74f1c35b4162b7c451fb7b57ce654"
+    },
+    {
+      "path": "consumers/linux-x86_64/cpp.json",
+      "bytes": 5243,
+      "sha256": "a939c18eaa9cd162573880ddec3a1d7e38c48de75d2bcf80223af320240c637e"
+    },
+    {
+      "path": "consumers/linux-x86_64/dart.json",
+      "bytes": 3877,
+      "sha256": "5a199886d24f666d447e3ce1a77dc48e5af66002216ba2f99f75357bff5b277e"
+    },
+    {
+      "path": "consumers/linux-x86_64/go.json",
+      "bytes": 4649,
+      "sha256": "fb0c3780e38335b9d4f1195c7cb4ff936e59644e05221bcfba1dce078ab93d16"
+    },
+    {
+      "path": "consumers/linux-x86_64/python.json",
+      "bytes": 3990,
+      "sha256": "0da659b3fae2269403c7e30f7619f9eed1a676e2ef8c04f93ad0d59004618281"
+    },
+    {
+      "path": "consumers/linux-x86_64/rust.json",
+      "bytes": 4635,
+      "sha256": "e7e2de7e14a5d951a446ff20338292e31cfcd6e535207c39e7bd5f29b3a1e4ea"
+    },
+    {
+      "path": "consumers/linux-x86_64/swift.json",
+      "bytes": 3913,
+      "sha256": "c0fb65970dd90bbdc6103d017909d76f58bc1a0bf0f5e11d2993b2af66f85784"
+    },
+    {
+      "path": "package-reconstruction/original-admission-archive.json",
+      "bytes": 21651,
+      "sha256": "22f9ec6471f087a85e6bb32459c32eac4763ddb2e35fc0d96574d681e20e8d71"
+    },
+    {
+      "path": "prerequisites/jvm/receipt.json",
+      "bytes": 1091,
+      "sha256": "f47a688ada0e054ac528e2d2ca41388aded90b304f65fa930034ced8308b60fc"
+    },
+    {
+      "path": "prerequisites/kotlin/receipt.json",
+      "bytes": 325,
+      "sha256": "138dfde06f2c7b0937bcefa19d84351bcd54a22cb183163d0c3df1fa66270640"
+    },
+    {
+      "path": "prerequisites/kotlin/preparation-output.json",
+      "bytes": 1033,
+      "sha256": "59344ee6eb0e13a1c7a1f56d238d194b0c8e2dfef84ecdfeffc2a7a3bef567f2"
+    },
+    {
+      "path": "prerequisites/dart/receipt.json",
+      "bytes": 876,
+      "sha256": "c5ea44a208a8b5c95e5e5cd13b5d3be3d182c92b724b6211745cdf2709a450eb"
+    },
+    {
+      "path": "prerequisites/dart/preparation-output.json",
+      "bytes": 597,
+      "sha256": "7481bbec842a4423994ded1954e83fc9f130d5af642205fdfed5cb3f10568272"
+    }
+  ],
+  "authority": "engineering-only",
+  "public_release_verified": false,
+  "publication_authorized": false,
+  "coverage": [
+    {
+      "id": "release:c:coordinate",
+      "artifact_id": "release:c",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:metadata",
+      "artifact_id": "release:c",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:artifact",
+      "artifact_id": "release:c",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:source",
+      "artifact_id": "release:c",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:sbom",
+      "artifact_id": "release:c",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:provenance",
+      "artifact_id": "release:c",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:documentation",
+      "artifact_id": "release:c",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:scope",
+      "artifact_id": "release:c",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:installation",
+      "artifact_id": "release:c",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:public-api",
+      "artifact_id": "release:c",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:product-version",
+      "artifact_id": "release:c",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:c",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:native-wasm",
+      "artifact_id": "release:c",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:target-compatibility",
+      "artifact_id": "release:c",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:c",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:windows-x86_64:isolation",
+      "artifact_id": "release:c",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010",
+      "evidence": "consumers/windows-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:installation",
+      "artifact_id": "release:c",
+      "check": "installation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:public-api",
+      "artifact_id": "release:c",
+      "check": "public-api",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:product-version",
+      "artifact_id": "release:c",
+      "check": "product-version",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:canonical-compiler",
+      "artifact_id": "release:c",
+      "check": "canonical-compiler",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:native-wasm",
+      "artifact_id": "release:c",
+      "check": "native-wasm",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:target-compatibility",
+      "artifact_id": "release:c",
+      "check": "target-compatibility",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:kernel-rejection",
+      "artifact_id": "release:c",
+      "check": "kernel-rejection",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:c:linux-x86_64:isolation",
+      "artifact_id": "release:c",
+      "check": "isolation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "79209164eec5af9bd6e12020a20744792b4514b058641706d0877ef70b8c24c6",
+      "evidence": "consumers/linux-x86_64/c.json"
+    },
+    {
+      "id": "release:cpp:coordinate",
+      "artifact_id": "release:cpp",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:metadata",
+      "artifact_id": "release:cpp",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:artifact",
+      "artifact_id": "release:cpp",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:source",
+      "artifact_id": "release:cpp",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:sbom",
+      "artifact_id": "release:cpp",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:provenance",
+      "artifact_id": "release:cpp",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:documentation",
+      "artifact_id": "release:cpp",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:scope",
+      "artifact_id": "release:cpp",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:installation",
+      "artifact_id": "release:cpp",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:public-api",
+      "artifact_id": "release:cpp",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:product-version",
+      "artifact_id": "release:cpp",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:cpp",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:native-wasm",
+      "artifact_id": "release:cpp",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:target-compatibility",
+      "artifact_id": "release:cpp",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:cpp",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:windows-x86_64:isolation",
+      "artifact_id": "release:cpp",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "62b616c5d4b89406f27641ea134867763a7ca92e0297512be7b5382ff4c45167",
+      "evidence": "consumers/windows-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:installation",
+      "artifact_id": "release:cpp",
+      "check": "installation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:public-api",
+      "artifact_id": "release:cpp",
+      "check": "public-api",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:product-version",
+      "artifact_id": "release:cpp",
+      "check": "product-version",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:canonical-compiler",
+      "artifact_id": "release:cpp",
+      "check": "canonical-compiler",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:native-wasm",
+      "artifact_id": "release:cpp",
+      "check": "native-wasm",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:target-compatibility",
+      "artifact_id": "release:cpp",
+      "check": "target-compatibility",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:kernel-rejection",
+      "artifact_id": "release:cpp",
+      "check": "kernel-rejection",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:cpp:linux-x86_64:isolation",
+      "artifact_id": "release:cpp",
+      "check": "isolation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "7a9cace39f75ebab3a5ffd1b83631bebe9948eaabf9e38df7409f20f6a9d9957",
+      "evidence": "consumers/linux-x86_64/cpp.json"
+    },
+    {
+      "id": "release:csharp:coordinate",
+      "artifact_id": "release:csharp",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:metadata",
+      "artifact_id": "release:csharp",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:artifact",
+      "artifact_id": "release:csharp",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:source",
+      "artifact_id": "release:csharp",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:sbom",
+      "artifact_id": "release:csharp",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:provenance",
+      "artifact_id": "release:csharp",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:documentation",
+      "artifact_id": "release:csharp",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:scope",
+      "artifact_id": "release:csharp",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:installation",
+      "artifact_id": "release:csharp",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:public-api",
+      "artifact_id": "release:csharp",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:product-version",
+      "artifact_id": "release:csharp",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:csharp",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:native-wasm",
+      "artifact_id": "release:csharp",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:target-compatibility",
+      "artifact_id": "release:csharp",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:csharp",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:csharp:windows-x86_64:isolation",
+      "artifact_id": "release:csharp",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577",
+      "evidence": "consumers/windows-x86_64/csharp.json"
+    },
+    {
+      "id": "release:dart:coordinate",
+      "artifact_id": "release:dart",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:metadata",
+      "artifact_id": "release:dart",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:artifact",
+      "artifact_id": "release:dart",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:source",
+      "artifact_id": "release:dart",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:sbom",
+      "artifact_id": "release:dart",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:provenance",
+      "artifact_id": "release:dart",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:documentation",
+      "artifact_id": "release:dart",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:scope",
+      "artifact_id": "release:dart",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:installation",
+      "artifact_id": "release:dart",
+      "check": "installation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:public-api",
+      "artifact_id": "release:dart",
+      "check": "public-api",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:product-version",
+      "artifact_id": "release:dart",
+      "check": "product-version",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:canonical-compiler",
+      "artifact_id": "release:dart",
+      "check": "canonical-compiler",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:native-wasm",
+      "artifact_id": "release:dart",
+      "check": "native-wasm",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:target-compatibility",
+      "artifact_id": "release:dart",
+      "check": "target-compatibility",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:kernel-rejection",
+      "artifact_id": "release:dart",
+      "check": "kernel-rejection",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:dart:linux-x86_64:isolation",
+      "artifact_id": "release:dart",
+      "check": "isolation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "255ab8b23bc38d17c786f7a8cceaf853d3abc7effa0385acaa2db1fb0e4854a8",
+      "evidence": "consumers/linux-x86_64/dart.json"
+    },
+    {
+      "id": "release:fsharp:coordinate",
+      "artifact_id": "release:fsharp",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:metadata",
+      "artifact_id": "release:fsharp",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:artifact",
+      "artifact_id": "release:fsharp",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:source",
+      "artifact_id": "release:fsharp",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:sbom",
+      "artifact_id": "release:fsharp",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:provenance",
+      "artifact_id": "release:fsharp",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:documentation",
+      "artifact_id": "release:fsharp",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:scope",
+      "artifact_id": "release:fsharp",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:installation",
+      "artifact_id": "release:fsharp",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:public-api",
+      "artifact_id": "release:fsharp",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:product-version",
+      "artifact_id": "release:fsharp",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:fsharp",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:native-wasm",
+      "artifact_id": "release:fsharp",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:target-compatibility",
+      "artifact_id": "release:fsharp",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:fsharp",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:fsharp:windows-x86_64:isolation",
+      "artifact_id": "release:fsharp",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827",
+      "evidence": "consumers/windows-x86_64/fsharp.json"
+    },
+    {
+      "id": "release:go:coordinate",
+      "artifact_id": "release:go",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:metadata",
+      "artifact_id": "release:go",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:artifact",
+      "artifact_id": "release:go",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:source",
+      "artifact_id": "release:go",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:sbom",
+      "artifact_id": "release:go",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:provenance",
+      "artifact_id": "release:go",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:documentation",
+      "artifact_id": "release:go",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:scope",
+      "artifact_id": "release:go",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:installation",
+      "artifact_id": "release:go",
+      "check": "installation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:public-api",
+      "artifact_id": "release:go",
+      "check": "public-api",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:product-version",
+      "artifact_id": "release:go",
+      "check": "product-version",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:canonical-compiler",
+      "artifact_id": "release:go",
+      "check": "canonical-compiler",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:native-wasm",
+      "artifact_id": "release:go",
+      "check": "native-wasm",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:target-compatibility",
+      "artifact_id": "release:go",
+      "check": "target-compatibility",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:kernel-rejection",
+      "artifact_id": "release:go",
+      "check": "kernel-rejection",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:go:linux-x86_64:isolation",
+      "artifact_id": "release:go",
+      "check": "isolation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be",
+      "evidence": "consumers/linux-x86_64/go.json"
+    },
+    {
+      "id": "release:java:coordinate",
+      "artifact_id": "release:java",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:metadata",
+      "artifact_id": "release:java",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:artifact",
+      "artifact_id": "release:java",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:source",
+      "artifact_id": "release:java",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:sbom",
+      "artifact_id": "release:java",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:provenance",
+      "artifact_id": "release:java",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:documentation",
+      "artifact_id": "release:java",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:scope",
+      "artifact_id": "release:java",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:installation",
+      "artifact_id": "release:java",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:public-api",
+      "artifact_id": "release:java",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:product-version",
+      "artifact_id": "release:java",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:java",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:native-wasm",
+      "artifact_id": "release:java",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:target-compatibility",
+      "artifact_id": "release:java",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:java",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:java:windows-x86_64:isolation",
+      "artifact_id": "release:java",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "291a40f27008298ae2505557ceedaa90e6c0961b663622086d83c15015ca8e03",
+      "evidence": "consumers/windows-x86_64/java.json"
+    },
+    {
+      "id": "release:kotlin:coordinate",
+      "artifact_id": "release:kotlin",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:metadata",
+      "artifact_id": "release:kotlin",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:artifact",
+      "artifact_id": "release:kotlin",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:source",
+      "artifact_id": "release:kotlin",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:sbom",
+      "artifact_id": "release:kotlin",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:provenance",
+      "artifact_id": "release:kotlin",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:documentation",
+      "artifact_id": "release:kotlin",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:scope",
+      "artifact_id": "release:kotlin",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:installation",
+      "artifact_id": "release:kotlin",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:public-api",
+      "artifact_id": "release:kotlin",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:product-version",
+      "artifact_id": "release:kotlin",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:kotlin",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:native-wasm",
+      "artifact_id": "release:kotlin",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:target-compatibility",
+      "artifact_id": "release:kotlin",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:kotlin",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:kotlin:windows-x86_64:isolation",
+      "artifact_id": "release:kotlin",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901",
+      "evidence": "consumers/windows-x86_64/kotlin.json"
+    },
+    {
+      "id": "release:lua:coordinate",
+      "artifact_id": "release:lua",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:lua:metadata",
+      "artifact_id": "release:lua",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:lua:artifact",
+      "artifact_id": "release:lua",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:lua:source",
+      "artifact_id": "release:lua",
+      "check": "source",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:lua:sbom",
+      "artifact_id": "release:lua",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:lua:provenance",
+      "artifact_id": "release:lua",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:lua:documentation",
+      "artifact_id": "release:lua",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:lua:scope",
+      "artifact_id": "release:lua",
+      "check": "scope",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-lua.json"
+    },
+    {
+      "id": "release:perl:coordinate",
+      "artifact_id": "release:perl",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:perl:metadata",
+      "artifact_id": "release:perl",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:perl:artifact",
+      "artifact_id": "release:perl",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:perl:source",
+      "artifact_id": "release:perl",
+      "check": "source",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:perl:sbom",
+      "artifact_id": "release:perl",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:perl:provenance",
+      "artifact_id": "release:perl",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:perl:documentation",
+      "artifact_id": "release:perl",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:perl:scope",
+      "artifact_id": "release:perl",
+      "check": "scope",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-perl.json"
+    },
+    {
+      "id": "release:php:coordinate",
+      "artifact_id": "release:php",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:php:metadata",
+      "artifact_id": "release:php",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:php:artifact",
+      "artifact_id": "release:php",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:php:source",
+      "artifact_id": "release:php",
+      "check": "source",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:php:sbom",
+      "artifact_id": "release:php",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:php:provenance",
+      "artifact_id": "release:php",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:php:documentation",
+      "artifact_id": "release:php",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:php:scope",
+      "artifact_id": "release:php",
+      "check": "scope",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-php.json"
+    },
+    {
+      "id": "release:python:coordinate",
+      "artifact_id": "release:python",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:metadata",
+      "artifact_id": "release:python",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:artifact",
+      "artifact_id": "release:python",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:source",
+      "artifact_id": "release:python",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:sbom",
+      "artifact_id": "release:python",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:provenance",
+      "artifact_id": "release:python",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:documentation",
+      "artifact_id": "release:python",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:scope",
+      "artifact_id": "release:python",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:installation",
+      "artifact_id": "release:python",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:public-api",
+      "artifact_id": "release:python",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:product-version",
+      "artifact_id": "release:python",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:python",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:native-wasm",
+      "artifact_id": "release:python",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:target-compatibility",
+      "artifact_id": "release:python",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:python",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:windows-x86_64:isolation",
+      "artifact_id": "release:python",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "3103dff3dba9e1c0a5029b59736a1e949e5948ac3923f96ecf90a8e5bde80db8",
+      "evidence": "consumers/windows-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:installation",
+      "artifact_id": "release:python",
+      "check": "installation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:public-api",
+      "artifact_id": "release:python",
+      "check": "public-api",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:product-version",
+      "artifact_id": "release:python",
+      "check": "product-version",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:canonical-compiler",
+      "artifact_id": "release:python",
+      "check": "canonical-compiler",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:native-wasm",
+      "artifact_id": "release:python",
+      "check": "native-wasm",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:target-compatibility",
+      "artifact_id": "release:python",
+      "check": "target-compatibility",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:kernel-rejection",
+      "artifact_id": "release:python",
+      "check": "kernel-rejection",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:python:linux-x86_64:isolation",
+      "artifact_id": "release:python",
+      "check": "isolation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "94123e25ef0249fbcda64f86acee7b4a053990c24b3a1e6531fe46762e0a8b5d",
+      "evidence": "consumers/linux-x86_64/python.json"
+    },
+    {
+      "id": "release:r:coordinate",
+      "artifact_id": "release:r",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:r:metadata",
+      "artifact_id": "release:r",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:r:artifact",
+      "artifact_id": "release:r",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:r:source",
+      "artifact_id": "release:r",
+      "check": "source",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:r:sbom",
+      "artifact_id": "release:r",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:r:provenance",
+      "artifact_id": "release:r",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:r:documentation",
+      "artifact_id": "release:r",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:r:scope",
+      "artifact_id": "release:r",
+      "check": "scope",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-r.json"
+    },
+    {
+      "id": "release:ruby:coordinate",
+      "artifact_id": "release:ruby",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:ruby:metadata",
+      "artifact_id": "release:ruby",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:ruby:artifact",
+      "artifact_id": "release:ruby",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:ruby:source",
+      "artifact_id": "release:ruby",
+      "check": "source",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:ruby:sbom",
+      "artifact_id": "release:ruby",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:ruby:provenance",
+      "artifact_id": "release:ruby",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:ruby:documentation",
+      "artifact_id": "release:ruby",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:ruby:scope",
+      "artifact_id": "release:ruby",
+      "check": "scope",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-ruby.json"
+    },
+    {
+      "id": "release:rust:coordinate",
+      "artifact_id": "release:rust",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:metadata",
+      "artifact_id": "release:rust",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:artifact",
+      "artifact_id": "release:rust",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:source",
+      "artifact_id": "release:rust",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:sbom",
+      "artifact_id": "release:rust",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:provenance",
+      "artifact_id": "release:rust",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:documentation",
+      "artifact_id": "release:rust",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:scope",
+      "artifact_id": "release:rust",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:installation",
+      "artifact_id": "release:rust",
+      "check": "installation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:public-api",
+      "artifact_id": "release:rust",
+      "check": "public-api",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:product-version",
+      "artifact_id": "release:rust",
+      "check": "product-version",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:canonical-compiler",
+      "artifact_id": "release:rust",
+      "check": "canonical-compiler",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:native-wasm",
+      "artifact_id": "release:rust",
+      "check": "native-wasm",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:target-compatibility",
+      "artifact_id": "release:rust",
+      "check": "target-compatibility",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:kernel-rejection",
+      "artifact_id": "release:rust",
+      "check": "kernel-rejection",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:windows-x86_64:isolation",
+      "artifact_id": "release:rust",
+      "check": "isolation",
+      "platform": "windows-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "576ed70a6a726551edc50e423b0f83ce842c402e6bdf1025bb56bc0136ad3da3",
+      "evidence": "consumers/windows-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:installation",
+      "artifact_id": "release:rust",
+      "check": "installation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:public-api",
+      "artifact_id": "release:rust",
+      "check": "public-api",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:product-version",
+      "artifact_id": "release:rust",
+      "check": "product-version",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:canonical-compiler",
+      "artifact_id": "release:rust",
+      "check": "canonical-compiler",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:native-wasm",
+      "artifact_id": "release:rust",
+      "check": "native-wasm",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:target-compatibility",
+      "artifact_id": "release:rust",
+      "check": "target-compatibility",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:kernel-rejection",
+      "artifact_id": "release:rust",
+      "check": "kernel-rejection",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:rust:linux-x86_64:isolation",
+      "artifact_id": "release:rust",
+      "check": "isolation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "29b3de74ae722165694f668c34ddecc2f4cd0e41c04ea61a1ae0c1296940a6d8",
+      "evidence": "consumers/linux-x86_64/rust.json"
+    },
+    {
+      "id": "release:swift:coordinate",
+      "artifact_id": "release:swift",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:metadata",
+      "artifact_id": "release:swift",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:artifact",
+      "artifact_id": "release:swift",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:source",
+      "artifact_id": "release:swift",
+      "check": "source",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:sbom",
+      "artifact_id": "release:swift",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:provenance",
+      "artifact_id": "release:swift",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:documentation",
+      "artifact_id": "release:swift",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:scope",
+      "artifact_id": "release:swift",
+      "check": "scope",
+      "platform": null,
+      "tier": "Supported",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:installation",
+      "artifact_id": "release:swift",
+      "check": "installation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:public-api",
+      "artifact_id": "release:swift",
+      "check": "public-api",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:product-version",
+      "artifact_id": "release:swift",
+      "check": "product-version",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:canonical-compiler",
+      "artifact_id": "release:swift",
+      "check": "canonical-compiler",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:native-wasm",
+      "artifact_id": "release:swift",
+      "check": "native-wasm",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:target-compatibility",
+      "artifact_id": "release:swift",
+      "check": "target-compatibility",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:kernel-rejection",
+      "artifact_id": "release:swift",
+      "check": "kernel-rejection",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:swift:linux-x86_64:isolation",
+      "artifact_id": "release:swift",
+      "check": "isolation",
+      "platform": "linux-x86_64",
+      "tier": "Supported",
+      "authority": "staged",
+      "status": "READY",
+      "receipt_fingerprint": "4642b094b35996bb109d3a4dd35c05cb6699e928c9d692ab8d011168c14c9639",
+      "evidence": "consumers/linux-x86_64/swift.json"
+    },
+    {
+      "id": "release:typescript:coordinate",
+      "artifact_id": "release:typescript",
+      "check": "coordinate",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    },
+    {
+      "id": "release:typescript:metadata",
+      "artifact_id": "release:typescript",
+      "check": "metadata",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    },
+    {
+      "id": "release:typescript:artifact",
+      "artifact_id": "release:typescript",
+      "check": "artifact",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    },
+    {
+      "id": "release:typescript:source",
+      "artifact_id": "release:typescript",
+      "check": "source",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    },
+    {
+      "id": "release:typescript:sbom",
+      "artifact_id": "release:typescript",
+      "check": "sbom",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    },
+    {
+      "id": "release:typescript:provenance",
+      "artifact_id": "release:typescript",
+      "check": "provenance",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    },
+    {
+      "id": "release:typescript:documentation",
+      "artifact_id": "release:typescript",
+      "check": "documentation",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    },
+    {
+      "id": "release:typescript:scope",
+      "artifact_id": "release:typescript",
+      "check": "scope",
+      "platform": null,
+      "tier": "Preview",
+      "authority": "synthetic",
+      "status": "READY",
+      "evidence": "artifacts/release-typescript.json"
+    }
+  ],
+  "transport_projection": {
+    "original_proof_sha256": "c37be20f1022e9bb5749d8a6d83a576111be01204a47bb53918986a8d1236bee",
+    "diagnostic_bytes_preserved": true,
+    "normalization_applied": false
+  }
+}

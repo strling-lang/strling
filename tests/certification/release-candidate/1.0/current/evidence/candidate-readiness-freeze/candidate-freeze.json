@@ -1,0 +1,452 @@
+{
+  "state": "CERTIFICATION_READY",
+  "decision": "GO",
+  "source": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "reader": "f8ef1a62be536981927e36a19587f96edb69f911",
+  "frozen_utc": "2026-11-13T09:05:54.345475+00:00",
+  "source_roots": [
+    "/mnt/d/Projects/strling-lang/strling",
+    "/var/tmp/strling-release-candidate-ea64d594-certification",
+    "/var/tmp/strling-public-release-ea64d594-aggregate-first",
+    "/var/tmp/strling-public-release-ea64d594-aggregate-second",
+    "/var/tmp/strling-public-release-ea64d594-first",
+    "/var/tmp/strling-public-release-ea64d594-second",
+    "/mnt/d/Projects/strling-lang/strling/target/bea64d5941",
+    "/mnt/d/Projects/strling-lang/strling/target/bea64d5942"
+  ],
+  "scope": {
+    "tier_counts": {
+      "Supported": 11,
+      "Preview": 6
+    },
+    "supported_consumer_scopes": 15,
+    "build_pairs": 21,
+    "required_build_receipts": 42,
+    "toolchain_coordinates": 95,
+    "public_obligations": 256,
+    "profile_denominators": {
+      "local": 38,
+      "pull-request": 80,
+      "full": 125,
+      "release": 125
+    }
+  },
+  "generated_families": 42,
+  "bundle_fingerprints": {
+    "full": "b99bd49cffbaf7a4e7e5a0b8d0db9b4c85b3be6cc549f107a404d280733c6849",
+    "release": "2da2af37ba990cf1782b5febe10bf5d467cd46d28e7c8992197ee107c9fbbb63"
+  },
+  "artifact_inventory": [
+    {
+      "id": "release:c",
+      "subject": {
+        "bytes": 4658893,
+        "kind": "source-tree",
+        "name": "strling-release-set:6b83d0b27f3df455",
+        "sha256": "a00617a1f8dd9cd48298c824f5420ee3be0bb72f5d18aa74b7c2d8982bd70e55"
+      }
+    },
+    {
+      "id": "release:cpp",
+      "subject": {
+        "bytes": 38224488,
+        "kind": "file",
+        "name": "strling-release-set:3d42bd7e45ed56ec",
+        "sha256": "708ce789c27808d21a17d2cc97d35be047b757d0e35a2b4c75356da903ecfd15"
+      }
+    },
+    {
+      "id": "release:csharp",
+      "subject": {
+        "bytes": 1658079,
+        "kind": "file",
+        "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg",
+        "sha256": "100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287"
+      }
+    },
+    {
+      "id": "release:dart",
+      "subject": {
+        "bytes": 30250,
+        "kind": "registry-assembled",
+        "name": "target/release-packaging/dart",
+        "sha256": "eb3478a57fd517ff3d1ac1c0ce3330c0cf939dca74ee20ef672449c07c017fcf"
+      }
+    },
+    {
+      "id": "release:fsharp",
+      "subject": {
+        "bytes": 15789,
+        "kind": "file",
+        "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg",
+        "sha256": "389b9f2d556d6b0dd7eb1a662a8df89627df351b1e000d50083cc526a7c29796"
+      }
+    },
+    {
+      "id": "release:go",
+      "subject": {
+        "bytes": 4630937,
+        "kind": "source-tree",
+        "name": "strling-release-set:6c18b1391ce412a0",
+        "sha256": "c85ce4418cdbcc785b71c7db490c03ebe72a137eb1d91cbd7959bfced275beab"
+      }
+    },
+    {
+      "id": "release:java",
+      "subject": {
+        "bytes": 309232,
+        "kind": "file",
+        "name": "strling-release-set:427289505b714b21",
+        "sha256": "7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a"
+      }
+    },
+    {
+      "id": "release:kotlin",
+      "subject": {
+        "bytes": 55575,
+        "kind": "file",
+        "name": "strling-release-set:f6353b28d050a50e",
+        "sha256": "d6878a1948a600438b2aed7e7bd5f0d08dcddc236a1799e34b643521f2d5886d"
+      }
+    },
+    {
+      "id": "release:lua",
+      "subject": {
+        "bytes": 12864,
+        "kind": "file",
+        "name": "strling-release-set:5977725b02f1917a",
+        "sha256": "570c2b84a13e6a440efd56a774d58d8f7f463f5cb9ff090b52b279b73cfcce91"
+      }
+    },
+    {
+      "id": "release:perl",
+      "subject": {
+        "bytes": 12267,
+        "kind": "file",
+        "name": "bindings/perl/STRling-4.0.0.tar.gz",
+        "sha256": "d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5"
+      }
+    },
+    {
+      "id": "release:php",
+      "subject": {
+        "bytes": 4696729,
+        "kind": "source-tree",
+        "name": "strling-release-set:ec5916df8bdf4db2",
+        "sha256": "29f28806f260a90a29c0c3e687abca0da55864b7b79772ab0f9f3a5dc3e629da"
+      }
+    },
+    {
+      "id": "release:python",
+      "subject": {
+        "bytes": 4767495,
+        "kind": "file",
+        "name": "strling-release-set:49793f92e8b729d7",
+        "sha256": "211934c55d78b9f96635868e674060c20eca2e309cadcbee3e73a12496a5ae9d"
+      }
+    },
+    {
+      "id": "release:r",
+      "subject": {
+        "bytes": 4673450,
+        "kind": "source-tree",
+        "name": "strling-release-set:e3155c2310af4716",
+        "sha256": "6bcb529188266cf8dea147e530a21117905584383d0de452b8277e6b196319b4"
+      }
+    },
+    {
+      "id": "release:ruby",
+      "subject": {
+        "bytes": 13312,
+        "kind": "file",
+        "name": "bindings/ruby/strling-4.0.0.gem",
+        "sha256": "d47970503f7e1e66a5c4659111ce86a415abf1824b5362bad23d06d476a733bf"
+      }
+    },
+    {
+      "id": "release:rust",
+      "subject": {
+        "bytes": 295960,
+        "kind": "file",
+        "name": "target/package/strling-4.0.0.crate",
+        "sha256": "361b0d1ab282c12c410cafc93579fe56fe226cc1c60a39d8b815d3fbc22e5a2c"
+      }
+    },
+    {
+      "id": "release:swift",
+      "subject": {
+        "bytes": 4637145,
+        "kind": "source-tree",
+        "name": "strling-release-set:2c1a8ef15dc98081",
+        "sha256": "260dfb66966dc4a96f19c397a273c73327bebb8787ffc4cc112e6b45c78fd4e9"
+      }
+    },
+    {
+      "id": "release:typescript",
+      "subject": {
+        "bytes": 1331038,
+        "kind": "file",
+        "name": "bindings/typescript/strling-lang-strling-4.0.0.tgz",
+        "sha256": "5789d1d3e9117d9f7b5316a95273958459b9335afdb7cb55af4a6c510150fd6b"
+      }
+    }
+  ],
+  "prerequisite_inputs": {
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/source-identity-qualification.json": {
+      "bytes": 1298,
+      "sha256": "5e87a2b5a18aec33e6129e9e9339d83114eb575e83f2ea4b6ca7b87727c4e028"
+    },
+    "/var/tmp/strling-release-candidate-ea64d594-certification/tests/certification/release-supply-chain/1.0/manifest.json": {
+      "bytes": 73991,
+      "sha256": "59422a73a827b21a07f3c589d923036dff4b8d2f8f555cecf9f52096100fd4df"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-scope-preflight.json": {
+      "bytes": 33703,
+      "sha256": "51a4836228deb7274970cb28eb310ae867e08b34f514261b75b864a39276229d"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/preparation-acceptance.json": {
+      "bytes": 8117,
+      "sha256": "3735552665d43336a9b0a6f4f584a7d2d8d49db6141b411df28790a5d22e8bd9"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/logs/certification-preparation-ea64d594/npm-source-identities.json": {
+      "bytes": 587,
+      "sha256": "4432b59087b976bad87752a0a701ce827ed52b535fcec4cf919362de212d261d"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/logs/certification-preparation-ea64d594/generated-check-attempt2.txt": {
+      "bytes": 48991,
+      "sha256": "b17b7276106cc5c07820b6f8f16f1fe2dd259ff23aed3c70efac812a0e7b6066"
+    },
+    "/var/tmp/strling-release-candidate-ea64d594-certification/governance/generated-artifacts.json": {
+      "bytes": 115218,
+      "sha256": "e6f64ec63291db767667d2675c9ca33ad19cb45aee4ef286d97dd7eafa2d9831"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/logs/metadata-admission-attempt1/terminal.json": {
+      "bytes": 2077,
+      "sha256": "02c3774b9a8f249021f4448aaf91a7ad5b6fe3b60d1932291bb122994a554428"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/logs/workflow-focused.terminal.json": {
+      "bytes": 1107,
+      "sha256": "0a81790bb5b3711e03232f6a65edf730ef3a472089a0281991ed7f1a9bb4a015"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/logs/immutable-reader-qualification-attempt1/terminal.json": {
+      "bytes": 9041,
+      "sha256": "f418572fb8b6d65bbcfa4a1f4025b94915cb900861bde522245efffb4bb3c47a"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/resource-admission-qualification.json": {
+      "bytes": 396,
+      "sha256": "768ddd78af1b9612092a18f02e8e17a94689f3dd61c27aa9cef1eb999e854675"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/noncompiling-transport-qualification.json": {
+      "bytes": 449,
+      "sha256": "9b518f7221faceeea2934e70b2e3c68f768fa5ce041ac57e1b232ac1a540d607"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/admission-archive-qualification.json": {
+      "bytes": 504,
+      "sha256": "36ed82bd516474f263ca53d3127c4a361bdfc3c81b2e0e0df26213e6a2704d87"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/linux-toolchain-readiness.json": {
+      "bytes": 33453,
+      "sha256": "7e2b5bb74a0e5006d92a4b5b85eaab84de3212141811de8e1996a059a1cac33a"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/windows-toolchain-readiness.json": {
+      "bytes": 29037,
+      "sha256": "ab01e2e09bc6fb43bbfbeaa904e1a2109a1c6ca12f5a6b36f42d1b5913590c2d"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/logs/noncompiling-security.terminal.json": {
+      "bytes": 640,
+      "sha256": "a6bc6dfac5089f670bd77e8386064cdeecd670e73077808a49e1cec847965951"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/logs/noncompiling-security.stdout": {
+      "bytes": 469,
+      "sha256": "984684f2ca6098ec26b8befd92ea258371a5ad6793d1f757b5e5266f6be6d9f5"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/risk-ea64d594.json": {
+      "bytes": 399656,
+      "sha256": "58dda894e69296474852a87be9ab2eb623400f15518ddd136dbb61140a2c9694"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/immutable-trust-contract-preflight.json": {
+      "bytes": 1175,
+      "sha256": "15e8101fbe0f1aab994b35b19009016f90dddb204a2f0fa3f882726ab670d536"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/receipt-pairs-preflight.json": {
+      "bytes": 9420,
+      "sha256": "114c4c2d3e9a784f4240636d2896b2b9b56119732d0e2337db1144df8fac0dba"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/supply-chain-ea64d594-full/release-supply-chain-evidence.json": {
+      "bytes": 2250563,
+      "sha256": "a9b438958f7178f3fcd83c1a5710f43cb0ae4a85c1d1cde0b17df2898e40b503"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/supply-chain-ea64d594-release/release-supply-chain-evidence.json": {
+      "bytes": 2250566,
+      "sha256": "5252a1c10b01d0d493f09d5ae80131142db53f79a873a7b9b3ef9c4bf2b3f034"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/sdist-proof-ea64d594/proof.json": {
+      "bytes": 2829,
+      "sha256": "3a54d49c298dc8a248d175d8bea94810ea2bb2af0af9bf29a48c59a3a25109e6"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/certified-handoff-ea64d594/proof.json": {
+      "bytes": 29948,
+      "sha256": "345d3c86602d86a8201e0b3c4138441917c01d92e5c8d19b6802748a9ff418bf"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/logs/preview-documentation/terminal.json": {
+      "bytes": 6228,
+      "sha256": "d2d0a5f0b7c6388ab22f29a1a89ff097140013a32f079310efbac30d6f674f89"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/lua/result.json": {
+      "bytes": 2664,
+      "sha256": "54f1496e27f3ce66303bb06d242e8f2594b28cd82d9e780fa29471349be51c59"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/lua/cdb4ee2aea69-consumer-command-0000.json": {
+      "bytes": 294,
+      "sha256": "4d560eabfe4b87ca47de5b2dddb77aaf4d246cab4621db95e6cb512af82ac0de"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/lua/cdb4ee2aea69-consumer-command-0001.json": {
+      "bytes": 206,
+      "sha256": "6aee88058eafb52d568ef028ea599e8c326d244733c38b53c11e204b72e93eac"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/perl/result.json": {
+      "bytes": 2986,
+      "sha256": "da21bf5749fdd2dd5714cc5f0925bb16c6dbb5d667390f1260221e330b352eb0"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/perl/bc4a71180870-consumer-command-0000.json": {
+      "bytes": 157,
+      "sha256": "58432cdfb2c56e42a515c9386bc213d6cd7d5451365b83fe730696d365fbc9b7"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/perl/bc4a71180870-consumer-command-0001.json": {
+      "bytes": 78,
+      "sha256": "a371f32bb9065f36b21eec92bd6f649ad531b82fbd18bdf53f9354b1a7b2b9a7"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/perl/bc4a71180870-consumer-command-0002.json": {
+      "bytes": 89,
+      "sha256": "ead7b6cef699ae51d73b2fef19c93cb2b7d6b90520fe9270503ee2ed695f8bbd"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/perl/cdb4ee2aea69-consumer-command-0000.json": {
+      "bytes": 205,
+      "sha256": "282589f1c532b0baf4cb1dd996b5c6d2129deb3eb809e0e7a2c957418cb29ee8"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/php/result.json": {
+      "bytes": 2597,
+      "sha256": "04bd952ee32ae23b8eabae1af2417335008a6a39a4474359e76afd9db14423bf"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/php/bc4a71180870-consumer-command-0000.json": {
+      "bytes": 173,
+      "sha256": "920419ad80cf8db14addeaef668d9b3fbb0d4e7f7800dfbb749a86903891d009"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/php/cdb4ee2aea69-consumer-command-0000.json": {
+      "bytes": 235,
+      "sha256": "963d6024915ba38e207530c40d3fdc440756fc850affa6873b60966f994980a9"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/r/result.json": {
+      "bytes": 2595,
+      "sha256": "7d4296b1607c4435725d6675e4d4bd5436e687cbb8a6466ace9f6a027dda3610"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/r/cdb4ee2aea69-consumer-command-0000.json": {
+      "bytes": 214,
+      "sha256": "286efe25ace0fe884a41faac6ca2424f67c89e93504b46e21a0ed0ecbd2e4a82"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/r/cdb4ee2aea69-consumer-command-0001.json": {
+      "bytes": 220,
+      "sha256": "2bf96acafe34d8b99daa58aeef63f65031982acadfc39e31a7f80b7660cfbb5a"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/ruby/result.json": {
+      "bytes": 2689,
+      "sha256": "8554fff91b7f18dcac19e4591acf3af9c307527599302d65d10067770f3c015e"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/ruby/cdb4ee2aea69-consumer-command-0000.json": {
+      "bytes": 301,
+      "sha256": "811d3fb4f26509cb1c86d67d60cd65d4aafb0ab25e127cb6699955a96f9bf818"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/ruby/cdb4ee2aea69-consumer-command-0001.json": {
+      "bytes": 205,
+      "sha256": "2fe0c08ba390e8c01ecda78f1b1be467a8987ded325bd6a31e4b8351e69da983"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/result.json": {
+      "bytes": 6459,
+      "sha256": "2a265c4dbbdb75182e1b3b92eaeebd43eb1d8be51eca785ace449484aa286be2"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0000.json": {
+      "bytes": 274,
+      "sha256": "0ebd97d8878a4f22a7028138c86e0aa75a21b6e3ca9edb1a336bf44952894dd3"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0001.json": {
+      "bytes": 388,
+      "sha256": "0bb08cf7c53087819af9112ca9f942e5b83f6d5ffbfbb34972dbf67438c6590b"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0002.json": {
+      "bytes": 138,
+      "sha256": "d144cf97fba657299f31c6a38cd235ff8ce7c4dc939fd560ef0f6d3af5d17ec4"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0003.json": {
+      "bytes": 388,
+      "sha256": "2e0bfdac6477d31c26e31417b96b5e2cdf1010e49c5c5ffa41a39301bfc90cab"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0004.json": {
+      "bytes": 138,
+      "sha256": "aebfd6eba5202b82294779b98d4f022279ddb70fc8e819c72c8060e590abe022"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0005.json": {
+      "bytes": 388,
+      "sha256": "d3cb05f4e7ca252092dbb0e33b26eaa25fd538c7f518e53beaa9a873b2bb893c"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0006.json": {
+      "bytes": 138,
+      "sha256": "0d1098eb57e2bf519eaeae8cebc0e1d1ca2ea1832c4fec278510b408effca69b"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0007.json": {
+      "bytes": 389,
+      "sha256": "6e123b963505a0c6fa6b08eb4a904eb71649b48f51a36628a9dd2d24a2321c59"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/candidate-documentation-ea64d594/typescript/cdb4ee2aea69-consumer-command-0008.json": {
+      "bytes": 138,
+      "sha256": "2692951f3f42ec61246c6f97ba0924146862dbc8d28f77a581028f79128605cb"
+    },
+    "/var/tmp/strling-release-candidate-ea64d594-certification/tests/documentation/1.0/manifest.json": {
+      "bytes": 52933,
+      "sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/coordinate-preflight/report.json": {
+      "bytes": 18107,
+      "sha256": "5bd14bdb79dac63b393ece01b734500db4bf793f1b0d56a46cdedca8c0195e5c"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/jvm-sdk-ea64d594/receipt.json": {
+      "bytes": 1091,
+      "sha256": "f47a688ada0e054ac528e2d2ca41388aded90b304f65fa930034ced8308b60fc"
+    },
+    "/var/tmp/strling-public-ea64d594-dart-sdk/receipt.json": {
+      "bytes": 876,
+      "sha256": "c5ea44a208a8b5c95e5e5cd13b5d3be3d182c92b724b6211745cdf2709a450eb"
+    },
+    "/var/tmp/strling-candidate-ea64d594-typescript-sdk/receipt.json": {
+      "bytes": 563,
+      "sha256": "a05442f0a2d977ca95da4a4c82776981d969b8fafd9db319dde09486cd704b4b"
+    },
+    "/mnt/d/Projects/strling-lang/strling/target/release-candidate/campaign-ea64d594/final-capacity-qualification.json": {
+      "bytes": 1858,
+      "sha256": "133766d707d0c38c8382aabc8af594ebbc4cfdd88fa39c25cd3166bc2c05f864"
+    }
+  },
+  "physical_capacity": {
+    "physical_d_free_bytes": 194697601024,
+    "host_compilers_or_protected_workers": [],
+    "linux_compilers": [],
+    "source": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+    "utc": "2026-11-13T09:05:43.827122+00:00",
+    "required_free_bytes": 120259084288,
+    "performance_admission_used": false,
+    "other_project_signaled": false,
+    "stage": "readiness-freeze-final-capacity",
+    "admitted": true
+  },
+  "readiness_helper_sha256": "00a6e592b73b6f32fa46a6364579ab2eb4f3cd691872d449ca3eb9c46e247466",
+  "pending_mandatory": [
+    "fresh authoritative Local/PR/Full",
+    "fresh independent no-reuse Release",
+    "key-free original package reconstruction and original-authority signing",
+    "Current-source staged public qualification for every derived obligation and applicable consumer",
+    "complete candidate reconstruction/signing",
+    "immutable and actual four-job hosted verification",
+    "handoff and formal closure"
+  ],
+  "public_release_verified": false,
+  "publication_authorized": false
+}

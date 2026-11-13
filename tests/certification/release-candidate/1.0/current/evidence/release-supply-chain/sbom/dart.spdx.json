@@ -1,0 +1,1718 @@
+{
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "annotations": [
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"dart-pub\",\"inputs\":[{\"path\":\"bindings/dart/pubspec.yaml\",\"sha256\":\"e2a34f42205378364918ec8956c8b697bebe9e96287b3ac78e731f89e77a7466\"},{\"path\":\"bindings/dart/pubspec.lock\",\"sha256\":\"59c530f1a37d19eb43045be8999e5460571d293369e1dade31c19af6bb324241\"}],\"policy\":{\"ecosystem\":\"dart-pub\",\"integrity_mode\":\"presence_and_parse\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"_fe_analyzer_shared\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"67.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"analyzer\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"6.4.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"args\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.5.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"async\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.11.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"boolean_selector\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"collection\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.18.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"convert\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"coverage\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.8.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"ffi\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"file\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"7.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"frontend_server_client\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"glob\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"http_multi_server\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.2.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"http_parser\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"io\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"js\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.7.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"lints\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"logging\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.2.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"matcher\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.12.16+1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"meta\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.16.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"mime\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.0.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"node_preamble\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"package_config\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"path\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.9.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pool\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.5.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pub_semver\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"shelf\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.4.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"shelf_packages_handler\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"shelf_static\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.1.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"shelf_web_socket\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"source_map_stack_trace\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"source_maps\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.10.12\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"source_span\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.10.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"stack_trace\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.11.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"stream_channel\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.1.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"string_scanner\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.4.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"term_glyph\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.2.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"test\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.25.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"test_api\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.7.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"test_core\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.6.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typed_data\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.3.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"vm_service\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"14.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"watcher\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.1.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"web\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.4.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"web_socket_channel\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.4.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"webkit_inspection_protocol\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.2.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"yaml\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.1.2\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"f4e1fe1df3832b993496d86d745e41968d6a68fe7f56f5296d99139eb540c9b4\"}"
+        }
+    ],
+    "creationInfo": {
+        "created": "1970-01-01T00:00:00Z",
+        "creators": [
+            "Tool: strling-release-supply-chain"
+        ],
+        "licenseListVersion": "3.23"
+    },
+    "dataLicense": "CC0-1.0",
+    "documentDescribes": [
+        "SPDXRef-Package"
+    ],
+    "documentNamespace": "https://strling.dev/sbom/dart/eb3478a57fd517ff3d1ac1c0ce3330c0cf939dca74ee20ef672449c07c017fcf",
+    "files": [
+        {
+            "SPDXID": "SPDXRef-File-1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "79518aa37638aa719ff7e62b5a10c6111d781a26c9c4cee67bd1963b5b5c6416"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0ed56ae85b8f44b7a09d8060d5790f4bbee73a5f"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/.pubignore",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-2",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1287099a08f38a6f426f3fe3f4aa9be74cb63115a36264774041bad158f42e6e"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2c3903a6d60d846757ea6473ae153de2f99b278e"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/CHANGELOG.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-3",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-4",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8a6da80d54f423f181eef3ff20a90541a6d902de161fbe9ed24c773975a01e27"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "fa26d37f08302133210b88503fc9b686f94778e0"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/README.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-5",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "9ed48a351034c97176f832dee81ab7bc7a5b85c89cffa56aea9e6ba7a83259eb"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "772eb8c5af44e402b57c5a299fa0d06820f267f9"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/lib/src/native_client.dart",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-6",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "3aa99fb17a4e43034d8ca9105007b54e6559d1b93d5a1d5e8b0b46ecfd61bbab"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "b68df5ea849d7929c97fa2ccb00a8db548a24667"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/lib/src/requests.dart",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-7",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "a6f4c643c8f9c90e55c50b46c0627acebc103ab898782e729f044d1677992f91"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "080776af50a73bf72bbcb78b53478b411148157d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/lib/src/stdlib_generated.dart",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-8",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "d8db189ca74c915555ce44955a18f3353b06db88c3aa6a4097071ec28c51d0e4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c3ee68cd368e6733bda84ddf6db52da9d8f32ca0"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/lib/strling.dart",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-9",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e2a34f42205378364918ec8956c8b697bebe9e96287b3ac78e731f89e77a7466"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "6761e61706c029d0ce1c35af706b0f74824f6c86"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "target/release-packaging/dart/pubspec.yaml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        }
+    ],
+    "name": "STRling dart release artifact",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-Package",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "eb3478a57fd517ff3d1ac1c0ce3330c0cf939dca74ee20ef672449c07c017fcf"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "release:dart",
+                    "referenceType": "strling-release-surface"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "NOASSERTION",
+            "licenseDeclared": "Apache-2.0",
+            "name": "strling",
+            "packageVerificationCode": {
+                "packageVerificationCodeValue": "30afe4e7d4cef334bea6207e0c8ce58e0805fd6b"
+            },
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-1-5ab0ae1decd8",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"_fe_analyzer_shared\",\"version\":\"67.0.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "_fe_analyzer_shared",
+            "versionInfo": "67.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-2-2af956532d00",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"analyzer\",\"version\":\"6.4.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "analyzer",
+            "versionInfo": "6.4.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-3-a3850cf14c12",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"args\",\"version\":\"2.5.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "args",
+            "versionInfo": "2.5.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-4-55d372844ab1",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"async\",\"version\":\"2.11.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "async",
+            "versionInfo": "2.11.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-5-d9e51336aa04",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"boolean_selector\",\"version\":\"2.1.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "boolean_selector",
+            "versionInfo": "2.1.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-6-3fb5c4edcdb5",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"collection\",\"version\":\"1.18.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "collection",
+            "versionInfo": "1.18.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-7-04db34e06cc7",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"convert\",\"version\":\"3.1.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "convert",
+            "versionInfo": "3.1.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-8-6633054e58ae",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"coverage\",\"version\":\"1.8.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "coverage",
+            "versionInfo": "1.8.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-9-995169fea2b9",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"crypto\",\"version\":\"3.0.3\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "crypto",
+            "versionInfo": "3.0.3"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-10-bc212494d1c0",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"ffi\",\"version\":\"2.1.3\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "ffi",
+            "versionInfo": "2.1.3"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-11-eae419c96518",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"file\",\"version\":\"7.0.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "file",
+            "versionInfo": "7.0.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-12-3f6148cad192",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"frontend_server_client\",\"version\":\"4.0.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "frontend_server_client",
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-13-cc94cbaee273",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"glob\",\"version\":\"2.1.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "glob",
+            "versionInfo": "2.1.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-14-4b6ff310b29f",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"http_multi_server\",\"version\":\"3.2.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "http_multi_server",
+            "versionInfo": "3.2.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-15-597dddd73d71",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"http_parser\",\"version\":\"4.0.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "http_parser",
+            "versionInfo": "4.0.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-16-e98cc74a3140",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"io\",\"version\":\"1.0.4\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "io",
+            "versionInfo": "1.0.4"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-17-c0ba81041d4d",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"js\",\"version\":\"0.7.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "js",
+            "versionInfo": "0.7.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-18-eb2c976a030e",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"lints\",\"version\":\"2.1.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "lints",
+            "versionInfo": "2.1.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-19-28ea9ba6ad91",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"logging\",\"version\":\"1.2.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "logging",
+            "versionInfo": "1.2.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-20-da3d7b91f567",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"matcher\",\"version\":\"0.12.16+1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "matcher",
+            "versionInfo": "0.12.16+1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-21-d437b7cd27b1",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"meta\",\"version\":\"1.16.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "meta",
+            "versionInfo": "1.16.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-22-7dea15898acf",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"mime\",\"version\":\"1.0.6\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "mime",
+            "versionInfo": "1.0.6"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-23-68bb7d92a02e",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"node_preamble\",\"version\":\"2.0.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "node_preamble",
+            "versionInfo": "2.0.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-24-174280209a83",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"package_config\",\"version\":\"2.1.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "package_config",
+            "versionInfo": "2.1.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-25-494be1619ae5",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"path\",\"version\":\"1.9.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "path",
+            "versionInfo": "1.9.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-26-c924b81aa4cb",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"pool\",\"version\":\"1.5.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "pool",
+            "versionInfo": "1.5.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-27-790aabf9e64a",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"pub_semver\",\"version\":\"2.1.4\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "pub_semver",
+            "versionInfo": "2.1.4"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-28-921fa37520cd",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"shelf\",\"version\":\"1.4.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "shelf",
+            "versionInfo": "1.4.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-29-3a7876b4a5a0",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"shelf_packages_handler\",\"version\":\"3.0.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "shelf_packages_handler",
+            "versionInfo": "3.0.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-30-86c5c006d2cc",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"shelf_static\",\"version\":\"1.1.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "shelf_static",
+            "versionInfo": "1.1.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-31-501dea8c1813",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"shelf_web_socket\",\"version\":\"2.0.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "shelf_web_socket",
+            "versionInfo": "2.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-32-b202003d74df",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"source_map_stack_trace\",\"version\":\"2.1.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "source_map_stack_trace",
+            "versionInfo": "2.1.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-33-64d3be0d5a1c",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"source_maps\",\"version\":\"0.10.12\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "source_maps",
+            "versionInfo": "0.10.12"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-34-1797cf894bfa",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"source_span\",\"version\":\"1.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "source_span",
+            "versionInfo": "1.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-35-538b0f64a35b",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"stack_trace\",\"version\":\"1.11.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "stack_trace",
+            "versionInfo": "1.11.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-36-6bd6a39ef14b",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"stream_channel\",\"version\":\"2.1.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "stream_channel",
+            "versionInfo": "2.1.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-37-9e090d769ef6",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"string_scanner\",\"version\":\"1.4.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "string_scanner",
+            "versionInfo": "1.4.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-38-e64432895b95",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"term_glyph\",\"version\":\"1.2.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "term_glyph",
+            "versionInfo": "1.2.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-39-95df72342270",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"test\",\"version\":\"1.25.7\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "test",
+            "versionInfo": "1.25.7"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-40-f67e9306f0cd",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"test_api\",\"version\":\"0.7.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "test_api",
+            "versionInfo": "0.7.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-41-e9b93642a08a",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"test_core\",\"version\":\"0.6.4\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "test_core",
+            "versionInfo": "0.6.4"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-42-1e3c39ce223e",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"typed_data\",\"version\":\"1.3.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "typed_data",
+            "versionInfo": "1.3.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-43-aa21e9b7d4cc",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"vm_service\",\"version\":\"14.0.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "vm_service",
+            "versionInfo": "14.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-44-a02d410611f1",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"watcher\",\"version\":\"1.1.4\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "watcher",
+            "versionInfo": "1.1.4"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-45-8c2a0498bdea",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"web\",\"version\":\"0.4.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "web",
+            "versionInfo": "0.4.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-46-96ad3e3e54f5",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"web_socket_channel\",\"version\":\"2.4.3\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "web_socket_channel",
+            "versionInfo": "2.4.3"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-47-e8782d034fab",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"webkit_inspection_protocol\",\"version\":\"1.2.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "BSD-3-Clause",
+            "licenseDeclared": "BSD-3-Clause",
+            "name": "webkit_inspection_protocol",
+            "versionInfo": "1.2.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-48-1412fc89d228",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"dart-pub\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"dart-pub\",\"ecosystem\":\"dart-pub\",\"name\":\"yaml\",\"version\":\"3.1.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "yaml",
+            "versionInfo": "3.1.2"
+        }
+    ],
+    "relationships": [
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "DESCRIBES",
+            "spdxElementId": "SPDXRef-DOCUMENT"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-1",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-2",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-3",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-4",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-5",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-6",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-7",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-8",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-9",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-1-5ab0ae1decd8",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-2-2af956532d00",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-3-a3850cf14c12",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-4-55d372844ab1",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-5-d9e51336aa04",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-6-3fb5c4edcdb5",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-7-04db34e06cc7",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-8-6633054e58ae",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-9-995169fea2b9",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-10-bc212494d1c0",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-11-eae419c96518",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-12-3f6148cad192",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-13-cc94cbaee273",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-14-4b6ff310b29f",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-15-597dddd73d71",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-16-e98cc74a3140",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-17-c0ba81041d4d",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-18-eb2c976a030e",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-19-28ea9ba6ad91",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-20-da3d7b91f567",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-21-d437b7cd27b1",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-22-7dea15898acf",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-23-68bb7d92a02e",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-24-174280209a83",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-25-494be1619ae5",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-26-c924b81aa4cb",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-27-790aabf9e64a",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-28-921fa37520cd",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-29-3a7876b4a5a0",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-30-86c5c006d2cc",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-31-501dea8c1813",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-32-b202003d74df",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-33-64d3be0d5a1c",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-34-1797cf894bfa",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-35-538b0f64a35b",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-36-6bd6a39ef14b",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-37-9e090d769ef6",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-38-e64432895b95",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-39-95df72342270",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-40-f67e9306f0cd",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-41-e9b93642a08a",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-42-1e3c39ce223e",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-43-aa21e9b7d4cc",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-44-a02d410611f1",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-45-8c2a0498bdea",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-46-96ad3e3e54f5",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-47-e8782d034fab",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-48-1412fc89d228",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        }
+    ],
+    "spdxVersion": "SPDX-2.3"
+}

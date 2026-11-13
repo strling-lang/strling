@@ -1,0 +1,65 @@
+{
+  "artifact_id": "release:php",
+  "authority": "bounded-preview-documentation",
+  "command_evidence": [
+    {
+      "command": [
+        "composer",
+        "install",
+        "--no-dev",
+        "--no-scripts",
+        "--no-plugins",
+        "--no-interaction",
+        "--prefer-dist"
+      ],
+      "exit_code": 0,
+      "metadata": "bc4a71180870-consumer-command-0000.json",
+      "metadata_sha256": "920419ad80cf8db14addeaef668d9b3fbb0d4e7f7800dfbb749a86903891d009"
+    },
+    {
+      "command": [
+        "php",
+        "-d",
+        "ffi.enable=1",
+        "/tmp/strling-preview-documentation-bpnf1i7y/package/example.php",
+        "/tmp/strling-preview-documentation-bpnf1i7y/libstrling_interop.so"
+      ],
+      "exit_code": 0,
+      "metadata": "cdb4ee2aea69-consumer-command-0000.json",
+      "metadata_sha256": "963d6024915ba38e207530c40d3fdc440756fc850affa6873b60966f994980a9"
+    }
+  ],
+  "documentation_examples": [
+    {
+      "id": "bindings/php/README.md#1",
+      "sha256": "8669cc7431d2467e5d8602142db6c589a0bc16e77628e00db2ecf2cf53ebfd4e",
+      "status": "passed"
+    }
+  ],
+  "documentation_manifest_sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e",
+  "engineering": false,
+  "evidence_fingerprint": "96a341f6c89ee02c3f38fcb6f73c64db4becb8d512072e3154cba2c194c10d7d",
+  "fixture_sha256": {
+    "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
+    "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
+    "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
+    "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
+  },
+  "invocation_id": "da6065f40a2c469c93002b310bea2bdb",
+  "limitations": [
+    "Preview policy and dependency-locking limits remain unchanged.",
+    "Browser-safe factory execution on Node is not an actual browser support claim."
+  ],
+  "native_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e",
+  "product_version": "4.0.0",
+  "public_retrieval": false,
+  "runner_scope": "linux-x86_64",
+  "source": {
+    "commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+    "dirty": false,
+    "tree_sha256": "1019fd23108ac67a265307730bc888bfaf56f598405fadc7de021d7f740ab951"
+  },
+  "status": "passed",
+  "subject_sha256": "29f28806f260a90a29c0c3e687abca0da55864b7b79772ab0f9f3a5dc3e629da",
+  "supported_claim": false
+}

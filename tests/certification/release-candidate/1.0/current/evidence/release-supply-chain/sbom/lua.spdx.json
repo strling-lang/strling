@@ -1,0 +1,260 @@
+{
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "annotations": [
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"lua-luarocks\",\"inputs\":[{\"path\":\"bindings/lua/strling-template.rockspec\",\"sha256\":\"00c54623999e760c2dc45eb0c818c8c52ca2aa0de85155f3f2478ad8795591e9\"},{\"path\":\"bindings/lua/luarocks.lock\",\"sha256\":\"f2fb2e3ca14e5ff386d032589b23ab545c30a84ade477a6ab7191a5c9a22439a\"}],\"policy\":{\"ecosystem\":\"luarocks\",\"integrity_mode\":\"luarocks_lock\",\"risk_mode\":\"luarocks_evidence\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"lua-cjson\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.1.0.10-1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"6db574be61b759169e4dc9c00511e35ef6fe26f0c24ec29932ada6359a485112\"}"
+        }
+    ],
+    "creationInfo": {
+        "created": "1970-01-01T00:00:00Z",
+        "creators": [
+            "Tool: strling-release-supply-chain"
+        ],
+        "licenseListVersion": "3.23"
+    },
+    "dataLicense": "CC0-1.0",
+    "documentDescribes": [
+        "SPDXRef-Package"
+    ],
+    "documentNamespace": "https://strling.dev/sbom/lua/570c2b84a13e6a440efd56a774d58d8f7f463f5cb9ff090b52b279b73cfcce91",
+    "files": [
+        {
+            "SPDXID": "SPDXRef-File-1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "940a01bf94f4555b8434a68aa632418fdeaf5f19"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/lua/strling-4.0.0-1.rockspec!/strling-4.0.0-1.rockspec",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-2",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "940a01bf94f4555b8434a68aa632418fdeaf5f19"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling-4.0.0-1.rockspec",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-3",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-4",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "9b78694ec5ea02c2126694e89b5eb4037ba15f7967dd83de096a92f760cf1ade"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2934d1d3f924a7e515ebcd31cd76bd96d710c353"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/README.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-5",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "9163aaa7a79e720d5c284b98cf83941f12b59da728992463b1d1108d72c81161"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "56ccb54656ea2b8ce277b42417295d15598837f9"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/src/adapter.lua",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-6",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "2253da86ec53fd78eec5171fb86c49d2ebf8b2f8d913a43daaf0add5715f25f8"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "9ead848764845e735f13fa73ef7507dba015f686"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/src/stdlib_generated.lua",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-7",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "062c798f740801e73045e97b8363cfec373cad83c21a1b01cfbb32311d59ccde"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c5dfc69f1fb1e700be600f580e9eadb63c2972ad"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/src/strling_native.c",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        }
+    ],
+    "name": "STRling lua release artifact",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-Package",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "570c2b84a13e6a440efd56a774d58d8f7f463f5cb9ff090b52b279b73cfcce91"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "release:lua",
+                    "referenceType": "strling-release-surface"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "NOASSERTION",
+            "licenseDeclared": "Apache-2.0",
+            "name": "strling",
+            "packageVerificationCode": {
+                "packageVerificationCodeValue": "d04dc7b2aedc53b68fd156dbf37a7817e64754f0"
+            },
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-1-39ae900d33fe",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"lua-luarocks\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"lua-luarocks\",\"ecosystem\":\"luarocks\",\"name\":\"lua-cjson\",\"version\":\"2.1.0.10-1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "lua-cjson",
+            "versionInfo": "2.1.0.10-1"
+        }
+    ],
+    "relationships": [
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "DESCRIBES",
+            "spdxElementId": "SPDXRef-DOCUMENT"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-1",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-2",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-3",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-4",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-5",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-6",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-7",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-1-39ae900d33fe",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        }
+    ],
+    "spdxVersion": "SPDX-2.3"
+}

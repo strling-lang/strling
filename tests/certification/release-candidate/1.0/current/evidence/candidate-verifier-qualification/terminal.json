@@ -1,0 +1,146 @@
+{
+  "status": "passed-immutable-reader-qualification",
+  "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+  "rows": [
+    {
+      "stage": "linux-reader-tests-admission",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "-c",
+        "import sys;sys.path.insert(0,'/mnt/d/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62');from admission import admit;admit('immutable-reader-linux-reader-tests')"
+      ],
+      "exit_code": 0,
+      "seconds": 6145.05871247701
+    },
+    {
+      "stage": "linux-reader-tests",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tooling/tests/test_candidate_handoff.py",
+        "tooling/tests/test_certification_readiness.py",
+        "tooling/tests/test_documentation_integrity.py",
+        "tooling/tests/test_evidence_bytes.py",
+        "tooling/tests/test_governance.py",
+        "tooling/tests/test_profile_source_identity.py",
+        "tooling/tests/test_public_contracts.py",
+        "tooling/tests/test_public_distribution.py",
+        "tooling/tests/test_public_distribution_certification.py",
+        "tooling/tests/test_public_execution.py",
+        "tooling/tests/test_public_payload_authentication.py",
+        "tooling/tests/test_public_registries.py",
+        "tooling/tests/test_public_verification_boundaries.py",
+        "tooling/tests/test_release_candidate.py",
+        "tooling/tests/test_release_candidate_evidence.py",
+        "tooling/tests/test_release_consumers.py",
+        "tooling/tests/test_release_supply_chain.py",
+        "tooling/tests/test_source_frontend_defaults.py",
+        "tooling/tests/test_local_certification_attestation.py",
+        "tooling/tests/test_documentation_programs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 834.9426818709762
+    },
+    {
+      "stage": "windows-reader-tests-admission",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "-c",
+        "import sys;sys.path.insert(0,'/mnt/d/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62');from admission import admit;admit('immutable-reader-windows-reader-tests')"
+      ],
+      "exit_code": 0,
+      "seconds": 107.35319439700106
+    },
+    {
+      "stage": "windows-reader-tests",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-windows-3.12.10/tools/python.exe",
+        "-X",
+        "utf8",
+        "-c",
+        "import os,subprocess,sys;from pathlib import Path;os.chdir('D:/Projects/strling-lang/strling/target/vf8ef1a62');os.environ.update(TEMP='D:/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/temporary-attempt1',TMP='D:/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/temporary-attempt1',GIT_CEILING_DIRECTORIES='D:/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/temporary-attempt1',RUSTUP_TOOLCHAIN='1.75.0',CARGO_BUILD_JOBS='2',CARGO_INCREMENTAL='0',PYTHONDONTWRITEBYTECODE='1');os.environ['PATH']='D:/Projects/strling-lang/strling/target/release-packaging/python-windows-3.12.10/tools;C:/Users/timdi/.cargo/bin;'+os.environ['PATH'];assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()=='f8ef1a62be536981927e36a19587f96edb69f911';assert not subprocess.check_output(['git','status','--porcelain']).strip();result=subprocess.run([sys.executable,'-X','utf8','-m','pytest','-q',*['tooling/tests/test_candidate_handoff.py', 'tooling/tests/test_certification_readiness.py', 'tooling/tests/test_documentation_integrity.py', 'tooling/tests/test_evidence_bytes.py', 'tooling/tests/test_governance.py', 'tooling/tests/test_profile_source_identity.py', 'tooling/tests/test_public_contracts.py', 'tooling/tests/test_public_distribution.py', 'tooling/tests/test_public_distribution_certification.py', 'tooling/tests/test_public_execution.py', 'tooling/tests/test_public_payload_authentication.py', 'tooling/tests/test_public_registries.py', 'tooling/tests/test_public_verification_boundaries.py', 'tooling/tests/test_release_candidate.py', 'tooling/tests/test_release_candidate_evidence.py', 'tooling/tests/test_release_consumers.py', 'tooling/tests/test_release_supply_chain.py', 'tooling/tests/test_source_frontend_defaults.py', 'tooling/tests/test_local_certification_attestation.py', 'tooling/tests/test_documentation_programs.py']]);assert not subprocess.check_output(['git','status','--porcelain']).strip();sys.exit(result.returncode)"
+      ],
+      "exit_code": 0,
+      "seconds": 2689.6821912550076
+    },
+    {
+      "stage": "linux-signed-reference-admission",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "-c",
+        "import sys;sys.path.insert(0,'/mnt/d/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62');from admission import admit;admit('immutable-reader-linux-signed-reference')"
+      ],
+      "exit_code": 0,
+      "seconds": 11.120414060016628
+    },
+    {
+      "stage": "linux-signed-reference",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "/mnt/d/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/probe_signed_reference.py"
+      ],
+      "exit_code": 0,
+      "seconds": 46.255561854020925
+    },
+    {
+      "stage": "windows-signed-reference-admission",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "-c",
+        "import sys;sys.path.insert(0,'/mnt/d/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62');from admission import admit;admit('immutable-reader-windows-signed-reference')"
+      ],
+      "exit_code": 0,
+      "seconds": 11.041525676992023
+    },
+    {
+      "stage": "windows-signed-reference",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-windows-3.12.10/tools/python.exe",
+        "-X",
+        "utf8",
+        "-c",
+        "import os,subprocess,sys;from pathlib import Path;os.chdir('D:/Projects/strling-lang/strling/target/vf8ef1a62');os.environ.update(TEMP='D:/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/temporary-attempt1',TMP='D:/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/temporary-attempt1',GIT_CEILING_DIRECTORIES='D:/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/temporary-attempt1',RUSTUP_TOOLCHAIN='1.75.0',CARGO_BUILD_JOBS='2',CARGO_INCREMENTAL='0',PYTHONDONTWRITEBYTECODE='1');os.environ['PATH']='D:/Projects/strling-lang/strling/target/release-packaging/python-windows-3.12.10/tools;C:/Users/timdi/.cargo/bin;'+os.environ['PATH'];assert subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()=='f8ef1a62be536981927e36a19587f96edb69f911';assert not subprocess.check_output(['git','status','--porcelain']).strip();result=subprocess.run([sys.executable,'-X','utf8','D:/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62/probe_signed_reference.py']);assert not subprocess.check_output(['git','status','--porcelain']).strip();sys.exit(result.returncode)"
+      ],
+      "exit_code": 0,
+      "seconds": 39.72636904800311
+    },
+    {
+      "stage": "isolated-reader-entrypoint-admission",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "-c",
+        "import sys;sys.path.insert(0,'/mnt/d/Projects/strling-lang/strling/target/release-candidate/reader-f8ef1a62');from admission import admit;admit('immutable-reader-isolated-reader-entrypoint')"
+      ],
+      "exit_code": 0,
+      "seconds": 11.472463942016475
+    },
+    {
+      "stage": "isolated-reader-entrypoint",
+      "source": "f8ef1a62be536981927e36a19587f96edb69f911",
+      "command": [
+        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python",
+        "-I",
+        "/var/tmp/strling-candidate-verifier-f8ef1a62/tooling/candidate_integrity.py",
+        "--help"
+      ],
+      "exit_code": 0,
+      "seconds": 9.488763762987219
+    }
+  ],
+  "test_files": 20,
+  "resource_class": "compiler-capable",
+  "performance_admission_used": false,
+  "private_key_read": false,
+  "publication_authorized": false
+}

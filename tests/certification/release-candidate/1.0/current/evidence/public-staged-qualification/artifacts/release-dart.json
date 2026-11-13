@@ -1,0 +1,249 @@
+{
+  "artifact_id": "release:dart",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [
+          {
+            "command": "dart pub add strling:4.0.0",
+            "executed": false,
+            "status": "passed"
+          }
+        ],
+        "exact_install_commands_found": 1,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "8a6da80d54f423f181eef3ff20a90541a6d902de161fbe9ed24c773975a01e27",
+      "source_path": "bindings/dart/README.md",
+      "url": "https://evidence.example.test/bindings/dart/README.md"
+    },
+    "provenance": {
+      "sha256": "5ea3dc3f183028e5ced5d2eaee6d039dcf64810ced1ee83ed418b38a87d51ae0",
+      "url": "https://evidence.example.test/release-dart.intoto.json"
+    },
+    "sbom": {
+      "sha256": "3cab26b6398044838f2268e0b1e06a8bd80d592aa662e0362ecc63baa97dd85a",
+      "url": "https://evidence.example.test/release-dart.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 1.4521902980050072,
+  "metadata": {
+    "fields": [
+      "dependencies",
+      "description",
+      "environment",
+      "name",
+      "repository",
+      "version"
+    ],
+    "status": "passed"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:dart:coordinate",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:dart:metadata",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:dart:artifact",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:dart:source",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:dart:sbom",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:dart:provenance",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:dart:documentation",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:dart:scope",
+      "platform": null,
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:dart:linux-x86_64:installation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:dart:linux-x86_64:public-api",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:dart:linux-x86_64:product-version",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:dart:linux-x86_64:canonical-compiler",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:dart:linux-x86_64:native-wasm",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:dart:linux-x86_64:target-compatibility",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:dart:linux-x86_64:kernel-rejection",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:dart",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:dart:linux-x86_64:isolation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "05882f1403bee2da1df1ec52a50b9d7e3505e3c61bb5dc41a877690f16b9b0e4",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "target/release-packaging/dart/.pubignore": "79518aa37638aa719ff7e62b5a10c6111d781a26c9c4cee67bd1963b5b5c6416",
+    "target/release-packaging/dart/CHANGELOG.md": "1287099a08f38a6f426f3fe3f4aa9be74cb63115a36264774041bad158f42e6e",
+    "target/release-packaging/dart/LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "target/release-packaging/dart/README.md": "8a6da80d54f423f181eef3ff20a90541a6d902de161fbe9ed24c773975a01e27",
+    "target/release-packaging/dart/lib/src/native_client.dart": "9ed48a351034c97176f832dee81ab7bc7a5b85c89cffa56aea9e6ba7a83259eb",
+    "target/release-packaging/dart/lib/src/requests.dart": "3aa99fb17a4e43034d8ca9105007b54e6559d1b93d5a1d5e8b0b46ecfd61bbab",
+    "target/release-packaging/dart/lib/src/stdlib_generated.dart": "a6f4c643c8f9c90e55c50b46c0627acebc103ab898782e729f044d1677992f91",
+    "target/release-packaging/dart/lib/strling.dart": "d8db189ca74c915555ce44955a18f3353b06db88c3aa6a4097071ec28c51d0e4",
+    "target/release-packaging/dart/pubspec.yaml": "e2a34f42205378364918ec8956c8b697bebe9e96287b3ac78e731f89e77a7466"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://pub.dev/api/packages/strling/versions/4.0.0",
+      "sha256": "24faa97526a2845df3e9eb408f4d48d39b5f8224ab15cce912552dca5aba9638",
+      "size": 476
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://pub.dev/api/archives/strling-4.0.0.tar.gz",
+      "sha256": "da3a26c8684d73c4ff51567c9dc5739a94b8a4b0098bb1103a2e102c8cb78bf6",
+      "size": 9721
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-dart.spdx.json",
+      "sha256": "3cab26b6398044838f2268e0b1e06a8bd80d592aa662e0362ecc63baa97dd85a",
+      "size": 84868
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-dart.intoto.json",
+      "sha256": "5ea3dc3f183028e5ced5d2eaee6d039dcf64810ced1ee83ed418b38a87d51ae0",
+      "size": 5025
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/dart/README.md",
+      "sha256": "8a6da80d54f423f181eef3ff20a90541a6d902de161fbe9ed24c773975a01e27",
+      "size": 2427
+    }
+  ]
+}

@@ -1,0 +1,3542 @@
+{
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "annotations": [
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"java-maven\",\"inputs\":[{\"path\":\"bindings/java/pom.xml\",\"sha256\":\"1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.strling:strling-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-PARAMS-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-params\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"01dc264320a1a1ccf5bb624455393cf58dd3b84c0f9dc206eb57a6f1be04a9ec\"}"
+        },
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"jvm-maven\",\"inputs\":[{\"path\":\"bindings/jvm/pom.xml\",\"sha256\":\"6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"net.java.dev.jna:jna\",\"reported_license\":\"Apache-2.0 OR LGPL-2.1-or-later\",\"selected_license\":null,\"version\":\"5.19.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"5672bc3a0842e83f04176f25c7f25f72804fae88b67e6c7b3eed3f5ee0b4be49\"}"
+        }
+    ],
+    "creationInfo": {
+        "created": "1970-01-01T00:00:00Z",
+        "creators": [
+            "Tool: strling-release-supply-chain"
+        ],
+        "licenseListVersion": "3.23"
+    },
+    "dataLicense": "CC0-1.0",
+    "documentDescribes": [
+        "SPDXRef-Package"
+    ],
+    "documentNamespace": "https://strling.dev/sbom/java/7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a",
+    "files": [
+        {
+            "SPDXID": "SPDXRef-File-1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "17f2da4d353bfed45d84425527e3f3d94449a8ca"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/pom.xml!/pom.xml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-2",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-3",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f97439c75cd300c33990c8b76b8d12ce92a2671fabcd1cc1bbbadd1b334c3d72"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "3b0f4cedd70412328d25c496e4b0397d05a422f1"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/allclasses-index.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-4",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "fad170f05b88db45dfff24856eed797d41ab20ebbc69612d339d9be25b86e13b"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "d4a38319d1306f5d39778952b1d7ea3143001c93"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/allpackages-index.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-5",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "4954b144dbb720ab80f98034081ba8b0cf6b4789e9ccdd8380f91690ba28b005"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "952ae85af93b6284b630bdddc19c4883e3f9d5b4"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/Compiler.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-6",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "95ca7bb171e627b56cfa144ec776103b8676340b628af77f6773124883628e72"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2075cee48912c803fdae59ef413ed560de4b6169"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/SourceCompileOptions.Builder.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-7",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ad4b7d712dc22b3c3a4bb6387f9ad6770b7822fda77144448a1a44c13dcb2209"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c2cfad41a711a1c35ffd87dbde42a1860d31f0de"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/SourceCompileOptions.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-8",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "459daffc9f718e3b824e86756e659c1b3b3b56abe60a6b34a8c88a2494c79653"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "b3184938f27883f3899f2f792ee83dfe9eb982b9"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/Strling.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-9",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "5d002da9ddd22d06127da4eae2a4ab99473a0719065d57ea1018738a1d66c051"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "e1f204b4254c2e92489d08d5db4bb9204dc888d1"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/package-summary.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-10",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "92115425d09d8c0c270f15433520f93bcfad1bf050bb5cd369d07ceb9b8f5bab"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0226c6cb6f474b7dd226fcf0257d03c0867768e6"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/package-tree.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-11",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8f8d545f44d81d6c9a9c3cd2112e12647654e5c4e3d625b2230e7a987294c986"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "ccfcc4b0999529a385565d050eaf58eaea7a0069"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/Essential.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-12",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "371b0eaf830b99531a084b1cc9075eab865b6b6d25e99bea41d33d9a5c1c3c16"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "85a049a64b65a57f5a28601432c5bd0d8f13e4be"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/Pattern.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-13",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "d7cc3badd481b78104afc30eaff0930a391cf05484e3ae6cc0c78e2378e1504e"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "55436fb8aa959a9abd43595df91c9718cead07ab"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/STRlingError.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-14",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "0eea92ea037a21cfce9e7c6c775906d694f8f2e24b56627fb883ace8e4b82901"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0b19eb0321541a16d3ae3d7dd0270451a682147c"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/Simply.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-15",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "39812094a526c31b8e099d87bbb595102c4ae98c272f5cbf4b911f1ff717c98a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "733462fc152ebbe31825fbdcf4ce8f0b2b843cc4"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/SimplyBuilder.Value.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-16",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "a6d5168f8d2a9bd300f211f63a1e9e016d896803f10c7e59560e67a9d0719594"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0b58352a43e6fac0881d0d46ef14feb5342dc74a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/SimplyBuilder.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-17",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "2bd7a945beb6b20c57b2a43b02ded2ab46dc005522227908715ee0a3de473dea"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "fad92916308a0c69e8f30e8cfad8ea41d43bbbc2"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/package-summary.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-18",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b9a37ffa6d72bf36a9675ae8eb56a2e356456ef9c9160f586eee08dc3aad776a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "4b121f800fe4f1cecb791b6ad446866a7f1dc1db"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/com/strling/simply/package-tree.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-19",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "0b82fe5107de1dd475b230070fb317509b2d67c5ca9d5bce43cf7163df4c170b"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0b536724d68d97a2cbe7341c5f09ff8a55da562e"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/constant-values.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-20",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1c574ce1ecfa8062de661058f85c6eeb4490b04a586255c5ec8327da1f315810"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "84faf35cdc3050d39c0c6d7fcb259b8fb9449433"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/copy.svg",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-21",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "acb575a0e4bdaa9d6aaceb08f3b11b6817bdc7c95cdbada038cb23d347b0f796"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7f110ccf8db72cb384d75a93fd932ac1c1e168ac"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/element-list",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-22",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "eb56478f277c3005c9191df5f90b53fc9e33b78842f3365908a5cccd8e8d46e3"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8e0992a7a024ab4ff2d1c761babc95660084632e"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/help-doc.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-23",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e1c6eab45e3001d0130da4d29ee1110cb0ac5eb37bc4de7665eeddc83e66b3a5"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f010647ff0ed16f42a6862d7d7b9be4fa80fec0b"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/index-all.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-24",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "60a98e6fddcc8658135ea815717e41884c75c922ce612190076c9938c64d61de"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "3bb5e101c1a422de0a6323aba64b9a6006372720"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/index.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-25",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ebf9777bd307ed789ceabf282a9aca168c391c7f48e15a60939352efb3ea33f9"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2db86ab706d9b73feeb51a904be03b63bee92baf"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/legal/ADDITIONAL_LICENSE_INFO",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-26",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b998cda101e5a1ebcfb5ff9cddd76ed43a2f2169676592d428b7c0d780665f2a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "24e7497426d27fe3c17774242883ccbed8f54b4d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/legal/ASSEMBLY_EXCEPTION",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-27",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "86e0516b888276a492b19f9a84f5a866ed36925fae1510b3a94a0b6213e69192"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "51ab20e8c19ee570bf6c496ec7346b7cf17bd04a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/legal/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-28",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b68f454c2bd58959c862d94bf0f16c3f78a2d537388ca060d354344db80ee695"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c04731482fa510d5d37ce7b9e751b15dd49daa28"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/legal/jquery.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-29",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "7854d2d568992ae25ff65867bd9021d655f70670142f0796b29a3b0621f19530"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1f548afcb55feb46be9fbe4683a61f9418142d0a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/legal/jqueryUI.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-30",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b34d4d91b8c735a19e842bec9f94edca8267408696ed22651f8a1ad8aea2186d"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0e223709777f3ab8588258a2fdace2e4939b1204"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/link.svg",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-31",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "4fa401ec468ce0a7616817394f24dc18c89a115b89ac155a219acb5ecf437274"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "726ec7a3e21598eb78d38af9ab7957b356fdded1"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/member-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-32",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "814a05983e3267d591c7e62b314eb8eb0504eee844c8a70d494f6edbaa0f4f18"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1e996ce630c6e1ada3ea86d7b71dabca0180f8e8"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/module-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-33",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b19b7074b14f0ed125664e7a6c65c7069903cf983279b1388389504cefd34bf6"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5f0124d869e04f76165baf33653f80a540da419e"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/overview-summary.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-34",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "4cdf70d6c1e3c4b4add35374ba10bdc345141f7923de7a4e68405dfd25b765e0"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "d78d48aed06a308bbf7e2e0390869b3cfa3c0df8"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/overview-tree.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-35",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "4eacd14f0323acc671ea6b3abdcd0d99cde9e387f6ec71ecf88e056a47a48490"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2ae4357975e5d56f37c08d99ce3ad06ee58822ee"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/package-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-36",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "60d5f059f11c5f61f77f612a2c82d2a89eb6f25b19d68c51ae3e1d44ead7c1ca"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5ae428dd5bc05edd1ddf74af99255de5653a6718"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/resources/glass.png",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-37",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "027f0ed28329634be645932e1ab7c321bf27b8cfaf9aed30f2cbf5ee4478952b"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f15abab0efbfa474320e005079c3d8a82bd5be71"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/resources/x.png",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-38",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "ee48592d1fff952fcf06ce0b666ed4785493afdc"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/script-dir/jquery-3.7.1.min.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-39",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ab01f1e5d951f9cfa5fed84d37004ba30724d0befcde1d6b6fcedf7041936244"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8abca4680047aed9a105211591b25438e02de273"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/script-dir/jquery-ui.min.css",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-40",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "4c0b2b6513452adf188402da32faea446b326e0a3362eda6fa8603e73594a567"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a3df331b23b1dc7d01d219cf426ff3148da3ac33"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/script-dir/jquery-ui.min.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-41",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "32fadb85ff242addcdf29fab11f2bf7b8f54a57940a139cd0c2184cb367d5cff"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "56f02c6cb044b2928ac4e7164e75f33c41b1223a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/script.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-42",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "37623854ff202a88def5af9b685fe8de58f8ddf26870fcef12580501a6b6b1b8"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "b390781c9eb02ccf6e5862a1a7f81eaf73acebd6"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/search-page.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-43",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1386eafd6fa346e697d581ed21c9193288d116b5ca4118896e8d0fee82c81a81"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5013142ada38ce1d3c31e778ae1c0891914833c9"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/search.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-44",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "6476e1549b85d0f3f5490d16c5d86089cb6ba1f6c65ce2c661697ee46f3c451a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "830c702e5a5ff4ce7955256dc230bddb2b9d4b24"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/search.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-45",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "12d8c306e9a527f5cf501bed461a4c64f7230725f566f7f1f4ee1bdc8b642bd2"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f4753e609ec4e4cc7a5672483104c0eae01d42e6"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/serialized-form.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-46",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f295f5a86ebf7ea4c1588d4a59846893ac673dad21d81416ca55119f60ecb558"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a15b88a65d6e3c4d759e858f73d4c71fed378893"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/stylesheet.css",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-47",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e31bd7c6847cd8b49a884fe01244f740ad184cdb7aa6449830be21985158f0d9"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "4d0358e131242bfb1a29d1db368e9e24381ad979"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/tag-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-48",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "12f150258767ce51ff7633f3482bc2488f807188eae61e817b3fdd095e9b5b7f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2f78bee3addb650fbdf30bab65b2cd86a5e85ab4"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-javadoc.jar!/type-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-49",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-50",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "402d4316a9590a8caed0071c54243949fd8117d0eaad4beaeaa118b43cca7dfc"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "10b0a788bd705156e308a801a5f2cceb57fe2200"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/Compiler.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-51",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "096f0340f1839fc7fa0eb96e8cd48a78d5ed69bae82af71f6236d1d714769054"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2987abbf5251d389cbd80b6187a69bcab23c4d61"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/SourceCompileOptions.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-52",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "06ed484c4344d055cb36e495b63e588ed237caa880422efc1f48faee26fbe31c"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "778e80225c9ec584c6e4c3f994bacf7aeaf689f7"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/Strling.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-53",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "a8c097cb0661d750691cd555c78051b2783787a172295e95fe507ecaa001fc50"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "d6730f920d506f4854829c083a152d41bcd10329"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/simply/Essential.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-54",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e40f4192ef3ab571a1a69d2746218d936b539610eda2b647fa1e474b88273292"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "80ae29c63b74fb668fd30a77ebe7c0995590fbcc"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/simply/Pattern.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-55",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "2b85a6458d1053af9252199a398ca5c02cd6b9de6f86c78a3132a5a35be891aa"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "e5405409362c783c355d16e443eecc5f448933dc"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/simply/STRlingError.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-56",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "d6e5a348199cc6326d1b93daa7bc70832230bbb840a76ba6c598d7fdc3b44e03"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "35ef5723b32a55527c1ad0d3f785227d4e5a8ef8"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/simply/Simply.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-57",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "733d748d967119c65a8ab6f1201c6c0a3edb1f1a7ad1d830588727e976ef1766"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "b813d90da215b8e7f9b5683806424d9c0811c428"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0-sources.jar!/com/strling/simply/SimplyBuilder.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-58",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-59",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8ef19699a3672226baa7a2419c01b023200134eca343c1949255670ea1b30ade"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a4a1231628bdb5afe4d397bb7ef2643578dc0f73"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/MANIFEST.MF",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-60",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "5c2666a32d7a177fe09301371b648c44d9feb6019142a3efbdaaa6202513c8a3"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "6f13160463d19cf7c30f4171370eb83b10e99faa"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/maven/com.strling/strling/pom.properties",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-61",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "17f2da4d353bfed45d84425527e3f3d94449a8ca"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/maven/com.strling/strling/pom.xml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-62",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "bb6defd78dc4b4dc16b669e1c8c7601415f3bb42573774353a757e05ff06f139"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "40ec563cfec0b0bfd9c8516a8334fde71b95d492"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/Compiler.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-63",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "0b1eddfb007b3c4ee933cf34273d6c70042d97b49c51332351620dd9d52fa2dc"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a896cb1f80722672fb707465fdbc7be5bd173464"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/SourceCompileOptions$Builder.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-64",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "3408a7e49b30242504cec8d8576290fae51c61a4ec3245ed3358f60417c6da83"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f74b936cfc612453d46cccbcb7794285a1ae162d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/SourceCompileOptions.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-65",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8c780fcc36181b67dc096d6741eac3278c183a3c6bd74c69a9b48c823a05638f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a1ef72cc192a50abd00e26af2dfff05a23238ae1"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/Strling.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-66",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "cef49502a15de8933918bf183836356af93ddd6211b9e4cfbb56631c61b001a3"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2e187dc47422dc89217d6a9d5d71ef38421ed0e4"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/Essential.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-67",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c9db2ab625d545670ac4000a450ed3da5bc99a3387b78909826cd2fcd51317aa"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f987761ee3b7bc012a14812c95ee65f0eb9ab894"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/Pattern$Context.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-68",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "40fd544698c7f689d3445224c3e7cd0d402aa652b50961245fd76cc86a520626"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "cbb4040363818daad4a8f8db65cd2f78068e7457"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/Pattern$Recipe.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-69",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "39c444746cbe2fbf1d6fb02feafd87bbec3165ca0d4ca0f8db7b4008429bb912"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "126dda25a2c096c2fcb3390e0f092d0159f93ce1"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/Pattern.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-70",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ef2067e55f90e04c3d2582e6f43ef78a4be197d59185392102900648193d8e1a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "ec2920a5050ce8a4fd39fee899e31fc40df0f012"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/STRlingError.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-71",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "229e2872ad30b4e86a3f1b528e27810d3a56dfed428decf21aa5f1bdf34490d7"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1679cfb6bd76fbbb6a00e5a406477fcc51357119"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/Simply.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-72",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "295171a950d612a69e6d9b1925e72280ca4f608b944e51b81dcd6f848050bda3"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "89027bba38f4df493c50900176e2d5faa1172c38"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/SimplyBuilder$Value.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-73",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "d933f6e3549d957e6df3d85101e88454e2f20e4fc87c2818ab39175b2ebf7a00"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "803bfbe36e68d5d2e295621d58c6d8d1e0169878"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/com/strling/simply/SimplyBuilder.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-74",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "e2e87f1a2512f6277601cf0c1daf201217a9a163"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/pom.xml!/pom.xml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-75",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-76",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "5469cbffdc6530fff3a89daa1da4a6ff87753b08be41112509cfbff15abca941"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a952c73c8435589e9392c18f618f1acd8acd1a08"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/allclasses-index.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-77",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "d14b0f6e568ef606a48730d17820071691849cb82992fa3de86e52d36367515f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a274953b1b329772146b35c0438e0312640fd4d5"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/allpackages-index.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-78",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1f31c29a1cdc5d22804cac35d3e0c8db4ac3b42b6065dc4fb86f589633f0c456"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "e63a9f3f9dd6f623458f7bbe6bfdb7c65f161315"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/AbiMismatchException.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-79",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "01a725adbdcbe24f9be2637832e9f69618e4e927232193a928b1f09b2ae06c7e"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a5be77990b2f40661dd386220f4708bb930f61fe"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/ClosedClientException.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-80",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1845bf5ece84c637ba0379f4e0e37ea86571e3791360558abebe279757139063"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0279944613daecc46d80f446a309b46ca7bd8a08"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/NativeAdapterException.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-81",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "3ec31ab621d53366a635f86759c3649f2cafecdcc6b38b81e931129ca3d6d4c0"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "ddb2b084daa7a3f521f5eda49c69aa1237ed12b9"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/NativeClient.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-82",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c6e43c9572c4cecb10d34a6708d68e7374d2400d49ac6f2a002d1c04b390e0ed"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8ffc0af0a4731f45824f184f29911f3188345658"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/NativeLoadException.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-83",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "cd9666c534cca9c11b8d49e0578afefcc2bac6d3b2b583213f2882a3ce98f4e3"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "542382c28a94f460f0a2ea7f3226e137a3658b72"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/ProtocolException.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-84",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8b0eae764f08f6c4518f23cf2dddb66d4ea534c2d4ce4535359587a53ecdc0d8"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1579097fd89ad819a18886fc6983a74c886b5dee"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/TransportException.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-85",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "fbb128b63d430199cee7bf80a56c2159420177f33e040e9e9aff3104d0068111"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2afa160e87d81833d1311fb64f609c97496d0362"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/package-summary.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-86",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "dfacfcf6fc52e4e5a28c607193c16752ab12b278876ce2f489bcb4c782a8f8b7"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "e82994e6d38b3ae2aa8191eb43ad891a29a7225f"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/com/strling/jvm/package-tree.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-87",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "08f6fc2ba078401a3751968d5872583f02be412ad621363d3f83ce62b92a0bcd"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "cf6b3b1bc348efeb146ccfc8a212756b8f4e1477"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/constant-values.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-88",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1c574ce1ecfa8062de661058f85c6eeb4490b04a586255c5ec8327da1f315810"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "84faf35cdc3050d39c0c6d7fcb259b8fb9449433"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/copy.svg",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-89",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "546459abdf6b09fb114df8e1a1e6027e5915af66bce2a853c44b63d44d7aa7df"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f3618bcc2cc9472981eccf1b4c0cb175b260db9a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/element-list",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-90",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f2c26d8c7cfe246d63e24dcd215a636dd3505b8258b29c9918c46e9595d671f3"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "13347b8ef6a8f16e35bc3dc8b0a2991629a00ca0"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/help-doc.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-91",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "9ea7b1b659993fcd97aa81128c4ef735608220b25baf70e0ffe86b3a967d15a2"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "78ac3a34614cda5af01d00f7674fa27737fabceb"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/index-all.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-92",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b213c5b250b485ff34bf8c3403d70f16cc8debc166e807bb4a60ca0f542f414f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "9444fd8d44ad813b2f0c6c49974da588e6405ce5"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/index.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-93",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ebf9777bd307ed789ceabf282a9aca168c391c7f48e15a60939352efb3ea33f9"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2db86ab706d9b73feeb51a904be03b63bee92baf"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/legal/ADDITIONAL_LICENSE_INFO",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-94",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b998cda101e5a1ebcfb5ff9cddd76ed43a2f2169676592d428b7c0d780665f2a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "24e7497426d27fe3c17774242883ccbed8f54b4d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/legal/ASSEMBLY_EXCEPTION",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-95",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "86e0516b888276a492b19f9a84f5a866ed36925fae1510b3a94a0b6213e69192"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "51ab20e8c19ee570bf6c496ec7346b7cf17bd04a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/legal/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-96",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b68f454c2bd58959c862d94bf0f16c3f78a2d537388ca060d354344db80ee695"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c04731482fa510d5d37ce7b9e751b15dd49daa28"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/legal/jquery.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-97",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "7854d2d568992ae25ff65867bd9021d655f70670142f0796b29a3b0621f19530"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1f548afcb55feb46be9fbe4683a61f9418142d0a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/legal/jqueryUI.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-98",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b34d4d91b8c735a19e842bec9f94edca8267408696ed22651f8a1ad8aea2186d"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0e223709777f3ab8588258a2fdace2e4939b1204"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/link.svg",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-99",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "7d152e4ff6d617ca9feb31f7a0bc34453848c3cf07929306d5dbc8ff1da5b268"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c7f925560a49b973f5c58fa3162c98ad589357ba"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/member-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-100",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "814a05983e3267d591c7e62b314eb8eb0504eee844c8a70d494f6edbaa0f4f18"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1e996ce630c6e1ada3ea86d7b71dabca0180f8e8"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/module-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-101",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "7bd1277ea5882f99df632b991cb23081a346b8be354f181fd2346a4d52535b33"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2b559d8e849c4c2f6eb21f267afe073882321e25"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/overview-tree.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-102",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "272919a457feb22b7b90c5419a7e3cd39fe4ef7f23319cb81d3a15262e8c90fa"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f05b841119d6eaae6d8c7fad55e0883dac58c446"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/package-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-103",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "60d5f059f11c5f61f77f612a2c82d2a89eb6f25b19d68c51ae3e1d44ead7c1ca"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5ae428dd5bc05edd1ddf74af99255de5653a6718"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/resources/glass.png",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-104",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "027f0ed28329634be645932e1ab7c321bf27b8cfaf9aed30f2cbf5ee4478952b"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f15abab0efbfa474320e005079c3d8a82bd5be71"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/resources/x.png",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-105",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "fc9a93dd241f6b045cbff0481cf4e1901becd0e12fb45166a8f17f95823f0b1a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "ee48592d1fff952fcf06ce0b666ed4785493afdc"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/script-dir/jquery-3.7.1.min.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-106",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ab01f1e5d951f9cfa5fed84d37004ba30724d0befcde1d6b6fcedf7041936244"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8abca4680047aed9a105211591b25438e02de273"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/script-dir/jquery-ui.min.css",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-107",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "4c0b2b6513452adf188402da32faea446b326e0a3362eda6fa8603e73594a567"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a3df331b23b1dc7d01d219cf426ff3148da3ac33"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/script-dir/jquery-ui.min.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-108",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "32fadb85ff242addcdf29fab11f2bf7b8f54a57940a139cd0c2184cb367d5cff"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "56f02c6cb044b2928ac4e7164e75f33c41b1223a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/script.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-109",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "37623854ff202a88def5af9b685fe8de58f8ddf26870fcef12580501a6b6b1b8"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "b390781c9eb02ccf6e5862a1a7f81eaf73acebd6"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/search-page.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-110",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "13ebc023e17bcf9b13f68657ff13716b5e83671485a90ee18390eb7eb1657557"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1217d79c213e78cf6ad98336e2e63e3a828b6b4f"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/search.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-111",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "6476e1549b85d0f3f5490d16c5d86089cb6ba1f6c65ce2c661697ee46f3c451a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "830c702e5a5ff4ce7955256dc230bddb2b9d4b24"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/search.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-112",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "6ac276e1631b13ca828b3d74ad6c360d1977bc43479b842a4a6f00adf3d54a32"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "620092ab041474e794689b470bc48f643ff25a77"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/serialized-form.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-113",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f295f5a86ebf7ea4c1588d4a59846893ac673dad21d81416ca55119f60ecb558"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a15b88a65d6e3c4d759e858f73d4c71fed378893"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/stylesheet.css",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-114",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e31bd7c6847cd8b49a884fe01244f740ad184cdb7aa6449830be21985158f0d9"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "4d0358e131242bfb1a29d1db368e9e24381ad979"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/tag-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-115",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f6b23a65ec5d71782d6fabc9a92d00468e3c587186d6fe96a319497fc7f86587"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "b41d5ce30c37dffcb4a29d2129eb8d6bae3f0d72"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar!/type-search-index.js",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-116",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-117",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c21a6d5f1423571afdadc808067432d490aff9297bfa741c32b576420ba590b1"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "62491d50ea44401e00b4f57602a905c2e4c0c0dc"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/AbiMismatchException.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-118",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "9a393b1a21b0f55acd2db2eed57b33cd486c51a6ec5d1e1c7f4f96380aa3d390"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a39c92dc7102c8ec3b5101f91f2b77657ca2d402"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/ClosedClientException.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-119",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "33b2d7cbe8e199a130d9653ce57987567fdb3968a853a8044f4ebeaa7fc13482"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "aad958d40106540c9dc6ffb1c2745fc002525d3d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/InteropLibrary.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-120",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "cb1b458905cb821b4d12487b23c69488b2d0476c4ef1eec238b46b6c20c65e7f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a8628664d8b91075dd383ba27fc0704811c70907"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/NativeAdapterException.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-121",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c88597b9e2ffeb165f2cbadce157ed8ff09fa2595b005d1403ab9f621d58c82b"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "55f9d7e2a775d1f9d156627450e78cfa1feca960"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/NativeClient.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-122",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "a4a9370fba8159144f27d0626c0520aedfe3bd1e4aaee652ba957ef218612542"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "18f2e5c85ad8bc2aeaf651eaa0351cd8c6ace0de"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/NativeLoadException.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-123",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "66a33d5098202b3c4789a8e3794cc77619fd2d8219ada0e47444c25858fa2ff0"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "2d8019becd9ad1119fe83651e66af3d037e90ca7"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/ProtocolException.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-124",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "376e846471dd57737f03049b68dcc97352a6fdf253bbac3698640d5f5a8f196b"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "97dbd4e507fe01bcdeb01067e388f027b4e213f3"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0-sources.jar!/com/strling/jvm/TransportException.java",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-125",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-126",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8ef19699a3672226baa7a2419c01b023200134eca343c1949255670ea1b30ade"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a4a1231628bdb5afe4d397bb7ef2643578dc0f73"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/META-INF/MANIFEST.MF",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-127",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "006257b26c382601c798e98b4e0b8cac38c3a56df146db98648731d95f8c3f25"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7cb793cebab61a1fa44deacd3e6db91f68ee39cc"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/AbiMismatchException.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-128",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "f6dfe52352f952a08b072a405a424554e40c3f4d6fcf44ed20da9418f57655ef"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "99a16e29e76882c3ac6ddd5d6a6bbcc120f9560a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/ClosedClientException.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-129",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c5b0f2ff768060ce8b3aa08f992bd86c33f686c9abcf9f179fe7211b9dec654f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "20297b3db60461ab196a4587ed3027fd65674637"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/InteropLibrary$OwnedBytes.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-130",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "038dbc157b15ceed5ec1c26ecc4a73a5057a64542fc955500b566442b23f2ce6"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "58be769fcf387145d124ed256c4288ade07c0fa5"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/InteropLibrary$SizeT.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-131",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "3f311e60e66b7a6d297b6067ab4239458ffef65da9d46865cc1cbde59e8a7bd8"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "559cf1fb7a94018fde2b6753a0325a82fdca584a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/InteropLibrary.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-132",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "3d7cea42b8f0bb00c220d1ad6628008c8583e758e46aa859c605690ef33557ba"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7f425542f7b1d5c1c3a7ef24ca36db4ee420dd82"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/NativeAdapterException.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-133",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "78a445066d6d0d59924bc7b5776dc68ee6eff7c4fdb1d72bec410fb855098a5d"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "9e08e7e16ff80e0de5eb76889f3a7ed7dce51106"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/NativeClient.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-134",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "727df32c1a1b7e51d5a288584d8ff9b526c1fad57e142f815bffd2f86b4696e6"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "36ab26fdbd60d9722e830d11e5e9c0c15f458e18"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/NativeLoadException.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-135",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8b159233286462131a0bb55adbbb84a2229bc505fb13151b44a3915535eaed8d"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5a62bba7de6f846e26c0cf0c3686d4198c7f5b9b"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/ProtocolException.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-136",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1beb59fd664b6c138672cb9c3daa07e941482fc79bb8f84be6d9bd79a6342a71"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "aeef0b173ead534982e1fe4a117bc239c179c2c9"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.0.jar!/com/strling/jvm/TransportException.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        }
+    ],
+    "name": "STRling java release artifact",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-Package",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "release:java",
+                    "referenceType": "strling-release-surface"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "NOASSERTION",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.strling:strling",
+            "packageVerificationCode": {
+                "packageVerificationCodeValue": "816e713c3a0b0a5073ba6e4f73fef30747f79be9"
+            },
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-1-618a86aa483b",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"java-maven\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"com.strling:strling-jvm\",\"version\":\"4.0.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.strling:strling-jvm",
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-2-0ee4f4efc594",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"java-maven\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.jupiter:junit-jupiter-api",
+            "versionInfo": "5.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-3-93ca34c84d06",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"java-maven\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.jupiter:junit-jupiter-engine",
+            "versionInfo": "5.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-4-6703850ec680",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"java-maven\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-PARAMS-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"org.junit.jupiter:junit-jupiter-params\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.jupiter:junit-jupiter-params",
+            "versionInfo": "5.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-5-083df28004f5",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"jvm-maven\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"jvm-maven\",\"ecosystem\":\"maven\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"version\":\"2.18.11\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.fasterxml.jackson.core:jackson-databind",
+            "versionInfo": "2.18.11"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-6-ac1a4f76c23d",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"jvm-maven\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"jvm-maven\",\"ecosystem\":\"maven\",\"name\":\"net.java.dev.jna:jna\",\"version\":\"5.19.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0 OR LGPL-2.1-or-later",
+            "licenseDeclared": "Apache-2.0 OR LGPL-2.1-or-later",
+            "name": "net.java.dev.jna:jna",
+            "versionInfo": "5.19.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-7-b9ed73d98cc2",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"jvm-maven\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"jvm-maven\",\"ecosystem\":\"maven\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.jupiter:junit-jupiter",
+            "versionInfo": "5.10.1"
+        }
+    ],
+    "relationships": [
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "DESCRIBES",
+            "spdxElementId": "SPDXRef-DOCUMENT"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-1",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-2",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-3",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-4",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-5",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-6",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-7",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-8",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-9",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-10",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-11",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-12",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-13",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-14",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-15",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-16",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-17",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-18",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-19",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-20",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-21",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-22",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-23",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-24",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-25",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-26",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-27",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-28",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-29",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-30",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-31",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-32",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-33",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-34",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-35",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-36",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-37",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-38",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-39",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-40",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-41",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-42",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-43",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-44",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-45",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-46",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-47",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-48",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-49",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-50",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-51",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-52",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-53",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-54",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-55",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-56",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-57",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-58",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-59",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-60",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-61",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-62",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-63",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-64",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-65",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-66",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-67",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-68",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-69",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-70",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-71",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-72",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-73",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-74",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-75",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-76",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-77",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-78",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-79",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-80",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-81",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-82",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-83",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-84",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-85",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-86",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-87",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-88",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-89",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-90",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-91",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-92",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-93",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-94",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-95",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-96",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-97",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-98",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-99",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-100",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-101",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-102",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-103",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-104",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-105",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-106",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-107",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-108",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-109",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-110",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-111",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-112",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-113",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-114",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-115",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-116",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-117",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-118",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-119",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-120",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-121",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-122",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-123",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-124",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-125",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-126",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-127",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-128",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-129",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-130",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-131",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-132",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-133",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-134",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-135",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-136",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-1-618a86aa483b",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-2-0ee4f4efc594"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-3-93ca34c84d06"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-4-6703850ec680"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-5-083df28004f5",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-6-ac1a4f76c23d",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-7-b9ed73d98cc2"
+        }
+    ],
+    "spdxVersion": "SPDX-2.3"
+}

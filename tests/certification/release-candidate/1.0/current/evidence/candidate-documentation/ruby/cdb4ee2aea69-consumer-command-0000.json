@@ -1,0 +1,1 @@
+{"command": ["gem", "install", "--local", "--ignore-dependencies", "--no-document", "--install-dir", "/tmp/strling-preview-documentation-65bo_5e5/gems", "/var/tmp/strling-public-release-ea64d594-aggregate-first/bindings/ruby/strling-4.0.0.gem"], "exit_code": 0, "elapsed_seconds": 0.5457693169882987}

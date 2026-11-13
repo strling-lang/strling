@@ -1,0 +1,1 @@
+{"command": ["luarocks", "--lua-version=5.1", "--tree=/tmp/strling-preview-documentation-89e3p9f1/lua-tree", "install", "--deps-mode=none", "/var/tmp/strling-public-release-ea64d594-aggregate-first/bindings/lua/strling-4.0.0-1.src.rock"], "exit_code": 0, "elapsed_seconds": 0.7480985980073456}

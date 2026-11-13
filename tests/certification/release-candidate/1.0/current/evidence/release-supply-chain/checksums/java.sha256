@@ -1,0 +1,9 @@
+# surface-sha256 7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a
+1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46  bindings/java/pom.xml
+c6018ab4222d79b58f4e27a7571460675d5f976b3e615a63432a22b7f54998b2  bindings/java/target/strling-4.0.0-javadoc.jar
+516c094b75282b88a0b7e3f67c5f59d02afd204eed83a8987bd2966b43bacc54  bindings/java/target/strling-4.0.0-sources.jar
+7df656da32f3814706ea0b513de69ab897d5309db93d323075cb33fdc59bbe2f  bindings/java/target/strling-4.0.0.jar
+6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21  bindings/jvm/pom.xml
+0273d518a29466b3d561a520c9b64b593bb7c05018b496fd817d3f30ae97b0f1  bindings/jvm/target/strling-jvm-4.0.0-javadoc.jar
+d298366fb796fbb1ed25f1145f921d32f270cea5d090ba459b81cc1f7061721c  bindings/jvm/target/strling-jvm-4.0.0-sources.jar
+1b9861ed7249b7fd572d317d8347f9a950f3658d6c5e3dc1cc59bc1c31cc942a  bindings/jvm/target/strling-jvm-4.0.0.jar

@@ -1,0 +1,335 @@
+{
+  "artifact_id": "release:python",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [
+          {
+            "command": "python -m pip install STRling==4.0.0",
+            "executed": false,
+            "status": "passed"
+          }
+        ],
+        "exact_install_commands_found": 1,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "5fcabe6766389f46e609aab4e90c5c00e54894ad7235505880e55a349d7642be",
+      "source_path": "bindings/python/README.md",
+      "url": "https://evidence.example.test/bindings/python/README.md"
+    },
+    "provenance": {
+      "sha256": "c29c17229170d3663c1450ff35d4b955444174b7414a1f8950ec9a5953e6907b",
+      "url": "https://evidence.example.test/release-python.intoto.json"
+    },
+    "sbom": {
+      "sha256": "1f1c28bdbe20be46468ca06242b3e14b71b22495704fedce52d9832c7d0eef15",
+      "url": "https://evidence.example.test/release-python.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.7914586650149431,
+  "metadata": {
+    "fields": [
+      "license_expression",
+      "name",
+      "project_urls",
+      "requires_python",
+      "summary",
+      "version"
+    ],
+    "status": "passed"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:python:coordinate",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:python:metadata",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:python:artifact",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:python:source",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:python:sbom",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:python:provenance",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:python:documentation",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:python:scope",
+      "platform": null,
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:python:windows-x86_64:installation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:python:windows-x86_64:public-api",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:python:windows-x86_64:product-version",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:python:windows-x86_64:canonical-compiler",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:python:windows-x86_64:native-wasm",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:python:windows-x86_64:target-compatibility",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:python:windows-x86_64:kernel-rejection",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:python:windows-x86_64:isolation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:python:linux-x86_64:installation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:python:linux-x86_64:public-api",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:python:linux-x86_64:product-version",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:python:linux-x86_64:canonical-compiler",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:python:linux-x86_64:native-wasm",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:python:linux-x86_64:target-compatibility",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:python:linux-x86_64:kernel-rejection",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:python",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:python:linux-x86_64:isolation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "fd2eda9fb7de03d718a0d24579182142af4772a1bae80f461eb7376552c9f52e",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl": "215a42984f4dd4eaf26423996364e8ff1f18493689df4a3f86c11503f2b0299e",
+    "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl": "2413ae458ad4f9f6a2b4db56be4e42e3e8a63fecd641618a4d0dcbb8e6125921",
+    "bindings/python/dist/strling-4.0.0.tar.gz": "347aa7041530e7ff3e6b3ce881399e994d11033653e6efdc1a590e3a4d5cfc5d"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://pypi.org/pypi/STRling/4.0.0/json",
+      "sha256": "851cf096bf267943e08b06c51bca0f1c60f4b52a8308ce150664b8b38a0099c0",
+      "size": 1123
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.0-cp312-none-linux_x86_64.whl",
+      "sha256": "215a42984f4dd4eaf26423996364e8ff1f18493689df4a3f86c11503f2b0299e",
+      "size": 2773736
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.0-cp312-none-win_amd64.whl",
+      "sha256": "2413ae458ad4f9f6a2b4db56be4e42e3e8a63fecd641618a4d0dcbb8e6125921",
+      "size": 1658226
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.0.tar.gz",
+      "sha256": "347aa7041530e7ff3e6b3ce881399e994d11033653e6efdc1a590e3a4d5cfc5d",
+      "size": 335533
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-python.spdx.json",
+      "sha256": "1f1c28bdbe20be46468ca06242b3e14b71b22495704fedce52d9832c7d0eef15",
+      "size": 193550
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-python.intoto.json",
+      "sha256": "c29c17229170d3663c1450ff35d4b955444174b7414a1f8950ec9a5953e6907b",
+      "size": 6020
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/python/README.md",
+      "sha256": "5fcabe6766389f46e609aab4e90c5c00e54894ad7235505880e55a349d7642be",
+      "size": 3985
+    }
+  ]
+}

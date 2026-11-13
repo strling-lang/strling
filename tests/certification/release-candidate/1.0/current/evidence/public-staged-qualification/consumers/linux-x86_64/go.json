@@ -1,0 +1,123 @@
+{
+  "artifact_id": "release:go",
+  "status": "passed",
+  "receipt": {
+    "document_kind": "retrieved-consumer-receipt",
+    "schema_version": "1.0.0",
+    "artifact_id": "release:go",
+    "scope": "linux-x86_64",
+    "product_version": "4.0.0",
+    "authority": "staged",
+    "status": "READY",
+    "retrieval_files_sha256": "ef9e3cf04994e8bcadd6b53d9c2d3977f8708682dd866f70bcbe9e6b55a1b008",
+    "fixture_sha256": {
+      "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
+      "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
+      "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77",
+      "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8"
+    },
+    "result": {
+      "kernel_mismatch_rejected": true,
+      "source_outcome": "succeeded",
+      "status": "passed",
+      "target_pattern": "abc",
+      "native_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e",
+      "documentation_manifest_sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e",
+      "documentation_examples": [
+        {
+          "id": "bindings/go/README.md#1",
+          "sha256": "ad52d6b021bbe4b8d031b0e4559967d4007dd29942d04b7ea15c4f799ee95652",
+          "status": "passed"
+        }
+      ]
+    },
+    "environment_keys": [
+      "APPDATA",
+      "CARGO_BUILD_JOBS",
+      "CARGO_HOME",
+      "CARGO_INCREMENTAL",
+      "CGO_ENABLED",
+      "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH",
+      "DOTNET_CLI_HOME",
+      "DOTNET_CLI_TELEMETRY_OPTOUT",
+      "DOTNET_GENERATE_ASPNET_CERTIFICATE",
+      "DOTNET_SKIP_FIRST_TIME_EXPERIENCE",
+      "GIT_CONFIG_GLOBAL",
+      "GIT_CONFIG_NOSYSTEM",
+      "GOPROXY",
+      "GOSUMDB",
+      "GOWORK",
+      "GRADLE_USER_HOME",
+      "HOME",
+      "LC_ALL",
+      "LOCALAPPDATA",
+      "NPM_CONFIG_GLOBALCONFIG",
+      "NPM_CONFIG_USERCONFIG",
+      "NUGET_PACKAGES",
+      "PATH",
+      "PIP_CONFIG_FILE",
+      "PIP_DISABLE_PIP_VERSION_CHECK",
+      "PIP_NO_INDEX",
+      "PUB_CACHE",
+      "PYTHONHASHSEED",
+      "PYTHONNOUSERSITE",
+      "RUSTUP_HOME",
+      "STRLING_MAVEN_REPOSITORY",
+      "TEMP",
+      "TMP",
+      "TMPDIR",
+      "TZ",
+      "USERPROFILE",
+      "XDG_CACHE_HOME",
+      "XDG_CONFIG_HOME"
+    ],
+    "toolchains": [
+      {
+        "id": "release:go:linux-x86_64:cc",
+        "artifact_id": "release:go",
+        "toolchain_id": "cc",
+        "status": "passed",
+        "version": "gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0 Copyright (C) 2023 Free Software Foundation, Inc. This is free software; see the source for copying conditions. There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+        "executable": "/usr/bin/x86_64-linux-gnu-gcc-13",
+        "executable_sha256": "1b99826121ae6682a634e5efe09bd3e3df58ce58e0b28f849114ab5b89139c26",
+        "scope": "linux-x86_64",
+        "runner_os": "Linux",
+        "runner_arch": "x86_64",
+        "policy_sha256": "80fa29cd89a30ddf857228934c5c0c5bc3aaf1c3b3330af9a1d593dc372ed71e",
+        "findings": []
+      },
+      {
+        "id": "release:go:linux-x86_64:go",
+        "artifact_id": "release:go",
+        "toolchain_id": "go",
+        "status": "passed",
+        "version": "go version go1.22.2 linux/amd64",
+        "executable": "/usr/lib/go-1.22/bin/go",
+        "executable_sha256": "38379bebce720e1abb72fa3232d3c7b07a4e71dd1e98fa5fcc6f9a56dd084a06",
+        "scope": "linux-x86_64",
+        "runner_os": "Linux",
+        "runner_arch": "x86_64",
+        "policy_sha256": "80fa29cd89a30ddf857228934c5c0c5bc3aaf1c3b3330af9a1d593dc372ed71e",
+        "findings": []
+      },
+      {
+        "id": "release:go:linux-x86_64:python",
+        "artifact_id": "release:go",
+        "toolchain_id": "python",
+        "status": "passed",
+        "version": "Python 3.12.3",
+        "executable": "/usr/bin/python3.12",
+        "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
+        "scope": "linux-x86_64",
+        "runner_os": "Linux",
+        "runner_arch": "x86_64",
+        "policy_sha256": "80fa29cd89a30ddf857228934c5c0c5bc3aaf1c3b3330af9a1d593dc372ed71e",
+        "findings": []
+      }
+    ],
+    "runner_environment": "local-staged-qualification",
+    "publication_authorized": false,
+    "receipt_fingerprint": "d626ae461d584ca2ed8d188aea6e557ce4541e76e042b3b48b17f310bf0c83be"
+  },
+  "elapsed_seconds": 68.25282190498547
+}

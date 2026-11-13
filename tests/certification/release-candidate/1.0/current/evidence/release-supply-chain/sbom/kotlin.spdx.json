@@ -1,0 +1,1826 @@
+{
+    "SPDXID": "SPDXRef-DOCUMENT",
+    "annotations": [
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"jvm-maven\",\"inputs\":[{\"path\":\"bindings/jvm/pom.xml\",\"sha256\":\"6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"net.java.dev.jna:jna\",\"reported_license\":\"Apache-2.0 OR LGPL-2.1-or-later\",\"selected_license\":null,\"version\":\"5.19.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"5672bc3a0842e83f04176f25c7f25f72804fae88b67e6c7b3eed3f5ee0b4be49\"}"
+        },
+        {
+            "annotationDate": "1970-01-01T00:00:00Z",
+            "annotationType": "OTHER",
+            "annotator": "Tool: strling-release-supply-chain",
+            "comment": "{\"id\":\"kotlin-gradle\",\"inputs\":[{\"path\":\"bindings/kotlin/build.gradle.kts\",\"sha256\":\"487549db41b4e9e48c6d440fba4e97121661ce91ab380cf03f59500651a4026e\"},{\"path\":\"bindings/kotlin/gradle.lockfile\",\"sha256\":\"285aa7334bccd3ed0a651cd058959ee06492f2689b26d6475343f9e682a34dd0\"},{\"path\":\"bindings/kotlin/gradle/verification-metadata.xml\",\"sha256\":\"21c8b008c9299abd9f85c41e6bde35f06ca30555cd22db6435363f0ee365d71b\"}],\"policy\":{\"ecosystem\":\"gradle\",\"integrity_mode\":\"gradle_lock\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-annotations\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-core\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.strling:strling-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"net.java.dev.jna:jna\",\"reported_license\":\"Apache-2.0 OR LGPL-2.1-or-later\",\"selected_license\":null,\"version\":\"5.19.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.apiguardian:apiguardian-api\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"1.1.2\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-GRADLE-TROVE4J-1.0.20200330\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.jetbrains.intellij.deps:trove4j\",\"reported_license\":\"LGPL-2.1\",\"selected_license\":null,\"version\":\"1.0.20200330\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-build-common\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-build-tools-api\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-build-tools-impl\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-compiler-embeddable\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-compiler-runner\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-daemon-client\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-daemon-embeddable\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-native-prebuilt\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-reflect\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"1.6.10\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-script-runtime\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-common\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-stdlib\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-test\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlin:kotlin-test-junit5\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.20\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"1.6.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.jetbrains:annotations\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"13.0\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-GRADLE-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-GRADLE-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-GRADLE-JUNIT-COMMONS-1.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.platform:junit-platform-commons\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"1.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-GRADLE-JUNIT-PLATFORM-ENGINE-1.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.platform:junit-platform-engine\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"1.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-GRADLE-JUNIT-LAUNCHER-1.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.platform:junit-platform-launcher\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"1.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-GRADLE-JUNIT-BOM-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit:junit-bom\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"org.opentest4j:opentest4j\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"1.3.0\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"429dfac384b9f48843f1ef652d7abaed7e69bbe710415eb83c51065abcb7ff33\"}"
+        }
+    ],
+    "creationInfo": {
+        "created": "1970-01-01T00:00:00Z",
+        "creators": [
+            "Tool: strling-release-supply-chain"
+        ],
+        "licenseListVersion": "3.23"
+    },
+    "dataLicense": "CC0-1.0",
+    "documentDescribes": [
+        "SPDXRef-Package"
+    ],
+    "documentNamespace": "https://strling.dev/sbom/kotlin/d6878a1948a600438b2aed7e7bd5f0d08dcddc236a1799e34b643521f2d5886d",
+    "files": [
+        {
+            "SPDXID": "SPDXRef-File-1",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-javadoc.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-2",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "aa56fb29f6fb562313caf91247ecf4004153bb7be38c0353fce9e30e26a69839"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "1ffb148c1fd84f097892460a51572aeb978660b1"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-javadoc.jar!/README.md",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-3",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "59958b3dac9d29b343fb00066c9dc92daf10df9d28ea19886931addbe4ef617f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c9c3ee8a3b0b959c530589c3455e1062cb64d753"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-javadoc.jar!/index.html",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-4",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-sources.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-5",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "26abf1d007c6f65f974dc24776a5e58794398ead6ffc345400543d53078b3547"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "94bc36092b5132a9f5f88c4008f650b36dd9deaf"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-sources.jar!/strling/Compiler.kt",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-6",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "05d1274cba9155cb18b18b239b7a3b3789251cdf3a2542ea078276449945c187"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c7d131c7d68ca0e4f0b9f4899aeb253d56672ecb"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-sources.jar!/strling/Essential.kt",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-7",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "957ba27e29b9d2e67c7d738c2e0a79da17eed4da61c3a30f62a1b2aba5f3fbea"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8a2a1f2c0393fca2a2835156c449b598b5cf7c62"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-sources.jar!/strling/STRling.kt",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-8",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "03d9be458703d5734e59c6afffd767cf5e856f64bb6b82ca5aef2908294ca2a1"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "3413fa359578551cb19c108c8079bb8b37087294"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0-sources.jar!/strling/Simply.kt",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-9",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "7df059597099bb7dcf25d2a9aedfaf4465f72d8d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/META-INF/LICENSE",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-10",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "566ad1a80220026d05099562645ce968ff0e7c36cde22634332605bb34cc3eff"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "79e33dd52ebdf615e6696ae69add91cb990d81e2"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/META-INF/MANIFEST.MF",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-11",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "cc37f38d19c2266523150d08cfda6b57cb2aea7fcc672a9b6085bbbb47729f33"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c4769b6a54316b03a868facae116cff398882446"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/META-INF/strling-kotlin.kotlin_module",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-12",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "d7ae122394039782b7a8b38dc5fdb526eacfeeecce04637b6176131673715e17"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "45355f059b7d3e46327cd1e982fadb4062f5a176"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Compiler$Companion.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-13",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "8603c644a1c681163ccdd6b434b1afd4f66c75eb5d746bc84d382aff38947070"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "0e52590ddba5a97ab29bb684b397aab1d694c5c7"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Compiler.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-14",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "6470c770f0fe5f426808eee995d6154d8d1a50a63764f72066154373c7ce3235"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "3921048ed6780ef39f81d5e77236ab3e3869d9a1"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Essential.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-15",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ab818670e114307cf0e20f6294087081af418f6b86ac95aa1f10c1fac5d97bff"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "282c7cfb22a3410bc2ebc600120c25d8054b86c0"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Pattern$Companion.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-16",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e7d789a143c3be74d29af4b7e61336414c0dc3d6e4c3c6b167ba6b863c5b9c34"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "f8bd4dee014d04bf834fafa8e2188fdc5251f6ff"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Pattern$Context.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-17",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "07e6d383dc571f4322191fda93809bcf3198cb027ff685085b1c1bb79f52824a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8a7b1b897660eedc92cd964dc7fc016bbf731b06"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Pattern$Repetition.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-18",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "da2ef55759509fd50c006bbb7b410b261fc847a5fd15cee615ac80d78656f0f1"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "8520cbb16a5ff0aa13c7242e236a17d97b470982"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Pattern.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-19",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "1c958f403c6e6f7332132a4663382848d7610244b92131cbc99f9f01ed36a3bf"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "c532c27044f7efde978285e3f0c4ad8ded3cbae3"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/STRling.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-20",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ec70d5530bebfe5111fd5d79f0e359ddf550ff28280c7549eeb526ac54ce1a1e"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "a1805883198630b3e2fde261f08f33c18ed2249b"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/STRlingError.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-21",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "ed82b1a9f0aabcce9dfce5a3d3478d8c4d0bfe9c6fb3bc4154c951d9c2d2c26f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5f9f8676c511e128573b4ddb13ffb0bbcba76287"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/Simply.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-22",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "3a456400be74fc971b52dd132c26298bc1b6ad9bf8f3a776d7808ab3f5d85787"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "5b92e704fbd48fafa202e66159df88932661bd3a"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/SimplyBuilder$Companion.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-23",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "c5d7175e98d0c097fecbfa00276d74a16b7f3d5daf021567c1c0a584d5ab837f"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "34effdc1ae50a6cc1d08a27ff10a3ae1371fa382"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/SimplyBuilder$Value.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-24",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "e28859ff75e09def9d19c1db0040d77b24c09f8742feeb46a86ff2618aefa40a"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "be394c48b7799c62dad809ba98bd667dd064a0ac"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/SimplyBuilder.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-25",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "3c8691262e23568d2f88b63b8b354e6119400ddae943abbc0d745c9a4b1b6387"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "754832953e2e303850ad5d220fb4c0ab44013759"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/SourceCompileOptions$Companion.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-26",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "78812b5ccff96ba29e0b3f78941ebe0ac56df3219d01adcbcb5e46a747991efa"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "93ebb7e81f8c9b41c0cc240c3017b5dd4373561b"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar!/strling/SourceCompileOptions.class",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        },
+        {
+            "SPDXID": "SPDXRef-File-27",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "b0d3b12cc8b4768faaee797ce8330a66d5865ea20f7aac1c1e45d50e13974b65"
+                },
+                {
+                    "algorithm": "SHA1",
+                    "checksumValue": "56f5892b03e20af6b68d93e043e286d0909db518"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "fileName": "bindings/kotlin/build/publications/maven/pom-default.xml!/pom-default.xml",
+            "licenseConcluded": "NOASSERTION",
+            "licenseInfoInFiles": [
+                "NOASSERTION"
+            ]
+        }
+    ],
+    "name": "STRling kotlin release artifact",
+    "packages": [
+        {
+            "SPDXID": "SPDXRef-Package",
+            "checksums": [
+                {
+                    "algorithm": "SHA256",
+                    "checksumValue": "d6878a1948a600438b2aed7e7bd5f0d08dcddc236a1799e34b643521f2d5886d"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "release:kotlin",
+                    "referenceType": "strling-release-surface"
+                }
+            ],
+            "filesAnalyzed": true,
+            "licenseConcluded": "NOASSERTION",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.strling:strling-kotlin",
+            "packageVerificationCode": {
+                "packageVerificationCodeValue": "1bde9ac90e9c0879482ff380e436746f3a580e3e"
+            },
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-1-083df28004f5",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"jvm-maven\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"jvm-maven\",\"ecosystem\":\"maven\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"version\":\"2.18.11\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.fasterxml.jackson.core:jackson-databind",
+            "versionInfo": "2.18.11"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-2-ac1a4f76c23d",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"jvm-maven\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"jvm-maven\",\"ecosystem\":\"maven\",\"name\":\"net.java.dev.jna:jna\",\"version\":\"5.19.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0 OR LGPL-2.1-or-later",
+            "licenseDeclared": "Apache-2.0 OR LGPL-2.1-or-later",
+            "name": "net.java.dev.jna:jna",
+            "versionInfo": "5.19.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-3-b9ed73d98cc2",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"jvm-maven\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"jvm-maven\",\"ecosystem\":\"maven\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.jupiter:junit-jupiter",
+            "versionInfo": "5.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-4-74ae80d2c162",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"com.fasterxml.jackson.core:jackson-annotations\",\"version\":\"2.18.11\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.fasterxml.jackson.core:jackson-annotations",
+            "versionInfo": "2.18.11"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-5-7aa8681f2e67",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"com.fasterxml.jackson.core:jackson-core\",\"version\":\"2.18.11\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.fasterxml.jackson.core:jackson-core",
+            "versionInfo": "2.18.11"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-6-d4ef642f641e",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"version\":\"2.18.11\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.fasterxml.jackson.core:jackson-databind",
+            "versionInfo": "2.18.11"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-7-ba3f12d8dcc9",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"com.strling:strling-jvm\",\"version\":\"4.0.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "com.strling:strling-jvm",
+            "versionInfo": "4.0.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-8-578247e03b31",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"net.java.dev.jna:jna\",\"version\":\"5.19.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0 OR LGPL-2.1-or-later",
+            "licenseDeclared": "Apache-2.0 OR LGPL-2.1-or-later",
+            "name": "net.java.dev.jna:jna",
+            "versionInfo": "5.19.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-9-6ead59108668",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.apiguardian:apiguardian-api\",\"version\":\"1.1.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.apiguardian:apiguardian-api",
+            "versionInfo": "1.1.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-10-a6fd6040dd98",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":\"LIC-GRADLE-TROVE4J-1.0.20200330\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.intellij.deps:trove4j\",\"version\":\"1.0.20200330\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "LGPL-2.1",
+            "licenseDeclared": "LGPL-2.1",
+            "name": "org.jetbrains.intellij.deps:trove4j",
+            "versionInfo": "1.0.20200330"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-11-bfd1c8d79f7e",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-build-common\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-build-common",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-12-22f25bd6334d",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-build-tools-api\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-build-tools-api",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-13-3be87670f7f8",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-build-tools-impl\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-build-tools-impl",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-14-3f5cd92d0a25",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-compiler-embeddable\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-compiler-embeddable",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-15-8466bd831eb7",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-compiler-runner\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-compiler-runner",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-16-5f4aad12517a",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-daemon-client\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-daemon-client",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-17-69f0067ed440",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-daemon-embeddable\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-daemon-embeddable",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-18-6eac6ed44278",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-klib-commonizer-embeddable",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-19-a472cbfd59dd",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-native-prebuilt\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-native-prebuilt",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-20-c7591d1c79d8",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-reflect\",\"version\":\"1.6.10\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-reflect",
+            "versionInfo": "1.6.10"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-21-095b9e25b4f5",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-script-runtime\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-script-runtime",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-22-a259367e9d3f",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-common\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-scripting-common",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-23-7a489f9217c7",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-24-4de6d84a78f4",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-scripting-compiler-impl-embeddable",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-25-d641b3bfa858",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-scripting-jvm\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-scripting-jvm",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-26-082462f10dca",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-stdlib\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-stdlib",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-27-837125909f2c",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-test\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-test",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-28-c8648baf1ba3",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlin:kotlin-test-junit5\",\"version\":\"2.0.20\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlin:kotlin-test-junit5",
+            "versionInfo": "2.0.20"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-29-e037c78355e7",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm\",\"version\":\"1.6.4\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm",
+            "versionInfo": "1.6.4"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-30-11538e129157",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.jetbrains:annotations\",\"version\":\"13.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.jetbrains:annotations",
+            "versionInfo": "13.0"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-31-93bc5378f9ab",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":\"LIC-GRADLE-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.jupiter:junit-jupiter-api",
+            "versionInfo": "5.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-32-1d7e846e3428",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":\"LIC-GRADLE-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.jupiter:junit-jupiter-engine",
+            "versionInfo": "5.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-33-8b4e852ba4cb",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":\"LIC-GRADLE-JUNIT-COMMONS-1.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.junit.platform:junit-platform-commons\",\"version\":\"1.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.platform:junit-platform-commons",
+            "versionInfo": "1.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-34-a574930db0fd",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":\"LIC-GRADLE-JUNIT-PLATFORM-ENGINE-1.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.junit.platform:junit-platform-engine\",\"version\":\"1.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.platform:junit-platform-engine",
+            "versionInfo": "1.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-35-068dc2448a42",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":\"LIC-GRADLE-JUNIT-LAUNCHER-1.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.junit.platform:junit-platform-launcher\",\"version\":\"1.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit.platform:junit-platform-launcher",
+            "versionInfo": "1.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-36-a6348efd4366",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"scoped_permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":\"LIC-GRADLE-JUNIT-BOM-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.junit:junit-bom\",\"version\":\"5.10.1\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "EPL-2.0",
+            "licenseDeclared": "EPL-2.0",
+            "name": "org.junit:junit-bom",
+            "versionInfo": "5.10.1"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-37-39ebb0959f5f",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"kotlin-gradle\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"kotlin-gradle\",\"ecosystem\":\"gradle\",\"name\":\"org.opentest4j:opentest4j\",\"version\":\"1.3.0\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Apache-2.0",
+            "licenseDeclared": "Apache-2.0",
+            "name": "org.opentest4j:opentest4j",
+            "versionInfo": "1.3.0"
+        }
+    ],
+    "relationships": [
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "DESCRIBES",
+            "spdxElementId": "SPDXRef-DOCUMENT"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-1",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-2",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-3",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-4",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-5",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-6",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-7",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-8",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-9",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-10",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-11",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-12",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-13",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-14",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-15",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-16",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-17",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-18",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-19",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-20",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-21",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-22",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-23",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-24",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-25",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-26",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-File-27",
+            "relationshipType": "CONTAINS",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-1-083df28004f5",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-2-ac1a4f76c23d",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-3-b9ed73d98cc2"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-4-74ae80d2c162",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-5-7aa8681f2e67",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-6-d4ef642f641e",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-7-ba3f12d8dcc9",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-8-578247e03b31",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-9-6ead59108668",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-10-a6fd6040dd98"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-11-bfd1c8d79f7e",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-12-22f25bd6334d",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-13-3be87670f7f8",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-14-3f5cd92d0a25",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-15-8466bd831eb7",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-16-5f4aad12517a",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-17-69f0067ed440",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-18-6eac6ed44278",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-19-a472cbfd59dd",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-20-c7591d1c79d8",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-21-095b9e25b4f5",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-22-a259367e9d3f",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-23-7a489f9217c7",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-24-4de6d84a78f4",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-25-d641b3bfa858",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-26-082462f10dca",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-27-837125909f2c",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-28-c8648baf1ba3",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-29-e037c78355e7",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-30-11538e129157",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-31-93bc5378f9ab"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-32-1d7e846e3428"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-33-8b4e852ba4cb"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-34-a574930db0fd"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-35-068dc2448a42"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Package",
+            "relationshipType": "BUILD_DEPENDENCY_OF",
+            "spdxElementId": "SPDXRef-Dependency-36-a6348efd4366"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-37-39ebb0959f5f",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        }
+    ],
+    "spdxVersion": "SPDX-2.3"
+}

@@ -1,0 +1,1 @@
+{"command": ["perl", "Makefile.PL", "INSTALL_BASE=/tmp/strling-preview-documentation-gb1ay46w/perl"], "exit_code": 0, "elapsed_seconds": 0.2556691709905863}

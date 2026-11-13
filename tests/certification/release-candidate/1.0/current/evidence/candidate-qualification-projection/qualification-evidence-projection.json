@@ -1,0 +1,51 @@
+{
+  "status": "passed-exact-qualification-profiles-and-independent-producer-reconstruction",
+  "source": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "profiles": [
+    {
+      "profile": "local",
+      "definition_version": "1.18.0",
+      "definition_fingerprint": "e4d6f06d3028421c17141c0c325db0f408c8842d23d6ac5371396cd6bca4b10a",
+      "evidence_fingerprint": "3af82488c50b4d28f6ade99eb8dc526a57c4a490a1a232cabc6c9335e714422d",
+      "operation_count": 38,
+      "status": "passed",
+      "counts": {
+        "failed": 0,
+        "incomplete": 0,
+        "not_applicable": 0,
+        "not_yet_configured": 0,
+        "not_yet_enforceable": 0,
+        "passed": 38,
+        "unavailable": 0,
+        "waived": 0
+      }
+    },
+    {
+      "profile": "pull-request",
+      "definition_version": "1.24.0",
+      "definition_fingerprint": "035b4992aa9a6dfa15a212ebc8adb313394df9cb8520c3646bfe519ab584bcff",
+      "evidence_fingerprint": "0fdc2a8b50c8a24904eff63beff7d1aed8c3045be57da4523454e413756b89d7",
+      "operation_count": 80,
+      "status": "passed",
+      "counts": {
+        "failed": 0,
+        "incomplete": 0,
+        "not_applicable": 0,
+        "not_yet_configured": 0,
+        "not_yet_enforceable": 0,
+        "passed": 80,
+        "unavailable": 0,
+        "waived": 0
+      }
+    }
+  ],
+  "producer_objects": 1,
+  "original_files": 49,
+  "verbatim_files": 48,
+  "archived_empty_streams": 1,
+  "index_sha256": "4e31e29a78e1fc841fb368046b76a8669c45e3ac837967142ede6b36f513e545",
+  "helper_sha256": "8ec6f3634a4847f9a77f362fe80883d7832111a36119c94ec0083cbc47c642b1",
+  "private_key_read": false,
+  "producer_records_modified": false,
+  "publication_authorized": false
+}

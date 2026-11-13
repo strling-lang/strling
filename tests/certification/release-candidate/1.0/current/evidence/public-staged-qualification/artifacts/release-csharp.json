@@ -1,0 +1,240 @@
+{
+  "artifact_id": "release:csharp",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [
+          {
+            "command": "dotnet add package STRling --version 4.0.0",
+            "executed": false,
+            "status": "passed"
+          }
+        ],
+        "exact_install_commands_found": 1,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "7f05a4e059caf2b83856625cc7bde26d0df8672b59152c17b87b1609e317f3e1",
+      "source_path": "bindings/csharp/README.md",
+      "url": "https://evidence.example.test/bindings/csharp/README.md"
+    },
+    "provenance": {
+      "sha256": "9dc110ab3e13e38b57355ee39345881a894c7348dbabadc0d0294b996367fdb9",
+      "url": "https://evidence.example.test/release-csharp.intoto.json"
+    },
+    "sbom": {
+      "sha256": "695c84d207860a24e498d75366074659132eaf2b9867aad40849c1067e036d67",
+      "url": "https://evidence.example.test/release-csharp.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.5369375459849834,
+  "metadata": {
+    "fields": [],
+    "status": "requires-authenticated-payload-metadata"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:csharp:coordinate",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:csharp:metadata",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:csharp:artifact",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:csharp:source",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:csharp:sbom",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:csharp:provenance",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:csharp:documentation",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:csharp:scope",
+      "platform": null,
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:csharp:windows-x86_64:installation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:csharp:windows-x86_64:public-api",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:csharp:windows-x86_64:product-version",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:csharp:windows-x86_64:canonical-compiler",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:csharp:windows-x86_64:native-wasm",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:csharp:windows-x86_64:target-compatibility",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:csharp:windows-x86_64:kernel-rejection",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:csharp",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:csharp:windows-x86_64:isolation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "0a5ab33464d3e014ed180b532c479dd803fcf57c5332cd4ac0ba614a9c2424cd",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg": "100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://api.nuget.org/v3/index.json",
+      "sha256": "d8021eef768469972baa3d1628e74dcacec39622517215579dd4db680b06903b",
+      "size": 100
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.0/strling.nuspec",
+      "sha256": "452ddd205d2372bf4aedcf4c03715a296d07b6847b5ddc9770daf07d715732b4",
+      "size": 639
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.0/strling.4.0.0.nupkg",
+      "sha256": "100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287",
+      "size": 1658079
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-csharp.spdx.json",
+      "sha256": "695c84d207860a24e498d75366074659132eaf2b9867aad40849c1067e036d67",
+      "size": 50816
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-csharp.intoto.json",
+      "sha256": "9dc110ab3e13e38b57355ee39345881a894c7348dbabadc0d0294b996367fdb9",
+      "size": 5177
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/csharp/README.md",
+      "sha256": "7f05a4e059caf2b83856625cc7bde26d0df8672b59152c17b87b1609e317f3e1",
+      "size": 4238
+    }
+  ]
+}

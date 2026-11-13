@@ -1,0 +1,1 @@
+{"command": ["npm", "install", "--offline", "--ignore-scripts", "--no-audit", "--no-fund", "--save-exact", "/var/tmp/strling-public-release-ea64d594-aggregate-first/bindings/typescript/strling-lang-strling-4.0.0.tgz"], "exit_code": 0, "elapsed_seconds": 1.1920463279820979}

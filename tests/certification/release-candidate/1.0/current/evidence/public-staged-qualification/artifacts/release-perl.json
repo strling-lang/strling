@@ -1,0 +1,157 @@
+{
+  "artifact_id": "release:perl",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [
+          {
+            "command": "cpanm STRling@4.0.0",
+            "executed": false,
+            "status": "passed"
+          }
+        ],
+        "exact_install_commands_found": 1,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "719b67f504601e17d5ca17381f03d08eb5569aa217fa4b810b1ab2c27b104d9d",
+      "source_path": "bindings/perl/README.md",
+      "url": "https://evidence.example.test/bindings/perl/README.md"
+    },
+    "provenance": {
+      "sha256": "d326e880e4f3b0e122d57c99359bdec0c095fa2c34eaf1805e1dca3d7b61598c",
+      "url": "https://evidence.example.test/release-perl.intoto.json"
+    },
+    "sbom": {
+      "sha256": "3b81c659a2608345d893d9b39a87237d3df4dfaab1a644928eb4ca580f3273a6",
+      "url": "https://evidence.example.test/release-perl.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 0.1367197240178939,
+  "metadata": {
+    "fields": [
+      "distribution",
+      "license"
+    ],
+    "status": "passed"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:perl:coordinate",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:perl:metadata",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:perl:artifact",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:perl:source",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:perl:sbom",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:perl:provenance",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:perl:documentation",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    },
+    {
+      "artifact_id": "release:perl",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:perl:scope",
+      "platform": null,
+      "retrieval_sha256": "51307a4c72bafd4b90707c6da62c580b90fccd64ed57e64847058404beefaf88",
+      "status": "READY",
+      "tier": "Preview"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/perl/STRling-4.0.0.tar.gz": "d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://fastapi.metacpan.org/v1/release/STRLING/STRling-4.0.0",
+      "sha256": "87d12e841924fc9050a65c3abaed80160881c8ff12d6492700be3b4430a9ff9e",
+      "size": 176
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://cpan.metacpan.org/authors/id/S/ST/STRLING/STRling-4.0.0.tar.gz",
+      "sha256": "d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5",
+      "size": 12267
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-perl.spdx.json",
+      "sha256": "3b81c659a2608345d893d9b39a87237d3df4dfaab1a644928eb4ca580f3273a6",
+      "size": 20701
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-perl.intoto.json",
+      "sha256": "d326e880e4f3b0e122d57c99359bdec0c095fa2c34eaf1805e1dca3d7b61598c",
+      "size": 4978
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/perl/README.md",
+      "sha256": "719b67f504601e17d5ca17381f03d08eb5569aa217fa4b810b1ab2c27b104d9d",
+      "size": 2395
+    }
+  ]
+}

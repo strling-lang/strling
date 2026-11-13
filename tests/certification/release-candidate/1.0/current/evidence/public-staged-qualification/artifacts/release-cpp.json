@@ -1,0 +1,408 @@
+{
+  "artifact_id": "release:cpp",
+  "associations": {
+    "documentation": {
+      "installation_commands": {
+        "commands": [
+          {
+            "command": "conan install --requires=strling/4.0.0 --build=never",
+            "executed": false,
+            "status": "passed"
+          }
+        ],
+        "exact_install_commands_found": 1,
+        "execution_authority": "trusted-clean-consumer-contract",
+        "status": "passed"
+      },
+      "sha256": "6087fbcdb6480a66ca4ad0c1b6caa12632ff97f7dfd99087df43169a579ea6d9",
+      "source_path": "bindings/cpp/README.md",
+      "url": "https://evidence.example.test/bindings/cpp/README.md"
+    },
+    "provenance": {
+      "sha256": "df4d357503d789cb94f9c9e94a7e82b9c5dcd5dbe949eebe7afb971e83a59573",
+      "url": "https://evidence.example.test/release-cpp.intoto.json"
+    },
+    "sbom": {
+      "sha256": "d494673ce7abab296639f0e34dcd3304f402c3cb26fd84ad0f355df51a84615e",
+      "url": "https://evidence.example.test/release-cpp.spdx.json"
+    }
+  },
+  "authority": "synthetic",
+  "elapsed_seconds": 34.26885089999996,
+  "metadata": {
+    "fields": [],
+    "status": "requires-authenticated-payload-metadata"
+  },
+  "observations": [
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "coordinate",
+      "id": "release:cpp:coordinate",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "metadata",
+      "id": "release:cpp:metadata",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "artifact",
+      "id": "release:cpp:artifact",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "source",
+      "id": "release:cpp:source",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "sbom",
+      "id": "release:cpp:sbom",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "provenance",
+      "id": "release:cpp:provenance",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "documentation",
+      "id": "release:cpp:documentation",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "scope",
+      "id": "release:cpp:scope",
+      "platform": null,
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "READY",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:cpp:windows-x86_64:installation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:cpp:windows-x86_64:public-api",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:cpp:windows-x86_64:product-version",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:cpp:windows-x86_64:canonical-compiler",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:cpp:windows-x86_64:native-wasm",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:cpp:windows-x86_64:target-compatibility",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:cpp:windows-x86_64:kernel-rejection",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:cpp:windows-x86_64:isolation",
+      "platform": "windows-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "installation",
+      "id": "release:cpp:linux-x86_64:installation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "public-api",
+      "id": "release:cpp:linux-x86_64:public-api",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "product-version",
+      "id": "release:cpp:linux-x86_64:product-version",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "canonical-compiler",
+      "id": "release:cpp:linux-x86_64:canonical-compiler",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "native-wasm",
+      "id": "release:cpp:linux-x86_64:native-wasm",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "target-compatibility",
+      "id": "release:cpp:linux-x86_64:target-compatibility",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "kernel-rejection",
+      "id": "release:cpp:linux-x86_64:kernel-rejection",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    },
+    {
+      "artifact_id": "release:cpp",
+      "authority": "synthetic",
+      "check": "isolation",
+      "id": "release:cpp:linux-x86_64:isolation",
+      "platform": "linux-x86_64",
+      "retrieval_sha256": "8ee3418f225c9cc1f2e5e4a3a600b0fbb9032acb599e9c5f9442e047e0f48cec",
+      "status": "VERIFYING",
+      "tier": "Supported"
+    }
+  ],
+  "publication_authorized": false,
+  "retrieval_files": {
+    "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz": "1a3f1ae415412c850a4177281eb263c65b303427ed4ffdd57c6802d8585007d5",
+    "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz": "9b35e9a5c60f9df7587c5e59846ec23e002822622543eb81b5f27e511589f534",
+    "conan-public/17e788f05ee2e3803151fea0cf281192c13a5f49951b05855d60170a90518b5c": "91fd4ff8202b4a7b71643970fdda37052700e2976233d2368ad32f601af3344f",
+    "conan-public/1c5057ee0f1dbb1f98340114b09ca1933a65ae5a25df1b027aa387c8e295ab91": "3a1fd55900b5722162337a987adc3815937bed650569fc66426e6994773bb315",
+    "conan-public/811006ed959f2e266878f33344e7df65d93d1bc54fb033871d67770589ad6c1b": "701ed00fb0eb65c68bf0a775a0fa3c51b22273f3800ffb372f6570b0ef2f0a5f",
+    "conan-public/9b583156745288d1518dbffb0fd87314396feded43ec2b2e5693936ad6ddaf91": "21298c20986e7e94c512fcce55febe67acc7abc30716faf0a6b5408920f19a53",
+    "conan-public/a1f1763e22be1af413e0e9ae2067a36bec32c1c5f49df96f37f4092ab09f8f18": "377ac8d913d6d160b22eaebd0983c56d5672f1b3e63ddc4671bb975e5907eea5",
+    "conan-public/bbb921d2a4256e71b87ceb469de37fd7a320ecd5c7f888ce551509ea22a51fdc": "0bf4722d979d93e92364e92dc84edbbdf44ccc26a6966d32d1849e58ba7bd5a3",
+    "conan-public/c913c0e172a292a978384282b38d0e776be311d893a00a27b1359fc290cdb0a6": "8b12c07c70a5dedc72ea09a75e844d5f75270e81a11777fb762956ff3fdd1e74",
+    "conan-public/dee2e00b423874f4ad88ca019d6ecf26a17834698241282af6d8449cc89c0009": "49c0b892b8c55cd2636f6d4bbf3dd85f1d99fd6e5f21dae71ab66833405a1e16",
+    "conan-public/df12cc8ed45fea69b42fc98b3db89efaa3d54b2d5c5e7d557d867393649ab206": "330fe3c183d524732d0b38ee6978a7ded5eef345bca2bffd4931ecb7c0b0d11b"
+  },
+  "retrieval_observations": [
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files",
+      "sha256": "3d1e19cc1f9f21145ca0ba50732e0d52d7b1eb8c8d4d35736c142fcd95969b31",
+      "size": 75
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files/conan_sources.tgz",
+      "sha256": "8b12c07c70a5dedc72ea09a75e844d5f75270e81a11777fb762956ff3fdd1e74",
+      "size": 929557
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files/conanfile.py",
+      "sha256": "3a1fd55900b5722162337a987adc3815937bed650569fc66426e6994773bb315",
+      "size": 5261
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files/conanmanifest.txt",
+      "sha256": "701ed00fb0eb65c68bf0a775a0fa3c51b22273f3800ffb372f6570b0ef2f0a5f",
+      "size": 56040
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/180b9ab725be16ad9982d504796879e73380c063/revisions/39dd5f1975da1507da68d9aeeb8d5396/files",
+      "sha256": "a1e79b5e155d1655ab944161192153b3c195657ce7a01722b3affc53ebc2edad",
+      "size": 76
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/180b9ab725be16ad9982d504796879e73380c063/revisions/39dd5f1975da1507da68d9aeeb8d5396/files/conan_package.tgz",
+      "sha256": "49c0b892b8c55cd2636f6d4bbf3dd85f1d99fd6e5f21dae71ab66833405a1e16",
+      "size": 8776224
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/180b9ab725be16ad9982d504796879e73380c063/revisions/39dd5f1975da1507da68d9aeeb8d5396/files/conaninfo.txt",
+      "sha256": "330fe3c183d524732d0b38ee6978a7ded5eef345bca2bffd4931ecb7c0b0d11b",
+      "size": 131
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/180b9ab725be16ad9982d504796879e73380c063/revisions/39dd5f1975da1507da68d9aeeb8d5396/files/conanmanifest.txt",
+      "sha256": "377ac8d913d6d160b22eaebd0983c56d5672f1b3e63ddc4671bb975e5907eea5",
+      "size": 1292
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files",
+      "sha256": "3d1e19cc1f9f21145ca0ba50732e0d52d7b1eb8c8d4d35736c142fcd95969b31",
+      "size": 75
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files/conan_sources.tgz",
+      "sha256": "8b12c07c70a5dedc72ea09a75e844d5f75270e81a11777fb762956ff3fdd1e74",
+      "size": 929557
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files/conanfile.py",
+      "sha256": "3a1fd55900b5722162337a987adc3815937bed650569fc66426e6994773bb315",
+      "size": 5261
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/files/conanmanifest.txt",
+      "sha256": "701ed00fb0eb65c68bf0a775a0fa3c51b22273f3800ffb372f6570b0ef2f0a5f",
+      "size": 56040
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/d610e60c6d7f744dee6c3dbcc6f0ed65f77448f0/revisions/9bf20c97227697ebc05554a074c885bf/files",
+      "sha256": "a1e79b5e155d1655ab944161192153b3c195657ce7a01722b3affc53ebc2edad",
+      "size": 76
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/d610e60c6d7f744dee6c3dbcc6f0ed65f77448f0/revisions/9bf20c97227697ebc05554a074c885bf/files/conan_package.tgz",
+      "sha256": "21298c20986e7e94c512fcce55febe67acc7abc30716faf0a6b5408920f19a53",
+      "size": 7566978
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/d610e60c6d7f744dee6c3dbcc6f0ed65f77448f0/revisions/9bf20c97227697ebc05554a074c885bf/files/conaninfo.txt",
+      "sha256": "0bf4722d979d93e92364e92dc84edbbdf44ccc26a6966d32d1849e58ba7bd5a3",
+      "size": 180
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://conan.example.test/v2/conans/strling/4.0.0/_/_/revisions/1913c3de9397a98f7bae1b35a2d89b1e/packages/d610e60c6d7f744dee6c3dbcc6f0ed65f77448f0/revisions/9bf20c97227697ebc05554a074c885bf/files/conanmanifest.txt",
+      "sha256": "91fd4ff8202b4a7b71643970fdda37052700e2976233d2368ad32f601af3344f",
+      "size": 1289
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-cpp.spdx.json",
+      "sha256": "d494673ce7abab296639f0e34dcd3304f402c3cb26fd84ad0f355df51a84615e",
+      "size": 2105211
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/release-cpp.intoto.json",
+      "sha256": "df4d357503d789cb94f9c9e94a7e82b9c5dcd5dbe949eebe7afb971e83a59573",
+      "size": 9656
+    },
+    {
+      "authority": "synthetic",
+      "request_url": "https://evidence.example.test/bindings/cpp/README.md",
+      "sha256": "6087fbcdb6480a66ca4ad0c1b6caa12632ff97f7dfd99087df43169a579ea6d9",
+      "size": 3405
+    }
+  ]
+}

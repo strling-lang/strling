@@ -243,11 +243,12 @@
                 "scope": "windows-x86_64 and linux-x86_64 interop routes",
                 "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
                 "ownership_status": "externally-pending",
-                "installation": "Conan package with canonical native dependency",
-                "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                "installation": "Supported direct CMake source build; ConanCenter deployment deferred for the initial release",
+                "publication_eligibility": "owner-deferred-conancenter-4.0.0",
                 "external_prerequisites": [
-                    "Obtain Conan Center Index recipe acceptance and independently verify the resulting Windows and Linux x86_64 package revisions from https://center2.conan.io",
-                    "Confirm protected release environment reviewers and approved workflow source"
+                    "The Program Owner deferred ConanCenter deployment for initial 4.0.0. Retain all C++ builds and consumer checks; direct developer source installation remains available.",
+                    "ConanCenter recipe submission and external acceptance require a separate owner-authorized task before public ConanCenter verification.",
+                    "Re-enabling this public distribution requires governed source changes and fresh applicable certification; deferred obligations are never reported as publicly verified."
                 ],
                 "native_runtime_prerequisites": [
                     "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",

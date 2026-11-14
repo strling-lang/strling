@@ -513,6 +513,72 @@ class ArchitectureValidationTests(unittest.TestCase):
         self.write_profile_workflows()
         self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
 
+    def test_closed_preservation_keeps_original_authority_and_rejects_mutations(
+        self,
+    ) -> None:
+        import copy
+        import json
+        import yaml
+
+        command = "mkdir -p artifacts\npython -I trusted/tooling/closed_certification_integrity.py --repository-root candidate --subject compiler --json | tee artifacts/cloud-certification-verification.json\n"
+        self.write_profile_workflows()
+        rule = self.ci_profile_rule()
+        rule["configuration"]["closed_preservation_verifier_sha"] = "a" * 40
+        for name in ("historical_delivery_reference", "historical_integrity_reference"):
+            rule["configuration"][name] = dict(
+                source_sha="b" * 40,
+                verifier_sha="c" * 40,
+                preservation_verifier_sha="a" * 40,
+            )
+        registry = self.root / "governance/closed-certifications.json"
+        registry.parent.mkdir()
+        registry.write_text(
+            json.dumps(
+                dict(
+                    subjects=[
+                        dict(
+                            id="compiler",
+                            closure_sha="b" * 40,
+                            original_verifier_sha="c" * 40,
+                        )
+                    ]
+                )
+            )
+        )
+        for name, job_id in (
+            ("cd.yml", "release-certification"),
+            ("certification-integrity.yml", "verify-local-certification"),
+        ):
+            path = self.root / ".github/workflows" / name
+            workflow = yaml.safe_load(path.read_text())
+            job = workflow["jobs"][job_id]
+            for step in job["steps"]:
+                if step.get("with", {}).get("path") == "trusted":
+                    step["with"]["ref"] = "a" * 40
+                elif step.get("with", {}).get("path") == "candidate":
+                    step["with"]["ref"] = "b" * 40
+                    if name != "cd.yml":
+                        step["with"]["repository"] = "strling-lang/strling"
+                elif "local_certification_attestation.py" in step.get("run", ""):
+                    step["run"] = command
+            path.write_text(yaml.safe_dump(workflow, sort_keys=False, width=2000))
+        result = self.evaluate(rule)
+        self.assertEqual("passed", result.status, result.findings)
+        for field in ("source_sha", "verifier_sha", "preservation_verifier_sha"):
+            mutated = copy.deepcopy(rule)
+            mutated["configuration"]["historical_integrity_reference"][field] = "d" * 40
+            self.assertEqual("failed", self.evaluate(mutated).status)
+        path = self.root / ".github/workflows/certification-integrity.yml"
+        original = path.read_text()
+        for mutation in (
+            "--subject compiler-new",
+            "--subject packaging",
+            "--subject compiler --json; python candidate/evil.py #",
+        ):
+            path.write_text(original.replace("--subject compiler", mutation))
+            self.assertEqual("failed", self.evaluate(rule).status)
+        path.write_text(original)
+
     def test_historical_delivery_requires_both_exact_identities(self) -> None:
         self.write_profile_workflows()
         path = self.root / ".github/workflows/cd.yml"

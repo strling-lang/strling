@@ -280,6 +280,40 @@ coordinate and scope checks; they do not acquire Supported consumer claims.
 The implementation derives these rows from the manifest rather than storing
 the total as an acceptance constant.
 
+The owner's initial 4.0.0 publication scope defers ConanCenter. All 17 build
+routes and all 256 controlled implementation obligations remain mandatory.
+Actual initial public execution covers 16 destinations and 13 Supported platform
+consumers: 232 obligations. The request and aggregate must explicitly account
+for the remaining 24 C++ ConanCenter obligations as deferred; they cannot be
+reported as passed or publicly verified. Supported direct C++ source builds
+remain available under their existing platform and runtime requirements.
+Only the exact manifest eligibility `owner-deferred-conancenter-4.0.0` permits
+this exclusion. Other routes, later release lines, missing public evidence,
+and partial publication remain subject to the complete applicable checks.
+
+The optional `export-certified-bytes` job in `certification-integrity.yml`
+restores the original certified packages into the artifact names consumed by
+the publisher. It runs only after all four integrity jobs pass, on a manually
+dispatched exact closure/workflow identity, with protected `release-attestation`
+approval and read-only repository permissions. It does not compile or publish.
+The qualified `tooling/certified_transport.py seal` command prepares a local
+lossless capsule from the complete exports, original signed package bundle and
+accepted full candidate closure. The importer independently verifies both
+certificates and their exact nesting before accepting the entire file graph.
+
+Private remote staging requires a separate owner-authorized action. No draft
+release, tag, asset upload or staging grant is created by this importer.
+If the owner authorizes private GitHub draft staging, protected nonsecret
+configuration must record `RELEASE_EXPORT_SOURCE_SHA`,
+`RELEASE_EXPORT_CLOSURE_SHA`, `RELEASE_EXPORT_WORKFLOW_SHA`,
+`RELEASE_EXPORT_PACKAGE_ROOT_SHA256`, `RELEASE_EXPORT_CAPSULE_SHA256`,
+`RELEASE_EXPORT_STAGING_RELEASE_ID` and `RELEASE_EXPORT_STAGING_ASSET_ID`.
+`RELEASE_EXPORT_ENABLED` defaults to disabled. The staging draft must remain
+unpublished and target the exact source; its named capsule asset must match
+the approved full checksum and bounded size. A successful immutable export
+run supplies `RELEASE_CERTIFIED_RUN_ID`. Neither a local sealing proof nor
+a skipped export job establishes that hosted byte transport has completed.
+
 The offline check is `python3 -m tooling.public_distribution --check`. Local,
 Pull Request, Full and Release all include this contract. Offline fixtures and
 certified staged packages can establish engineering `READY` only. They cannot

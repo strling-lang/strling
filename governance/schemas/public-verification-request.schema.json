@@ -137,6 +137,12 @@
             "items": {
                 "$ref": "#/$defs/obligation"
             }
+        },
+        "deferred_obligations": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/obligation" }
         }
     },
     "$defs": {

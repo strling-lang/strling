@@ -13,6 +13,7 @@ import pytest
 from tooling.public_distribution import (
     authenticate_archive,
     obligations,
+    publication_obligations,
     reduce_observations,
     strict_json,
 )
@@ -187,7 +188,11 @@ def manifest():
 def results(manifest, authority="synthetic", status="READY"):
     return [
         {**row, "authority": authority, "status": status, "retrieval_sha256": "a" * 64}
-        for row in obligations(manifest)
+        for row in (
+            publication_obligations(manifest)[0]
+            if authority == "public"
+            else obligations(manifest)
+        )
     ]
 
 
@@ -267,6 +272,88 @@ def test_preview_has_no_invented_supported_consumer(manifest):
         for row in obligations(manifest)
         if row["artifact_id"] in preview
     )
+
+
+def test_deferred_cpp_remains_mandatory_for_implementation(manifest):
+    active, deferred = publication_obligations(manifest)
+    assert len(active) + len(deferred) == len(obligations(manifest))
+    assert {row["artifact_id"] for row in deferred} == {"release:cpp"}
+    for authority in ("synthetic", "staged"):
+        with pytest.raises(RetrievalError):
+            reduce_observations(
+                manifest,
+                [
+                    row
+                    for row in results(manifest, authority)
+                    if row["artifact_id"] != "release:cpp"
+                ],
+                authority=authority,
+            )
+    result = reduce_observations(
+        manifest, results(manifest, "public", "VERIFIED"), authority="public"
+    )
+    assert result["deferred_obligations"] == deferred
+    assert result["all_registered_routes_verified"] is False
+    with pytest.raises(RetrievalError):
+        reduce_observations(
+            manifest,
+            results(manifest, "public", "VERIFIED")
+            + [
+                {
+                    **deferred[0],
+                    "status": "VERIFIED",
+                    "authority": "public",
+                    "retrieval_sha256": "a" * 64,
+                }
+            ],
+            authority="public",
+        )
+
+
+@pytest.mark.parametrize(
+    "field,value", [("id", "release:java"), ("registry", "maven-central")]
+)
+def test_deferral_cannot_be_transferred_to_another_route(manifest, field, value):
+    cpp = next(a for a in manifest["artifacts"] if a["id"] == "release:cpp")
+    cpp[field] = value
+    with pytest.raises(RetrievalError):
+        publication_obligations(manifest)
+
+
+@pytest.mark.parametrize("version", ["4.0.1", "4.1.0", "5.0.0", "4.0.0-rc.0"])
+def test_deferral_is_bound_to_initial_release_version(manifest, version):
+    from tooling import release_supply_chain as supply
+
+    original = supply.load_json
+
+    def source_policy(path):
+        value = original(path)
+        if Path(path) == ROOT / "governance/release-policy.json":
+            value["product"]["version"] = version
+        return value
+
+    with patch.object(supply, "load_json", side_effect=source_policy):
+        with pytest.raises(supply.ReleaseSupplyChainError, match="initial ConanCenter"):
+            supply.validate_manifest(manifest, root=ROOT)
+
+
+def test_legacy_source_still_requires_every_public_route(manifest):
+    cpp = next(a for a in manifest["artifacts"] if a["id"] == "release:cpp")
+    cpp["distribution_contract"]["publication_eligibility"] = (
+        "requires-supported-evidence-and-owner-authorization"
+    )
+    active, deferred = publication_obligations(manifest)
+    assert active == obligations(manifest)
+    assert deferred == []
+    rows = results(manifest, "public", "VERIFIED")
+    result = reduce_observations(manifest, rows, authority="public")
+    assert "deferred_obligations" not in result
+    with pytest.raises(RetrievalError):
+        reduce_observations(
+            manifest,
+            [row for row in rows if row["artifact_id"] != "release:cpp"],
+            authority="public",
+        )
 
 
 @pytest.mark.parametrize(

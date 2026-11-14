@@ -5,6 +5,12 @@
     "artifact_authority": "tests/certification/release-supply-chain/1.0/manifest.json",
     "certification_verifier": "642cc21f8f5d5ccabde1bb893076e02c624247a7",
     "certification_trust": "governance/release-certification-trust.json",
+    "initial_publication_scope": {
+        "release_line": "4.0.0",
+        "owner_deferred_artifacts": ["release:cpp"],
+        "engineering_coverage_required": true,
+        "deferred_is_publicly_verified": false
+    },
     "public_authority": "independently-retrieved-public-bytes",
     "engineering_authorities": ["synthetic", "staged"],
     "statuses": [

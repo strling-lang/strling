@@ -42,6 +42,13 @@ SPDX_SCHEMA_PATH = (
 )
 SECURITY_POLICY_PATH = ROOT / "governance/security-policy.json"
 TOOLCHAIN_PATH = ROOT / "toolchain.json"
+DEFERRED_CPP_ELIGIBILITY = "owner-deferred-conancenter-4.0.0"
+INITIAL_PUBLICATION_SCOPE = {
+    "release_line": "4.0.0",
+    "owner_deferred_artifacts": ["release:cpp"],
+    "engineering_coverage_required": True,
+    "deferred_is_publicly_verified": False,
+}
 
 ARTIFACT_IDS = [
     "release:c",
@@ -408,6 +415,21 @@ def validate_manifest(
                     "credential-policy",
                     f"{artifact_id} GitHub token scope is malformed",
                 )
+
+        if distribution["publication_eligibility"] == DEFERRED_CPP_ELIGIBILITY and (
+            artifact_id != "release:cpp"
+            or artifact["registry"] != "conan"
+            or distribution["tier"] != "Supported"
+            or re.fullmatch(
+                r"4\.0\.0(?:-rc\.[1-9][0-9]*)?",
+                release_policy["product"]["version"],
+            )
+            is None
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-scope",
+                "only the owner-deferred initial ConanCenter route is build-only",
+            )
 
     profiles = cast(dict[str, dict[str, Any]], manifest["profile_policy"])
     for profile, (network, builds) in PROFILE_EXPECTATIONS.items():

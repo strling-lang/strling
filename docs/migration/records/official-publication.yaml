@@ -30,6 +30,9 @@ scope:
         - governance/release-policy.json
         - governance/public-distribution.json
         - governance/schemas/release-supply-chain-certification.schema.json
+        - governance/schemas/public-distribution.schema.json
+        - governance/schemas/public-verification-request.schema.json
+        - governance/schemas/public-verification-result.schema.json
         - governance/security-policy.json
         - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
         - tests/adapters/3.0/release-graph.json
@@ -44,6 +47,11 @@ scope:
         - tooling/maven_release.py
         - tooling/public_registries.py
         - tooling/public_verification_request.py
+        - tooling/public_distribution.py
+        - tooling/verify_public_release.py
+        - tooling/candidate_handoff.py
+        - tooling/certified_transport.py
+        - tooling/architecture_fitness.py
         - tooling/publish_certified_artifact.py
         - tooling/release_payload.py
         - tooling/release_supply_chain.py
@@ -54,6 +62,10 @@ scope:
         - tooling/tests/test_maven_release.py
         - tooling/tests/test_public_registries.py
         - tooling/tests/test_public_verification_boundaries.py
+        - tooling/tests/test_public_distribution.py
+        - tooling/tests/test_public_execution.py
+        - tooling/tests/test_certified_transport.py
+        - tooling/tests/test_governance.py
         - tooling/tests/test_release_publication_authorization.py
         - tooling/tests/test_release_supply_chain.py
     forbidden_paths:
@@ -105,6 +117,7 @@ change_classification:
         level: compatible
         evidence:
             - Register external-review as a credential mode for deferred ConanCenter deployment.
+            - Account explicitly for the owner's initial 4.0.0 public scope without removing any controlled implementation obligation.
     diagnostic_change:
         level: none
         evidence:
@@ -120,6 +133,8 @@ change_classification:
               remains unchanged.
             - Preserve only exact previously accepted closed certificates through a separately scoped immutable-history check;
               keep current-source waiver and certification checks fail-closed and preserve the original signing authority.
+            - Restore original certified package bytes through a protected, read-only hosted export; independently authenticate
+              the candidate certificate, its original nested package certificate and the complete artifact graph before export.
     generated_output_change:
         level: compatible
         evidence:
@@ -169,4 +184,24 @@ checkpoints:
             details:
                 Local at 117794cb failed governance because the previous completed task remained active; preserve that
                 result and register this publication scope.
+    - name: Immutable predecessor reader qualification
+      status: complete
+      evidence:
+          - check: Qualify c8f629ef without private-key access
+            result: passed
+            details:
+                Linux 607 tests and Windows 605 tests, 197 subtests each, all nine independent replay stages passed.
+                Both Windows capability skips passed on Linux. This qualification remains bound to c8f629ef;
+                subsequent applicability, governance and transport changes require a new frozen reader qualification.
+    - name: Applicability and transport focused diagnostic
+      status: in_progress
+      evidence:
+          - check: Preserve full engineering denominator and exact initial publication scope
+            result: passed
+            details:
+                All 17 build routes and 256 controlled obligations remain mandatory. The initial public scope derives
+                232 applicable obligations and explicitly accounts for 24 deferred C++ ConanCenter obligations.
+                The complete focused Windows diagnostic passed 375 tests and 150 subtests with one known symlink
+                capability skip; all registered generator checks and governance passed. These are engineering observations,
+                not authoritative certification. Private staging and actual hosted byte export remain unexecuted.
 commits: []

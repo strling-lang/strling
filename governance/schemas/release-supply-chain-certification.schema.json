@@ -1213,6 +1213,7 @@
                 "publication_eligibility": {
                     "enum": [
                         "requires-supported-evidence-and-owner-authorization",
+                        "owner-deferred-conancenter-4.0.0",
                         "preview-only-explicit-authorization",
                         "ineligible"
                     ]

@@ -22,7 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tooling.public_authentication import authenticate_release, git
 from tooling.public_distribution import (
     exact_rows,
-    obligations,
+    publication_obligations,
     reduce_observations,
     strict_json,
 )
@@ -153,6 +153,9 @@ def execute(args, control: dict) -> dict:
     )
     attestation = load_json(args.bundle / "attestation.json")["signed_payload"]
     artifacts = {row["id"]: row for row in manifest["artifacts"]}
+    required, _ = publication_obligations(manifest)
+    active = {row["artifact_id"] for row in required}
+    artifacts = {key: value for key, value in artifacts.items() if key in active}
     destinations = exact_rows(request["destinations"], "artifact_id", set(artifacts))
     documents = exact_rows(request["documents"], "artifact_id", set(artifacts))
     results, observations, files = {}, [], {}
@@ -314,11 +317,9 @@ def execute(args, control: dict) -> dict:
 
 
 def aggregate(manifest: dict, reports: list[dict], control: dict) -> dict:
-    scopes = {
-        row["platform"] for row in obligations(manifest) if row["platform"] is not None
-    }
+    required, _ = publication_obligations(manifest)
+    scopes = {row["platform"] for row in required if row["platform"] is not None}
     scoped = exact_rows(reports, "scope", scopes)
-    required = obligations(manifest)
     for report in reports:
         if report["authority"] != "public" or report["execution"] != control:
             raise RetrievalError(

@@ -8,7 +8,11 @@ from pathlib import Path
 import pytest
 import yaml
 
-from tooling.public_distribution import obligations, strict_json
+from tooling.public_distribution import (
+    obligations,
+    publication_obligations,
+    strict_json,
+)
 from tooling.public_retrieval import RetrievalError
 from tooling.release_supply_chain import canonical_json, document_fingerprint
 from tooling.verify_public_release import aggregate, protected_execution
@@ -133,7 +137,7 @@ def fixture_reports():
                 else "VERIFYING",
                 "retrieval_sha256": "c" * 64,
             }
-            for row in obligations(manifest)
+            for row in publication_obligations(manifest)[0]
         ]
         receipts = {}
         for row in observations:
@@ -170,7 +174,12 @@ def fixture_reports():
 def test_complete_public_scope_reconciliation():
     result = aggregate(*fixture_reports())
     assert result["status"] == "VERIFIED"
-    assert result["required"] == 256
+    registered = obligations(fixture_reports()[0])
+    deferred = publication_obligations(fixture_reports()[0])[1]
+    assert result["required"] == len(registered) - len(deferred)
+    assert result["registered_obligations"] == len(registered)
+    assert result["deferred_obligations"] == deferred
+    assert result["all_registered_routes_verified"] is False
     assert result["publication_authorized"] is False
     assert result["registry_mutation_authorized"] is False
 

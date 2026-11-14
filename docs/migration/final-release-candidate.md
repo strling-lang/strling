@@ -688,3 +688,28 @@ symlink capability skip. Immutable cross-platform qualification, refreshed
 verifier pins, successor certification, signing, staged qualification and hosted
 acceptance remain pending. No release tag, public package or registry mutation
 has occurred.
+
+### Publication-reader qualification and initial public scope
+
+The immutable `c8f629ef` reader completed qualification on November 14: Linux
+607 tests and Windows 605 tests, with 197 subtests on each host. The two Windows
+capability skips executed successfully on Linux. All nine independent replay
+stages passed, including complete current-source Full/Release reconstruction,
+both 17-artifact supply-chain bundles, producer reconstruction and preservation
+of the four original signed certificates. No private key was accessed.
+
+Subsequent engineering reconciles the explicitly deferred ConanCenter route.
+All 17 build routes and 256 controlled implementation obligations remain
+mandatory. The initial public request must cover 232 applicable obligations
+across 16 destinations and explicitly list 24 deferred C++ ConanCenter
+obligations. Deferred observations cannot be passed or called publicly verified.
+Direct C++ source installation retains its existing Supported scope.
+
+The local lossless transport and protected read-only export job authenticate
+the full candidate certificate, its exact original nested package certificate,
+the complete artifact file graph and a separately approved capsule digest.
+They do not rebuild, sign, create staging infrastructure or publish packages.
+Private remote staging and actual immutable hosted export remain unexecuted.
+These changes require a newly frozen, qualified reader and fresh product
+certification after promotion. The `c8f629ef` qualification and `29fc1db4`
+profile results remain bound to their original exact identities.

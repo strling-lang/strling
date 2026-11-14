@@ -747,6 +747,13 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
     def setUp(self) -> None:
         self.manifest = load_json(MANIFEST_PATH)
         self.temporary = tempfile.TemporaryDirectory()
+        # These producer fixtures intentionally exercise a historical 1.0.0
+        # package graph, not the owner's source-bound initial 4.0.0 deferral.
+        next(a for a in self.manifest["artifacts"] if a["id"] == "release:cpp")[
+            "distribution_contract"
+        ][
+            "publication_eligibility"
+        ] = "requires-supported-evidence-and-owner-authorization"
         base = Path(self.temporary.name)
         self.first = base / "first"
         self.second = base / "second"

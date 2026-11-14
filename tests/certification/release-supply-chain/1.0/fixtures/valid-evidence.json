@@ -11,9 +11,9 @@
         }
     ],
     "disclaimer": "Synthetic contract fixture only; this is not live artifact evidence and cannot authorize publication.",
-    "evidence_fingerprint": "e231fa2499aec0163dc197f5690d59c8024c172cd9279c0757a52575a473e921",
+    "evidence_fingerprint": "3b868095f4f1f89d7570d72f30712b359c736bcb9e4dedf57482c16f6faefcd1",
     "evidence_kind": "synthetic-contract-fixture",
-    "manifest_fingerprint": "18b08090c5ce61d8020c16c63de390aa2b749fe13b84d4860efed89f44b51024",
+    "manifest_fingerprint": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
     "operation_id": "certification.release-supply-chain-contract",
     "profile": "contract",
     "publication_authorized": false,

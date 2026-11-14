@@ -1446,7 +1446,23 @@ def certification_checkout_findings(
         reference = trusted.get("ref")
         if not isinstance(reference, str):
             raise ValueError("trusted checkout requires an immutable verifier revision")
-        if pull_request_base:
+        preservation = (
+            historical_reference is not None
+            and "preservation_verifier_sha" in historical_reference
+        )
+        if preservation:
+            if re.fullmatch(r"[0-9a-f]{40}", reference) is None:
+                raise ValueError("closed preservation must pin immutable verifier code")
+            pin = reference
+            expected_candidate = historical_reference["source_sha"]
+            if (
+                pull_request_base
+                and checkouts["candidate"].get("repository") != "strling-lang/strling"
+            ):
+                raise ValueError("closed reference must use the governed repository")
+            if not pull_request_base and "repository" in checkouts["candidate"]:
+                raise ValueError("delivery candidate must use the workflow repository")
+        elif pull_request_base:
             match = re.fullmatch(
                 r"\$\{\{\s*github\.event_name == 'pull_request_target' && "
                 r"github\.event\.pull_request\.base\.sha \|\| '([0-9a-f]{40})'\s*\}\}",
@@ -1482,52 +1498,84 @@ def certification_checkout_findings(
             if "repository" in checkouts["candidate"]:
                 raise ValueError("delivery candidate must use the workflow repository")
         if historical_reference is not None:
-            if set(historical_reference) != {
-                "source_sha",
-                "verifier_sha",
-            }:
+            if set(historical_reference) != (
+                {"source_sha", "verifier_sha", "preservation_verifier_sha"}
+                if preservation
+                else {"source_sha", "verifier_sha"}
+            ):
                 raise ValueError("invalid historical reference verification context")
             if any(
                 re.fullmatch(r"[0-9a-f]{40}", str(value)) is None
                 for value in historical_reference.values()
             ):
                 raise ValueError("historical reference identities must be immutable")
-            if pin != historical_reference["verifier_sha"]:
+            if (
+                pin
+                != historical_reference[
+                    "preservation_verifier_sha" if preservation else "verifier_sha"
+                ]
+            ):
                 raise ValueError(
                     "historical reference must retain its approved verifier"
                 )
             expected_candidate = historical_reference["source_sha"]
         if checkouts["candidate"].get("ref") != expected_candidate:
             raise ValueError("candidate checkout must use the exact event source SHA")
+        verifier_script = (
+            "closed_certification_integrity.py"
+            if preservation
+            else "local_certification_attestation.py"
+        )
         verification_steps = [
             step
             for step in steps
             if isinstance(step, dict)
-            and "trusted/tooling/local_certification_attestation.py"
-            in str(step.get("run", ""))
+            and ("trusted/tooling/" + verifier_script) in str(step.get("run", ""))
         ]
         if len(verification_steps) != 1 or verification_steps[0].get("shell") != "bash":
             raise ValueError(
                 "one verifier step must use explicit bash to propagate pipeline failure"
             )
+        if preservation:
+            normalized = " ".join(
+                str(verification_steps[0]["run"]).replace("\\\n", " ").split()
+            )
+            expected = "mkdir -p artifacts python -I trusted/tooling/closed_certification_integrity.py --repository-root candidate --subject compiler --json | tee artifacts/cloud-certification-verification.json"
+            if normalized != expected:
+                raise ValueError(
+                    "closed preservation requires the exact isolated compiler-subject command"
+                )
         runs = "\n".join(
             str(step.get("run", "")) for step in steps if isinstance(step, dict)
         )
-        if pull_request_base and (
-            f"git -C trusted merge-base --is-ancestor {pin} HEAD" not in runs
-            or "exit 1" not in runs
+        if (
+            pull_request_base
+            and not preservation
+            and (
+                f"git -C trusted merge-base --is-ancestor {pin} HEAD" not in runs
+                or "exit 1" not in runs
+            )
         ):
             raise ValueError(
                 "trusted base must contain the approved verifier before execution"
             )
         if re.search(r"candidate/(?:strling|tooling/[^ ]+\.py)\s", runs):
             raise ValueError("verification must not execute candidate code")
-        for required in (
-            "python -I trusted/tooling/local_certification_attestation.py",
-            "--repository-root candidate",
-            "--trust-root trusted",
-            "--bundle candidate/tests/certification/hardened-core/1.0/current",
-        ):
+        required_invocation = (
+            (
+                "python -I trusted/tooling/closed_certification_integrity.py",
+                "--repository-root candidate",
+                "--subject compiler",
+            )
+            if preservation
+            else (
+                "python -I trusted/tooling/local_certification_attestation.py",
+                "--repository-root candidate",
+                "--trust-root trusted",
+                "--bundle candidate/tests/certification/hardened-core/1.0/current",
+            )
+        )
+        for required in required_invocation:
             if required not in runs:
                 raise ValueError(f"missing isolated trusted invocation: {required}")
         return findings, pin
@@ -1549,6 +1597,38 @@ def ci_profile_routing_findings(
         ".github/workflows/certification-integrity.yml",
     }
     findings: list[Finding] = []
+    closed_pin = configuration.get("closed_preservation_verifier_sha")
+    if (
+        closed_pin is not None
+        and re.fullmatch(r"[0-9a-f]{40}", str(closed_pin)) is None
+    ):
+        findings.append(("closed preservation verifier must be immutable", None))
+    for context_name in (
+        "historical_delivery_reference",
+        "historical_integrity_reference",
+    ):
+        context = configuration.get(context_name)
+        if isinstance(context, dict) and "preservation_verifier_sha" in context:
+            try:
+                registry = json.loads(
+                    (root / "governance/closed-certifications.json").read_text(
+                        encoding="utf-8"
+                    )
+                )
+                subjects = [
+                    row for row in registry["subjects"] if row["id"] == "compiler"
+                ]
+                if (
+                    len(subjects) != 1
+                    or context["source_sha"] != subjects[0]["closure_sha"]
+                    or context["verifier_sha"] != subjects[0]["original_verifier_sha"]
+                    or context["preservation_verifier_sha"] != closed_pin
+                ):
+                    raise ValueError(
+                        "closed preservation changed its historical authority"
+                    )
+            except (OSError, KeyError, TypeError, ValueError) as error:
+                findings.append((str(error), "governance/closed-certifications.json"))
     if set(sources) != expected_sources:
         findings.append(
             (
@@ -1617,7 +1697,17 @@ def ci_profile_routing_findings(
         )
 
     cd_text = texts.get(".github/workflows/cd.yml", "")
-    if "trusted/tooling/local_certification_attestation.py" not in cd_text:
+    delivery_preservation = "preservation_verifier_sha" in configuration.get(
+        "historical_delivery_reference", {}
+    )
+    integrity_preservation = "preservation_verifier_sha" in configuration.get(
+        "historical_integrity_reference", {}
+    )
+    if (
+        "trusted/tooling/closed_certification_integrity.py"
+        if delivery_preservation
+        else "trusted/tooling/local_certification_attestation.py"
+    ) not in cd_text:
         findings.append(
             (
                 ".github/workflows/cd.yml: delivery must verify authoritative local certification",
@@ -1653,15 +1743,24 @@ def ci_profile_routing_findings(
         findings.append(
             ("cloud and delivery must pin the same reviewed verifier revision", None)
         )
-    for fragment in (
+    integrity_fragments = (
         "pull_request_target:",
         "Checkout trusted verifier",
         "Checkout candidate evidence as data",
-        "trusted/tooling/local_certification_attestation.py",
+        "trusted/tooling/closed_certification_integrity.py"
+        if integrity_preservation
+        else "trusted/tooling/local_certification_attestation.py",
         "--repository-root candidate",
-        "--trust-root trusted",
-        "tests/certification/hardened-core/1.0/current",
-    ):
+        *(
+            ("--subject compiler",)
+            if integrity_preservation
+            else (
+                "--trust-root trusted",
+                "tests/certification/hardened-core/1.0/current",
+            )
+        ),
+    )
+    for fragment in integrity_fragments:
         if fragment not in integrity_text:
             findings.append(
                 (
@@ -1799,6 +1898,15 @@ def ci_profile_routing_findings(
                         "--bundle candidate-candidate/tests/certification/release-candidate/1.0/current "
                         "--json | tee artifacts/candidate-certification-verification.json"
                     )
+                elif closed_pin is not None:
+                    subject = (
+                        "packaging" if prefix == "packaging" else "public-verification"
+                    )
+                    expected_command = (
+                        f"python -I {prefix}-trusted/tooling/closed_certification_integrity.py "
+                        f"--repository-root {prefix}-candidate --subject {subject} "
+                        f"--json | tee artifacts/{prefix}-certification-verification.json"
+                    )
                 script = (
                     commands[1].strip().split("\n", 1) if len(commands) == 2 else []
                 )
@@ -1814,6 +1922,11 @@ def ci_profile_routing_findings(
                     or len(trusted) != 1
                     or len(candidates) != 1
                     or re.fullmatch(r"[0-9a-f]{40}", str(trusted[0].get("ref"))) is None
+                    or (
+                        closed_pin is not None
+                        and prefix != "candidate"
+                        and trusted[0].get("ref") != closed_pin
+                    )
                     or any(
                         row.get("persist-credentials") is not False for row in checkouts
                     )

@@ -10093,3 +10093,12 @@ publication authority. Original certificates, policies, keys and acceptance
 records remain unchanged. Focused Windows validation passed 225 tests and
 18 subtests with the existing symlink capability skip; immutable reader
 qualification, promotion and successor certification remain pending.
+
+The `c8f629ef` reader subsequently passed all nine independent replay stages,
+Linux 607 tests and Windows 605 tests, with 197 subtests each. Two Windows host
+capability skips passed on Linux. Further source changes reconcile the owner's
+initial public scope (232 applicable plus 24 explicitly deferred ConanCenter
+obligations; all 256 implementation obligations retained) and prepare exact-byte
+hosted export without rebuilding or publishing. They require their own reader
+qualification, promotion and fresh product evidence. No private staging asset,
+release tag or public package has been created.

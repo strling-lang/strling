@@ -8,6 +8,7 @@ import subprocess
 from pathlib import Path
 
 from tooling.release_candidate_evidence import source_data
+from tooling.public_distribution import obligations, publication_obligations
 from tooling.release_supply_chain import document_fingerprint, load_json
 
 
@@ -161,13 +162,23 @@ def derive(repository: Path, trust: Path, bundle: Path, *, provisional_rc: str) 
             stable_promotion=policy["release_lifecycle"]["release_candidate"],
             future_publication_prerequisites=[
                 "Exact owner authorization naming channel, version, source, artifact subjects, destinations and run.",
-                "Approved existing registry owners, Conan endpoint, protected environment reviewers and trusted publishers or credentials.",
+                "Approved existing registry owners, protected environment reviewers and trusted publishers or credentials."
+                if publication_obligations(manifest)[1]
+                else "Approved existing registry owners, Conan endpoint, protected environment reviewers and trusted publishers or credentials.",
                 "Reconcile all registry/tag histories and immutable coordinate availability immediately before publication.",
                 "Use the certified bytes without rebuilding; any coordinate projection requires its exact governed certification.",
                 "A published terminal RC and its stable promotion must use the same source and fresh required stable certification.",
                 "After publication execute the qualified independent public verifier against actual authorized coordinates; preserve partial-publication failures.",
             ],
         )
+        applicable, deferred = publication_obligations(manifest)
+        if deferred:
+            result["public_verification_inputs"].update(
+                registered_obligations=len(obligations(manifest)),
+                applicable_obligations=len(applicable),
+                deferred_obligations=deferred,
+                all_registered_routes_verified=False,
+            )
     result["handoff_fingerprint"] = document_fingerprint(result)
     return result
 

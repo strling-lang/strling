@@ -10,7 +10,12 @@ from urllib.parse import urlsplit
 
 from jsonschema import Draft202012Validator
 
-from tooling.public_distribution import CONTRACT, exact_rows, obligations
+from tooling.public_distribution import (
+    CONTRACT,
+    exact_rows,
+    obligations,
+    publication_obligations,
+)
 from tooling.public_retrieval import RetrievalError
 from tooling.release_supply_chain import canonical_json, document_fingerprint
 
@@ -51,6 +56,8 @@ def validate_request(
         "lifecycle_state",
         "authority",
     }
+    if "deferred_obligations" in request:
+        keys.add("deferred_obligations")
     if set(request) != keys or request.get("contract") != CONTRACT:
         raise RetrievalError(
             "contract", "verification request has an unknown shape or contract"
@@ -91,10 +98,30 @@ def validate_request(
             "contract", "verification channel differs from immutable coordinate"
         )
     artifacts = {row["id"]: row for row in manifest["artifacts"]}
+    required, deferred = (
+        publication_obligations(manifest)
+        if authority == "public"
+        else (obligations(manifest), [])
+    )
+    if deferred:
+        if re.fullmatch(r"4\.0\.0(?:-rc\.[1-9][0-9]*)?", version) is None:
+            raise RetrievalError(
+                "contract", "owner deferral is limited to initial 4.0.0 publication"
+            )
+        if request.get("deferred_obligations") != deferred:
+            raise RetrievalError(
+                "contract",
+                "every owner-deferred obligation must be explicitly accounted",
+            )
+    elif "deferred_obligations" in request:
+        raise RetrievalError("contract", "undeclared public obligation deferral")
+    applicable_ids = {row["artifact_id"] for row in required}
+    artifacts = {
+        key: value for key, value in artifacts.items() if key in applicable_ids
+    }
     destinations = exact_rows(request["destinations"], "artifact_id", set(artifacts))
     documents = exact_rows(request["documents"], "artifact_id", set(artifacts))
     exact_rows(request["publication_receipts"], "artifact_id", set(artifacts))
-    required = obligations(manifest)
     if request["obligations"] != required:
         raise RetrievalError(
             "contract", "verification denominator or scope was changed"

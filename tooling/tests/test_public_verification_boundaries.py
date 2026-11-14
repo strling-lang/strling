@@ -10,7 +10,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from tooling.public_distribution import CONTRACT, obligations
+from tooling.public_distribution import CONTRACT, obligations, publication_obligations
 from tooling.public_retrieval import PublicTransport, RetrievalError
 from tooling.public_verification_request import validate_request
 from tooling.release_supply_chain import canonical_json, document_fingerprint
@@ -97,12 +97,95 @@ def validate(request, manifest, authentication):
     )
 
 
+def initial_public_request():
+    request, manifest, authentication = request_fixture()
+    request.update(authority="public", lifecycle_state="published")
+    required, deferred = publication_obligations(manifest)
+    identities = {row["artifact_id"] for row in required}
+    for field in ("destinations", "documents", "publication_receipts"):
+        request[field] = [
+            row for row in request[field] if row["artifact_id"] in identities
+        ]
+    request["obligations"] = required
+    request["deferred_obligations"] = deferred
+    for artifact in manifest["artifacts"]:
+        if artifact["id"] in identities:
+            artifact["distribution_contract"].update(
+                ownership_status="verified", registry_owner="fixture-owner"
+            )
+    for destination in request["destinations"]:
+        destination["registry_owner"] = "fixture-owner"
+    request["manifest_fingerprint"] = document_fingerprint(manifest)
+    return request, manifest, authentication
+
+
+def test_initial_public_scope_accounts_for_every_deferred_obligation():
+    request, manifest, authentication = initial_public_request()
+    result = validate(request, manifest, authentication)
+    assert result["artifacts"] == len(manifest["artifacts"]) - 1
+    assert result["required"] + len(request["deferred_obligations"]) == len(
+        obligations(manifest)
+    )
+    assert {row["artifact_id"] for row in request["deferred_obligations"]} == {
+        "release:cpp"
+    }
+    assert result["publication_authorized"] is False
+
+
+def test_initial_deferral_cannot_authorize_a_later_release_line():
+    request, manifest, authentication = initial_public_request()
+    request["version"] = authentication["product_version"] = "4.0.1"
+    with pytest.raises(RetrievalError, match="limited to initial"):
+        validate(request, manifest, authentication)
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "absent",
+        "missing",
+        "duplicate",
+        "wrong-id",
+        "active-hidden",
+        "active-evidence",
+        "false-cpp",
+        "wrong-source",
+        "controlled",
+    ],
+)
+def test_initial_public_scope_cannot_hide_or_invent_results(mutation):
+    request, manifest, authentication = initial_public_request()
+    if mutation == "absent":
+        request.pop("deferred_obligations")
+    elif mutation == "missing":
+        request["deferred_obligations"].pop()
+    elif mutation == "duplicate":
+        request["deferred_obligations"].append(request["deferred_obligations"][0])
+    elif mutation == "wrong-id":
+        request["deferred_obligations"][0]["artifact_id"] = "release:java"
+    elif mutation == "active-hidden":
+        request["deferred_obligations"].append(request["obligations"].pop())
+    elif mutation == "active-evidence":
+        request["documents"].pop()
+    elif mutation == "false-cpp":
+        request["obligations"].append(request["deferred_obligations"][0])
+    elif mutation == "wrong-source":
+        request["certified_source_sha"] = "e" * 40
+    elif mutation == "controlled":
+        request.update(authority="staged", lifecycle_state="certified")
+    with pytest.raises(RetrievalError):
+        validate(request, manifest, authentication)
+
+
 def test_complete_synthetic_request_does_not_authorize_publication():
     assert validate(*request_fixture())["publication_authorized"] is False
 
 
 def test_public_request_rejects_private_conan_remote():
     request, manifest, authentication = request_fixture()
+    next(a for a in manifest["artifacts"] if a["id"] == "release:cpp")[
+        "distribution_contract"
+    ]["publication_eligibility"] = "requires-supported-evidence-and-owner-authorization"
     request.update(authority="public", lifecycle_state="published")
     for artifact in manifest["artifacts"]:
         artifact["distribution_contract"].update(
@@ -222,8 +305,9 @@ def test_protected_digest_cannot_be_supplied_by_candidate():
 
 
 def test_real_public_request_cannot_use_pending_registry_ownership():
-    request, manifest, authentication = request_fixture()
-    request.update(authority="public", lifecycle_state="published")
+    request, manifest, authentication = initial_public_request()
+    manifest["artifacts"][0]["distribution_contract"]["ownership_status"] = "pending"
+    request["manifest_fingerprint"] = document_fingerprint(manifest)
     with pytest.raises(RetrievalError, match="ownership"):
         validate(request, manifest, authentication)
 

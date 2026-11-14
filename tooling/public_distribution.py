@@ -17,7 +17,11 @@ from pathlib import Path
 
 from tooling.public_retrieval import RetrievalError
 from tooling.release_payload import archive_files
-from tooling.release_supply_chain import canonical_json
+from tooling.release_supply_chain import (
+    DEFERRED_CPP_ELIGIBILITY,
+    INITIAL_PUBLICATION_SCOPE,
+    canonical_json,
+)
 
 CONTRACT = "strling-public-distribution-v1"
 STATUSES = {
@@ -60,6 +64,14 @@ def validate_contract(root: Path) -> dict:
     manifest = validate_manifest(
         load_json(root / contract["artifact_authority"]), root=root
     )
+    _, deferred = publication_obligations(manifest)
+    declared = contract.get("initial_publication_scope")
+    if (deferred and declared != INITIAL_PUBLICATION_SCOPE) or (
+        declared is not None and (declared != INITIAL_PUBLICATION_SCOPE or not deferred)
+    ):
+        raise RetrievalError(
+            "contract", "initial public applicability lacks its exact owner scope"
+        )
     required = {
         "github-tag" if row["registry"].startswith("github-tag:") else row["registry"]
         for row in manifest["artifacts"]
@@ -152,11 +164,45 @@ def obligations(manifest: dict) -> list[dict]:
     return result
 
 
+def publication_obligations(manifest: dict) -> tuple[list[dict], list[dict]]:
+    """Initial public scope is source authority, never a caller-selected subset.
+
+    All implementation/build obligations remain registered. Only the owner's
+    exact 4.0.0 ConanCenter deferral can be outside initial public execution.
+    """
+    deferred_ids = set()
+    for artifact in manifest["artifacts"]:
+        distribution = artifact["distribution_contract"]
+        if distribution["publication_eligibility"] != DEFERRED_CPP_ELIGIBILITY:
+            continue
+        credential = artifact["credential_policy"]
+        if (
+            artifact["id"] != "release:cpp"
+            or artifact["registry"] != "conan"
+            or distribution["tier"] != "Supported"
+            or credential["mode"] != "external-review"
+            or credential["secret_names"]
+            or credential["trusted_publishing"]
+        ):
+            raise RetrievalError("contract", "unapproved public obligation deferral")
+        deferred_ids.add(artifact["id"])
+    registered = obligations(manifest)
+    return (
+        [row for row in registered if row["artifact_id"] not in deferred_ids],
+        [row for row in registered if row["artifact_id"] in deferred_ids],
+    )
+
+
 def reduce_observations(manifest: dict, rows: list[dict], *, authority: str) -> dict:
     """Synthetic success establishes READY only; partial publication is explicit."""
     if authority not in {"public", "synthetic", "staged"}:
         raise RetrievalError("contract", "unknown observation authority")
-    required = {row["id"]: row for row in obligations(manifest)}
+    applicable, deferred = (
+        publication_obligations(manifest)
+        if authority == "public"
+        else (obligations(manifest), [])
+    )
+    required = {row["id"]: row for row in applicable}
     observed = exact_rows(rows, "id", set(required))
     states = []
     for identity, row in observed.items():
@@ -190,7 +236,7 @@ def reduce_observations(manifest: dict, rows: list[dict], *, authority: str) -> 
         status = "READY"
     else:
         raise RetrievalError("authority", "inconsistent aggregate observations")
-    return {
+    result = {
         "contract": CONTRACT,
         "authority": authority,
         "status": status,
@@ -204,6 +250,14 @@ def reduce_observations(manifest: dict, rows: list[dict], *, authority: str) -> 
         "registry_mutation_authorized": False,
         "observations_sha256": hashlib.sha256(canonical_json(rows)).hexdigest(),
     }
+    if deferred:
+        result.update(
+            verification_scope="owner-approved-initial-publication",
+            registered_obligations=len(obligations(manifest)),
+            deferred_obligations=deferred,
+            all_registered_routes_verified=False,
+        )
+    return result
 
 
 def certified_file_graph(sbom: dict, subject: str) -> dict[str, str]:

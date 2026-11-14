@@ -19,6 +19,241 @@ permissions:
     contents: read
 
 jobs:
+    export-certified-bytes:
+        name: Export authenticated certified bytes without rebuilding
+        needs:
+            - verify-release-candidate-certification
+            - verify-public-distribution-certification
+            - verify-release-packaging-certification
+            - verify-local-certification
+        if: >-
+            github.event_name == 'workflow_dispatch' && github.repository == 'strling-lang/strling'
+            && vars.RELEASE_EXPORT_ENABLED == 'true' && github.sha == vars.RELEASE_EXPORT_CLOSURE_SHA
+            && github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA
+        runs-on: ubuntu-24.04
+        environment: release-attestation
+        permissions:
+            contents: read
+        steps:
+            - name: Validate protected export identities
+              env:
+                  SOURCE_SHA: ${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  CLOSURE_SHA: ${{ vars.RELEASE_EXPORT_CLOSURE_SHA }}
+                  REVIEWED_WORKFLOW_SHA: ${{ vars.RELEASE_EXPORT_WORKFLOW_SHA }}
+                  PACKAGE_ROOT: ${{ vars.RELEASE_EXPORT_PACKAGE_ROOT_SHA256 }}
+                  CAPSULE_SHA256: ${{ vars.RELEASE_EXPORT_CAPSULE_SHA256 }}
+                  STAGING_RELEASE_ID: ${{ vars.RELEASE_EXPORT_STAGING_RELEASE_ID }}
+                  STAGING_ASSET_ID: ${{ vars.RELEASE_EXPORT_STAGING_ASSET_ID }}
+              run: |
+                  python3 - <<'PY'
+                  import os, re
+                  for key, width in [('SOURCE_SHA', 40), ('CLOSURE_SHA', 40), ('REVIEWED_WORKFLOW_SHA', 40), ('PACKAGE_ROOT', 64), ('CAPSULE_SHA256', 64)]:
+                      assert re.fullmatch('[0-9a-f]{' + str(width) + '}', os.environ[key]), key
+                  assert os.environ['CLOSURE_SHA'] == os.environ['GITHUB_SHA']
+                  assert os.environ['REVIEWED_WORKFLOW_SHA'] == os.environ['GITHUB_WORKFLOW_SHA']
+                  for key in ('STAGING_RELEASE_ID', 'STAGING_ASSET_ID'):
+                      assert re.fullmatch('[1-9][0-9]*', os.environ[key]), key
+                  PY
+            - name: Checkout qualified transport verifier
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: c8f629efaf6372a4670ab93796c583d32b1e1cbe
+                  path: export-trusted
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout exact certified source as data
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: export-source
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Checkout accepted candidate closure as data
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ vars.RELEASE_EXPORT_CLOSURE_SHA }}
+                  path: export-closure
+                  persist-credentials: false
+                  fetch-depth: 0
+            - name: Install verification runtime
+              uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: "3.12"
+            - name: Install pinned schema validators
+              run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
+            - name: Retrieve separately authorized private staging bytes
+              env:
+                  GITHUB_TOKEN: ${{ github.token }}
+                  SOURCE_SHA: ${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  CAPSULE_SHA256: ${{ vars.RELEASE_EXPORT_CAPSULE_SHA256 }}
+                  STAGING_RELEASE_ID: ${{ vars.RELEASE_EXPORT_STAGING_RELEASE_ID }}
+                  STAGING_ASSET_ID: ${{ vars.RELEASE_EXPORT_STAGING_ASSET_ID }}
+              run: |
+                  python -I export-trusted/tooling/certified_transport.py fetch \
+                    --source "$SOURCE_SHA" --release-id "$STAGING_RELEASE_ID" --asset-id "$STAGING_ASSET_ID" \
+                    --capsule-sha256 "$CAPSULE_SHA256" --output "$RUNNER_TEMP/certified-capsule.zip"
+            - name: Verify original signatures and restore exact bytes
+              env:
+                  SOURCE_SHA: ${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  PACKAGE_ROOT: ${{ vars.RELEASE_EXPORT_PACKAGE_ROOT_SHA256 }}
+                  CAPSULE_SHA256: ${{ vars.RELEASE_EXPORT_CAPSULE_SHA256 }}
+              run: |
+                  python -I export-trusted/tooling/certified_transport.py restore \
+                    --source "$SOURCE_SHA" --evidence-root "$PACKAGE_ROOT" --source-root export-source \
+                    --trust-root export-trusted --closure-root export-closure \
+                    --capsule "$RUNNER_TEMP/certified-capsule.zip" --capsule-sha256 "$CAPSULE_SHA256" \
+                    --output "$RUNNER_TEMP/certified-exports" | tee "$RUNNER_TEMP/certified-export-result.json"
+            - name: Retain exact certified c export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-c-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-c-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified cpp export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-cpp-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-cpp-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified csharp export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-csharp-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-csharp-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified dart export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-dart-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-dart-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified fsharp export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-fsharp-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-fsharp-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified go export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-go-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-go-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified java export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-java-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-java-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified kotlin export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-kotlin-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-kotlin-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified lua export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-lua-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-lua-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified perl export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-perl-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-perl-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified php export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-php-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-php-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified python export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-python-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-python-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified r export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-r-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-r-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified ruby export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-ruby-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-ruby-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified rust export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-rust-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-rust-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified swift export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-swift-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-swift-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact certified typescript export
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-typescript-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/certified-typescript-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain original signed package certificate
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: signed-release-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  path: ${{ runner.temp }}/certified-exports/signed-release-${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
+                  if-no-files-found: error
+                  include-hidden-files: true
+                  retention-days: 90
+            - name: Retain exact-byte export verification
+              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: certified-export-verification-${{ github.run_id }}
+                  path: ${{ runner.temp }}/certified-export-result.json
+                  if-no-files-found: error
+                  retention-days: 90
     verify-release-candidate-certification:
         name: Verify complete product candidate
         runs-on: ubuntu-24.04

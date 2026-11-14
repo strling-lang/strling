@@ -10072,3 +10072,24 @@ documentation, migration, support/runtime scope, benchmark limits, signatures,
 timings and future publication prerequisites. This contained task is complete;
 separate publication authorization and genuine public verification remain future
 work. No public package, release tag, GitHub Release or registry mutation occurred.
+
+## Official publication preparation — trust integration repair
+
+IN PROGRESS; no publication authorization. Source `29fc1db4` completed Local
+38/38, Pull Request 80/80, Full and independent no-reuse Release 124 passed plus
+the sole authorized waiver /125, and 42 fresh build receipts. Reconstruction
+rejected historical reader snapshots for the new ConanCenter credential mode
+and the owner-approved December 13 waiver renewal before private-key access.
+Preserve those exact results; a successor requires fresh source-bound evidence.
+
+The authenticated PAUSE uploader is `STRLING`; no `STRling%` indexing permissions
+were found, and first-upload indexing remains pending. The governed manifest and
+synthetic fixture record the uploader without claiming a reserved namespace.
+
+A separately scoped closed-evidence preservation reader authenticates only the
+four original certificates and their 954 signed producer files from accepted
+hosted run 43496556523. It grants no current certification, waiver-renewal or
+publication authority. Original certificates, policies, keys and acceptance
+records remain unchanged. Focused Windows validation passed 225 tests and
+18 subtests with the existing symlink capability skip; immutable reader
+qualification, promotion and successor certification remain pending.

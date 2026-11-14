@@ -5,6 +5,9 @@ scope:
         head: working-tree
     allowed_paths:
         - .github/workflows/cd.yml
+        - .github/workflows/ci.yml
+        - .github/workflows/certification-integrity.yml
+        - .github/workflows/public-verification.yml
         - bindings/cpp/README.md
         - bindings/java/README.md
         - bindings/java/pom.xml
@@ -15,13 +18,17 @@ scope:
         - bindings/kotlin/gradle.lockfile
         - bindings/kotlin/gradle/verification-metadata.xml
         - docs/migration/ledger.md
+        - docs/migration/final-release-candidate.md
         - docs/migration/records/official-publication.yaml
         - docs/releasing.md
+        - docs/release-policy.md
         - docs/support-matrix.md
         - governance/architecture-rules.json
         - governance/change-control.json
+        - governance/closed-certifications.json
         - governance/dependency-lock-verification.json
         - governance/release-policy.json
+        - governance/public-distribution.json
         - governance/schemas/release-supply-chain-certification.schema.json
         - governance/security-policy.json
         - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
@@ -31,6 +38,7 @@ scope:
         - tests/certification/release-supply-chain/1.0/manifest.json
         - tests/documentation/1.0/manifest.json
         - tooling/exact_runtime_provision.py
+        - tooling/closed_certification_integrity.py
         - tooling/jvm_adapter_package.py
         - tooling/jvm_adapter_runtime.py
         - tooling/maven_release.py
@@ -40,6 +48,7 @@ scope:
         - tooling/release_payload.py
         - tooling/release_supply_chain.py
         - tooling/tests/test_exact_runtime_provision.py
+        - tooling/tests/test_closed_certification_integrity.py
         - tooling/tests/test_jvm_adapter_runtime.py
         - tooling/tests/test_kotlin_product_verification.py
         - tooling/tests/test_maven_release.py
@@ -109,6 +118,8 @@ change_classification:
         evidence:
             - Correct the shared JVM package identity to the owner-verified io.github.strling-lang namespace; adapter responsibility
               remains unchanged.
+            - Preserve only exact previously accepted closed certificates through a separately scoped immutable-history check;
+              keep current-source waiver and certification checks fail-closed and preserve the original signing authority.
     generated_output_change:
         level: compatible
         evidence:
@@ -131,6 +142,25 @@ objective:
     Correct verified Maven coordinates, preserve direct C++ developer distribution while deferring ConanCenter,
     qualify the publisher and certify an exact source before separately approved publication.
 checkpoints:
+    - name: Trusted-reader and renewed-waiver reconciliation
+      status: in_progress
+      evidence:
+          - check: Preserve completed 29fc1db4 source-bound profiles
+            result: passed
+            details:
+                Local 38/38, Pull Request 80/80, Full and independent no-reuse Release each 124 passed plus the sole authorized
+                waiver. Their results remain bound to 29fc1db4. Original readers rejected the new credential-mode schema and
+                renewed waiver record before signing; all terminal evidence is retained.
+          - check: Preserve original closed acceptance
+            result: passed
+            details:
+                Hosted run 43496556523 at da4539f5 completed all four jobs successfully on 2026-11-13. Preserve its exact
+                source, signatures and producer objects without presenting historical waiver acceptance as current certification.
+          - check: Verify Perl publisher account without publication
+            result: passed
+            details:
+                The existing PAUSE session authenticated STRLING. The STRling% permissions query found no namespace records;
+                record the verified uploader and retain first-upload indexing and collision checks as explicit dependencies.
     - name: Fresh source certification
       status: in_progress
       evidence:

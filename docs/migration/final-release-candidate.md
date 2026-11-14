@@ -638,3 +638,53 @@ is an original test vector; none of its results become certification for the nex
 candidate. That candidate requires fresh source-bound preparation, all builds and
 consumers, Local/PR/Full/independent Release, reconstruction, original-authority
 signing, whole-object handoff and actual four-job hosted acceptance.
+
+## Official publication preparation: trust renewal
+
+The corrected publication source `29fc1db4f6ab20340196ec6624d10ad1ed78c84b`
+passed Local 38/38 and Pull Request 80/80. Full and a fresh independent no-reuse
+Release each accepted 124 operations plus the sole authorized VSCE waiver,
+with zero failed, unavailable or incomplete operations out of 125. Its 42 fresh
+distribution receipts and 21 independent build pairs remain bound to that source.
+Release took 4546.792675544013 seconds including canonical preparation. These
+results do not establish a signed or hosted successor certificate.
+
+Key-free reconstruction exposed two trust-data incompatibilities before any
+private key was accessed: the historical candidate reader rejects the new
+ConanCenter `external-review` mode, and the historical packaging trust snapshot
+does not authorize the owner's exact waiver renewal through December 13, 2026.
+The signature authority and its key remain unchanged. A refreshed immutable
+verifier requires qualification and promotion before another product source is
+frozen. Any successor needs its own fresh source-bound profiles and artifacts;
+none of the `29fc1db4` results may be relabeled for it.
+
+The closed certificates retain their original interpretation and identities.
+Hosted run [43496556523](https://github.com/strling-lang/strling/actions/runs/43496556523)
+accepted all four jobs at `da4539f5` on November 13, 2026. A current invocation
+of the original packaging verifier now rejects its expired waiver. This does
+not change the earlier acceptance or authorize a new certification.
+
+`governance/closed-certifications.json` records only the exact compiler,
+packaging, public-verification and final-candidate certificates from that
+accepted run. `tooling/closed_certification_integrity.py` authenticates their
+immutable Git trees, original signature authority, exact certificate bytes,
+signed evidence roots and complete producer inventories. Its result is
+`preserved-historical-certification`, with current certification, waiver renewal
+and publication authority explicitly false. Unknown subjects and any changed,
+missing or additional evidence are rejected. This preservation path is separate
+from current Full/Release reconstruction and live exact-waiver enforcement.
+No historical certificate, trust policy, signature or producer record is edited.
+
+Read-only PAUSE verification authenticated the existing uploader `STRLING`.
+The November 14 `STRling%` permissions query returned no registered namespaces.
+The manifest identifies the verified uploader while retaining first-upload
+indexing, a fresh collision check and actual public verification as dependencies;
+it does not claim an existing or reserved indexing permission. ConanCenter
+publication remains deferred, and direct C++ developer builds remain available.
+
+The initial focused preservation tests passed 20/20 on Windows. The broader
+contract cohort passed 225 tests and 18 subtests, with the existing Windows
+symlink capability skip. Immutable cross-platform qualification, refreshed
+verifier pins, successor certification, signing, staged qualification and hosted
+acceptance remain pending. No release tag, public package or registry mutation
+has occurred.

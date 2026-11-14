@@ -989,12 +989,13 @@
                 "tier": "Preview",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "STRLING",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "preview-only-explicit-authorization",
                 "external_prerequisites": [
-                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Authenticated PAUSE uploader STRLING; the 2026-11-14 STRling% permissions query returned no existing namespace registrations. First-come indexing permission is pending the separately authorized first upload.",
+                    "Recheck namespace collision before publication and verify actual indexer acceptance afterward; no existing or reserved indexing permission is claimed.",
                     "Confirm protected release environment reviewers and approved workflow source"
                 ],
                 "native_runtime_prerequisites": [

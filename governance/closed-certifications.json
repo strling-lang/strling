@@ -1,0 +1,88 @@
+{
+    "schema_version": "1.0.0",
+    "purpose": "preserve-closed-certification-evidence",
+    "current_certification_authority": false,
+    "publication_authority": false,
+    "subjects": [
+        {
+            "id": "compiler",
+            "closure_sha": "2d8d897504663211d3768517f0be9f0e28d0f11e",
+            "original_verifier_sha": "dd9d7702237ba9c56e1269418d5a9bd5b582b9f0",
+            "trust_policy": "governance/local-certification-trust.json",
+            "bundle_path": "tests/certification/hardened-core/1.0/current",
+            "bundle_tree": "3c3a9579db55c1ea37ab20bd23640250a32be940",
+            "certified_source_sha": "fdcdea27bcbabd8cb54a9d93dd5302e6032215ee",
+            "certified_tree_sha": "9f4dcc06c64c327b9ac69c9c6e38f3b76e38ade7",
+            "attestation_sha256": "49171ced8920ed23b614291f75ccd8237fc7adcda2e13a594ec88ff3bb0edbbb",
+            "evidence_root_sha256": "53a33c548f269a52fc78f16c70823cb669b5f2f46f59080b8712c421523007fa",
+            "certifier_id": "strling-local-release-certifier-2026-01",
+            "ssh_key_fingerprint": "SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA",
+            "accepted_hosted_run": {
+                "id": 43496556523,
+                "head_sha": "da4539f52692df7290ecc3da79323fa81de3f653",
+                "url": "https://github.com/strling-lang/strling/actions/runs/43496556523",
+                "job_id": 132131067166
+            }
+        },
+        {
+            "id": "final-candidate",
+            "closure_sha": "da4539f52692df7290ecc3da79323fa81de3f653",
+            "original_verifier_sha": "f8ef1a62be536981927e36a19587f96edb69f911",
+            "trust_policy": "governance/release-candidate-certification-trust.json",
+            "bundle_path": "tests/certification/release-candidate/1.0/current",
+            "bundle_tree": "75f6431a76d414106266d08f35984aed259ede18",
+            "certified_source_sha": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+            "certified_tree_sha": "484d7c64bf5fd7fc4baaa7c9693b6dcafac4c7fa",
+            "attestation_sha256": "70a2dd2ef5434a17f425a0c3428ef615d75e2d555c204f80b6e4666a8f74ea59",
+            "evidence_root_sha256": "7ec80fb88f10bc36b1b2b5bd60b59c9608c2441ef1922acd46e2168b55ae9562",
+            "certifier_id": "strling-local-release-certifier-2026-01",
+            "ssh_key_fingerprint": "SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA",
+            "accepted_hosted_run": {
+                "id": 43496556523,
+                "head_sha": "da4539f52692df7290ecc3da79323fa81de3f653",
+                "url": "https://github.com/strling-lang/strling/actions/runs/43496556523",
+                "job_id": 132131066802
+            }
+        },
+        {
+            "id": "packaging",
+            "closure_sha": "33e50ac033314dad089717a0ee20c0c7c310dea7",
+            "original_verifier_sha": "642cc21f8f5d5ccabde1bb893076e02c624247a7",
+            "trust_policy": "governance/release-certification-trust.json",
+            "bundle_path": "tests/certification/release-packaging/1.0/current",
+            "bundle_tree": "10966b9c19de02bfcb7e443b3b5b7354977e8425",
+            "certified_source_sha": "021239608ffa5066e59bdebde9869e193fbb3eab",
+            "certified_tree_sha": "67f49c1711fb4a99f65dcf6b6c7a501f365d1528",
+            "attestation_sha256": "6e8e6cbcc8d6f7e3bca656ed3762d84b88d466a91e6345593c17286f2d314966",
+            "evidence_root_sha256": "19533d8d1de2248367616df5a6a6782156125efefe6c8e3be47e316ed7c0d2b0",
+            "certifier_id": "strling-local-release-certifier-2026-01",
+            "ssh_key_fingerprint": "SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA",
+            "accepted_hosted_run": {
+                "id": 43496556523,
+                "head_sha": "da4539f52692df7290ecc3da79323fa81de3f653",
+                "url": "https://github.com/strling-lang/strling/actions/runs/43496556523",
+                "job_id": 132131066398
+            }
+        },
+        {
+            "id": "public-verification",
+            "closure_sha": "d284446710c8164efc870d60071eeb5faf542a95",
+            "original_verifier_sha": "080107ed6d7893d60eb011fb83af09ac937eeb89",
+            "trust_policy": "governance/public-verification-certification-trust.json",
+            "bundle_path": "tests/certification/public-verification/1.0/current",
+            "bundle_tree": "cfdb0081a933b017df59e01726529b9aef2480e2",
+            "certified_source_sha": "3e7061271d906251cb17c3eb06b6c748ac3068e7",
+            "certified_tree_sha": "bd499bcc748c1455c17edb1978579be1cba55397",
+            "attestation_sha256": "3ffdc122bee384e99623e6a948cfd8f29f3959e7f03899d6dde93261a1a9c4eb",
+            "evidence_root_sha256": "89a3ed2ab59f883463fcd5ed36e665d3fe18bdfd8bb2112d5c28a2435e23302e",
+            "certifier_id": "strling-local-release-certifier-2026-01",
+            "ssh_key_fingerprint": "SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA",
+            "accepted_hosted_run": {
+                "id": 43496556523,
+                "head_sha": "da4539f52692df7290ecc3da79323fa81de3f653",
+                "url": "https://github.com/strling-lang/strling/actions/runs/43496556523",
+                "job_id": 132131067086
+            }
+        }
+    ]
+}

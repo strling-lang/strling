@@ -1,5 +1,6 @@
 import hashlib
 import io
+import secrets
 import shutil
 import subprocess
 import zipfile
@@ -193,7 +194,7 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path, signing_subke
     home.mkdir(mode=0o700)
     public_home = tmp_path / "public-only-keyring"
     public_home.mkdir(mode=0o700)
-    password = "synthetic-fixture-only"
+    password = secrets.token_urlsafe(32)
 
     def gpg(*args):
         return subprocess.run(

@@ -280,4 +280,15 @@ checkpoints:
                 retrieved; its normalized public identity exactly matched the approved certificate. Paper custody and
                 off-device transfer remain pending owner confirmation; the owner will physically transfer the prepared copy.
                 No public package, tag, registry upload or production publication workflow was executed.
+    - name: Preserve first primary-signing candidate security failure
+      status: in_progress
+      evidence:
+          - check: Resolve tracked synthetic fixture credential without weakening policy
+            result: passed
+            details:
+                Local at 1391bc21 stopped at security_content_workflows, operation 4 of 38, because the new Maven test
+                contained a literal synthetic passphrase. Preserve that exact failed profile and producer output.
+                Replace the fixture literal with cryptographic random generation; the tracked-secret rule remains unchanged.
+                Run direct content and dependency-integrity checks before freezing the successor source. The real protected
+                Maven key and encrypted recovery material were not involved and require no regeneration.
 commits: []

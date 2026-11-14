@@ -92,24 +92,28 @@ outside Git. A failed verification is repaired by deliberately producing and
 signing fresh same-source evidence, never by cloud fallback or accepting a bare
 hash.
 
-The preserved compiler certification is verified at historical closure
-`2d8d897504663211d3768517f0be9f0e28d0f11e`, using reviewed verifier
-`dd9d7702237ba9c56e1269418d5a9bd5b582b9f0`. Its integrity job uses the exact
-trusted base SHA for `pull_request_target` and requires that base to contain
-the reviewed verifier; other events use the immutable verifier directly.
-New package changes do not become closure changes to that historical evidence.
+The compiler certificate remains at historical closure
+`2d8d897504663211d3768517f0be9f0e28d0f11e`, with original verifier
+`dd9d7702237ba9c56e1269418d5a9bd5b582b9f0`. The packaging certificate remains
+at `33e50ac033314dad089717a0ee20c0c7c310dea7`, with original verifier
+`642cc21f8f5d5ccabde1bb893076e02c624247a7`. The public-verification certificate
+retains closure `d284446710c8164efc870d60071eeb5faf542a95` and original verifier
+`080107ed6d7893d60eb011fb83af09ac937eeb89`.
 
-The preserved packaging integrity job verifies closure
-`33e50ac033314dad089717a0ee20c0c7c310dea7` with immutable verifier
-`642cc21f8f5d5ccabde1bb893076e02c624247a7`. Protected publishers use that same
-trust checkout independently of their owner-approved publisher implementation.
-The public-verification certification job checks the event source with immutable
-verifier `080107ed6d7893d60eb011fb83af09ac937eeb89` and the separate
-`public-verification-certification-trust.json` policy. All verification contexts
-read candidate source and evidence as data. Missing
-trusted base integration cannot fall back to candidate tooling. Local
-certification and a valid signature do not authorize production credentials,
-package publication, or creation of a public coordinate.
+Current workflows preserve those exact closed records through qualified
+immutable reader `c653d82504bf28f4d18bc0f80c9426912a2fb3e7` and its frozen
+`governance/closed-certifications.json`. The reader verifies original authority,
+signatures, Git identities, evidence roots and complete file inventories. This
+preservation does not renew a historical waiver or certify a new source.
+
+New package and complete-product certificates use the same qualified reader
+with live current-source policy and exact-waiver enforcement. Protected
+publishers use that trust checkout separately from their approved publisher
+implementation. Delivery additionally verifies the current candidate certificate
+before enabled publication; historical preservation cannot satisfy that check.
+All verification contexts read candidate source and evidence as data. They cannot
+fall back to candidate tooling. Certification and a valid signature do not
+authorize production credentials, package publication or a public coordinate.
 
 ## Immutable candidates and releases
 

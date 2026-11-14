@@ -57,7 +57,7 @@ jobs:
             - name: Checkout qualified transport verifier
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: c8f629efaf6372a4670ab93796c583d32b1e1cbe
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: export-trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -263,7 +263,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: f8ef1a62be536981927e36a19587f96edb69f911
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: candidate-trusted
             - name: Checkout candidate evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -298,7 +298,7 @@ jobs:
                   if-no-files-found: warn
                   retention-days: 90
     verify-public-distribution-certification:
-        name: Verify signed public certification
+        name: Preserve exact closed public-verification certification
         runs-on: ubuntu-24.04
         steps:
             - name: Checkout qualified public verifier
@@ -306,7 +306,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: 080107ed6d7893d60eb011fb83af09ac937eeb89
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: public-trusted
             - name: Checkout public evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -322,15 +322,13 @@ jobs:
                   python-version: "3.12"
             - name: Install pinned schema validators
               run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
-            - name: Verify public source, signature, and evidence
+            - name: Preserve original public-verification signature and complete evidence
               shell: bash
               run: |
                   mkdir -p artifacts
-                  python -I public-trusted/tooling/local_certification_attestation.py \
+                  python -I public-trusted/tooling/closed_certification_integrity.py \
                     --repository-root public-candidate \
-                    --trust-root public-trusted \
-                    --trust-policy public-verification-certification-trust.json \
-                    verify --bundle public-candidate/tests/certification/public-verification/1.0/current \
+                    --subject public-verification \
                     --json | tee artifacts/public-certification-verification.json
             - name: Retain public verification result
               if: ${{ always() }}
@@ -342,7 +340,7 @@ jobs:
                   if-no-files-found: warn
                   retention-days: 90
     verify-release-packaging-certification:
-        name: Verify signed packaging certification
+        name: Preserve exact closed packaging certification
         runs-on: ubuntu-24.04
         steps:
             - name: Checkout qualified packaging verifier
@@ -350,7 +348,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: packaging-trusted
             - name: Checkout packaging evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -366,15 +364,13 @@ jobs:
                   python-version: "3.12"
             - name: Install pinned schema validators
               run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
-            - name: Verify packaging source, signature, and evidence
+            - name: Preserve original packaging signature and complete evidence
               shell: bash
               run: |
                   mkdir -p artifacts
-                  python -I packaging-trusted/tooling/local_certification_attestation.py \
+                  python -I packaging-trusted/tooling/closed_certification_integrity.py \
                     --repository-root packaging-candidate \
-                    --trust-root packaging-trusted \
-                    --trust-policy release-certification-trust.json \
-                    verify --bundle packaging-candidate/tests/certification/release-packaging/1.0/current \
+                    --subject packaging \
                     --json | tee artifacts/packaging-certification-verification.json
             - name: Retain packaging verification result
               if: ${{ always() }}
@@ -386,7 +382,7 @@ jobs:
                   if-no-files-found: warn
                   retention-days: 90
     verify-local-certification:
-        name: Verify signed local certification
+        name: Preserve exact closed compiler certification
         runs-on: ubuntu-latest
         steps:
             - name: Checkout trusted verifier
@@ -394,10 +390,10 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.base.sha || 'dd9d7702237ba9c56e1269418d5a9bd5b582b9f0' }}
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: trusted
 
-            - name: Require approved verifier in the trusted base
+            - name: Require original authority in preservation history
               run: |
                   if ! git -C trusted merge-base --is-ancestor dd9d7702237ba9c56e1269418d5a9bd5b582b9f0 HEAD; then
                     echo "Trusted base lacks the reviewed verifier. Owner-authorized base integration is required."
@@ -421,20 +417,14 @@ jobs:
             - name: Install schema validator
               run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
 
-            - name: Verify source, trust, signature, and evidence root
+            - name: Preserve original compiler signature and complete evidence
               shell: bash
               run: |
                   mkdir -p artifacts
-                  start_seconds="$(date +%s)"
-                  python -I trusted/tooling/local_certification_attestation.py \
+                  python -I trusted/tooling/closed_certification_integrity.py \
                     --repository-root candidate \
-                    --trust-root trusted \
-                    verify \
-                    --bundle candidate/tests/certification/hardened-core/1.0/current \
+                    --subject compiler \
                     --json | tee artifacts/cloud-certification-verification.json
-                  end_seconds="$(date +%s)"
-                  echo "verification_wall_seconds=$((end_seconds - start_seconds))" | tee artifacts/cloud-certification-verification-time.txt
-
             - name: Retain cloud verification result
               if: ${{ always() }}
               continue-on-error: true

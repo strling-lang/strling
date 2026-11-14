@@ -494,9 +494,18 @@ class ArchitectureValidationTests(unittest.TestCase):
             encoding="utf-8",
         )
 
+        # Preserve the frozen closed-subject authority in disposable workflow fixtures.
+        closed = (
+            Path(__file__).resolve().parents[2]
+            / "governance/closed-certifications.json"
+        )
+        fixture = self.root / "governance/closed-certifications.json"
+        fixture.parent.mkdir(exist_ok=True)
+        fixture.write_bytes(closed.read_bytes())
+
     @staticmethod
     def ci_profile_rule() -> dict[str, object]:
-        return {
+        rule = {
             "id": "canonical-ci-profile-routing",
             "status": "enforced",
             "kind": "ci-profile-routing",
@@ -508,10 +517,72 @@ class ArchitectureValidationTests(unittest.TestCase):
                 ]
             },
         }
+        source_rules = load_json(
+            Path(__file__).resolve().parents[2] / "governance/architecture-rules.json"
+        )
+        source_rule = next(
+            row
+            for row in source_rules["rules"]
+            if row["id"] == "canonical-ci-profile-routing"
+        )
+        pin = source_rule["configuration"].get("closed_preservation_verifier_sha")
+        if pin is not None:
+            rule["configuration"]["closed_preservation_verifier_sha"] = pin
+        return rule
 
     def test_canonical_ci_profile_routing_passes(self) -> None:
         self.write_profile_workflows()
         self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
+
+    def test_closed_preservation_schema_keeps_original_required_identities(
+        self,
+    ) -> None:
+        import copy
+        from jsonschema import Draft202012Validator
+
+        schema = load_json(ROOT / "governance/schemas/architecture-rules.schema.json")
+        original = load_json(ROOT / "governance/architecture-rules.json")
+        validator = Draft202012Validator(schema)
+        validator.validate(original)
+        for mutation in (
+            "missing-pin",
+            "branch-pin",
+            "missing-preserver",
+            "missing-original-verifier",
+            "missing-source",
+            "extra-field",
+        ):
+            candidate = copy.deepcopy(original)
+            config = next(
+                r["configuration"]
+                for r in candidate["rules"]
+                if r["id"] == "canonical-ci-profile-routing"
+            )
+            context = config["historical_delivery_reference"]
+            if mutation == "missing-pin":
+                config.pop("closed_preservation_verifier_sha")
+            elif mutation == "branch-pin":
+                config["closed_preservation_verifier_sha"] = "refs/heads/dev"
+            elif mutation == "missing-preserver":
+                context.pop("preservation_verifier_sha")
+            elif mutation == "missing-original-verifier":
+                context.pop("verifier_sha")
+            elif mutation == "missing-source":
+                context.pop("source_sha")
+            else:
+                context["bypass"] = True
+            with self.subTest(mutation=mutation):
+                self.assertFalse(validator.is_valid(candidate))
+        legacy = copy.deepcopy(original)
+        config = next(
+            r["configuration"]
+            for r in legacy["rules"]
+            if r["id"] == "canonical-ci-profile-routing"
+        )
+        config.pop("closed_preservation_verifier_sha")
+        for key in ("historical_delivery_reference", "historical_integrity_reference"):
+            config[key].pop("preservation_verifier_sha")
+        validator.validate(legacy)
 
     def test_closed_preservation_keeps_original_authority_and_rejects_mutations(
         self,
@@ -531,7 +602,7 @@ class ArchitectureValidationTests(unittest.TestCase):
                 preservation_verifier_sha="a" * 40,
             )
         registry = self.root / "governance/closed-certifications.json"
-        registry.parent.mkdir()
+        registry.parent.mkdir(exist_ok=True)
         registry.write_text(
             json.dumps(
                 dict(
@@ -662,9 +733,7 @@ class ArchitectureValidationTests(unittest.TestCase):
             self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
             mutations = (
                 extra.replace("continue-on-error: true", "continue-on-error: false"),
-                extra.replace(
-                    "642cc21f8f5d5ccabde1bb893076e02c624247a7", "refs/heads/dev"
-                ),
+                extra.replace(actual["steps"][0]["with"]["ref"], "refs/heads/dev"),
                 extra.replace(
                     "python -I packaging-trusted/", "python -I packaging-candidate/"
                 ),
@@ -709,9 +778,7 @@ class ArchitectureValidationTests(unittest.TestCase):
         for path, original in originals.items():
             for mutated in (
                 "",
-                extra.replace(
-                    "080107ed6d7893d60eb011fb83af09ac937eeb89", "refs/heads/dev"
-                ),
+                extra.replace(actual["steps"][0]["with"]["ref"], "refs/heads/dev"),
                 extra.replace(
                     "python -I public-trusted/", "python -I public-candidate/"
                 ),

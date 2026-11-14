@@ -309,6 +309,10 @@
                         "verifier_sha": {
                             "type": "string",
                             "pattern": "^[0-9a-f]{40}$"
+                        },
+                        "preservation_verifier_sha": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
                         }
                     }
                 },
@@ -324,10 +328,59 @@
                         "verifier_sha": {
                             "type": "string",
                             "pattern": "^[0-9a-f]{40}$"
+                        },
+                        "preservation_verifier_sha": {
+                            "type": "string",
+                            "pattern": "^[0-9a-f]{40}$"
                         }
                     }
+                },
+                "closed_preservation_verifier_sha": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{40}$"
                 }
-            }
+            },
+            "allOf": [
+                {
+                    "if": { "required": ["closed_preservation_verifier_sha"] },
+                    "then": {
+                        "required": [
+                            "historical_delivery_reference",
+                            "historical_integrity_reference"
+                        ],
+                        "properties": {
+                            "historical_delivery_reference": {
+                                "required": ["preservation_verifier_sha"]
+                            },
+                            "historical_integrity_reference": {
+                                "required": ["preservation_verifier_sha"]
+                            }
+                        }
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["historical_delivery_reference"],
+                        "properties": {
+                            "historical_delivery_reference": {
+                                "required": ["preservation_verifier_sha"]
+                            }
+                        }
+                    },
+                    "then": { "required": ["closed_preservation_verifier_sha"] }
+                },
+                {
+                    "if": {
+                        "required": ["historical_integrity_reference"],
+                        "properties": {
+                            "historical_integrity_reference": {
+                                "required": ["preservation_verifier_sha"]
+                            }
+                        }
+                    },
+                    "then": { "required": ["closed_preservation_verifier_sha"] }
+                }
+            ]
         },
         "rule": {
             "type": "object",

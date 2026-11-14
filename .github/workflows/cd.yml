@@ -14,7 +14,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: dd9d7702237ba9c56e1269418d5a9bd5b582b9f0
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: trusted
             - name: Checkout closed reference evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -29,19 +29,39 @@ jobs:
                   python-version: "3.12"
             - name: Install verification dependency
               run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
-            - name: Verify signed local Release evidence
+            - name: Preserve original compiler signature and complete evidence
               shell: bash
-              run:
-                  "mkdir -p artifacts\npython -I trusted/tooling/local_certification_attestation.py \\\n  --repository-root\
-                  \ candidate \\\n  --trust-root trusted \\\n  verify \\\n  --bundle candidate/tests/certification/hardened-core/1.0/current\
-                  \ \\\n  --json | tee artifacts/cloud-certification-verification.json\n"
+              run: |
+                  mkdir -p artifacts
+                  python -I trusted/tooling/closed_certification_integrity.py \
+                    --repository-root candidate \
+                    --subject compiler \
+                    --json | tee artifacts/cloud-certification-verification.json
+            - name: Checkout approved current candidate closure as data
+              if: vars.RELEASE_PUBLICATION_ENABLED == 'true'
+              uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  persist-credentials: false
+                  fetch-depth: 0
+                  repository: strling-lang/strling
+                  ref: ${{ vars.RELEASE_CERTIFICATION_REF }}
+                  path: approved-closure
+            - name: Verify current source and live exact-waiver certification before publication
+              if: vars.RELEASE_PUBLICATION_ENABLED == 'true'
+              shell: bash
+              run: |
+                  python -I trusted/tooling/local_certification_attestation.py \
+                    --repository-root approved-closure --trust-root trusted \
+                    --trust-policy release-candidate-certification-trust.json verify \
+                    --bundle approved-closure/tests/certification/release-candidate/1.0/current \
+                    --json | tee artifacts/current-candidate-certification-verification.json
             - name: Retain release certification evidence
               if: ${{ always() }}
               continue-on-error: true
               uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
               with:
                   name: certification-verification-${{ github.run_id }}
-                  path: artifacts/cloud-certification-verification.json
+                  path: artifacts/*certification-verification.json
                   if-no-files-found: warn
                   retention-days: 90
     verify-release:
@@ -1899,7 +1919,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2008,7 +2028,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2114,7 +2134,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2221,7 +2241,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2327,7 +2347,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2431,7 +2451,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2537,7 +2557,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2652,7 +2672,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2760,7 +2780,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2871,7 +2891,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2983,7 +3003,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3094,7 +3114,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3201,7 +3221,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3314,7 +3334,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3424,7 +3444,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3538,7 +3558,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3650,7 +3670,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3766,7 +3786,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 642cc21f8f5d5ccabde1bb893076e02c624247a7
+                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0

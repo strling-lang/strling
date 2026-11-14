@@ -98,7 +98,8 @@ def test_central_rejects_unsafe_companion_dependency(tmp_path, mutation):
 @pytest.mark.skipif(
     shutil.which("gpg") is None, reason="Linux publication qualification requires GnuPG"
 )
-def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path):
+@pytest.mark.parametrize("signing_subkey", [False, True])
+def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path, signing_subkey):
     home = tmp_path / "test-keyring"
     home.mkdir(mode=0o700)
 
@@ -116,7 +117,7 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path):
             "--quick-generate-key",
             "STRling local test <test@example.invalid>",
             "ed25519",
-            "sign",
+            "cert" if signing_subkey else "sign",
             "0",
         )
         fingerprint = next(
@@ -124,7 +125,23 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path):
             for line in gpg("--with-colons", "--list-secret-keys").decode().splitlines()
             if line.startswith("fpr:")
         )
-        key = gpg("--armor", "--export-secret-keys", fingerprint).decode()
+        primary = fingerprint
+        if signing_subkey:
+            gpg("--passphrase", "", "--quick-add-key", primary, "ed25519", "sign", "1y")
+            fingerprint = [
+                line.split(":")[9]
+                for line in gpg(
+                    "--with-colons", "--with-subkey-fingerprint", "--list-secret-keys"
+                )
+                .decode()
+                .splitlines()
+                if line.startswith("fpr:")
+            ][1]
+        key = gpg(
+            "--armor",
+            "--export-secret-subkeys" if signing_subkey else "--export-secret-keys",
+            fingerprint + "!",
+        ).decode()
         files = {
             "io/github/strling-lang/strling/4.0.0/strling-4.0.0.jar": b"exact approved binary bytes"
         }
@@ -140,6 +157,24 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path):
                 assert archive.read(name + ".asc").startswith(
                     b"-----BEGIN PGP SIGNATURE-----"
                 )
+                signature = tmp_path / "payload.asc"
+                payload_path = tmp_path / "payload"
+                signature.write_bytes(archive.read(name + ".asc"))
+                payload_path.write_bytes(payload)
+                status = gpg(
+                    "--status-fd", "1", "--verify", str(signature), str(payload_path)
+                ).decode()
+                valid = next(
+                    line.split()
+                    for line in status.splitlines()
+                    if line.startswith("[GNUPG:] VALIDSIG ")
+                )
+                assert valid[2] == fingerprint
+                if signing_subkey:
+                    assert valid[-1] == primary
+        if signing_subkey:
+            with pytest.raises(subprocess.CalledProcessError):
+                signed_envelope(files, key, "", primary)
         with pytest.raises(ValueError, match="owner authorization"):
             signed_envelope(files, key, "", "A" * 40)
     finally:

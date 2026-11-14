@@ -30,6 +30,7 @@ scope:
         - governance/release-policy.json
         - governance/public-distribution.json
         - governance/schemas/release-supply-chain-certification.schema.json
+        - governance/schemas/architecture-rules.schema.json
         - governance/schemas/public-distribution.schema.json
         - governance/schemas/public-verification-request.schema.json
         - governance/schemas/public-verification-result.schema.json
@@ -185,7 +186,7 @@ checkpoints:
                 Local at 117794cb failed governance because the previous completed task remained active; preserve that
                 result and register this publication scope.
     - name: Immutable predecessor reader qualification
-      status: complete
+      status: passed
       evidence:
           - check: Qualify c8f629ef without private-key access
             result: passed
@@ -204,4 +205,57 @@ checkpoints:
                 The complete focused Windows diagnostic passed 375 tests and 150 subtests with one known symlink
                 capability skip; all registered generator checks and governance passed. These are engineering observations,
                 not authoritative certification. Private staging and actual hosted byte export remain unexecuted.
+    - name: Successor reader qualification and promotion
+      status: in_progress
+      evidence:
+          - check: Qualify c653d825 without original-authority private-key access
+            result: passed
+            details:
+                Linux 664 tests and Windows 662 tests, 197 subtests each, all eleven independent qualification leaves passed.
+                The two Windows capability skips passed on Linux. Current Full/Release reconstruction, both real supply-chain
+                bundles, public producer reconstruction, original closed certificates and the 2304-file export graph passed.
+                The production signing authority remains unchanged. Promote only this exact immutable reader; the subsequent
+                product source still requires fresh source-bound profiles, artifacts, consumers, reconstruction, signing and hosted acceptance.
+    - name: Owner-selected Maven token scope
+      status: passed
+      evidence:
+          - check: Preserve the existing repository-scoped Central token pair
+            result: passed
+            details:
+                The owner explicitly chose repository scope for SONATYPE_USERNAME and SONATYPE_PASSWORD. Preserve both
+                entries without migration or deletion. Java and Kotlin reference the same intended names only within
+                protected release jobs; manual approval, exact source, workflow, artifact and run authorization remain mandatory.
+                Organizational OpenPGP generation and custody remain owner-only and are not prerequisites for independent certification.
+    - name: Governed reader promotion schema reconciliation
+      status: passed
+      evidence:
+          - check: Register preservation references without weakening historical bindings
+            result: passed
+            details:
+                The architecture schema now registers the immutable global and per-reference preservation verifier fields.
+                Original source and original verifier identities remain required; missing, mutable and unknown fields are rejected.
+                Governance passed and focused regressions passed 128 tests and 64 subtests. These are engineering checks;
+                fresh product certification remains pending for the subsequent frozen source.
+    - name: Maven signing compatibility investigation
+      status: in_progress
+      evidence:
+          - check: Verify exact publisher with a synthetic signing-only subkey export
+            result: passed
+            details:
+                Immutable c653d825 tooling signed six Java, Kotlin and shared JVM fixture JAR/POM payloads using only an
+                RSA4096 signing-subkey secret export. Independent public-certificate verification confirmed subkey and
+                primary binding, exact payload bytes, unavailable-primary rejection and wrong-passphrase rejection.
+                No production identity, credential access, registry request or publication occurred. Sonatype's current
+                primary-key guidance conflicts with assuming Portal acceptance; key creation remains on compatibility hold.
+                The approved offline-primary custody architecture is unchanged, pending explicit Portal compatibility evidence
+                or an owner-approved alternative. Independent certification does not require a production Maven identity.
+    - name: LuaRocks authenticated ownership verification
+      status: in_progress
+      evidence:
+          - check: Verify existing account ownership and module administration
+            result: passed
+            details:
+                The authenticated strling-lang session shows ownership of the existing strling module and permits opening
+                its edit page. No field or publishing grant was changed. The profile and edit pages expose no numeric uploader
+                identity; retain that exact authorization field as pending rather than inferring it from random DOM identifiers.
 commits: []

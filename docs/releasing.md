@@ -115,6 +115,37 @@ All verification contexts read candidate source and evidence as data. They canno
 fall back to candidate tooling. Certification and a valid signature do not
 authorize production credentials, package publication or a public coordinate.
 
+## Maven artifact signing
+
+Java, Kotlin and the shared JVM bridge use one dedicated organizational RSA
+primary signing key, at least 3072 bits, with a nonempty passphrase and finite
+validity. The initial identity uses RSA4096 and one-year validity. Detached
+ASCII-armored signatures use SHA-256 and the exact owner-approved primary
+fingerprint. Signing subkeys, expired or revoked keys, unavailable secrets and
+different Java/Kotlin signer identities are rejected. Signing adds registry
+transport signatures and checksums over certified bytes; it does not rebuild
+packages or authorize publication.
+
+`GPG_PRIVATE_KEY` and `GPG_PASSPHRASE` belong to the protected `release`
+environment. The owner-selected `SONATYPE_USERNAME` and `SONATYPE_PASSWORD`
+remain repository secrets, consumed only by protected Maven publication jobs.
+Environment approval, exact source, artifact, workflow and run authorization
+remain mandatory. The primary secret is available to these approved jobs;
+this provides less isolation than an offline primary key. Passphrase protection,
+purpose isolation, restricted custody, manual deployment review and independent
+signature checks compensate for that distinction.
+
+The owner must retain an encrypted recovery archive containing the protected key,
+signing passphrase, public certificate and revocation certificate. Its separate
+recovery passphrase must be recorded physically, apart from encrypted on-device and
+off-device copies. Recovery imports only into a restricted isolated key store;
+verify the full primary fingerprint and a synthetic detached signature before
+restoring environment secrets. Renew before expiration through owner-reviewed
+custody and public-certificate redistribution; revocation or rotation requires
+fresh public fingerprint approval and secret replacement. Never reuse a revoked
+identity. Public-key distribution is separately authorized; successful local
+signing is not Central Portal acceptance or permission to upload.
+
 ## Immutable candidates and releases
 
 Public release candidates use `MAJOR.MINOR.PATCH-rc.N`. Published prerelease

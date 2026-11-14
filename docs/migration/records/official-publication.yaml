@@ -258,4 +258,26 @@ checkpoints:
                 The authenticated strling-lang session shows ownership of the existing strling module and permits opening
                 its edit page. No field or publishing grant was changed. The profile and edit pages expose no numeric uploader
                 identity; retain that exact authorization field as pending rather than inferring it from random DOM identifiers.
+    - name: Owner-approved Maven primary signing architecture
+      status: in_progress
+      evidence:
+          - check: Supersede the signing-subkey compatibility hold explicitly
+            result: passed
+            details:
+                The owner authorized a dedicated organizational primary signer shared by Java and Kotlin. RSA4096,
+                SHA-256 detached signatures, one-year initial validity and passphrase-protected release environment secrets
+                replace the offline-primary/subkey design. The online primary custody distinction is documented.
+                Repository-scoped Maven credentials remain unchanged. The exact publisher rejects subkey selection,
+                expired or revoked keys, weak or non-RSA keys, unavailable secrets and differing distribution fingerprints.
+          - check: Qualify production identity without public publication
+            result: passed
+            details:
+                Restricted local generation, encrypted recovery restoration and revocation restoration passed.
+                Twelve synthetic Java, Kotlin and JVM artifact signatures verified independently against the public
+                primary certificate with SHA-256 and unchanged payloads. Protected release signing secret writes succeeded.
+                Public fingerprint and nonsecret metadata are retained in the campaign provisioning receipt.
+                The separately authorized public certificate was distributed through keyserver.ubuntu.com and independently
+                retrieved; its normalized public identity exactly matched the approved certificate. Paper custody and
+                off-device transfer remain pending owner confirmation; the owner will physically transfer the prepared copy.
+                No public package, tag, registry upload or production publication workflow was executed.
 commits: []

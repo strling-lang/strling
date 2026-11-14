@@ -549,7 +549,11 @@ def upload(
             "ConanCenter distributes STRling through reviewed Conan Center Index contributions",
         )
     if slug in {"java", "kotlin"}:
-        from tooling.maven_release import central_files, signed_envelope
+        from tooling.maven_release import (
+            central_files,
+            maven_signing_identity,
+            signed_envelope,
+        )
 
         if authorization is None:
             raise ReleaseSupplyChainError(
@@ -560,6 +564,14 @@ def upload(
             for item in authorization["destinations"]
             if item["artifact_id"] == artifact["id"]
         )
+        if (
+            maven_signing_identity(authorization["destinations"])
+            != destination["signing_key_fingerprint"]
+        ):
+            raise ReleaseSupplyChainError(
+                "publication-signing",
+                "Maven signing identity differs between distributions",
+            )
         files = central_files(root, artifact, version, members)
         for name in files:
             if name.endswith(".pom"):

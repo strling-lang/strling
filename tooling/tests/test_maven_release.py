@@ -9,6 +9,95 @@ import pytest
 from tooling.maven_release import central_files, signed_envelope
 
 
+@pytest.mark.parametrize(
+    "fingerprints",
+    [("A" * 40, "A" * 40), ("A" * 40, "B" * 40), ("A" * 40, ""), ("", "")],
+)
+def test_java_and_kotlin_require_the_same_approved_primary(fingerprints):
+    from tooling.maven_release import maven_signing_identity
+
+    destinations = [
+        dict(artifact_id="release:" + slug, signing_key_fingerprint=value)
+        for slug, value in zip(("java", "kotlin"), fingerprints)
+    ]
+    if fingerprints == ("A" * 40, "A" * 40):
+        assert maven_signing_identity(destinations) == "A" * 40
+    else:
+        with pytest.raises(ValueError, match="shared"):
+            maven_signing_identity(destinations)
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        None,
+        "expired",
+        "revoked",
+        "subkey",
+        "weak",
+        "curve",
+        "no-expiry",
+        "future",
+        "unavailable",
+        "no-sign",
+        "duplicate",
+        "wrong",
+    ],
+)
+def test_maven_primary_key_metadata_policy(mutation):
+    from tooling.maven_release import primary_signer
+
+    fingerprint = "B" * 40
+    fields = [
+        "sec",
+        "u",
+        "3072",
+        "1",
+        "KEY",
+        "100",
+        "200",
+        "",
+        "",
+        "",
+        "",
+        "scSC",
+        "",
+        "",
+        "+",
+        "",
+    ]
+    positions = {
+        "expired": (6, "150"),
+        "revoked": (1, "r"),
+        "subkey": (0, "ssb"),
+        "weak": (2, "2048"),
+        "curve": (3, "22"),
+        "no-expiry": (6, ""),
+        "future": (5, "175"),
+        "unavailable": (14, "#"),
+        "no-sign": (11, "cC"),
+    }
+    if mutation in positions:
+        index, value = positions[mutation]
+        fields[index] = value
+    listing = ":".join(fields) + "\nfpr:::::::::" + fingerprint + ":\n"
+    if mutation == "duplicate":
+        listing += listing
+    if mutation is None:
+        primary_signer(listing, fingerprint, now=150)
+    else:
+        with pytest.raises(ValueError):
+            primary_signer(
+                listing, "A" * 40 if mutation == "wrong" else fingerprint, now=150
+            )
+
+
+@pytest.mark.parametrize("passphrase", ["", "bad\nframe", "bad\rframe"])
+def test_maven_requires_nonempty_well_framed_passphrase(passphrase):
+    with pytest.raises(ValueError, match="passphrase"):
+        signed_envelope({"fixture.jar": b"fixture"}, "", passphrase, "B" * 40)
+
+
 def fixture_files(tmp_path):
     files = {}
     for name in ("strling", "strling-jvm"):
@@ -102,23 +191,50 @@ def test_central_rejects_unsafe_companion_dependency(tmp_path, mutation):
 def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path, signing_subkey):
     home = tmp_path / "test-keyring"
     home.mkdir(mode=0o700)
+    public_home = tmp_path / "public-only-keyring"
+    public_home.mkdir(mode=0o700)
+    password = "synthetic-fixture-only"
 
     def gpg(*args):
         return subprocess.run(
-            ["gpg", "--homedir", str(home), "--batch", "--no-tty", *args],
+            [
+                "gpg",
+                "--homedir",
+                str(home),
+                "--batch",
+                "--no-tty",
+                "--pinentry-mode",
+                "loopback",
+                "--passphrase-fd",
+                "0",
+                *args,
+            ],
+            input=(password + "\n").encode(),
+            capture_output=True,
+            check=True,
+        ).stdout
+
+    def verify(*args):
+        return subprocess.run(
+            [
+                "gpg",
+                "--homedir",
+                str(public_home),
+                "--batch",
+                "--no-auto-key-retrieve",
+                *args,
+            ],
             capture_output=True,
             check=True,
         ).stdout
 
     try:
         gpg(
-            "--passphrase",
-            "",
             "--quick-generate-key",
             "STRling local test <test@example.invalid>",
-            "ed25519",
+            "rsa3072",
             "cert" if signing_subkey else "sign",
-            "0",
+            "1y",
         )
         fingerprint = next(
             line.split(":")[9]
@@ -127,7 +243,7 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path, signing_subke
         )
         primary = fingerprint
         if signing_subkey:
-            gpg("--passphrase", "", "--quick-add-key", primary, "ed25519", "sign", "1y")
+            gpg("--quick-add-key", primary, "rsa3072", "sign", "1y")
             fingerprint = [
                 line.split(":")[9]
                 for line in gpg(
@@ -143,9 +259,33 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path, signing_subke
             fingerprint + "!",
         ).decode()
         files = {
-            "io/github/strling-lang/strling/4.0.0/strling-4.0.0.jar": b"exact approved binary bytes"
+            f"io/github/strling-lang/{module}/4.0.0/{module}-4.0.0.{kind}": b"exact synthetic fixture bytes: "
+            + module.encode()
+            + kind.encode()
+            for module in ("strling", "strling-kotlin", "strling-jvm")
+            for kind in ("jar", "pom", "sources.jar", "javadoc.jar")
         }
-        data, digest = signed_envelope(files, key, "", fingerprint)
+        if signing_subkey:
+            with pytest.raises(ValueError, match="primary key, not a subkey"):
+                signed_envelope(files, key, password, fingerprint)
+            return
+        data, digest = signed_envelope(files, key, password, fingerprint)
+        first_name = next(iter(files))
+        with zipfile.ZipFile(io.BytesIO(data)) as archive:
+            (tmp_path / "untrusted.asc").write_bytes(archive.read(first_name + ".asc"))
+        (tmp_path / "untrusted").write_bytes(files[first_name])
+        with pytest.raises(subprocess.CalledProcessError):
+            verify(
+                "--verify", str(tmp_path / "untrusted.asc"), str(tmp_path / "untrusted")
+            )
+        public = gpg("--armor", "--export", primary)
+        subprocess.run(
+            ["gpg", "--homedir", str(public_home), "--batch", "--import"],
+            input=public,
+            capture_output=True,
+            check=True,
+        )
+        assert b"sec:" not in verify("--with-colons", "--list-secret-keys")
         assert hashlib.sha256(data).hexdigest() == digest
         with zipfile.ZipFile(io.BytesIO(data)) as archive:
             for name, payload in files.items():
@@ -161,7 +301,7 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path, signing_subke
                 payload_path = tmp_path / "payload"
                 signature.write_bytes(archive.read(name + ".asc"))
                 payload_path.write_bytes(payload)
-                status = gpg(
+                status = verify(
                     "--status-fd", "1", "--verify", str(signature), str(payload_path)
                 ).decode()
                 valid = next(
@@ -170,18 +310,30 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path, signing_subke
                     if line.startswith("[GNUPG:] VALIDSIG ")
                 )
                 assert valid[2] == fingerprint
-                if signing_subkey:
-                    assert valid[-1] == primary
-        if signing_subkey:
-            with pytest.raises(subprocess.CalledProcessError):
-                signed_envelope(files, key, "", primary)
+                assert valid[9] == "8"
+                assert valid[-1] == primary
+                payload_path.write_bytes(payload + b"modified")
+                with pytest.raises(subprocess.CalledProcessError):
+                    verify("--verify", str(signature), str(payload_path))
+                payload_path.write_bytes(payload)
+                signature.write_bytes(b"invalid detached signature")
+                with pytest.raises(subprocess.CalledProcessError):
+                    verify("--verify", str(signature), str(payload_path))
+                signature.unlink()
+                with pytest.raises(subprocess.CalledProcessError):
+                    verify("--verify", str(signature), str(payload_path))
+        with pytest.raises(subprocess.CalledProcessError):
+            signed_envelope(files, key, password + "wrong", fingerprint)
+        with pytest.raises(subprocess.CalledProcessError):
+            signed_envelope(files, "", password, fingerprint)
         with pytest.raises(ValueError, match="owner authorization"):
-            signed_envelope(files, key, "", "A" * 40)
+            signed_envelope(files, key, password, "A" * 40)
     finally:
-        subprocess.run(
-            ["gpgconf", "--homedir", str(home), "--kill", "gpg-agent"],
-            capture_output=True,
-        )
+        for keyring in (home, public_home):
+            subprocess.run(
+                ["gpgconf", "--homedir", str(keyring), "--kill", "gpg-agent"],
+                capture_output=True,
+            )
 
 
 @pytest.mark.parametrize(

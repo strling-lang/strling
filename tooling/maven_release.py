@@ -13,6 +13,7 @@ import os
 import re
 import subprocess
 import tempfile
+import time
 import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path
@@ -147,13 +148,64 @@ def central_files(
     return files
 
 
+def maven_signing_identity(destinations: list[dict]) -> str:
+    """Java and Kotlin share one exact owner-approved organizational signer."""
+    fingerprints = {
+        item.get("signing_key_fingerprint", "")
+        for item in destinations
+        if item.get("artifact_id") in {"release:java", "release:kotlin"}
+    }
+    if len(fingerprints) != 1 or not all(
+        re.fullmatch(r"[A-F0-9]{40}", value) for value in fingerprints
+    ):
+        raise ValueError(
+            "Java and Kotlin require one shared owner-approved primary fingerprint"
+        )
+    return next(iter(fingerprints))
+
+
+def primary_signer(listing: str, fingerprint: str, *, now: int | None = None) -> None:
+    """Require the authorized, live RSA primary; never select a signing subkey."""
+    now = int(time.time()) if now is None else now
+    records = []
+    pending = None
+    for line in listing.splitlines():
+        fields = line.split(":")
+        if fields[0] in {"sec", "ssb"}:
+            pending = fields
+        elif fields[0] == "fpr" and pending is not None:
+            records.append((pending, fields[9]))
+            pending = None
+    matches = [(record, value) for record, value in records if value == fingerprint]
+    if len(matches) != 1:
+        raise ValueError("protected signing key differs from owner authorization")
+    record, _ = matches[0]
+    if record[0] != "sec":
+        raise ValueError(
+            "Maven signing requires the approved primary key, not a subkey"
+        )
+    if (
+        record[1] in {"r", "e", "d", "i"}
+        or record[3] not in {"1", "3"}
+        or int(record[2]) < 3072
+        or not record[6]
+        or int(record[6]) <= now
+        or int(record[5]) > now
+        or "s" not in record[11]
+        or record[14] == "#"
+    ):
+        raise ValueError(
+            "Maven primary signing key is expired, unavailable or outside RSA policy"
+        )
+
+
 def signed_envelope(
     files: dict[str, bytes], private_key: str, passphrase: str, fingerprint: str
 ) -> tuple[bytes, str]:
     """Sign existing distribution bytes; create only registry transport metadata."""
     if re.fullmatch(r"[A-F0-9]{40}", fingerprint) is None:
         raise ValueError("owner-approved PGP fingerprint is required")
-    if "\n" in passphrase or "\r" in passphrase:
+    if not passphrase or "\n" in passphrase or "\r" in passphrase:
         raise ValueError("invalid signing passphrase framing")
     with tempfile.TemporaryDirectory(prefix="strling-pgp-envelope-") as temporary:
         home = Path(temporary)
@@ -170,15 +222,7 @@ def signed_envelope(
         try:
             gpg("--import", input=private_key.encode())
             keys = gpg("--with-colons", "--list-secret-keys").decode()
-            fingerprints = [
-                line.split(":")[9]
-                for line in keys.splitlines()
-                if line.startswith("fpr:")
-            ]
-            if fingerprint not in fingerprints:
-                raise ValueError(
-                    "protected signing key differs from owner authorization"
-                )
+            primary_signer(keys, fingerprint)
             envelope = dict(files)
             for name, payload in files.items():
                 # Input on stdin is the passphrase only; distribution bytes are
@@ -194,6 +238,8 @@ def signed_envelope(
                     "0",
                     "--local-user",
                     fingerprint + "!",
+                    "--digest-algo",
+                    "SHA256",
                     "--armor",
                     "--detach-sign",
                     "--output",
@@ -204,9 +250,19 @@ def signed_envelope(
                 status = gpg(
                     "--status-fd", "1", "--verify", str(signature), str(path)
                 ).decode()
+                valid = [
+                    line.split()
+                    for line in status.splitlines()
+                    if line.startswith("[GNUPG:] VALIDSIG ")
+                ]
                 if (
-                    "[GNUPG:] VALIDSIG " + fingerprint + " " not in status
+                    len(valid) != 1
+                    or valid[0][2] != fingerprint
+                    or valid[0][9] != "8"
                     or path.read_bytes() != payload
+                    or not signature.read_bytes().startswith(
+                        b"-----BEGIN PGP SIGNATURE-----"
+                    )
                 ):
                     raise ValueError("detached signature verification failed")
                 envelope[name + ".asc"] = signature.read_bytes()

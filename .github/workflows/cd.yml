@@ -2488,12 +2488,7 @@ jobs:
                   candidate --trust-root .cert/trusted --certification-bundle .cert/certification --evidence .cert/certification/evidence/release-supply-chain/release-supply-chain-evidence.json
                   --authorization .cert/authorization.json --download-root .cert/downloads/cpp --json --certification-root
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
-            - name: Install pinned data-only Conan client
-              run: python -m pip install conan==2.31.2
-            - name: Upload only the approved subject
-              env:
-                  CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
-                  CONAN_USERNAME: ${{ secrets.CONAN_USERNAME }}
+            - name: Enforce ConanCenter contribution policy
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:cpp
                   --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification
@@ -2746,7 +2741,7 @@ jobs:
             - release-certification
             - publish-csharp
         if:
-            ${{ always() && needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run
+            ${{ !cancelled() && needs.release-certification.result == 'success' && needs.verify-release.result == 'success' && needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run
             == 'false' && vars.RELEASE_PUBLICATION_ENABLED == 'true' && github.workflow_sha == vars.RELEASE_APPROVED_WORKFLOW_SHA
             && github.repository == 'strling-lang/strling' && (github.event_name == 'workflow_dispatch' || github.event_name
             == 'push') && contains(fromJSON(vars.RELEASE_AUTHORIZED_DESTINATIONS || '[]'), 'release:fsharp') &&
@@ -2969,7 +2964,7 @@ jobs:
             - release-certification
             - publish-java
         if:
-            ${{ always() && needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run
+            ${{ !cancelled() && needs.release-certification.result == 'success' && needs.verify-release.result == 'success' && needs.verify-release.outputs.is_release == 'true' && needs.verify-release.outputs.is_dry_run
             == 'false' && vars.RELEASE_PUBLICATION_ENABLED == 'true' && github.workflow_sha == vars.RELEASE_APPROVED_WORKFLOW_SHA
             && github.repository == 'strling-lang/strling' && (github.event_name == 'workflow_dispatch' || github.event_name
             == 'push') && contains(fromJSON(vars.RELEASE_AUTHORIZED_DESTINATIONS || '[]'), 'release:kotlin') &&
@@ -3048,10 +3043,10 @@ jobs:
                   .cert/closure --output-dir .cert/receipts/handoff-intent.json
             - name: Upload only the approved subject
               env:
-                  GPG_PRIVATE_KEY: ${{ secrets.GPG_KEY }}
+                  GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
                   GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-                  SONATYPE_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-                  SONATYPE_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+                  SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+                  SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
               run:
                   python -I .cert/publisher/tooling/publish_certified_artifact.py --execute --artifact-id release:kotlin
                   --source-root candidate --trust-root .cert/trusted --certification-bundle .cert/certification

@@ -16,7 +16,7 @@ ENTRY = """<components>
       <component group="third.party" name="dependency" version="1.0">
          <artifact name="dependency.jar"><sha256 value="reviewed-external-hash"/></artifact>
       </component>
-      <component group="com.strling" name="strling-jvm" version="3.0.0">
+      <component group="io.github.strling-lang" name="strling-jvm" version="3.0.0">
          <artifact name="strling-jvm-3.0.0.jar"><sha256 value="old"/></artifact>
       </component>
 </components>
@@ -26,8 +26,8 @@ ENTRY = """<components>
 def test_local_product_refresh_preserves_third_party_and_is_idempotent():
     updated = product_verification_projection(ENTRY, "4.0.0", "a" * 64, "b" * 64)
     assert (
-        ENTRY.split('      <component group="com.strling"')[0]
-        == updated.split('      <component group="com.strling"')[0]
+        ENTRY.split('      <component group="io.github.strling-lang"')[0]
+        == updated.split('      <component group="io.github.strling-lang"')[0]
     )
     assert "strling-jvm-4.0.0.jar" in updated
     assert "strling-jvm-4.0.0.pom" in updated

@@ -421,7 +421,7 @@ def inspect_payload(
                 fields.get("artifactId"),
                 fields.get("version"),
             ) != (
-                ("com.strling", "strling-jvm", version)
+                ("io.github.strling-lang", "strling-jvm", version)
                 if slug == "java" and member["name"] == "bindings/jvm/pom.xml"
                 else (*artifact["package_name"].split(":"), version)
             ):

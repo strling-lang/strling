@@ -1,6 +1,6 @@
 # STRling shared JVM bridge
 
-`com.strling:strling-jvm:4.0.0` is the single semantic-free JVM bridge used by
+`io.github.strling-lang:strling-jvm:4.0.0` is the single semantic-free JVM bridge used by
 the Java and Kotlin adapters. It maps the governed `strling.c-abi` v1 through
 JNA and projects strict JSON values into immutable Java collections.
 

@@ -16,7 +16,6 @@ import sys
 import tarfile
 import tempfile
 import zipfile
-import urllib.parse
 import uuid
 from pathlib import Path
 from typing import Any, Mapping, Sequence, cast
@@ -377,7 +376,18 @@ def validate_manifest(
                 "reproducibility", f"{artifact_id} normalizes an exact identity mode"
             )
 
-        if artifact_id in OIDC_ARTIFACT_IDS:
+        if artifact_id == "release:cpp" or credential["mode"] == "external-review":
+            if (
+                artifact_id != "release:cpp"
+                or credential["mode"] != "external-review"
+                or credential["secret_names"]
+                or credential["trusted_publishing"]
+            ):
+                raise ReleaseSupplyChainError(
+                    "credential-policy",
+                    "only ConanCenter uses credential-free external review",
+                )
+        elif artifact_id in OIDC_ARTIFACT_IDS:
             if (
                 credential["mode"] != "oidc"
                 or credential["secret_names"]
@@ -1365,6 +1375,15 @@ def qualify_workflow(root: Path, manifest: Mapping[str, object]) -> dict[str, ob
         }.get(artifact["id"])
         if companion_publish:
             expected_publish_needs.add(companion_publish)
+            required_prefix = (
+                "${{ !cancelled() && needs.release-certification.result == 'success' "
+                "&& needs.verify-release.result == 'success' && "
+            )
+            if not condition.startswith(required_prefix):
+                raise ReleaseSupplyChainError(
+                    "workflow-handoff",
+                    f"{publish_job} must require successful release verification",
+                )
         if set(needs) != expected_publish_needs:
             raise ReleaseSupplyChainError(
                 "workflow-handoff",
@@ -4130,19 +4149,10 @@ def verify_publication_authorization(
                 "LuaRocks requires the exact owner-approved numeric uploader identity",
             )
         if item["artifact_id"] == "release:cpp":
-            endpoint = urllib.parse.urlparse(item.get("registry_endpoint", ""))
-            if (
-                endpoint.scheme != "https"
-                or not endpoint.hostname
-                or endpoint.username
-                or endpoint.password
-                or endpoint.query
-                or endpoint.fragment
-            ):
-                raise ReleaseSupplyChainError(
-                    "publication-destination",
-                    "Conan requires an owner-approved HTTPS registry endpoint without embedded credentials",
-                )
+            raise ReleaseSupplyChainError(
+                "publication-destination",
+                "ConanCenter distributes STRling through reviewed Conan Center Index contributions",
+            )
         if distribution["ownership_status"] == "verified" and distribution[
             "registry_owner"
         ].startswith("existing "):

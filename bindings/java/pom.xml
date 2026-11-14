@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Maven GAV (GroupId, ArtifactId, Version) -->
-    <groupId>com.strling</groupId>
+    <groupId>io.github.strling-lang</groupId>
     <artifactId>strling</artifactId>
     <version>4.0.0</version>
     <packaging>jar</packaging>
@@ -52,7 +52,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.strling</groupId>
+            <groupId>io.github.strling-lang</groupId>
             <artifactId>strling-jvm</artifactId>
             <version>4.0.0</version>
         </dependency>

@@ -330,6 +330,7 @@
                         "github-token",
                         "oidc",
                         "long-lived-secret",
+                        "external-review",
                         "mixed"
                     ]
                 },
@@ -871,6 +872,7 @@
                         "github-token",
                         "oidc",
                         "long-lived-secret",
+                        "external-review",
                         "mixed"
                     ]
                 },

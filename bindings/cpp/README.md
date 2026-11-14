@@ -13,6 +13,13 @@ available separately through `strling::response::transport_status()`.
 
 ## Local build and test
 
+Developers can build and install the C++ package directly from the STRling
+repository. Start at the root of the chosen source revision with a C++17
+compiler, a C compiler, CMake and Python 3.12 available. Put rustup-managed
+Cargo on the build PATH and install the project's Rust 1.75.0 toolchain.
+The native build runs Cargo offline and needs the locked dependencies in the
+local Cargo cache. This path works independently of ConanCenter.
+
 ```bash
 cmake -S bindings/cpp -B bindings/cpp/build \
   -DSTRLING_CPP_WARNINGS_AS_ERRORS=ON
@@ -81,9 +88,11 @@ versions fail closed. This package check does not authenticate arbitrary local
 files; release checksums and signed evidence authenticate distribution bytes.
 The compiler semantics and versioned ABI/protocol are unchanged.
 
-## Proposed public installation
+## Deferred ConanCenter distribution
 
-After separately authorized publication, the exact proposed coordinate is:
+ConanCenter deployment is deferred for the current rollout. Use the CMake
+installation above. The following coordinate is reserved in the STRling
+verification contract for a possible future ConanCenter deployment:
 
 ```bash
 conan install --requires=strling/4.0.0 --build=never

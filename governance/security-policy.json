@@ -919,14 +919,14 @@
             },
             {
                 "ecosystem": "maven",
-                "package": "com.strling:strling-jvm",
+                "package": "io.github.strling-lang:strling-jvm",
                 "version": "4.0.0",
                 "license": "Apache-2.0",
                 "evidence": "The governed local bindings/jvm/pom.xml declares Apache License 2.0; this package is unavailable from the public resolver during the coordinated dry run."
             },
             {
                 "ecosystem": "gradle",
-                "package": "com.strling:strling-jvm",
+                "package": "io.github.strling-lang:strling-jvm",
                 "version": "4.0.0",
                 "license": "Apache-2.0",
                 "evidence": "The governed local bindings/jvm/pom.xml declares Apache License 2.0; the Kotlin build consumes this exact locally installed package rather than public registry metadata."

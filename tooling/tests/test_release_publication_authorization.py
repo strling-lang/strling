@@ -84,6 +84,32 @@ def test_exact_protected_approval_passes_policy_only(approval):
 
 
 @pytest.mark.parametrize(
+    "endpoint", ["https://center2.conan.io", "https://private.example.test"]
+)
+def test_cpp_cannot_authorize_direct_upload_even_with_an_approved_digest(
+    approval, endpoint
+):
+    manifest = approval["manifest"]
+    cpp = next(item for item in manifest["artifacts"] if item["id"] == "release:cpp")
+    cpp["distribution_contract"].update(
+        ownership_status="verified", registry_owner="fixture-owner"
+    )
+    auth = approval["authorization"]
+    auth["destinations"][0].update(
+        artifact_id=cpp["id"],
+        registry=cpp["registry"],
+        package_name=cpp["package_name"],
+        registry_owner="fixture-owner",
+        registry_endpoint=endpoint,
+    )
+    approval["evidence"]["artifacts"][0]["id"] = cpp["id"]
+    auth["manifest_fingerprint"] = document_fingerprint(manifest)
+    approval["expected_sha256"] = document_fingerprint(auth)
+    with pytest.raises(ReleaseSupplyChainError, match="Conan Center Index"):
+        verify_publication_authorization(**approval)
+
+
+@pytest.mark.parametrize(
     "field,value",
     [
         ("event_name", "pull_request"),

@@ -247,7 +247,7 @@ def retrieve(
                 "unregistered Maven companion",
             )
             url = (
-                "https://repo1.maven.org/maven2/com/strling/"
+                "https://repo1.maven.org/maven2/io/github/strling-lang/"
                 + module
                 + "/"
                 + coordinate

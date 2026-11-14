@@ -14,14 +14,14 @@ def fixture_files(tmp_path):
     for name in ("strling", "strling-jvm"):
         pom = tmp_path / name / "pom.xml"
         pom.parent.mkdir()
-        pom.write_text(f"""<project><groupId>com.strling</groupId><artifactId>{name}</artifactId><version>4.0.0</version>
+        pom.write_text(f"""<project><groupId>io.github.strling-lang</groupId><artifactId>{name}</artifactId><version>4.0.0</version>
 <name>STRling</name><description>Canonical adapter</description><url>https://github.com/strling-lang/strling</url>
 <licenses><license><name>Apache License 2.0</name><url>https://www.apache.org/licenses/LICENSE-2.0</url></license></licenses><developers><developer><name>STRling Team</name></developer></developers><scm><connection>scm:git:https://github.com/strling-lang/strling.git</connection><developerConnection>scm:git:ssh://git@github.com/strling-lang/strling.git</developerConnection><url>https://github.com/strling-lang/strling</url></scm></project>""")
         if name == "strling":
             pom.write_text(
                 pom.read_text().replace(
                     "</project>",
-                    "<dependencies><dependency><groupId>com.strling</groupId><artifactId>strling-jvm</artifactId><version>4.0.0</version></dependency></dependencies></project>",
+                    "<dependencies><dependency><groupId>io.github.strling-lang</groupId><artifactId>strling-jvm</artifactId><version>4.0.0</version></dependency></dependencies></project>",
                 )
             )
         files[pom.relative_to(tmp_path).as_posix()] = pom.read_bytes()
@@ -36,7 +36,7 @@ def test_central_layout_preserves_all_certified_file_bytes(tmp_path):
     members = fixture_files(tmp_path)
     layout = central_files(tmp_path, {"id": "release:java"}, "4.0.0", members)
     assert len(layout) == 8
-    assert all(name.startswith("com/strling/") for name in layout)
+    assert all(name.startswith("io/github/strling-lang/") for name in layout)
     assert sorted(
         hashlib.sha256(data).hexdigest() for data in layout.values()
     ) == sorted(
@@ -55,10 +55,14 @@ def test_central_rejects_missing_companion_and_classifier(tmp_path):
             central_files(tmp_path, {"id": "release:java"}, "4.0.0", incomplete)
 
 
-def test_central_rejects_substituted_coordinate(tmp_path):
+@pytest.mark.parametrize(
+    "old,new",
+    [("<version>4.0.0", "<version>3.0.0"), ("io.github.strling-lang", "com.strling")],
+)
+def test_central_rejects_substituted_coordinate(tmp_path, old, new):
     members = fixture_files(tmp_path)
     path = tmp_path / "strling/pom.xml"
-    path.write_text(path.read_text().replace("<version>4.0.0", "<version>3.0.0"))
+    path.write_text(path.read_text().replace(old, new))
     with pytest.raises(ValueError, match="coordinate"):
         central_files(tmp_path, {"id": "release:java"}, "4.0.0", members)
 
@@ -122,7 +126,7 @@ def test_signatures_bind_existing_bytes_and_owner_signer(tmp_path):
         )
         key = gpg("--armor", "--export-secret-keys", fingerprint).decode()
         files = {
-            "com/strling/strling/4.0.0/strling-4.0.0.jar": b"exact approved binary bytes"
+            "io/github/strling-lang/strling/4.0.0/strling-4.0.0.jar": b"exact approved binary bytes"
         }
         data, digest = signed_envelope(files, key, "", fingerprint)
         assert hashlib.sha256(data).hexdigest() == digest

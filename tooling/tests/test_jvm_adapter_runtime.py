@@ -16,12 +16,12 @@ class JvmAdapterRuntimeTests(unittest.TestCase):
         self,
     ) -> None:
         for dependency, accepted in (
-            ('api("com.strling:strling-jvm:4.1.0")', True),
-            ('api("com.strling:strling-jvm:3.0.0")', False),
-            ('api("com.strling:strling-jvm:4.1.0-extra")', False),
+            ('api("io.github.strling-lang:strling-jvm:4.1.0")', True),
+            ('api("io.github.strling-lang:strling-jvm:3.0.0")', False),
+            ('api("io.github.strling-lang:strling-jvm:4.1.0-extra")', False),
             (
-                'api("com.strling:strling-jvm:4.1.0")\n'
-                'api("com.strling:strling-jvm:3.0.0")',
+                'api("io.github.strling-lang:strling-jvm:4.1.0")\n'
+                'api("io.github.strling-lang:strling-jvm:3.0.0")',
                 False,
             ),
         ):

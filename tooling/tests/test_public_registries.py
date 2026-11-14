@@ -114,7 +114,7 @@ def fixture(artifact):
         module = name.split(":")[1]
         subjects = {f"bindings/{artifact['surface']}/target/{module}-4.0.0.jar": DIGEST}
         responses[
-            f"https://repo1.maven.org/maven2/com/strling/{module}/4.0.0/{module}-4.0.0.jar"
+            f"https://repo1.maven.org/maven2/io/github/strling-lang/{module}/4.0.0/{module}-4.0.0.jar"
         ] = PAYLOAD
     elif registry == "pub.dev":
         document(

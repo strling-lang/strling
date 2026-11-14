@@ -45,7 +45,7 @@ def central_files(
         group = fields["groupId"].text
         name = fields["artifactId"].text
         if (
-            group != "com.strling"
+            group != "io.github.strling-lang"
             or name not in expected
             or fields["version"].text != version
         ):
@@ -79,7 +79,7 @@ def central_files(
                 raise ValueError(
                     "Maven publication cannot depend on local system paths"
                 )
-            if dependency.findtext("groupId") == "com.strling":
+            if dependency.findtext("groupId") == "io.github.strling-lang":
                 bridge_dependencies.append(dependency)
         if name in {"strling", "strling-kotlin"}:
             if len(bridge_dependencies) != 1 or (
@@ -95,7 +95,16 @@ def central_files(
             raise ValueError(
                 "The shared JVM companion cannot depend on another product package"
             )
-        prefix = "com/strling/" + name + "/" + version + "/" + name + "-" + version
+        prefix = (
+            "io/github/strling-lang/"
+            + name
+            + "/"
+            + version
+            + "/"
+            + name
+            + "-"
+            + version
+        )
         if name in coordinates:
             raise ValueError("duplicate Maven coordinate")
         coordinates[name] = prefix

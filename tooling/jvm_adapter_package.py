@@ -33,31 +33,31 @@ EXTERNAL_PACKAGES = (
     ("org.jetbrains.kotlin:kotlin-stdlib", "2.0.20", "Apache-2.0"),
 )
 INTERNAL_PACKAGES = (
-    ("com.strling:strling", PRODUCT_VERSION),
-    ("com.strling:strling-jvm", PRODUCT_VERSION),
-    ("com.strling:strling-kotlin", PRODUCT_VERSION),
+    ("io.github.strling-lang:strling", PRODUCT_VERSION),
+    ("io.github.strling-lang:strling-jvm", PRODUCT_VERSION),
+    ("io.github.strling-lang:strling-kotlin", PRODUCT_VERSION),
 )
 ROOT_GRAPHS = {
     "java": (
-        f"com.strling:strling:{PRODUCT_VERSION}",
-        f"com.strling:strling-jvm:{PRODUCT_VERSION}",
+        f"io.github.strling-lang:strling:{PRODUCT_VERSION}",
+        f"io.github.strling-lang:strling-jvm:{PRODUCT_VERSION}",
         "net.java.dev.jna:jna:5.19.1",
         "com.fasterxml.jackson.core:jackson-databind:2.18.11",
         "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
         "com.fasterxml.jackson.core:jackson-core:2.18.11",
     ),
     "jvm": (
-        f"com.strling:strling-jvm:{PRODUCT_VERSION}",
+        f"io.github.strling-lang:strling-jvm:{PRODUCT_VERSION}",
         "net.java.dev.jna:jna:5.19.1",
         "com.fasterxml.jackson.core:jackson-databind:2.18.11",
         "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
         "com.fasterxml.jackson.core:jackson-core:2.18.11",
     ),
     "kotlin": (
-        f"com.strling:strling-kotlin:{PRODUCT_VERSION}",
+        f"io.github.strling-lang:strling-kotlin:{PRODUCT_VERSION}",
         "org.jetbrains.kotlin:kotlin-stdlib:2.0.20",
         "org.jetbrains:annotations:13.0",
-        f"com.strling:strling-jvm:{PRODUCT_VERSION}",
+        f"io.github.strling-lang:strling-jvm:{PRODUCT_VERSION}",
         "net.java.dev.jna:jna:5.19.1",
         "com.fasterxml.jackson.core:jackson-databind:2.18.11",
         "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
@@ -102,7 +102,7 @@ def _require_manifest_markers() -> None:
             f"<version>{PRODUCT_VERSION}</version>",
         ),
         "bindings/kotlin/build.gradle.kts": (
-            f'api("com.strling:strling-jvm:{PRODUCT_VERSION}")',
+            f'api("io.github.strling-lang:strling-jvm:{PRODUCT_VERSION}")',
             'kotlin("jvm") version "2.0.20"',
         ),
     }
@@ -367,15 +367,15 @@ def certify_packages(native_library: Path) -> dict[str, Any]:
 
     coordinates = [
         (
-            f"com/strling/strling/{PRODUCT_VERSION}/strling-{PRODUCT_VERSION}.jar",
+            f"io/github/strling-lang/strling/{PRODUCT_VERSION}/strling-{PRODUCT_VERSION}.jar",
             repository,
         ),
         (
-            f"com/strling/strling-jvm/{PRODUCT_VERSION}/strling-jvm-{PRODUCT_VERSION}.jar",
+            f"io/github/strling-lang/strling-jvm/{PRODUCT_VERSION}/strling-jvm-{PRODUCT_VERSION}.jar",
             repository,
         ),
         (
-            f"com/strling/strling-kotlin/{PRODUCT_VERSION}/strling-kotlin-{PRODUCT_VERSION}.jar",
+            f"io/github/strling-lang/strling-kotlin/{PRODUCT_VERSION}/strling-kotlin-{PRODUCT_VERSION}.jar",
             local_install,
         ),
     ]
@@ -462,7 +462,7 @@ public final class Consumer {
     (kotlin_root / "build.gradle.kts").write_text(
         f'''plugins {{ kotlin("jvm") version "2.0.20"; application }}
 repositories {{ maven {{ url = uri("{local_uri}") }}; maven {{ url = uri("{base_uri}") }}; mavenCentral() }}
-dependencies {{ implementation("com.strling:strling-kotlin:{PRODUCT_VERSION}") }}
+dependencies {{ implementation("io.github.strling-lang:strling-kotlin:{PRODUCT_VERSION}") }}
 application {{ mainClass.set("ConsumerKt") }}
 ''',
         encoding="utf-8",
@@ -518,7 +518,7 @@ def product_verification_projection(
         for value in (*jar_hashes, pom_sha256)
     ):
         raise JvmPackageCertificationError("invalid product verification digest")
-    pattern = r'(?ms)^      <component group="com\.strling" name="strling-jvm" version="[^"]+">.*?^      </component>'
+    pattern = r'(?ms)^      <component group="(?:com\.strling|io\.github\.strling-lang)" name="strling-jvm" version="[^"]+">.*?^      </component>'
     if len(list(re.finditer(pattern, text))) != 1:
         raise JvmPackageCertificationError(
             "expected exactly one local JVM product verification entry"
@@ -535,7 +535,7 @@ def product_verification_projection(
             )
             + "\n            </sha256>"
         )
-    component = f'''      <component group="com.strling" name="strling-jvm" version="{version}">
+    component = f'''      <component group="io.github.strling-lang" name="strling-jvm" version="{version}">
          <artifact name="strling-jvm-{version}.jar">
 {digest}
          </artifact>

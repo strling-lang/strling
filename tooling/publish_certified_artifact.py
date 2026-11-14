@@ -254,15 +254,18 @@ def _crate_frame(path: Path, version: str) -> bytes:
 
 def publication_plan(artifact: dict, version: str, members: list[dict]) -> dict:
     slug = artifact["id"].removeprefix("release:")
+    route = "certified-payload-upload"
+    if slug == "cpp":
+        route = "conancenter-reviewed-contribution"
+    elif artifact["delivery_kind"] == "source-tag":
+        route = "exact-source-ref"
     return {
         "artifact_id": artifact["id"],
         "version": version,
         "registry": artifact["registry"],
         "package_name": artifact["package_name"],
         "transport": artifact["credential_policy"]["mode"],
-        "route": "exact-source-ref"
-        if artifact["delivery_kind"] == "source-tag"
-        else "certified-payload-upload",
+        "route": route,
         "subjects": [
             {"name": item["name"], "sha256": item["sha256"]} for item in members
         ],
@@ -541,23 +544,9 @@ def upload(
             )
         return canonical_json({"rockspec": first, "source_rock": second})
     if slug == "cpp":
-        from tooling.conan_release import upload as conan_upload
-
-        if authorization is None:
-            raise ReleaseSupplyChainError(
-                "publication-destination", "owner-approved Conan endpoint is missing"
-            )
-        destination = next(
-            item
-            for item in authorization["destinations"]
-            if item["artifact_id"] == artifact["id"]
-        )
-        return conan_upload(
-            paths,
-            version,
-            destination["registry_endpoint"],
-            _secret("CONAN_USERNAME"),
-            _secret("CONAN_PASSWORD"),
+        raise ReleaseSupplyChainError(
+            "publication-destination",
+            "ConanCenter distributes STRling through reviewed Conan Center Index contributions",
         )
     if slug in {"java", "kotlin"}:
         from tooling.maven_release import central_files, signed_envelope
@@ -591,7 +580,7 @@ def upload(
                     else "bindings/jvm/target/strling-jvm-" + version + ".jar"
                 )
                 remote = _http(
-                    "https://repo1.maven.org/maven2/com/strling/strling-jvm/"
+                    "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/"
                     + version
                     + "/strling-jvm-"
                     + version

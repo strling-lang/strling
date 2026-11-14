@@ -5,7 +5,7 @@ the proposed separately authorized release. Candidate tests use staged artifacts
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
 The Java package is a thin STRling 4.0 facade over the shared
-`com.strling:strling-jvm` bridge. It does not contain a parser, compiler,
+`io.github.strling-lang:strling-jvm` bridge. It does not contain a parser, compiler,
 semantic IR, validator, diagnostic engine, or target emitter.
 
 > **Migration status:** canonical adapter complete. The retired Java-owned
@@ -85,7 +85,7 @@ See the [Java API reference](docs/api_reference.md), the
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-mvn dependency:get -Dartifact=com.strling:strling:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2
+mvn dependency:get -Dartifact=io.github.strling-lang:strling:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2
 ```
 
-This proposed command resolves the exact Maven coordinate. Add the same `com.strling:strling:4.0.0` dependency to the application POM and use the shared JVM bridge dependency graph. The application supplies the authenticated native library.
+This proposed command resolves the exact Maven coordinate. Add the same `io.github.strling-lang:strling:4.0.0` dependency to the application POM and use the shared JVM bridge dependency graph. The application supplies the authenticated native library.

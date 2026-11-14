@@ -898,7 +898,7 @@
                     },
                     {
                         "path": "bindings/kotlin/build.gradle.kts",
-                        "markers": ["api(\"com.strling:strling-jvm:"]
+                        "markers": ["api(\"io.github.strling-lang:strling-jvm:"]
                     },
                     {
                         "path": "bindings/jvm/pom.xml",

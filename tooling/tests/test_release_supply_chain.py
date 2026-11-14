@@ -339,10 +339,17 @@ class ReleaseSupplyChainContractTests(unittest.TestCase):
 
         long_lived = copy.deepcopy(self.manifest)
         row = next(
-            item for item in long_lived["artifacts"] if item["id"] == "release:cpp"
+            item for item in long_lived["artifacts"] if item["id"] == "release:csharp"
         )
         row["credential_policy"]["secret_names"] = []
         self.assert_rejected(lambda: validate_manifest(long_lived), "credential-policy")
+
+        external = copy.deepcopy(self.manifest)
+        cpp = next(
+            item for item in external["artifacts"] if item["id"] == "release:cpp"
+        )
+        cpp["credential_policy"]["secret_names"] = ["CONAN_PASSWORD"]
+        self.assert_rejected(lambda: validate_manifest(external), "credential-policy")
 
         observed_oidc = {
             item["id"]
@@ -1173,6 +1180,23 @@ class ReleaseSupplyChainProducerTests(unittest.TestCase):
         with self.assertRaises(ReleaseSupplyChainError) as raised:
             qualify_workflow(self.first, self.manifest)
         self.assertEqual("workflow-handoff", raised.exception.code)
+
+    def test_companion_publishers_require_successful_release_checks(self) -> None:
+        path = self.first / self.manifest["workflow_policy"]["path"]
+        original = path.read_text(encoding="utf-8")
+        for job in ("publish-fsharp", "publish-kotlin"):
+            before, marker, after = original.partition(f"    {job}:")
+            self.assertTrue(marker)
+            for gate in ("release-certification", "verify-release"):
+                with self.subTest(job=job, gate=gate):
+                    term = f"needs.{gate}.result == 'success' && "
+                    changed = after.replace(term, "", 1)
+                    self.assertNotEqual(changed, after)
+                    path.write_text(before + marker + changed, encoding="utf-8")
+                    with self.assertRaisesRegex(
+                        ReleaseSupplyChainError, "successful release verification"
+                    ):
+                        qualify_workflow(self.first, self.manifest)
 
     def test_source_authentication_rejects_dirty_tree(self) -> None:
         repository = Path(self.temporary.name) / "source-authentication"

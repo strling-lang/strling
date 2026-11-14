@@ -148,8 +148,8 @@ def _assert_dependency_direction() -> None:
             "Java does not depend on exactly one shared bridge"
         )
     if (
-        kotlin.count(f"com.strling:{coordinate}:") != 1
-        or kotlin.count(f'com.strling:{coordinate}:{product_version}"') != 1
+        kotlin.count(f"io.github.strling-lang:{coordinate}:") != 1
+        or kotlin.count(f'io.github.strling-lang:{coordinate}:{product_version}"') != 1
     ):
         raise JvmAdapterRuntimeError(
             "Kotlin does not depend on exactly one shared bridge"

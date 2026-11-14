@@ -101,6 +101,20 @@ def test_complete_synthetic_request_does_not_authorize_publication():
     assert validate(*request_fixture())["publication_authorized"] is False
 
 
+def test_public_request_rejects_private_conan_remote():
+    request, manifest, authentication = request_fixture()
+    request.update(authority="public", lifecycle_state="published")
+    for artifact in manifest["artifacts"]:
+        artifact["distribution_contract"].update(
+            ownership_status="verified", registry_owner="fixture-owner"
+        )
+    for destination in request["destinations"]:
+        destination["registry_owner"] = "fixture-owner"
+    request["manifest_fingerprint"] = document_fingerprint(manifest)
+    with pytest.raises(RetrievalError, match="requires ConanCenter"):
+        validate(request, manifest, authentication)
+
+
 @pytest.mark.parametrize(
     "endpoint",
     [

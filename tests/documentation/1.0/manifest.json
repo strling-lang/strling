@@ -275,7 +275,7 @@
         {
             "id": "bindings/java/README.md#3",
             "language": "bash",
-            "sha256": "9ca805ed2f31f6d43f4a4d5415697e7634bff7eb412c3cb529daee77fd9509f3",
+            "sha256": "7abfd8077eb121995a37ad06146e48a137a807394adef4911e51672da7719df8",
             "kind": "installation",
             "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
@@ -315,7 +315,7 @@
         {
             "id": "bindings/kotlin/README.md#3",
             "language": "bash",
-            "sha256": "7d871a19d9c003b641d905f990c1cff0f91c029e5800fb50f7e2e248a9c35524",
+            "sha256": "c76c1e5136778b3596a2930b4fc6dc88471768c3c81436da82158cf84a03d86d",
             "kind": "installation",
             "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"

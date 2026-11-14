@@ -130,8 +130,8 @@
                 "tier": "Supported",
                 "platforms": ["windows-x86_64", "linux-x86_64"],
                 "scope": "windows-x86_64 and linux-x86_64 interop routes",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "CMake installed source archive",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
@@ -229,8 +229,8 @@
                 "allowed_normalizations": ["registry-generated-metadata"]
             },
             "credential_policy": {
-                "mode": "long-lived-secret",
-                "secret_names": ["CONAN_PASSWORD", "CONAN_USERNAME"],
+                "mode": "external-review",
+                "secret_names": [],
                 "trusted_publishing": false,
                 "release_environment": "release",
                 "untrusted_context_forbidden": true,
@@ -246,7 +246,7 @@
                 "installation": "Conan package with canonical native dependency",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
-                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Obtain Conan Center Index recipe acceptance and independently verify the resulting Windows and Linux x86_64 package revisions from https://center2.conan.io",
                     "Confirm protected release environment reviewers and approved workflow source"
                 ],
                 "native_runtime_prerequisites": [
@@ -326,8 +326,8 @@
                 "tier": "Supported",
                 "platforms": ["windows-x86_64"],
                 "scope": "windows-x86_64 clean-consumer native assets",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
@@ -410,12 +410,12 @@
                 "tier": "Supported",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "pub.dev legacy uploader sha256:cc219ebed9b06fe346aec03c0e6bbd0e3b2292383d965c9813839cb99c3b602d",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
-                    "Verify existing registry ownership and uploader or trusted publisher configuration",
+                    "Confirm the sole legacy uploader by SHA-256 of its lowercase email and the strling-lang/strling protected release tag-push association",
                     "Confirm protected release environment reviewers and approved workflow source"
                 ],
                 "native_runtime_prerequisites": [
@@ -497,8 +497,8 @@
                 "tier": "Supported",
                 "platforms": ["windows-x86_64"],
                 "scope": "windows-x86_64 clean-consumer native assets",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
@@ -591,8 +591,8 @@
                 "tier": "Supported",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64 with cgo",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "Git module, cgo and canonical native installation",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
@@ -628,7 +628,7 @@
             "id": "release:java",
             "surface": "java",
             "ecosystem": "maven",
-            "package_name": "com.strling:strling",
+            "package_name": "io.github.strling-lang:strling",
             "delivery_kind": "package-archive",
             "registry": "maven-central",
             "package_root": "bindings/java",
@@ -699,14 +699,14 @@
                 "tier": "Supported",
                 "platforms": ["windows-x86_64"],
                 "scope": "windows-x86_64 with caller-supplied absolute native path",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "Strling-lang",
+                "ownership_status": "verified",
                 "installation": "Maven artifact plus canonical native payload at absolute path",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
                     "Verify existing registry ownership and uploader or trusted publisher configuration",
                     "Confirm protected release environment reviewers and approved workflow source",
-                    "Confirm Central Publisher Portal user-token credentials and com.strling namespace ownership",
+                    "Confirm Central Publisher Portal user-token credentials and io.github.strling-lang namespace ownership",
                     "Confirm the owner-approved PGP signing fingerprint and public-key availability"
                 ],
                 "native_runtime_prerequisites": [
@@ -742,7 +742,7 @@
             "id": "release:kotlin",
             "surface": "kotlin",
             "ecosystem": "gradle-maven",
-            "package_name": "com.strling:strling-kotlin",
+            "package_name": "io.github.strling-lang:strling-kotlin",
             "delivery_kind": "package-archive",
             "registry": "maven-central",
             "package_root": "bindings/kotlin",
@@ -797,10 +797,10 @@
             "credential_policy": {
                 "mode": "long-lived-secret",
                 "secret_names": [
-                    "GPG_KEY",
                     "GPG_PASSPHRASE",
-                    "MAVEN_PASSWORD",
-                    "MAVEN_USERNAME"
+                    "GPG_PRIVATE_KEY",
+                    "SONATYPE_PASSWORD",
+                    "SONATYPE_USERNAME"
                 ],
                 "trusted_publishing": false,
                 "release_environment": "release",
@@ -812,14 +812,14 @@
                 "tier": "Supported",
                 "platforms": ["windows-x86_64"],
                 "scope": "windows-x86_64 with caller-supplied absolute native path",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "Strling-lang",
+                "ownership_status": "verified",
                 "installation": "Maven artifact plus canonical native payload at absolute path",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
                     "Verify existing registry ownership and uploader or trusted publisher configuration",
                     "Confirm protected release environment reviewers and approved workflow source",
-                    "Confirm Central Publisher Portal user-token credentials and com.strling namespace ownership",
+                    "Confirm Central Publisher Portal user-token credentials and io.github.strling-lang namespace ownership",
                     "Confirm the owner-approved PGP signing fingerprint and public-key availability"
                 ],
                 "native_runtime_prerequisites": [
@@ -903,8 +903,8 @@
                 "tier": "Preview",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "preview-only-explicit-authorization",
                 "external_prerequisites": [
@@ -1084,8 +1084,8 @@
                 "tier": "Preview",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64 with caller-owned native payload discovery",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "preview-only-explicit-authorization",
                 "external_prerequisites": [
@@ -1184,8 +1184,8 @@
                 "tier": "Supported",
                 "platforms": ["windows-x86_64", "linux-x86_64"],
                 "scope": "windows-x86_64 and linux-x86_64 with CPython 3.12 evidence",
-                "registry_owner": "strling-lang PyPI organization",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "Platform wheel or governed source distribution",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
@@ -1280,8 +1280,8 @@
                 "tier": "Preview",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "preview-only-explicit-authorization",
                 "external_prerequisites": [
@@ -1368,8 +1368,8 @@
                 "tier": "Preview",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "TheCyberLocal",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "preview-only-explicit-authorization",
                 "external_prerequisites": [
@@ -1451,8 +1451,8 @@
                 "tier": "Supported",
                 "platforms": ["windows-x86_64", "linux-x86_64"],
                 "scope": "windows-x86_64 and linux-x86_64 reference kernel/facade",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "github:strling-lang:release-managers",
+                "ownership_status": "verified",
                 "installation": "Governed registry artifact or source-tag route",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
@@ -1542,8 +1542,8 @@
                 "tier": "Supported",
                 "platforms": ["linux-x86_64"],
                 "scope": "linux-x86_64",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "strling-lang",
+                "ownership_status": "verified",
                 "installation": "SwiftPM Git source and canonical native installation",
                 "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
                 "external_prerequisites": [
@@ -1633,8 +1633,8 @@
                 "tier": "Preview",
                 "platforms": [],
                 "scope": "Windows Node 24 observation and Chrome browser WASM certification harness",
-                "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
-                "ownership_status": "externally-pending",
+                "registry_owner": "thecyberlocal",
+                "ownership_status": "verified",
                 "installation": "npm archive with canonical WASM payload",
                 "publication_eligibility": "preview-only-explicit-authorization",
                 "external_prerequisites": [

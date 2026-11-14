@@ -5,7 +5,7 @@ the proposed separately authorized release. Candidate tests use staged artifacts
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
 The Kotlin package is an idiomatic thin facade over the same
-`com.strling:strling-jvm` bridge used by Java. It contains no independent
+`io.github.strling-lang:strling-jvm` bridge used by Java. It contains no independent
 parser, compiler, semantic IR, validator, diagnostics, or target emitter.
 
 > **Migration status:** canonical adapter complete. The retired Kotlin-owned
@@ -81,7 +81,7 @@ See the [Kotlin API reference](docs/api_reference.md), the
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-mvn dependency:get -Dartifact=com.strling:strling-kotlin:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2
+mvn dependency:get -Dartifact=io.github.strling-lang:strling-kotlin:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2
 ```
 
-This proposed command resolves the exact Maven coordinate. Add `implementation("com.strling:strling-kotlin:4.0.0")` to the application dependency block. The application supplies the authenticated native library.
+This proposed command resolves the exact Maven coordinate. Add `implementation("io.github.strling-lang:strling-kotlin:4.0.0")` to the application dependency block. The application supplies the authenticated native library.

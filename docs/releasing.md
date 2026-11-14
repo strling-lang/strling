@@ -156,6 +156,20 @@ the owner in the protected environment as `RELEASE_AUTHORIZATION_SHA256` and
 supply those trusted values. Approval does not replace registry ownership
 verification. Every externally pending ownership row blocks publication.
 
+Java and Kotlin use the same protected `release` environment secrets for
+the Central namespace `io.github.strling-lang`. Configure the Central Portal
+token pair as `SONATYPE_USERNAME` and `SONATYPE_PASSWORD`, and the approved
+OpenPGP signing material as `GPG_PRIVATE_KEY` and `GPG_PASSPHRASE`.
+Each destination authorization must bind the approved signing fingerprint.
+
+Exclude `release:cpp` from the current publication authorization. ConanCenter
+deployment is deferred by the owner. Build, stage and verify the C++ package
+on its governed platforms. Developers can install it from the STRling source
+checkout using the [CMake build and install instructions](../bindings/cpp/README.md).
+Record ConanCenter delivery as deferred in the release handoff. A future
+ConanCenter contribution requires separate authorization, maintainer acceptance
+and independent verification of the recipe and package revisions.
+
 Pub.dev additionally requires a version-tag push for trusted publication; a
 manual non-tag dispatch cannot publish Dart. This registry constraint does not
 authorize creating or pushing any tag during package preparation. See the

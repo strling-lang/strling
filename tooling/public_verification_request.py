@@ -103,6 +103,13 @@ def validate_request(
         artifact = artifacts[identity]
         distribution = artifact["distribution_contract"]
         if artifact["registry"] == "conan":
+            if (
+                authority == "public"
+                and destination.get("registry_endpoint") != "https://center2.conan.io"
+            ):
+                raise RetrievalError(
+                    "contract", "public C++ verification requires ConanCenter"
+                )
             endpoint = urlsplit(destination.get("registry_endpoint", ""))
             if (
                 endpoint.scheme != "https"

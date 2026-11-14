@@ -55,7 +55,8 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
             )
         version = get_source_version()
         bridge = (
-            repository / f"com/strling/strling-jvm/{version}/strling-jvm-{version}.jar"
+            repository
+            / f"io/github/strling-lang/strling-jvm/{version}/strling-jvm-{version}.jar"
         )
         bridge.parent.mkdir(parents=True)
         bridge.write_bytes(b"prepared bridge")
@@ -64,7 +65,10 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
             json.dumps(
                 {
                     "roots": {
-                        "jvm": [f"com.strling:strling-jvm:{version}", *coordinates]
+                        "jvm": [
+                            f"io.github.strling-lang:strling-jvm:{version}",
+                            *coordinates,
+                        ]
                     },
                     "packages": [
                         {"coordinate": coordinate, "internal": False}
@@ -86,8 +90,8 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
 
     def test_maven_inputs_reject_stale_or_duplicate_product_bridges(self) -> None:
         for bridges in (
-            ["com.strling:strling-jvm:3.0.0"],
-            [f"com.strling:strling-jvm:{get_source_version()}"] * 2,
+            ["io.github.strling-lang:strling-jvm:3.0.0"],
+            [f"io.github.strling-lang:strling-jvm:{get_source_version()}"] * 2,
         ):
             with (
                 self.subTest(bridges=bridges),
@@ -98,7 +102,7 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
                 document["roots"]["jvm"] = bridges + [
                     value
                     for value in document["roots"]["jvm"]
-                    if not value.startswith("com.strling:strling-jvm:")
+                    if not value.startswith("io.github.strling-lang:strling-jvm:")
                 ]
                 graph.write_text(json.dumps(document), encoding="utf-8")
                 with self.assertRaisesRegex(
@@ -116,9 +120,12 @@ class ExactRuntimeProvisionTests(unittest.TestCase):
             version = get_source_version()
             current = (
                 repository
-                / f"com/strling/strling-jvm/{version}/strling-jvm-{version}.jar"
+                / f"io/github/strling-lang/strling-jvm/{version}/strling-jvm-{version}.jar"
             )
-            old = repository / "com/strling/strling-jvm/3.0.0/strling-jvm-3.0.0.jar"
+            old = (
+                repository
+                / "io/github/strling-lang/strling-jvm/3.0.0/strling-jvm-3.0.0.jar"
+            )
             old.parent.mkdir(parents=True)
             current.rename(old)
             with self.assertRaisesRegex(

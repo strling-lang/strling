@@ -173,12 +173,12 @@ def verify_maven_repository_inputs(
                 f"Maven repository artifact SHA-256 differs: {coordinate}"
             )
         verified[coordinate] = observed
-    bridge_coordinate = f"com.strling:strling-jvm:{get_source_version()}"
+    bridge_coordinate = f"io.github.strling-lang:strling-jvm:{get_source_version()}"
     bridge_roots = [
         coordinate
         for coordinate in roots
         if isinstance(coordinate, str)
-        and coordinate.startswith("com.strling:strling-jvm:")
+        and coordinate.startswith("io.github.strling-lang:strling-jvm:")
     ]
     if bridge_roots != [bridge_coordinate]:
         raise ExactRuntimeProvisionError(

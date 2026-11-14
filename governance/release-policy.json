@@ -564,7 +564,7 @@
             "probe": {
                 "kind": "regex",
                 "expected": "repository_projection",
-                "pattern": "api\\(\"com\\.strling:strling-jvm:([^\"\\s]+)\"\\)"
+                "pattern": "api\\(\"io\\.github\\.strling-lang:strling-jvm:([^\"\\s]+)\"\\)"
             }
         },
         {
@@ -581,7 +581,7 @@
             "probe": {
                 "kind": "regex",
                 "expected": "repository_projection",
-                "pattern": "(?m)^com\\.strling:strling-jvm:([^=\\s]+)="
+                "pattern": "(?m)^io\\.github\\.strling-lang:strling-jvm:([^=\\s]+)="
             }
         },
         {
@@ -853,7 +853,7 @@
             "probe": {
                 "kind": "regex",
                 "expected": "repository_projection",
-                "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"maven\",\\s*\"package\"\\s*:\\s*\"com\\.strling:strling\\-jvm\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
+                "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"maven\",\\s*\"package\"\\s*:\\s*\"io\\.github\\.strling-lang:strling\\-jvm\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
             }
         },
         {
@@ -870,7 +870,7 @@
             "probe": {
                 "kind": "regex",
                 "expected": "repository_projection",
-                "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"gradle\",\\s*\"package\"\\s*:\\s*\"com\\.strling:strling\\-jvm\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
+                "pattern": "(?s)\"ecosystem\"\\s*:\\s*\"gradle\",\\s*\"package\"\\s*:\\s*\"io\\.github\\.strling-lang:strling\\-jvm\",\\s*\"version\"\\s*:\\s*\"([^\\\"]+)\""
             }
         },
         {

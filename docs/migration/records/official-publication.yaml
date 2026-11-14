@@ -64,6 +64,7 @@ scope:
         - tooling/tests/test_public_registries.py
         - tooling/tests/test_public_verification_boundaries.py
         - tooling/tests/test_public_distribution.py
+        - tooling/tests/test_public_contracts.py
         - tooling/tests/test_public_execution.py
         - tooling/tests/test_certified_transport.py
         - tooling/tests/test_governance.py
@@ -291,4 +292,24 @@ checkpoints:
                 Replace the fixture literal with cryptographic random generation; the tracked-secret rule remains unchanged.
                 Run direct content and dependency-integrity checks before freezing the successor source. The real protected
                 Maven key and encrypted recovery material were not involved and require no regeneration.
+    - name: Bounded-command fixture startup synchronization
+      status: in_progress
+      evidence:
+          - check: Preserve the source-bound PR result and reproduce its startup race
+            result: passed
+            details:
+                Local at 1336efa0 passed 38 operations. PR stopped at repository tests, operation 73 of 80, with
+                2521 passed tests and 4214 passed subtests; one process-termination fixture timed out before emitting its
+                required output. A controlled 0.75-second startup delay reproduces the same missing-output assertion
+                under the unchanged 0.5-second command timeout. Preserve both the original failure and this diagnostic.
+          - check: Keep process safety assertions independent from fixture startup
+            result: passed
+            details:
+                Synchronize fixture readiness after descendant creation and both flushed output streams; test ordinary
+                startup and startup slower than the command timeout. Keep the production implementation, 0.5-second
+                timeout and descendant-termination assertion unchanged. A separate case checks timeout and process
+                termination before any readiness output. Ten repeated executions passed on each platform, and all 50
+                affected component tests passed on Linux. Forced slow startup remains covered. An initial diagnostic
+                harness used a DrvFS temporary directory and failed before collection; preserve those original logs
+                separately from the successful native-temporary-directory runs. Production process handling is unchanged.
 commits: []

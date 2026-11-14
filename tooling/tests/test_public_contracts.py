@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import signal
 import subprocess
 import sys
 import tempfile
@@ -22,6 +23,7 @@ from tooling.public_contracts import (
     _rust_facade_symbols,
     _swift_sdk_arguments,
     _swift_symbolgraph_extractor,
+    _terminate_process_tree,
     compare_schema_value,
     cpp_declaration_units,
     declaration_units,
@@ -156,7 +158,15 @@ class PublicContractTests(unittest.TestCase):
     def test_bounded_command_preserves_output_and_terminates_descendants(
         self,
     ) -> None:
+        for startup_delay in (0.0, 0.75):
+            with self.subTest(startup_delay=startup_delay):
+                self._assert_bounded_descendant_cleanup(startup_delay)
+
+    def _assert_bounded_descendant_cleanup(self, startup_delay: float) -> None:
         pid_path = self.root / "descendant.pid"
+        ready_path = self.root / "tool.ready"
+        pid_path.unlink(missing_ok=True)
+        ready_path.unlink(missing_ok=True)
         script = self.root / "hung_contract_tool.py"
         script.write_text(
             """import os
@@ -165,6 +175,7 @@ import subprocess
 import sys
 import time
 
+time.sleep(float(sys.argv[3]))
 options = (
     {"creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
     if os.name == "nt"
@@ -177,25 +188,89 @@ child = subprocess.Popen(
 pathlib.Path(sys.argv[1]).write_text(str(child.pid), encoding="utf-8")
 print("captured standard output", flush=True)
 print("captured standard error", file=sys.stderr, flush=True)
+pathlib.Path(sys.argv[2]).write_text("ready", encoding="utf-8")
 time.sleep(60)
 """,
             encoding="utf-8",
         )
 
-        with self.assertRaisesRegex(ContractError, "timed out after") as raised:
-            run_command(
-                [sys.executable, str(script), str(pid_path)],
-                cwd=self.root,
-                timeout_seconds=0.5,
-            )
+        command = [
+            sys.executable,
+            str(script),
+            str(pid_path),
+            str(ready_path),
+            str(startup_delay),
+        ]
+        real_popen = subprocess.Popen
+        launched = []
 
-        self.assertIn("captured standard output", str(raised.exception))
-        self.assertIn("captured standard error", str(raised.exception))
-        descendant_pid = int(pid_path.read_text(encoding="utf-8"))
-        deadline = time.monotonic() + 3
-        while _pid_is_running(descendant_pid) and time.monotonic() < deadline:
-            time.sleep(0.05)
-        self.assertFalse(_pid_is_running(descendant_pid))
+        def ready_popen(arguments, **options):
+            process = real_popen(arguments, **options)
+            if arguments == command:
+                launched.append(process)
+                # Synchronize fixture setup before testing the unchanged deadline.
+                # Readiness follows both flushed streams and descendant creation.
+                deadline = time.monotonic() + 10
+                while not ready_path.is_file():
+                    if process.poll() is not None or time.monotonic() >= deadline:
+                        _terminate_process_tree(process)
+                        self.fail("synthetic command did not become ready")
+                    time.sleep(0.01)
+            return process
+
+        try:
+            with mock.patch(
+                "tooling.public_contracts.subprocess.Popen", side_effect=ready_popen
+            ):
+                with self.assertRaisesRegex(ContractError, "timed out after") as raised:
+                    run_command(command, cwd=self.root, timeout_seconds=0.5)
+            self.assertIn("captured standard output", str(raised.exception))
+            self.assertIn("captured standard error", str(raised.exception))
+            descendant_pid = int(pid_path.read_text(encoding="utf-8"))
+            deadline = time.monotonic() + 3
+            while _pid_is_running(descendant_pid) and time.monotonic() < deadline:
+                time.sleep(0.05)
+            self.assertFalse(_pid_is_running(descendant_pid))
+        finally:
+            for process in launched:
+                if process.poll() is None:
+                    _terminate_process_tree(process)
+                process.wait(timeout=5)
+                for stream in (process.stdout, process.stderr):
+                    if stream is not None:
+                        stream.close()
+            if pid_path.is_file():
+                descendant_pid = int(pid_path.read_text(encoding="utf-8"))
+                if _pid_is_running(descendant_pid):
+                    try:
+                        os.kill(descendant_pid, signal.SIGTERM)
+                    except ProcessLookupError:
+                        pass
+
+    def test_bounded_command_also_times_out_before_tool_readiness(self) -> None:
+        command = [sys.executable, "-c", "import time; time.sleep(60)"]
+        real_popen = subprocess.Popen
+        launched = []
+
+        def capture_popen(arguments, **options):
+            process = real_popen(arguments, **options)
+            if arguments == command:
+                launched.append(process)
+            return process
+
+        try:
+            with mock.patch(
+                "tooling.public_contracts.subprocess.Popen", side_effect=capture_popen
+            ):
+                with self.assertRaisesRegex(ContractError, "timed out after"):
+                    run_command(command, cwd=self.root, timeout_seconds=0.5)
+            self.assertEqual(1, len(launched))
+            self.assertIsNotNone(launched[0].poll())
+        finally:
+            for process in launched:
+                if process.poll() is None:
+                    _terminate_process_tree(process)
+                process.wait(timeout=5)
 
     def test_kotlin_contract_build_is_offline_noninteractive_and_bounded(
         self,

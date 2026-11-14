@@ -1,0 +1,142 @@
+record_version: 2.0.0
+scope:
+    diff:
+        base: da4539f52692df7290ecc3da79323fa81de3f653
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/cd.yml
+        - bindings/cpp/README.md
+        - bindings/java/README.md
+        - bindings/java/pom.xml
+        - bindings/jvm/README.md
+        - bindings/jvm/pom.xml
+        - bindings/kotlin/README.md
+        - bindings/kotlin/build.gradle.kts
+        - bindings/kotlin/gradle.lockfile
+        - bindings/kotlin/gradle/verification-metadata.xml
+        - docs/migration/ledger.md
+        - docs/migration/records/official-publication.yaml
+        - docs/releasing.md
+        - docs/support-matrix.md
+        - governance/architecture-rules.json
+        - governance/change-control.json
+        - governance/dependency-lock-verification.json
+        - governance/release-policy.json
+        - governance/schemas/release-supply-chain-certification.schema.json
+        - governance/security-policy.json
+        - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
+        - tests/adapters/3.0/release-graph.json
+        - tests/certification/release-supply-chain/1.0/fixtures/valid-evidence.json
+        - tests/certification/release-supply-chain/1.0/jvm-product-builds.json
+        - tests/certification/release-supply-chain/1.0/manifest.json
+        - tests/documentation/1.0/manifest.json
+        - tooling/exact_runtime_provision.py
+        - tooling/jvm_adapter_package.py
+        - tooling/jvm_adapter_runtime.py
+        - tooling/maven_release.py
+        - tooling/public_registries.py
+        - tooling/public_verification_request.py
+        - tooling/publish_certified_artifact.py
+        - tooling/release_payload.py
+        - tooling/release_supply_chain.py
+        - tooling/tests/test_exact_runtime_provision.py
+        - tooling/tests/test_jvm_adapter_runtime.py
+        - tooling/tests/test_kotlin_product_verification.py
+        - tooling/tests/test_maven_release.py
+        - tooling/tests/test_public_registries.py
+        - tooling/tests/test_public_verification_boundaries.py
+        - tooling/tests/test_release_publication_authorization.py
+        - tooling/tests/test_release_supply_chain.py
+    forbidden_paths:
+        - core/src/**
+        - spec/**
+        - governance/local-certification-trust.json
+        - governance/release-certification-trust.json
+        - governance/public-verification-certification-trust.json
+        - tests/certification/hardened-core/1.0/current/**
+        - tests/certification/release-packaging/1.0/current/**
+        - tests/certification/public-verification/1.0/current/**
+    expected_files:
+        - docs/migration/records/official-publication.yaml
+    permitted_generated_changes:
+        - binding-support-certification-evidence
+        - jvm-adapter-release-graph
+        - kotlin-product-verification
+        - legacy-removal-inventory-evidence
+        - lua-release-rockspec
+        - package-manager-lockfiles
+        - product-support-matrix
+        - profile-source-definitions
+        - public-contract-snapshots
+        - release-candidate-certification-trust
+        - release-policy-documentation
+        - release-supply-chain-contract-fixture
+        - semantic-authority-retirement-evidence
+        - target-adapter-certification-matrices
+        - version-synchronized-metadata
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+        - certification
+    bounded_exemptions:
+        - WVR-SEC-VSCE-LICENSE-001
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+    public_api_change:
+        level: none
+        evidence:
+            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+    schema_change:
+        level: compatible
+        evidence:
+            - Register external-review as a credential mode for deferred ConanCenter deployment.
+    diagnostic_change:
+        level: none
+        evidence:
+            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+    architecture_change:
+        level: intentional-correction
+        evidence:
+            - Correct the shared JVM package identity to the owner-verified io.github.strling-lang namespace; adapter responsibility
+              remains unchanged.
+    generated_output_change:
+        level: compatible
+        evidence:
+            - Reconcile Maven dependency metadata, version probes, reviewed command hashes and registered projections through
+              their owning authorities.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Focused source-helper and documentation regressions
+      command: python3 -m pytest -q tooling/tests/test_documentation_integrity.py
+      expected_result: Source-backed examples and scope assertions reject drift; canonical source frontends remain authoritative.
+    - name: Fresh complete-product certification
+      command: python3 tooling/production_certification.py --profile release --all --no-reuse --plain
+      expected_result:
+          Fresh current-source Local, Pull Request, Full and independent no-reuse Release, staged builds/consumers,
+          independent reconstruction, restricted signing and hosted verification all pass.
+title: Official publication preparation and independent public verification
+status: in_progress
+objective:
+    Correct verified Maven coordinates, preserve direct C++ developer distribution while deferring ConanCenter,
+    qualify the publisher and certify an exact source before separately approved publication.
+checkpoints:
+    - name: Fresh source certification
+      status: in_progress
+      evidence:
+          - check: Correct active publication task
+            result: not_run
+            details:
+                Local at 117794cb failed governance because the previous completed task remained active; preserve that
+                result and register this publication scope.
+commits: []

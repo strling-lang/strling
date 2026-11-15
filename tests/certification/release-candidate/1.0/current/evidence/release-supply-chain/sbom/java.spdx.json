@@ -5,13 +5,13 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"java-maven\",\"inputs\":[{\"path\":\"bindings/java/pom.xml\",\"sha256\":\"1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.strling:strling-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-PARAMS-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-params\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"01dc264320a1a1ccf5bb624455393cf58dd3b84c0f9dc206eb57a6f1be04a9ec\"}"
+            "comment": "{\"id\":\"java-maven\",\"inputs\":[{\"path\":\"bindings/java/pom.xml\",\"sha256\":\"6bb34852e5bba699977b41788f6de237fb1cff3d31a4ed878e4bcb25c2b8e0cd\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"io.github.strling-lang:strling-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-PARAMS-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-params\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"6baedbf5a14c422d231c05215b2c5d3d82f46d99883463354cc18cf02193fe91\"}"
         },
         {
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"jvm-maven\",\"inputs\":[{\"path\":\"bindings/jvm/pom.xml\",\"sha256\":\"6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"net.java.dev.jna:jna\",\"reported_license\":\"Apache-2.0 OR LGPL-2.1-or-later\",\"selected_license\":null,\"version\":\"5.19.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"5672bc3a0842e83f04176f25c7f25f72804fae88b67e6c7b3eed3f5ee0b4be49\"}"
+            "comment": "{\"id\":\"jvm-maven\",\"inputs\":[{\"path\":\"bindings/jvm/pom.xml\",\"sha256\":\"02a9229eee14f0e4149cd4c812e857652e06fc8d61132157f536386a0151923e\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"net.java.dev.jna:jna\",\"reported_license\":\"Apache-2.0 OR LGPL-2.1-or-later\",\"selected_license\":null,\"version\":\"5.19.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"5672bc3a0842e83f04176f25c7f25f72804fae88b67e6c7b3eed3f5ee0b4be49\"}"
         }
     ],
     "creationInfo": {
@@ -25,18 +25,18 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/java/7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a",
+    "documentNamespace": "https://strling.dev/sbom/java/2f91f743b404a8e09c68f6e03f5838f2e5e9b30e488e14a11938b5a88f6ab4bd",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46"
+                    "checksumValue": "6bb34852e5bba699977b41788f6de237fb1cff3d31a4ed878e4bcb25c2b8e0cd"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "17f2da4d353bfed45d84425527e3f3d94449a8ca"
+                    "checksumValue": "de2cd9bacb0a2dd6d457338e3e72c0fa85e0ef1f"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -1153,15 +1153,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5c2666a32d7a177fe09301371b648c44d9feb6019142a3efbdaaa6202513c8a3"
+                    "checksumValue": "93d67410d9c0461758a1779ae4dfb51ef7e67f99d71785e72ce003ecd7ad28ff"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6f13160463d19cf7c30f4171370eb83b10e99faa"
+                    "checksumValue": "44e5a894d1489b68886d60751fb8949c6f9717e2"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/maven/com.strling/strling/pom.properties",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/maven/io.github.strling-lang/strling/pom.properties",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1172,15 +1172,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46"
+                    "checksumValue": "6bb34852e5bba699977b41788f6de237fb1cff3d31a4ed878e4bcb25c2b8e0cd"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "17f2da4d353bfed45d84425527e3f3d94449a8ca"
+                    "checksumValue": "de2cd9bacb0a2dd6d457338e3e72c0fa85e0ef1f"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/maven/com.strling/strling/pom.xml",
+            "fileName": "bindings/java/target/strling-4.0.0.jar!/META-INF/maven/io.github.strling-lang/strling/pom.xml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1419,11 +1419,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21"
+                    "checksumValue": "02a9229eee14f0e4149cd4c812e857652e06fc8d61132157f536386a0151923e"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "e2e87f1a2512f6277601cf0c1daf201217a9a163"
+                    "checksumValue": "a3b774d1ce1ad550ddad7031f50b945c88f96afd"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -2619,7 +2619,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a"
+                    "checksumValue": "2f91f743b404a8e09c68f6e03f5838f2e5e9b30e488e14a11938b5a88f6ab4bd"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -2634,14 +2634,14 @@
             "filesAnalyzed": true,
             "licenseConcluded": "NOASSERTION",
             "licenseDeclared": "Apache-2.0",
-            "name": "com.strling:strling",
+            "name": "io.github.strling-lang:strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "816e713c3a0b0a5073ba6e4f73fef30747f79be9"
+                "packageVerificationCodeValue": "4bfaa2c87aaf2c976eedcbaa26ecda2ab808a462"
             },
             "versionInfo": "4.0.0"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-1-618a86aa483b",
+            "SPDXID": "SPDXRef-Dependency-1-4ef651df37a8",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -2655,14 +2655,14 @@
             "externalRefs": [
                 {
                     "referenceCategory": "OTHER",
-                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"com.strling:strling-jvm\",\"version\":\"4.0.0\"}",
+                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"io.github.strling-lang:strling-jvm\",\"version\":\"4.0.0\"}",
                     "referenceType": "strling-dependency-coordinate"
                 }
             ],
             "filesAnalyzed": false,
             "licenseConcluded": "Apache-2.0",
             "licenseDeclared": "Apache-2.0",
-            "name": "com.strling:strling-jvm",
+            "name": "io.github.strling-lang:strling-jvm",
             "versionInfo": "4.0.0"
         },
         {
@@ -3503,7 +3503,7 @@
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-1-618a86aa483b",
+            "relatedSpdxElement": "SPDXRef-Dependency-1-4ef651df37a8",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },

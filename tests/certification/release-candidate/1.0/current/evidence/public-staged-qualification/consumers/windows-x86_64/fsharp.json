@@ -9,7 +9,7 @@
     "product_version": "4.0.0",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "78efeaccd0cf1f3ecd703c74c04e55b36af60483deff7bd79defcc681347474f",
+    "retrieval_files_sha256": "4d2292508a3bd624797ffdfaa36af6662ab1e357ac41ddb3c4dbf22345b5604f",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -21,7 +21,7 @@
       "source_outcome": "succeeded",
       "status": "passed",
       "target_pattern": "abc",
-      "documentation_manifest_sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e",
+      "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
       "documentation_examples": [
         {
           "id": "bindings/fsharp/README.md#1",
@@ -29,7 +29,7 @@
           "status": "passed"
         }
       ],
-      "companion_subject_sha256": "100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287"
+      "companion_subject_sha256": "f288649051229ca5d2bd73aea25ae607659a8275a7377fea6eb25bf671942cf8"
     },
     "environment_keys": [
       "ALLUSERSPROFILE",
@@ -114,7 +114,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "5d6beab2aa78a6144f7705092c123174316f381c5c96d828f04c4cb59a047827"
+    "receipt_fingerprint": "219e96d342c34ac47be2a1b5bf071f429fe06170e003b285847b7887364de5fe"
   },
-  "elapsed_seconds": 15.171999999787658
+  "elapsed_seconds": 13.860000000102445
 }

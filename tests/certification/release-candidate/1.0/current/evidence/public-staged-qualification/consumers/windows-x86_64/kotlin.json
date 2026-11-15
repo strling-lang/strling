@@ -9,7 +9,7 @@
     "product_version": "4.0.0",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "78efeaccd0cf1f3ecd703c74c04e55b36af60483deff7bd79defcc681347474f",
+    "retrieval_files_sha256": "4d2292508a3bd624797ffdfaa36af6662ab1e357ac41ddb3c4dbf22345b5604f",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -21,7 +21,7 @@
       "source_outcome": "succeeded",
       "target_pattern": "abc",
       "kernel_mismatch_rejected": true,
-      "documentation_manifest_sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e",
+      "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
       "documentation_examples": [
         {
           "id": "bindings/kotlin/README.md#2",
@@ -38,7 +38,7 @@
         "org.jetbrains:annotations:13.0": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
         "org.jetbrains.kotlin:kotlin-stdlib:2.0.20": "fb169596659a518357c4b2c16f43dc75ab1c4980565ed4b4a317a050e5e39006"
       },
-      "companion_subject_sha256": "7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a"
+      "companion_subject_sha256": "2f91f743b404a8e09c68f6e03f5838f2e5e9b30e488e14a11938b5a88f6ab4bd"
     },
     "environment_keys": [
       "ALLUSERSPROFILE",
@@ -137,7 +137,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "8064ea87936e1557d92a268f5a1e385a68ea048dd975c4abe6647b0db676e901"
+    "receipt_fingerprint": "d49caa7cca15a8e81a6246d9d439f40f15f201dcdd65a063f0e82416f6d57055"
   },
-  "elapsed_seconds": 91.93699999991804
+  "elapsed_seconds": 60.07799999997951
 }

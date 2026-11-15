@@ -1,7 +1,7 @@
 {
   "schema_version": "strling-evidence-byte-archive-v1",
   "document_kind": "supplemental-evidence-bytes",
-  "source": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "source": "8a0c1ca31484b537bcff596922182bb66ab1e392",
   "original_name": "cdb4ee2aea69-consumer-command-0002.stdout",
   "bytes": 31,
   "sha256": "a672fa4eb94918dcabf1b768fb66ad615e3ab02a38158e8b4f9a5df879298c31",

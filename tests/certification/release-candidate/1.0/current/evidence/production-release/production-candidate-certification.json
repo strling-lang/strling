@@ -12,22 +12,22 @@
         },
         "artifact_identities": {
             "product": {
-                "sha256": "13266f1f4c4de4cad4d95b06f9726fe643ceecb51ab0295b1af47fcc21c7ed6a",
-                "size_bytes": 2299769
+                "sha256": "b2deedf1ef0694ac11c90fb4f1b55caa28d921c57b9d9c2161a7b0b8071c8acd",
+                "size_bytes": 2456997
             },
             "product_report": {
-                "sha256": "92c759a17fa53673cf270c9bfc0d5fbc22ae66445818f7ae841513e315be50d6",
+                "sha256": "f22f8f0c37dc2db20fc7c182e7b0bb55b2f4f8da3361efa5ea78595e2d41f6c2",
                 "size_bytes": 1177
             },
             "profile": {
-                "sha256": "27cf0ba7a6cc38f01fb8d9eefcbf0e2ab0c8652efa14d62c8e3458b11a63f695",
-                "size_bytes": 1125830
+                "sha256": "eda5d091d1b845fc46692b47a7da829daa125622438351869d75a77bfac824cf",
+                "size_bytes": 1203444
             }
         },
         "artifacts": {
-            "product": "/var/tmp/strling-release-candidate-ea64d594-certification/artifacts/production-certification/ea64d59467ef73a90e57bc23412daf78539bf69f/ea64d59467ef-20261113T130310Z/product-certification-release.json",
-            "product_report": "/var/tmp/strling-release-candidate-ea64d594-certification/artifacts/production-certification/ea64d59467ef73a90e57bc23412daf78539bf69f/ea64d59467ef-20261113T130310Z/product-certification-release.md",
-            "profile": "/var/tmp/strling-release-candidate-ea64d594-certification/artifacts/production-certification/ea64d59467ef73a90e57bc23412daf78539bf69f/ea64d59467ef-20261113T130310Z/profile-release.json"
+            "product": "/var/tmp/strling-publication-8a0c1ca3-certification/artifacts/production-certification/8a0c1ca31484b537bcff596922182bb66ab1e392/8a0c1ca31484-20261115T062402Z/product-certification-release.json",
+            "product_report": "/var/tmp/strling-publication-8a0c1ca3-certification/artifacts/production-certification/8a0c1ca31484b537bcff596922182bb66ab1e392/8a0c1ca31484-20261115T062402Z/product-certification-release.md",
+            "profile": "/var/tmp/strling-publication-8a0c1ca3-certification/artifacts/production-certification/8a0c1ca31484b537bcff596922182bb66ab1e392/8a0c1ca31484-20261115T062402Z/profile-release.json"
         },
         "certification": {
             "claim_summary": {
@@ -90,7 +90,7 @@
                     "passed": 7
                 }
             },
-            "product_evidence_fingerprint": "4d5b71312c2e475c620c927cd5f62c4365968727a6e78b0692044f8d1dc8a86e",
+            "product_evidence_fingerprint": "76f8c7aeb97bd69d011f328b2df24bbb5c2e05bce41dfe636e8cc09fad802477",
             "product_schema_version": "1.0.0",
             "profile_artifact_schema_version": "2.0.0",
             "profile_definition_fingerprint": "cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3",
@@ -123,7 +123,7 @@
                     "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
                 }
             },
-            "disk_free_bytes": 481007341568,
+            "disk_free_bytes": 431528239104,
             "exact_runtime_toolchains": {
                 "manifest_sha256": "c79424081e94168fdb394dfe1f258b0cb1644a6d40e2bbb8d95bd0da37a0ff76",
                 "schema_version": "1.0.0",
@@ -181,7 +181,7 @@
             "preserved_execution_evidence": [
                 {
                     "path": "adversarial-semantic-runtime/evidence.json",
-                    "sha256": "e3ec64aff0ab3b052931d69087036c138bfa0177354413865158005b86d485c4",
+                    "sha256": "584862d9022a7a94aba3f08282fa2d6e8dea7e253c5179b1a5eac5e40f2ccb20",
                     "size_bytes": 26105
                 },
                 {
@@ -390,19 +390,19 @@
                     "size_bytes": 101384
                 },
                 {
-                    "path": "operation-results/42f6252c07ae42c5a2c248b9f4956771/result.json",
-                    "sha256": "e9919af41517a93c346e564493035455f1ac2f824bd2ac9a9181604ca9667fa3",
-                    "size_bytes": 47110
+                    "path": "operation-results/7a86f3ed16b34c708af4f3958c16601c/result.json",
+                    "sha256": "6583c139d8f22ba69a35d3c4bc7fb975b837b59c74eaa59a7408cc10bf90fd29",
+                    "size_bytes": 47038
                 },
                 {
-                    "path": "operation-results/42f6252c07ae42c5a2c248b9f4956771/stderr.txt",
+                    "path": "operation-results/7a86f3ed16b34c708af4f3958c16601c/stderr.txt",
                     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                     "size_bytes": 0
                 },
                 {
-                    "path": "operation-results/42f6252c07ae42c5a2c248b9f4956771/stdout.txt",
-                    "sha256": "64d2fc6fc456917c03ef5e8bdf3e8755bb2a70e311b0c20f8856b34d84a8383d",
-                    "size_bytes": 40946
+                    "path": "operation-results/7a86f3ed16b34c708af4f3958c16601c/stdout.txt",
+                    "sha256": "c8d3ce0d144085fc3095860b066a7e0d068a394166cab891a467ad5376a20b79",
+                    "size_bytes": 40874
                 }
             ],
             "probes": {
@@ -631,7 +631,7 @@
                 },
                 "python": {
                     "command": [
-                        "/usr/bin/python3",
+                        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python3",
                         "--version"
                     ],
                     "exit_code": 0,
@@ -708,7 +708,7 @@
             "storage_capacity": {
                 "contract_fingerprint": "bdaedd6454f2a965a113237ca6513e444dbf5d6dab106814b714b24979a34779",
                 "contract_path": "governance/production-certification-capacity.json",
-                "free_bytes": 481007341568,
+                "free_bytes": 431528239104,
                 "maximum_expected_transient_bytes": 103079215104,
                 "required_free_bytes": 120259084288,
                 "rounded_workspace_envelope_bytes": 34359738368,
@@ -719,7 +719,7 @@
         },
         "failure": null,
         "no_reuse": {
-            "clean_detached_worktree": "/var/tmp/strling-release-candidate-ea64d594-certification/.cert/production-certification/ea64d59467ef-20261113T130310Z/source",
+            "clean_detached_worktree": "/var/tmp/strling-publication-8a0c1ca3-certification/.cert/production-certification/8a0c1ca31484-20261115T062402Z/source",
             "final_root_status": "",
             "final_source_status": "",
             "generated_artifacts_recreated": true,
@@ -729,15 +729,15 @@
         "profile": "release",
         "publication_authorized": false,
         "source": {
-            "branch": "",
-            "sha": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+            "branch": "dev",
+            "sha": "8a0c1ca31484b537bcff596922182bb66ab1e392",
             "status_porcelain": ""
         },
         "status": "passed"
     },
-    "evidence_fingerprint": "ee05f22d354e3d17db715b2fff2a763ca0de46a97b995388e320be7071f553e3",
+    "evidence_fingerprint": "80cb8cf3b2341d89dfc6cf72056ca37ce2dcbb6c48cd0c03062fa7d94d8d41c0",
     "execution_metadata": {
-        "generated_at": "2026-11-13T14:45:53.919823+00:00"
+        "generated_at": "2026-11-15T08:08:43.075843+00:00"
     },
     "schema_version": "1.0.0"
 }

@@ -9,7 +9,7 @@
     "product_version": "4.0.0",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "78efeaccd0cf1f3ecd703c74c04e55b36af60483deff7bd79defcc681347474f",
+    "retrieval_files_sha256": "4d2292508a3bd624797ffdfaa36af6662ab1e357ac41ddb3c4dbf22345b5604f",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -21,7 +21,7 @@
       "source_outcome": "succeeded",
       "target_pattern": "abc",
       "kernel_mismatch_rejected": true,
-      "documentation_manifest_sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e",
+      "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
       "documentation_examples": [
         {
           "id": "bindings/csharp/README.md#1",
@@ -118,7 +118,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "42960fb7184416f83e218b0828c9efecca37b51973e005024d743a40acc3f577"
+    "receipt_fingerprint": "3d3d95d240abfb62235145a62d16736fe99f56a7d6d11065dd4195fdc4572ca6"
   },
-  "elapsed_seconds": 14.593000000109896
+  "elapsed_seconds": 12.577999999979511
 }

@@ -1,10 +1,10 @@
 {
   "schema_version": "strling-evidence-byte-archive-v1",
   "document_kind": "supplemental-evidence-bytes",
-  "source": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "source": "8a0c1ca31484b537bcff596922182bb66ab1e392",
   "original_name": "bc4a71180870-consumer-command-0002.stdout",
   "bytes": 694,
-  "sha256": "90789bbd3f64f431e36390484e7776082b09a445ec873710c301a7fa0f215d11",
+  "sha256": "00728788f3f2bbc0196c011da2ac9135a14f00c901471550246eafeb6dea20c6",
   "encoding": "gzip+base64",
-  "payload": "H4sIAAAAAAACA7WSTQoCMQyF955iLlCLqINbcSEKKjjupU7jGGjT2kn9ub3tiF7AcRFImve+BpKNIjw/kZpiVHinC+3qaIF4sKKWlTG5I9l62XLIhfABbgh38REqRkeiOY3Uc1LepYdgpMFTl0xlddhn19DbfoFym2Q3WBhMjv7pFQeseV3ttv9g6/S4BIKgGHT/H+zhGqHl9leyVZRj/F3iOAHn3gPpzMM3unOm4uwKdr+M/5iVx3IikjM+RENR8CWA0sJGw9hpjKuVGaYrHbwAxrxurrYCAAA="
+  "payload": "H4sIAAAAAAACA7WSTY7CMAyF95yiFwhhxI/YolmMQAIkyr4KjUstJU5IHSi3J+louACdhSU7fu+LJXuvCJsn0rX4KrzThXZ1tEA82VLHypjckWy97DjkQvgAd4SH+BMqRkeiWc+qtq166SEYafAyJEtZnk/ZNfV2XKA8JNkdvg0mx/j0kgPWvCuPh/9g6/T4AwRBMejxPzjBLULH3adkqyjH/L3EeQJuvAfSmYe/6MGZisYV7D4Zv1+vqtVCJGfsxZWi4DaA0sJGwzhojKuVmaYrnbwAGxR/3bYCAAA="
 }

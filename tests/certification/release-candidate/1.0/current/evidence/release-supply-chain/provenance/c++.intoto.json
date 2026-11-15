@@ -16,10 +16,11 @@
                 "registry": "conan",
                 "support": {
                     "external_prerequisites": [
-                        "Verify existing registry ownership and uploader or trusted publisher configuration",
-                        "Confirm protected release environment reviewers and approved workflow source"
+                        "The Program Owner deferred ConanCenter deployment for initial 4.0.0. Retain all C++ builds and consumer checks; direct developer source installation remains available.",
+                        "ConanCenter recipe submission and external acceptance require a separate owner-authorized task before public ConanCenter verification.",
+                        "Re-enabling this public distribution requires governed source changes and fresh applicable certification; deferred obligations are never reported as publicly verified."
                     ],
-                    "installation": "Conan package with canonical native dependency",
+                    "installation": "Supported direct CMake source build; ConanCenter deployment deferred for the initial release",
                     "native_runtime_prerequisites": [
                         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",
                         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
@@ -29,7 +30,7 @@
                         "windows-x86_64",
                         "linux-x86_64"
                     ],
-                    "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+                    "publication_eligibility": "owner-deferred-conancenter-4.0.0",
                     "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
                     "scope": "windows-x86_64 and linux-x86_64 interop routes",
                     "support_claim": "binding:cpp",
@@ -37,7 +38,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
                 "toolchains": [
                     {
                         "executable_sha256": "b30a9fc475de8b03077f5947e0a20ea59af47733724af215cabd0a72e3722446",
@@ -114,9 +115,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "ea64d59467ef73a90e57bc23412daf78539bf69f"
+                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@ea64d59467ef73a90e57bc23412daf78539bf69f"
+                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
                 },
                 {
                     "digest": {
@@ -132,7 +133,7 @@
                 },
                 {
                     "digest": {
-                        "sha256": "d2506ce29ab6016e9493783af1122ccfb425fd209dd2793a2ae14e1e01997b57"
+                        "sha256": "c942c04d4f5f5987acb5ac7637fcbda6cd05247f13ce5fe8b3b466182e2be653"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -144,7 +145,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "ea64d59467ef73a90e57bc23412daf78539bf69f:release:cpp",
+                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:cpp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -153,25 +154,25 @@
     "subject": [
         {
             "digest": {
-                "sha256": "d081db3e0fae1af16bf1f9d4ecccfaa31c893f7eaea6e4da1513a2665674fea3"
+                "sha256": "9cc02444af270d26af5fb913f38fd9a0437b02fcf645ac8658482803323321f1"
             },
             "name": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz"
         },
         {
             "digest": {
-                "sha256": "63d3ef8dbccd4fb91645b22c272cd3ad96702ee0a5ee1d82fc5113ea7419e888"
+                "sha256": "56517322f9f54d365fb8a1b92ed63e44b9aab0be8b1abcdeef2fa9d83026222a"
             },
             "name": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.upload.zip"
         },
         {
             "digest": {
-                "sha256": "0ef319f7dcfb5ec36b45e3ede0e4ac933ecbf5097c1557bb28a6f48116b547b9"
+                "sha256": "437af33c28680dd21b27bb0f03c63251ef51364d4de921d9e65bff4d48ea8b57"
             },
             "name": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz"
         },
         {
             "digest": {
-                "sha256": "d7256ec4ff2f37de98a0257f5068ad6cc2e3af1bb0f1c6f874c454732295ba7b"
+                "sha256": "0027d56d1709b04dde0a92bb9754508dc9a45c2596679b70f716699bb088a679"
             },
             "name": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.upload.zip"
         }

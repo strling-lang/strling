@@ -19,7 +19,7 @@
       "url": "https://evidence.example.test/bindings/swift/README.md"
     },
     "provenance": {
-      "sha256": "76779e0b2311e88aa80289139f0af82b6a831b10d9f2541732b05b016036555f",
+      "sha256": "ec3d76459c1de7cf84ec8ee0e1657dae453855f82731ec6e5c457ea9f1d68ff3",
       "url": "https://evidence.example.test/release-swift.intoto.json"
     },
     "sbom": {
@@ -28,7 +28,7 @@
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 53.81626622399199,
+  "elapsed_seconds": 27.861972854007035,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:swift:coordinate",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:swift:metadata",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:swift:artifact",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:swift:source",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:swift:sbom",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:swift:provenance",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:swift:documentation",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:swift:scope",
       "platform": null,
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:swift:linux-x86_64:installation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:swift:linux-x86_64:public-api",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:swift:linux-x86_64:product-version",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:swift:linux-x86_64:canonical-compiler",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:swift:linux-x86_64:native-wasm",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:swift:linux-x86_64:target-compatibility",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:swift:linux-x86_64:kernel-rejection",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,7 +190,7 @@
       "check": "isolation",
       "id": "release:swift:linux-x86_64:isolation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "20eeb9b6ed857c1b420339cc543ffef1b948776e7fa12b5c143a9e00d34e9390",
+      "retrieval_sha256": "fe2e4e4e6a3f4a98b2c1095ae65931da355f61637b3554e4c8f6a470f6d3d2c1",
       "status": "VERIFYING",
       "tier": "Supported"
     }
@@ -653,20 +653,20 @@
     {
       "authority": "synthetic",
       "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.0",
-      "sha256": "b8b488d8d819cd13a251b0a52e9700e2f9848b4262c83faec6ca07700035cc58",
+      "sha256": "c7c1fbdb658b76008da6e063328bdf05984f5bd8eecf69e04bf557fa6195ba3a",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/ea64d59467ef73a90e57bc23412daf78539bf69f",
-      "sha256": "d9329fde22679bd7982d2ecc572fd3c47a926f5aa20d11745ae09cf654d3951f",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/8a0c1ca31484b537bcff596922182bb66ab1e392",
+      "sha256": "b59a41bc45cec289975df1fa7893ed97d1380bdea00b887dc9b645c5a54924a6",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/ea64d59467ef73a90e57bc23412daf78539bf69f",
-      "sha256": "a04caa87a119adf030d025f38509bf25d0f344d88fa7a34eea0583c67d4c5391",
-      "size": 721655
+      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/8a0c1ca31484b537bcff596922182bb66ab1e392",
+      "sha256": "a17a39dea4e94c90d89a3b7feb545832213e74d56bbf015fb7a0e56cd1a7e5da",
+      "size": 721633
     },
     {
       "authority": "synthetic",
@@ -677,8 +677,8 @@
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-swift.intoto.json",
-      "sha256": "76779e0b2311e88aa80289139f0af82b6a831b10d9f2541732b05b016036555f",
-      "size": 6872
+      "sha256": "ec3d76459c1de7cf84ec8ee0e1657dae453855f82731ec6e5c457ea9f1d68ff3",
+      "size": 6796
     },
     {
       "authority": "synthetic",

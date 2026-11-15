@@ -21,17 +21,17 @@
                         "Confirm protected release environment reviewers and approved workflow source"
                     ],
                     "installation": "npm archive with canonical WASM payload",
-                    "ownership_status": "externally-pending",
+                    "ownership_status": "verified",
                     "platforms": [],
                     "publication_eligibility": "preview-only-explicit-authorization",
-                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "registry_owner": "thecyberlocal",
                     "scope": "Windows Node 24 observation and Chrome browser WASM certification harness",
                     "support_claim": "binding:typescript",
                     "tier": "Preview"
                 }
             },
             "internalParameters": {
-                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
                 "toolchains": [
                     {
                         "executable_sha256": "b30a9fc475de8b03077f5947e0a20ea59af47733724af215cabd0a72e3722446",
@@ -63,13 +63,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "ea64d59467ef73a90e57bc23412daf78539bf69f"
+                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@ea64d59467ef73a90e57bc23412daf78539bf69f"
+                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
                 },
                 {
                     "digest": {
-                        "sha256": "d2506ce29ab6016e9493783af1122ccfb425fd209dd2793a2ae14e1e01997b57"
+                        "sha256": "c942c04d4f5f5987acb5ac7637fcbda6cd05247f13ce5fe8b3b466182e2be653"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 },
@@ -87,7 +87,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "ea64d59467ef73a90e57bc23412daf78539bf69f:release:typescript",
+                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:typescript",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }

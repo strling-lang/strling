@@ -2,7 +2,7 @@
   "status": "passed",
   "purpose": "runtime-prerequisite-only",
   "strling_packages": [],
-  "verification_metadata_sha256": "21c8b008c9299abd9f85c41e6bde35f06ca30555cd22db6435363f0ee365d71b",
+  "verification_metadata_sha256": "97e2cb0e7fc0a2af8abacb9f51df77a906218f9417e1a731b4f386d5e305a590",
   "dependencies": {
     "com.fasterxml.jackson.core:jackson-annotations:2.18.11": "9eab0d36da981645392427eedcb087e13be542488e37f935723dc0be50d18a53",
     "com.fasterxml.jackson.core:jackson-core:2.18.11": "825fa72dfb9e2f8a642322f1390dbac22c30d15ebd6dc6b3772158821ee124eb",
@@ -11,6 +11,6 @@
     "org.jetbrains:annotations:13.0": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
     "org.jetbrains.kotlin:kotlin-stdlib:2.0.20": "fb169596659a518357c4b2c16f43dc75ab1c4980565ed4b4a317a050e5e39006"
   },
-  "repository": "D:\\Projects\\strling-lang\\strling\\target\\release-candidate\\campaign-ea64d594\\jvm-sdk-ea64d594\\repository",
+  "repository": "D:\\Projects\\strling-lang\\strling\\target\\official-publication\\campaign-ea64d594-20261113\\jvm-sdk-8a0c1ca3\\repository",
   "publication_authorized": false
 }

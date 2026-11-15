@@ -1,6 +1,6 @@
 {
   "certification": {
-    "attestation_sha256": "70a2dd2ef5434a17f425a0c3428ef615d75e2d555c204f80b6e4666a8f74ea59",
+    "attestation_sha256": "3326da7330c664bc18eb07a18aa0a54b5a9b5b9be965f6d8cb2ef8739783023c",
     "certification_contract": {
       "operation_registry_fingerprint": "b37fd0e49f28f4c4604b5cb37fcdef7bdbf9acd44c016cb071ed782d07e4989e",
       "profile_registry_fingerprint": "0ea34ea746e711efcb1d12d0a41c6c3fb1f6a637340c95504cf0bc2a891ac68a",
@@ -12,7 +12,7 @@
       "certifier_id": "strling-local-release-certifier-2026-01",
       "ssh_key_fingerprint": "SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA"
     },
-    "evidence_root_sha256": "7ec80fb88f10bc36b1b2b5bd60b59c9608c2441ef1922acd46e2168b55ae9562",
+    "evidence_root_sha256": "d27a91282731ba7ddc1bd5f5c315e70cd87c116d09ab9daabbe8e55ae46dd433",
     "profile_results": [
       {
         "counts": {
@@ -27,7 +27,7 @@
         },
         "definition_fingerprint": "0ed74f964b7b83f27a9912f14bb3bed9decf0264d603606a4827252f2c6f0112",
         "definition_version": "1.33.0",
-        "evidence_fingerprint": "9d1c16f52b07a93e2969ed13826bd22adb8b51240b30fe741ff4223183b20672",
+        "evidence_fingerprint": "1e23d6b0550148dc2f6d3bbb4b80b38c01bfc472ebeca1cd4d2e6c384ba39c0b",
         "evidence_path": "evidence/profile-full/profile-full.json",
         "exit_code": 0,
         "operation_count": 125,
@@ -47,7 +47,7 @@
         },
         "definition_fingerprint": "cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3",
         "definition_version": "1.33.0",
-        "evidence_fingerprint": "e518f20c529c341cb14973249f1f726cd80a305b3ede5bf78baa83f5c7e0c8f6",
+        "evidence_fingerprint": "d3f012aaeb5aafbb96eb7cc5efa28745d227820f0b0ffcbcc2c311db8d535d8e",
         "evidence_path": "evidence/profile-release/profile-release.json",
         "exit_code": 0,
         "operation_count": 125,
@@ -55,8 +55,8 @@
         "status": "waived"
       }
     ],
-    "signature_sha256": "11211ce372e5643975a07e1e0ed8c4fe1f16cf02d46b6488103d11bb81d019e1",
-    "trusted_verifier_sha": "f8ef1a62be536981927e36a19587f96edb69f911",
+    "signature_sha256": "dc54ea7607c595eea728983bcb4f8e6c30fdc0adf3dbf928cdec9eee4d2a6383",
+    "trusted_verifier_sha": "c653d82504bf28f4d18bc0f80c9426912a2fb3e7",
     "waiver_inventory": [
       "WVR-SEC-VSCE-LICENSE-001"
     ]
@@ -64,6 +64,7 @@
   "certified_artifact_coordinate": "4.0.0",
   "coordinate_preflight": {
     "limitations": [
+      "The provisional RC lookup is diagnostic only; no prerelease or tag creation is authorized or reserved.",
       "A dated metadata lookup is not ownership proof or a guarantee that an immutable coordinate was never used.",
       "Unavailable endpoints are unverified, never treated as empty.",
       "Reconcile all registry histories, owners, destinations and coordinates again in the separately authorized publication run."
@@ -93,7 +94,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:37:56.516757+00:00",
+        "observed_utc": "2026-11-14T22:40:21.665651+00:00",
         "ownership_confirmed": false,
         "package_name": "strling-c",
         "registry": "github-tag:c-vVERSION",
@@ -101,10 +102,10 @@
       },
       {
         "artifact_id": "release:cpp",
-        "observed_utc": "2026-11-13T04:37:57.964119+00:00",
+        "observed_utc": "2026-11-14T22:40:23.062993+00:00",
         "ownership_confirmed": false,
         "package_name": "strling",
-        "reason": "Exact existing approved owner and, for Conan, public endpoint are future protected publication prerequisites; no owner is guessed.",
+        "reason": "ConanCenter publication is explicitly deferred; direct C++ developer installation remains supported.",
         "registry": "conan",
         "status": "owner-specific-coordinate-unverified"
       },
@@ -132,7 +133,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:37:57.998306+00:00",
+        "observed_utc": "2026-11-14T22:40:23.084516+00:00",
         "ownership_confirmed": false,
         "package_name": "STRling",
         "registry": "nuget.org",
@@ -162,7 +163,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:37:59.052797+00:00",
+        "observed_utc": "2026-11-14T22:40:24.468326+00:00",
         "ownership_confirmed": false,
         "package_name": "strling",
         "registry": "pub.dev",
@@ -192,7 +193,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:00.031159+00:00",
+        "observed_utc": "2026-11-14T22:40:25.673429+00:00",
         "ownership_confirmed": false,
         "package_name": "STRling.FSharp",
         "registry": "nuget.org",
@@ -222,7 +223,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:01.395217+00:00",
+        "observed_utc": "2026-11-14T22:40:26.751948+00:00",
         "ownership_confirmed": false,
         "package_name": "github.com/strling-lang/strling/bindings/go",
         "registry": "github-tag:go-vVERSION",
@@ -238,7 +239,7 @@
             "detail": "exact public coordinate is absent",
             "http_status": 404,
             "status": "unavailable",
-            "url": "https://repo1.maven.org/maven2/com/strling/strling/4.0.0-rc.1/strling-4.0.0-rc.1.pom",
+            "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.0-rc.1/strling-4.0.0-rc.1.pom",
             "version": "4.0.0-rc.1"
           },
           {
@@ -248,13 +249,13 @@
             "detail": "exact public coordinate is absent",
             "http_status": 404,
             "status": "unavailable",
-            "url": "https://repo1.maven.org/maven2/com/strling/strling/4.0.0/strling-4.0.0.pom",
+            "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.0/strling-4.0.0.pom",
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:02.908083+00:00",
+        "observed_utc": "2026-11-14T22:40:28.366276+00:00",
         "ownership_confirmed": false,
-        "package_name": "com.strling:strling",
+        "package_name": "io.github.strling-lang:strling",
         "registry": "maven-central",
         "status": "read-only-coordinate-observation"
       },
@@ -268,7 +269,7 @@
             "detail": "exact public coordinate is absent",
             "http_status": 404,
             "status": "unavailable",
-            "url": "https://repo1.maven.org/maven2/com/strling/strling-kotlin/4.0.0-rc.1/strling-kotlin-4.0.0-rc.1.pom",
+            "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.0-rc.1/strling-kotlin-4.0.0-rc.1.pom",
             "version": "4.0.0-rc.1"
           },
           {
@@ -278,31 +279,31 @@
             "detail": "exact public coordinate is absent",
             "http_status": 404,
             "status": "unavailable",
-            "url": "https://repo1.maven.org/maven2/com/strling/strling-kotlin/4.0.0/strling-kotlin-4.0.0.pom",
+            "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.0/strling-kotlin-4.0.0.pom",
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:04.361696+00:00",
+        "observed_utc": "2026-11-14T22:40:30.063727+00:00",
         "ownership_confirmed": false,
-        "package_name": "com.strling:strling-kotlin",
+        "package_name": "io.github.strling-lang:strling-kotlin",
         "registry": "maven-central",
         "status": "read-only-coordinate-observation"
       },
       {
         "artifact_id": "release:lua",
-        "observed_utc": "2026-11-13T04:38:06.005491+00:00",
+        "observed_utc": "2026-11-14T22:40:31.984478+00:00",
         "ownership_confirmed": false,
         "package_name": "strling",
-        "reason": "Exact existing approved owner and, for Conan, public endpoint are future protected publication prerequisites; no owner is guessed.",
+        "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately.",
         "registry": "luarocks.org",
         "status": "owner-specific-coordinate-unverified"
       },
       {
         "artifact_id": "release:perl",
-        "observed_utc": "2026-11-13T04:38:06.036374+00:00",
+        "observed_utc": "2026-11-14T22:40:32.011362+00:00",
         "ownership_confirmed": false,
         "package_name": "STRling",
-        "reason": "Exact existing approved owner and, for Conan, public endpoint are future protected publication prerequisites; no owner is guessed.",
+        "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately.",
         "registry": "cpan",
         "status": "owner-specific-coordinate-unverified"
       },
@@ -330,7 +331,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:06.060170+00:00",
+        "observed_utc": "2026-11-14T22:40:32.032052+00:00",
         "ownership_confirmed": false,
         "package_name": "strling/strling",
         "registry": "github-tag:php-vVERSION",
@@ -360,7 +361,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:07.288293+00:00",
+        "observed_utc": "2026-11-14T22:40:33.930845+00:00",
         "ownership_confirmed": false,
         "package_name": "STRling",
         "registry": "pypi.org",
@@ -390,7 +391,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:08.575662+00:00",
+        "observed_utc": "2026-11-14T22:40:35.501211+00:00",
         "ownership_confirmed": false,
         "package_name": "strling",
         "registry": "github-tag:r-vVERSION",
@@ -420,7 +421,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:09.713119+00:00",
+        "observed_utc": "2026-11-14T22:40:37.662070+00:00",
         "ownership_confirmed": false,
         "package_name": "strling",
         "registry": "rubygems.org",
@@ -450,7 +451,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:11.209627+00:00",
+        "observed_utc": "2026-11-14T22:40:40.152323+00:00",
         "ownership_confirmed": false,
         "package_name": "strling",
         "registry": "crates.io",
@@ -480,7 +481,7 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:12.374008+00:00",
+        "observed_utc": "2026-11-14T22:40:41.693317+00:00",
         "ownership_confirmed": false,
         "package_name": "STRling",
         "registry": "github-tag:swift-vVERSION",
@@ -510,14 +511,14 @@
             "version": "4.0.0"
           }
         ],
-        "observed_utc": "2026-11-13T04:38:13.590162+00:00",
+        "observed_utc": "2026-11-14T22:40:46.331076+00:00",
         "ownership_confirmed": false,
         "package_name": "@strling-lang/strling",
         "registry": "npmjs.org",
         "status": "read-only-coordinate-observation"
       }
     ],
-    "report_sha256": "5bd14bdb79dac63b393ece01b734500db4bf793f1b0d56a46cdedca8c0195e5c"
+    "report_sha256": "f153b6992a11b61b189306ef69e5c074f9f60da8a9c61302ef6c2f3d8b638694"
   },
   "distributions": [
     {
@@ -542,7 +543,7 @@
         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "strling-c",
       "package_root": "bindings/c",
       "platforms": [
@@ -552,21 +553,21 @@
       "provenance": {
         "build_command_sha256": "0afbecd2cf9cefe348c3c6c6a32ed07545347ebf46cd14ecd4feda31bf583829",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "8fa415bcc55212fb165c1fb271aa397424e19340f53829a776f4d1b4c0664efa",
+        "predicate_sha256": "293ae85cab09c15a7843a9ff84dc6aa271fc1df38a8e74158287250df09a693b",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:6b83d0b27f3df455",
         "subject_sha256": "a00617a1f8dd9cd48298c824f5420ee3be0bb72f5d18aa74b7c2d8982bd70e55"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "github-tag:c-vVERSION",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 22,
         "document_namespace": "https://strling.dev/sbom/c/a00617a1f8dd9cd48298c824f5420ee3be0bb72f5d18aa74b7c2d8982bd70e55",
         "relationship_count": 479,
-        "sha256": "8dd736f4d5e7f28dba92d833f96a0f384eab06faf3285326c9ca1b94e9c77c89",
+        "sha256": "452de7d3dec70b8652994361a0831fecf0f3754d2ce22de568769285b8ab06fc",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
@@ -759,22 +760,20 @@
       "artifact_id": "release:cpp",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "708ce789c27808d21a17d2cc97d35be047b757d0e35a2b4c75356da903ecfd15"
+        "digest": "c05341d9ad43f66b1f3b9083fd6e8181f4df9a3069b15b4e42a40fb668fd6621"
       },
       "credential_policy": {
-        "mode": "long-lived-secret",
+        "mode": "external-review",
         "publication_authorization": "explicit-non-dry-run",
         "release_environment": "release",
-        "secret_names": [
-          "CONAN_PASSWORD",
-          "CONAN_USERNAME"
-        ],
+        "secret_names": [],
         "trusted_publishing": false,
         "untrusted_context_forbidden": true
       },
       "external_prerequisites": [
-        "Verify existing registry ownership and uploader or trusted publisher configuration",
-        "Confirm protected release environment reviewers and approved workflow source"
+        "The Program Owner deferred ConanCenter deployment for initial 4.0.0. Retain all C++ builds and consumer checks; direct developer source installation remains available.",
+        "ConanCenter recipe submission and external acceptance require a separate owner-authorized task before public ConanCenter verification.",
+        "Re-enabling this public distribution requires governed source changes and fresh applicable certification; deferred obligations are never reported as publicly verified."
       ],
       "native_runtime_prerequisites": [
         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",
@@ -790,30 +789,30 @@
       "provenance": {
         "build_command_sha256": "35dc5547e074fdaba4d90ac2bbe113ed93446a856107d73d66de6c6c4c8e8fab",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "edf5bb8f921d91e5f1e514853037c4e0c85e1a87bfbaf06c94e8e8639d335a8a",
+        "predicate_sha256": "14e7c0ca91b749279bd36e42874fab75604a4c1a2abfb8f4ad1ef7d98581a4e0",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:3d42bd7e45ed56ec",
-        "subject_sha256": "708ce789c27808d21a17d2cc97d35be047b757d0e35a2b4c75356da903ecfd15"
+        "subject_sha256": "c05341d9ad43f66b1f3b9083fd6e8181f4df9a3069b15b4e42a40fb668fd6621"
       },
-      "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
+      "publication_eligibility": "owner-deferred-conancenter-4.0.0",
       "registry": "conan",
       "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
       "sbom": {
         "component_count": 22,
-        "document_namespace": "https://strling.dev/sbom/c++/708ce789c27808d21a17d2cc97d35be047b757d0e35a2b4c75356da903ecfd15",
+        "document_namespace": "https://strling.dev/sbom/c++/c05341d9ad43f66b1f3b9083fd6e8181f4df9a3069b15b4e42a40fb668fd6621",
         "relationship_count": 2224,
-        "sha256": "76587cbbe460a10f1d44e5daed8023f0399e6cbf7b579e3cfafc0710e1bd3f86",
+        "sha256": "748b8829e71f82c842d7da85397d9a8a5d78a8f13f6c9252e33c21c6f66c2087",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "windows-x86_64 and linux-x86_64 interop routes",
       "subject": {
-        "bytes": 38224488,
+        "bytes": 38226055,
         "kind": "file",
         "name": "strling-release-set:3d42bd7e45ed56ec",
-        "sha256": "708ce789c27808d21a17d2cc97d35be047b757d0e35a2b4c75356da903ecfd15"
+        "sha256": "c05341d9ad43f66b1f3b9083fd6e8181f4df9a3069b15b4e42a40fb668fd6621"
       },
       "tier": "Supported",
       "toolchains": [
@@ -1025,7 +1024,7 @@
       "artifact_id": "release:csharp",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287"
+        "digest": "f288649051229ca5d2bd73aea25ae607659a8275a7377fea6eb25bf671942cf8"
       },
       "credential_policy": {
         "mode": "long-lived-secret",
@@ -1044,7 +1043,7 @@
       "native_runtime_prerequisites": [
         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "STRling",
       "package_root": "bindings/csharp",
       "platforms": [
@@ -1053,30 +1052,30 @@
       "provenance": {
         "build_command_sha256": "d487205ebefdba765caf21ed0ab6ee920297ea5ef9e56f91b57717dfe907b1fd",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "6057ce54eed8aa3307a8329c5f0088a43e14244e063ed541c7a483894059132e",
+        "predicate_sha256": "d8512fd7466ad2d617d3f2726a284fbfb0a4395b73dd7d8fb41946b6b60a56b0",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg",
-        "subject_sha256": "100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287"
+        "subject_sha256": "f288649051229ca5d2bd73aea25ae607659a8275a7377fea6eb25bf671942cf8"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "nuget.org",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 26,
-        "document_namespace": "https://strling.dev/sbom/c#/100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287",
+        "document_namespace": "https://strling.dev/sbom/c#/f288649051229ca5d2bd73aea25ae607659a8275a7377fea6eb25bf671942cf8",
         "relationship_count": 35,
-        "sha256": "1d4891e8b8029ee0a88d03950f47010a3090e0cf3313176e7958232803fcaf18",
+        "sha256": "e34573ae3d7d36db81a16b33edb4c7f747c48eed8b027614140f6ded0bf550c5",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "windows-x86_64 clean-consumer native assets",
       "subject": {
-        "bytes": 1658079,
+        "bytes": 1658080,
         "kind": "file",
         "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg",
-        "sha256": "100475d3bdf8c218845cf7b9dea2bae8bf36961c209e315b8cc0f99b0e52f287"
+        "sha256": "f288649051229ca5d2bd73aea25ae607659a8275a7377fea6eb25bf671942cf8"
       },
       "tier": "Supported",
       "toolchains": [
@@ -1173,13 +1172,13 @@
         "untrusted_context_forbidden": true
       },
       "external_prerequisites": [
-        "Verify existing registry ownership and uploader or trusted publisher configuration",
+        "Confirm the sole legacy uploader by SHA-256 of its lowercase email and the strling-lang/strling protected release tag-push association",
         "Confirm protected release environment reviewers and approved workflow source"
       ],
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "strling",
       "package_root": "bindings/dart",
       "platforms": [
@@ -1188,16 +1187,16 @@
       "provenance": {
         "build_command_sha256": "19b7f8469eba5744d4a22bda9c3585788045a4eb63be4215433623a4226d0c81",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "832c3ec5d0009c4f7f01f6904d9f9bb28eed7fe00df09e131b6af46b87a88427",
+        "predicate_sha256": "4272562726d14e3a229246dc4a2f4955a103b5f51760b3b4c4593a82e13ff40c",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "target/release-packaging/dart",
         "subject_sha256": "eb3478a57fd517ff3d1ac1c0ce3330c0cf939dca74ee20ef672449c07c017fcf"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "pub.dev",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "pub.dev legacy uploader sha256:cc219ebed9b06fe346aec03c0e6bbd0e3b2292383d965c9813839cb99c3b602d",
       "sbom": {
         "component_count": 49,
         "document_namespace": "https://strling.dev/sbom/dart/eb3478a57fd517ff3d1ac1c0ce3330c0cf939dca74ee20ef672449c07c017fcf",
@@ -1297,7 +1296,7 @@
       "artifact_id": "release:fsharp",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "389b9f2d556d6b0dd7eb1a662a8df89627df351b1e000d50083cc526a7c29796"
+        "digest": "c84c630ab3d0de84b306548cc96c4f97d5ef566eaafc5eda5abc8f1804c4931c"
       },
       "credential_policy": {
         "mode": "long-lived-secret",
@@ -1316,7 +1315,7 @@
       "native_runtime_prerequisites": [
         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "STRling.FSharp",
       "package_root": "bindings/fsharp",
       "platforms": [
@@ -1325,30 +1324,30 @@
       "provenance": {
         "build_command_sha256": "c57737646d66bfdc3fb033d5a1182bf136500b940cdd37759fa22b7e11fb548c",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "44f260b0fa2967a36a0a831c5687c5754d3f32040d6d8d152677af111e82a08d",
+        "predicate_sha256": "33b7ad65f1e542128600fa8aea47b12967dd193e0d1b543632c1fabb34bf6512",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg",
-        "subject_sha256": "389b9f2d556d6b0dd7eb1a662a8df89627df351b1e000d50083cc526a7c29796"
+        "subject_sha256": "c84c630ab3d0de84b306548cc96c4f97d5ef566eaafc5eda5abc8f1804c4931c"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "nuget.org",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 6,
-        "document_namespace": "https://strling.dev/sbom/f#/389b9f2d556d6b0dd7eb1a662a8df89627df351b1e000d50083cc526a7c29796",
+        "document_namespace": "https://strling.dev/sbom/f#/c84c630ab3d0de84b306548cc96c4f97d5ef566eaafc5eda5abc8f1804c4931c",
         "relationship_count": 13,
-        "sha256": "6466da5c970f445a08ce331d9d3188f7756da9c3eb4247ee2ca8e796705bb54c",
+        "sha256": "1c062be597f0c800eebe492952dc55c2ab6ea2718732431977b28670852f0688",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "windows-x86_64 clean-consumer native assets",
       "subject": {
-        "bytes": 15789,
+        "bytes": 15793,
         "kind": "file",
         "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg",
-        "sha256": "389b9f2d556d6b0dd7eb1a662a8df89627df351b1e000d50083cc526a7c29796"
+        "sha256": "c84c630ab3d0de84b306548cc96c4f97d5ef566eaafc5eda5abc8f1804c4931c"
       },
       "tier": "Supported",
       "toolchains": [
@@ -1451,7 +1450,7 @@
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "github.com/strling-lang/strling/bindings/go",
       "package_root": "bindings/go",
       "platforms": [
@@ -1460,16 +1459,16 @@
       "provenance": {
         "build_command_sha256": "336577fbb5fbb0c554170c07a4e35421ed89f4fe6ab6124b0f6130508d6d2be3",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "201e9162590f92b6681e1bdfb07fd37205140c9a443bd724e37b00d1aa961db6",
+        "predicate_sha256": "3d63246d27abf0e6249fb13895d45a8d280cf7bc6e0549d5040a52a39ffb87fa",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:6c18b1391ce412a0",
         "subject_sha256": "c85ce4418cdbcc785b71c7db490c03ebe72a137eb1d91cbd7959bfced275beab"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "github-tag:go-vVERSION",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 1,
         "document_namespace": "https://strling.dev/sbom/go/c85ce4418cdbcc785b71c7db490c03ebe72a137eb1d91cbd7959bfced275beab",
@@ -1569,7 +1568,7 @@
       "artifact_id": "release:java",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a"
+        "digest": "2f91f743b404a8e09c68f6e03f5838f2e5e9b30e488e14a11938b5a88f6ab4bd"
       },
       "credential_policy": {
         "mode": "long-lived-secret",
@@ -1587,14 +1586,14 @@
       "external_prerequisites": [
         "Verify existing registry ownership and uploader or trusted publisher configuration",
         "Confirm protected release environment reviewers and approved workflow source",
-        "Confirm Central Publisher Portal user-token credentials and com.strling namespace ownership",
+        "Confirm Central Publisher Portal user-token credentials and io.github.strling-lang namespace ownership",
         "Confirm the owner-approved PGP signing fingerprint and public-key availability"
       ],
       "native_runtime_prerequisites": [
         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
       ],
-      "ownership_status": "externally-pending",
-      "package_name": "com.strling:strling",
+      "ownership_status": "verified",
+      "package_name": "io.github.strling-lang:strling",
       "package_root": "bindings/java",
       "platforms": [
         "windows-x86_64"
@@ -1602,30 +1601,30 @@
       "provenance": {
         "build_command_sha256": "35ffb35982a991c28caeea8fd6ab1ec3ce1385d1ae266ef0309b4c79f52fe5e8",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "abcb498ffad7b3eb4b713f56426215bb01e6e336060d12f0e2f4469b8378404d",
+        "predicate_sha256": "eb05024ad7a9bf67ab43b0e4bfd91bac738a2ddc34f93940d78a6438e0d5309a",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:427289505b714b21",
-        "subject_sha256": "7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a"
+        "subject_sha256": "2f91f743b404a8e09c68f6e03f5838f2e5e9b30e488e14a11938b5a88f6ab4bd"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "maven-central",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "Strling-lang",
       "sbom": {
         "component_count": 8,
-        "document_namespace": "https://strling.dev/sbom/java/7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a",
+        "document_namespace": "https://strling.dev/sbom/java/2f91f743b404a8e09c68f6e03f5838f2e5e9b30e488e14a11938b5a88f6ab4bd",
         "relationship_count": 144,
-        "sha256": "f8cc8e8517a28435bc8872fa99b000e3cf6e835923345a27d2b18386b768c8af",
+        "sha256": "7cfdb17a7c0a48e59709a06ca123c5d87a6a07732170a68779f51dda15660851",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "windows-x86_64 with caller-supplied absolute native path",
       "subject": {
-        "bytes": 309232,
+        "bytes": 309323,
         "kind": "file",
         "name": "strling-release-set:427289505b714b21",
-        "sha256": "7aa51d7e96411f263578795dc3679a2bc7efe1dd8fbfbf9cbf07b965797b310a"
+        "sha256": "2f91f743b404a8e09c68f6e03f5838f2e5e9b30e488e14a11938b5a88f6ab4bd"
       },
       "tier": "Supported",
       "toolchains": [
@@ -1725,17 +1724,17 @@
       "artifact_id": "release:kotlin",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "d6878a1948a600438b2aed7e7bd5f0d08dcddc236a1799e34b643521f2d5886d"
+        "digest": "6a0874d455c2394e83ce1356beee2f9416396b0b8535711d6066316ee9d3ec4e"
       },
       "credential_policy": {
         "mode": "long-lived-secret",
         "publication_authorization": "explicit-non-dry-run",
         "release_environment": "release",
         "secret_names": [
-          "GPG_KEY",
           "GPG_PASSPHRASE",
-          "MAVEN_PASSWORD",
-          "MAVEN_USERNAME"
+          "GPG_PRIVATE_KEY",
+          "SONATYPE_PASSWORD",
+          "SONATYPE_USERNAME"
         ],
         "trusted_publishing": false,
         "untrusted_context_forbidden": true
@@ -1743,14 +1742,14 @@
       "external_prerequisites": [
         "Verify existing registry ownership and uploader or trusted publisher configuration",
         "Confirm protected release environment reviewers and approved workflow source",
-        "Confirm Central Publisher Portal user-token credentials and com.strling namespace ownership",
+        "Confirm Central Publisher Portal user-token credentials and io.github.strling-lang namespace ownership",
         "Confirm the owner-approved PGP signing fingerprint and public-key availability"
       ],
       "native_runtime_prerequisites": [
         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
       ],
-      "ownership_status": "externally-pending",
-      "package_name": "com.strling:strling-kotlin",
+      "ownership_status": "verified",
+      "package_name": "io.github.strling-lang:strling-kotlin",
       "package_root": "bindings/kotlin",
       "platforms": [
         "windows-x86_64"
@@ -1758,30 +1757,30 @@
       "provenance": {
         "build_command_sha256": "d4b01ef3d8ab9bd17ef5c81d2fcb54404d2780a29a542449e8145369a38bc25d",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "c2c912ce27978b8a0bbf66790344d3deeed917694484ff4c255c6507d1155219",
+        "predicate_sha256": "1b1fd46bfad1598d95f942c9e05c9f99abda2bb691c38edfb7436aa54321418d",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:f6353b28d050a50e",
-        "subject_sha256": "d6878a1948a600438b2aed7e7bd5f0d08dcddc236a1799e34b643521f2d5886d"
+        "subject_sha256": "6a0874d455c2394e83ce1356beee2f9416396b0b8535711d6066316ee9d3ec4e"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "maven-central",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "Strling-lang",
       "sbom": {
         "component_count": 38,
-        "document_namespace": "https://strling.dev/sbom/kotlin/d6878a1948a600438b2aed7e7bd5f0d08dcddc236a1799e34b643521f2d5886d",
+        "document_namespace": "https://strling.dev/sbom/kotlin/6a0874d455c2394e83ce1356beee2f9416396b0b8535711d6066316ee9d3ec4e",
         "relationship_count": 65,
-        "sha256": "5ac86cbf414b19988c8eb73264b750cc407d473e563ee003a6929f115af9a662",
+        "sha256": "8cdf760ce5921f9db22c5bfeb578718507ffe8a9b09d7a5793f3f538ae60d218",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "windows-x86_64 with caller-supplied absolute native path",
       "subject": {
-        "bytes": 55575,
+        "bytes": 55616,
         "kind": "file",
         "name": "strling-release-set:f6353b28d050a50e",
-        "sha256": "d6878a1948a600438b2aed7e7bd5f0d08dcddc236a1799e34b643521f2d5886d"
+        "sha256": "6a0874d455c2394e83ce1356beee2f9416396b0b8535711d6066316ee9d3ec4e"
       },
       "tier": "Supported",
       "toolchains": [
@@ -1914,7 +1913,7 @@
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "strling",
       "package_root": "bindings/lua",
       "platforms": [
@@ -1923,16 +1922,16 @@
       "provenance": {
         "build_command_sha256": "a2667a080810ec2a178fee514b7d3220c08f316e542bc803ca151b16a0c3129a",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "977f7a020f937efd970fd3d6b4710d689d6644b2b9c55a4783374b32808c526d",
+        "predicate_sha256": "8b91fd8a0c25c27b2ee05c73c9ba6e116214ffbc4435424b98c44722f1fcde1e",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:5977725b02f1917a",
         "subject_sha256": "570c2b84a13e6a440efd56a774d58d8f7f463f5cb9ff090b52b279b73cfcce91"
       },
       "publication_eligibility": "preview-only-explicit-authorization",
       "registry": "luarocks.org",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 2,
         "document_namespace": "https://strling.dev/sbom/lua/570c2b84a13e6a440efd56a774d58d8f7f463f5cb9ff090b52b279b73cfcce91",
@@ -2004,7 +2003,7 @@
       "artifact_id": "release:perl",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5"
+        "digest": "0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695"
       },
       "credential_policy": {
         "mode": "long-lived-secret",
@@ -2018,13 +2017,14 @@
         "untrusted_context_forbidden": true
       },
       "external_prerequisites": [
-        "Verify existing registry ownership and uploader or trusted publisher configuration",
+        "Authenticated PAUSE uploader STRLING; the 2026-11-14 STRling% permissions query returned no existing namespace registrations. First-come indexing permission is pending the separately authorized first upload.",
+        "Recheck namespace collision before publication and verify actual indexer acceptance afterward; no existing or reserved indexing permission is claimed.",
         "Confirm protected release environment reviewers and approved workflow source"
       ],
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "STRling",
       "package_root": "bindings/perl",
       "platforms": [
@@ -2033,30 +2033,30 @@
       "provenance": {
         "build_command_sha256": "5e7aeeb8b0d6946de05162d1ec72e4e5fc177b34abebb8090991d18c83302d2e",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "ca023bfa699228627adb709ed8c84fc9531b07bd0363c3b3101641b8751ca446",
+        "predicate_sha256": "eb57822b6a1fdea61e6a2d6f9badcf805bc84b0b547d9968a244e70c5c3212e3",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "bindings/perl/STRling-4.0.0.tar.gz",
-        "subject_sha256": "d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5"
+        "subject_sha256": "0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695"
       },
       "publication_eligibility": "preview-only-explicit-authorization",
       "registry": "cpan",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "STRLING",
       "sbom": {
         "component_count": 5,
-        "document_namespace": "https://strling.dev/sbom/perl/d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5",
+        "document_namespace": "https://strling.dev/sbom/perl/0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695",
         "relationship_count": 18,
-        "sha256": "d9d94939aeb8baa302874184a48caa56dc4cc416f1ebd230e9cf416103ffac0b",
+        "sha256": "c06fed884a57dff8300a68bb59d788160cc4f120e44dc744177fdb449e4ab9e2",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "linux-x86_64",
       "subject": {
-        "bytes": 12267,
+        "bytes": 12275,
         "kind": "file",
         "name": "bindings/perl/STRling-4.0.0.tar.gz",
-        "sha256": "d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5"
+        "sha256": "0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695"
       },
       "tier": "Preview",
       "toolchains": [
@@ -2131,7 +2131,7 @@
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "strling/strling",
       "package_root": "bindings/php",
       "platforms": [
@@ -2140,16 +2140,16 @@
       "provenance": {
         "build_command_sha256": "eb625a55ae24e874e945abeae3fd25ef115a7120d3e8d5ba7b89eba88dce1f73",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "2315b7ea405a35fac2e688d2d823e4991fc843f51757a5fc892dc1409018e304",
+        "predicate_sha256": "884caf569650874e163c82583b3e6ef8cb06e975f2a72d9684aff2729999553c",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:ec5916df8bdf4db2",
         "subject_sha256": "29f28806f260a90a29c0c3e687abca0da55864b7b79772ab0f9f3a5dc3e629da"
       },
       "publication_eligibility": "preview-only-explicit-authorization",
       "registry": "github-tag:php-vVERSION",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 27,
         "document_namespace": "https://strling.dev/sbom/php/29f28806f260a90a29c0c3e687abca0da55864b7b79772ab0f9f3a5dc3e629da",
@@ -2179,7 +2179,7 @@
           "scope": "linux-x86_64",
           "status": "passed",
           "toolchain_id": "composer",
-          "version": "Composer plugins have been disabled for safety in this non-interactive session. Set COMPOSER_ALLOW_SUPERUSER=1 if you want to allow plugins to run as root/super user. Do not run Composer as root/super user! See https://getcomposer.org/root for details Composer version 2.7.1 2024-02-09 15:26:28"
+          "version": "Composer version 2.7.1 2024-02-09 15:26:28"
         },
         {
           "artifact_id": "release:php",
@@ -2221,7 +2221,7 @@
       "artifact_id": "release:python",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "211934c55d78b9f96635868e674060c20eca2e309cadcbee3e73a12496a5ae9d"
+        "digest": "faba0275945819c3c01d7b0d116c03093feb00abd477ec62fb3487d92c1fbc7e"
       },
       "credential_policy": {
         "mode": "oidc",
@@ -2239,7 +2239,7 @@
         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)",
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "STRling",
       "package_root": "bindings/python",
       "platforms": [
@@ -2249,30 +2249,30 @@
       "provenance": {
         "build_command_sha256": "65b51b7a5f7844d4d18f184ff94aede7118a8ed86d32975c32afbb60378cce4b",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "b403f7c5278f7b59a43339b04840b53ad8ef111fd0dc8704d37711ee58eae391",
+        "predicate_sha256": "85a777246baea1787c0afbb6f44d91c59859f0cbb5549815a107cf74818f2a9b",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:49793f92e8b729d7",
-        "subject_sha256": "211934c55d78b9f96635868e674060c20eca2e309cadcbee3e73a12496a5ae9d"
+        "subject_sha256": "faba0275945819c3c01d7b0d116c03093feb00abd477ec62fb3487d92c1fbc7e"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "pypi.org",
-      "registry_owner": "strling-lang PyPI organization",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 32,
-        "document_namespace": "https://strling.dev/sbom/python/211934c55d78b9f96635868e674060c20eca2e309cadcbee3e73a12496a5ae9d",
+        "document_namespace": "https://strling.dev/sbom/python/faba0275945819c3c01d7b0d116c03093feb00abd477ec62fb3487d92c1fbc7e",
         "relationship_count": 187,
-        "sha256": "fa3f13a8a6f7e9238413f5bfae500b2b0f5146bf96dbc1cb8611e7b977a56cda",
+        "sha256": "b19a80df9951f2325103d421a6618554cf78466cf940b6d373ad50602acf8eb7",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "windows-x86_64 and linux-x86_64 with CPython 3.12 evidence",
       "subject": {
-        "bytes": 4767495,
+        "bytes": 4767613,
         "kind": "file",
         "name": "strling-release-set:49793f92e8b729d7",
-        "sha256": "211934c55d78b9f96635868e674060c20eca2e309cadcbee3e73a12496a5ae9d"
+        "sha256": "faba0275945819c3c01d7b0d116c03093feb00abd477ec62fb3487d92c1fbc7e"
       },
       "tier": "Supported",
       "toolchains": [
@@ -2389,7 +2389,7 @@
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "strling",
       "package_root": "bindings/r",
       "platforms": [
@@ -2398,16 +2398,16 @@
       "provenance": {
         "build_command_sha256": "095b5d4b973f247ece20f286b8c50aa06c57fceaa3e7f068a2676cda2c440337",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "138b47e1a47d1ccc707141460ec4e561fa23022d262c957561f70017177a5230",
+        "predicate_sha256": "23203a2b69c32cecea6eae840f4f27850c767a158ffeb7146111943ae4f8fd7c",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:e3155c2310af4716",
         "subject_sha256": "6bcb529188266cf8dea147e530a21117905584383d0de452b8277e6b196319b4"
       },
       "publication_eligibility": "preview-only-explicit-authorization",
       "registry": "github-tag:r-vVERSION",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 25,
         "document_namespace": "https://strling.dev/sbom/r/6bcb529188266cf8dea147e530a21117905584383d0de452b8277e6b196319b4",
@@ -2465,7 +2465,7 @@
       "artifact_id": "release:ruby",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "d47970503f7e1e66a5c4659111ce86a415abf1824b5362bad23d06d476a733bf"
+        "digest": "2f58a0416e1ce1942615e5977b6a989790823b7639bff86e8eb8361d31d56b92"
       },
       "credential_policy": {
         "mode": "oidc",
@@ -2482,7 +2482,7 @@
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "strling",
       "package_root": "bindings/ruby",
       "platforms": [
@@ -2491,21 +2491,21 @@
       "provenance": {
         "build_command_sha256": "893aac61ad4cf824673b458e7b2fde241f1a9c8cb18e7fc0c492094b4615742e",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "f98c355131f6ddc7a444fc06ecfcfc98b18688ad338f17e7898d6d640416684c",
+        "predicate_sha256": "a778873a4e9e31e8925fb8cfd761b1a893a31aa120b9b81be4c921e564e7c346",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "bindings/ruby/strling-4.0.0.gem",
-        "subject_sha256": "d47970503f7e1e66a5c4659111ce86a415abf1824b5362bad23d06d476a733bf"
+        "subject_sha256": "2f58a0416e1ce1942615e5977b6a989790823b7639bff86e8eb8361d31d56b92"
       },
       "publication_eligibility": "preview-only-explicit-authorization",
       "registry": "rubygems.org",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "TheCyberLocal",
       "sbom": {
         "component_count": 10,
-        "document_namespace": "https://strling.dev/sbom/ruby/d47970503f7e1e66a5c4659111ce86a415abf1824b5362bad23d06d476a733bf",
+        "document_namespace": "https://strling.dev/sbom/ruby/2f58a0416e1ce1942615e5977b6a989790823b7639bff86e8eb8361d31d56b92",
         "relationship_count": 19,
-        "sha256": "9bbbdf11206e3302f19347c0f0c28b83eb84a55a6e289b4572add74633e34177",
+        "sha256": "1d62200a7a14ccee6d7774f974c4a6075cfa884f93efffcd8c805dfcdd0a41c6",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
@@ -2514,7 +2514,7 @@
         "bytes": 13312,
         "kind": "file",
         "name": "bindings/ruby/strling-4.0.0.gem",
-        "sha256": "d47970503f7e1e66a5c4659111ce86a415abf1824b5362bad23d06d476a733bf"
+        "sha256": "2f58a0416e1ce1942615e5977b6a989790823b7639bff86e8eb8361d31d56b92"
       },
       "tier": "Preview",
       "toolchains": [
@@ -2572,7 +2572,7 @@
       "artifact_id": "release:rust",
       "checksum": {
         "algorithm": "sha256",
-        "digest": "361b0d1ab282c12c410cafc93579fe56fe226cc1c60a39d8b815d3fbc22e5a2c"
+        "digest": "6bc99a4a447bca2d866a2859e495058d75e505ab6d78d164e0363aba1082164d"
       },
       "credential_policy": {
         "mode": "oidc",
@@ -2587,7 +2587,7 @@
         "Confirm protected release environment reviewers and approved workflow source"
       ],
       "native_runtime_prerequisites": [],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "strling",
       "package_root": ".",
       "platforms": [
@@ -2597,30 +2597,30 @@
       "provenance": {
         "build_command_sha256": "ce8b0db4d06cc7c1a8f6dc9b1ca0b4a645c50586f884f35b519c2e5fee9d9e4f",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "9506f33e80008cd9822bdae805b919b8727c25164f2006e31ab43067c98144bd",
+        "predicate_sha256": "969e906a9e81d32bc9ac12e0888a9f47f6ad9ac11d4b5238338d7089ee96a461",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "target/package/strling-4.0.0.crate",
-        "subject_sha256": "361b0d1ab282c12c410cafc93579fe56fe226cc1c60a39d8b815d3fbc22e5a2c"
+        "subject_sha256": "6bc99a4a447bca2d866a2859e495058d75e505ab6d78d164e0363aba1082164d"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "crates.io",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "github:strling-lang:release-managers",
       "sbom": {
         "component_count": 22,
-        "document_namespace": "https://strling.dev/sbom/rust/361b0d1ab282c12c410cafc93579fe56fe226cc1c60a39d8b815d3fbc22e5a2c",
+        "document_namespace": "https://strling.dev/sbom/rust/6bc99a4a447bca2d866a2859e495058d75e505ab6d78d164e0363aba1082164d",
         "relationship_count": 95,
-        "sha256": "77b9b3930efd5a1af16f56514c10d80784d34e758d646ac5bcbb87ff3381356f",
+        "sha256": "a9864cf46c286186965ddc37ab7504046bc8c5695ebf4db6a2b8f13ec4296711",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
       "scope": "windows-x86_64 and linux-x86_64 reference kernel/facade",
       "subject": {
-        "bytes": 295960,
+        "bytes": 295923,
         "kind": "file",
         "name": "target/package/strling-4.0.0.crate",
-        "sha256": "361b0d1ab282c12c410cafc93579fe56fe226cc1c60a39d8b815d3fbc22e5a2c"
+        "sha256": "6bc99a4a447bca2d866a2859e495058d75e505ab6d78d164e0363aba1082164d"
       },
       "tier": "Supported",
       "toolchains": [
@@ -2737,7 +2737,7 @@
       "native_runtime_prerequisites": [
         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
       ],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "STRling",
       "package_root": "bindings/swift",
       "platforms": [
@@ -2746,16 +2746,16 @@
       "provenance": {
         "build_command_sha256": "68f13184e6b154e9b5793b919174ee71c0f5fc4b4747debb1ef42faf1a990314",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "2c7668ab6b2854a5ef0507a3018cecf6b827a83a4b62b6cfa7f0f24751350604",
+        "predicate_sha256": "cfe18b82ed08571bad70a5fff0a98b507ca9b99bf18abe58f5dcfadfdffbbcc9",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "strling-release-set:2c1a8ef15dc98081",
         "subject_sha256": "260dfb66966dc4a96f19c397a273c73327bebb8787ffc4cc112e6b45c78fd4e9"
       },
       "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
       "registry": "github-tag:swift-vVERSION",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "strling-lang",
       "sbom": {
         "component_count": 1,
         "document_namespace": "https://strling.dev/sbom/swift/260dfb66966dc4a96f19c397a273c73327bebb8787ffc4cc112e6b45c78fd4e9",
@@ -2870,28 +2870,28 @@
         "Confirm protected release environment reviewers and approved workflow source"
       ],
       "native_runtime_prerequisites": [],
-      "ownership_status": "externally-pending",
+      "ownership_status": "verified",
       "package_name": "@strling-lang/strling",
       "package_root": "bindings/typescript",
       "platforms": [],
       "provenance": {
         "build_command_sha256": "a2079a211095215775c9934c70a35dcfd5dd6cec71c8c3fddf52f8797e72a2a8",
         "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-        "predicate_sha256": "641a6d91a95193eb6184854549bbc6a385464a1299320847d821f785ca6b2b0b",
+        "predicate_sha256": "f42d0deb3900bea22ec44391c8c807987d1752458184315d34cec7c4def473f0",
         "predicate_type": "https://slsa.dev/provenance/v1",
-        "source_commit": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+        "source_commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
         "statement_type": "https://in-toto.io/Statement/v1",
         "subject_name": "bindings/typescript/strling-lang-strling-4.0.0.tgz",
         "subject_sha256": "5789d1d3e9117d9f7b5316a95273958459b9335afdb7cb55af4a6c510150fd6b"
       },
       "publication_eligibility": "preview-only-explicit-authorization",
       "registry": "npmjs.org",
-      "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+      "registry_owner": "thecyberlocal",
       "sbom": {
         "component_count": 356,
         "document_namespace": "https://strling.dev/sbom/typescript/5789d1d3e9117d9f7b5316a95273958459b9335afdb7cb55af4a6c510150fd6b",
         "relationship_count": 388,
-        "sha256": "85d12f59de48ac47234ddb8638c7324aaaa442b0c88c65f5df54d1b250390d1d",
+        "sha256": "594ac8182f87bccc679bbe22e570d71a30fa9497beae90e39c7ac78cbd70c65c",
         "spdx_version": "SPDX-2.3",
         "unresolved_components": 0
       },
@@ -2992,21 +2992,21 @@
       "docs/benchmark-report.md": "96d9c85cf704227180c7227d1d47ccbc2af8b1dac30de0f59a8307f7f7fec125",
       "docs/getting-started.md": "c5dd7065c4242710c6729a8610f29cc56eee57c8c746ea17c245110ccf9be8b6",
       "docs/migration-guide.md": "5889c75c4f6d28d78a3f2c9195a3218f08b0102fe7fda4ac17f04a7e99698922",
-      "docs/support-matrix.md": "0b5ec236d3381a23a745974761fa5f6e32b760a2a7d49cd7195cc977e845aaf1",
-      "tests/documentation/1.0/manifest.json": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e"
+      "docs/support-matrix.md": "d6065175d42824450e2bfc494fc2ab925113c6a20220db5accda36be442d30ea",
+      "tests/documentation/1.0/manifest.json": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168"
     }
   },
   "future_publication_prerequisites": [
     "Exact owner authorization naming channel, version, source, artifact subjects, destinations and run.",
-    "Approved existing registry owners, Conan endpoint, protected environment reviewers and trusted publishers or credentials.",
+    "Approved existing registry owners, protected environment reviewers and trusted publishers or credentials.",
     "Reconcile all registry/tag histories and immutable coordinate availability immediately before publication.",
     "Use the certified bytes without rebuilding; any coordinate projection requires its exact governed certification.",
     "A published terminal RC and its stable promotion must use the same source and fresh required stable certification.",
     "After publication execute the qualified independent public verifier against actual authorized coordinates; preserve partial-publication failures."
   ],
-  "handoff_fingerprint": "3c89997160e152111e229373cec0189ff217191b49706262a04acd13a283f696",
+  "handoff_fingerprint": "1c27795d1036e11464ddaf3ecd6be9b8e1615fb544d575975fa4f3ca38d2e79e",
   "lifecycle": "certified",
-  "manifest_fingerprint": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+  "manifest_fingerprint": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
   "product_authority": "governance/release-policy.json#/product/version",
   "product_version": "4.0.0",
   "provisional_public_rc": {
@@ -3018,20 +3018,193 @@
   },
   "public_release_verified": false,
   "public_verification_inputs": {
+    "all_registered_routes_verified": false,
+    "applicable_obligations": 232,
     "contract": "strling-public-distribution-v1",
-    "packaging_verifier_sha": "642cc21f8f5d5ccabde1bb893076e02c624247a7",
+    "deferred_obligations": [
+      {
+        "artifact_id": "release:cpp",
+        "check": "coordinate",
+        "id": "release:cpp:coordinate",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "metadata",
+        "id": "release:cpp:metadata",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "artifact",
+        "id": "release:cpp:artifact",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "source",
+        "id": "release:cpp:source",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "sbom",
+        "id": "release:cpp:sbom",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "provenance",
+        "id": "release:cpp:provenance",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "documentation",
+        "id": "release:cpp:documentation",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "scope",
+        "id": "release:cpp:scope",
+        "platform": null,
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "installation",
+        "id": "release:cpp:windows-x86_64:installation",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "public-api",
+        "id": "release:cpp:windows-x86_64:public-api",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "product-version",
+        "id": "release:cpp:windows-x86_64:product-version",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "canonical-compiler",
+        "id": "release:cpp:windows-x86_64:canonical-compiler",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "native-wasm",
+        "id": "release:cpp:windows-x86_64:native-wasm",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "target-compatibility",
+        "id": "release:cpp:windows-x86_64:target-compatibility",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "kernel-rejection",
+        "id": "release:cpp:windows-x86_64:kernel-rejection",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "isolation",
+        "id": "release:cpp:windows-x86_64:isolation",
+        "platform": "windows-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "installation",
+        "id": "release:cpp:linux-x86_64:installation",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "public-api",
+        "id": "release:cpp:linux-x86_64:public-api",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "product-version",
+        "id": "release:cpp:linux-x86_64:product-version",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "canonical-compiler",
+        "id": "release:cpp:linux-x86_64:canonical-compiler",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "native-wasm",
+        "id": "release:cpp:linux-x86_64:native-wasm",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "target-compatibility",
+        "id": "release:cpp:linux-x86_64:target-compatibility",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "kernel-rejection",
+        "id": "release:cpp:linux-x86_64:kernel-rejection",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      },
+      {
+        "artifact_id": "release:cpp",
+        "check": "isolation",
+        "id": "release:cpp:linux-x86_64:isolation",
+        "platform": "linux-x86_64",
+        "tier": "Supported"
+      }
+    ],
+    "packaging_verifier_sha": "c653d82504bf28f4d18bc0f80c9426912a2fb3e7",
     "product_version": "4.0.0",
     "public_registry_results_available": false,
     "publication_request_requires_exact_owner_destinations": true,
-    "qualified_consumer_harness_sha": "f8ef1a62be536981927e36a19587f96edb69f911",
-    "qualified_protocol_verifier_sha": "f8ef1a62be536981927e36a19587f96edb69f911",
-    "source_sha": "ea64d59467ef73a90e57bc23412daf78539bf69f"
+    "qualified_consumer_harness_sha": "c653d82504bf28f4d18bc0f80c9426912a2fb3e7",
+    "qualified_protocol_verifier_sha": "c653d82504bf28f4d18bc0f80c9426912a2fb3e7",
+    "registered_obligations": 256,
+    "source_sha": "8a0c1ca31484b537bcff596922182bb66ab1e392"
   },
   "publication_authorized": false,
   "registry_mutation_authorized": false,
   "release_channel_proposal": "release-candidate",
   "schema_version": "1.0.0",
-  "source_sha": "ea64d59467ef73a90e57bc23412daf78539bf69f",
+  "source_sha": "8a0c1ca31484b537bcff596922182bb66ab1e392",
   "stable_promotion": {
     "change_rule": "Any source change, governed input change, dependency/lock change, generated-output change, artifact-content change beyond approved coordinate metadata, or waiver change requires a new monotonically numbered RC and fresh required certification.",
     "evidence_binding": "No evidence may be transferred between candidates unless the governing producer explicitly authenticates identical inputs and policy permits reuse; Release remains no-reuse where registered.",

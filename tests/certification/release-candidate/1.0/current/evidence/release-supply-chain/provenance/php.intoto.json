@@ -24,24 +24,24 @@
                     "native_runtime_prerequisites": [
                         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
                     ],
-                    "ownership_status": "externally-pending",
+                    "ownership_status": "verified",
                     "platforms": [
                         "linux-x86_64"
                     ],
                     "publication_eligibility": "preview-only-explicit-authorization",
-                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "registry_owner": "strling-lang",
                     "scope": "linux-x86_64 with caller-owned native payload discovery",
                     "support_claim": "binding:php",
                     "tier": "Preview"
                 }
             },
             "internalParameters": {
-                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
                 "toolchains": [
                     {
                         "executable_sha256": "5cf51f9912671912136317d889df7a5b8219f2a77f2b311b9a100989106847e2",
                         "id": "release:php:linux-x86_64:composer",
-                        "version": "Composer plugins have been disabled for safety in this non-interactive session. Set COMPOSER_ALLOW_SUPERUSER=1 if you want to allow plugins to run as root/super user. Do not run Composer as root/super user! See https://getcomposer.org/root for details Composer version 2.7.1 2024-02-09 15:26:28"
+                        "version": "Composer version 2.7.1 2024-02-09 15:26:28"
                     },
                     {
                         "executable_sha256": "7f1ac2fe89d267364311651c0e7e6651d32ea006c9a701c0cab68eb2394a67d7",
@@ -58,9 +58,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "ea64d59467ef73a90e57bc23412daf78539bf69f"
+                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@ea64d59467ef73a90e57bc23412daf78539bf69f"
+                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
                 },
                 {
                     "digest": {
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "ea64d59467ef73a90e57bc23412daf78539bf69f:release:php",
+                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:php",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }

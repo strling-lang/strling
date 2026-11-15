@@ -9,7 +9,7 @@
     "product_version": "4.0.0",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "78efeaccd0cf1f3ecd703c74c04e55b36af60483deff7bd79defcc681347474f",
+    "retrieval_files_sha256": "4d2292508a3bd624797ffdfaa36af6662ab1e357ac41ddb3c4dbf22345b5604f",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -22,7 +22,7 @@
       "target_pattern": "abc",
       "kernel_mismatch_rejected": true,
       "native_sha256": "a1495b749097c20758cb8048e0b29b37f8a5419e6d6a2f04603286881ad4cf98",
-      "documentation_manifest_sha256": "e86aeaf0f87e93e1d9d7987683bf563f4838981559094d18adade3047d610d7e",
+      "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
       "documentation_examples": []
     },
     "environment_keys": [
@@ -150,7 +150,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "60544a94393c491f1a450ec71bba8cdfe0a7163f5cc92292f0ef7da23639c010"
+    "receipt_fingerprint": "8d1c4cc3d041be813bbd82acf5518299cf32b26c13931139b1284ffbe0ab16eb"
   },
-  "elapsed_seconds": 249.73499999986961
+  "elapsed_seconds": 160.0779999999795
 }

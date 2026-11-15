@@ -1,3 +1,21 @@
+# Publication-preparation successor certification
+
+Status: **SOURCE CERTIFICATION PASSED — HOSTED ACCEPTANCE PENDING**.
+
+Successor source 8a0c1ca31484b537bcff596922182bb66ab1e392; candidate root d27a91282731ba7ddc1bd5f5c315e70cd87c116d09ab9daabbe8e55ae46dd433; package root d18509d0933489b16c9c832223297fd287b9169b930bf025a821b794a5a2f479; immutable reader c653d82504bf28f4d18bc0f80c9426912a2fb3e7. Local 38/38 and PR 80/80; Full and fresh no-reuse Release each 124 passed plus the exact WVR-SEC-VSCE-LICENSE-001 /125, renewed by the owner through 2026-12-13 inclusive UTC. All 42 fresh receipts and 21 independent pairs, 17 routes, 15 Supported consumer scopes, six bounded Preview producers and 256 engineering obligations are source-bound. Initial publication scope is 232 obligations at 16 destinations; 24 ConanCenter obligations are explicitly owner-deferred, with direct C++ Supported builds retained. Independent reconstruction, original-authority signatures and local immutable verification passed; hosted acceptance is pending. Historical ea64d594/da4539f5 and all closed certificates retain their original source identities. No publication authorization or public verification is claimed.
+
+The revised source reconciles the `io.github.strling-lang` Java/Kotlin/shared-JVM coordinates, the owner-approved direct C++ distribution and deferred ConanCenter scope, the governed VSCE renewal and the dedicated primary-key Maven signing policy. The separately qualified C653 reader is retained unchanged. One subsequent operational assembly attempt placed a Preview diagnostic index in the byte-archive role; the immutable reader rejected it before candidate signing. The corrected selector retains the exact index under its own role and every encoded original archive under the existing archive role. Eight focused positive/adversarial cases and a fresh complete independent reconstruction passed. Original failing evidence is retained; no product source, producer bytes or trust requirement was changed for that correction.
+
+Certified product source and the eventual evidence-only closure are distinct Git identities. This successor changes no product bytes after freeze. The existing primary Maven key is `FC743D45327F6528D9AF26108BBC359CDE8F7505`; its public certificate is distributed and Java/Kotlin signing is locally qualified. Paper recovery custody is confirmed; physical transfer of the encrypted off-device copy remains owner action. Maven token scope remains as directed by the owner.
+
+Independent public retrieval has not occurred. `4.0.0-rc.1` remains a provisional diagnostic coordinate, not a reserved or authorized prerelease. Registry readiness, protected artifact export, exact publication authorization, and actual post-publication verification remain separate gates. LuaRocks credential renewal and numeric uploader verification, authenticated NuGet credential metadata, and any protected manual approvals remain owner-dependent.
+
+The signed evidence root is `d27a91282731ba7ddc1bd5f5c315e70cd87c116d09ab9daabbe8e55ae46dd433`; detached certification signature SHA-256 is `dc54ea7607c595eea728983bcb4f8e6c30fdc0adf3dbf928cdec9eee4d2a6383`. The nested package root is `d18509d0933489b16c9c832223297fd287b9169b930bf025a821b794a5a2f479`. The original certifier is `strling-local-release-certifier-2026-01` with SSH fingerprint `SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA`. The generated handoff contains the exact artifact, checksum, SBOM, provenance, profile and trust identities.
+
+## Preserved historical candidate closure
+
+The following report describes the previously accepted `ea64d594` candidate only. Its results are historical evidence, not results transferred to this successor.
+
 # Final product candidate preparation and clean-room certification
 
 Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.

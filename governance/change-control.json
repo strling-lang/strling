@@ -1,9 +1,10 @@
 {
-    "configuration_version": 1,
-    "active_task": "docs/migration/records/official-publication.yaml",
-    "generated_artifact_registry": "governance/generated-artifacts.json",
-    "public_surface_registry": "governance/public-surfaces.json",
+    "active_task": "docs/migration/records/final-release-candidate.yaml",
     "architecture_rule_registry": "governance/architecture-rules.json",
+    "configuration_version": 1,
+    "documentation_paths": ["**/*.md", "docs/**"],
+    "generated_artifact_registry": "governance/generated-artifacts.json",
+    "internal_implementation_paths": ["tooling/**", "strling", "strling.ps1"],
     "path_evidence": [
         {
             "classification": "semantic_change",
@@ -74,6 +75,5 @@
             ]
         }
     ],
-    "documentation_paths": ["**/*.md", "docs/**"],
-    "internal_implementation_paths": ["tooling/**", "strling", "strling.ps1"]
+    "public_surface_registry": "governance/public-surfaces.json"
 }

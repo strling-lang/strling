@@ -19,7 +19,7 @@
       "url": "https://evidence.example.test/bindings/php/README.md"
     },
     "provenance": {
-      "sha256": "2168c5412eb1b2013e8e1c3ceb1b3f57331b900463be47c55d219ff7e01fffe5",
+      "sha256": "0a8ac5907bd61339ba1cb041b905704fe148f076b616bb02c113131044dd58a4",
       "url": "https://evidence.example.test/release-php.intoto.json"
     },
     "sbom": {
@@ -28,7 +28,7 @@
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 60.419849464989966,
+  "elapsed_seconds": 41.08149932802189,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:php:coordinate",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:php:metadata",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:php:artifact",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:php:source",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:php:sbom",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:php:provenance",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:php:documentation",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:php:scope",
       "platform": null,
-      "retrieval_sha256": "3dca57e33d7662a070c1af75435f0fdde6ffb22e524e9540cb670a296f41f649",
+      "retrieval_sha256": "69c5e4a8742c87db431d21dc599eeccb080d8d3c3bcfba0c49d04edd662f4a2c",
       "status": "READY",
       "tier": "Preview"
     }
@@ -576,20 +576,20 @@
     {
       "authority": "synthetic",
       "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.0",
-      "sha256": "228d75d6b125b857693893a00287d9e81d1fdf7ef82c3011a5e063d7825c14b6",
+      "sha256": "0e77670da1ef634bfda0db3f824a745ab39526e18354f749485ec5d23fce60f8",
       "size": 106
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/ea64d59467ef73a90e57bc23412daf78539bf69f",
-      "sha256": "d9329fde22679bd7982d2ecc572fd3c47a926f5aa20d11745ae09cf654d3951f",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/8a0c1ca31484b537bcff596922182bb66ab1e392",
+      "sha256": "b59a41bc45cec289975df1fa7893ed97d1380bdea00b887dc9b645c5a54924a6",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/ea64d59467ef73a90e57bc23412daf78539bf69f",
-      "sha256": "0f532bfbe2579df02a685055d100f3bb2fbcd0564101651bafa254944db69194",
-      "size": 727295
+      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/8a0c1ca31484b537bcff596922182bb66ab1e392",
+      "sha256": "b6a7fc480113b9f567bea0de9059cdbd1c8c63aa203c59254fff76a601c35141",
+      "size": 727277
     },
     {
       "authority": "synthetic",
@@ -600,8 +600,8 @@
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-php.intoto.json",
-      "sha256": "2168c5412eb1b2013e8e1c3ceb1b3f57331b900463be47c55d219ff7e01fffe5",
-      "size": 6482
+      "sha256": "0a8ac5907bd61339ba1cb041b905704fe148f076b616bb02c113131044dd58a4",
+      "size": 6154
     },
     {
       "authority": "synthetic",

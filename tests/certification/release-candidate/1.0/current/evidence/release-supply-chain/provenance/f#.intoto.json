@@ -23,19 +23,19 @@
                     "native_runtime_prerequisites": [
                         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
                     ],
-                    "ownership_status": "externally-pending",
+                    "ownership_status": "verified",
                     "platforms": [
                         "windows-x86_64"
                     ],
                     "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
-                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "registry_owner": "strling-lang",
                     "scope": "windows-x86_64 clean-consumer native assets",
                     "support_claim": "binding:fsharp",
                     "tier": "Supported"
                 }
             },
             "internalParameters": {
-                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
                 "toolchains": [
                     {
                         "executable_sha256": "7f2357adb9b7dca9f7b6e9eb9a0e0a0b4e7e516c19f34d3a348b298701692c80",
@@ -67,9 +67,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "ea64d59467ef73a90e57bc23412daf78539bf69f"
+                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@ea64d59467ef73a90e57bc23412daf78539bf69f"
+                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
                 },
                 {
                     "digest": {
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "ea64d59467ef73a90e57bc23412daf78539bf69f:release:fsharp",
+                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:fsharp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -94,7 +94,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "389b9f2d556d6b0dd7eb1a662a8df89627df351b1e000d50083cc526a7c29796"
+                "sha256": "c84c630ab3d0de84b306548cc96c4f97d5ef566eaafc5eda5abc8f1804c4931c"
             },
             "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg"
         }

@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "mvn dependency:get -Dartifact=com.strling:strling-kotlin:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2",
+            "command": "mvn dependency:get -Dartifact=io.github.strling-lang:strling-kotlin:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "aa56fb29f6fb562313caf91247ecf4004153bb7be38c0353fce9e30e26a69839",
+      "sha256": "d5ee787c2d2452223427a97aea62609f2f3f40c5280fab148025e855711e7a00",
       "source_path": "bindings/kotlin/README.md",
       "url": "https://evidence.example.test/bindings/kotlin/README.md"
     },
     "provenance": {
-      "sha256": "d65535ab06acc12f91efd61d29ad03ff2c9d02e41a36b30d24b808beec6c8592",
+      "sha256": "4f944042a1ac9c0996731928e5c1b4cd7e7b04fd63a2c6f70dca2d7f90d8c051",
       "url": "https://evidence.example.test/release-kotlin.intoto.json"
     },
     "sbom": {
-      "sha256": "5cc07ef97ea356eb969063f68f50d93ba53479cc978c29df9381a92b5c39a9f7",
+      "sha256": "c5161112abe793c9aa09ba500a5ccbaaeb6f65ffe91c3e077818c50ac4ac682a",
       "url": "https://evidence.example.test/release-kotlin.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.542806562007172,
+  "elapsed_seconds": 0.7576525670010597,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:kotlin:coordinate",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:kotlin:metadata",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:kotlin:artifact",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:kotlin:source",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:kotlin:sbom",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:kotlin:provenance",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:kotlin:documentation",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:kotlin:scope",
       "platform": null,
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:kotlin:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:kotlin:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:kotlin:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:kotlin:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:kotlin:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:kotlin:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:kotlin:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,60 +190,60 @@
       "check": "isolation",
       "id": "release:kotlin:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "89e422e77ec2761fafec9d040ac2d9c85a3b0989a771ddb690ed421683b6c420",
+      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
       "status": "VERIFYING",
       "tier": "Supported"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/kotlin/build/libs/strling-kotlin-4.0.0-javadoc.jar": "aa66dd6a52d4ccb9f5916ee89cd1e2dc1671121d3d625b9a145ea89a3eb4d1e6",
+    "bindings/kotlin/build/libs/strling-kotlin-4.0.0-javadoc.jar": "0a703b02e78f1c94d7c967067c645d0e3cc748588c9af11527f14a037805c955",
     "bindings/kotlin/build/libs/strling-kotlin-4.0.0-sources.jar": "429a1600f5efc195dc16612a5c884f772120f2bd620c4da4052a674cf0cf14e9",
     "bindings/kotlin/build/libs/strling-kotlin-4.0.0.jar": "70f08e1843eb1cb5ccaddeda478d3fcb856169fd61a1d6062511daa9da8b6cfa",
-    "bindings/kotlin/build/publications/maven/pom-default.xml": "b0d3b12cc8b4768faaee797ce8330a66d5865ea20f7aac1c1e45d50e13974b65"
+    "bindings/kotlin/build/publications/maven/pom-default.xml": "b8e512ab6c55dc8bdee4cefcf8cedc73e972c490beb25a25c63989889b317477"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/com/strling/strling-kotlin/4.0.0/strling-kotlin-4.0.0-javadoc.jar",
-      "sha256": "aa66dd6a52d4ccb9f5916ee89cd1e2dc1671121d3d625b9a145ea89a3eb4d1e6",
-      "size": 7979
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.0/strling-kotlin-4.0.0-javadoc.jar",
+      "sha256": "0a703b02e78f1c94d7c967067c645d0e3cc748588c9af11527f14a037805c955",
+      "size": 7998
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/com/strling/strling-kotlin/4.0.0/strling-kotlin-4.0.0-sources.jar",
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.0/strling-kotlin-4.0.0-sources.jar",
       "sha256": "429a1600f5efc195dc16612a5c884f772120f2bd620c4da4052a674cf0cf14e9",
       "size": 9257
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/com/strling/strling-kotlin/4.0.0/strling-kotlin-4.0.0.jar",
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.0/strling-kotlin-4.0.0.jar",
       "sha256": "70f08e1843eb1cb5ccaddeda478d3fcb856169fd61a1d6062511daa9da8b6cfa",
       "size": 36413
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/com/strling/strling-kotlin/4.0.0/strling-kotlin-4.0.0.pom",
-      "sha256": "b0d3b12cc8b4768faaee797ce8330a66d5865ea20f7aac1c1e45d50e13974b65",
-      "size": 1926
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.0/strling-kotlin-4.0.0.pom",
+      "sha256": "b8e512ab6c55dc8bdee4cefcf8cedc73e972c490beb25a25c63989889b317477",
+      "size": 1948
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-kotlin.spdx.json",
-      "sha256": "5cc07ef97ea356eb969063f68f50d93ba53479cc978c29df9381a92b5c39a9f7",
-      "size": 89053
+      "sha256": "c5161112abe793c9aa09ba500a5ccbaaeb6f65ffe91c3e077818c50ac4ac682a",
+      "size": 89097
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-kotlin.intoto.json",
-      "sha256": "d65535ab06acc12f91efd61d29ad03ff2c9d02e41a36b30d24b808beec6c8592",
-      "size": 7643
+      "sha256": "4f944042a1ac9c0996731928e5c1b4cd7e7b04fd63a2c6f70dca2d7f90d8c051",
+      "size": 7578
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/kotlin/README.md",
-      "sha256": "aa56fb29f6fb562313caf91247ecf4004153bb7be38c0353fce9e30e26a69839",
-      "size": 3802
+      "sha256": "d5ee787c2d2452223427a97aea62609f2f3f40c5280fab148025e855711e7a00",
+      "size": 3835
     }
   ]
 }

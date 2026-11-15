@@ -17,26 +17,27 @@
                 "registry": "cpan",
                 "support": {
                     "external_prerequisites": [
-                        "Verify existing registry ownership and uploader or trusted publisher configuration",
+                        "Authenticated PAUSE uploader STRLING; the 2026-11-14 STRling% permissions query returned no existing namespace registrations. First-come indexing permission is pending the separately authorized first upload.",
+                        "Recheck namespace collision before publication and verify actual indexer acceptance afterward; no existing or reserved indexing permission is claimed.",
                         "Confirm protected release environment reviewers and approved workflow source"
                     ],
                     "installation": "Governed registry artifact or source-tag route",
                     "native_runtime_prerequisites": [
                         "Linux x86_64 GNU environment: glibc loader, libc.so.6 and libgcc_s.so.1; observed builds and consumers run on Ubuntu 24.04 with glibc 2.39; no musl or additional distribution certification is claimed"
                     ],
-                    "ownership_status": "externally-pending",
+                    "ownership_status": "verified",
                     "platforms": [
                         "linux-x86_64"
                     ],
                     "publication_eligibility": "preview-only-explicit-authorization",
-                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "registry_owner": "STRLING",
                     "scope": "linux-x86_64",
                     "support_claim": "binding:perl",
                     "tier": "Preview"
                 }
             },
             "internalParameters": {
-                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
                 "toolchains": [
                     {
                         "executable_sha256": "d78b8f1d099fbcfb6f2f49ab87223b9b68fb3956642f92d6ec6de812e8afa965",
@@ -58,9 +59,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "ea64d59467ef73a90e57bc23412daf78539bf69f"
+                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@ea64d59467ef73a90e57bc23412daf78539bf69f"
+                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
                 },
                 {
                     "digest": {
@@ -76,7 +77,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "ea64d59467ef73a90e57bc23412daf78539bf69f:release:perl",
+                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:perl",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -85,7 +86,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "d41fbdb3358079b51fc9321ac248c0929f0444c8656efee23ce261804ba425e5"
+                "sha256": "0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695"
             },
             "name": "bindings/perl/STRling-4.0.0.tar.gz"
         }

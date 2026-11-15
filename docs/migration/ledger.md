@@ -10102,3 +10102,7 @@ obligations; all 256 implementation obligations retained) and prepare exact-byte
 hosted export without rebuilding or publishing. They require their own reader
 qualification, promotion and fresh product evidence. No private staging asset,
 release tag or public package has been created.
+
+## Publication-preparation successor — source certification accepted
+
+Successor source 8a0c1ca31484b537bcff596922182bb66ab1e392; candidate root d27a91282731ba7ddc1bd5f5c315e70cd87c116d09ab9daabbe8e55ae46dd433; package root d18509d0933489b16c9c832223297fd287b9169b930bf025a821b794a5a2f479; immutable reader c653d82504bf28f4d18bc0f80c9426912a2fb3e7. Local 38/38 and PR 80/80; Full and fresh no-reuse Release each 124 passed plus the exact WVR-SEC-VSCE-LICENSE-001 /125, renewed by the owner through 2026-12-13 inclusive UTC. All 42 fresh receipts and 21 independent pairs, 17 routes, 15 Supported consumer scopes, six bounded Preview producers and 256 engineering obligations are source-bound. Initial publication scope is 232 obligations at 16 destinations; 24 ConanCenter obligations are explicitly owner-deferred, with direct C++ Supported builds retained. Independent reconstruction, original-authority signatures and local immutable verification passed; hosted acceptance is pending. Historical ea64d594/da4539f5 and all closed certificates retain their original source identities. No publication authorization or public verification is claimed.

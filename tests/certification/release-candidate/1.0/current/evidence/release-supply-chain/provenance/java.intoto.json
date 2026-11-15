@@ -18,26 +18,26 @@
                     "external_prerequisites": [
                         "Verify existing registry ownership and uploader or trusted publisher configuration",
                         "Confirm protected release environment reviewers and approved workflow source",
-                        "Confirm Central Publisher Portal user-token credentials and com.strling namespace ownership",
+                        "Confirm Central Publisher Portal user-token credentials and io.github.strling-lang namespace ownership",
                         "Confirm the owner-approved PGP signing fingerprint and public-key availability"
                     ],
                     "installation": "Maven artifact plus canonical native payload at absolute path",
                     "native_runtime_prerequisites": [
                         "Windows x86_64: Microsoft Visual C++ v14 x64 runtime compatible with the registered MSVC 14.44 build profile (vcruntime140.dll)"
                     ],
-                    "ownership_status": "externally-pending",
+                    "ownership_status": "verified",
                     "platforms": [
                         "windows-x86_64"
                     ],
                     "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
-                    "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
+                    "registry_owner": "Strling-lang",
                     "scope": "windows-x86_64 with caller-supplied absolute native path",
                     "support_claim": "binding:java",
                     "tier": "Supported"
                 }
             },
             "internalParameters": {
-                "manifestSha256": "9cd59f8d85542b06a7494f6628087b557aaacbb110ac40871d1d0db41131152c",
+                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
                 "toolchains": [
                     {
                         "executable_sha256": "7f2357adb9b7dca9f7b6e9eb9a0e0a0b4e7e516c19f34d3a348b298701692c80",
@@ -74,19 +74,19 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "ea64d59467ef73a90e57bc23412daf78539bf69f"
+                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@ea64d59467ef73a90e57bc23412daf78539bf69f"
+                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
                 },
                 {
                     "digest": {
-                        "sha256": "80aaefa43a20e1da6613f89026c6ebdf87b9ac93a40d8d18ff35eeedff2238d0"
+                        "sha256": "706643b2eb04a7e3cead5db830a3df6e6d328261c05ccc1806aac2940f79edff"
                     },
                     "uri": "strling:dependency-root:java-maven"
                 },
                 {
                     "digest": {
-                        "sha256": "9c77af50588a826ac7c72b36363fe2f4e439c524916fe1918d887161c78e76ed"
+                        "sha256": "5f19c66cbdcd8cd3b3e0d439bbbec77d0cedf31bcfe91cd7f3f7444c3d7c4a05"
                     },
                     "uri": "strling:dependency-root:jvm-maven"
                 }
@@ -98,7 +98,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "ea64d59467ef73a90e57bc23412daf78539bf69f:release:java",
+                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:java",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -107,7 +107,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "1e06e5db2df434b765e4aef2d8bb4872442460b263f715e0ddf06de91f56df46"
+                "sha256": "6bb34852e5bba699977b41788f6de237fb1cff3d31a4ed878e4bcb25c2b8e0cd"
             },
             "name": "bindings/java/pom.xml"
         },
@@ -125,13 +125,13 @@
         },
         {
             "digest": {
-                "sha256": "7df656da32f3814706ea0b513de69ab897d5309db93d323075cb33fdc59bbe2f"
+                "sha256": "58f508295b46215582d28902a2bb12abf61eaa7485bde86d0c5867e7a1f8be14"
             },
             "name": "bindings/java/target/strling-4.0.0.jar"
         },
         {
             "digest": {
-                "sha256": "6929b831d27efe95be83a5552fd21f00047cf01cc8e586eee26b67954f0eba21"
+                "sha256": "02a9229eee14f0e4149cd4c812e857652e06fc8d61132157f536386a0151923e"
             },
             "name": "bindings/jvm/pom.xml"
         },

@@ -72,7 +72,7 @@ change_classification:
     documentation_only: false
     internal_implementation: false
 title: Final product candidate preparation and clean-room certification
-status: in_progress
+status: complete
 objective:
     Preserve historical candidate acceptance and close the independently recertified publication-preparation
     successor without publication or product-source changes.
@@ -246,26 +246,32 @@ checkpoints:
                 qualified immutable reader f8ef1a62; actual four-job hosted acceptance https://github.com/strling-lang/strling/actions/runs/43492305250.
                 Publication and public verification remain false; closure preserves product source and historical certificates.
     - name: Successor source-bound certification and evidence-only closure
-      status: in_progress
+      status: passed
       evidence:
           - check: Fresh source and original-authority signed evidence
             result: passed
             details:
-                Successor source 8a0c1ca31484b537bcff596922182bb66ab1e392; candidate root d27a91282731ba7ddc1bd5f5c315e70cd87c116d09ab9daabbe8e55ae46dd433;
+                "Successor source 8a0c1ca31484b537bcff596922182bb66ab1e392; candidate root d27a91282731ba7ddc1bd5f5c315e70cd87c116d09ab9daabbe8e55ae46dd433;
                 package root d18509d0933489b16c9c832223297fd287b9169b930bf025a821b794a5a2f479; immutable reader c653d82504bf28f4d18bc0f80c9426912a2fb3e7.
                 Local 38/38 and PR 80/80; Full and fresh no-reuse Release each 124 passed plus the exact WVR-SEC-VSCE-LICENSE-001
                 /125, renewed by the owner through 2026-12-13 inclusive UTC. All 42 fresh receipts and 21 independent pairs,
                 17 routes, 15 Supported consumer scopes, six bounded Preview producers and 256 engineering obligations are
                 source-bound. Initial publication scope is 232 obligations at 16 destinations; 24 ConanCenter obligations
                 are explicitly owner-deferred, with direct C++ Supported builds retained. Independent reconstruction, original-authority
-                signatures and local immutable verification passed; hosted acceptance is pending. Historical ea64d594/da4539f5
-                and all closed certificates retain their original source identities. No publication authorization or public
-                verification is claimed.
+                signatures and local immutable verification passed; All four required immutable hosted jobs accepted exact
+                evidence closure e6399bd46e414a1388da567f7b20e2945a928253: https://github.com/strling-lang/strling/actions/runs/43715440180.
+                The subsequent documentation-only closure retains identical product source, signed evidence and qualified
+                verifier; its final run is retained in the operational handoff. Historical ea64d594/da4539f5 and all closed
+                certificates retain their original source identities. No publication authorization or public verification
+                is claimed."
           - check: Actual immutable hosted acceptance
-            result: not_run
+            result: passed
             details:
-                Pending dispatch of the existing read-only certification-integrity workflow on the exact successor
-                closure. No historical run is reused as current acceptance.
+                "All four required immutable hosted jobs accepted exact evidence closure e6399bd46e414a1388da567f7b20e2945a928253:
+                https://github.com/strling-lang/strling/actions/runs/43715440180. The subsequent documentation-only closure
+                retains identical product source, signed evidence and qualified verifier; its final run is retained in the
+                operational handoff."
+            command: gh run view 43715440180 --repo strling-lang/strling --json headSha,conclusion,jobs
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -287,11 +293,15 @@ commits:
       subject: Seal complete product candidate certification
     - sha: 8a0c1ca31484b537bcff596922182bb66ab1e392
       subject: Synchronize bounded-command fixture readiness
+    - sha: e6399bd46e414a1388da567f7b20e2945a928253
+      subject: Seal corrected publication candidate certification
 completion:
     accomplished:
         - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
         - Completed architecture, product documentation, migration/examples, governed support matrices, benchmark report
           and independently certified clean-room candidate.
+        - Independently recertified and closed successor product source 8a0c1ca31484b537bcff596922182bb66ab1e392; publication
+          remains unauthorized.
     verified:
         - Source ea64d59467ef73a90e57bc23412daf78539bf69f; Local 38/38, PR 80/80, Full/Release 124passed plus the sole
           authorized waiver /125; zero unauthorized mandatory nonpasses.
@@ -301,6 +311,15 @@ completion:
           signature 11211ce372e5643975a07e1e0ed8c4fe1f16cf02d46b6488103d11bb81d019e1.
         - Immutable reader f8ef1a62be536981927e36a19587f96edb69f911; four-job hosted acceptance https://github.com/strling-lang/strling/actions/runs/43492305250,
           evidence 32efc1d0242a2e5b65ed56606ff09f0c838b97cd.
+        - "All four required immutable hosted jobs accepted exact evidence closure e6399bd46e414a1388da567f7b20e2945a928253:
+          https://github.com/strling-lang/strling/actions/runs/43715440180. The subsequent documentation-only closure
+          retains identical product source, signed evidence and qualified verifier; its final run is retained in the operational
+          handoff."
+        - Successor candidate evidence root d27a91282731ba7ddc1bd5f5c315e70cd87c116d09ab9daabbe8e55ae46dd433; package
+          root d18509d0933489b16c9c832223297fd287b9169b930bf025a821b794a5a2f479; immutable reader c653d82504bf28f4d18bc0f80c9426912a2fb3e7.
+        - Successor Local38/38, PR80/80, Full and fresh independent no-reuse Release124passed plus sole authorized waiver/125;
+          42fresh receipts,21pairs,17routes,15Supported consumer scopes,six bounded Preview producers and256engineering
+          obligations. Existing VSCE waiver renewed by the owner through2026-12-13inclusive UTC.
     behavior_changed:
         Corrected obsolete frontend defaults, reconciled package documentation/examples and independently
         verified the complete-product certificate and publication handoff.
@@ -310,6 +329,8 @@ completion:
         - The missing Lua public 4.0.0 projection is generated from unchanged authority.
         - Complete-product evidence, required documentation proof, lossless retention and immutable hosted verification
           are qualified.
+        - Evidence-only successor bundle and derived handoff replace the current candidate projection; historical ea64d594/da4539f5
+          acceptance remains preserved at its exact original source and closure.
     preserved_behavior:
         - Canonical Rust compiler semantics, normative authority, five target claims, diagnostics, ABI/transport and independent
           version contracts.
@@ -317,6 +338,9 @@ completion:
           fixtures.
         - Closed H08/packaging/public-verification certificates, original signing authority and WVR-SEC-VSCE-LICENSE-001.
         - Quantitative performance remains non-gating; functional resource safety is mandatory.
+        - No product-source or trusted-verifier change during successor certification or evidence closure. Initial public
+          scope remains16destinations/232obligations plus24explicit owner-deferred ConanCenter obligations; direct C++
+          builds remain Supported.
     transitional_architecture: []
     deferred_work:
         - Separately authorized publication, owner/publisher/protected-environment prerequisites, coordinate-specific
@@ -325,9 +349,10 @@ completion:
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
     next_task:
-        Actual immutable hosted integrity acceptance, certified transport and source-bound protected publication
-        authorization.
+        Finish protected artifact export and registry/account prerequisites, then obtain exact source-bound
+        publication authorization and execute independent public verification.
     rationale:
-        Fresh source-bound profiles and complete signed local evidence passed. Historical completion details
-        below remain bound to ea64d594; the appended successor checkpoint records current work and pending hosted acceptance
-        explicitly.
+        Successor implementation and source-bound certification passed, including complete reconstruction,
+        original-authority signatures and actual immutable hosted acceptance. Owner-dependent LuaRocks credential/uploader
+        verification, NuGet authenticated metadata, off-device recovery transfer, protected export and publication authorization
+        remain release prerequisites. Historical completion facts retain their original identities.

@@ -1,75 +1,15 @@
 record_version: 2.0.0
 scope:
     diff:
-        base: da4539f52692df7290ecc3da79323fa81de3f653
+        base: 81dbf8b56bb33fc48dd1bb2292d4c0c2592ad08f
         head: working-tree
     allowed_paths:
-        - .github/workflows/cd.yml
-        - .github/workflows/ci.yml
-        - .github/workflows/certification-integrity.yml
-        - .github/workflows/public-verification.yml
-        - bindings/cpp/README.md
-        - bindings/java/README.md
-        - bindings/java/pom.xml
-        - bindings/jvm/README.md
-        - bindings/jvm/pom.xml
-        - bindings/kotlin/README.md
-        - bindings/kotlin/build.gradle.kts
-        - bindings/kotlin/gradle.lockfile
-        - bindings/kotlin/gradle/verification-metadata.xml
-        - docs/migration/ledger.md
-        - docs/migration/final-release-candidate.md
-        - docs/migration/records/official-publication.yaml
-        - docs/releasing.md
-        - docs/release-policy.md
-        - docs/support-matrix.md
-        - governance/architecture-rules.json
-        - governance/change-control.json
-        - governance/closed-certifications.json
-        - governance/dependency-lock-verification.json
-        - governance/release-policy.json
-        - governance/public-distribution.json
-        - governance/schemas/release-supply-chain-certification.schema.json
-        - governance/schemas/architecture-rules.schema.json
-        - governance/schemas/public-distribution.schema.json
-        - governance/schemas/public-verification-request.schema.json
-        - governance/schemas/public-verification-result.schema.json
-        - governance/security-policy.json
-        - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
-        - tests/adapters/3.0/release-graph.json
-        - tests/certification/release-supply-chain/1.0/fixtures/valid-evidence.json
-        - tests/certification/release-supply-chain/1.0/jvm-product-builds.json
-        - tests/certification/release-supply-chain/1.0/manifest.json
-        - tests/documentation/1.0/manifest.json
-        - tooling/exact_runtime_provision.py
-        - tooling/closed_certification_integrity.py
-        - tooling/jvm_adapter_package.py
-        - tooling/jvm_adapter_runtime.py
-        - tooling/maven_release.py
         - tooling/public_registries.py
-        - tooling/public_verification_request.py
-        - tooling/public_distribution.py
-        - tooling/verify_public_release.py
-        - tooling/candidate_handoff.py
-        - tooling/certified_transport.py
-        - tooling/architecture_fitness.py
-        - tooling/publish_certified_artifact.py
-        - tooling/release_payload.py
-        - tooling/release_supply_chain.py
-        - tooling/tests/test_exact_runtime_provision.py
-        - tooling/tests/test_closed_certification_integrity.py
-        - tooling/tests/test_jvm_adapter_runtime.py
-        - tooling/tests/test_kotlin_product_verification.py
-        - tooling/tests/test_maven_release.py
+        - tooling/public_fixtures.py
         - tooling/tests/test_public_registries.py
-        - tooling/tests/test_public_verification_boundaries.py
-        - tooling/tests/test_public_distribution.py
-        - tooling/tests/test_public_contracts.py
-        - tooling/tests/test_public_execution.py
-        - tooling/tests/test_certified_transport.py
-        - tooling/tests/test_governance.py
-        - tooling/tests/test_release_publication_authorization.py
-        - tooling/tests/test_release_supply_chain.py
+        - governance/change-control.json
+        - docs/migration/records/official-publication.yaml
+        - docs/migration/ledger.md
     forbidden_paths:
         - core/src/**
         - spec/**
@@ -81,22 +21,7 @@ scope:
         - tests/certification/public-verification/1.0/current/**
     expected_files:
         - docs/migration/records/official-publication.yaml
-    permitted_generated_changes:
-        - binding-support-certification-evidence
-        - jvm-adapter-release-graph
-        - kotlin-product-verification
-        - legacy-removal-inventory-evidence
-        - lua-release-rockspec
-        - package-manager-lockfiles
-        - product-support-matrix
-        - profile-source-definitions
-        - public-contract-snapshots
-        - release-candidate-certification-trust
-        - release-policy-documentation
-        - release-supply-chain-contract-fixture
-        - semantic-authority-retirement-evidence
-        - target-adapter-certification-matrices
-        - version-synchronized-metadata
+    permitted_generated_changes: []
     expected_generated_outputs: []
     required_verification_levels:
         - contract
@@ -110,38 +35,38 @@ change_classification:
     semantic_change:
         level: none
         evidence:
-            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
+              or trust-authority change.
     public_api_change:
         level: none
         evidence:
-            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
+              or trust-authority change.
     schema_change:
-        level: compatible
+        level: none
         evidence:
-            - Register external-review as a credential mode for deferred ConanCenter deployment.
-            - Account explicitly for the owner's initial 4.0.0 public scope without removing any controlled implementation obligation.
+            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
+              or trust-authority change.
     diagnostic_change:
         level: none
         evidence:
-            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
+              or trust-authority change.
     target_behavior_change:
         level: none
         evidence:
-            - Compiler semantics, API shapes, diagnostics and target behavior remain governed by existing contracts.
+            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
+              or trust-authority change.
     architecture_change:
-        level: intentional-correction
+        level: none
         evidence:
-            - Correct the shared JVM package identity to the owner-verified io.github.strling-lang namespace; adapter responsibility
-              remains unchanged.
-            - Preserve only exact previously accepted closed certificates through a separately scoped immutable-history check;
-              keep current-source waiver and certification checks fail-closed and preserve the original signing authority.
-            - Restore original certified package bytes through a protected, read-only hosted export; independently authenticate
-              the candidate certificate, its original nested package certificate and the complete artifact graph before export.
+            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
+              or trust-authority change.
     generated_output_change:
-        level: compatible
+        level: none
         evidence:
-            - Reconcile Maven dependency metadata, version probes, reviewed command hashes and registered projections through
-              their owning authorities.
+            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
+              or trust-authority change.
     documentation_only: false
     internal_implementation: true
 required_verification:
@@ -165,19 +90,19 @@ checkpoints:
           - check: Preserve completed 29fc1db4 source-bound profiles
             result: passed
             details:
-                Local 38/38, Pull Request 80/80, Full and independent no-reuse Release each 124 passed plus the sole authorized
-                waiver. Their results remain bound to 29fc1db4. Original readers rejected the new credential-mode schema and
-                renewed waiver record before signing; all terminal evidence is retained.
+                Local 38/38, Pull Request 80/80, Full and independent no-reuse Release each 124 passed plus the sole
+                authorized waiver. Their results remain bound to 29fc1db4. Original readers rejected the new credential-mode
+                schema and renewed waiver record before signing; all terminal evidence is retained.
           - check: Preserve original closed acceptance
             result: passed
             details:
-                Hosted run 43496556523 at da4539f5 completed all four jobs successfully on 2026-11-13. Preserve its exact
-                source, signatures and producer objects without presenting historical waiver acceptance as current certification.
+                Hosted run 43496556523 at da4539f5 completed all four jobs successfully on 2026-11-13. Preserve its
+                exact source, signatures and producer objects without presenting historical waiver acceptance as current certification.
           - check: Verify Perl publisher account without publication
             result: passed
             details:
-                The existing PAUSE session authenticated STRLING. The STRling% permissions query found no namespace records;
-                record the verified uploader and retain first-upload indexing and collision checks as explicit dependencies.
+                The existing PAUSE session authenticated STRLING. The STRling% permissions query found no namespace
+                records; record the verified uploader and retain first-upload indexing and collision checks as explicit dependencies.
     - name: Fresh source certification
       status: in_progress
       evidence:
@@ -193,8 +118,8 @@ checkpoints:
             result: passed
             details:
                 Linux 607 tests and Windows 605 tests, 197 subtests each, all nine independent replay stages passed.
-                Both Windows capability skips passed on Linux. This qualification remains bound to c8f629ef;
-                subsequent applicability, governance and transport changes require a new frozen reader qualification.
+                Both Windows capability skips passed on Linux. This qualification remains bound to c8f629ef; subsequent applicability,
+                governance and transport changes require a new frozen reader qualification.
     - name: Applicability and transport focused diagnostic
       status: in_progress
       evidence:
@@ -202,21 +127,22 @@ checkpoints:
             result: passed
             details:
                 All 17 build routes and 256 controlled obligations remain mandatory. The initial public scope derives
-                232 applicable obligations and explicitly accounts for 24 deferred C++ ConanCenter obligations.
-                The complete focused Windows diagnostic passed 375 tests and 150 subtests with one known symlink
-                capability skip; all registered generator checks and governance passed. These are engineering observations,
-                not authoritative certification. Private staging and actual hosted byte export remain unexecuted.
+                232 applicable obligations and explicitly accounts for 24 deferred C++ ConanCenter obligations. The complete
+                focused Windows diagnostic passed 375 tests and 150 subtests with one known symlink capability skip; all registered
+                generator checks and governance passed. These are engineering observations, not authoritative certification.
+                Private staging and actual hosted byte export remain unexecuted.
     - name: Successor reader qualification and promotion
       status: in_progress
       evidence:
           - check: Qualify c653d825 without original-authority private-key access
             result: passed
             details:
-                Linux 664 tests and Windows 662 tests, 197 subtests each, all eleven independent qualification leaves passed.
-                The two Windows capability skips passed on Linux. Current Full/Release reconstruction, both real supply-chain
+                Linux 664 tests and Windows 662 tests, 197 subtests each, all eleven independent qualification leaves
+                passed. The two Windows capability skips passed on Linux. Current Full/Release reconstruction, both real supply-chain
                 bundles, public producer reconstruction, original closed certificates and the 2304-file export graph passed.
                 The production signing authority remains unchanged. Promote only this exact immutable reader; the subsequent
-                product source still requires fresh source-bound profiles, artifacts, consumers, reconstruction, signing and hosted acceptance.
+                product source still requires fresh source-bound profiles, artifacts, consumers, reconstruction, signing and
+                hosted acceptance.
     - name: Owner-selected Maven token scope
       status: passed
       evidence:
@@ -224,32 +150,32 @@ checkpoints:
             result: passed
             details:
                 The owner explicitly chose repository scope for SONATYPE_USERNAME and SONATYPE_PASSWORD. Preserve both
-                entries without migration or deletion. Java and Kotlin reference the same intended names only within
-                protected release jobs; manual approval, exact source, workflow, artifact and run authorization remain mandatory.
-                Organizational OpenPGP generation and custody remain owner-only and are not prerequisites for independent certification.
+                entries without migration or deletion. Java and Kotlin reference the same intended names only within protected
+                release jobs; manual approval, exact source, workflow, artifact and run authorization remain mandatory. Organizational
+                OpenPGP generation and custody remain owner-only and are not prerequisites for independent certification.
     - name: Governed reader promotion schema reconciliation
       status: passed
       evidence:
           - check: Register preservation references without weakening historical bindings
             result: passed
             details:
-                The architecture schema now registers the immutable global and per-reference preservation verifier fields.
-                Original source and original verifier identities remain required; missing, mutable and unknown fields are rejected.
-                Governance passed and focused regressions passed 128 tests and 64 subtests. These are engineering checks;
-                fresh product certification remains pending for the subsequent frozen source.
+                The architecture schema now registers the immutable global and per-reference preservation verifier
+                fields. Original source and original verifier identities remain required; missing, mutable and unknown fields
+                are rejected. Governance passed and focused regressions passed 128 tests and 64 subtests. These are engineering
+                checks; fresh product certification remains pending for the subsequent frozen source.
     - name: Maven signing compatibility investigation
       status: in_progress
       evidence:
           - check: Verify exact publisher with a synthetic signing-only subkey export
             result: passed
             details:
-                Immutable c653d825 tooling signed six Java, Kotlin and shared JVM fixture JAR/POM payloads using only an
-                RSA4096 signing-subkey secret export. Independent public-certificate verification confirmed subkey and
-                primary binding, exact payload bytes, unavailable-primary rejection and wrong-passphrase rejection.
-                No production identity, credential access, registry request or publication occurred. Sonatype's current
-                primary-key guidance conflicts with assuming Portal acceptance; key creation remains on compatibility hold.
-                The approved offline-primary custody architecture is unchanged, pending explicit Portal compatibility evidence
-                or an owner-approved alternative. Independent certification does not require a production Maven identity.
+                Immutable c653d825 tooling signed six Java, Kotlin and shared JVM fixture JAR/POM payloads using only
+                an RSA4096 signing-subkey secret export. Independent public-certificate verification confirmed subkey and
+                primary binding, exact payload bytes, unavailable-primary rejection and wrong-passphrase rejection. No production
+                identity, credential access, registry request or publication occurred. Sonatype's current primary-key guidance
+                conflicts with assuming Portal acceptance; key creation remains on compatibility hold. The approved offline-primary
+                custody architecture is unchanged, pending explicit Portal compatibility evidence or an owner-approved alternative.
+                Independent certification does not require a production Maven identity.
     - name: LuaRocks authenticated ownership verification
       status: in_progress
       evidence:
@@ -267,20 +193,20 @@ checkpoints:
             details:
                 The owner authorized a dedicated organizational primary signer shared by Java and Kotlin. RSA4096,
                 SHA-256 detached signatures, one-year initial validity and passphrase-protected release environment secrets
-                replace the offline-primary/subkey design. The online primary custody distinction is documented.
-                Repository-scoped Maven credentials remain unchanged. The exact publisher rejects subkey selection,
-                expired or revoked keys, weak or non-RSA keys, unavailable secrets and differing distribution fingerprints.
+                replace the offline-primary/subkey design. The online primary custody distinction is documented. Repository-scoped
+                Maven credentials remain unchanged. The exact publisher rejects subkey selection, expired or revoked keys,
+                weak or non-RSA keys, unavailable secrets and differing distribution fingerprints.
           - check: Qualify production identity without public publication
             result: passed
             details:
-                Restricted local generation, encrypted recovery restoration and revocation restoration passed.
-                Twelve synthetic Java, Kotlin and JVM artifact signatures verified independently against the public
-                primary certificate with SHA-256 and unchanged payloads. Protected release signing secret writes succeeded.
-                Public fingerprint and nonsecret metadata are retained in the campaign provisioning receipt.
-                The separately authorized public certificate was distributed through keyserver.ubuntu.com and independently
-                retrieved; its normalized public identity exactly matched the approved certificate. Paper custody and
-                off-device transfer remain pending owner confirmation; the owner will physically transfer the prepared copy.
-                No public package, tag, registry upload or production publication workflow was executed.
+                Restricted local generation, encrypted recovery restoration and revocation restoration passed. Twelve
+                synthetic Java, Kotlin and JVM artifact signatures verified independently against the public primary certificate
+                with SHA-256 and unchanged payloads. Protected release signing secret writes succeeded. Public fingerprint
+                and nonsecret metadata are retained in the campaign provisioning receipt. The separately authorized public
+                certificate was distributed through keyserver.ubuntu.com and independently retrieved; its normalized public
+                identity exactly matched the approved certificate. Paper custody and off-device transfer remain pending owner
+                confirmation; the owner will physically transfer the prepared copy. No public package, tag, registry upload
+                or production publication workflow was executed.
     - name: Preserve first primary-signing candidate security failure
       status: in_progress
       evidence:
@@ -288,28 +214,55 @@ checkpoints:
             result: passed
             details:
                 Local at 1391bc21 stopped at security_content_workflows, operation 4 of 38, because the new Maven test
-                contained a literal synthetic passphrase. Preserve that exact failed profile and producer output.
-                Replace the fixture literal with cryptographic random generation; the tracked-secret rule remains unchanged.
-                Run direct content and dependency-integrity checks before freezing the successor source. The real protected
-                Maven key and encrypted recovery material were not involved and require no regeneration.
+                contained a literal synthetic passphrase. Preserve that exact failed profile and producer output. Replace
+                the fixture literal with cryptographic random generation; the tracked-secret rule remains unchanged. Run direct
+                content and dependency-integrity checks before freezing the successor source. The real protected Maven key
+                and encrypted recovery material were not involved and require no regeneration.
     - name: Bounded-command fixture startup synchronization
       status: in_progress
       evidence:
           - check: Preserve the source-bound PR result and reproduce its startup race
             result: passed
             details:
-                Local at 1336efa0 passed 38 operations. PR stopped at repository tests, operation 73 of 80, with
-                2521 passed tests and 4214 passed subtests; one process-termination fixture timed out before emitting its
-                required output. A controlled 0.75-second startup delay reproduces the same missing-output assertion
-                under the unchanged 0.5-second command timeout. Preserve both the original failure and this diagnostic.
+                Local at 1336efa0 passed 38 operations. PR stopped at repository tests, operation 73 of 80, with 2521
+                passed tests and 4214 passed subtests; one process-termination fixture timed out before emitting its required
+                output. A controlled 0.75-second startup delay reproduces the same missing-output assertion under the unchanged
+                0.5-second command timeout. Preserve both the original failure and this diagnostic.
           - check: Keep process safety assertions independent from fixture startup
             result: passed
             details:
                 Synchronize fixture readiness after descendant creation and both flushed output streams; test ordinary
-                startup and startup slower than the command timeout. Keep the production implementation, 0.5-second
-                timeout and descendant-termination assertion unchanged. A separate case checks timeout and process
-                termination before any readiness output. Ten repeated executions passed on each platform, and all 50
-                affected component tests passed on Linux. Forced slow startup remains covered. An initial diagnostic
-                harness used a DrvFS temporary directory and failed before collection; preserve those original logs
-                separately from the successful native-temporary-directory runs. Production process handling is unchanged.
+                startup and startup slower than the command timeout. Keep the production implementation, 0.5-second timeout
+                and descendant-termination assertion unchanged. A separate case checks timeout and process termination before
+                any readiness output. Ten repeated executions passed on each platform, and all 50 affected component tests
+                passed on Linux. Forced slow startup remains covered. An initial diagnostic harness used a DrvFS temporary
+                directory and failed before collection; preserve those original logs separately from the successful native-temporary-directory
+                runs. Production process handling is unchanged.
+    - name: Live MetaCPAN exact-owner response qualification
+      status: in_progress
+      evidence:
+          - check: Independent live positive response and certified staged reproduction
+            result: passed
+            details:
+                The exact-owner endpoint https://fastapi.metacpan.org/v1/release/HAARG/Moo-2.005005 returned a release/took/total
+                envelope (body SHA256535d992a0649e271e470ad0734194b316581d8081c43e376cfc27567c3d34c70). C653 rejected the
+                equivalent wrapped STRLING fixture before retrieving any certified Perl bytes. Preserve 8a0c1ca3 certificates,
+                closure81dbf8b5 and actual four-job hosted acceptance43716242391; do not transfer them to a corrected successor.
+          - check: Narrow fail-closed correction and fresh qualification
+            result: not_run
+            details:
+                Parse one exact wrapped release or legacy flat metadata; distinguish a genuine empty lookup from malformed/ambiguous
+                data, preserve owner/version/download/subject checks, update the controlled fixture, qualify/promote the changed
+                reader, then freeze and freshly certify the successor. No waiver, Preview promotion, public upload or trust-authority
+                rotation is authorized.
+          - check: Strict wire correction and independent focused proof
+            result: passed
+            details:
+                Two regressions failed before the correction;132registry tests now pass. The affected offline subsystem
+                passed375tests and76subtests, with one Windows capability skip requiring Linux coverage. Exact live Moo metadata
+                now yields the same author/name/distribution/version/download URL as the flat convenience lookup; the empty
+                STRLING lookup is NOT_PUBLISHED. Boolean/floating/ambiguous counts, invalid timing, missing/extra envelope
+                fields and substituted identities are rejected before payload retrieval. Existing signed subjects and trust
+                checks remain mandatory. Pinned Ruff0.15.21 formatting/lint, scope governance and hygiene pass. Generator-input
+                lookup matched no registered family for this narrow six-path change.
 commits: []

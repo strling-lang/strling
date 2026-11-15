@@ -285,11 +285,15 @@ def protocol_fixture(
         document(
             f"https://fastapi.metacpan.org/v1/release/STRLING/STRling-{version}",
             {
-                "author": "STRLING",
-                "distribution": name,
-                "version": version,
-                "download_url": url,
-                "license": ["apache_2_0"],
+                "release": {
+                    "author": "STRLING",
+                    "distribution": name,
+                    "version": version,
+                    "download_url": url,
+                    "license": ["apache_2_0"],
+                },
+                "took": 0,
+                "total": 1,
             },
         )
         responses[url] = (staged / next(iter(subjects))).read_bytes()

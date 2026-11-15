@@ -7,6 +7,7 @@ and cannot turn their retrieval result into public release verification.
 from __future__ import annotations
 
 import hashlib
+import math
 import re
 from pathlib import PurePosixPath
 from urllib.parse import quote, urlsplit
@@ -18,6 +19,34 @@ from tooling.public_retrieval import RetrievalError
 def require(value: bool, detail: str, category: str = "metadata") -> None:
     if not value:
         raise RetrievalError(category, detail)
+
+
+def cpan_release_document(document: object) -> dict:
+    """Read one exact release, retaining legacy flat metadata compatibility."""
+    require(isinstance(document, dict), "invalid CPAN release document")
+    if "release" not in document:
+        return document
+    require(
+        set(document) == {"release", "total", "took"},
+        "ambiguous CPAN release envelope",
+    )
+    total, took = document["total"], document["took"]
+    valid_timing = (type(took) is int and took >= 0) or (
+        type(took) is float and math.isfinite(took) and took >= 0
+    )
+    require(
+        type(total) is int and valid_timing,
+        "invalid CPAN release envelope count or timing",
+    )
+    if total == 0 and document["release"] is None:
+        raise RetrievalError(
+            "missing-coordinate", "exact CPAN release is absent", status="NOT_PUBLISHED"
+        )
+    require(
+        total == 1 and isinstance(document["release"], dict),
+        "CPAN release envelope is missing or ambiguous",
+    )
+    return document["release"]
 
 
 def coordinate_version(version: str, ecosystem: str) -> str:
@@ -294,8 +323,8 @@ def retrieve(
             "exact approved PAUSE owner is required",
             "contract",
         )
-        metadata = data(
-            f"https://fastapi.metacpan.org/v1/release/{owner}/{name}-{coordinate}"
+        metadata = cpan_release_document(
+            data(f"https://fastapi.metacpan.org/v1/release/{owner}/{name}-{coordinate}")
         )
         require(
             metadata.get("author") == owner

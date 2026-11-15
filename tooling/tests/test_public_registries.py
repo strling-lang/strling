@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+from copy import deepcopy
 from pathlib import Path
 from urllib.parse import quote
 
@@ -250,3 +251,109 @@ def test_wrong_git_commit_rejected(artifact):
             source_sha="b" * 40,
             **extra,
         )
+
+
+CPAN_URL = "https://fastapi.metacpan.org/v1/release/STRLING/STRling-4.0.0"
+
+
+def cpan_envelope_fixture(document):
+    artifact = next(a for a in ARTIFACTS if a["registry"] == "cpan")
+    transport, subjects, destination, extra = fixture(artifact)
+    expected = json.loads(transport.responses[CPAN_URL])
+    document = deepcopy(document)
+    if isinstance(document, dict) and document.get("release") == "$registered":
+        document["release"] = expected
+    transport.responses[CPAN_URL] = json.dumps(document).encode()
+    return artifact, transport, subjects, destination, extra, expected
+
+
+@pytest.mark.parametrize("took", [0, 0.5, 10**400])
+def test_cpan_exact_owner_release_envelope_preserves_subject_and_identity(took):
+    artifact, transport, subjects, destination, extra, expected = cpan_envelope_fixture(
+        {"release": "$registered", "total": 1, "took": took}
+    )
+    result = retrieve(
+        transport, artifact, "4.0.0", subjects, destination, source_sha=SOURCE, **extra
+    )
+    assert result["metadata"] == expected
+    assert result["files"] == {"package.archive": PAYLOAD}
+    assert result["authority"] == "synthetic"
+
+
+def test_cpan_http_200_empty_release_is_not_published():
+    artifact, transport, subjects, destination, extra, _ = cpan_envelope_fixture(
+        {"release": None, "total": 0, "took": 0}
+    )
+    with pytest.raises(RetrievalError) as caught:
+        retrieve(
+            transport,
+            artifact,
+            "4.0.0",
+            subjects,
+            destination,
+            source_sha=SOURCE,
+            **extra,
+        )
+    assert caught.value.category == "missing-coordinate"
+    assert caught.value.status == "NOT_PUBLISHED"
+    assert [r["request_url"] for r in transport.observations] == [CPAN_URL]
+
+
+@pytest.mark.parametrize(
+    "document",
+    [
+        None,
+        [],
+        {"release": None, "total": 1, "took": 0},
+        {"release": [], "total": 1, "took": 0},
+        {"release": "substituted", "total": 1, "took": 0},
+        {"release": "$registered", "total": True, "took": 0},
+        {"release": "$registered", "total": 1.0, "took": 0},
+        {"release": "$registered", "total": 2, "took": 0},
+        {"release": "$registered", "total": -1, "took": 0},
+        {"release": "$registered", "total": 0, "took": 0},
+        {"release": "$registered", "total": 1, "took": "0"},
+        {"release": "$registered", "total": 1, "took": True},
+        {"release": "$registered", "total": 1, "took": -1},
+        {"release": "$registered", "total": 1},
+        {"release": "$registered", "took": 0},
+        {"release": "$registered", "total": 1, "took": 0, "unexpected": {}},
+        {"release": "$registered", "total": 1, "took": 0, "author": "STRLING"},
+    ],
+)
+def test_cpan_malformed_or_ambiguous_envelope_cannot_fetch_payload(document):
+    artifact, transport, subjects, destination, extra, _ = cpan_envelope_fixture(
+        document
+    )
+    with pytest.raises(RetrievalError):
+        retrieve(
+            transport,
+            artifact,
+            "4.0.0",
+            subjects,
+            destination,
+            source_sha=SOURCE,
+            **extra,
+        )
+    assert [r["request_url"] for r in transport.observations] == [CPAN_URL]
+
+
+@pytest.mark.parametrize("field", ["author", "distribution", "version", "download_url"])
+def test_cpan_envelope_does_not_bypass_exact_identity(field):
+    artifact, transport, subjects, destination, extra, _ = cpan_envelope_fixture(
+        {"release": "$registered", "total": 1, "took": 0}
+    )
+    document = json.loads(transport.responses[CPAN_URL])
+    document["release"][field] = "substituted"
+    transport.responses[CPAN_URL] = json.dumps(document).encode()
+    with pytest.raises(RetrievalError):
+        retrieve(
+            transport,
+            artifact,
+            "4.0.0",
+            subjects,
+            destination,
+            source_sha=SOURCE,
+            **extra,
+        )
+    assert [r["request_url"] for r in transport.observations] == [CPAN_URL]

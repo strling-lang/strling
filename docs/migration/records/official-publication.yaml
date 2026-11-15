@@ -4,12 +4,21 @@ scope:
         base: 81dbf8b56bb33fc48dd1bb2292d4c0c2592ad08f
         head: working-tree
     allowed_paths:
-        - tooling/public_registries.py
-        - tooling/public_fixtures.py
-        - tooling/tests/test_public_registries.py
-        - governance/change-control.json
-        - docs/migration/records/official-publication.yaml
+        - .github/workflows/cd.yml
+        - .github/workflows/certification-integrity.yml
+        - .github/workflows/ci.yml
+        - .github/workflows/public-verification.yml
         - docs/migration/ledger.md
+        - docs/migration/records/official-publication.yaml
+        - governance/architecture-rules.json
+        - governance/change-control.json
+        - governance/public-distribution.json
+        - tests/adapters/binding-support-4.0/evidence.json
+        - tests/architecture/legacy-removal/1.0/evidence.json
+        - tests/architecture/legacy-removal/1.0/evidence.md
+        - tooling/public_fixtures.py
+        - tooling/public_registries.py
+        - tooling/tests/test_public_registries.py
     forbidden_paths:
         - core/src/**
         - spec/**
@@ -21,7 +30,9 @@ scope:
         - tests/certification/public-verification/1.0/current/**
     expected_files:
         - docs/migration/records/official-publication.yaml
-    permitted_generated_changes: []
+    permitted_generated_changes:
+        - binding-support-certification-evidence
+        - legacy-removal-inventory-evidence
     expected_generated_outputs: []
     required_verification_levels:
         - contract
@@ -58,15 +69,16 @@ change_classification:
             - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
               or trust-authority change.
     architecture_change:
-        level: none
+        level: intentional-correction
         evidence:
-            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
-              or trust-authority change.
+            - Promote only immutable reader 68bce447442fd59ac6a1046c48532adc6562ac12 after all thirteen qualification/replay
+              stages pass; original signing authority, trusted policies and historical subjects remain unchanged.
     generated_output_change:
         level: none
         evidence:
-            - Narrow registry wire-envelope parsing correction; no compiler, package, support, version, normative schema
-              or trust-authority change.
+            - Both affected registered families were regenerated and independently checked in an isolated dev checkout with
+              identical authoritative inputs. All three outputs reproduced their existing bytes; no generated output changes.
+              The task schema uses family IDs for expected changed outputs, so the actual expected-change set is empty.
     documentation_only: false
     internal_implementation: true
 required_verification:
@@ -265,4 +277,25 @@ checkpoints:
                 fields and substituted identities are rejected before payload retrieval. Existing signed subjects and trust
                 checks remain mandatory. Pinned Ruff0.15.21 formatting/lint, scope governance and hygiene pass. Generator-input
                 lookup matched no registered family for this narrow six-path change.
-commits: []
+          - check: Immutable reader qualification and original evidence replay
+            result: passed
+            details:
+                "Reader 68bce447442fd59ac6a1046c48532adc6562ac12 accepted all thirteen stages across all24existing
+                test files. linux: 711 passed, 1 warning, 205 subtests passed in 750.07s (0:12:30); windows: 708 passed, 3
+                skipped, 1 warning, 205 subtests passed in 2218.73s (0:36:58). Closed compiler/packaging/public/final-candidate
+                certificates, source29fc profiles/supply/public producer, actual export graph, isolated entrypoints and retained
+                live CPAN metadata passed. The initial source8a replay correctly rejected substitution of its original C653
+                handoff verifier. Five adversarial identity/source/fingerprint cases and exact unchanged code/policy blobs
+                proved the operational harness error. The new reader code then verified the complete source8a candidate/closure81db
+                using its original C653 trust identity; all389 signed files remained unchanged and the failing attempt is
+                preserved. Product successor certification remains pending and no evidence is transferred between sources."
+          - check: Registered generated output and task-schema reconciliation
+            result: passed
+            details:
+                Both registered producers and verification commands passed in an isolated dev checkout; actual main/dev
+                refs are unchanged. All three outputs reproduce existing bytes. Preserve the original branch-context and malformed-task-record
+                failures; correct only operational context and the expected-change declaration, retaining strict schema and
+                completeness enforcement.
+commits:
+    - sha: 68bce447442fd59ac6a1046c48532adc6562ac12
+      subject: Handle exact-owner MetaCPAN release envelopes

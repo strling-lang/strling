@@ -28,7 +28,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
+                  ref: 68bce447442fd59ac6a1046c48532adc6562ac12
                   path: candidate-trusted
             - name: Checkout candidate evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -71,7 +71,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
+                  ref: 68bce447442fd59ac6a1046c48532adc6562ac12
                   path: public-trusted
             - name: Checkout public evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -113,7 +113,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: c653d82504bf28f4d18bc0f80c9426912a2fb3e7
+                  ref: 68bce447442fd59ac6a1046c48532adc6562ac12
                   path: packaging-trusted
             - name: Checkout packaging evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09

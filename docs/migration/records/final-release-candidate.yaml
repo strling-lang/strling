@@ -72,7 +72,7 @@ change_classification:
     documentation_only: false
     internal_implementation: false
 title: Final product candidate preparation and clean-room certification
-status: in_progress
+status: complete
 objective:
     Close the independently certified live-CPAN-protocol successor while preserving historical certification
     and the separate publication boundary.
@@ -273,7 +273,7 @@ checkpoints:
                 operational handoff."
             command: gh run view 43715440180 --repo strling-lang/strling --json headSha,conclusion,jobs
     - name: Live CPAN protocol successor certification
-      status: in_progress
+      status: passed
       evidence:
           - check: Fresh source-bound profiles, reconstruction and original-authority signatures
             result: passed
@@ -288,8 +288,13 @@ checkpoints:
                 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable
                 public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.'
           - check: Actual immutable hosted acceptance
-            result: not_run
-            details: Pending exact successor closure dispatch; no historical hosted run is reused.
+            result: passed
+            details:
+                "All four required immutable hosted jobs accepted exact evidence closure fe65e00f05664a7c09c99a30fe788fab7831f555:
+                https://github.com/strling-lang/strling/actions/runs/43775078870. The following documentation-only closure
+                preserves identical product source, signed evidence and immutable reader68; its final run is retained separately
+                in the operational handoff."
+            command: gh run view 43775078870 --repo strling-lang/strling --json headSha,conclusion,jobs
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -315,6 +320,8 @@ commits:
       subject: Seal corrected publication candidate certification
     - sha: a58f126b2721773ab9346d4dc449910371adccd9
       subject: Promote independently qualified CPAN protocol verifier
+    - sha: fe65e00f05664a7c09c99a30fe788fab7831f555
+      subject: Preserve independently certified publication candidate evidence
 completion:
     accomplished:
         - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
@@ -322,6 +329,8 @@ completion:
           and independently certified clean-room candidate.
         - Independently recertified and closed successor product source 8a0c1ca31484b537bcff596922182bb66ab1e392; publication
           remains unauthorized.
+        - Completed independently certified live-CPAN-protocol successor a58f126b2721773ab9346d4dc449910371adccd9; no
+          prior-source evidence transfer or public publication.
     verified:
         - Source ea64d59467ef73a90e57bc23412daf78539bf69f; Local 38/38, PR 80/80, Full/Release 124passed plus the sole
           authorized waiver /125; zero unauthorized mandatory nonpasses.
@@ -340,6 +349,12 @@ completion:
         - Successor Local38/38, PR80/80, Full and fresh independent no-reuse Release124passed plus sole authorized waiver/125;
           42fresh receipts,21pairs,17routes,15Supported consumer scopes,six bounded Preview producers and256engineering
           obligations. Existing VSCE waiver renewed by the owner through2026-12-13inclusive UTC.
+        - "All four required immutable hosted jobs accepted exact evidence closure fe65e00f05664a7c09c99a30fe788fab7831f555:
+          https://github.com/strling-lang/strling/actions/runs/43775078870. The following documentation-only closure preserves
+          identical product source, signed evidence and immutable reader68; its final run is retained separately in the
+          operational handoff."
+        - Candidate evidence root d5e672fa07327ca3551097c7e440e252b4883056522561a686b4db4f6f45d69f; nested package root
+          1f13655c683044d8fbd5712c71776979a53c745c798f3dc602b93fb526e87c35; immutable qualified reader68bce447442fd59ac6a1046c48532adc6562ac12.
     behavior_changed:
         Corrected obsolete frontend defaults, reconciled package documentation/examples and independently
         verified the complete-product certificate and publication handoff.
@@ -351,6 +366,8 @@ completion:
           are qualified.
         - Evidence-only successor bundle and derived handoff replace the current candidate projection; historical ea64d594/da4539f5
           acceptance remains preserved at its exact original source and closure.
+        - Exact-owner MetaCPAN single-release envelopes and genuine empty HTTP-200 results are handled under unchanged
+          owner/source/artifact identity checks; malformed and substituted responses remain rejected.
     preserved_behavior:
         - Canonical Rust compiler semantics, normative authority, five target claims, diagnostics, ABI/transport and independent
           version contracts.
@@ -361,6 +378,9 @@ completion:
         - No product-source or trusted-verifier change during successor certification or evidence closure. Initial public
           scope remains16destinations/232obligations plus24explicit owner-deferred ConanCenter obligations; direct C++
           builds remain Supported.
+        - Original compiler semantics, support tiers,17build routes,16initial publication destinations,232applicable public
+          obligations and24explicitly deferred ConanCenter obligations remain unchanged. Historical8A and all earlier
+          signed certificates retain their original identities and accepted results.
     transitional_architecture: []
     deferred_work:
         - Separately authorized publication, owner/publisher/protected-environment prerequisites, coordinate-specific
@@ -369,8 +389,9 @@ completion:
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
     next_task:
-        Immutable hosted acceptance, certified byte transport, final owner-dependent release prerequisites
-        and exact publication authorization.
+        Protected immutable artifact export, remaining owner-only account/custody actions, exact source/run
+        publication approval and actual independent public verification.
     rationale:
-        All current-source local certification and signed evidence accepted; actual hosted acceptance remains
-        pending. Historical completion facts retain their original identities.
+        Fresh successor source-bound certification, independent reconstruction, original-authority signatures
+        and actual immutable hosted checks passed. This closes certification only; official publication remains separately
+        gated.

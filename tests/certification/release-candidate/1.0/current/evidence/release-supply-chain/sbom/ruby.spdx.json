@@ -19,18 +19,18 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/ruby/2f58a0416e1ce1942615e5977b6a989790823b7639bff86e8eb8361d31d56b92",
+    "documentNamespace": "https://strling.dev/sbom/ruby/4a6c99e91a734d9022d6e3416668c2e8dc5f6cac811e5a3ca148a83b676c39eb",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "d435891bdf3ba4fd395d8e5ada343d7a703c6a29a605444f1b0e2b200c14eafc"
+                    "checksumValue": "6ecdf61ab8bd87770e8ead49a3e36f5bd088355df5c0007b21db2fb9c49bbe4d"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "899309e2ad7613dae117b784fc84942a272c6b52"
+                    "checksumValue": "740cca0f9421af118c524502089a88f22fa135e2"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -45,11 +45,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5e7224bc0cd9f125c0b6b67e0f1d6e0c93181ad04c70b3a7957643118676ad9c"
+                    "checksumValue": "1e21cd9af5d5d93eeb8899a273169d9c7bb7838e20e1346c49765c2c555d64f7"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "00b8b4de8c68b21f1ed9ad11a9c791aa47049675"
+                    "checksumValue": "6e4a46f5766be4cc95ed0b7f373b7f3117bf37ef"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -178,11 +178,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "afe45c391156552118885daa12d8c90bacd174f63a9ef93e99ab85dc2c1b5993"
+                    "checksumValue": "570c122af1b85ad83b1131f25ffc55ce697781e02f8464ddd6248f64656b2e49"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "ff05c3e785712f052b019fe191b30636e516e562"
+                    "checksumValue": "081af7f13d10c8a0567e9e489c9fe103696fe966"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -200,7 +200,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "2f58a0416e1ce1942615e5977b6a989790823b7639bff86e8eb8361d31d56b92"
+                    "checksumValue": "4a6c99e91a734d9022d6e3416668c2e8dc5f6cac811e5a3ca148a83b676c39eb"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -217,7 +217,7 @@
             "licenseDeclared": "Apache-2.0",
             "name": "strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "ea342dff80965c1d0b3838c391d9c6288b2adf41"
+                "packageVerificationCodeValue": "521ddfd5003f5cf2c9b232afe156ebed7f5a977b"
             },
             "versionInfo": "4.0.0"
         },

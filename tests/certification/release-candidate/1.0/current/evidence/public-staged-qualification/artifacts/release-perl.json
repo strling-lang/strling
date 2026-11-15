@@ -19,16 +19,16 @@
       "url": "https://evidence.example.test/bindings/perl/README.md"
     },
     "provenance": {
-      "sha256": "dba3ba35b42118917bf39c1830a01974f0c6f8a0eaa69ca415d01ffd1301631f",
+      "sha256": "e563e08f5ce9bc4a824952861055aa7f277e3d964fb2238e3c6c68f5b2cf59bf",
       "url": "https://evidence.example.test/release-perl.intoto.json"
     },
     "sbom": {
-      "sha256": "c2e1fd8b9e1ba80b37f367f5e52437d3551c08880976618db4191713b008c93e",
+      "sha256": "6c4fc044d2ee5b32ca068ecd4bbf98dffcb03f76a1eaaeaa12f18cc7d7e4a0c3",
       "url": "https://evidence.example.test/release-perl.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.10991030297009274,
+  "elapsed_seconds": 0.13853842299431562,
   "metadata": {
     "fields": [
       "distribution",
@@ -43,7 +43,7 @@
       "check": "coordinate",
       "id": "release:perl:coordinate",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     },
@@ -53,7 +53,7 @@
       "check": "metadata",
       "id": "release:perl:metadata",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     },
@@ -63,7 +63,7 @@
       "check": "artifact",
       "id": "release:perl:artifact",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     },
@@ -73,7 +73,7 @@
       "check": "source",
       "id": "release:perl:source",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     },
@@ -83,7 +83,7 @@
       "check": "sbom",
       "id": "release:perl:sbom",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     },
@@ -93,7 +93,7 @@
       "check": "provenance",
       "id": "release:perl:provenance",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     },
@@ -103,7 +103,7 @@
       "check": "documentation",
       "id": "release:perl:documentation",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     },
@@ -113,38 +113,38 @@
       "check": "scope",
       "id": "release:perl:scope",
       "platform": null,
-      "retrieval_sha256": "83079c29de5096ede19b272494e4a39f2363bb569b641606a3002d07df578c89",
+      "retrieval_sha256": "6d5e3d4e8c06938ebd3aae1728bbaf6babe727dcad06a0402604f7008ccccaae",
       "status": "READY",
       "tier": "Preview"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/perl/STRling-4.0.0.tar.gz": "0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695"
+    "bindings/perl/STRling-4.0.0.tar.gz": "f7634122b96ba2a764ae58d9ae38a3fcbf74d35c1d6a440a5b139e772b67668e"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
       "request_url": "https://fastapi.metacpan.org/v1/release/STRLING/STRling-4.0.0",
-      "sha256": "87d12e841924fc9050a65c3abaed80160881c8ff12d6492700be3b4430a9ff9e",
-      "size": 176
+      "sha256": "f16c972d672fe15a8986a38241e180af6ef7ea0da7b93763a85ac5e018b010b2",
+      "size": 207
     },
     {
       "authority": "synthetic",
       "request_url": "https://cpan.metacpan.org/authors/id/S/ST/STRLING/STRling-4.0.0.tar.gz",
-      "sha256": "0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695",
-      "size": 12275
+      "sha256": "f7634122b96ba2a764ae58d9ae38a3fcbf74d35c1d6a440a5b139e772b67668e",
+      "size": 12279
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-perl.spdx.json",
-      "sha256": "c2e1fd8b9e1ba80b37f367f5e52437d3551c08880976618db4191713b008c93e",
+      "sha256": "6c4fc044d2ee5b32ca068ecd4bbf98dffcb03f76a1eaaeaa12f18cc7d7e4a0c3",
       "size": 20701
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-perl.intoto.json",
-      "sha256": "dba3ba35b42118917bf39c1830a01974f0c6f8a0eaa69ca415d01ffd1301631f",
+      "sha256": "e563e08f5ce9bc4a824952861055aa7f277e3d964fb2238e3c6c68f5b2cf59bf",
       "size": 5200
     },
     {

@@ -19,16 +19,16 @@
       "url": "https://evidence.example.test/bindings/typescript/README.md"
     },
     "provenance": {
-      "sha256": "dde20c76d5c22d6f27ad5c093f6310c9ee45b190be378100852a980ca1102e27",
+      "sha256": "58f13cd677770a612cfe304dcf997853f42370b91493e3479fbd1398cb643136",
       "url": "https://evidence.example.test/release-typescript.intoto.json"
     },
     "sbom": {
-      "sha256": "9fb21bd8299dc266f4cdb26452eaffc42ad161a0e769cb7e1622cca4ee03a610",
+      "sha256": "85606d2e11ecdf7a21e8e638002f8ef334a14ee32eec6fcf8fb35f96aba35712",
       "url": "https://evidence.example.test/release-typescript.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.37815832399064675,
+  "elapsed_seconds": 0.41137503302888945,
   "metadata": {
     "fields": [
       "dependencies",
@@ -51,7 +51,7 @@
       "check": "coordinate",
       "id": "release:typescript:coordinate",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     },
@@ -61,7 +61,7 @@
       "check": "metadata",
       "id": "release:typescript:metadata",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     },
@@ -71,7 +71,7 @@
       "check": "artifact",
       "id": "release:typescript:artifact",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     },
@@ -81,7 +81,7 @@
       "check": "source",
       "id": "release:typescript:source",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     },
@@ -91,7 +91,7 @@
       "check": "sbom",
       "id": "release:typescript:sbom",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     },
@@ -101,7 +101,7 @@
       "check": "provenance",
       "id": "release:typescript:provenance",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     },
@@ -111,7 +111,7 @@
       "check": "documentation",
       "id": "release:typescript:documentation",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     },
@@ -121,7 +121,7 @@
       "check": "scope",
       "id": "release:typescript:scope",
       "platform": null,
-      "retrieval_sha256": "7aab5285e91737304fc2831c5741da34aeca618d11fbaddf59304fa9bf454a47",
+      "retrieval_sha256": "da93a2d9ef876bccdf97a03f3c20204f751c055888c3955ff87313605dd97cb6",
       "status": "READY",
       "tier": "Preview"
     }
@@ -146,13 +146,13 @@
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-typescript.spdx.json",
-      "sha256": "9fb21bd8299dc266f4cdb26452eaffc42ad161a0e769cb7e1622cca4ee03a610",
+      "sha256": "85606d2e11ecdf7a21e8e638002f8ef334a14ee32eec6fcf8fb35f96aba35712",
       "size": 586700
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-typescript.intoto.json",
-      "sha256": "dde20c76d5c22d6f27ad5c093f6310c9ee45b190be378100852a980ca1102e27",
+      "sha256": "58f13cd677770a612cfe304dcf997853f42370b91493e3479fbd1398cb643136",
       "size": 4686
     },
     {

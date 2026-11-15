@@ -74,13 +74,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
+                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
+                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
                 },
                 {
                     "digest": {
-                        "sha256": "c942c04d4f5f5987acb5ac7637fcbda6cd05247f13ce5fe8b3b466182e2be653"
+                        "sha256": "7224851c3ef582eb78d2f45194fb66ce2c04a036c22bc8c95c60b7f68864c9f2"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 },
@@ -98,7 +98,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:python",
+                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:python",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -107,19 +107,19 @@
     "subject": [
         {
             "digest": {
-                "sha256": "2cce2fd291db9adfbc5f0673f970d3c9ca588a187a7cf0225309ba7c98ce837d"
+                "sha256": "f27f8b3c7251042cd7100be6c06cce57e435276511d6e16fe29be22f6ed36856"
             },
             "name": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl"
         },
         {
             "digest": {
-                "sha256": "0d68eacbfbae5c6750a4a1a8f0b1bdb414e02b2293976df35c24a79eae7a154a"
+                "sha256": "6609a159b48db58f3f22f572d71a6461500e170fd9c5099b2bd5dd8d1192d76b"
             },
             "name": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl"
         },
         {
             "digest": {
-                "sha256": "bbea1083e2efc8c7870a1dc357ba696e8d872ce5f8435a12efa5bb1adc4bdba2"
+                "sha256": "5e28bc5192fec6d76b5f633a1840dc6509e0d004775181a97c0002c0d6d2a2d7"
             },
             "name": "bindings/python/dist/strling-4.0.0.tar.gz"
         }

@@ -19,7 +19,7 @@
       "url": "https://evidence.example.test/bindings/kotlin/README.md"
     },
     "provenance": {
-      "sha256": "4f944042a1ac9c0996731928e5c1b4cd7e7b04fd63a2c6f70dca2d7f90d8c051",
+      "sha256": "8902afac2e5ea07886d03f5cdda9dc843fac245c3d110b2f295740087d982417",
       "url": "https://evidence.example.test/release-kotlin.intoto.json"
     },
     "sbom": {
@@ -28,7 +28,7 @@
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.7576525670010597,
+  "elapsed_seconds": 1.0064452220103703,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:kotlin:coordinate",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:kotlin:metadata",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:kotlin:artifact",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:kotlin:source",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:kotlin:sbom",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:kotlin:provenance",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:kotlin:documentation",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:kotlin:scope",
       "platform": null,
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:kotlin:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:kotlin:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:kotlin:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:kotlin:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:kotlin:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:kotlin:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:kotlin:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,7 +190,7 @@
       "check": "isolation",
       "id": "release:kotlin:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d3134ee69ffee059bd6a3723d3be579cd4ef7ad095c62c11961fc82ba678aa83",
+      "retrieval_sha256": "ad11f531ab3c8d8fa66d38ec9988f4049f02945fea3fc7e3de1d6d1c4d99db84",
       "status": "VERIFYING",
       "tier": "Supported"
     }
@@ -236,7 +236,7 @@
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-kotlin.intoto.json",
-      "sha256": "4f944042a1ac9c0996731928e5c1b4cd7e7b04fd63a2c6f70dca2d7f90d8c051",
+      "sha256": "8902afac2e5ea07886d03f5cdda9dc843fac245c3d110b2f295740087d982417",
       "size": 7578
     },
     {

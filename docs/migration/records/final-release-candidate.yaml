@@ -1,7 +1,7 @@
 record_version: 2.0.0
 scope:
     diff:
-        base: 8a0c1ca31484b537bcff596922182bb66ab1e392
+        base: a58f126b2721773ab9346d4dc449910371adccd9
         head: working-tree
     allowed_paths:
         - tests/certification/release-candidate/1.0/current/**
@@ -37,45 +37,45 @@ change_classification:
     semantic_change:
         level: none
         evidence:
-            - Evidence-only successor closure; product source, policies and trusted pins are unchanged from the separately
-              certified implementation.
+            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+              policy or trusted-pin change.
     public_api_change:
         level: none
         evidence:
-            - Evidence-only successor closure; product source, policies and trusted pins are unchanged from the separately
-              certified implementation.
+            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+              policy or trusted-pin change.
     schema_change:
         level: none
         evidence:
-            - Evidence-only successor closure; product source, policies and trusted pins are unchanged from the separately
-              certified implementation.
+            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+              policy or trusted-pin change.
     diagnostic_change:
         level: none
         evidence:
-            - Evidence-only successor closure; product source, policies and trusted pins are unchanged from the separately
-              certified implementation.
+            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+              policy or trusted-pin change.
     target_behavior_change:
         level: none
         evidence:
-            - Evidence-only successor closure; product source, policies and trusted pins are unchanged from the separately
-              certified implementation.
+            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+              policy or trusted-pin change.
     architecture_change:
         level: none
         evidence:
-            - Evidence-only successor closure; product source, policies and trusted pins are unchanged from the separately
-              certified implementation.
+            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+              policy or trusted-pin change.
     generated_output_change:
         level: none
         evidence:
-            - Evidence-only successor closure; product source, policies and trusted pins are unchanged from the separately
-              certified implementation.
+            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+              policy or trusted-pin change.
     documentation_only: false
     internal_implementation: false
 title: Final product candidate preparation and clean-room certification
-status: complete
+status: in_progress
 objective:
-    Preserve historical candidate acceptance and close the independently recertified publication-preparation
-    successor without publication or product-source changes.
+    Close the independently certified live-CPAN-protocol successor while preserving historical certification
+    and the separate publication boundary.
 required_verification:
     - name: Focused source-helper and documentation regressions
       command: python3 -m pytest -q tooling/tests/test_documentation_integrity.py
@@ -272,6 +272,24 @@ checkpoints:
                 retains identical product source, signed evidence and qualified verifier; its final run is retained in the
                 operational handoff."
             command: gh run view 43715440180 --repo strling-lang/strling --json headSha,conclusion,jobs
+    - name: Live CPAN protocol successor certification
+      status: in_progress
+      evidence:
+          - check: Fresh source-bound profiles, reconstruction and original-authority signatures
+            result: passed
+            details:
+                'Product source a58f126b2721773ab9346d4dc449910371adccd9; qualified immutable reader 68bce447442fd59ac6a1046c48532adc6562ac12;
+                candidate evidence root d5e672fa07327ca3551097c7e440e252b4883056522561a686b4db4f6f45d69f; nested package root
+                1f13655c683044d8fbd5712c71776979a53c745c798f3dc602b93fb526e87c35. Fresh profiles: {"full": {"failed": 0, "incomplete":
+                0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0,
+                "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request":
+                {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived":
+                0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable":
+                0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable
+                public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.'
+          - check: Actual immutable hosted acceptance
+            result: not_run
+            details: Pending exact successor closure dispatch; no historical hosted run is reused.
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -295,6 +313,8 @@ commits:
       subject: Synchronize bounded-command fixture readiness
     - sha: e6399bd46e414a1388da567f7b20e2945a928253
       subject: Seal corrected publication candidate certification
+    - sha: a58f126b2721773ab9346d4dc449910371adccd9
+      subject: Promote independently qualified CPAN protocol verifier
 completion:
     accomplished:
         - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
@@ -349,10 +369,8 @@ completion:
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
     next_task:
-        Finish protected artifact export and registry/account prerequisites, then obtain exact source-bound
-        publication authorization and execute independent public verification.
+        Immutable hosted acceptance, certified byte transport, final owner-dependent release prerequisites
+        and exact publication authorization.
     rationale:
-        Successor implementation and source-bound certification passed, including complete reconstruction,
-        original-authority signatures and actual immutable hosted acceptance. Owner-dependent LuaRocks credential/uploader
-        verification, NuGet authenticated metadata, off-device recovery transfer, protected export and publication authorization
-        remain release prerequisites. Historical completion facts retain their original identities.
+        All current-source local certification and signed evidence accepted; actual hosted acceptance remains
+        pending. Historical completion facts retain their original identities.

@@ -17,7 +17,7 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"570e79e3e3fcf92a052cda0d293321f2d61f87b9e156fae4287dc0d00479a5dc\"}"
+            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"d54c8c9166d4afd24f9ed3dc83ebbce6e8f738f7894afd9f510540c4bb0b69c1\"}"
         }
     ],
     "creationInfo": {
@@ -31,7 +31,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/c++/c05341d9ad43f66b1f3b9083fd6e8181f4df9a3069b15b4e42a40fb668fd6621",
+    "documentNamespace": "https://strling.dev/sbom/c++/d6d293f0cb45159a7b8bc4381907e87f68f0fca1515c7e35f36eca6e0dae7ea5",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -46,7 +46,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/conaninfo.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/conaninfo.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -57,15 +57,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "8b98a04a0ce6046f1b1c737a192cd2ba344e41b60eb8f7fe63d0de9be1c56a0b"
+                    "checksumValue": "73b692d09866e47070e111786dd2298083a6ef5328f567ac001b53aba840a8cd"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "3c5ffc8d82e059f364d1e14d0cfbd3d624d5f935"
+                    "checksumValue": "263692a6785a40d4c1748e85cf1cbb24bbb5fecc"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/conanmanifest.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/conanmanifest.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -84,7 +84,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -103,7 +103,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling/essential.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling/essential.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -122,7 +122,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling/native.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling/native.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -141,7 +141,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling/simply.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling/simply.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -160,7 +160,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling/strling.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling/strling.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -179,7 +179,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling_essential.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling_essential.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -198,7 +198,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling_interop.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling_interop.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -217,7 +217,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/include/strling_simply.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/include/strling_simply.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -236,7 +236,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/lib/cmake/strling-c/strling-c-config-version.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/lib/cmake/strling-c/strling-c-config-version.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -255,7 +255,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/lib/cmake/strling-c/strling-c-config.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/lib/cmake/strling-c/strling-c-config.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -274,7 +274,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/lib/cmake/strling-cpp/strling-cpp-config-version.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/lib/cmake/strling-cpp/strling-cpp-config-version.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -293,7 +293,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/lib/cmake/strling-cpp/strling-cpp-config.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/lib/cmake/strling-cpp/strling-cpp-config.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -312,7 +312,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/lib/libstrling.a",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/lib/libstrling.a",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -331,7 +331,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/lib/libstrling_cpp.a",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/lib/libstrling_cpp.a",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -350,7 +350,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/lib/libstrling_interop.a",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/lib/libstrling_interop.a",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -369,7 +369,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/licenses/LICENSE",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/licenses/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -388,7 +388,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/licenses/THIRD_PARTY_NOTICES.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/licenses/THIRD_PARTY_NOTICES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -407,7 +407,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/share/licenses/strling/LICENSE",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/share/licenses/strling/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -426,7 +426,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strlibf733317afd59/p/share/licenses/strling/THIRD_PARTY_NOTICES.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz!/b/strli93479d960f438/p/share/licenses/strling/THIRD_PARTY_NOTICES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -437,11 +437,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "ccd7ea32fa34b1667a3a6a10f429e2f9970a634de4a9532caa416ffda7ab788b"
+                    "checksumValue": "a4da829510372c33fdcd12dd4999c9835e219662294dc111249b6fdad04445b3"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "660cab612e61b5c31492588e5216c5aa4df925b8"
+                    "checksumValue": "b27688407140e3c1c98c00439c84981f5840169f"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -475,11 +475,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "a50d8d48b9bc1bc07ace9efd00ace946083e6b5a79f096d3e84600f2a36c4cab"
+                    "checksumValue": "b6a21d674689e7de38fb1326ab802b47244bc972d6101dad984f73effbc4f2ef"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "1d0f5b6bbda9eb45207667115d9a11a10d326270"
+                    "checksumValue": "dd7da354208ba5a803efff63b2c24d5c19bdd87b"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -20965,7 +20965,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/conaninfo.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/conaninfo.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -20976,15 +20976,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5d5fc9e2a7b4c7b42adee5cd774fc00f864fc602de9f068260e6454fb03e3e11"
+                    "checksumValue": "faa111e067cb3dd02e0daf8376b3d828c2bbc833e5584204de78d5a86ddd2c94"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "1f4976b6696bae8ccb711ab069d450cd366fbb23"
+                    "checksumValue": "25f718c3fcf8aad5a8c4b21d1b787eae25d3d421"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/conanmanifest.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/conanmanifest.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21003,7 +21003,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21022,7 +21022,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling/essential.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling/essential.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21041,7 +21041,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling/native.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling/native.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21060,7 +21060,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling/simply.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling/simply.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21079,7 +21079,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling/strling.hpp",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling/strling.hpp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21098,7 +21098,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling_essential.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling_essential.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21117,7 +21117,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling_interop.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling_interop.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21136,7 +21136,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/include/strling_simply.h",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/include/strling_simply.h",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21155,7 +21155,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/lib/cmake/strling-c/strling-c-config-version.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/lib/cmake/strling-c/strling-c-config-version.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21174,7 +21174,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/lib/cmake/strling-c/strling-c-config.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/lib/cmake/strling-c/strling-c-config.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21193,7 +21193,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/lib/cmake/strling-cpp/strling-cpp-config-version.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/lib/cmake/strling-cpp/strling-cpp-config-version.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21212,7 +21212,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/lib/cmake/strling-cpp/strling-cpp-config.cmake",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/lib/cmake/strling-cpp/strling-cpp-config.cmake",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21231,7 +21231,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/lib/strling.lib",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/lib/strling.lib",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21250,7 +21250,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/lib/strling_cpp.lib",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/lib/strling_cpp.lib",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21269,7 +21269,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/lib/strling_interop.lib",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/lib/strling_interop.lib",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21288,7 +21288,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/licenses/LICENSE",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/licenses/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21307,7 +21307,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/licenses/THIRD_PARTY_NOTICES.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/licenses/THIRD_PARTY_NOTICES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21326,7 +21326,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/share/licenses/strling/LICENSE",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/share/licenses/strling/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21345,7 +21345,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli27b95b9996dd9/p/share/licenses/strling/THIRD_PARTY_NOTICES.txt",
+            "fileName": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz!/b/strli7da7381610fb5/p/share/licenses/strling/THIRD_PARTY_NOTICES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -21356,11 +21356,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "14132ff75f14fe05539a8c3e0b3bee23d2e13bf0ec6ede945c105dc94f75672d"
+                    "checksumValue": "09230c3a94a7c4eae8eaa3a1bc2ab118ee9eece59bf0caaec27dd6d815760920"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "e4139a48ca8fdc6825fe35e85db860fbfbe13799"
+                    "checksumValue": "034ebef9eed6c73cdd877a913d1518d28e5284cb"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -21394,11 +21394,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c79eb3f73a32336f2b6bac4c634ff8d97e2cfc412d491828051efa929f9efaf4"
+                    "checksumValue": "b67efc79dccb029c71ccd3fcdc818e413739726cd32e1cdc261d10adaab486f4"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "fbf226d7db429213633f8aa366cc067176621b99"
+                    "checksumValue": "bb059cce8250c629d73b0f5bdb21a99191d77902"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -41879,7 +41879,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c05341d9ad43f66b1f3b9083fd6e8181f4df9a3069b15b4e42a40fb668fd6621"
+                    "checksumValue": "d6d293f0cb45159a7b8bc4381907e87f68f0fca1515c7e35f36eca6e0dae7ea5"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -41896,7 +41896,7 @@
             "licenseDeclared": "Apache-2.0",
             "name": "strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "224369c0cac0ef1db420d84eb5ffd551f80de83b"
+                "packageVerificationCodeValue": "0ffa001ce8b916e7559dcc35b55a075cc3aedbab"
             },
             "versionInfo": "4.0.0"
         },

@@ -19,7 +19,7 @@
       "url": "https://evidence.example.test/bindings/r/README.md"
     },
     "provenance": {
-      "sha256": "57c217571e8f3dec89e52e321039681f2bd7b71fd89f44cfddca017ce01221b4",
+      "sha256": "3c83acb855ed62ca6b25c1f24c8816ab9e09fd50b8512284207b8a2aba203ee9",
       "url": "https://evidence.example.test/release-r.intoto.json"
     },
     "sbom": {
@@ -28,7 +28,7 @@
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 44.490042396006174,
+  "elapsed_seconds": 102.12973804801004,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:r:coordinate",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:r:metadata",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:r:artifact",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:r:source",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:r:sbom",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:r:provenance",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:r:documentation",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:r:scope",
       "platform": null,
-      "retrieval_sha256": "f385329b708928281bd2ae425d395bcdfbe3c760881095fb0f8c07c83b42e9f8",
+      "retrieval_sha256": "22519c041f867f939e62926a1075a3e0d145f2cb273086162c75757cb4bf7adf",
       "status": "READY",
       "tier": "Preview"
     }
@@ -578,20 +578,20 @@
     {
       "authority": "synthetic",
       "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.0",
-      "sha256": "755f4394874fdc9652f4031fb687af99dcdac1007cc4a1d410b367e4b6be545e",
+      "sha256": "2a02f6b612ef4ca4dfb711e36202cd054e17958fb5589c98753c31b8f1f82d64",
       "size": 104
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/8a0c1ca31484b537bcff596922182bb66ab1e392",
-      "sha256": "b59a41bc45cec289975df1fa7893ed97d1380bdea00b887dc9b645c5a54924a6",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/a58f126b2721773ab9346d4dc449910371adccd9",
+      "sha256": "281303096d18a86a3f6e2390e3afae36be926c51d6236478c2108b5432c2e9ec",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/8a0c1ca31484b537bcff596922182bb66ab1e392",
-      "sha256": "446c2c0efece9252259e1b5dcffd14aa8ee23d8c80d206395e6272a7d4be6f74",
-      "size": 729615
+      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/a58f126b2721773ab9346d4dc449910371adccd9",
+      "sha256": "87507cd4851ac3daa3ba4e6483d7eb9a5cd7335e813bb176c104e331ccd8b3c7",
+      "size": 729612
     },
     {
       "authority": "synthetic",
@@ -602,7 +602,7 @@
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-r.intoto.json",
-      "sha256": "57c217571e8f3dec89e52e321039681f2bd7b71fd89f44cfddca017ce01221b4",
+      "sha256": "3c83acb855ed62ca6b25c1f24c8816ab9e09fd50b8512284207b8a2aba203ee9",
       "size": 5980
     },
     {

@@ -1,3 +1,19 @@
+# Live-protocol-corrected publication candidate
+
+Status: **SOURCE CERTIFICATION PASSED — HOSTED ACCEPTANCE PENDING**.
+
+Product source a58f126b2721773ab9346d4dc449910371adccd9; qualified immutable reader 68bce447442fd59ac6a1046c48532adc6562ac12; candidate evidence root d5e672fa07327ca3551097c7e440e252b4883056522561a686b4db4f6f45d69f; nested package root 1f13655c683044d8fbd5712c71776979a53c745c798f3dc602b93fb526e87c35. Fresh profiles: {"full": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0, "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request": {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived": 0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.
+
+A final anonymous exact-owner MetaCPAN lookup exposed the registry's wrapped `release` response and its HTTP-200 empty result. The previous reader expected a flat record. The narrowly corrected adapter accepts a single validated envelope or the preserved flat representation, reports the genuine empty envelope as `NOT_PUBLISHED`, and retains exact owner, distribution, version, HTTPS download and certified artifact checks. Malformed, ambiguous and substituted records remain rejected. All thirteen independent reader qualification/replay stages passed before promotion. Required generated families were reconciled before the new product source was frozen; its fresh profiles, builds, consumers, independent reconstruction and original-authority signatures are distinct from the earlier accepted 8A evidence.
+
+Candidate detached signature SHA-256: `7721e9d1967575c6e56301de836434c002919cf35ec0937d073c3b7ce1a18e6e`. Certifier: `strling-local-release-certifier-2026-01`; SSH fingerprint: `SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA`. Signing authority, trusted policies, Maven signing identity and support tiers are preserved. The sole VSCE waiver remains owner-authorized through December 13, 2026 inclusive UTC.
+
+Independent public package retrieval and installation remain pending separate exact publication authorization. Initial direct C++ distribution remains Supported; ConanCenter admission is explicitly deferred. Maven's public primary fingerprint remains `FC743D45327F6528D9AF26108BBC359CDE8F7505`; paper recovery custody is confirmed and physical off-device transfer awaits owner confirmation. LuaRocks replacement credential/uploader verification, authenticated NuGet credential metadata, protected immutable artifact staging and exact source/run publication approval remain separate owner actions. No tags, packages or GitHub Release were created.
+
+## Preserved historical candidate reports
+
+The following reports retain their original source identities and accepted results. They do not certify this successor.
+
 # Publication-preparation successor certification
 
 Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.

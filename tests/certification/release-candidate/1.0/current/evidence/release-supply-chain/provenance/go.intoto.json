@@ -67,9 +67,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
+                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
+                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
                 },
                 {
                     "digest": {
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:go",
+                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:go",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }

@@ -67,9 +67,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
+                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
+                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
                 },
                 {
                     "digest": {
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:fsharp",
+                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:fsharp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -94,7 +94,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "c84c630ab3d0de84b306548cc96c4f97d5ef566eaafc5eda5abc8f1804c4931c"
+                "sha256": "1e68a4d0598fc67f2d48fee44c22e8b8ecbb26917b45c84049244f1208d4d197"
             },
             "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg"
         }

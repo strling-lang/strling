@@ -115,9 +115,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
+                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
+                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
                 },
                 {
                     "digest": {
@@ -133,7 +133,7 @@
                 },
                 {
                     "digest": {
-                        "sha256": "c942c04d4f5f5987acb5ac7637fcbda6cd05247f13ce5fe8b3b466182e2be653"
+                        "sha256": "7224851c3ef582eb78d2f45194fb66ce2c04a036c22bc8c95c60b7f68864c9f2"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -145,7 +145,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:cpp",
+                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:cpp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -154,7 +154,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "9cc02444af270d26af5fb913f38fd9a0437b02fcf645ac8658482803323321f1"
+                "sha256": "1e04e93cf14ed711b17a4bf34bdf2e6d9de40a49650953feff8bf048955ff257"
             },
             "name": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz"
         },
@@ -166,7 +166,7 @@
         },
         {
             "digest": {
-                "sha256": "437af33c28680dd21b27bb0f03c63251ef51364d4de921d9e65bff4d48ea8b57"
+                "sha256": "7771386aa6effc4153cf21347c88458d9c7c63d1bae62c7e027aaa4eca8e1668"
             },
             "name": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz"
         },

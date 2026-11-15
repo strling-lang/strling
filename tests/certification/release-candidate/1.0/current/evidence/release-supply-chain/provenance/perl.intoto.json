@@ -59,9 +59,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
+                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
+                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
                 },
                 {
                     "digest": {
@@ -77,7 +77,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:perl",
+                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:perl",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -86,7 +86,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "0217c9ab5ff74c41dbc57df8225eb944e59ddd2426d44ee4aefb8a9766582695"
+                "sha256": "f7634122b96ba2a764ae58d9ae38a3fcbf74d35c1d6a440a5b139e772b67668e"
             },
             "name": "bindings/perl/STRling-4.0.0.tar.gz"
         }

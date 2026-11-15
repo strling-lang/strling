@@ -9,7 +9,7 @@
     "product_version": "4.0.0",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "1dd03e7c92de02640e57bcab1a8edf2f1d2aade6c2c077e8cd053cf0250d9863",
+    "retrieval_files_sha256": "4f7f3a543c71cc03c4c84afa113d9120e0e96cdfeca58a2c7f72df4a493bf4f6",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -17,10 +17,10 @@
       "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8"
     },
     "result": {
+      "status": "passed",
       "target_pattern": "abc",
       "source_outcome": "succeeded",
       "kernel_mismatch_rejected": true,
-      "status": "passed",
       "native_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e",
       "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
       "documentation_examples": [
@@ -100,7 +100,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "e8299907f54791a7757280d261fead54bae6a2ae5077344101f6ac0d9eba5f24"
+    "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432"
   },
-  "elapsed_seconds": 63.623233182006516
+  "elapsed_seconds": 67.81453200802207
 }

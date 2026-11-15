@@ -1,7 +1,7 @@
 {
   "status": "read-only-preflight-completed",
   "authoritative": false,
-  "source_head": "8a0c1ca31484b537bcff596922182bb66ab1e392",
+  "source_head": "a58f126b2721773ab9346d4dc449910371adccd9",
   "publication_authorized": false,
   "registry_mutation_authorized": false,
   "provisional_rc": "4.0.0-rc.1",
@@ -9,7 +9,7 @@
   "repository_publicly_resolved": true,
   "repository_observation": {
     "status": "metadata-retrieved",
-    "sha256": "b0a316c278ee4dc24c9d23f4b671a671ae232f4f4227570fdbb3642103060988"
+    "sha256": "202f3b14b3aaee889d433d20d00ededaf528dcff4a0d3fe9527e621b5930324f"
   },
   "observations": [
     {
@@ -17,7 +17,7 @@
       "registry": "github-tag:c-vVERSION",
       "package_name": "strling-c",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:21.665651+00:00",
+      "observed_utc": "2026-11-15T15:21:28.120578+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -47,7 +47,7 @@
       "registry": "conan",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:23.062993+00:00",
+      "observed_utc": "2026-11-15T15:21:29.121566+00:00",
       "status": "owner-specific-coordinate-unverified",
       "reason": "ConanCenter publication is explicitly deferred; direct C++ developer installation remains supported."
     },
@@ -56,7 +56,7 @@
       "registry": "nuget.org",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:23.084516+00:00",
+      "observed_utc": "2026-11-15T15:21:29.139584+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -86,7 +86,7 @@
       "registry": "pub.dev",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:24.468326+00:00",
+      "observed_utc": "2026-11-15T15:21:30.056892+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -116,7 +116,7 @@
       "registry": "nuget.org",
       "package_name": "STRling.FSharp",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:25.673429+00:00",
+      "observed_utc": "2026-11-15T15:21:30.971316+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -146,7 +146,7 @@
       "registry": "github-tag:go-vVERSION",
       "package_name": "github.com/strling-lang/strling/bindings/go",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:26.751948+00:00",
+      "observed_utc": "2026-11-15T15:21:31.899038+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -176,7 +176,7 @@
       "registry": "maven-central",
       "package_name": "io.github.strling-lang:strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:28.366276+00:00",
+      "observed_utc": "2026-11-15T15:21:33.378851+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -206,7 +206,7 @@
       "registry": "maven-central",
       "package_name": "io.github.strling-lang:strling-kotlin",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:30.063727+00:00",
+      "observed_utc": "2026-11-15T15:21:34.652252+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -236,7 +236,7 @@
       "registry": "luarocks.org",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:31.984478+00:00",
+      "observed_utc": "2026-11-15T15:21:35.934546+00:00",
       "status": "owner-specific-coordinate-unverified",
       "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately."
     },
@@ -245,7 +245,7 @@
       "registry": "cpan",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:32.011362+00:00",
+      "observed_utc": "2026-11-15T15:21:35.957345+00:00",
       "status": "owner-specific-coordinate-unverified",
       "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately."
     },
@@ -254,7 +254,7 @@
       "registry": "github-tag:php-vVERSION",
       "package_name": "strling/strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:32.032052+00:00",
+      "observed_utc": "2026-11-15T15:21:35.983813+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -284,7 +284,7 @@
       "registry": "pypi.org",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:33.930845+00:00",
+      "observed_utc": "2026-11-15T15:21:37.080672+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -314,7 +314,7 @@
       "registry": "github-tag:r-vVERSION",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:35.501211+00:00",
+      "observed_utc": "2026-11-15T15:21:38.141776+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -344,7 +344,7 @@
       "registry": "rubygems.org",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:37.662070+00:00",
+      "observed_utc": "2026-11-15T15:21:39.299112+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -374,7 +374,7 @@
       "registry": "crates.io",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:40.152323+00:00",
+      "observed_utc": "2026-11-15T15:21:40.609450+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -404,7 +404,7 @@
       "registry": "github-tag:swift-vVERSION",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:41.693317+00:00",
+      "observed_utc": "2026-11-15T15:21:41.646953+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
@@ -434,7 +434,7 @@
       "registry": "npmjs.org",
       "package_name": "@strling-lang/strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-14T22:40:46.331076+00:00",
+      "observed_utc": "2026-11-15T15:21:42.852744+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {

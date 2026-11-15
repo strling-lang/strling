@@ -1,1 +1,1 @@
-{"command": ["perl", "/tmp/strling-preview-documentation-f80_hh_x/example.pl", "/tmp/strling-preview-documentation-f80_hh_x/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.07016362098511308}
+{"command": ["perl", "/tmp/strling-preview-documentation-o3oo60zn/example.pl", "/tmp/strling-preview-documentation-o3oo60zn/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.06263348000356928}

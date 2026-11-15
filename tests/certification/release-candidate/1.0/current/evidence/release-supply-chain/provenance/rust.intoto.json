@@ -70,13 +70,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "8a0c1ca31484b537bcff596922182bb66ab1e392"
+                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@8a0c1ca31484b537bcff596922182bb66ab1e392"
+                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
                 },
                 {
                     "digest": {
-                        "sha256": "804429b9af69cd860805f074736bedafb7232f952ab3288bb4ec38858b5200f2"
+                        "sha256": "55c2aa3191d8b5abb80a5c7ce3db8062a27767822a3446495a1cc0b571d6347d"
                     },
                     "uri": "strling:dependency-root:rust-binding-cargo"
                 }
@@ -88,7 +88,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "8a0c1ca31484b537bcff596922182bb66ab1e392:release:rust",
+                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:rust",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -97,7 +97,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "6bc99a4a447bca2d866a2859e495058d75e505ab6d78d164e0363aba1082164d"
+                "sha256": "f66fde2fef29d8fab443bb36de01f2653ac8a5d88bb3727f90162f3318f606d5"
             },
             "name": "target/package/strling-4.0.0.crate"
         }

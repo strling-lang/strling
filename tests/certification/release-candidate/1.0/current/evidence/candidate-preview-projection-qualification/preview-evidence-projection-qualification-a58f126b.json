@@ -1,0 +1,15 @@
+{
+  "status": "passed-lossless-preview-evidence-projection",
+  "source": "a58f126b2721773ab9346d4dc449910371adccd9",
+  "mandatory_json_files": 27,
+  "diagnostic_archives": 42,
+  "empty_diagnostics": 28,
+  "original_files": 69,
+  "index_sha256": "7652c98a1ede415d5d467a616fc5602e569ca892c66ce9f52470739fa17e5ce1",
+  "helper_sha256": "41c995c2842eb71d8a19e4b0989e5f3b1d09e0ddeebc8cef1384c3b0085359fc",
+  "codec_sha256": "925b3fc9559cbce4fc0c2c7a6acd441e97ef6a45f7714d9cc3ed3fc5ef266183",
+  "producer_json_changed": false,
+  "product_artifact_normalization_applied": false,
+  "private_key_read": false,
+  "publication_authorized": false
+}

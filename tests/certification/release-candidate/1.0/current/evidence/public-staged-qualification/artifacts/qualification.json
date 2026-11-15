@@ -2,114 +2,114 @@
   "artifacts": [
     {
       "artifact_id": "release:c",
-      "elapsed_seconds": 31.440951626980677,
+      "elapsed_seconds": 66.13505933299894,
       "status": "passed"
     },
     {
       "artifact_id": "release:cpp",
-      "elapsed_seconds": 33.38500583998393,
+      "elapsed_seconds": 44.462684120982885,
       "status": "passed"
     },
     {
       "artifact_id": "release:csharp",
-      "elapsed_seconds": 0.38371274899691343,
+      "elapsed_seconds": 0.4102978970040567,
       "status": "passed"
     },
     {
       "artifact_id": "release:dart",
-      "elapsed_seconds": 0.988204911001958,
+      "elapsed_seconds": 1.6432296119746752,
       "status": "passed"
     },
     {
       "artifact_id": "release:fsharp",
-      "elapsed_seconds": 0.30599569901824,
+      "elapsed_seconds": 0.48831223597517237,
       "status": "passed"
     },
     {
       "artifact_id": "release:go",
-      "elapsed_seconds": 27.90798720897874,
+      "elapsed_seconds": 94.88081195502309,
       "status": "passed"
     },
     {
       "artifact_id": "release:java",
-      "elapsed_seconds": 0.9317553639994003,
+      "elapsed_seconds": 1.1943484880030155,
       "status": "passed"
     },
     {
       "artifact_id": "release:kotlin",
-      "elapsed_seconds": 0.7576525670010597,
+      "elapsed_seconds": 1.0064452220103703,
       "status": "passed"
     },
     {
       "artifact_id": "release:lua",
-      "elapsed_seconds": 0.1364353420212865,
+      "elapsed_seconds": 0.1569913660059683,
       "status": "passed"
     },
     {
       "artifact_id": "release:perl",
-      "elapsed_seconds": 0.10991030297009274,
+      "elapsed_seconds": 0.13853842299431562,
       "status": "passed"
     },
     {
       "artifact_id": "release:php",
-      "elapsed_seconds": 41.08149932802189,
+      "elapsed_seconds": 103.31289801601088,
       "status": "passed"
     },
     {
       "artifact_id": "release:python",
-      "elapsed_seconds": 0.6646131669986062,
+      "elapsed_seconds": 0.999212444992736,
       "status": "passed"
     },
     {
       "artifact_id": "release:r",
-      "elapsed_seconds": 44.490042396006174,
+      "elapsed_seconds": 102.12973804801004,
       "status": "passed"
     },
     {
       "artifact_id": "release:ruby",
-      "elapsed_seconds": 0.11027584603289142,
+      "elapsed_seconds": 0.12667309900280088,
       "status": "passed"
     },
     {
       "artifact_id": "release:rust",
-      "elapsed_seconds": 0.2884661839925684,
+      "elapsed_seconds": 0.17468165000900626,
       "status": "passed"
     },
     {
       "artifact_id": "release:swift",
-      "elapsed_seconds": 27.861972854007035,
+      "elapsed_seconds": 95.36106902902247,
       "status": "passed"
     },
     {
       "artifact_id": "release:typescript",
-      "elapsed_seconds": 0.37815832399064675,
+      "elapsed_seconds": 0.41137503302888945,
       "status": "passed"
     }
   ],
   "authentication": {
-    "certified_source_sha": "8a0c1ca31484b537bcff596922182bb66ab1e392",
-    "closure_source_sha": "8a0c1ca31484b537bcff596922182bb66ab1e392",
+    "certified_source_sha": "a58f126b2721773ab9346d4dc449910371adccd9",
+    "closure_source_sha": "a58f126b2721773ab9346d4dc449910371adccd9",
     "manifest_sha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
     "product_version": "4.0.0",
     "publication_authorized": false,
-    "signed_evidence_root": "d18509d0933489b16c9c832223297fd287b9169b930bf025a821b794a5a2f479",
+    "signed_evidence_root": "1f13655c683044d8fbd5712c71776979a53c745c798f3dc602b93fb526e87c35",
     "status": "passed",
-    "supply_chain_sha256": "94a035b366aa903e8bb03a2fe41cb2669a439a3fae129c1e8c3cbe39ac72fc0b",
+    "supply_chain_sha256": "26770a719c4ff736559a03c0f8d6874dd4c807e931a0b4864fdf3c8ef7cca4cb",
     "trust_policy": "governance/release-certification-trust.json",
-    "verifier_source_sha": "c653d82504bf28f4d18bc0f80c9426912a2fb3e7"
+    "verifier_source_sha": "68bce447442fd59ac6a1046c48532adc6562ac12"
   },
   "authority": "synthetic",
   "consumers_qualified_by_this_run": 0,
-  "elapsed_seconds": 301.7614866999793,
+  "elapsed_seconds": 763.5771485769656,
   "failed": 0,
   "materialization": {
     "authority": "staged",
     "files": 548,
-    "files_sha256": "2bd5febddc69302063d885d8ca4aceede8be497215ee0fa9f453c733da5b0f3f"
+    "files_sha256": "37dd01bac40292736ab1ae739aa5c8a02f29a24a2204d73ce61b7ce0b9a2061f"
   },
   "passed": 17,
   "public_release_verified": false,
   "required_artifacts": 17,
-  "source": "8a0c1ca31484b537bcff596922182bb66ab1e392",
+  "source": "a58f126b2721773ab9346d4dc449910371adccd9",
   "status": "artifact-qualification-passed"
 }

@@ -9,7 +9,7 @@
     "product_version": "4.0.0",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "4d2292508a3bd624797ffdfaa36af6662ab1e357ac41ddb3c4dbf22345b5604f",
+    "retrieval_files_sha256": "8c1419a2f2618d3bdd2885ee02b065cece825c3261d87cc0f21a8c2b97fa1fc4",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -133,7 +133,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "24103038949140770ed0cd7596275bb25754ec5cbee1727e1d192ae365ef8586"
+    "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135"
   },
-  "elapsed_seconds": 62.34399999980815
+  "elapsed_seconds": 71.2180000001099
 }

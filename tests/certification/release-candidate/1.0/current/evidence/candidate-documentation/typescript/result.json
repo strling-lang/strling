@@ -11,123 +11,123 @@
         "--no-audit",
         "--no-fund",
         "--save-exact",
-        "/var/tmp/strling-pub-8a0c1ca3-aggregate-first/bindings/typescript/strling-lang-strling-4.0.0.tgz"
+        "/var/tmp/strling-pub-a58f126b-aggregate-first/bindings/typescript/strling-lang-strling-4.0.0.tgz"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0000.json",
-      "metadata_sha256": "723df7da198ef30839c6cea06b79927e27a4134339e87c803bed10ceedc9b1b8"
+      "metadata_sha256": "cff6c43cae43da02601d93296e35819f1a7a7dc9fcff7fb241d454ac543f1c73"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-0.ts"
+        "/tmp/strling-preview-documentation-tba8whp0/example-0.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0001.json",
-      "metadata_sha256": "ddb0458f7be5879caeefd4cbf32c6e5ee35be27c520b9408bb11cdb6035e610b"
+      "metadata_sha256": "7691c9997d9bddc049c16a2a1ac8fbf995446549c2584fbd4d388b7abbe67eff"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-0.js"
+        "/tmp/strling-preview-documentation-tba8whp0/example-0.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0002.json",
-      "metadata_sha256": "ec318768ac57363f0a768685dc5e3e0ca5c05fc2ab42e8ed4d0c93ddefe24450"
+      "metadata_sha256": "f4b98f70f0b6b397f4687d3ed584581090fb3be5ca8923d0a03e7a2e3cb4793f"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-1.ts"
+        "/tmp/strling-preview-documentation-tba8whp0/example-1.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0003.json",
-      "metadata_sha256": "5b3979a6ffce0974d50723ee34887238149232ca57a777feaca6b8e0c3d97e0d"
+      "metadata_sha256": "4b486e3143e85c5c8524f9a825cccc4b0d1669b2c0cb208a3b4825f5267414cc"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-1.js"
+        "/tmp/strling-preview-documentation-tba8whp0/example-1.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0004.json",
-      "metadata_sha256": "51b6d7259eb2dd6aa7c8d23f8758334c7c309a2227758f07cd4875c9f3f924f1"
+      "metadata_sha256": "c58203baad37c40f8b42c2e671106d2b467f5ca24e553cdb0aa786fe96d7eee1"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-2.ts"
+        "/tmp/strling-preview-documentation-tba8whp0/example-2.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0005.json",
-      "metadata_sha256": "1e59ad253f996f828d522378a2eef92eb8ac827201cb84320d482b843dfda7b5"
+      "metadata_sha256": "3aac39bdb014505280b4f69871b21879161bf3d4e5da2fe236a4df3a4ceda7fd"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-2.js"
+        "/tmp/strling-preview-documentation-tba8whp0/example-2.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0006.json",
-      "metadata_sha256": "e33a7908a9ae63f1c6b17aad367f6311eab348f8713146c66d11de2fd44c012c"
+      "metadata_sha256": "918ed0f801eca08ca13d4d814e4e60429821689e65a2219aab75413e35f1e219"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-8a0c1ca3-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-a58f126b-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-3.ts"
+        "/tmp/strling-preview-documentation-tba8whp0/example-3.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0007.json",
-      "metadata_sha256": "a436c1eb383bd26de43bc7b22ddd46125def906c08af0e4f2ee03eb050541de4"
+      "metadata_sha256": "a0d5c8bad7e850ba57f050e43bd166ec8358e528c131ef4ef4b0404972c02341"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-yu936s7n/example-3.js"
+        "/tmp/strling-preview-documentation-tba8whp0/example-3.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0008.json",
-      "metadata_sha256": "cee4135ea50382b3270d22685f0b494879f905af08f2b919d549efa98b25b88b"
+      "metadata_sha256": "378af844a18c70e75548159b4af474644ab8e61cc2dd30a69688d610a3f6ecde"
     }
   ],
   "documentation_examples": [
@@ -154,14 +154,14 @@
   ],
   "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
   "engineering": false,
-  "evidence_fingerprint": "06f87c253a91b2da5ed1fbefeb287aeb1ce1cd09e40067c9ebbbb045ec40947a",
+  "evidence_fingerprint": "893273343103f583364a24c72cab525a8f7a2b4a2c39e58211ce463f85743717",
   "fixture_sha256": {
     "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
     "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
     "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
     "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
   },
-  "invocation_id": "499851593c044e408ef1ac96430b45c2",
+  "invocation_id": "a91f6bcec4a14dafa118942ae93f6011",
   "limitations": [
     "Preview policy and dependency-locking limits remain unchanged.",
     "Browser-safe factory execution on Node is not an actual browser support claim."
@@ -171,9 +171,9 @@
   "public_retrieval": false,
   "runner_scope": "linux-x86_64",
   "source": {
-    "commit": "8a0c1ca31484b537bcff596922182bb66ab1e392",
+    "commit": "a58f126b2721773ab9346d4dc449910371adccd9",
     "dirty": false,
-    "tree_sha256": "89040f45cf66df0b33ee5fd809b9eae9b1c2aa146d7a38c15dd9c89d4329f248"
+    "tree_sha256": "a902b14eb881e59e4218c826b40a2417d9da7a27020acd382eb02eefb8271e16"
   },
   "status": "passed",
   "subject_sha256": "5789d1d3e9117d9f7b5316a95273958459b9335afdb7cb55af4a6c510150fd6b",

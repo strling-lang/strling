@@ -19,7 +19,7 @@
       "url": "https://evidence.example.test/bindings/go/README.md"
     },
     "provenance": {
-      "sha256": "c14199f7465c84cb2d7a166a5e1af40787037e36cc43cffe3579f172a01c8852",
+      "sha256": "4eb02783c6bee0c0af965d32c99a426c474781976a20baaa7282b26bd239cc23",
       "url": "https://evidence.example.test/release-go.intoto.json"
     },
     "sbom": {
@@ -28,7 +28,7 @@
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 27.90798720897874,
+  "elapsed_seconds": 94.88081195502309,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:go:coordinate",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:go:metadata",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:go:artifact",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:go:source",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:go:sbom",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:go:provenance",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:go:documentation",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:go:scope",
       "platform": null,
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:go:linux-x86_64:installation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:go:linux-x86_64:public-api",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:go:linux-x86_64:product-version",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:go:linux-x86_64:canonical-compiler",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:go:linux-x86_64:native-wasm",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:go:linux-x86_64:target-compatibility",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:go:linux-x86_64:kernel-rejection",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,7 +190,7 @@
       "check": "isolation",
       "id": "release:go:linux-x86_64:isolation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "3d16ba8599db9f2e3a7bae624649dd652fe773c87ad25fdd0f1a60f4df19cb4a",
+      "retrieval_sha256": "8fc0524cb97881db3047f92ed88ae67267d32ea3f0069e62944997439d55c261",
       "status": "VERIFYING",
       "tier": "Supported"
     }
@@ -652,20 +652,20 @@
     {
       "authority": "synthetic",
       "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.0",
-      "sha256": "0094c321da239ec31ad9f8ea2440ff54bd56fee5df140ead25dedaeca6761f1c",
+      "sha256": "3e77b61fe428ae765022aab6799c49543524f1eedce139c398905f751d5686a2",
       "size": 105
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/8a0c1ca31484b537bcff596922182bb66ab1e392",
-      "sha256": "b59a41bc45cec289975df1fa7893ed97d1380bdea00b887dc9b645c5a54924a6",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/a58f126b2721773ab9346d4dc449910371adccd9",
+      "sha256": "281303096d18a86a3f6e2390e3afae36be926c51d6236478c2108b5432c2e9ec",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/8a0c1ca31484b537bcff596922182bb66ab1e392",
-      "sha256": "96e27d9902248080c3b773143ad8307483e6664679237b405ed89ea83a45e834",
-      "size": 723337
+      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/a58f126b2721773ab9346d4dc449910371adccd9",
+      "sha256": "87bb8f6f778b94d4fa8219a90364a913b24486cb68265b3b2a727d7b36f5f005",
+      "size": 723333
     },
     {
       "authority": "synthetic",
@@ -676,7 +676,7 @@
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-go.intoto.json",
-      "sha256": "c14199f7465c84cb2d7a166a5e1af40787037e36cc43cffe3579f172a01c8852",
+      "sha256": "4eb02783c6bee0c0af965d32c99a426c474781976a20baaa7282b26bd239cc23",
       "size": 6720
     },
     {

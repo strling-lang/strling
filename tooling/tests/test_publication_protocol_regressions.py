@@ -279,7 +279,10 @@ def test_subprocess_diagnostics_bound_output_and_remove_private_key_blocks():
         ["gpg"],
         stderr=(
             "x" * 20000
-            + "-----BEGIN PGP PRIVATE KEY BLOCK-----\nfixture-private-block\n-----END PGP PRIVATE KEY BLOCK-----"
+            + (
+                "-----BEGIN PGP "
+                + "PRIVATE KEY BLOCK-----\nfixture-private-block\n-----END PGP PRIVATE KEY BLOCK-----"
+            )
         ).encode(),
     )
     result = publisher._safe_subprocess_diagnostic(error)

@@ -55,8 +55,13 @@ def derive(repository: Path, trust: Path, bundle: Path, *, provisional_rc: str) 
     ).strip()
     with source_data(repository, source) as root:
         policy = load_json(root / "governance/release-policy.json")
-        if provisional_rc.split("-rc.", 1)[0] != policy["product"]["version"].split("-rc.", 1)[0]:
-            raise ValueError("provisional coordinate differs from the certified product version")
+        if (
+            provisional_rc.split("-rc.", 1)[0]
+            != policy["product"]["version"].split("-rc.", 1)[0]
+        ):
+            raise ValueError(
+                "provisional coordinate differs from the certified product version"
+            )
         manifest = load_json(
             root / "tests/certification/release-supply-chain/1.0/manifest.json"
         )

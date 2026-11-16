@@ -152,7 +152,9 @@ def test_workflow_release_outputs_are_separate_github_output_lines(
         "is_release",
         "is_dry_run",
     }
-    policy_version = load_json(ROOT / "governance/release-policy.json")["product"]["version"]
+    policy_version = load_json(ROOT / "governance/release-policy.json")["product"][
+        "version"
+    ]
     assert lines["version"] == policy_version and lines["is_dry_run"] == "true"
 
 

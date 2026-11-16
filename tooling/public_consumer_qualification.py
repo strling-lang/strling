@@ -54,7 +54,9 @@ def main() -> int:
         if hashlib.sha256((root / name).read_bytes()).hexdigest() != digest:
             raise ValueError("staged retrieval changed")
     scope = host_scope()
-    python_artifact = next(a for a in manifest["artifacts"] if a["id"] == "release:python")
+    python_artifact = next(
+        a for a in manifest["artifacts"] if a["id"] == "release:python"
+    )
     platform_tag = python_wheel_platform(python_artifact, scope)
     wheels = [
         name

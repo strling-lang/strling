@@ -78,7 +78,9 @@ def save(path: Path, value: dict) -> None:
         stream.write("\n")
 
 
-def native_companion(root: Path, files: dict[str, str], scope: str, manifest: dict) -> Path:
+def native_companion(
+    root: Path, files: dict[str, str], scope: str, manifest: dict
+) -> Path:
     artifact = next(a for a in manifest["artifacts"] if a["id"] == "release:python")
     tag = python_wheel_platform(artifact, scope)
     wheels = [name for name in files if name.endswith("-cp312-none-" + tag + ".whl")]

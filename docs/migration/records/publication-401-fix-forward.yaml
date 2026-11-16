@@ -246,6 +246,32 @@ checkpoints:
                 security-policy fingerprint; all 16 lock and 20 dependency-manifest identities
                 remain unchanged. These observations authorize source freeze and preparation,
                 and do not substitute for fresh source-bound profiles or distribution builds.
+          - check: Initial authoritative Local and grouped remainder diagnosis
+            result: failed
+            details: >-
+                Source 763b6d088360dca68e5e0fb5ce6433a1886623d4 passed complete canonical
+                preparation, risk preflight with 54 passes and the existing waiver, and SDK/toolchain
+                admission. Fresh Local stopped at operation 21 of 38 on ordinary formatting after
+                its first 20 operations passed. Preserve that failed profile and all producer records.
+                A non-authoritative remainder pass executed all 18 remaining registered leaves:
+                17 passed, including core/interop tests, and hygiene identified header-only literals
+                in the redactor and synthetic test. No PR, Full, Release or fresh distribution build
+                had started. Canonical formatting preserves all five Python ASTs and the existing
+                workflow-context record's parsed values. Re-expressing the two header constants
+                preserves recursive Python bytecode, names, constants and exception tables. The
+                unchanged production PGP-marker guard still rejects tracked marker material;
+                82 focused redaction/hygiene tests passed. No private material, detector exception,
+                weakening, new waiver or trusted-reader change is involved. Freeze a successor
+                and run every complete authoritative profile afresh after dependent checks pass.
+          - check: Grouped Local repair qualification
+            result: passed
+            details: >-
+                The follow-up diagnostic passed the complete repository formatter, hygiene and
+                linter checks plus 217 targeted tests and 13 subtests. It accounts for all 18
+                previously unexecuted Local leaves together with the unchanged passing Rust,
+                interop and type checks. These are engineering observations only: no accepted
+                Local profile is assembled from partial runs, and no old-source evidence will
+                substitute for any complete fresh Local, PR, Full or independent Release profile.
           - check: engineering readiness
             result: not_run
             details:

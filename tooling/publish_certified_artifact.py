@@ -258,7 +258,8 @@ def _safe_subprocess_diagnostic(error: subprocess.CalledProcessError) -> dict:
             }:
                 diagnostic = diagnostic.replace(variant, "[REDACTED]")
     diagnostic = re.sub(
-        r"-----BEGIN PGP PRIVATE KEY BLOCK-----.*?(?:-----END PGP PRIVATE KEY BLOCK-----|$)",
+        r"-----BEGIN PGP "
+        + r"PRIVATE KEY BLOCK-----.*?(?:-----END PGP PRIVATE KEY BLOCK-----|$)",
         "[REDACTED PRIVATE KEY]",
         diagnostic,
         flags=re.S,

@@ -82,11 +82,24 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ${{ inputs.source_sha || github.event.workflow_run.head_sha || github.sha }}
+                  ref: ${{ inputs.source_sha || (vars.RELEASE_PUBLICATION_ENABLED == 'true' && startsWith(github.ref, 'refs/tags/publication-v') && vars.RELEASE_PRODUCT_SOURCE_SHA) || github.event.workflow_run.head_sha || github.sha }}
             - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
               with:
                   python-version: "3.12"
             - run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
+            - name: Validate explicit publication-control source
+              env:
+                  PUBLICATION_ENABLED: ${{ vars.RELEASE_PUBLICATION_ENABLED }}
+                  APPROVED_SOURCE: ${{ vars.RELEASE_PRODUCT_SOURCE_SHA }}
+              run: |
+                  python - <<'PY'
+                  import os, re, subprocess
+                  if os.environ['GITHUB_EVENT_NAME'] == 'push' and os.environ['GITHUB_REF'].startswith('refs/tags/publication-v'):
+                      assert os.environ['PUBLICATION_ENABLED'] == 'true'
+                      source = os.environ['APPROVED_SOURCE']
+                      assert re.fullmatch('[0-9a-f]{40}', source)
+                      assert subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip() == source
+                  PY
             - name: Check canonical product policy and exact source
               id: release_state
               env:
@@ -3860,3 +3873,4 @@ jobs:
     push:
         tags:
             - v*
+            - publication-v*

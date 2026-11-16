@@ -262,7 +262,7 @@ jobs:
         name: Verify complete product candidate
         runs-on: ubuntu-24.04
         outputs:
-            verified_closure_sha: ${{ steps.verify_candidate.outputs.verified_closure_sha }}
+            verified_closure_sha: ${{ steps.checkout_candidate.outputs.commit }}
         steps:
             - name: Checkout qualified candidate verifier
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -272,6 +272,7 @@ jobs:
                   ref: 68bce447442fd59ac6a1046c48532adc6562ac12
                   path: candidate-trusted
             - name: Checkout candidate evidence as data
+              id: checkout_candidate
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
                   persist-credentials: false
@@ -286,7 +287,6 @@ jobs:
             - name: Install pinned schema validators
               run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
             - name: Verify candidate signature, producers and publication handoff
-              id: verify_candidate
               shell: bash
               run: |
                   mkdir -p artifacts
@@ -295,7 +295,6 @@ jobs:
                     --trust-root candidate-trusted \
                     --bundle candidate-candidate/tests/certification/release-candidate/1.0/current \
                     --json | tee artifacts/candidate-certification-verification.json
-                  echo "verified_closure_sha=$(git -C candidate-candidate rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             - name: Retain candidate verification result
               if: ${{ always() }}
               continue-on-error: true

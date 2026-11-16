@@ -123,7 +123,11 @@ def authenticate_release(
             "-I",
             str(verifier / "tooling/local_certification_attestation.py"),
             "--repository-root",
-            str(certification_source),
+            str(
+                implementation_source
+                if policy == "governance/release-certification-trust.json"
+                else certification_source
+            ),
             "--trust-root",
             str(verifier),
             "--trust-policy",

@@ -547,15 +547,18 @@ def test_operational_export_revision_verifies_original_closure_without_extending
     assert "vars.RELEASE_EXPORT_CLOSURE_SHA" in checkout["with"]["ref"]
     assert "pull_request_target" in checkout["with"]["ref"]
     assert "github.event.pull_request.head.sha || github.sha" in checkout["with"]["ref"]
-    verify = next(s for s in job["steps"] if s.get("id") == "verify_candidate")
-    assert "candidate_integrity.py" in verify["run"]
-    assert (
-        "verified_closure_sha=$(git -C candidate-candidate rev-parse HEAD)"
-        in verify["run"]
+    verify = next(
+        s
+        for s in job["steps"]
+        if s.get("name")
+        == "Verify candidate signature, producers and publication handoff"
     )
+    assert "candidate_integrity.py" in verify["run"]
+    assert checkout["id"] == "checkout_candidate"
+    assert "git -C candidate-candidate" not in verify["run"]
     assert (
         job["outputs"]["verified_closure_sha"]
-        == "${{ steps.verify_candidate.outputs.verified_closure_sha }}"
+        == "${{ steps.checkout_candidate.outputs.commit }}"
     )
     guard = workflow["jobs"]["export-certified-bytes"]["steps"][0]
     assert (

@@ -534,6 +534,68 @@ class ArchitectureValidationTests(unittest.TestCase):
         self.write_profile_workflows()
         self.assertEqual("passed", self.evaluate(self.ci_profile_rule()).status)
 
+    def test_protected_export_closure_keeps_immutable_verifier_and_all_guards(
+        self,
+    ) -> None:
+        import copy
+        import yaml
+
+        self.write_profile_workflows()
+        for name in ("ci.yml", "cd.yml"):
+            (self.root / ".github/workflows" / name).write_bytes(
+                (ROOT / ".github/workflows" / name).read_bytes()
+            )
+        rule = next(
+            row
+            for row in load_json(ROOT / "governance/architecture-rules.json")["rules"]
+            if row["id"] == "canonical-ci-profile-routing"
+        )
+        path = self.root / ".github/workflows/certification-integrity.yml"
+        original = yaml.safe_load(
+            (ROOT / ".github/workflows/certification-integrity.yml").read_text(
+                encoding="utf-8"
+            )
+        )
+        if True in original:
+            original["on"] = original.pop(True)
+        path.write_text(yaml.safe_dump(original, sort_keys=False), encoding="utf-8")
+        result = self.evaluate(rule)
+        self.assertEqual("passed", result.status, result.findings)
+        for mutation in (
+            "missing-pin",
+            "wrong-environment",
+            "wrong-output",
+            "extra-code",
+            "mutable-ref",
+            "missing-required-job",
+        ):
+            with self.subTest(mutation=mutation):
+                changed = copy.deepcopy(original)
+                candidate = changed["jobs"]["verify-release-candidate-certification"]
+                export = changed["jobs"]["export-certified-bytes"]
+                if mutation == "missing-pin":
+                    export["if"] = export["if"].replace(
+                        "&& github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA", ""
+                    )
+                elif mutation == "wrong-environment":
+                    export["environment"] = "unprotected"
+                elif mutation == "wrong-output":
+                    candidate["outputs"]["verified_closure_sha"] = (
+                        "${{ steps.untrusted.outputs.commit }}"
+                    )
+                elif mutation == "extra-code":
+                    candidate["steps"][4]["run"] += (
+                        "\npython candidate-candidate/untrusted.py\n"
+                    )
+                elif mutation == "mutable-ref":
+                    candidate["steps"][1]["with"]["ref"] = "refs/heads/dev"
+                else:
+                    export["needs"].remove("verify-local-certification")
+                path.write_text(
+                    yaml.safe_dump(changed, sort_keys=False), encoding="utf-8"
+                )
+                self.assertEqual("failed", self.evaluate(rule).status)
+
     def test_closed_preservation_schema_keeps_original_required_identities(
         self,
     ) -> None:

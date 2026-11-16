@@ -1883,6 +1883,43 @@ def ci_profile_routing_findings(
                 candidates = [
                     row for row in checkouts if row.get("path") == prefix + "-candidate"
                 ]
+                export_output = "${{ steps.checkout_candidate.outputs.commit }}"
+                if prefix == "candidate" and packaging.get("outputs") == {
+                    "verified_closure_sha": export_output
+                }:
+                    export = jobs.get("export-certified-bytes", {})
+                    expected_export_gate = (
+                        "github.event_name == 'workflow_dispatch' && github.repository == 'strling-lang/strling' "
+                        "&& vars.RELEASE_EXPORT_ENABLED == 'true' && github.sha == vars.RELEASE_EXPORT_WORKFLOW_SHA "
+                        "&& github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA"
+                    )
+                    if (
+                        relative != ".github/workflows/certification-integrity.yml"
+                        or " ".join(str(export.get("if", "")).split())
+                        != expected_export_gate
+                        or export.get("environment") != "release-attestation"
+                        or export.get("permissions") != {"contents": "write"}
+                        or set(export.get("needs", []))
+                        != {
+                            "verify-release-candidate-certification",
+                            "verify-release-packaging-certification",
+                            "verify-public-distribution-certification",
+                            "verify-local-certification",
+                        }
+                        or len(steps) < 2
+                        or steps[1].get("id") != "checkout_candidate"
+                    ):
+                        findings.append(
+                            (
+                                f"{relative}: protected export closure binding is invalid",
+                                relative,
+                            )
+                        )
+                    candidate_ref = (
+                        "${{ github.event_name == 'workflow_dispatch' && vars.RELEASE_EXPORT_ENABLED == 'true' "
+                        "&& vars.RELEASE_EXPORT_CLOSURE_SHA || (github.event_name == 'pull_request_target' "
+                        "&& github.event.pull_request.head.sha || github.sha) }}"
+                    )
                 commands = [step["run"] for step in steps if "run" in step]
                 expected_command = (
                     f"python -I {prefix}-trusted/tooling/local_certification_attestation.py "

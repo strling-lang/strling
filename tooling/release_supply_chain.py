@@ -4084,10 +4084,18 @@ def verify_publication_authorization(
             "publication-authorization", "missing or unapproved owner authorization"
         )
     event = context.get("event_name")
+    publication_ref = authorization.get("publication_ref")
+    if publication_ref is not None and (
+        publication_ref != "refs/tags/publication-v" + authorization["version"]
+        or event != "push"
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-context", "invalid explicit publication-control tag"
+        )
     allowed_ref = (
         "refs/heads/main"
         if event == "workflow_dispatch"
-        else "refs/tags/v" + authorization["version"]
+        else publication_ref or "refs/tags/v" + authorization["version"]
     )
     if (
         event not in {"workflow_dispatch", "push"}
@@ -4233,7 +4241,7 @@ def certified_subject_checksums(
             "-I",
             str(trust_root / "tooling/local_certification_attestation.py"),
             "--repository-root",
-            str(certification_root),
+            str(root),
             "--trust-root",
             str(trust_root),
             "--trust-policy",
@@ -4295,6 +4303,30 @@ def certified_subject_checksums(
     }
 
 
+def _verify_publication_source_tag(
+    root: Path, authorization: Mapping[str, Any]
+) -> None:
+    if authorization.get("publication_ref") is None:
+        return
+    tagged_source = (
+        _git_output(
+            root,
+            [
+                "rev-parse",
+                "--verify",
+                "refs/tags/v" + authorization["version"] + "^{commit}",
+            ],
+        )
+        .decode()
+        .strip()
+    )
+    if tagged_source != authorization["source_sha"]:
+        raise ReleaseSupplyChainError(
+            "publication-source-tag",
+            "official version tag differs from the certified implementation",
+        )
+
+
 def verify_publication_handoff(
     *,
     root: Path,
@@ -4324,7 +4356,7 @@ def verify_publication_handoff(
             "-I",
             str(trust_root / "tooling/local_certification_attestation.py"),
             "--repository-root",
-            str(certification_root or root),
+            str(root),
             "--trust-root",
             str(trust_root),
             "--trust-policy",
@@ -4404,6 +4436,7 @@ def verify_publication_handoff(
         raise ReleaseSupplyChainError(
             "publication-destination", "this artifact is not authorized"
         )
+    _verify_publication_source_tag(root, authorization)
     artifact = next(item for item in manifest["artifacts"] if item["id"] == artifact_id)
     row = next(item for item in evidence["artifacts"] if item["id"] == artifact_id)
     if (

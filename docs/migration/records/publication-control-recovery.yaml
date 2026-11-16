@@ -1,0 +1,149 @@
+record_version: 2.0.0
+title: Authenticated publication source and closure separation
+status: in_progress
+objective:
+    Correct certificate repository routing and prepare an explicitly authorized operational publication ref
+    while preserving the immutable official product tag and certified bytes.
+scope:
+    diff:
+        base: 4f360091b6772211a773ca8e7ec2448d65d03300
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/cd.yml
+        - docs/releasing.md
+        - governance/schemas/release-supply-chain-certification.schema.json
+        - tooling/public_authentication.py
+        - tooling/release_supply_chain.py
+        - tooling/tests/test_public_execution.py
+        - tooling/tests/test_release_publication_authorization.py
+        - governance/change-control.json
+        - docs/migration/records/publication-control-recovery.yaml
+        - .github/workflows/certification-integrity.yml
+        - tooling/architecture_fitness.py
+        - tooling/tests/test_governance.py
+        - tooling/tests/test_certified_transport.py
+    forbidden_paths:
+        - core/**
+        - bindings/**
+        - spec/**
+        - tests/certification/**/current/**
+        - governance/*-certification-trust.json
+        - governance/waivers/**
+    expected_files:
+        - docs/migration/records/publication-control-recovery.yaml
+    permitted_generated_changes:
+        - release-supply-chain-contract-fixture
+        - release-certification-trust
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence: &id001
+            - No compiler, package source, product version, public API, target, runtime, or supported-platform change; preserve
+              certified product a58f126b and its original artifacts.
+    public_api_change:
+        level: none
+        evidence: *id001
+    diagnostic_change:
+        level: none
+        evidence: *id001
+    target_behavior_change:
+        level: none
+        evidence: *id001
+    generated_output_change:
+        level: none
+        evidence: *id001
+    schema_change:
+        level: intentional-correction
+        evidence:
+            - Add an optional explicit publication_ref for the one version-bound publication-v control-tag namespace; missing/mismatched
+              ref, version, source, workflow or run remains rejected. Legacy authorizations retain their original exact-ref
+              checks.
+    architecture_change:
+        level: intentional-correction
+        evidence:
+            - Verify the package certificate against its exact implementation while retaining independent closure and immutable-verifier
+              bindings. Separate qualified delivery-code identity from original product source without retagging v4.0.0 or
+              rebuilding packages.
+            - Use the immutable checkout action commit output for the protected export closure, retaining the exact verifier-only
+              command and requiring all existing export source/workflow/environment/needs guards in architecture validation.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: contract
+      command: python3 -m tooling.release_supply_chain check --json && python3 -m tooling.release_supply_chain check-release-trust
+      expected_result: Current contract fixture and unchanged original trust policy; no optional mandatory checks.
+    - name: unit
+      command:
+          python3 -m pytest tooling/tests/test_release_publication_authorization.py tooling/tests/test_public_execution.py
+          tooling/tests/test_release_supply_chain.py tooling/tests/test_release_packaging_security.py tooling/tests/test_certified_transport.py
+          tooling/tests/test_public*.py -q
+      expected_result:
+          Affected positive/adversarial suites pass on native Windows and Linux; capability skips remain
+          bounded.
+    - name: integration
+      command:
+          Nonpublishing original-certificate and complete certified-artifact handoff replay with exact A58 implementation,
+          C2 closure, immutable reader68 and proposed control workflow identity
+      expected_result:
+          Original package signature and complete artifact bytes pass; wrong roots and substituted identities
+          fail; no registry writes.
+    - name: quality
+      command:
+          python3 tooling/security.py content --json; python3 tooling/governance.py --json; governed Ruff and Prettier
+          changed-file checks
+      expected_result: Security, scope, architecture, lint and formatting pass without new waivers or trust-pin changes.
+checkpoints:
+    - name: Preserve terminal publication failure
+      status: passed
+      evidence:
+          - check: actual attempt 2
+            result: passed
+            details:
+                Run 43789526011 attempt 2 failed at certificate gates. All upload and remote-attestation steps were skipped.
+                Publication routing disabled; original authorization and failure logs retained.
+    - name: Repair and qualify source/closure routing
+      status: passed
+      evidence:
+          - check: Windows focused affected suites
+            result: passed
+            details: 529 passed, one capability skip, 20 subtests; native unsandboxed test fixture run.
+          - check: Linux focused affected suites
+            result: passed
+            details: 530 passed from a native Git clone with byte-matched proposal overlay.
+          - check: immutable original certificate replay
+            result: passed
+            details:
+                Unmodified reader68 accepts the original A58 package certificate at A58 and correctly rejects applying
+                package-closure rules to the distinct C2 product closure.
+    - name: Qualify complete proposed operational handoff
+      status: in_progress
+      evidence:
+          - check: end-to-end nonpublishing replay
+            result: not_run
+            details:
+                Freeze the operational proposal, bind its own workflow SHA and explicit publication_ref, and replay every
+                originally certified destination without upload.
+    - name: Protected production authorization
+      status: blocked
+      evidence:
+          - check: live mutation boundary
+            result: not_run
+            details:
+                No publication-control tag, pub.dev publisher-pattern mutation, protected rerun, package upload or retag
+                is authorized by this engineering record. Present exact qualified proposal for owner approval.
+commits: []
+readiness:
+    status: BLOCKED
+    next_task:
+        Finish independent operational qualification, then obtain the revised exact control-tag/publisher-pattern
+        and publication-run authorization.
+    rationale:
+        Immutable v4.0.0 and product source remain preserved; existing failed tag workflow cannot pick up a later
+        code repair. No product recertification or release completion is claimed for the operational source.

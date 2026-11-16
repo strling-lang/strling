@@ -226,3 +226,130 @@ def test_download_receipt_cannot_escape_staging(tmp_path, name):
             },
         )
     assert not (tmp_path / "outside").exists()
+
+
+@pytest.mark.parametrize("operation", ["handoff", "attestation-subjects"])
+@pytest.mark.parametrize("separate_closure", [False, True])
+def test_package_certificate_verifies_implementation_not_candidate_closure(
+    tmp_path, monkeypatch, operation, separate_closure
+):
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    from tooling import release_supply_chain as supply
+
+    source = tmp_path / "implementation"
+    closure = tmp_path / "candidate-closure" if separate_closure else source
+    trust = tmp_path / "immutable-verifier"
+    bundle = tmp_path / "original-package"
+    output = tmp_path / "subjects.sha256"
+    monkeypatch.setattr(supply, "verify_bundle", lambda **kwargs: {})
+    monkeypatch.setattr(
+        supply,
+        "load_json",
+        lambda path: (
+            {"product": {"version": "4.0.0"}}
+            if path.name == "release-policy.json"
+            else {"version": "4.0.0"}
+        ),
+    )
+    runner = Mock(
+        return_value=SimpleNamespace(returncode=1, stdout="", stderr="bad signature")
+    )
+    monkeypatch.setattr(supply.subprocess, "run", runner)
+    with pytest.raises(
+        ReleaseSupplyChainError, match="signed Release verification failed"
+    ):
+        if operation == "handoff":
+            supply.verify_publication_handoff(
+                root=source,
+                trust_root=trust,
+                certification_root=closure,
+                certification_bundle=bundle,
+                evidence_path=bundle / "evidence.json",
+                authorization_path=tmp_path / "authorization.json",
+                artifact_id="release:c",
+            )
+        else:
+            supply.certified_subject_checksums(
+                root=source,
+                trust_root=trust,
+                certification_root=closure,
+                certification_bundle=bundle,
+                evidence_path=bundle / "evidence.json",
+                output=output,
+            )
+    command = runner.call_args.args[0]
+    assert command[command.index("--repository-root") + 1] == str(source)
+    assert command[command.index("--trust-root") + 1] == str(trust)
+    assert (
+        command[command.index("--trust-policy") + 1]
+        == "release-certification-trust.json"
+    )
+    assert command[command.index("--bundle") + 1] == str(bundle)
+    assert not output.exists()
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        None,
+        "missing-ref",
+        "wrong-ref",
+        "wrong-version",
+        "dispatch",
+        "unapproved-attempt",
+    ],
+)
+def test_separate_publication_control_tag_is_explicit_and_run_bound(approval, mutation):
+    auth = approval["authorization"]
+    auth["publication_ref"] = "refs/tags/publication-v4.0.0"
+    approval["context"].update(event_name="push", ref=auth["publication_ref"])
+    if mutation == "missing-ref":
+        auth.pop("publication_ref")
+    elif mutation == "wrong-ref":
+        auth["publication_ref"] = "refs/tags/other-v4.0.0"
+        approval["context"]["ref"] = auth["publication_ref"]
+    elif mutation == "wrong-version":
+        auth["publication_ref"] = "refs/tags/publication-v4.0.1"
+        approval["context"]["ref"] = auth["publication_ref"]
+    elif mutation == "dispatch":
+        approval["context"].update(
+            event_name="workflow_dispatch", ref="refs/heads/main"
+        )
+    elif mutation == "unapproved-attempt":
+        approval["context"]["run_attempt"] = "2"
+    approval["expected_sha256"] = hashlib.sha256(canonical_json(auth)).hexdigest()
+    if mutation:
+        with pytest.raises(ReleaseSupplyChainError):
+            verify_publication_authorization(**approval)
+    else:
+        assert verify_publication_authorization(**approval)["status"] == "passed"
+
+
+@pytest.mark.parametrize("tagged_source", ["b" * 40, "c" * 40, None])
+def test_control_tag_preserves_original_official_product_tag(
+    tmp_path, monkeypatch, tagged_source
+):
+    from unittest.mock import Mock
+    from tooling import release_supply_chain as supply
+
+    auth = {
+        "publication_ref": "refs/tags/publication-v4.0.0",
+        "version": "4.0.0",
+        "source_sha": "b" * 40,
+    }
+    runner = Mock(return_value=((tagged_source or "") + "\n").encode())
+    if tagged_source is None:
+        runner.side_effect = ReleaseSupplyChainError(
+            "source-git", "missing version tag"
+        )
+    monkeypatch.setattr(supply, "_git_output", runner)
+    if tagged_source == auth["source_sha"]:
+        supply._verify_publication_source_tag(tmp_path, auth)
+    else:
+        with pytest.raises(ReleaseSupplyChainError):
+            supply._verify_publication_source_tag(tmp_path, auth)
+    assert runner.call_args.args == (
+        tmp_path,
+        ["rev-parse", "--verify", "refs/tags/v4.0.0^{commit}"],
+    )

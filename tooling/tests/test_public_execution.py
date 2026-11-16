@@ -68,6 +68,9 @@ def test_authentication_uses_only_governed_policy_and_rejects_bad_signature(
         )
     command = runner.call_args.args[0]
     assert command[command.index("--trust-policy") + 1] == policy
+    assert command[command.index("--repository-root") + 1] == str(
+        implementation if policy == "release-certification-trust.json" else closure
+    )
     assert command[1] == "-I"
     assert "PUBLICATION_TOKEN" not in runner.call_args.kwargs["env"]
     assert (
@@ -366,3 +369,53 @@ def test_readme_installation_command_is_checked_in_context():
     ):
         with pytest.raises(RetrievalError):
             verify_readme_commands(b"```bash\n" + wrong + b"\n```", artifact, "4.0.0")
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [None, "disabled", "missing-pin", "malformed-pin", "wrong-source", "legacy-tag"],
+)
+def test_publication_control_source_guard_executes_actual_workflow(
+    tmp_path, monkeypatch, mutation
+):
+    import subprocess
+
+    workflow = yaml.load(
+        (ROOT / ".github/workflows/cd.yml").read_text(encoding="utf-8"),
+        Loader=yaml.BaseLoader,
+    )
+    step = next(
+        s
+        for s in workflow["jobs"]["verify-release"]["steps"]
+        if s.get("name") == "Validate explicit publication-control source"
+    )
+    script = step["run"].split("<<'PY'\n", 1)[1].rsplit("\nPY", 1)[0]
+    values = {
+        "GITHUB_EVENT_NAME": "push",
+        "GITHUB_REF": "refs/tags/publication-v4.0.0",
+        "PUBLICATION_ENABLED": "true",
+        "APPROVED_SOURCE": "a" * 40,
+    }
+    if mutation == "disabled":
+        values["PUBLICATION_ENABLED"] = "false"
+    elif mutation == "missing-pin":
+        values["APPROVED_SOURCE"] = ""
+    elif mutation == "malformed-pin":
+        values["APPROVED_SOURCE"] = "not-a-sha"
+    elif mutation == "wrong-source":
+        values["APPROVED_SOURCE"] = "b" * 40
+    elif mutation == "legacy-tag":
+        values.update(GITHUB_REF="refs/tags/v4.0.0", APPROVED_SOURCE="")
+    for key, value in values.items():
+        monkeypatch.setenv(key, value)
+    monkeypatch.setattr(
+        subprocess, "check_output", lambda *args, **kwargs: "a" * 40 + "\n"
+    )
+    if mutation not in (None, "legacy-tag"):
+        with pytest.raises(AssertionError):
+            exec(compile(script, "actual-publication-source-guard", "exec"), {})
+    else:
+        exec(compile(script, "actual-publication-source-guard", "exec"), {})
+    ref = workflow["jobs"]["verify-release"]["steps"][0]["with"]["ref"]
+    assert "vars.RELEASE_PRODUCT_SOURCE_SHA" in ref
+    assert "startsWith(github.ref, 'refs/tags/publication-v')" in ref

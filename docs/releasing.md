@@ -419,3 +419,26 @@ successful public observations produce an explicit partial-publication result.
 Preserve those observations and require separate owner authorization for any
 repair, replacement version, withdrawal or renewed publication. Never relabel
 an earlier attempt or repair a registry from the verifier.
+
+### Separate publication-control tags
+
+An already published official version tag remains immutable at the certified
+implementation. A corrected, independently qualified publisher may instead run
+from a separately approved `publication-vVERSION` control tag. That control tag
+identifies delivery code, not a new product source or artifact build.
+
+This route requires the exact `publication_ref` in the protected canonical owner
+authorization, the real tag-push workflow/run/attempt, and
+`RELEASE_PRODUCT_SOURCE_SHA` selecting the original clean certified source.
+`RELEASE_CERTIFICATION_REF` still selects its accepted evidence closure.
+The publisher verifies the original package certificate against the implementation,
+retains the separate closure binding, and requires `vVERSION` to resolve to that
+same certified implementation before any upload. Original signatures, artifact
+checksums, support scopes and immutable verifier pins remain enforced.
+
+Pub.dev's configured tag pattern must match the explicitly approved control tag
+(for example `publication-v{{version}}`) while retaining the `release` environment.
+Changing that persistent association and creating the control tag require their
+own applicable owner approvals. This route never authorizes moving an existing
+version tag, rebuilding certified packages, changing package ownership, or using
+a different publication run. Missing source pins or an unapproved tag fail closed.

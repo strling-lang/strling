@@ -26,6 +26,7 @@ scope:
         - tests/certification/profile-source/1.0/definitions.json
         - tests/certification/performance-resource/1.0/runner/Cargo.lock
         - tests/adapters/3.0/release-graph.json
+        - tests/adapters/binding-support-4.0/evidence.json
         - tests/adapters/dotnet-3.0/release-graph.json
         - tests/documentation/1.0/manifest.json
         - tests/architecture/legacy-removal/1.0/evidence.json
@@ -41,6 +42,7 @@ scope:
     expected_files:
         - docs/migration/records/publication-401-fix-forward.yaml
     permitted_generated_changes:
+        - binding-support-certification-evidence
         - version-synchronized-metadata
         - lua-release-rockspec
         - release-policy-documentation
@@ -204,6 +206,27 @@ checkpoints:
             details:
                 Do not start expensive campaigns before all deterministic protocol, packaging,
                 source and resource readiness checks pass. No 4.0.0 evidence transferred.
+          - check: Immutable reader qualification
+            result: passed
+            details:
+                Reader ea03dd4cbe35b5614fb862c1568cc7356a5bd16f passed all thirteen source-bound qualification stages.
+                Original certificates, signatures, artifact bytes and signing authority remain unchanged. This qualifies the
+                reader only; final product preparation, source freeze and fresh certification remain required.
+          - check: Nonpublishing Ruby client and server archive qualification
+            result: passed
+            details:
+                The actual adapter and RubyGems 4.1.0 CLI preserve exact 4.0.0/engineering 4.0.1 gem bytes with synthetic
+                HTTP and the intended environment credential. The unmodified upstream server archive validator accepts both
+                retained gems and rejects two corrupted controls. No production credentials, signing or uploads were used;
+                the original server refusal remains unproven.
+          - check: Asynchronous JVM companion availability
+            result: passed
+            details:
+                Retained first-404 Kotlin and FSharp failures are corrected by shared bounded read-only availability
+                waits. Java-signed JVM POM/JAR hashes and existing NuGet repository-signature/SBOM checks remain mandatory
+                before dependent signing/submission. The exact publisher patch passes Windows (207 passed, 2 skipped in 30.76s)
+                and Linux (209 passed in 25.53s). Governance, security and the standalone public contract pass. The patch
+                is integrated before final source freeze; no upload retry or authorization bypass is added.
     - name: Publication authorization
       status: blocked
       evidence:
@@ -212,7 +235,9 @@ checkpoints:
             details:
                 No 4.0.1 tag, package, main/dev push or GitHub Release is authorized.
                 Present a new exact plan after certification.
-commits: []
+commits:
+    - sha: ea03dd4cbe35b5614fb862c1568cc7356a5bd16f
+      subject: Constrain Ruby publishing and verify normalized CPAN identities
 readiness:
     status: BLOCKED
     next_task:

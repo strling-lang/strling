@@ -48,6 +48,16 @@ stable or prerelease archive URL and authenticated artifact checksum must still
 match exactly. This normalization does not permit substituting a stable archive
 for a requested prerelease.
 
+Central publication and NuGet indexing are asynchronous. Dependent publishers
+use a 30-minute readiness deadline for missing public companions. Kotlin checks
+Java's JVM POM and JAR against Java's signed checksums. F# retains the existing
+NuGet repository-signature and SBOM verification of the C# package. Only missing
+package retrievals are polled; integrity failures, unavailable trust material
+and responses other than HTTP 404 fail immediately. An exhausted deadline keeps
+the dependent package unsubmitted. Existing HTTP request timeouts remain in
+effect. Further publication attempts follow the incident and authorization
+process.
+
 Release work advances only through the machine-registered states:
 
 ```text

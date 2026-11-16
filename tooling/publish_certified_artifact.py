@@ -17,12 +17,14 @@ import struct
 import subprocess
 import sys
 import tempfile
+import time
 import shutil
 import tarfile
 import tomllib
 import urllib.error
 import urllib.parse
 import urllib.request
+from collections.abc import Callable
 from pathlib import Path
 
 # An isolated invocation admits only this reviewed tools directory for imports.
@@ -396,6 +398,104 @@ def _companion_checksums(evidence: Path, surface: str) -> dict[str, str]:
     return rows
 
 
+def _wait_for_public_companions(
+    checks: dict[str, Callable[[bytes], object]],
+    *,
+    dependent: str,
+    timeout_seconds: float = 1800,
+    poll_interval_seconds: float = 15,
+) -> None:
+    """Wait only for immutable public bytes; never retry signing or an upload."""
+    if (
+        not 0 < timeout_seconds <= 1800
+        or not 0 < poll_interval_seconds <= 15
+        or not checks
+        or not all(callable(check) for check in checks.values())
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-companion",
+            "invalid public companion readiness contract",
+        )
+    pending = dict(checks)
+    deadline = time.monotonic() + timeout_seconds
+
+    def remaining() -> float:
+        value = deadline - time.monotonic()
+        if value <= 0:
+            raise ReleaseSupplyChainError(
+                "publication-companion",
+                "certified public companion availability deadline exceeded; "
+                + dependent
+                + " was not uploaded",
+            )
+        return value
+
+    while pending:
+        for url, validate in list(pending.items()):
+            remaining()
+            try:
+                remote = _http(url)
+            except urllib.error.HTTPError as error:
+                if error.code != 404:
+                    raise
+                error.close()
+                continue
+            remaining()
+            # Trust-material fetch failures inside validation are not package
+            # availability responses and must never enter the retry branch.
+            validate(remote)
+            remaining()
+            del pending[url]
+        if pending:
+            time.sleep(min(poll_interval_seconds, remaining()))
+
+
+def _wait_for_jvm_companion(
+    version: str,
+    expected: dict[str, str],
+    *,
+    timeout_seconds: float = 1800,
+    poll_interval_seconds: float = 15,
+) -> None:
+    names = {
+        "pom": "bindings/jvm/pom.xml",
+        "jar": "bindings/jvm/target/strling-jvm-" + version + ".jar",
+    }
+    if any(
+        not isinstance(expected.get(name), str)
+        or re.fullmatch(r"[0-9a-f]{64}", expected[name]) is None
+        for name in names.values()
+    ):
+        raise ReleaseSupplyChainError(
+            "publication-companion",
+            "required signed JVM companion checksums are invalid",
+        )
+    checks: dict[str, Callable[[bytes], object]] = {}
+    for extension, name in names.items():
+
+        def validate(payload: bytes, digest: str = expected[name]) -> None:
+            if hashlib.sha256(payload).hexdigest() != digest:
+                raise ReleaseSupplyChainError(
+                    "publication-companion",
+                    "public JVM companion differs from the certified primary artifact",
+                )
+
+        checks[
+            "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/"
+            + version
+            + "/strling-jvm-"
+            + version
+            + "."
+            + extension
+        ] = validate
+    _wait_for_public_companions(
+        checks,
+        dependent="Kotlin",
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=poll_interval_seconds,
+    )
+
+
 def verify_nuget_registry_payload(payload: bytes, sbom: dict) -> dict:
     from tooling.nuget_signature import verify_nuget_registry_payload as verify
 
@@ -506,15 +606,18 @@ def upload(
             raise ReleaseSupplyChainError(
                 "publication-companion", "signed primary package checksums are required"
             )
-        remote = _http(
-            "https://api.nuget.org/v3-flatcontainer/strling/"
-            + version
-            + "/strling."
-            + version
-            + ".nupkg"
-        )
-        verify_nuget_registry_payload(
-            remote, load_json(verified_evidence.parent / "sbom/csharp.spdx.json")
+        primary_sbom = load_json(verified_evidence.parent / "sbom/csharp.spdx.json")
+        _wait_for_public_companions(
+            {
+                "https://api.nuget.org/v3-flatcontainer/strling/"
+                + version
+                + "/strling."
+                + version
+                + ".nupkg": lambda payload: verify_nuget_registry_payload(
+                    payload, primary_sbom
+                )
+            },
+            dependent="F#",
         )
     if slug in {"csharp", "fsharp"}:
         name = artifact["package_name"].lower()
@@ -726,25 +829,7 @@ def upload(
                     "signed primary package checksums are required",
                 )
             expected = _companion_checksums(verified_evidence, "java")
-            for extension in ("pom", "jar"):
-                name = (
-                    "bindings/jvm/pom.xml"
-                    if extension == "pom"
-                    else "bindings/jvm/target/strling-jvm-" + version + ".jar"
-                )
-                remote = _http(
-                    "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/"
-                    + version
-                    + "/strling-jvm-"
-                    + version
-                    + "."
-                    + extension
-                )
-                if hashlib.sha256(remote).hexdigest() != expected[name]:
-                    raise ReleaseSupplyChainError(
-                        "publication-companion",
-                        "public JVM companion differs from the certified primary artifact",
-                    )
+            _wait_for_jvm_companion(version, expected)
         data, envelope_sha256 = signed_envelope(
             files,
             _secret("GPG_PRIVATE_KEY"),

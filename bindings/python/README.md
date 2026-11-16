@@ -1,6 +1,6 @@
 # STRling Python adapter
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -78,7 +78,7 @@ serialization, and helper meaning remain in the canonical Rust kernel.
 
 ## Product compatibility
 
-Fourth Edition packages require the exact 4.0.0 native product identity in
+Fourth Edition packages require the exact 4.0.1 native product identity in
 addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
 product marker before loading; installed CMake packages check their static
 archive during configuration. Unmarked older kernels and mismatched product
@@ -86,12 +86,17 @@ versions fail closed. This package check does not authenticate arbitrary local
 files; release checksums and signed evidence authenticate distribution bytes.
 The compiler semantics and versioned ABI/protocol are unchanged.
 
+Release wheels target CPython 3.12 on Windows x86_64 and the governed Linux
+x86_64 scope. Linux wheels use `manylinux_2_34_x86_64`; their native ABI is audited
+before and after platform tagging, with no native payload replacement or bundled
+external libraries. This tag does not expand the supported operating-system scope.
+
 ## Proposed public installation
 
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-python -m pip install STRling==4.0.0
+python -m pip install STRling==4.0.1
 ```
 
 Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

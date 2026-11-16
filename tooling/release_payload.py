@@ -156,6 +156,27 @@ def _metadata(files: dict[str, bytes], pattern: str) -> bytes:
     return selected[0]
 
 
+def python_wheel_platform(artifact: dict, scope: str) -> str:
+    """Select only the exact platform declared by the authenticated manifest."""
+    patterns = artifact["artifact_policy"]["platform_patterns"].get(scope, [])
+    wheels = [PurePosixPath(p).name for p in patterns if p.endswith(".whl")]
+    if len(wheels) != 1:
+        raise ValueError("one registered host wheel pattern is required")
+    matched = re.fullmatch(r".+-cp312-none-([A-Za-z0-9_]+)\.whl", wheels[0])
+    if matched is None:
+        raise ValueError("invalid registered Python wheel platform")
+    tag = matched[1]
+    valid = (
+        tag == "win_amd64"
+        if scope == "windows-x86_64"
+        else scope == "linux-x86_64"
+        and re.fullmatch(r"(?:linux_x86_64|manylinux_2_(?:0|[1-9][0-9]*)_x86_64)", tag)
+    )
+    if not valid:
+        raise ValueError("Python wheel platform differs from its registered host")
+    return tag
+
+
 def _python_metadata(data: bytes, name: str, version: str) -> None:
     message = email.parser.BytesParser().parsebytes(data)
     for field, expected in (("Name", name), ("Version", version)):
@@ -258,6 +279,22 @@ def inspect_payload(
                     raise ValueError("wheel has no unique native payload")
                 native_scope = native_identity(native[0], version)
                 inspect_native(native[0])
+                platform_tag = python_wheel_platform(artifact, native_scope)
+                wheel_metadata = email.parser.BytesParser().parsebytes(
+                    _metadata(files, "*.dist-info/WHEEL")
+                )
+                if (
+                    wheel_metadata.get_all("Root-Is-Purelib") != ["false"]
+                    or wheel_metadata.get_all("Tag") != ["cp312-none-" + platform_tag]
+                    or not path.name.endswith("-cp312-none-" + platform_tag + ".whl")
+                    or (
+                        version.split("-rc.", 1)[0] != "4.0.0"
+                        and any(".data/purelib/" in name for name in files)
+                    )
+                ):
+                    raise ValueError(
+                        "native wheel layout or platform metadata differs from its registered public contract"
+                    )
                 if (
                     artifact.get("assembly_scope") is not None
                     and native_scope != artifact["assembly_scope"]

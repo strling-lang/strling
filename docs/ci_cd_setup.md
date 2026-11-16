@@ -11,7 +11,7 @@ source-bound clean-consumer certification.
 ## Version and source authority
 
 `governance/release-policy.json#/product/version` is the sole product authority.
-The active repository projection is 4.0.0. The Python manifest and other
+The active repository projection is 4.0.1. The Python manifest and other
 coordinated surfaces are generated projections; independently versioned
 specification, ABI, transport, target and editor contracts remain separate.
 
@@ -22,7 +22,7 @@ python3 tooling/release_policy.py --check
 
 Edit the governed source inventory and use its registered generator when a
 projection changes. Never bump one package manifest to manufacture an RC.
-Internal candidates use an exact source commit. Public `4.0.0-rc.N` coordinates
+Internal candidates use an exact source commit. Public `4.0.1-rc.N` coordinates
 are provisional until separately authorized, monotonic and immutable once used.
 Stable promotion requires the exact terminal RC source plus fresh required
 stable certification and only permitted generated coordinate differences.

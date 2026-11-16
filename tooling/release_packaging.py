@@ -289,6 +289,152 @@ def canonical_nuget_archive(source: Path, destination: Path) -> None:
         )
 
 
+def stage_dart_public_payload(root: Path, stage: Path) -> None:
+    """Stage only published members; package-selection controls are not payload."""
+    if stage.exists():
+        raise ReleaseSupplyChainError(
+            "packaging-stage", "Dart staging directory already exists"
+        )
+    tracked = subprocess.check_output(
+        [
+            "git",
+            "-C",
+            str(root),
+            "ls-files",
+            "-z",
+            "--",
+            "bindings/dart/lib",
+            "bindings/dart/pubspec.yaml",
+            "bindings/dart/README.md",
+            "bindings/dart/CHANGELOG.md",
+        ]
+    )
+    for raw in tracked.split(b"\0"):
+        if not raw:
+            continue
+        relative = Path(raw.decode("utf-8"))
+        destination = stage / relative.relative_to("bindings/dart")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(root / relative, destination)
+    shutil.copyfile(root / "LICENSE", stage / "LICENSE")
+
+
+def qualify_linux_python_wheel(
+    root: Path, artifact: dict, version: str, environment: dict[str, str]
+) -> dict:
+    """Audit before tagging; retain every payload byte and the native ABI floor."""
+    from tooling.release_payload import archive_files
+    from tooling.release_supply_chain import _validate_toolchain_version
+
+    auditor = importlib.metadata.version("auditwheel")
+    _validate_toolchain_version(
+        root, "auditwheel", "auditwheel " + auditor, scope="linux-x86_64"
+    )
+    patterns = [
+        p.replace("VERSION", version)
+        for p in artifact["artifact_policy"]["platform_patterns"]["linux-x86_64"]
+        if p.endswith(".whl")
+    ]
+    if len(patterns) != 1:
+        raise ReleaseSupplyChainError(
+            "packaging-wheel", "one governed Linux wheel pattern is required"
+        )
+    destination = root / patterns[0]
+    match = re.search(
+        r"-cp312-none-(manylinux_2_([0-9]+)_x86_64)\.whl$", destination.name
+    )
+    if (
+        match is None
+        or not destination.resolve().is_relative_to(root.resolve())
+        or destination.exists()
+    ):
+        raise ReleaseSupplyChainError(
+            "packaging-wheel", "invalid or existing governed Linux wheel destination"
+        )
+    target_tag, floor = match[1], int(match[2])
+    original = destination.with_name(
+        destination.name.replace(target_tag, "linux_x86_64")
+    )
+    if not original.is_file() or original.is_symlink():
+        raise ReleaseSupplyChainError(
+            "packaging-wheel", "one newly built Linux wheel is required"
+        )
+
+    def audit(path):
+        result = subprocess.run(
+            [sys.executable, "-I", "-m", "auditwheel", "show", "--json", str(path)],
+            check=True,
+            capture_output=True,
+            env=environment,
+        )
+        report = json.loads(result.stdout)
+        flags = ("pure", "pyfpe", "ucs2", "unsupported_isa")
+        if (
+            type(report.get("version")) is not int
+            or report["version"] != 1
+            or report.get("wheel") != path.name
+            or any(report.get(key) is not False for key in flags)
+            or report.get("external_libs") != {}
+        ):
+            raise ReleaseSupplyChainError(
+                "packaging-wheel-abi",
+                "Linux wheel has unsupported binary or external dependencies",
+            )
+        for key in ("overall_tag", "sym_tag"):
+            tag = re.fullmatch(r"manylinux_2_([0-9]+)_x86_64", report.get(key, ""))
+            if tag is None or int(tag[1]) > floor:
+                raise ReleaseSupplyChainError(
+                    "packaging-wheel-abi", "native ABI exceeds the governed Linux tag"
+                )
+        return report
+
+    before = audit(original)
+    files = archive_files(original)
+    if any(".data/purelib/" in name for name in files):
+        raise ReleaseSupplyChainError(
+            "packaging-wheel-abi", "native wheel uses purelib instead of platlib"
+        )
+    original_sha = hashlib.sha256(original.read_bytes()).hexdigest()
+    subprocess.run(
+        [
+            sys.executable,
+            "-I",
+            "-m",
+            "wheel",
+            "tags",
+            "--platform-tag",
+            target_tag,
+            str(original),
+        ],
+        check=True,
+        capture_output=True,
+        env=environment,
+    )
+    after = audit(destination)
+    tagged_files = archive_files(destination)
+
+    def controls(name):
+        return name.endswith((".dist-info/WHEEL", ".dist-info/RECORD"))
+
+    if set(files) != set(tagged_files) or {
+        n: b for n, b in files.items() if not controls(n)
+    } != {n: b for n, b in tagged_files.items() if not controls(n)}:
+        raise ReleaseSupplyChainError(
+            "packaging-wheel", "platform qualification changed package payload bytes"
+        )
+    result = {
+        "auditor_version": auditor,
+        "platform_tag": target_tag,
+        "original_sha256": original_sha,
+        "qualified_sha256": hashlib.sha256(destination.read_bytes()).hexdigest(),
+        "before": before,
+        "after": after,
+        "payload_bytes_unchanged": True,
+    }
+    original.unlink()
+    return result
+
+
 def prepare_sdk(artifact_id: str, *, engineering: bool = False) -> dict:
     """Populate pinned JVM dependency caches in a credential-free build context.
 
@@ -420,6 +566,7 @@ def build(
     ).strip()
     environment = build_environment(ROOT, epoch, manifest)
     slug = artifact_id.removeprefix("release:")
+    platform_audit = None
     binding = ROOT / artifact["package_root"]
 
     def run(*args: str, cwd: Path = binding) -> None:
@@ -511,6 +658,10 @@ def build(
                     "Install the repository hash-locked Python build requirements before assembly",
                 )
         run(sys.executable, "-m", "build", "--no-isolation")
+        if scope == "linux-x86_64":
+            platform_audit = qualify_linux_python_wheel(
+                ROOT, artifact, version, environment
+            )
     elif slug == "typescript":
         run("npm", "ci", "--offline", "--ignore-scripts")
         run("npm", "pack", "--json")
@@ -785,39 +936,11 @@ def build(
         run("R", "CMD", "build", ".")
     elif slug == "dart":
         stage = ROOT / "target/release-packaging/dart"
-        if stage.exists():
-            raise ReleaseSupplyChainError(
-                "packaging-stage", "Dart staging directory already exists"
-            )
-        tracked = subprocess.check_output(
-            [
-                "git",
-                "-C",
-                str(ROOT),
-                "ls-files",
-                "-z",
-                "--",
-                "bindings/dart/lib",
-                "bindings/dart/pubspec.yaml",
-                "bindings/dart/README.md",
-                "bindings/dart/CHANGELOG.md",
-            ]
-        )
-        for raw in tracked.split(b"\0"):
-            if not raw:
-                continue
-            relative = Path(raw.decode("utf-8"))
-            destination = stage / relative.relative_to("bindings/dart")
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(ROOT / relative, destination)
-        shutil.copyfile(ROOT / "LICENSE", stage / "LICENSE")
-        # Override the parent repository's ignored target/ directory. Pub
-        # excludes hidden control files; the certified assembly still binds it.
-        (stage / ".pubignore").write_text(
-            ".dart_tool/\npubspec.lock\n", encoding="utf-8"
-        )
+        stage_dart_public_payload(ROOT, stage)
         # Pub evaluates ancestor Git ignores. Validate an exact relocation
-        # outside the checkout, leaving the certified assembly untouched.
+        # outside the checkout, leaving the certified assembly untouched. No
+        # .pubignore is needed there: Pub omits that control file from uploads,
+        # so it must not become a certified public payload member.
         with tempfile.TemporaryDirectory(prefix="strling-pub-dry-run-") as temporary:
             validation = Path(temporary) / "package"
             shutil.copytree(stage, validation)
@@ -829,6 +952,7 @@ def build(
     return {
         "status": "passed",
         "artifact_id": artifact_id,
+        "platform_audit": platform_audit,
         "version": version,
         "source": source,
         "scope": scope,

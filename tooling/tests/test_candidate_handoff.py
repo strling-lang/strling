@@ -90,6 +90,35 @@ class CandidateHandoffBoundaryTests(unittest.TestCase):
                     provisional_rc=version,
                 )
 
+    def test_write_handoff_requires_an_explicit_retained_coordinate(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "handoff.json"
+            arguments = [
+                "candidate_integrity",
+                "--repository-root",
+                directory,
+                "--trust-root",
+                directory,
+                "--bundle",
+                directory,
+                "--handoff",
+                str(path),
+                "--write-handoff",
+            ]
+            with (
+                patch("sys.argv", arguments),
+                patch.object(
+                    candidate_integrity, "verify_attestation", return_value={}
+                ),
+                patch.object(candidate_integrity, "derive") as derive,
+            ):
+                with self.assertRaisesRegex(
+                    ValueError, "exact retained provisional coordinate"
+                ):
+                    candidate_integrity.main()
+                derive.assert_not_called()
+                self.assertFalse(path.exists())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -43,6 +43,10 @@ class ProductScopeTests(unittest.TestCase):
     def test_every_registered_route_and_target_is_projected(self):
         data = scope(ROOT)
         text = render(ROOT)
+        version = data["product"]["version"]
+        self.assertIn(f"matching {version} product marker", text)
+        self.assertIn(f"authenticated {version} module factory", text)
+        self.assertIn(f"No public {version} download", text)
         for artifact in data["artifacts"]:
             self.assertIn(artifact["package_name"], text)
             self.assertIn(artifact["distribution_contract"]["tier"], text)

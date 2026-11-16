@@ -20,6 +20,7 @@ from tooling.release_payload import archive_files
 from tooling.release_supply_chain import (
     DEFERRED_CPP_ELIGIBILITY,
     INITIAL_PUBLICATION_SCOPE,
+    OWNER_DEFERRED_RELEASES,
     canonical_json,
 )
 
@@ -66,9 +67,14 @@ def validate_contract(root: Path) -> dict:
     )
     _, deferred = publication_obligations(manifest)
     declared = contract.get("initial_publication_scope")
-    if (deferred and declared != INITIAL_PUBLICATION_SCOPE) or (
-        declared is not None and (declared != INITIAL_PUBLICATION_SCOPE or not deferred)
-    ):
+    version = load_json(root / "governance/release-policy.json")["product"][
+        "version"
+    ].split("-rc.", 1)[0]
+    expected_scope = {**INITIAL_PUBLICATION_SCOPE, "release_line": version}
+    if (
+        deferred
+        and (version not in OWNER_DEFERRED_RELEASES or declared != expected_scope)
+    ) or (declared is not None and (declared != expected_scope or not deferred)):
         raise RetrievalError(
             "contract", "initial public applicability lacks its exact owner scope"
         )
@@ -168,7 +174,7 @@ def publication_obligations(manifest: dict) -> tuple[list[dict], list[dict]]:
     """Initial public scope is source authority, never a caller-selected subset.
 
     All implementation/build obligations remain registered. Only the owner's
-    exact 4.0.0 ConanCenter deferral can be outside initial public execution.
+    exact owner-approved 4.0.0/4.0.1 ConanCenter deferral can be outside public execution.
     """
     deferred_ids = set()
     for artifact in manifest["artifacts"]:

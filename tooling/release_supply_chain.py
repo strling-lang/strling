@@ -43,6 +43,7 @@ SPDX_SCHEMA_PATH = (
 SECURITY_POLICY_PATH = ROOT / "governance/security-policy.json"
 TOOLCHAIN_PATH = ROOT / "toolchain.json"
 DEFERRED_CPP_ELIGIBILITY = "owner-deferred-conancenter-4.0.0"
+OWNER_DEFERRED_RELEASES = frozenset({"4.0.0", "4.0.1"})
 INITIAL_PUBLICATION_SCOPE = {
     "release_line": "4.0.0",
     "owner_deferred_artifacts": ["release:cpp"],
@@ -91,6 +92,14 @@ PROFILE_EXPECTATIONS = {
 }
 STATUS_PRECEDENCE = ("failed", "incomplete", "unavailable", "passed")
 TOOLCHAIN_PROBES: dict[str, tuple[tuple[str, ...], tuple[str, ...]]] = {
+    "auditwheel": (
+        ("python", "python3"),
+        (
+            "-I",
+            "-c",
+            "import importlib.metadata; print('auditwheel ' + importlib.metadata.version('auditwheel'))",
+        ),
+    ),
     "R": (("R",), ("--version",)),
     "bundler": (("bundle", "bundler"), ("--version",)),
     "cargo": (("cargo",), ("--version",)),
@@ -420,11 +429,7 @@ def validate_manifest(
             artifact_id != "release:cpp"
             or artifact["registry"] != "conan"
             or distribution["tier"] != "Supported"
-            or re.fullmatch(
-                r"4\.0\.0(?:-rc\.[1-9][0-9]*)?",
-                release_policy["product"]["version"],
-            )
-            is None
+            or release_policy["product"]["version"] not in OWNER_DEFERRED_RELEASES
         ):
             raise ReleaseSupplyChainError(
                 "publication-scope",
@@ -1744,7 +1749,7 @@ def _probe_toolchain(
         (str(path) for path in repository_candidates if path.is_file()),
         None,
     ) or next((shutil.which(name) for name in candidates if shutil.which(name)), None)
-    if toolchain_id == "python":
+    if toolchain_id in {"python", "auditwheel"}:
         executable = sys.executable
     if toolchain_id in {"cc", "cxx"}:
         if os.name != "nt":
@@ -4136,12 +4141,12 @@ def verify_publication_authorization(
             "authorization lacks exact same-source certified Release evidence",
         )
     version = authorization["version"]
-    if not re.fullmatch(r"4\.0\.0(?:-rc\.[1-9][0-9]*)?", version):
+    if not re.fullmatch(r"4\.0\.(?:0|[1-9][0-9]*)(?:-rc\.[1-9][0-9]*)?", version):
         raise ReleaseSupplyChainError(
             "publication-version",
             "authorization version is outside the ratified release line",
         )
-    if (authorization["channel"] == "stable") != (version == "4.0.0"):
+    if (authorization["channel"] == "stable") != ("-rc." not in version):
         raise ReleaseSupplyChainError(
             "publication-version", "release channel and coordinate disagree"
         )

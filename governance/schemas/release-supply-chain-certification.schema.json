@@ -1355,7 +1355,7 @@
                 },
                 "publication_ref": {
                     "type": "string",
-                    "pattern": "^refs/tags/publication-v4\\.0\\.0(?:-rc\\.[1-9][0-9]*)?$",
+                    "pattern": "^refs/tags/publication-v4\\.0\\.(?:0|[1-9][0-9]*)(?:-rc\\.[1-9][0-9]*)?$",
                     "description": "Explicit owner-approved operational tag; the official product version tag remains at the certified source."
                 }
             }

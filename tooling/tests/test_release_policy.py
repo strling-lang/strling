@@ -36,7 +36,7 @@ class ReleasePolicyTests(unittest.TestCase):
 
     def test_product_version_has_one_canonical_authority(self) -> None:
         product = self.policy["product"]
-        self.assertEqual("4.0.0", product["version"])
+        self.assertEqual("4.0.1", product["version"])
         self.assertEqual(
             "governance/release-policy.json#/product/version",
             product["version_authority"],

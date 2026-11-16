@@ -748,12 +748,17 @@ def consume_python(
     version: str,
     environment: dict[str, str],
     members: list[dict],
+    *,
+    artifact: dict,
 ) -> dict:
     if sys.version_info[:2] != (3, 12):
         raise ReleaseSupplyChainError(
             "consumer-runtime", "the Python consumer requires CPython 3.12"
         )
-    tag = "win_amd64" if os.name == "nt" else "linux_x86_64"
+    from tooling.release_payload import python_wheel_platform
+    from tooling.release_packaging import host_scope
+
+    tag = python_wheel_platform(artifact, host_scope())
     wheels = [
         root / row["name"]
         for row in members
@@ -1246,7 +1251,9 @@ def execute_consumer_contract(
     """
     fixtures = fixture_files(fixture_root, work)
     if artifact_id == "release:python":
-        result = consume_python(root, work, version, environment, members)
+        result = consume_python(
+            root, work, version, environment, members, artifact=artifact
+        )
     elif artifact_id in {"release:go", "release:dart", "release:swift"}:
         result = consume_gds(
             root, artifact, work, version, environment, members, native

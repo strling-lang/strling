@@ -21,7 +21,7 @@ def main() -> int:
     parser.add_argument("--bundle", type=Path, required=True)
     parser.add_argument("--handoff", type=Path)
     parser.add_argument("--write-handoff", action="store_true")
-    parser.add_argument("--provisional-rc", default="4.0.0-rc.1")
+    parser.add_argument("--provisional-rc")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
     result = verify_attestation(
@@ -32,6 +32,10 @@ def main() -> int:
     )
     destination = args.handoff or args.repository_root / HANDOFF_PATH
     if args.write_handoff:
+        if args.provisional_rc is None:
+            raise ValueError(
+                "handoff creation requires the exact retained provisional coordinate"
+            )
         if destination.exists():
             raise ValueError("publication handoff already exists")
         destination.parent.mkdir(parents=True, exist_ok=True)

@@ -13,7 +13,7 @@ from tooling.public_distribution import strict_json
 from tooling.public_verification import write_retrieved
 from tooling.release_consumers import verify_retrieved_consumer
 from tooling.release_packaging import host_scope
-from tooling.release_payload import archive_files
+from tooling.release_payload import archive_files, python_wheel_platform
 from tooling.release_supply_chain import load_json
 
 
@@ -54,11 +54,13 @@ def main() -> int:
         if hashlib.sha256((root / name).read_bytes()).hexdigest() != digest:
             raise ValueError("staged retrieval changed")
     scope = host_scope()
+    python_artifact = next(a for a in manifest["artifacts"] if a["id"] == "release:python")
+    platform_tag = python_wheel_platform(python_artifact, scope)
     wheels = [
         name
         for name in files
         if name.endswith(".whl")
-        and ("win_amd64" in name if os.name == "nt" else "linux_x86_64" in name)
+        and name.endswith("-cp312-none-" + platform_tag + ".whl")
     ]
     if len(wheels) != 1:
         raise ValueError(

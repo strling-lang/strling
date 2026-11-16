@@ -3,7 +3,7 @@ local json = require("cjson.safe")
 local native = require("strling_native")
 
 local strling = {
-  VERSION = "4.0.0",
+  VERSION = "4.0.1",
   INTEROP_PROTOCOL_VERSION = "1.0.0",
   NATIVE_ABI_VERSION = 1,
   MAX_INTEROP_REQUEST_BYTES = 10485760,

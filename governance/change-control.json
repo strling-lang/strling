@@ -1,5 +1,5 @@
 {
-    "active_task": "docs/migration/records/public-verification-workflow-context.yaml",
+    "active_task": "docs/migration/records/publication-401-fix-forward.yaml",
     "architecture_rule_registry": "governance/architecture-rules.json",
     "configuration_version": 1,
     "documentation_paths": ["**/*.md", "docs/**"],

@@ -22,7 +22,9 @@ from tooling.evidence_bytes import decode
 from tooling.public_registries import coordinate_version
 
 
-def validate_coordinate_preflight(manifest: dict, report: dict) -> None:
+def validate_coordinate_preflight(
+    manifest: dict, report: dict, *, version: str | None = None
+) -> None:
     rows = report.get("observations", [])
     indexed = {row.get("artifact_id"): row for row in rows}
     expected = {row["id"]: row for row in manifest["artifacts"]}
@@ -33,7 +35,11 @@ def validate_coordinate_preflight(manifest: dict, report: dict) -> None:
         or report.get("publication_authorized") is not False
         or report.get("registry_mutation_authorized") is not False
         or report.get("rc_reserved") is not False
-        or re.fullmatch(r"4\.0\.0-rc\.[1-9][0-9]*", coordinate) is None
+        or re.fullmatch(r"4\.0\.(?:0|[1-9][0-9]*)-rc\.[1-9][0-9]*", coordinate) is None
+        or (
+            version is not None
+            and coordinate.split("-rc.", 1)[0] != version.split("-rc.", 1)[0]
+        )
         or len(indexed) != len(rows)
         or set(indexed) != set(expected)
     ):
@@ -57,7 +63,7 @@ def validate_coordinate_preflight(manifest: dict, report: dict) -> None:
         if (
             row.get("status") != "read-only-coordinate-observation"
             or len(versions) != 2
-            or set(versions) != {coordinate, "4.0.0"}
+            or set(versions) != {coordinate, coordinate.split("-rc.", 1)[0]}
             or any(
                 value.get("coordinate")
                 != coordinate_version(value["version"], artifact["registry"])
@@ -460,7 +466,13 @@ def verify_candidate_evidence(
             raise ValueError("candidate package evidence did not pass for this source")
         examples = load_json(root / "tests/documentation/1.0/manifest.json")
         preflight = load_json(preflights[0])
-        validate_coordinate_preflight(manifest, preflight)
+        validate_coordinate_preflight(
+            manifest,
+            preflight,
+            version=load_json(root / "governance/release-policy.json")["product"][
+                "version"
+            ],
+        )
         fixtures = {
             relative: hashlib.sha256((root / relative).read_bytes()).hexdigest()
             for relative in CONSUMER_FIXTURES.values()

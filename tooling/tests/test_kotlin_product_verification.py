@@ -5,6 +5,7 @@ import zipfile
 import pytest
 
 from tooling.jvm_adapter_package import (
+    PRODUCT_VERSION,
     JvmPackageCertificationError,
     product_verification_projection,
     product_build_inputs,
@@ -80,7 +81,7 @@ def _reviewed_fixture(tmp_path):
         archive.writestr("Api.class", b"compiled bytes")
     document = {
         "schema_version": "1.0.0",
-        "product_version": "4.0.0",
+        "product_version": PRODUCT_VERSION,
         "source_files": product_build_inputs(tmp_path),
         "compiler_variants": {
             "11": hashlib.sha256(jar.read_bytes()).hexdigest(),

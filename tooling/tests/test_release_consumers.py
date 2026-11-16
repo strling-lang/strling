@@ -13,6 +13,42 @@ from tooling.release_consumers import (
 from tooling.release_supply_chain import ReleaseSupplyChainError
 
 
+@pytest.mark.parametrize(
+    "scope,tag",
+    [("windows-x86_64", "win_amd64"), ("linux-x86_64", "manylinux_2_34_x86_64")],
+)
+@pytest.mark.parametrize("substituted", [False, True])
+def test_python_consumer_selects_only_the_registered_host_wheel(
+    tmp_path, monkeypatch, scope, tag, substituted
+):
+    from tooling import release_consumers, release_packaging
+
+    monkeypatch.setattr(release_packaging, "host_scope", lambda: scope)
+    artifact = {
+        "artifact_policy": {
+            "platform_patterns": {scope: [f"dist/strling-VERSION-cp312-none-{tag}.whl"]}
+        }
+    }
+    selected = "linux_x86_64" if substituted else tag
+    members = [{"name": f"dist/strling-4.0.1-cp312-none-{selected}.whl"}]
+
+    def stop_before_install(arguments, *args, **kwargs):
+        assert arguments[1:4] == ["-m", "venv", "--without-pip"]
+        raise RuntimeError("governed wheel selected before isolated installation")
+
+    monkeypatch.setattr(release_consumers, "run_consumer", stop_before_install)
+    if substituted:
+        with pytest.raises(ReleaseSupplyChainError, match="one exact host wheel"):
+            release_consumers.consume_python(
+                tmp_path, tmp_path / "consumer", "4.0.1", {}, members, artifact=artifact
+            )
+    else:
+        with pytest.raises(RuntimeError, match="governed wheel selected"):
+            release_consumers.consume_python(
+                tmp_path, tmp_path / "consumer", "4.0.1", {}, members, artifact=artifact
+            )
+
+
 def results():
     return (
         {

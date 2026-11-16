@@ -114,7 +114,7 @@ class ReleaseSupplyChainArchitectureTests(unittest.TestCase):
             ["interop-cargo", "python-binding"], python_artifact["dependency_roots"]
         )
         self.assertEqual(
-            ["cargo", "python", "rustc"], python_artifact["toolchain_refs"]
+            ["auditwheel", "cargo", "python", "rustc"], python_artifact["toolchain_refs"]
         )
 
     def test_native_package_builds_prefetch_locked_cargo_graphs(self) -> None:

@@ -1,6 +1,6 @@
 # STRling TypeScript adapter
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -12,7 +12,7 @@ emitter, or independent standard-library implementation.
 ## Installation
 
 ```bash
-npm install @strling-lang/strling@4.0.0
+npm install @strling-lang/strling@4.0.1
 ```
 
 Node 22 is the declared runtime. The package is ESM-only. The ratified support

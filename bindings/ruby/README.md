@@ -1,6 +1,6 @@
 # STRling Ruby adapter
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -46,7 +46,7 @@ See the [canonical interop contract](../../spec/interop/1.0/README.md) and the [
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-gem install strling --version 4.0.0
+gem install strling --version 4.0.1
 ```
 
 Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

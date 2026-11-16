@@ -1,6 +1,6 @@
 # STRling Kotlin adapter
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -81,7 +81,7 @@ See the [Kotlin API reference](docs/api_reference.md), the
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-mvn dependency:get -Dartifact=io.github.strling-lang:strling-kotlin:4.0.0 -DremoteRepositories=https://repo1.maven.org/maven2
+mvn dependency:get -Dartifact=io.github.strling-lang:strling-kotlin:4.0.1 -DremoteRepositories=https://repo1.maven.org/maven2
 ```
 
-This proposed command resolves the exact Maven coordinate. Add `implementation("io.github.strling-lang:strling-kotlin:4.0.0")` to the application dependency block. The application supplies the authenticated native library.
+This proposed command resolves the exact Maven coordinate. Add `implementation("io.github.strling-lang:strling-kotlin:4.0.1")` to the application dependency block. The application supplies the authenticated native library.

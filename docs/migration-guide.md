@@ -1,8 +1,10 @@
 # Migrating STRling 3.x applications to 4.0
 
 This guide describes the implemented Fourth Edition interfaces and intentional
-retirements. STRling 4.0.0 remains prepublication. Installation commands are
-proposed public-release commands; no public 4.0.0 installation is claimed.
+retirements. STRling 4.0.1 remains prepublication. Installation commands are
+proposed public-release commands; no public 4.0.1 installation is claimed.
+The [4.0.0 partial-publication record](migration/publication-400-partial.md)
+records the earlier release's incomplete public verification.
 
 The historical comparison point is the repository's frozen 3.0.0 compatibility
 baseline, `77f6a81e6b0a63cc6052fdadb428c719b16c7c61`. It is implementation and
@@ -75,7 +77,7 @@ is not an independent parser or target emitter.
 
 ## Bind the exact product kernel
 
-Fourth Edition packages coordinate on product 4.0.0 and require its exact
+Fourth Edition packages coordinate on product 4.0.1 and require its exact
 native/WASM product marker, ABI 1 and interop protocol 1.0.0. Matching the ABI
 number alone is insufficient. Unmarked older kernels and mismatched product
 libraries are rejected before normal client use. This deliberately tightens
@@ -89,7 +91,7 @@ that a compatible filename authenticates the bytes. See the
 
 Product, specification, source dialect, ABI, transport, compiler-description and
 target-profile versions are separate identities. Do not change protocol or
-specification versions to 4.0.0 merely because the package version is 4.0.0.
+specification versions to 4.0.1 merely because the package version is 4.0.1.
 
 ## Use the verified WASM construction path
 
@@ -133,8 +135,8 @@ does not claim that a PCRE2 artifact executes as Python `re` or ECMAScript.
 Lexical-shape standard helpers do not become standards validators through
 this migration.
 
-Final candidate preparation also corrected defects in the unpublished 4.0.0
-adapters: source helpers now select the registered Semantic frontend by default,
+Before the partial 4.0.0 publication, final candidate preparation corrected
+adapter defects: source helpers select the registered Semantic frontend by default,
 and the .NET and JVM Simply start/end helpers use the canonical input-position
 identities. These are corrections to invalid requests, not additional language
 features or supported 3.x compatibility aliases. Explicit obsolete frontend

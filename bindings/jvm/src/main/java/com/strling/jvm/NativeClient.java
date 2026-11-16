@@ -38,7 +38,7 @@ public final class NativeClient implements AutoCloseable {
 
     private static final int STATUS_RESPONSE_WRITTEN = 0;
     // Generated product projection; tooling/sync_versions.py owns this value.
-    private static final String PRODUCT_VERSION = "4.0.0";
+    private static final String PRODUCT_VERSION = "4.0.1";
     private static final ObjectMapper JSON = new ObjectMapper(
             JsonFactory.builder().enable(StreamReadFeature.STRICT_DUPLICATE_DETECTION).build())
             .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);

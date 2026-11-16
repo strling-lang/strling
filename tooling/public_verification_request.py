@@ -104,9 +104,12 @@ def validate_request(
         else (obligations(manifest), [])
     )
     if deferred:
-        if re.fullmatch(r"4\.0\.0(?:-rc\.[1-9][0-9]*)?", version) is None:
+        from tooling.release_supply_chain import OWNER_DEFERRED_RELEASES
+
+        if version.split("-rc.", 1)[0] not in OWNER_DEFERRED_RELEASES:
             raise RetrievalError(
-                "contract", "owner deferral is limited to initial 4.0.0 publication"
+                "contract",
+                "owner deferral is limited to explicitly approved release versions",
             )
         if request.get("deferred_obligations") != deferred:
             raise RetrievalError(

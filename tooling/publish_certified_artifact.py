@@ -170,6 +170,109 @@ def _require_absent(url: str) -> None:
     )
 
 
+def _require_cpan_absent(url: str) -> None:
+    from tooling.public_distribution import strict_json
+    from tooling.public_registries import cpan_release_document
+    from tooling.public_retrieval import RetrievalError
+
+    try:
+        payload = _http(url)
+    except urllib.error.HTTPError as error:
+        if error.code == 404:
+            return
+        raise ReleaseSupplyChainError(
+            "publication-availability", "CPAN availability check failed"
+        ) from None
+    try:
+        cpan_release_document(strict_json(payload))
+    except RetrievalError as error:
+        if error.category == "missing-coordinate" and error.status == "NOT_PUBLISHED":
+            return
+        raise ReleaseSupplyChainError(
+            "publication-availability", "CPAN availability response is unqualified"
+        ) from None
+    raise ReleaseSupplyChainError(
+        "publication-collision", "immutable CPAN destination already exists"
+    )
+
+
+def _require_luarocks_absent(document: object, user_id: int) -> None:
+    # The server's nil-valued MoonScript fields are omitted from JSON. Its
+    # documented null-valued response is also accepted, after owner binding.
+    if type(document) is dict and not document:
+        return
+    if type(document) is dict and set(document) == {"module", "version"}:
+        if document["module"] is None and document["version"] is None:
+            return
+    if type(document) is dict and set(document) <= {"module", "version"}:
+        module = document.get("module")
+        if (
+            type(module) is dict
+            and type(module.get("id")) is int
+            and module["id"] > 0
+            and module.get("name") == "strling"
+            and type(module.get("user_id")) is int
+            and module["user_id"] == user_id
+            and document.get("version") is None
+        ):
+            return
+    raise ReleaseSupplyChainError(
+        "publication-collision", "LuaRocks coordinate is present or unqualified"
+    )
+
+
+def _safe_subprocess_diagnostic(error: subprocess.CalledProcessError) -> dict:
+    def text(value):
+        if isinstance(value, bytes):
+            return value.decode("utf-8", errors="replace")
+        return value or ""
+
+    diagnostic = text(error.stderr) + "\n" + text(error.stdout)
+    credential_names = (
+        "GEM_HOST_API_KEY",
+        "RUBYGEMS_API_KEY",
+        "NODE_AUTH_TOKEN",
+        "NPM_TOKEN",
+        "NUGET_KEY",
+        "SONATYPE_USERNAME",
+        "SONATYPE_PASSWORD",
+        "PAUSE_USERNAME",
+        "PAUSE_PASSWORD",
+        "LUAROCKS_API_KEY",
+        "GITHUB_TOKEN",
+        "GH_TOKEN",
+        "GPG_PRIVATE_KEY",
+        "GPG_PASSPHRASE",
+        "CARGO_REGISTRY_TOKEN",
+        "ACTIONS_ID_TOKEN_REQUEST_TOKEN",
+    )
+    for name in credential_names:
+        value = os.environ.get(name)
+        if value:
+            for variant in {
+                value,
+                urllib.parse.quote(value, safe=""),
+                json.dumps(value)[1:-1],
+            }:
+                diagnostic = diagnostic.replace(variant, "[REDACTED]")
+    diagnostic = re.sub(
+        r"-----BEGIN PGP PRIVATE KEY BLOCK-----.*?(?:-----END PGP PRIVATE KEY BLOCK-----|$)",
+        "[REDACTED PRIVATE KEY]",
+        diagnostic,
+        flags=re.S,
+    )
+    diagnostic = re.sub(r"\x1b\[[0-9;]*[A-Za-z]", "", diagnostic)
+    diagnostic = re.sub(
+        r"(?i)\b(Bearer|Basic)\s+[A-Za-z0-9_.+/=-]+", r"\1 [REDACTED]", diagnostic
+    )
+    diagnostic = re.sub(
+        r"(?i)([?&](?:key|token|password|api_key|access_token)=)[^\s&]+",
+        r"\1[REDACTED]",
+        diagnostic,
+    )
+    return {"exit_code": error.returncode, "diagnostic": diagnostic[-16384:].strip()}
+
+
 def _crate_frame(path: Path, version: str) -> bytes:
     """Cargo registry upload framing, assembled solely from the approved crate."""
     with tarfile.open(path, "r:*") as archive:
@@ -326,9 +429,15 @@ def upload(
         with tempfile.TemporaryDirectory(
             prefix="strling-approved-upload-"
         ) as temporary:
-            completed = subprocess.run(
-                arguments, cwd=cwd or temporary, check=True, capture_output=True
-            )
+            try:
+                completed = subprocess.run(
+                    arguments, cwd=cwd or temporary, check=True, capture_output=True
+                )
+            except subprocess.CalledProcessError as error:
+                raise ReleaseSupplyChainError(
+                    "publication-command",
+                    json.dumps(_safe_subprocess_diagnostic(error), sort_keys=True),
+                ) from None
             return completed.stdout
 
     if artifact["delivery_kind"] == "source-tag":
@@ -361,22 +470,29 @@ def upload(
         )
     if slug == "typescript":
         _require_absent("https://registry.npmjs.org/@strling-lang%2fstrling/" + version)
-        return run(
-            [
-                "npm",
-                "publish",
-                str(one(".tgz")),
-                "--ignore-scripts",
-                "--registry=https://registry.npmjs.org",
-                "--userconfig=" + os.devnull,
-                "--globalconfig=" + os.devnull,
-                "--provenance",
-                "--access",
-                "public",
-                "--tag",
-                "next" if "-" in version else "latest",
+        with tempfile.TemporaryDirectory(prefix="strling-npm-config-") as directory:
+            configs = [
+                Path(directory) / name for name in ("user.npmrc", "global.npmrc")
             ]
-        )
+            for path in configs:
+                descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+                os.close(descriptor)
+            return run(
+                [
+                    "npm",
+                    "publish",
+                    str(one(".tgz")),
+                    "--ignore-scripts",
+                    "--registry=https://registry.npmjs.org",
+                    "--userconfig=" + str(configs[0]),
+                    "--globalconfig=" + str(configs[1]),
+                    "--provenance",
+                    "--access",
+                    "public",
+                    "--tag",
+                    "next" if "-" in version else "latest",
+                ]
+            )
     if slug == "fsharp":
         if verified_evidence is None:
             raise ReleaseSupplyChainError(
@@ -410,6 +526,7 @@ def upload(
             ]
         )
     if slug == "ruby":
+        _secret("GEM_HOST_API_KEY")
         _require_absent(
             "https://rubygems.org/api/v2/rubygems/strling/versions/" + version + ".json"
         )
@@ -429,7 +546,7 @@ def upload(
             raise ReleaseSupplyChainError(
                 "publication-destination", "PAUSE requires an exact uppercase uploader"
             )
-        _require_absent(
+        _require_cpan_absent(
             "https://fastapi.metacpan.org/v1/release/" + owner + "/STRling-" + version
         )
         archive = one(".tar.gz")
@@ -489,14 +606,7 @@ def upload(
                 headers=headers,
             )
         )
-        if (
-            not {"module", "version"}.issubset(available)
-            or available.get("errors")
-            or available["version"] is not None
-        ):
-            raise ReleaseSupplyChainError(
-                "publication-collision", "LuaRocks coordinate is present or unqualified"
-            )
+        _require_luarocks_absent(available, destination["registry_user_id"])
         _require_absent(
             "https://luarocks.org/manifests/"
             + owner

@@ -95,5 +95,5 @@ mandatory; quantitative performance is informational.
 Certification does not authorize publication. Separately authorized public
 publication must be followed by real registry retrieval and consumer checks.
 Staged installation and controlled registry fixtures do not establish a public
-4.0.0 installation. Compatibility evidence may block readiness, but it does not
+4.0.1 installation. Compatibility evidence may block readiness, but it does not
 outrank the controlling specification.

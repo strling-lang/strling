@@ -32,7 +32,7 @@ from tooling.public_verification import verify_artifact, write_retrieved
 from tooling.public_verification_request import validate_request
 from tooling.release_consumers import verify_retrieved_consumer
 from tooling.release_packaging import host_scope
-from tooling.release_payload import archive_files
+from tooling.release_payload import archive_files, python_wheel_platform
 from tooling.release_supply_chain import canonical_json, document_fingerprint, load_json
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -78,9 +78,10 @@ def save(path: Path, value: dict) -> None:
         stream.write("\n")
 
 
-def native_companion(root: Path, files: dict[str, str], scope: str) -> Path:
-    marker = "win_amd64" if scope == "windows-x86_64" else "linux_x86_64"
-    wheels = [name for name in files if name.endswith(".whl") and marker in name]
+def native_companion(root: Path, files: dict[str, str], scope: str, manifest: dict) -> Path:
+    artifact = next(a for a in manifest["artifacts"] if a["id"] == "release:python")
+    tag = python_wheel_platform(artifact, scope)
+    wheels = [name for name in files if name.endswith("-cp312-none-" + tag + ".whl")]
     if (
         len(wheels) != 1
         or hashlib.sha256((root / wheels[0]).read_bytes()).hexdigest()
@@ -216,7 +217,7 @@ def execute(args, control: dict) -> dict:
             continue
         try:
             native = (
-                native_companion(args.output / "retrieved", files, scope)
+                native_companion(args.output / "retrieved", files, scope, manifest)
                 if identity
                 in {
                     "release:java",

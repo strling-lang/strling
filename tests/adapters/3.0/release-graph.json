@@ -2,25 +2,25 @@
     "schema_version": "jvm-release-graph-v1",
     "roots": {
         "java": [
-            "io.github.strling-lang:strling:4.0.0",
-            "io.github.strling-lang:strling-jvm:4.0.0",
+            "io.github.strling-lang:strling:4.0.1",
+            "io.github.strling-lang:strling-jvm:4.0.1",
             "net.java.dev.jna:jna:5.19.1",
             "com.fasterxml.jackson.core:jackson-databind:2.18.11",
             "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
             "com.fasterxml.jackson.core:jackson-core:2.18.11"
         ],
         "jvm": [
-            "io.github.strling-lang:strling-jvm:4.0.0",
+            "io.github.strling-lang:strling-jvm:4.0.1",
             "net.java.dev.jna:jna:5.19.1",
             "com.fasterxml.jackson.core:jackson-databind:2.18.11",
             "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
             "com.fasterxml.jackson.core:jackson-core:2.18.11"
         ],
         "kotlin": [
-            "io.github.strling-lang:strling-kotlin:4.0.0",
+            "io.github.strling-lang:strling-kotlin:4.0.1",
             "org.jetbrains.kotlin:kotlin-stdlib:2.0.20",
             "org.jetbrains:annotations:13.0",
-            "io.github.strling-lang:strling-jvm:4.0.0",
+            "io.github.strling-lang:strling-jvm:4.0.1",
             "net.java.dev.jna:jna:5.19.1",
             "com.fasterxml.jackson.core:jackson-databind:2.18.11",
             "com.fasterxml.jackson.core:jackson-annotations:2.18.11",
@@ -50,19 +50,19 @@
             "license_disposition": "permitted"
         },
         {
-            "coordinate": "io.github.strling-lang:strling-jvm:4.0.0",
+            "coordinate": "io.github.strling-lang:strling-jvm:4.0.1",
             "ecosystem": "Maven",
             "internal": true,
             "license": "Apache-2.0"
         },
         {
-            "coordinate": "io.github.strling-lang:strling-kotlin:4.0.0",
+            "coordinate": "io.github.strling-lang:strling-kotlin:4.0.1",
             "ecosystem": "Maven",
             "internal": true,
             "license": "Apache-2.0"
         },
         {
-            "coordinate": "io.github.strling-lang:strling:4.0.0",
+            "coordinate": "io.github.strling-lang:strling:4.0.1",
             "ecosystem": "Maven",
             "internal": true,
             "license": "Apache-2.0"
@@ -94,5 +94,5 @@
         "load_mode": "caller-supplied absolute path",
         "reason": "P17-T04 certifies only the locally executed Windows x86_64 native row; no unexecuted classifier is advertised."
     },
-    "fingerprint": "sha256:db3ccb7126a29a8d03589f2d260936066be800b1661ea2b756215f2b7007060e"
+    "fingerprint": "sha256:6ec5d0df7123301acc7907621a2f845d6d6e27f49b5e7c3155e59c874f243f74"
 }

@@ -11,6 +11,7 @@ from pathlib import Path
 from setuptools import setup
 from setuptools.command.build_py import build_py
 from setuptools.command.sdist import sdist
+from setuptools.dist import Distribution
 from wheel.bdist_wheel import bdist_wheel
 
 
@@ -81,6 +82,13 @@ class BuildWithNativeInterop(build_py):
         )
 
 
+class InteropDistribution(Distribution):
+    def has_ext_modules(self) -> bool:
+        # ctypes loads a native shared library even though no CPython extension
+        # is declared. Setuptools must install this package into platlib.
+        return True
+
+
 class PlatformInteropWheel(bdist_wheel):
     def finalize_options(self) -> None:
         super().finalize_options()
@@ -91,6 +99,7 @@ class PlatformInteropWheel(bdist_wheel):
 
 
 setup(
+    distclass=InteropDistribution,
     cmdclass={
         "bdist_wheel": PlatformInteropWheel,
         "build_py": BuildWithNativeInterop,

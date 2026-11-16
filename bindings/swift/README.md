@@ -1,6 +1,6 @@
 # STRling Swift adapter
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -34,7 +34,7 @@ support claims require execution under the governed CP4 toolchain matrix.
 
 ## Product compatibility
 
-Fourth Edition packages require the exact 4.0.0 native product identity in
+Fourth Edition packages require the exact 4.0.1 native product identity in
 addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
 product marker before loading; installed CMake packages check their static
 archive during configuration. Unmarked older kernels and mismatched product
@@ -44,7 +44,7 @@ The compiler semantics and versioned ABI/protocol are unchanged.
 
 ## Product release installation
 
-Clone the immutable `swift-v4.0.0` product source tag, verify the checkout's
+Clone the immutable `swift-v4.0.1` product source tag, verify the checkout's
 commit against release provenance, and use `bindings/swift` as the SwiftPM
 package path. A consuming project can reference that checked-out package with
 `.package(path: "/absolute/checkout/bindings/swift")`. The supported execution
@@ -56,7 +56,7 @@ absolute path.
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-git clone --branch swift-v4.0.0 --single-branch https://github.com/strling-lang/strling.git
+git clone --branch swift-v4.0.1 --single-branch https://github.com/strling-lang/strling.git
 ```
 
 Use `swift build --package-path strling/bindings/swift` for this source route. A consuming SwiftPM project references that authenticated subtree as a local package; the repository root is not a SwiftPM package.

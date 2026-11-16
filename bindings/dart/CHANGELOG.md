@@ -1,3 +1,9 @@
+# 4.0.1
+
+Fix-forward packaging excludes Pub's selection-control file from the certified
+public payload. The adapter requires the exact 4.0.1 native product identity;
+compiler semantics and the declared platform scope remain unchanged.
+
 # 4.0.0
 
 Canonical compiler adapter with explicit native loading, strict ABI/protocol

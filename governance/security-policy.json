@@ -920,14 +920,14 @@
             {
                 "ecosystem": "maven",
                 "package": "io.github.strling-lang:strling-jvm",
-                "version": "4.0.0",
+                "version": "4.0.1",
                 "license": "Apache-2.0",
                 "evidence": "The governed local bindings/jvm/pom.xml declares Apache License 2.0; this package is unavailable from the public resolver during the coordinated dry run."
             },
             {
                 "ecosystem": "gradle",
                 "package": "io.github.strling-lang:strling-jvm",
-                "version": "4.0.0",
+                "version": "4.0.1",
                 "license": "Apache-2.0",
                 "evidence": "The governed local bindings/jvm/pom.xml declares Apache License 2.0; the Kotlin build consumes this exact locally installed package rather than public registry metadata."
             },
@@ -1004,7 +1004,7 @@
             {
                 "ecosystem": "nuget",
                 "package": "STRling",
-                "version": "4.0.0",
+                "version": "4.0.1",
                 "license": "Apache-2.0",
                 "evidence": "The coordinated local STRling companion is built from bindings/csharp/src/STRling/STRling.csproj with PackageLicenseExpression Apache-2.0 and the repository LICENSE. Its product version is projected from release-policy.json; this is first-party metadata, not evidence of public registry publication."
             }

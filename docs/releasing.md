@@ -10,7 +10,7 @@ package metadata or release automation.
 
 ## Current preparation boundary
 
-STRling `4.0.0` is the ratified product release identity and active coordinated
+STRling `4.0.1` is the owner-authorized fix-forward identity and active coordinated
 package projection. The version generator reads `product/version` in the release
 policy and validates the complete inventory before updating any file. Independent
 specification, protocol, ABI, transport-crate, and editor versions are preserved.
@@ -315,7 +315,8 @@ coordinate and scope checks; they do not acquire Supported consumer claims.
 The implementation derives these rows from the manifest rather than storing
 the total as an acceptance constant.
 
-The owner's initial 4.0.0 publication scope defers ConanCenter. All 17 build
+The owner's 4.0.0 publication scope and authorized 4.0.1 fix forward defer
+ConanCenter. All 17 build
 routes and all 256 controlled implementation obligations remain mandatory.
 Actual initial public execution covers 16 destinations and 13 Supported platform
 consumers: 232 obligations. The request and aggregate must explicitly account
@@ -323,14 +324,17 @@ for the remaining 24 C++ ConanCenter obligations as deferred; they cannot be
 reported as passed or publicly verified. Supported direct C++ source builds
 remain available under their existing platform and runtime requirements.
 Only the exact manifest eligibility `owner-deferred-conancenter-4.0.0` permits
-this exclusion. Other routes, later release lines, missing public evidence,
+this exclusion for those two explicitly approved versions. Other routes, later
+release versions, missing public evidence,
 and partial publication remain subject to the complete applicable checks.
 
 The optional `export-certified-bytes` job in `certification-integrity.yml`
 restores the original certified packages into the artifact names consumed by
 the publisher. It runs only after all four integrity jobs pass, on a manually
 dispatched exact closure/workflow identity, with protected `release-attestation`
-approval and read-only repository permissions. It does not compile or publish.
+approval. Reading an unpublished draft requires `contents: write` in this job;
+its reviewed commands retrieve and export existing bytes. It does not compile
+or publish packages. The exact permission and workflow identity require approval.
 The qualified `tooling/certified_transport.py seal` command prepares a local
 lossless capsule from the complete exports, original signed package bundle and
 accepted full candidate closure. The importer independently verifies both

@@ -1138,7 +1138,7 @@
                 "--artifact-id",
                 "release:python"
             ],
-            "toolchain_refs": ["cargo", "python", "rustc"],
+            "toolchain_refs": ["auditwheel", "cargo", "python", "rustc"],
             "artifact_policy": {
                 "subject_kind": "file",
                 "patterns": [
@@ -1151,7 +1151,7 @@
                 "platform_patterns": {
                     "linux-x86_64": [
                         "bindings/python/dist/strling-VERSION.tar.gz",
-                        "bindings/python/dist/strling-VERSION-cp312-none-linux_x86_64.whl"
+                        "bindings/python/dist/strling-VERSION-cp312-none-manylinux_2_34_x86_64.whl"
                     ],
                     "windows-x86_64": [
                         "bindings/python/dist/strling-VERSION-cp312-none-win_amd64.whl"

@@ -320,7 +320,7 @@ def test_deferral_cannot_be_transferred_to_another_route(manifest, field, value)
         publication_obligations(manifest)
 
 
-@pytest.mark.parametrize("version", ["4.0.1", "4.1.0", "5.0.0", "4.0.0-rc.0"])
+@pytest.mark.parametrize("version", ["4.0.2", "4.1.0", "5.0.0", "4.0.0-rc.0"])
 def test_deferral_is_bound_to_initial_release_version(manifest, version):
     from tooling import release_supply_chain as supply
 
@@ -335,6 +335,22 @@ def test_deferral_is_bound_to_initial_release_version(manifest, version):
     with patch.object(supply, "load_json", side_effect=source_policy):
         with pytest.raises(supply.ReleaseSupplyChainError, match="initial ConanCenter"):
             supply.validate_manifest(manifest, root=ROOT)
+
+
+@pytest.mark.parametrize("version", ["4.0.0", "4.0.1"])
+def test_deferral_preserves_only_owner_approved_release_versions(manifest, version):
+    from tooling import release_supply_chain as supply
+
+    original = supply.load_json
+
+    def source_policy(path):
+        value = original(path)
+        if Path(path) == ROOT / "governance/release-policy.json":
+            value["product"]["version"] = version
+        return value
+
+    with patch.object(supply, "load_json", side_effect=source_policy):
+        assert supply.validate_manifest(manifest, root=ROOT) == manifest
 
 
 def test_legacy_source_still_requires_every_public_route(manifest):

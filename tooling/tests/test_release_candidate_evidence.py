@@ -101,6 +101,19 @@ class CandidateEvidenceTests(unittest.TestCase):
             observations=observations,
         )
         validate_coordinate_preflight(self.manifest, report)
+        patch_report = copy.deepcopy(report)
+        patch_report["provisional_rc"] = "4.0.1-rc.1"
+        for row in patch_report["observations"]:
+            for entry in row.get("coordinates", []):
+                entry["version"] = entry["version"].replace("4.0.0", "4.0.1")
+                entry["coordinate"] = coordinate_version(
+                    entry["version"], row["registry"]
+                )
+        validate_coordinate_preflight(self.manifest, patch_report, version="4.0.1")
+        with self.assertRaises(ValueError):
+            validate_coordinate_preflight(self.manifest, patch_report, version="4.0.0")
+        with self.assertRaises(ValueError):
+            validate_coordinate_preflight(self.manifest, report, version="4.0.1")
         for mutation in (
             "missing",
             "duplicate",

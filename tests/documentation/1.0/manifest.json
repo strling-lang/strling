@@ -109,15 +109,15 @@
             "language": "text",
             "sha256": "2b0a368b03ff280224d878617354e08d04a7efd4ffcc26799f6304d2f95483b0",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
             "id": "bindings/c/README.md#3",
             "language": "bash",
-            "sha256": "429ef70f2c4427dda6c0f081fa92fa56392d97a5bb4a80b705f3cebd21f92743",
+            "sha256": "6e5cd7d0038e4e946bb4a6caf200eb273b617c5a02bd0dceb11b403fa618d2c6",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -133,7 +133,7 @@
             "language": "bash",
             "sha256": "2f291b455704e56f0c555d9b2d3a8367fe2190efe70dadf6f32eafb2bb167bbb",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -155,9 +155,9 @@
         {
             "id": "bindings/cpp/README.md#5",
             "language": "bash",
-            "sha256": "0af121faeb2633eb3df9468379a05916c23b781f357cafa62e08fd2d6775d71c",
+            "sha256": "2dfcb0f3d5b3e6c73c85bcb6591090357424adb1f3706ae3a2c60c41fa4f6b31",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -179,9 +179,9 @@
         {
             "id": "bindings/csharp/README.md#3",
             "language": "bash",
-            "sha256": "3a3a7c83c4a4627caa89be5739293f39121b305dcf5d951bf468e87495c2f162",
+            "sha256": "f6ed5ce1ec8f4b6d1c03749073056c23ed3cd3707499dbdfcae89f3d74d2e3ab",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -195,9 +195,9 @@
         {
             "id": "bindings/dart/README.md#2",
             "language": "bash",
-            "sha256": "572e5f03d3714ddf5b99aebfd3f1f3b978a0f8ad1745cc14d25240817d9c99cf",
+            "sha256": "b20cedc2522f7d988ab46b559ec610d36bb96d08696673246af2ba6a12ee4e58",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -211,9 +211,9 @@
         {
             "id": "bindings/fsharp/README.md#2",
             "language": "bash",
-            "sha256": "f19019f360395d00c7dc0e0ae2ff53259c148796d414dfab8cbd9fd063992c53",
+            "sha256": "d0586a146c9df2867385a2e014768c646fdcff924a10dc58f2d60f0cde6efbb8",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -227,9 +227,9 @@
         {
             "id": "bindings/go/README.md#2",
             "language": "sh",
-            "sha256": "67e75fdb45edd4ea502222b00b867f7f0ca5dd2d4262ec1909ef97b2d0176a72",
+            "sha256": "ed2465164e042132644ef9e84e33d22a24be94a6c3fecb671416755d8c069759",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -275,9 +275,9 @@
         {
             "id": "bindings/java/README.md#3",
             "language": "bash",
-            "sha256": "7abfd8077eb121995a37ad06146e48a137a807394adef4911e51672da7719df8",
+            "sha256": "2f44182f41623434680bb4549d5b61feb571c7ccbbdd472a86cce1ed1cd472e4",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -315,9 +315,9 @@
         {
             "id": "bindings/kotlin/README.md#3",
             "language": "bash",
-            "sha256": "c76c1e5136778b3596a2930b4fc6dc88471768c3c81436da82158cf84a03d86d",
+            "sha256": "74a8eec7f245e183f5d16a0a78d2f97b62c10bbe389bb736cf99f7b00df12b62",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -339,9 +339,9 @@
         {
             "id": "bindings/lua/README.md#3",
             "language": "bash",
-            "sha256": "3ebc3cc9d39ea347d6587ce49d58156abf92965771aba67e2511ee149e7c263a",
+            "sha256": "ea7582c92245a4520490cfa45a7b070618e4c41bccbc9d8829f497cf89f79777",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -355,9 +355,9 @@
         {
             "id": "bindings/perl/README.md#2",
             "language": "bash",
-            "sha256": "edb446b1576b22c4540dbe796695b91be52595450d4b6550a8aa755e1f086bb1",
+            "sha256": "188b7d54d046fd8dfe8127684a8efaf39323329dd9d7ab80343e517c9caa7b8a",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -371,9 +371,9 @@
         {
             "id": "bindings/php/README.md#2",
             "language": "bash",
-            "sha256": "d73957976a08eaf3d07ee88da5a59bd6f377ee08c694ac4246a395ad7efc8938",
+            "sha256": "6c367ef42bb3afa490d8c87a52580d55124c45ec062a2a99f02d8ac1fb01e068",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -403,9 +403,9 @@
         {
             "id": "bindings/python/README.md#4",
             "language": "bash",
-            "sha256": "a6b8d3bf7c1f56673fbe8e730e26be99ad3b8bf386a243e603ccdcf06804c242",
+            "sha256": "8fe4516be79576006420c7c3bef77bb4b689b4fbf5925fcb4a63c85f759def9c",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -419,9 +419,9 @@
         {
             "id": "bindings/r/README.md#2",
             "language": "bash",
-            "sha256": "bb4a4277104fd754880fbf254c41ad4992906bbf6d5616b25dbc318b8d5dbfc0",
+            "sha256": "1d10fe0ecf139415d0178488e77496fb3138d32936d45d7bfb6b43904f761bf7",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -435,9 +435,9 @@
         {
             "id": "bindings/ruby/README.md#2",
             "language": "bash",
-            "sha256": "f18644d91c92a0428ddd00860388741dc0ba69bdb4d130953bcda65ed124011a",
+            "sha256": "175658614b674e38bf60a2d3997467253d94b93b61f8ed9d93098150c9c907bc",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -459,9 +459,9 @@
         {
             "id": "bindings/rust/README.md#3",
             "language": "bash",
-            "sha256": "040cbace763d9be8b5501680578fb3db1e2d081700c1c4c355d89619c1936227",
+            "sha256": "49d5c86e616c362043bda82f26f42e87b44fd8d6fedd992da125d25597907e54",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -475,17 +475,17 @@
         {
             "id": "bindings/swift/README.md#2",
             "language": "bash",
-            "sha256": "d8c6a2e58780fa7c3337b76ff97342c27e2fb68d573332ee903163792c399cc9",
+            "sha256": "6436951b9af694ea7a43b55e121939ff1f8a16b86539e35cbbfa0920d5e2f749",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
             "id": "bindings/typescript/README.md#1",
             "language": "bash",
-            "sha256": "e11522f8a34de7513e4eac7bc535fe8ff15e62f0a6735b3d66198967b8cbd0d4",
+            "sha256": "c50bd39a8afe2c60b51b99847c6455b07588a8825097503624e31982e65f657a",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {
@@ -571,9 +571,9 @@
         {
             "id": "docs/getting-started.md#4",
             "language": "bash",
-            "sha256": "6b964843338925d5c4abec46a75c2c90c51ed2e3ec51c5d1b5d6768cb013e5bf",
+            "sha256": "316215e30bfc246f33919dbfb054ebcc3cb54a39112d4d0b884e05960a1c9bdf",
             "kind": "installation",
-            "reason": "Proposed public install or explicit local-prefix install; public 4.0.0 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
+            "reason": "Proposed public install or explicit local-prefix install; public 4.0.1 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
         },
         {

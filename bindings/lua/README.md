@@ -1,6 +1,6 @@
 # STRling Lua adapter
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -70,7 +70,7 @@ See the [canonical interop contract](../../spec/interop/1.0/README.md) and the [
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-luarocks install strling 4.0.0-1
+luarocks install strling 4.0.1-1
 ```
 
 The exact approved LuaRocks owner and immutable rock revision must be reconciled in the protected publication handoff. Dependencies and runtime observations remain Preview.

@@ -1,6 +1,6 @@
 # STRling for C
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -59,7 +59,7 @@ details.
 
 ## Product compatibility
 
-Fourth Edition packages require the exact 4.0.0 native product identity in
+Fourth Edition packages require the exact 4.0.1 native product identity in
 addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
 product marker before loading; installed CMake packages check their static
 archive during configuration. Unmarked older kernels and mismatched product
@@ -72,7 +72,7 @@ The compiler semantics and versioned ABI/protocol are unchanged.
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-git clone --branch c-v4.0.0 --single-branch https://github.com/strling-lang/strling.git
+git clone --branch c-v4.0.1 --single-branch https://github.com/strling-lang/strling.git
 ```
 
 Run the documented CMake build and local-prefix install inside this authenticated checkout. Verify the tag commit against release provenance before building.

@@ -152,7 +152,8 @@ def test_workflow_release_outputs_are_separate_github_output_lines(
         "is_release",
         "is_dry_run",
     }
-    assert lines["version"] == "4.0.0" and lines["is_dry_run"] == "true"
+    policy_version = load_json(ROOT / "governance/release-policy.json")["product"]["version"]
+    assert lines["version"] == policy_version and lines["is_dry_run"] == "true"
 
 
 def test_workflow_rejects_missing_registered_platform(workflow):

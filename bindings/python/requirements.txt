@@ -2,3 +2,4 @@ setuptools>=83
 wheel
 build
 pytest
+auditwheel==6.8.2

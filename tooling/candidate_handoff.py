@@ -17,7 +17,7 @@ TERMINAL_STATE = "RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PEND
 
 
 def derive(repository: Path, trust: Path, bundle: Path, *, provisional_rc: str) -> dict:
-    if re.fullmatch(r"4\.0\.0-rc\.[1-9][0-9]*", provisional_rc) is None:
+    if re.fullmatch(r"4\.0\.(?:0|[1-9][0-9]*)-rc\.[1-9][0-9]*", provisional_rc) is None:
         raise ValueError("unregistered provisional candidate coordinate")
     attestation = load_json(bundle / "attestation.json")
     payload = attestation["signed_payload"]
@@ -55,6 +55,8 @@ def derive(repository: Path, trust: Path, bundle: Path, *, provisional_rc: str) 
     ).strip()
     with source_data(repository, source) as root:
         policy = load_json(root / "governance/release-policy.json")
+        if provisional_rc.split("-rc.", 1)[0] != policy["product"]["version"].split("-rc.", 1)[0]:
+            raise ValueError("provisional coordinate differs from the certified product version")
         manifest = load_json(
             root / "tests/certification/release-supply-chain/1.0/manifest.json"
         )

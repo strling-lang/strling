@@ -1,6 +1,6 @@
 # STRling — F# adapter
 
-STRling 4.0.0 is not publicly published. Public installation commands describe
+STRling 4.0.1 is not publicly published. Public installation commands describe
 the proposed separately authorized release. Candidate tests use staged artifacts.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
@@ -67,7 +67,7 @@ See the repository [specification](../../spec/README.md) and
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-dotnet add package STRling.FSharp --version 4.0.0
+dotnet add package STRling.FSharp --version 4.0.1
 ```
 
 Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

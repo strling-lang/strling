@@ -3746,9 +3746,11 @@ jobs:
                   node-version: "22"
                   registry-url: https://registry.npmjs.org
             - name: Install pinned npm trusted-publishing client
-              run:
-                  npm install --global --ignore-scripts npm@11.5.1 --registry=https://registry.npmjs.org --userconfig=/dev/null
-                  --globalconfig=/dev/null
+              run: |
+                  npm_user_config="$(mktemp "$RUNNER_TEMP/strling-npm-user-XXXXXX")"
+                  npm_global_config="$(mktemp "$RUNNER_TEMP/strling-npm-global-XXXXXX")"
+                  npm install --global --ignore-scripts npm@11.5.1 --registry=https://registry.npmjs.org \
+                    --userconfig="$npm_user_config" --globalconfig="$npm_global_config"
             - name: Upload only the approved subject
               env: {}
               run:

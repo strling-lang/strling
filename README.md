@@ -14,8 +14,11 @@ specifications, canonical compiler, host integrations, and developer tooling.
 The Fourth Edition implementation is prepublication. Versioned contracts,
 the broader draft specification, implemented capability, and source-bound
 certification are identified separately in the linked authority documents.
-STRling 4.0.0 has not yet been published; installation commands for that version
-describe the proposed public release, not an available public package.
+STRling 4.0.1 is the unpublished fix-forward candidate; installation commands
+for that version describe a proposed release. The 4.0.0 publication was partial
+and has not achieved complete public verification. Its immutable packages, tags
+and certification evidence are preserved; see the
+[publication incident record](docs/migration/publication-400-partial.md).
 
 ## Why STRling
 

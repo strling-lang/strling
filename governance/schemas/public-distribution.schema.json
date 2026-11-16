@@ -30,12 +30,20 @@
                 "type": "array",
                 "minItems": 1,
                 "uniqueItems": true,
-                "items": { "type": "string" }
+                "items": {
+                    "type": "string"
+                }
             }
         },
-        "schema_version": { "const": "1.0.0" },
-        "contract": { "const": "strling-public-distribution-v1" },
-        "identity_authority": { "const": "governance/release-policy.json" },
+        "schema_version": {
+            "const": "1.0.0"
+        },
+        "contract": {
+            "const": "strling-public-distribution-v1"
+        },
+        "identity_authority": {
+            "const": "governance/release-policy.json"
+        },
         "artifact_authority": {
             "const": "tests/certification/release-supply-chain/1.0/manifest.json"
         },
@@ -49,16 +57,32 @@
                 "governance/public-verification-certification-trust.json"
             ]
         },
-        "public_authority": { "const": "independently-retrieved-public-bytes" },
-        "initial_publication_scope": {
-            "const": {
-                "release_line": "4.0.0",
-                "owner_deferred_artifacts": ["release:cpp"],
-                "engineering_coverage_required": true,
-                "deferred_is_publicly_verified": false
-            }
+        "public_authority": {
+            "const": "independently-retrieved-public-bytes"
         },
-        "engineering_authorities": { "const": ["synthetic", "staged"] },
+        "initial_publication_scope": {
+            "oneOf": [
+                {
+                    "const": {
+                        "release_line": "4.0.0",
+                        "owner_deferred_artifacts": ["release:cpp"],
+                        "engineering_coverage_required": true,
+                        "deferred_is_publicly_verified": false
+                    }
+                },
+                {
+                    "const": {
+                        "release_line": "4.0.1",
+                        "owner_deferred_artifacts": ["release:cpp"],
+                        "engineering_coverage_required": true,
+                        "deferred_is_publicly_verified": false
+                    }
+                }
+            ]
+        },
+        "engineering_authorities": {
+            "const": ["synthetic", "staged"]
+        },
         "statuses": {
             "const": [
                 "NOT_PUBLISHED",
@@ -97,7 +121,10 @@
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
-            "items": { "type": "string", "pattern": "^[a-z][a-z-]+$" }
+            "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z-]+$"
+            }
         },
         "network": {
             "type": "object",
@@ -114,15 +141,33 @@
                 "local_fallback"
             ],
             "properties": {
-                "methods": { "const": ["GET"] },
-                "credentials": { "const": false },
-                "maximum_attempts": { "const": 3 },
-                "maximum_redirects": { "const": 3 },
-                "attempt_seconds": { "const": 30 },
-                "maximum_metadata_bytes": { "const": 8388608 },
-                "maximum_payload_bytes": { "const": 536870912 },
-                "proxies": { "const": false },
-                "local_fallback": { "const": false }
+                "methods": {
+                    "const": ["GET"]
+                },
+                "credentials": {
+                    "const": false
+                },
+                "maximum_attempts": {
+                    "const": 3
+                },
+                "maximum_redirects": {
+                    "const": 3
+                },
+                "attempt_seconds": {
+                    "const": 30
+                },
+                "maximum_metadata_bytes": {
+                    "const": 8388608
+                },
+                "maximum_payload_bytes": {
+                    "const": 536870912
+                },
+                "proxies": {
+                    "const": false
+                },
+                "local_fallback": {
+                    "const": false
+                }
             }
         },
         "routes": {
@@ -141,7 +186,10 @@
                             "pattern": "^https://[a-z0-9.-]+$"
                         }
                     },
-                    "protocol": { "type": "string", "pattern": "^https://" }
+                    "protocol": {
+                        "type": "string",
+                        "pattern": "^https://"
+                    }
                 }
             }
         },

@@ -1,0 +1,201 @@
+record_version: 2.0.0
+title: Fourth Edition packaging and publication fix forward
+status: in_progress
+objective:
+    Prepare and freshly certify owner-authorized 4.0.1 without reusing 4.0.0
+    certification or modifying its immutable public artifacts.
+scope:
+    diff:
+        base: 6fb680484d9d721d2b24a1564549d0f6a8ebc26a
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/**
+        - bindings/**
+        - Cargo.toml
+        - Cargo.lock
+        - core/internal/Cargo.toml
+        - core/internal/Cargo.lock
+        - toolchain.json
+        - tooling/**
+        - governance/**
+        - docs/**
+        - README.md
+        - tests/certification/release-supply-chain/1.0/manifest.json
+        - tests/certification/release-supply-chain/1.0/jvm-product-builds.json
+        - tests/certification/release-supply-chain/1.0/fixtures/**
+        - tests/certification/profile-source/1.0/definitions.json
+        - tests/certification/performance-resource/1.0/runner/Cargo.lock
+        - tests/adapters/3.0/release-graph.json
+        - tests/adapters/dotnet-3.0/release-graph.json
+        - tests/documentation/1.0/manifest.json
+        - tests/architecture/legacy-removal/1.0/evidence.json
+        - tests/architecture/legacy-removal/1.0/evidence.md
+    forbidden_paths:
+        - core/src/**
+        - spec/**
+        - tests/certification/hardened-core/**
+        - tests/certification/release-packaging/**
+        - tests/certification/public-verification/**
+        - tests/certification/release-candidate/1.0/current/**
+        - governance/waivers/**
+    expected_files:
+        - docs/migration/records/publication-401-fix-forward.yaml
+    permitted_generated_changes:
+        - version-synchronized-metadata
+        - lua-release-rockspec
+        - release-policy-documentation
+        - kotlin-product-verification
+        - product-support-matrix
+        - release-supply-chain-contract-fixture
+        - release-certification-trust
+        - package-manager-lockfiles
+        - dependency-license-evidence
+        - profile-source-definitions
+        - jvm-adapter-release-graph
+        - dotnet-adapter-release-graph
+        - public-contract-snapshots
+        - legacy-removal-inventory-evidence
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence: &id001
+            - No compiler semantics, public API, target behavior or supported-platform
+              expansion. Packaging and publisher implementation changes produce a new
+              4.0.1 source; certified a58f126b and its original 4.0.0 artifacts remain historical.
+    public_api_change:
+        level: compatible
+        evidence:
+            - Project the owner-authorized 4.0.1 product identity into public package and
+              native adapter version surfaces. Public API shapes and compiler semantics
+              remain unchanged; the new source requires fresh certification.
+    diagnostic_change:
+        level: none
+        evidence: *id001
+    target_behavior_change:
+        level: none
+        evidence: *id001
+    generated_output_change:
+        level: intentional-correction
+        evidence:
+            - Owner-authorized product 4.0.1 projections and regenerated exact policy/lock/fixture
+              outputs; historical source and signed evidence remain unchanged.
+    schema_change:
+        level: intentional-correction
+        evidence:
+            - Bind future acceptance to the exact 4.0.1 product authority without weakening
+              version, source or completeness checks.
+    architecture_change:
+        level: intentional-correction
+        evidence:
+            - Repair real registry semantics, public file graph, audited Linux wheel transport
+              and safe subprocess diagnostics. Preserve kernel semantics and support classifications.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: contract
+      command:
+          Registered version, release-policy, generated-artifact, public-distribution,
+          package and trust checks
+      expected_result:
+          Exact 4.0.1 projections with unchanged trust authorities and support
+          boundaries.
+    - name: unit
+      command:
+          Affected positive and adversarial Windows/Linux tests and actual-client
+          nonpublishing protocol qualification
+      expected_result: No deterministic registry/toolchain prerequisite remains unresolved.
+    - name: integration
+      command:
+          Fresh 17-route distribution builds, independent comparisons and applicable
+          consumers; Local, Pull Request, Full and no-reuse Release; independent reconstruction/signing/hosted
+          acceptance
+      expected_result:
+          All registered required operations pass or retain only the exact
+          authorized existing waiver.
+    - name: quality
+      command: Governed security, licensing, architecture, lint and formatting checks
+      expected_result: No new waiver or unbounded dependency/platform claim.
+checkpoints:
+    - name: Preserve partial 4.0.0 release and approve fix forward
+      status: passed
+      evidence:
+          - check: owner authority and incident
+            result: passed
+            details:
+                "Owner explicitly authorized 4.0.1 engineering and fresh certification
+                only. 43803833092/2: nine publishers succeeded, five failed, two untouched jobs
+                cancelled safely; original package bytes, tags, signatures, receipts and public
+                retrievals preserved."
+    - name: Focused registry protocol repairs
+      status: passed
+      evidence:
+          - check: initial direct regressions
+            result: passed
+            details:
+                73 focused tests passed for CPAN absent envelopes, Lua authenticated
+                nil/null responses and distinct private npm config files. Further packaging
+                and safe-error diagnostics remain.
+          - check: Grouped fix-forward engineering qualification
+            result: passed
+            details:
+                Windows focused diagnostics passed 308 tests; a byte-verified native
+                Linux snapshot passed 491 tests and 292 subtests. Final targeted
+                source checks passed 97 tests and 91 subtests, followed by 90 tests
+                and 13 subtests for the final guarded publisher/consumer changes.
+                These are overlapping engineering suites, not certification totals.
+          - check: Actual nonpublishing package and client checks
+            result: passed
+            details:
+                Fresh Windows and Linux Python engineering builds and isolated
+                staged consumers passed. The Linux wheel passed auditwheel 6.8.2
+                before and after manylinux_2_34 tagging with unchanged payload bytes.
+                Pinned npm 11.5.1 reproduced the old duplicate-config failure and
+                passed the corrected configuration. Pub dry-run selected exactly
+                eight payload files without .pubignore. JDK 11/21 source-bound
+                bridge identities were reviewed; Kotlin generation changed no
+                third-party entries. All public API snapshots regenerated; five
+                changed only product/assembly version identities. Eighteen reviewed
+                installation examples changed only coordinates. Canonical LSP
+                assembly passed. Frozen-source preparation must be repeated where
+                the generated manifest binds its exact commit.
+          - check: Ruby historical diagnostic boundary
+            result: passed
+            details:
+                The original server-side refusal cannot be reconstructed because
+                stderr was not retained. Preserve that uncertainty. The revised
+                adapter requires the explicit short-lived protected identity and
+                retains bounded credential-redacted command errors; synthetic
+                refusal and no-fallback checks pass. No production retry occurred.
+    - name: Freeze and independently certify 4.0.1
+      status: blocked
+      evidence:
+          - check: engineering readiness
+            result: not_run
+            details:
+                Do not start expensive campaigns before all deterministic protocol, packaging,
+                source and resource readiness checks pass. No 4.0.0 evidence transferred.
+    - name: Publication authorization
+      status: blocked
+      evidence:
+          - check: irreversible boundary
+            result: not_run
+            details:
+                No 4.0.1 tag, package, main/dev push or GitHub Release is authorized.
+                Present a new exact plan after certification.
+commits: []
+readiness:
+    status: BLOCKED
+    next_task:
+        Freeze the reviewed implementation and qualify the immutable reader,
+        then promote it and satisfy exact-source dev and generated preparation
+        requirements before fresh authoritative certification.
+    rationale:
+        4.0.0 is published partially and unverified; patch-coordinate engineering
+        is owner-authorized but publication remains separately gated.

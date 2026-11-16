@@ -1,113 +1,108 @@
 record_version: 2.0.0
 title: Hosted public verification runner context and immutable dispatch
 status: in_progress
-objective:
-    Repair unsupported job environment contexts and qualify exact protected
-    operational dispatch without changing certified artifacts or main/dev.
+objective: Repair unsupported job environment contexts and qualify exact protected
+  operational dispatch without changing certified artifacts or main/dev.
 scope:
-    diff:
-        base: a1016380560c17c608af161fc00034fb18325905
-        head: working-tree
-    allowed_paths:
-        - .github/workflows/public-verification.yml
-        - tooling/tests/test_public_workflow_contexts.py
-        - governance/change-control.json
-        - docs/migration/records/public-verification-workflow-context.yaml
-    forbidden_paths:
-        - core/**
-        - bindings/**
-        - spec/**
-        - tests/certification/**/current/**
-        - governance/*-certification-trust.json
-        - governance/waivers/**
-    expected_files:
-        - docs/migration/records/public-verification-workflow-context.yaml
-    permitted_generated_changes: []
-    expected_generated_outputs: []
-    required_verification_levels:
-        - contract
-        - unit
-        - integration
-        - quality
-    bounded_exemptions: []
+  diff:
+    base: a1016380560c17c608af161fc00034fb18325905
+    head: working-tree
+  allowed_paths:
+  - .github/workflows/public-verification.yml
+  - tooling/tests/test_public_workflow_contexts.py
+  - governance/change-control.json
+  - docs/migration/records/public-verification-workflow-context.yaml
+  forbidden_paths:
+  - core/**
+  - bindings/**
+  - spec/**
+  - tests/certification/**/current/**
+  - governance/*-certification-trust.json
+  - governance/waivers/**
+  expected_files:
+  - docs/migration/records/public-verification-workflow-context.yaml
+  permitted_generated_changes: []
+  expected_generated_outputs: []
+  required_verification_levels:
+  - contract
+  - unit
+  - integration
+  - quality
+  bounded_exemptions: []
 change_classification:
-    semantic_change:
-        level: none
-        evidence: &id001
-            - No compiler, package source, product version, public API, target, runtime, or
-              supported-platform change; preserve certified product a58f126b and its original
-              artifacts.
-    public_api_change:
-        level: none
-        evidence: *id001
-    diagnostic_change:
-        level: none
-        evidence: *id001
-    target_behavior_change:
-        level: none
-        evidence: *id001
-    generated_output_change:
-        level: none
-        evidence: *id001
-    schema_change:
-        level: none
-        evidence:
-            - No schema change.
-    architecture_change:
-        level: intentional-correction
-        evidence:
-            - Move runner paths to step env and propagate through GITHUB_ENV. Off-default
-              operational dispatch requires exact protected repository/ref/workflow bindings,
-              existing activation, and public-verification manual approval. No credential
-              or upload permission.
-    documentation_only: false
-    internal_implementation: true
+  semantic_change:
+    level: none
+    evidence: &id001
+    - No compiler, package source, product version, public API, target, runtime, or
+      supported-platform change; preserve certified product a58f126b and its original
+      artifacts.
+  public_api_change:
+    level: none
+    evidence: *id001
+  diagnostic_change:
+    level: none
+    evidence: *id001
+  target_behavior_change:
+    level: none
+    evidence: *id001
+  generated_output_change:
+    level: none
+    evidence: *id001
+  schema_change:
+    level: none
+    evidence:
+    - No schema change.
+  architecture_change:
+    level: intentional-correction
+    evidence:
+    - Move runner paths to step env and propagate through GITHUB_ENV. Off-default
+      operational dispatch requires exact protected repository/ref/workflow bindings,
+      existing activation, and public-verification manual approval. No credential
+      or upload permission.
+  documentation_only: false
+  internal_implementation: true
 required_verification:
-    - name: contract
-      command: Check workflow runner contexts and unchanged verifier trust pins
-      expected_result: No runner context in job env; step env is permitted.
-    - name: unit
-      command:
-          python3 -m pytest tooling/tests/test_public_workflow_contexts.py tooling/tests/test_public_execution.py
-          -q
-      expected_result: Positive and negative workflow-context and exact-ref tests pass.
-    - name: integration
-      command:
-          python3 tooling/governance.py --json; python3 tooling/security.py content
-          --json
-      expected_result:
-          Governance and security pass; actual hosted validation required
-          before public publication.
-    - name: quality
-      command: Governed Ruff and Prettier changed-file checks
-      expected_result: Lint and format pass without waivers.
+- name: contract
+  command: Check workflow runner contexts and unchanged verifier trust pins
+  expected_result: No runner context in job env; step env is permitted.
+- name: unit
+  command: python3 -m pytest tooling/tests/test_public_workflow_contexts.py tooling/tests/test_public_execution.py
+    -q
+  expected_result: Positive and negative workflow-context and exact-ref tests pass.
+- name: integration
+  command: python3 -m tooling.governance --json; python3 -m tooling.security content
+    --json
+  expected_result: Governance and security pass; actual hosted validation required
+    before public publication.
+- name: quality
+  command: Governed Ruff and Prettier changed-file checks
+  expected_result: Lint and format pass without waivers.
 checkpoints:
-    - name: Retain hosted validation failure
-      status: passed
-      evidence:
-          - check: GitHub annotation
-            result: passed
-            details:
-                Run 43802775797 rejected runner.temp at job env lines 35-38 before executing
-                any jobs.
-    - name: Local operational qualification
-      status: in_progress
-      evidence:
-          - check: focused tests and governance/security
-            result: not_run
-            details: Windows and Linux each passed 45 focused tests. Governance, security, Ruff and Prettier passed. No generated families affected. Q publisher source, control tag, certified product, immutable verifier and trust policies preserved.
-    - name: Hosted immutable workflow validation
-      status: blocked
-      evidence:
-          - check: exact source approval
-            result: not_run
-            details: No push, dispatch or activation for this separate correction is yet authorized.
+- name: Retain hosted validation failure
+  status: passed
+  evidence:
+  - check: GitHub annotation
+    result: passed
+    details: Run 43802775797 rejected runner.temp at job env lines 35-38 before executing
+      any jobs.
+- name: Local operational qualification
+  status: passed
+  evidence:
+  - check: focused tests and governance/security
+    result: passed
+    details: Windows and Linux each passed 45 focused tests. Governance, security,
+      Ruff and Prettier passed. No generated families affected. Q publisher source,
+      control tag, certified product, immutable verifier and trust policies preserved.
+- name: Hosted immutable workflow validation
+  status: blocked
+  evidence:
+  - check: exact source approval
+    result: not_run
+    details: No push, dispatch or activation for this separate correction is yet authorized.
 commits: []
 readiness:
-    status: BLOCKED
-    next_task:
-        Qualify local correction, include exact source/ref in final publication
-        handoff.
-    rationale:
-        Preserve the original certified product; never publish with a known unavailable
-        hosted verification prerequisite.
+  status: BLOCKED
+  next_task: Qualify local correction, include exact source/ref in final publication
+    handoff.
+  rationale: Preserve the original certified product; never publish with a known unavailable
+    hosted verification prerequisite.

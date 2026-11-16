@@ -1038,6 +1038,9 @@
                     "id-token"
                 ],
                 "publish-c": ["contents"]
+            },
+            ".github/workflows/certification-integrity.yml": {
+                "export-certified-bytes": ["contents"]
             }
         },
         "credential_persistence_jobs": {

@@ -297,7 +297,7 @@ def test_private_staging_download_is_bounded_and_read_only(
     )
 
 
-def test_hosted_export_is_exact_source_protected_and_cannot_publish():
+def test_hosted_export_is_exact_source_protected_and_issues_no_publication_commands():
     root = Path(__file__).resolve().parents[2]
     workflow = yaml.load(
         (root / ".github/workflows/certification-integrity.yml").read_text(),
@@ -310,12 +310,18 @@ def test_hosted_export_is_exact_source_protected_and_cannot_publish():
         "verify-release-packaging-certification",
         "verify-local-certification",
     }
-    assert job["permissions"] == {"contents": "read"}
+    assert job["permissions"] == {"contents": "write"}
+    assert workflow["permissions"] == {"contents": "read"}
+    for name, other in workflow["jobs"].items():
+        if name != "export-certified-bytes":
+            assert other.get("permissions", workflow["permissions"]) == {
+                "contents": "read"
+            }
     assert job["environment"] == "release-attestation"
     for condition in (
         "workflow_dispatch",
         "RELEASE_EXPORT_ENABLED",
-        "github.sha == vars.RELEASE_EXPORT_CLOSURE_SHA",
+        "github.sha == vars.RELEASE_EXPORT_WORKFLOW_SHA",
         "github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA",
     ):
         assert condition in job["if"]
@@ -365,6 +371,8 @@ def test_hosted_export_is_exact_source_protected_and_cannot_publish():
     [
         None,
         "CLOSURE_SHA",
+        "VERIFIED_CLOSURE_SHA",
+        "GITHUB_SHA",
         "REVIEWED_WORKFLOW_SHA",
         "CAPSULE_SHA256",
         "STAGING_ASSET_ID",
@@ -386,12 +394,13 @@ def test_hosted_identity_guard_executes_against_actual_event_and_workflow(
     values = dict(
         SOURCE_SHA=SOURCE,
         CLOSURE_SHA="c" * 40,
+        VERIFIED_CLOSURE_SHA="c" * 40,
         REVIEWED_WORKFLOW_SHA="d" * 40,
         PACKAGE_ROOT=ROOT_HASH,
         CAPSULE_SHA256="e" * 64,
         STAGING_RELEASE_ID="12",
         STAGING_ASSET_ID="34",
-        GITHUB_SHA="c" * 40,
+        GITHUB_SHA="d" * 40,
         GITHUB_WORKFLOW_SHA="d" * 40,
     )
     for key, value in values.items():
@@ -519,3 +528,61 @@ def test_authentication_binds_both_original_certificates_and_complete_graph(
             "release-certification-trust.json",
         ]
         assert expected[PACKAGE] == hashlib.sha256(certificate).hexdigest()
+
+
+def test_operational_export_revision_verifies_original_closure_without_extending_certificate():
+    root = Path(__file__).resolve().parents[2]
+    workflow = yaml.load(
+        (root / ".github/workflows/certification-integrity.yml").read_text(),
+        Loader=yaml.BaseLoader,
+    )
+    job = workflow["jobs"]["verify-release-candidate-certification"]
+    checkout = next(
+        s
+        for s in job["steps"]
+        if s.get("name") == "Checkout candidate evidence as data"
+    )
+    assert "github.event_name == 'workflow_dispatch'" in checkout["with"]["ref"]
+    assert "vars.RELEASE_EXPORT_ENABLED == 'true'" in checkout["with"]["ref"]
+    assert "vars.RELEASE_EXPORT_CLOSURE_SHA" in checkout["with"]["ref"]
+    assert "pull_request_target" in checkout["with"]["ref"]
+    assert "github.event.pull_request.head.sha || github.sha" in checkout["with"]["ref"]
+    verify = next(s for s in job["steps"] if s.get("id") == "verify_candidate")
+    assert "candidate_integrity.py" in verify["run"]
+    assert (
+        "verified_closure_sha=$(git -C candidate-candidate rev-parse HEAD)"
+        in verify["run"]
+    )
+    assert (
+        job["outputs"]["verified_closure_sha"]
+        == "${{ steps.verify_candidate.outputs.verified_closure_sha }}"
+    )
+    guard = workflow["jobs"]["export-certified-bytes"]["steps"][0]
+    assert (
+        guard["env"]["VERIFIED_CLOSURE_SHA"]
+        == "${{ needs.verify-release-candidate-certification.outputs.verified_closure_sha }}"
+    )
+
+
+@pytest.mark.parametrize("mutate", [False, True])
+def test_draft_access_permission_is_governed_only_for_protected_export(mutate):
+    from tooling.security import SecurityEngine
+    from unittest.mock import patch
+
+    root = Path(__file__).resolve().parents[2]
+    policy = json.loads((root / "governance/security-policy.json").read_text())
+    path = ".github/workflows/certification-integrity.yml"
+    assert policy["workflow_policy"]["privileged_jobs"][path] == {
+        "export-certified-bytes": ["contents"]
+    }
+    workflow = yaml.safe_load((root / path).read_text())
+    if mutate:
+        workflow["jobs"]["verify-release-candidate-certification"]["permissions"] = {
+            "contents": "write"
+        }
+    engine = SecurityEngine(root, policy, tracked_files=[path])
+    with patch("tooling.security.yaml.safe_load", return_value=workflow):
+        result = engine._check_workflow(path)
+    assert result.status == ("failed" if mutate else "passed")
+    codes = {finding.code for finding in result.findings}
+    assert ("SEC-WORKFLOW-JOB-PERMISSIONS" in codes) == mutate

@@ -28,17 +28,20 @@ jobs:
             - verify-local-certification
         if: >-
             github.event_name == 'workflow_dispatch' && github.repository == 'strling-lang/strling'
-            && vars.RELEASE_EXPORT_ENABLED == 'true' && github.sha == vars.RELEASE_EXPORT_CLOSURE_SHA
+            && vars.RELEASE_EXPORT_ENABLED == 'true' && github.sha == vars.RELEASE_EXPORT_WORKFLOW_SHA
             && github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA
         runs-on: ubuntu-24.04
         environment: release-attestation
+        # GitHub requires push access to retrieve unpublished draft assets.
+        # This protected job issues read requests only; write capability is explicit.
         permissions:
-            contents: read
+            contents: write
         steps:
             - name: Validate protected export identities
               env:
                   SOURCE_SHA: ${{ vars.RELEASE_EXPORT_SOURCE_SHA }}
                   CLOSURE_SHA: ${{ vars.RELEASE_EXPORT_CLOSURE_SHA }}
+                  VERIFIED_CLOSURE_SHA: ${{ needs.verify-release-candidate-certification.outputs.verified_closure_sha }}
                   REVIEWED_WORKFLOW_SHA: ${{ vars.RELEASE_EXPORT_WORKFLOW_SHA }}
                   PACKAGE_ROOT: ${{ vars.RELEASE_EXPORT_PACKAGE_ROOT_SHA256 }}
                   CAPSULE_SHA256: ${{ vars.RELEASE_EXPORT_CAPSULE_SHA256 }}
@@ -47,9 +50,10 @@ jobs:
               run: |
                   python3 - <<'PY'
                   import os, re
-                  for key, width in [('SOURCE_SHA', 40), ('CLOSURE_SHA', 40), ('REVIEWED_WORKFLOW_SHA', 40), ('PACKAGE_ROOT', 64), ('CAPSULE_SHA256', 64)]:
+                  for key, width in [('SOURCE_SHA', 40), ('CLOSURE_SHA', 40), ('VERIFIED_CLOSURE_SHA', 40), ('REVIEWED_WORKFLOW_SHA', 40), ('PACKAGE_ROOT', 64), ('CAPSULE_SHA256', 64)]:
                       assert re.fullmatch('[0-9a-f]{' + str(width) + '}', os.environ[key]), key
-                  assert os.environ['CLOSURE_SHA'] == os.environ['GITHUB_SHA']
+                  assert os.environ['CLOSURE_SHA'] == os.environ['VERIFIED_CLOSURE_SHA']
+                  assert os.environ['REVIEWED_WORKFLOW_SHA'] == os.environ['GITHUB_SHA']
                   assert os.environ['REVIEWED_WORKFLOW_SHA'] == os.environ['GITHUB_WORKFLOW_SHA']
                   for key in ('STAGING_RELEASE_ID', 'STAGING_ASSET_ID'):
                       assert re.fullmatch('[1-9][0-9]*', os.environ[key]), key
@@ -257,6 +261,8 @@ jobs:
     verify-release-candidate-certification:
         name: Verify complete product candidate
         runs-on: ubuntu-24.04
+        outputs:
+            verified_closure_sha: ${{ steps.verify_candidate.outputs.verified_closure_sha }}
         steps:
             - name: Checkout qualified candidate verifier
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -271,7 +277,7 @@ jobs:
                   persist-credentials: false
                   fetch-depth: 0
                   repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  ref: ${{ github.event_name == 'workflow_dispatch' && vars.RELEASE_EXPORT_ENABLED == 'true' && vars.RELEASE_EXPORT_CLOSURE_SHA || (github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha) }}
                   path: candidate-candidate
             - name: Install verification runtime
               uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
@@ -280,6 +286,7 @@ jobs:
             - name: Install pinned schema validators
               run: python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
             - name: Verify candidate signature, producers and publication handoff
+              id: verify_candidate
               shell: bash
               run: |
                   mkdir -p artifacts
@@ -288,6 +295,7 @@ jobs:
                     --trust-root candidate-trusted \
                     --bundle candidate-candidate/tests/certification/release-candidate/1.0/current \
                     --json | tee artifacts/candidate-certification-verification.json
+                  echo "verified_closure_sha=$(git -C candidate-candidate rev-parse HEAD)" >> "$GITHUB_OUTPUT"
             - name: Retain candidate verification result
               if: ${{ always() }}
               continue-on-error: true

@@ -173,6 +173,29 @@ checkpoints:
                 adapter requires the explicit short-lived protected identity and
                 retains bounded credential-redacted command errors; synthetic
                 refusal and no-fallback checks pass. No production retry occurred.
+          - check: RubyGems automatic-client behavior
+            result: passed
+            details:
+                Hash-verified official RubyGems 4.1.0 source and synthetic request
+                callbacks demonstrate automatic sigstore-cli installation/signing
+                when its child retains GITHUB_ACTIONS. The uploader now pins and
+                verifies that client, uses only its exchanged scoped gem credential,
+                and removes unused GitHub/OIDC credentials from that child only.
+                Parent authorization and protected attestation remain enforced.
+                No production signing or upload was used as a test. This does not
+                establish the original server-side refusal's cause.
+          - check: CPAN archive versus normalized metadata version
+            result: passed
+            details:
+                An actual disposable 4.0.1 archive has META.json version v4.0.1.
+                Official MetaCPAN indexer revision cbdebb4d01ab71407465595ad2d54bb63fbaee4c
+                derives the release version with fix_version, which prefixes v for
+                three-part versions and drops a prerelease suffix. The reader now
+                checks this exact normalized value while preserving complete archive
+                coordinates, owner identity and authenticated byte checks. Regression
+                cases reject alternate metadata and stable-for-prerelease substitution.
+                This reader change requires a new immutable qualification source;
+                the retained e8e70f81 qualification cannot certify the successor.
     - name: Freeze and independently certify 4.0.1
       status: blocked
       evidence:

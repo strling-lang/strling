@@ -307,12 +307,28 @@ def test_ruby_requires_explicit_protected_identity_and_never_falls_back(
 def test_ruby_failed_upload_retains_safe_error_and_exact_payload(tmp_path, monkeypatch):
     token = "fixture-protected-ruby-identity"
     monkeypatch.setenv("GEM_HOST_API_KEY", token)
+    parent_context = {
+        "GITHUB_ACTIONS": "true",
+        "ACTIONS_ID_TOKEN_REQUEST_URL": "https://example.invalid/fixture-oidc",
+        "ACTIONS_ID_TOKEN_REQUEST_TOKEN": "fixture-unused-oidc-token",
+        "GITHUB_TOKEN": "fixture-unused-github-token",
+        "GH_TOKEN": "fixture-unused-gh-token",
+    }
+    for name, value in parent_context.items():
+        monkeypatch.setenv(name, value)
     path = tmp_path / "strling-4.0.1.gem"
     path.write_bytes(b"controlled exact gem payload")
     checks = []
     monkeypatch.setattr(publisher, "_require_absent", lambda url: checks.append(url))
 
     def reject(arguments, **kwargs):
+        environment = kwargs["env"]
+        assert kwargs["stdin"] == subprocess.DEVNULL
+        assert kwargs["timeout"] == 120
+        assert environment["GEM_HOST_API_KEY"] == token
+        assert all(name not in environment for name in parent_context)
+        if arguments == ["gem", "--version"]:
+            return SimpleNamespace(stdout=b"4.1.0\n")
         assert arguments == ["gem", "push", str(path), "--host", "https://rubygems.org"]
         assert path.read_bytes() == b"controlled exact gem payload"
         raise subprocess.CalledProcessError(
@@ -331,10 +347,99 @@ def test_ruby_failed_upload_retains_safe_error_and_exact_payload(tmp_path, monke
             [{"name": path.name}],
         )
     assert token not in str(caught.value)
+    assert all(
+        publisher.os.environ[name] == value for name, value in parent_context.items()
+    )
     assert checks == [
         "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.1.json"
     ]
     assert path.read_bytes() == b"controlled exact gem payload"
+
+
+@pytest.mark.parametrize("banner", [b"3.4.20\n", b"4.1.1\n", b"4.1.0\nextra", b""])
+def test_ruby_wrong_or_unavailable_client_cannot_contact_registry(
+    tmp_path, monkeypatch, banner
+):
+    monkeypatch.setenv("GEM_HOST_API_KEY", "fixture-publishing-key")
+    monkeypatch.setattr(
+        publisher,
+        "_require_absent",
+        lambda url: pytest.fail("No registry access with an unqualified client"),
+    )
+
+    def version_only(arguments, **kwargs):
+        assert arguments == ["gem", "--version"]
+        return SimpleNamespace(stdout=banner)
+
+    monkeypatch.setattr(publisher.subprocess, "run", version_only)
+    with pytest.raises(ReleaseSupplyChainError, match="qualified RubyGems 4.1.0"):
+        publisher.upload(
+            tmp_path,
+            {"id": "release:ruby", "delivery_kind": "package"},
+            "4.0.1",
+            "a" * 40,
+            [{"name": "strling-4.0.1.gem"}],
+        )
+
+
+def test_ruby_timeout_is_controlled_and_does_not_expose_captured_credentials(
+    tmp_path, monkeypatch
+):
+    token = "fixture-scoped-gem-token"
+    monkeypatch.setenv("GEM_HOST_API_KEY", token)
+    monkeypatch.setattr(publisher, "_require_absent", lambda url: None)
+    package = tmp_path / "strling-4.0.1.gem"
+    package.write_bytes(b"fixture-certified-bytes")
+
+    def timeout(arguments, **kwargs):
+        if arguments == ["gem", "--version"]:
+            return SimpleNamespace(stdout=b"4.1.0\n")
+        raise subprocess.TimeoutExpired(arguments, 120, output=token, stderr=token)
+
+    monkeypatch.setattr(publisher.subprocess, "run", timeout)
+    with pytest.raises(
+        ReleaseSupplyChainError, match="requires reconciliation"
+    ) as caught:
+        publisher.upload(
+            tmp_path,
+            {"id": "release:ruby", "delivery_kind": "package"},
+            "4.0.1",
+            "a" * 40,
+            [{"name": package.name}],
+        )
+    assert token not in str(caught.value)
+    assert package.read_bytes() == b"fixture-certified-bytes"
+
+
+def test_ruby_publication_pins_reviewed_client_and_preserves_protected_provenance():
+    import yaml
+    from tooling.release_supply_chain import ROOT
+
+    jobs = yaml.safe_load((ROOT / ".github/workflows/cd.yml").read_text())["jobs"]
+    publisher_job = jobs["publish-ruby"]
+    ruby = [
+        step
+        for step in publisher_job["steps"]
+        if step.get("uses", "").startswith("ruby/setup-ruby@")
+    ]
+    assert len(ruby) == 1 and ruby[0]["with"]["rubygems"] == "4.1.0"
+    assert publisher_job["environment"] == "release"
+    assert publisher_job["permissions"]["id-token"] == "write"
+    assert "RELEASE_AUTHORIZED_RUN_ID" in publisher_job["if"]
+    assert "RELEASE_AUTHORIZED_RUN_ATTEMPT" in publisher_job["if"]
+    attestation = jobs["attest-release-subjects"]
+    assert attestation["environment"] == "release-attestation"
+    assert attestation["permissions"]["attestations"] == "write"
+    actions = [
+        step
+        for step in attestation["steps"]
+        if step.get("uses", "").startswith("actions/attest@")
+    ]
+    assert len(actions) == 1
+    assert (
+        actions[0]["uses"] == "actions/attest@508db95dd578ae2727ebd6217d5ba78e4fbda05d"
+    )
+    assert actions[0]["with"]["subject-checksums"] == ".cert/subjects.sha256"
 
 
 @pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2"])

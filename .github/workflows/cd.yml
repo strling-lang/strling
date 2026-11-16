@@ -3518,7 +3518,7 @@ jobs:
               uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b
               with:
                   ruby-version: "3.2"
-                  rubygems: latest
+                  rubygems: "4.1.0"
             - name: Obtain short-lived RubyGems identity
               uses: rubygems/configure-rubygems-credentials@abfabee9aa68f1c2c95a6f58c91d826e5fac33da
             - name: Upload only the approved subject

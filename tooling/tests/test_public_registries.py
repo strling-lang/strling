@@ -141,7 +141,7 @@ def fixture(artifact):
             {
                 "author": "STRLING",
                 "distribution": name,
-                "version": "4.0.0",
+                "version": "v4.0.0",
                 "download_url": url,
             },
         )
@@ -254,6 +254,69 @@ def test_wrong_git_commit_rejected(artifact):
 
 
 CPAN_URL = "https://fastapi.metacpan.org/v1/release/STRLING/STRling-4.0.0"
+
+
+@pytest.mark.parametrize("version", ["4.0.1", "4.0.1-rc.1"])
+def test_cpan_normalized_metadata_preserves_exact_archive_coordinate(version):
+    artifact = next(a for a in ARTIFACTS if a["registry"] == "cpan")
+    transport, subjects, destination, extra = fixture(artifact)
+    transport.responses = {
+        url.replace("4.0.0", version): payload.replace(b"4.0.0", version.encode())
+        for url, payload in transport.responses.items()
+    }
+    url = CPAN_URL.replace("4.0.0", version)
+    metadata = json.loads(transport.responses[url])
+    metadata["version"] = "v" + version.partition("-rc.")[0]
+    transport.responses[url] = json.dumps(metadata).encode()
+    result = retrieve(
+        transport, artifact, version, subjects, destination, source_sha=SOURCE, **extra
+    )
+    assert result["metadata"] == metadata
+    assert result["files"] == {"package.archive": PAYLOAD}
+    assert transport.observations[-1]["request_url"].endswith(
+        "/STRLING/STRling-" + version + ".tar.gz"
+    )
+
+
+@pytest.mark.parametrize("value", ["4.0.0", "v4.0.1", "v4.0.0_1", "v04.0.0", 4, None])
+def test_cpan_rejects_noncanonical_or_different_metadata_versions(value):
+    artifact = next(a for a in ARTIFACTS if a["registry"] == "cpan")
+    transport, subjects, destination, extra = fixture(artifact)
+    metadata = json.loads(transport.responses[CPAN_URL])
+    metadata["version"] = value
+    transport.responses[CPAN_URL] = json.dumps(metadata).encode()
+    with pytest.raises(RetrievalError):
+        retrieve(
+            transport,
+            artifact,
+            "4.0.0",
+            subjects,
+            destination,
+            source_sha=SOURCE,
+            **extra,
+        )
+    assert [row["request_url"] for row in transport.observations] == [CPAN_URL]
+
+
+def test_cpan_prerelease_normalization_cannot_substitute_stable_archive():
+    artifact = next(a for a in ARTIFACTS if a["registry"] == "cpan")
+    transport, subjects, destination, extra = fixture(artifact)
+    # Both metadata versions normalize to v4.0.0, but the archive must retain
+    # the complete requested prerelease coordinate.
+    transport.responses[CPAN_URL + "-rc.1"] = transport.responses[CPAN_URL]
+    with pytest.raises(RetrievalError, match="download location"):
+        retrieve(
+            transport,
+            artifact,
+            "4.0.0-rc.1",
+            subjects,
+            destination,
+            source_sha=SOURCE,
+            **extra,
+        )
+    assert [row["request_url"] for row in transport.observations] == [
+        CPAN_URL + "-rc.1"
+    ]
 
 
 def cpan_envelope_fixture(document):

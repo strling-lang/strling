@@ -425,14 +425,22 @@ def upload(
             )
         return matched[0]
 
-    def run(arguments, cwd=None):
+    def run(arguments, cwd=None, *, environment=None):
         with tempfile.TemporaryDirectory(
             prefix="strling-approved-upload-"
         ) as temporary:
             try:
-                completed = subprocess.run(
-                    arguments, cwd=cwd or temporary, check=True, capture_output=True
-                )
+                keywords = dict(cwd=cwd or temporary, check=True, capture_output=True)
+                if environment is not None:
+                    keywords["env"] = environment
+                    keywords["stdin"] = subprocess.DEVNULL
+                    keywords["timeout"] = 120
+                completed = subprocess.run(arguments, **keywords)
+            except subprocess.TimeoutExpired:
+                raise ReleaseSupplyChainError(
+                    "publication-command",
+                    "uploader deadline exceeded; remote outcome requires reconciliation",
+                ) from None
             except subprocess.CalledProcessError as error:
                 raise ReleaseSupplyChainError(
                     "publication-command",
@@ -527,10 +535,33 @@ def upload(
         )
     if slug == "ruby":
         _secret("GEM_HOST_API_KEY")
+        # Handoff authorization already ran in the real protected parent context.
+        # RubyGems 4.1 opportunistically installs sigstore-cli and signs when it
+        # sees GITHUB_ACTIONS. That is outside this exact-byte uploader's remit.
+        # Keep the scoped OIDC-exchanged gem key; give this child no CI signer or
+        # GitHub API credentials. Governed provenance/attestation jobs remain
+        # separately protected and mandatory.
+        environment = dict(os.environ)
+        for name in (
+            "GITHUB_ACTIONS",
+            "ACTIONS_ID_TOKEN_REQUEST_URL",
+            "ACTIONS_ID_TOKEN_REQUEST_TOKEN",
+            "GITHUB_TOKEN",
+            "GH_TOKEN",
+        ):
+            environment.pop(name, None)
+        if run(["gem", "--version"], environment=environment).strip() != b"4.1.0":
+            raise ReleaseSupplyChainError(
+                "publication-toolchain",
+                "Ruby publication requires qualified RubyGems 4.1.0",
+            )
         _require_absent(
             "https://rubygems.org/api/v2/rubygems/strling/versions/" + version + ".json"
         )
-        return run(["gem", "push", str(one(".gem")), "--host", "https://rubygems.org"])
+        return run(
+            ["gem", "push", str(one(".gem")), "--host", "https://rubygems.org"],
+            environment=environment,
+        )
     if slug == "perl":
         owner = _secret("PAUSE_USERNAME")
         if authorization is None or owner != next(

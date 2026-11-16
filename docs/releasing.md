@@ -30,6 +30,24 @@ independent Preview version and must state its exact compatible product range.
 
 ## Release lifecycle
 
+Ruby publication pins the reviewed RubyGems 4.1.0 client and checks its version
+before registry access. After the parent process verifies the protected exact
+handoff, only the Ruby uploader child omits `GITHUB_ACTIONS` and unused GitHub/OIDC
+credentials. RubyGems 4.1.0 otherwise attempts an opportunistic `sigstore-cli`
+installation and signing operation. The child retains its scoped short-lived
+`GEM_HOST_API_KEY` and uploads the exact certified gem bytes. The child is
+noninteractive and has a bounded request deadline. Parent authorization
+checks retain the real workflow context. Required original signatures, SBOMs,
+provenance and the protected `attest-release-subjects` job are unchanged; this
+does not create a replacement signing authority or bypass deployment review.
+
+CPAN retrieval checks MetaCPAN's normalized metadata version separately from
+the exact archive coordinate. The indexer normalizes a three-part version to
+`v4.0.1`; its metadata omits a prerelease suffix. The approved owner, full
+stable or prerelease archive URL and authenticated artifact checksum must still
+match exactly. This normalization does not permit substituting a stable archive
+for a requested prerelease.
+
 Release work advances only through the machine-registered states:
 
 ```text

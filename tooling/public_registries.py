@@ -326,10 +326,15 @@ def retrieve(
         metadata = cpan_release_document(
             data(f"https://fastapi.metacpan.org/v1/release/{owner}/{name}-{coordinate}")
         )
+        # MetaCPAN::Model::Release applies fix_version to the archive version:
+        # three-part versions gain 'v', and a prerelease suffix is omitted from
+        # this metadata field. The owner, exact archive URL and signed bytes
+        # below still bind the complete stable or prerelease coordinate.
+        metadata_version = "v" + coordinate.partition("-rc.")[0]
         require(
             metadata.get("author") == owner
             and metadata.get("distribution") == name
-            and str(metadata.get("version")) == coordinate,
+            and metadata.get("version") == metadata_version,
             "wrong CPAN coordinate or owner",
         )
         expected = f"https://cpan.metacpan.org/authors/id/{owner[0]}/{owner[:2]}/{owner}/{name}-{coordinate}.tar.gz"

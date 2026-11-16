@@ -15,7 +15,9 @@ jobs:
         permissions:
             contents: read
             actions: read
-        if: github.repository == 'strling-lang/strling' && github.ref_name == github.event.repository.default_branch
+        if:
+            github.repository == 'strling-lang/strling' && (github.ref_name == github.event.repository.default_branch ||
+            (github.ref == vars.PUBLIC_WORKFLOW_REF && github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA))
         environment: public-verification
         strategy:
             fail-fast: false
@@ -32,10 +34,6 @@ jobs:
             STRLING_PUBLIC_VERIFIER_SHA: ${{ vars.PUBLIC_VERIFIER_SHA }}
             STRLING_PUBLIC_REQUEST_SHA256: ${{ vars.PUBLIC_REQUEST_SHA256 }}
             PUBLIC_REQUEST_JSON: ${{ vars.PUBLIC_REQUEST_JSON }}
-            CARGO_HOME: ${{ runner.temp }}/public-cargo
-            STRLING_MAVEN_REPOSITORY: ${{ runner.temp }}/public-jvm/repository
-            STRLING_GRADLE_CACHE: ${{ runner.temp }}/public-kotlin/dependency-cache
-            STRLING_PUB_CACHE: ${{ runner.temp }}/public-dart/dependency-cache
         defaults:
             run:
                 shell: bash
@@ -47,6 +45,21 @@ jobs:
                   assert os.environ['PUBLIC_VERIFICATION_ENABLED'] == 'true', 'Public execution is disabled by default'
                   assert re.fullmatch('[0-9a-f]{40}', os.environ['STRLING_PUBLIC_VERIFIER_SHA'])
                   assert re.fullmatch('[0-9a-f]{64}', os.environ['STRLING_PUBLIC_REQUEST_SHA256'])
+                  PY
+            - name: Configure isolated verification storage
+              env:
+                  CARGO_HOME: ${{ runner.temp }}/public-cargo
+                  STRLING_MAVEN_REPOSITORY: ${{ runner.temp }}/public-jvm/repository
+                  STRLING_GRADLE_CACHE: ${{ runner.temp }}/public-kotlin/dependency-cache
+                  STRLING_PUB_CACHE: ${{ runner.temp }}/public-dart/dependency-cache
+              run: |
+                  python - <<'PY'
+                  import os
+                  with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as output:
+                      for key in ('CARGO_HOME', 'STRLING_MAVEN_REPOSITORY', 'STRLING_GRADLE_CACHE', 'STRLING_PUB_CACHE'):
+                          value = os.environ[key]
+                          assert '\n' not in value and '\r' not in value
+                          output.write(f'{key}={value}\n')
                   PY
             - name: Checkout approved verification code
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -157,7 +170,9 @@ jobs:
                   retention-days: 90
     reconcile:
         needs: verify
-        if: always() && !cancelled() && github.repository == 'strling-lang/strling' && github.ref_name == github.event.repository.default_branch
+        if:
+            always() && !cancelled() && github.repository == 'strling-lang/strling' && (github.ref_name == github.event.repository.default_branch ||
+            (github.ref == vars.PUBLIC_WORKFLOW_REF && github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA))
         environment: public-verification
         runs-on: ubuntu-24.04
         timeout-minutes: 15

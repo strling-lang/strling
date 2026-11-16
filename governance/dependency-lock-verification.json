@@ -3,7 +3,7 @@
     "artifact_id": "package-manager-lockfiles",
     "verification_contract": "reviewed-identities-and-native-integrity-v1",
     "refresh_policy": "explicit-reviewed-dependency-change-only",
-    "security_policy_sha256": "26475f37564f7ed4af4a6b02f6d3803627cd9aeee0de05cafcb270a8b87be231",
+    "security_policy_sha256": "87dcd72675e2fdbbac772eab6e5bd6c28ce4529465754712df212a92c3c443a5",
     "manifest_hashes": {
         "bindings/dart/pubspec.yaml": "904357d9d1373c163fc3b1f4385c736cbddd5c9483643f67292f3f0fd2073fc4",
         "bindings/interop/Cargo.toml": "5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66",

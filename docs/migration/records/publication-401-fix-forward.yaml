@@ -222,6 +222,30 @@ checkpoints:
                 Original preparation and direct diagnostic failures are retained; no authoritative
                 profile or fresh distribution build started for that source. Correct the declaration
                 and freeze a successor without changing snapshots, the comparator or trust policy.
+          - check: Successor canonical preparation and license preflight
+            result: failed
+            details: >-
+                Source c0d638461d4dc9846ae44b53ee45d216d688aab4 passed all 42 generated
+                families, governance and 42 Maven/documentation tests. Its non-authoritative risk
+                preflight retained 53 passes, the existing VSCE waiver and one blocked unknown
+                license classification for newly locked pyelftools 0.33. No authoritative profile
+                or fresh distribution build had started. The exact official archive and all ten
+                bundled Construct files were independently checked; preserve the Unlicense and
+                omitted upstream MIT notice together. Correct only the exact-version registry
+                metadata and explicit conjunction of two already permitted licenses, with no
+                new license family, dependency version change or waiver. The focused security
+                and exact-identity regression tests passed 65 tests and 18 subtests; re-freeze
+                and certify a successor after the complete risk preflight passes.
+          - check: Exact license-policy engineering disposition
+            result: passed
+            details: >-
+                An isolated, explicitly unfrozen policy diagnostic passed all 54 ordinary risk
+                checks and retained only the existing scoped VSCE waiver, with zero failures,
+                unavailable or incomplete checks. Windows and Linux focused security suites
+                each passed 65 tests and 18 subtests. The reviewed catalog changes only the
+                security-policy fingerprint; all 16 lock and 20 dependency-manifest identities
+                remain unchanged. These observations authorize source freeze and preparation,
+                and do not substitute for fresh source-bound profiles or distribution builds.
           - check: engineering readiness
             result: not_run
             details:

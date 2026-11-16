@@ -565,6 +565,7 @@
             "MPL-2.0",
             "Python-2.0",
             "Unlicense",
+            "Unlicense AND MIT",
             "Unlicense OR MIT",
             "Unlicense/MIT",
             "WTFPL",
@@ -903,6 +904,13 @@
             }
         ],
         "metadata_overrides": [
+            {
+                "ecosystem": "python",
+                "package": "pyelftools",
+                "version": "0.33",
+                "license": "Unlicense AND MIT",
+                "evidence": "The exact locked PyPI sdist SHA-256 660d82dcbeb8e83d1702bd97f223f761625da06111c0cc988eac6b8ab0c1b61f has the standard Unlicense text (LICENSE SHA-256 ae18bf4cb82f92af7547259177bc28bc48e4fc732518bcedfe690226288d3445). Its ten bundled Construct source files match upstream commit 52ce435186022bd6b32012a998931fe86c985ec8; the omitted upstream MIT notice has SHA-256 f8d0c347a0dcc6ebe1671640dfae8d2411b6ded892e06a6764f8208b218b2af4. Both licenses are already permitted individually; preserve the conjunction and both notices. Exact review and retained notices: docs/migration/license-reviews/pyelftools-0.33/. This corrects non-standard registry metadata without introducing a new license family or waiver."
+            },
             {
                 "ecosystem": "npm",
                 "package": "exit",

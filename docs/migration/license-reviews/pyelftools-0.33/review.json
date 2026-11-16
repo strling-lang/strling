@@ -1,0 +1,79 @@
+{
+    "status": "PASSED",
+    "package": "pyelftools",
+    "version": "0.33",
+    "archive_url": "https://files.pythonhosted.org/packages/a3/11/767522582afab1b884d277de0e6e011640cb9d7292a38694b4b1a1df1ae8/pyelftools-0.33.tar.gz",
+    "archive_sha256": "660d82dcbeb8e83d1702bd97f223f761625da06111c0cc988eac6b8ab0c1b61f",
+    "lock": "bindings/python/requirements.lock.txt",
+    "licenses": [
+        {
+            "path": "pyelftools-0.33/LICENSE",
+            "sha256": "ae18bf4cb82f92af7547259177bc28bc48e4fc732518bcedfe690226288d3445",
+            "spdx": "Unlicense",
+            "origin": "Exact locked source archive",
+            "reference_url": "https://spdx.org/licenses/Unlicense.json",
+            "reference_sha256": "cfaa34adc72071fb8b8a250449313197d81a2f4d28d8e3c98253fc9912974e1d",
+            "match": "Complete operative license text matches SPDX after whitespace and equivalent Unlicense URL normalization; MIT copyright retained separately"
+        },
+        {
+            "path": "pyelftools-0.33/elftools/construct/LICENSE",
+            "sha256": "f8d0c347a0dcc6ebe1671640dfae8d2411b6ded892e06a6764f8208b218b2af4",
+            "spdx": "MIT",
+            "origin": "Upstream exact tag commit; absent from sdist, whose complete bundled Construct source bytes match this commit",
+            "reference_url": "https://spdx.org/licenses/MIT.json",
+            "reference_sha256": "0c2b3c87a154a4aaac6bc6a735dd454dc29d9a78c23a85deedb080e0c65de1f8",
+            "match": "Complete operative license text matches SPDX after whitespace and equivalent Unlicense URL normalization; MIT copyright retained separately"
+        }
+    ],
+    "expression": "Unlicense AND MIT",
+    "original_scanner_classification": "non-standard",
+    "new_license_families_required": false,
+    "new_waiver_required": false,
+    "upstream_commit": "52ce435186022bd6b32012a998931fe86c985ec8",
+    "bundled_construct_files": [
+        {
+            "path": "elftools/construct/__init__.py",
+            "sha256": "15104eb011a640e4268a9b9221d07201a0360ff0b1c8b49e252ef41fdfbb35de"
+        },
+        {
+            "path": "elftools/construct/adapters.py",
+            "sha256": "5745745b25eb849174ee5c3179b9867b03e0471633e9eac8276aa439fe4c8841"
+        },
+        {
+            "path": "elftools/construct/core.py",
+            "sha256": "86c7c9ef0303beb7bfe7b310c52e44697cc31b6cec7435eb33168216b70a965f"
+        },
+        {
+            "path": "elftools/construct/debug.py",
+            "sha256": "491486779e464e0f4a59cfd429d8e93c577a0f0d9b969847e69400a3c86acb1c"
+        },
+        {
+            "path": "elftools/construct/lib/__init__.py",
+            "sha256": "322a9b5b2cbe036a5ccf8e939dcbc3734203073db70fc4f2cb00f0f98ba107cf"
+        },
+        {
+            "path": "elftools/construct/lib/binary.py",
+            "sha256": "f18e4161a11bc95732bd01c577cbe98373081afd5b4112b02fec51a0e1df2e11"
+        },
+        {
+            "path": "elftools/construct/lib/bitstream.py",
+            "sha256": "ee8081769bed1d00a086399c8749a847c1a48b8d08637506bf7d1229b6e1808a"
+        },
+        {
+            "path": "elftools/construct/lib/container.py",
+            "sha256": "0385a420febf5bac714153ceaadd192ff9d09862bc7e17c203bf759aa18b2bb4"
+        },
+        {
+            "path": "elftools/construct/lib/hex.py",
+            "sha256": "55f82dc36f273347c08e9e469fd497368241453b7a63e69e167ad6b316e5e2c7"
+        },
+        {
+            "path": "elftools/construct/macros.py",
+            "sha256": "0244e84cf4f598ac8da7c3d8f1f09b06112a508e71fb8d381b377f1c0472a4e3"
+        }
+    ],
+    "caveat": "Upstream sdist omits the bundled Construct LICENSE; retain its independently verified upstream MIT notice. Do not misclassify the complete package as only Unlicense or as dual-licensed OR.",
+    "checked_utc": "2026-11-16T15:08:11.629873+00:00",
+    "archive_retained": false,
+    "publication_authorized": false
+}

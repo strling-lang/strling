@@ -72,11 +72,22 @@ change_classification:
               expansion. Packaging and publisher implementation changes produce a new
               4.0.1 source; certified a58f126b and its original 4.0.0 artifacts remain historical.
     public_api_change:
-        level: compatible
+        level: intentional-correction
+        affected_surfaces:
+            - c-public-api
+            - cpp-public-api
+            - csharp-public-api
+            - fsharp-public-api
+            - php-public-api
         evidence:
             - Project the owner-authorized 4.0.1 product identity into public package and
               native adapter version surfaces. Public API shapes and compiler semantics
               remain unchanged; the new source requires fresh certification.
+            - The exact comparator classifies the C/C++ package-version literals, C#/FSharp
+              assembly-version identities and PHP VERSION constant as breaking snapshot drift.
+              Only those five reviewed 4.0.0-to-4.0.1 projections are declared as an intentional
+              correction; snapshot comparison, exact surface accounting and all other checks
+              remain enforced. No public signature, type shape or compiler behavior changes.
     diagnostic_change:
         level: none
         evidence: *id001
@@ -201,6 +212,16 @@ checkpoints:
     - name: Freeze and independently certify 4.0.1
       status: blocked
       evidence:
+          - check: Initial frozen canonical preparation
+            result: failed
+            details: >-
+                Source 89d460704d212bf77efb63fe6c612ecaaa97e841 passed setup, native interop,
+                source-bound LSP assembly and 41 generated families. Public snapshot checking
+                reproduced an incomplete migration declaration: all 26 snapshots matched, but
+                five version-only surface changes were unnamed and classified incorrectly.
+                Original preparation and direct diagnostic failures are retained; no authoritative
+                profile or fresh distribution build started for that source. Correct the declaration
+                and freeze a successor without changing snapshots, the comparator or trust policy.
           - check: engineering readiness
             result: not_run
             details:
@@ -238,6 +259,8 @@ checkpoints:
 commits:
     - sha: ea03dd4cbe35b5614fb862c1568cc7356a5bd16f
       subject: Constrain Ruby publishing and verify normalized CPAN identities
+    - sha: 89d460704d212bf77efb63fe6c612ecaaa97e841
+      subject: Promote qualified 4.0.1 verifier and await authenticated companion packages
 readiness:
     status: BLOCKED
     next_task:

@@ -272,6 +272,34 @@ checkpoints:
                 interop and type checks. These are engineering observations only: no accepted
                 Local profile is assembled from partial runs, and no old-source evidence will
                 substitute for any complete fresh Local, PR, Full or independent Release profile.
+          - check: Preserved source-bound Local and final PR failure
+            result: failed
+            details: >-
+                Source 4f002556169501505260f5c1dcd2f9f4fc2c4ca7 passed fresh Local 38/38,
+                then failed PR only at test@typescript (79 passed, 1 failed /80). Its
+                test searched the correctly assembled 4.0.1 WASM for a literal 4.0.0
+                product marker. Exact original test, WASM, profile and producer evidence
+                are retained. No fresh distribution receipts, Full or Release began.
+          - check: Version-independent WASM identity rejection regression
+            result: passed
+            details: >-
+                The test now consumes the governed generated PRODUCT_VERSION, mutates
+                one version byte without changing the valid module layout, and proves
+                identity-mismatch rejection for raw bytes and precompiled modules.
+                All five TypeScript suites and 22 tests passed after a real WASM rebuild.
+                Production loading, compiler semantics, package inputs and support policy
+                are unchanged. Tracked binding tests were audited for related current-
+                version assumptions; remaining Python literals are self-contained
+                negative fixtures. No generated family has this authored test as input.
+          - check: Grouped independent Full-only binding readiness
+            result: passed
+            details: >-
+                All 29 additional dependency-ready Full-only binding build/test and
+                LuaRocks contract operations passed in a non-authoritative diagnostic.
+                The preserved 4f source remains clean. Together with the corrected
+                TypeScript suite these are 30 engineering observations, not an assembled
+                profile, accepted successor evidence, or a substitute for any fresh
+                complete Local, PR, Full or independent no-reuse Release campaign.
           - check: engineering readiness
             result: not_run
             details:
@@ -312,11 +340,13 @@ commits:
     - sha: 89d460704d212bf77efb63fe6c612ecaaa97e841
       subject: Promote qualified 4.0.1 verifier and await authenticated companion packages
 readiness:
-    status: BLOCKED
+    status: READY WITH RECORDED CARRY-FORWARD
     next_task:
-        Freeze the reviewed implementation and qualify the immutable reader,
-        then promote it and satisfy exact-source dev and generated preparation
-        requirements before fresh authoritative certification.
+        Freeze the qualified test-only successor, complete fresh canonical preparation
+        and all authoritative profiles, then reconstruct, sign and obtain immutable
+        hosted acceptance before reporting publication readiness.
     rationale:
-        4.0.0 is published partially and unverified; patch-coordinate engineering
-        is owner-authorized but publication remains separately gated.
+        Grouped dependency-ready diagnostics passed. The qualified immutable reader
+        remains unchanged. Historical 4f Local acceptance and failed PR retain their
+        source identity; no profile result transfers to a successor. Publication,
+        release tags and remote permanent-branch updates remain separately gated.

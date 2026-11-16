@@ -10,6 +10,7 @@ import {
     instantiateWasm,
 } from "../src/STRling/interop.js";
 import { loadWasmFile } from "../src/node.js";
+import { PRODUCT_VERSION } from "../src/STRling/product_version.js";
 
 const artifact = resolve(process.cwd(), "dist", "strling_interop.wasm");
 
@@ -25,16 +26,24 @@ describe("raw strling.wasm-abi adapter", () => {
             /use instantiateWasm/,
         );
     });
-    test("rejects a different product kernel before instantiation", async () => {
-        const bytes = Buffer.from(await readFile(artifact));
-        const marker = Buffer.from('"product_version":"4.0.0"');
-        const offset = bytes.indexOf(marker);
-        expect(offset).toBeGreaterThanOrEqual(0);
-        bytes[offset + '"product_version":"'.length] = "3".charCodeAt(0);
-        await expect(instantiateWasm(bytes)).rejects.toThrow(
-            /identity mismatch/,
-        );
-    });
+    test.each(["raw bytes", "precompiled module"])(
+        "rejects a different product kernel before instantiation (%s)",
+        async (representation) => {
+            const bytes = Buffer.from(await readFile(artifact));
+            const prefix = '"product_version":"';
+            const marker = Buffer.from(`${prefix}${PRODUCT_VERSION}"`);
+            const offset = bytes.indexOf(marker);
+            expect(offset).toBeGreaterThanOrEqual(0);
+            bytes[offset + prefix.length] = PRODUCT_VERSION.charCodeAt(0) ^ 1;
+            const source =
+                representation === "raw bytes"
+                    ? bytes
+                    : await WebAssembly.compile(bytes);
+            await expect(instantiateWasm(source)).rejects.toThrow(
+                /identity mismatch/,
+            );
+        },
+    );
 
     test("accepts the same sealed precompiled module", async () => {
         const module = await WebAssembly.compile(await readFile(artifact));

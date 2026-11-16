@@ -10128,3 +10128,20 @@ Initial frozen source `89d460704d212bf77efb63fe6c612ecaaa97e841` exposed a migra
 Successor `c0d638461d4dc9846ae44b53ee45d216d688aab4` passed canonical preparation, including all 42 generated families, before the risk preflight identified `pyelftools@0.33` as unknown registry license metadata. The locked archive's Unlicense text and the bundled Construct code's upstream MIT notice were verified independently and retained under `license-reviews/pyelftools-0.33/`. Record the exact-version correction as `Unlicense AND MIT`, retaining both obligations and the original failure. Both license families were already permitted; no waiver or dependency change is introduced. Freeze a successor before any authoritative profile or fresh distribution build.
 
 Source `763b6d088360dca68e5e0fb5ce6433a1886623d4` passed complete preparation, risk and SDK admission, then its fresh Local profile stopped at formatting operation 21/38 after 20 passes. Preserve that failed profile. The non-authoritative remainder diagnostic found only one additional issue: detection/test header literals tripped the unchanged hygiene rule. Formatting repairs preserve Python ASTs and parsed migration-record values; header representation repairs preserve recursive bytecode and live redaction behavior. The actual production PGP-marker guard remains enforced. Immutable reader `ea03dd4c` and all historical certificates remain unchanged. Freeze the grouped repair and run complete fresh certification; no publication or tags are authorized.
+
+## 4.0.1 WASM negative-test correction before successor freeze
+
+Frozen source `4f002556169501505260f5c1dcd2f9f4fc2c4ca7` passed fresh Local
+38/38, then failed only the final PR operation (79 passed, one failed /80).
+The assembled kernel correctly identified 4.0.1; the authored negative test still
+searched for 4.0.0. Its original WASM, test, complete failed profile and producer
+records are preserved under that source. No distribution receipts, Full or
+Release were produced for it. The corrected test consumes the generated product
+version and rejects a substituted version through both raw-byte and precompiled
+module paths. All 22 TypeScript tests and 29 independent Full-only binding
+build/test or LuaRocks contract operations passed as engineering diagnostics.
+Production code, version projections, trusted reader and security requirements
+remain unchanged. A clean successor still requires every complete fresh profile,
+fresh builds, reconstruction, original-authority signatures and hosted acceptance;
+neither partial profile results nor old source evidence are transferred. No
+4.0.1 tags, packages or public Release are authorized.

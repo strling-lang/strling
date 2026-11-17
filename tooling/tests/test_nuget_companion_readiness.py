@@ -8,7 +8,16 @@ import urllib.error
 import pytest
 
 from tooling import publish_certified_artifact as publisher
-from tooling.release_supply_chain import ReleaseSupplyChainError
+from tooling.release_supply_chain import MANIFEST_PATH, ROOT, ReleaseSupplyChainError
+
+
+def primary_sbom_path(root):
+    manifest = json.loads(MANIFEST_PATH.read_text())
+    path = root / MANIFEST_PATH.relative_to(ROOT)
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(manifest))
+    primary = next(a for a in manifest["artifacts"] if a["id"] == "release:csharp")
+    return root / "sbom" / (primary["surface"] + ".spdx.json")
 
 
 def test_fsharp_waits_for_repository_authenticated_csharp_before_upload(
@@ -20,7 +29,7 @@ def test_fsharp_waits_for_repository_authenticated_csharp_before_upload(
     package.write_bytes(b"fixture certified FSharp payload")
     (tmp_path / "sbom").mkdir()
     sbom = {"fixture_only": "authenticated primary CSharp SBOM"}
-    (tmp_path / "sbom/csharp.spdx.json").write_text(json.dumps(sbom))
+    primary_sbom_path(tmp_path).write_text(json.dumps(sbom))
     monkeypatch.setenv("NUGET_KEY", "fixture-only-no-publishing-access")
     monkeypatch.setattr(
         publisher, "_require_absent", lambda url: events.append("check-fsharp-absent")
@@ -86,7 +95,7 @@ def guarded_fsharp(tmp_path, monkeypatch):
     package = tmp_path / "STRling.FSharp.4.0.1.nupkg"
     package.write_bytes(b"fixture certified package")
     (tmp_path / "sbom").mkdir()
-    (tmp_path / "sbom/csharp.spdx.json").write_text('{"fixture_only":true}')
+    primary_sbom_path(tmp_path).write_text('{"fixture_only":true}')
     monkeypatch.setenv("NUGET_KEY", "fixture-only-no-publishing-access")
     monkeypatch.setattr(publisher, "_require_absent", lambda url: None)
     monkeypatch.setattr(
@@ -161,7 +170,9 @@ def test_fsharp_missing_authenticated_companion_evidence_precedes_network(
 def test_fsharp_missing_primary_sbom_precedes_network(
     guarded_fsharp, tmp_path, monkeypatch
 ):
-    (tmp_path / "sbom/csharp.spdx.json").unlink()
+    manifest = json.loads(MANIFEST_PATH.read_text())
+    primary = next(a for a in manifest["artifacts"] if a["id"] == "release:csharp")
+    (tmp_path / "sbom" / (primary["surface"] + ".spdx.json")).unlink()
     monkeypatch.setattr(publisher, "_http", lambda url: pytest.fail("Missing evidence"))
     with pytest.raises(ReleaseSupplyChainError, match="cannot load"):
         guarded_fsharp()

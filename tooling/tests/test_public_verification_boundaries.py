@@ -134,14 +134,15 @@ def test_initial_public_scope_accounts_for_every_deferred_obligation():
 
 def test_initial_deferral_cannot_authorize_a_later_release_line():
     request, manifest, authentication = initial_public_request()
-    request["version"] = authentication["product_version"] = "4.0.2"
+    request["version"] = authentication["product_version"] = "4.0.3"
     with pytest.raises(RetrievalError, match="limited to explicitly approved"):
         validate(request, manifest, authentication)
 
 
-def test_owner_approved_fix_forward_preserves_exact_deferred_obligations():
+@pytest.mark.parametrize("version", ["4.0.1", "4.0.2"])
+def test_owner_approved_fix_forward_preserves_exact_deferred_obligations(version):
     request, manifest, authentication = initial_public_request()
-    request["version"] = authentication["product_version"] = "4.0.1"
+    request["version"] = authentication["product_version"] = version
     result = validate(request, manifest, authentication)
     assert result["required"] == 232
     assert len(request["deferred_obligations"]) == 24

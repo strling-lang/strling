@@ -158,14 +158,15 @@ def python_registry_receipt(version: str, members: list[dict]) -> bytes:
     )
 
 
-def _require_absent(url: str) -> None:
+def _require_absent(url: str, *, headers: dict | None = None) -> None:
     try:
-        _http(url)
+        _http(url, **({"headers": headers} if headers else {}))
     except urllib.error.HTTPError as error:
         if error.code == 404:
             return
         raise ReleaseSupplyChainError(
-            "publication-availability", "registry availability check failed"
+            "publication-availability",
+            "registry availability check failed (HTTP " + str(error.code) + ")",
         ) from None
     raise ReleaseSupplyChainError(
         "publication-collision", "immutable destination already exists"
@@ -553,16 +554,18 @@ def upload(
         tag = (
             artifact["registry"].removeprefix("github-tag:").replace("VERSION", version)
         )
+        headers = {"Authorization": "Bearer " + _secret("GITHUB_TOKEN")}
         _require_absent(
             "https://api.github.com/repos/strling-lang/strling/git/ref/tags/"
-            + urllib.parse.quote(tag, safe="")
+            + urllib.parse.quote(tag, safe=""),
+            headers=headers,
         )
         return _http(
             "https://api.github.com/repos/strling-lang/strling/git/refs",
             method="POST",
             data=canonical_json({"ref": "refs/tags/" + tag, "sha": source_sha}),
             headers={
-                "Authorization": "Bearer " + _secret("GITHUB_TOKEN"),
+                **headers,
                 "Content-Type": "application/json",
             },
         )
@@ -607,7 +610,14 @@ def upload(
             raise ReleaseSupplyChainError(
                 "publication-companion", "signed primary package checksums are required"
             )
-        primary_sbom = load_json(verified_evidence.parent / "sbom/csharp.spdx.json")
+        primary = next(
+            item
+            for item in load_json(root / MANIFEST_PATH.relative_to(ROOT))["artifacts"]
+            if item["id"] == "release:csharp"
+        )
+        primary_sbom = load_json(
+            verified_evidence.parent / "sbom" / (primary["surface"] + ".spdx.json")
+        )
         _wait_for_public_companions(
             {
                 "https://api.nuget.org/v3-flatcontainer/strling/"

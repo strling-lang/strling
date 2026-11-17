@@ -1,0 +1,182 @@
+record_version: 2.0.0
+scope:
+    diff:
+        base: 2354ac924851920632d99c99f64c39ed402d158c
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/**
+        - bindings/**
+        - Cargo.toml
+        - Cargo.lock
+        - core/internal/Cargo.toml
+        - core/internal/Cargo.lock
+        - toolchain.json
+        - tooling/**
+        - governance/**
+        - docs/**
+        - README.md
+        - tests/certification/release-supply-chain/1.0/manifest.json
+        - tests/certification/release-supply-chain/1.0/jvm-product-builds.json
+        - tests/certification/release-supply-chain/1.0/fixtures/**
+        - tests/certification/profile-source/1.0/definitions.json
+        - tests/certification/performance-resource/1.0/runner/Cargo.lock
+        - tests/adapters/3.0/release-graph.json
+        - tests/adapters/binding-support-4.0/evidence.json
+        - tests/adapters/dotnet-3.0/release-graph.json
+        - tests/documentation/1.0/manifest.json
+        - tests/architecture/legacy-removal/1.0/evidence.json
+        - tests/architecture/legacy-removal/1.0/evidence.md
+    forbidden_paths:
+        - core/src/**
+        - spec/**
+        - tests/certification/hardened-core/**
+        - tests/certification/release-packaging/**
+        - tests/certification/public-verification/**
+        - tests/certification/release-candidate/1.0/current/**
+        - governance/waivers/**
+    expected_files:
+        - docs/migration/records/publication-402-fix-forward.yaml
+    permitted_generated_changes:
+        - binding-support-certification-evidence
+        - version-synchronized-metadata
+        - lua-release-rockspec
+        - release-policy-documentation
+        - kotlin-product-verification
+        - product-support-matrix
+        - release-supply-chain-contract-fixture
+        - release-certification-trust
+        - package-manager-lockfiles
+        - dependency-license-evidence
+        - profile-source-definitions
+        - jvm-adapter-release-graph
+        - dotnet-adapter-release-graph
+        - public-contract-snapshots
+        - legacy-removal-inventory-evidence
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
+              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
+              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
+              fresh certification.
+    public_api_change:
+        level: none
+        evidence:
+            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
+              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
+              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
+              fresh certification.
+    diagnostic_change:
+        level: none
+        evidence:
+            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
+              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
+              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
+              fresh certification.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
+              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
+              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
+              fresh certification.
+    generated_output_change:
+        level: none
+        evidence:
+            - Both affected registered producers (contract fixture and release trust) ran under unchanged 4.0.1 inputs
+              and reproduced original bytes. No signed/live historical evidence is regenerated.
+    schema_change:
+        level: none
+        evidence:
+            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
+              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
+              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
+              fresh certification.
+    architecture_change:
+        level: intentional-correction
+        evidence:
+            - Correct the manifest-derived NuGet companion path and scope the already authorized protected GitHub token
+              to its own exact API read; no new credential, permission, authority, bypass, waiver or optional check. Qualify
+              the changed verifier and replay historical certificates before immutable promotion.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: contract
+      command: Registered version, release-policy, generated-artifact, public-distribution, package and trust checks
+      expected_result: Exact 4.0.2 projections with unchanged trust authorities and support boundaries.
+    - name: unit
+      command: Affected positive and adversarial Windows/Linux tests and actual-client nonpublishing protocol qualification
+      expected_result: No deterministic registry/toolchain prerequisite remains unresolved.
+    - name: integration
+      command:
+          Fresh 17-route distribution builds, independent comparisons and applicable consumers; Local, Pull Request,
+          Full and no-reuse Release; independent reconstruction/signing/hosted acceptance
+      expected_result: All registered required operations pass or retain only the exact authorized existing waiver.
+    - name: quality
+      command: Governed security, licensing, architecture, lint and formatting checks
+      expected_result: No new waiver or unbounded dependency/platform claim.
+title: Fourth Edition registry incident recovery and certified fix forward
+status: in_progress
+objective:
+    Prepare, independently qualify and freshly certify owner-authorized 4.0.2 after partial 4.0.1 publication;
+    preserve all immutable public subjects, signed historical certificates, support tiers and exact protected authorization
+    boundaries.
+checkpoints:
+    - name: Preserve partial publication and authorize engineering
+      status: passed
+      evidence:
+          - check: Exact attempt2 and attempt3 terminal reconciliation
+            result: passed
+            details:
+                4.0.1 source17be3e0c81fb2816803653b73f0f9198d6711d5d and closure2354ac924851920632d99c99f64c39ed402d158c
+                remain immutable. Fourteen destinations uploaded and independently authenticated. R availability checks
+                failed before tag creation; FSharp failed before upload because the publisher requested csharp.spdx.json
+                instead of governed surface c#.spdx.json. Both attempts, receipts, masked logs and actual owner reviews
+                are retained. Publication routing is disabled. Owner explicitly authorizes 4.0.2 engineering and fresh certification
+                only; no 4.0.2 publication or tags.
+    - name: Reproduce and repair publisher prerequisites
+      status: in_progress
+      evidence:
+          - check: Failing incident regressions and narrow source repairs
+            result: passed
+            details:
+                Two regressions reproduce the manifest/SBOM filename mismatch and anonymous GitHub availability GET.
+                Derive CSharp SBOM path from the governed manifest; scope the existing protected GitHub job token to its
+                exact GitHub availability read and retain only nonsecret HTTP status on failure. Controlled403/429/5xx responses
+                still prevent POST; collisions and missing credentials fail closed.158 focused Windows tests pass, including
+                companion, protocol and packaging security coverage. No package bytes or original signed evidence changed.
+          - check: Actual public primary and untouched dependent payload qualification
+            result: passed
+            details:
+                Actual public CSharp4.0.1 content and NuGet repository signature verified against its original certified
+                c#.spdx.json. The repaired publisher selected that governed filename, reached the exact original FSharp
+                package (SHA25676742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f), and intercepted its push
+                locally. No production credential read or registry upload. Expanded focused Windows checks pass304tests
+                and18subtests; content/security, dependency integrity, Ruff and both registered fixture/trust checks pass.
+          - check: Preserve diagnostic formatting mismatch and restore canonical bytes
+            result: passed
+            details:
+                The registered trust producer emitted semantically identical pretty JSON before the pinned repository
+                formatter. The non-authoritative readiness diagnostic correctly rejected that generated-output diff. Pinned
+                formatting restores the exact original Git blob; no trust policy, signing authority, waiver or signed historical
+                record changes.
+    - name: Immutable reader qualification before 4.0.2 activation
+      status: in_progress
+      evidence:
+          - check: Bound existing ConanCenter deferral to the explicitly approved successor only
+            result: passed
+            details:
+                The immutable predecessor reader permits only 4.0.0/4.0.1 owner-deferred scopes. Add only owner-authorized
+                4.0.2; retain256 engineering obligations,232 applicable public obligations and24 explicitly deferred ConanCenter
+                obligations.4.0.3 and other future/unapproved versions remain rejected. Qualify the frozen successor reader
+                and replay original source-bound certificates before promotion. Product/version projections remain 4.0.1
+                during this reader-only phase.
+commits: []

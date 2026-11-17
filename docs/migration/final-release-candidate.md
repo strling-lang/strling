@@ -1,6 +1,6 @@
 # STRling 4.0.1 fix-forward certification
 
-Status: **SOURCE CERTIFICATION PASSED — HOSTED ACCEPTANCE PENDING**.
+Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.
 
 Product source 17be3e0c81fb2816803653b73f0f9198d6711d5d; qualified immutable reader ea03dd4cbe35b5614fb862c1568cc7356a5bd16f; candidate evidence root 7ad3c371ce7251d3fe244e756c0dad0d8c9bc9466bf2e6a9da8c49bef099d902; nested package root 0af021bcd956dfcf54c5d9ea23bf6a07850bdc0c9707dda4715ed2b6074182a0. Fresh profiles: {"full": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0, "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request": {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived": 0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.
 
@@ -21,6 +21,8 @@ Staged artifact and clean-consumer qualification is implementation evidence, not
 Maven's public primary fingerprint remains `FC743D45327F6528D9AF26108BBC359CDE8F7505`. The owner confirmed encrypted off-device recovery transfer; the paper recovery record remains separately under owner custody. The approved repository-scoped Maven token pair and protected release signing secrets are preserved. LuaRocks uploader 56721 and the previously approved scoped NuGet credential are recorded; npm trusted-publisher freshness must be revalidated at the final publication gate.
 
 Fresh protected certified-artifact export, source/run-bound publication approval, actual protected deployment reviews, registry publication and independent public verification remain separate gates. No 4.0.1 package, tag, or GitHub Release was created by this certification task.
+
+All four required immutable hosted jobs accepted exact evidence closure `655641e7f6e90feeb38d24c35275c7f2f0a3ae82` in [run 44078159816](https://github.com/strling-lang/strling/actions/runs/44078159816). The export job was skipped. This documentation-only successor preserves the exact certified product `17be3e0c81fb2816803653b73f0f9198d6711d5d`, all signed evidence bytes and immutable reader `ea03dd4cbe35b5614fb862c1568cc7356a5bd16f`. Its own hosted result is retained separately in the operational handoff; the preceding run is not relabeled as verification of another commit.
 
 ## Preserved historical candidate reports
 

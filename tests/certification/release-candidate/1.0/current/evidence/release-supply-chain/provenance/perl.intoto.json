@@ -13,7 +13,7 @@
                     "release:perl",
                     "--preview"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "cpan",
                 "support": {
                     "external_prerequisites": [
@@ -37,7 +37,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "d78b8f1d099fbcfb6f2f49ab87223b9b68fb3956642f92d6ec6de812e8afa965",
@@ -59,13 +59,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
-                        "sha256": "fe397d4f16bd945696b3e4e9f5163f29c0ad302d23bb783f586e26b176758d08"
+                        "sha256": "e52a559357145c0fee2ee9db09b153b2161c9dfca6da06d83e1d3ea04c810721"
                     },
                     "uri": "strling:dependency-root:perl-cpan"
                 }
@@ -77,7 +77,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:perl",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:perl",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -86,9 +86,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "f7634122b96ba2a764ae58d9ae38a3fcbf74d35c1d6a440a5b139e772b67668e"
+                "sha256": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811"
             },
-            "name": "bindings/perl/STRling-4.0.0.tar.gz"
+            "name": "bindings/perl/STRling-4.0.1.tar.gz"
         }
     ]
 }

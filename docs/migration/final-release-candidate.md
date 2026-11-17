@@ -1,3 +1,31 @@
+# STRling 4.0.1 fix-forward certification
+
+Status: **SOURCE CERTIFICATION PASSED — HOSTED ACCEPTANCE PENDING**.
+
+Product source 17be3e0c81fb2816803653b73f0f9198d6711d5d; qualified immutable reader ea03dd4cbe35b5614fb862c1568cc7356a5bd16f; candidate evidence root 7ad3c371ce7251d3fe244e756c0dad0d8c9bc9466bf2e6a9da8c49bef099d902; nested package root 0af021bcd956dfcf54c5d9ea23bf6a07850bdc0c9707dda4715ed2b6074182a0. Fresh profiles: {"full": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0, "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request": {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived": 0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.
+
+The partially published 4.0.0 release remains published-but-unverified history. Its immutable tags, artifacts, source identities and certification records are preserved. This separately frozen 4.0.1 candidate corrects the Python wheel platform/purity contract, CPAN and LuaRocks protocol handling, npm and RubyGems client isolation, Dart package payload selection, and Java/Kotlin and C#/F# companion-availability dependencies. It retains the ratified support classifications, direct C++ distribution and deferred ConanCenter admission. No compiler semantics were changed.
+
+Readiness diagnostics identified and corrected the exact version-only public-snapshot declaration, a hash-bound pyelftools 0.33 Unlicense AND MIT metadata disposition, inherited formatting debt, and two equivalent redaction-marker representations. The security guard and runtime redaction behavior remain enforced. Failed preparation and profile records retain their original source identities; none is relabeled or transferred to this source.
+
+The final PR diagnostic exposed an authored TypeScript test that still searched the correctly assembled 4.0.1 WASM for a 4.0.0 marker. Its successor consumes the generated product version and proves rejection through both raw-byte and precompiled-module inputs. All 22 TypeScript tests and 29 additional Full-only binding diagnostic operations passed before freeze. The production loader, generated product identity and immutable reader were unchanged. The failed predecessor's accepted Local and failed PR remain historical source-bound evidence, never transferred acceptance.
+
+The preceding source 91a71c35 passed all four fresh profiles, 42 receipts, 21 comparisons and package signing, but complete staged qualification correctly rejected its authored CPAN fixture. That synthetic producer now emits the independently required v-prefixed metadata version while keeping the full archive coordinate. Seven direct producer/decoder regressions and grouped 17-route, 15-Supported-scope and six-Preview diagnostics passed before this separate freeze. All predecessor source identities, actual failures and signatures remain preserved; none is transferred acceptance.
+
+Two operational interruptions on this source were reconciled without changing the frozen implementation. A missing continuation-policy file stopped initial admission before any profile operation; the corrected owner-authorized ongoing storage policy was recorded before execution resumed. Later, aggregation selected a predecessor's launcher and refused its existing output. That terminal failure was preserved. One continuation owner independently reconstructed the current-source bundles, adopted only verified successful current-source prerequisites, and completed Full, fresh no-reuse Release, all 17 staged artifact routes, all 15 Supported consumer scopes and all six bounded Preview observations. No predecessor result was transferred and no authoritative requirement was skipped.
+
+Candidate detached signature SHA-256: `197dedf4ac379768088590e50df808a823de866da333f2cc11d3f977889dd374`. Certifier: `strling-local-release-certifier-2026-01`; SSH fingerprint: `SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA`. The package and candidate were independently reconstructed before original-authority signing. The immutable EA reader is separately qualified. The sole VSCE waiver remains owner-authorized through December 13, 2026 inclusive UTC.
+
+Staged artifact and clean-consumer qualification is implementation evidence, not a claim of public 4.0.1 retrieval. All applicable Supported scopes and bounded Preview observations are retained in the signed bundle. Current coordinate observations preserve unavailable or owner-only checks honestly. The diagnostic `4.0.1-rc.1` coordinate is neither reserved nor authorized for publication.
+
+Maven's public primary fingerprint remains `FC743D45327F6528D9AF26108BBC359CDE8F7505`. The owner confirmed encrypted off-device recovery transfer; the paper recovery record remains separately under owner custody. The approved repository-scoped Maven token pair and protected release signing secrets are preserved. LuaRocks uploader 56721 and the previously approved scoped NuGet credential are recorded; npm trusted-publisher freshness must be revalidated at the final publication gate.
+
+Fresh protected certified-artifact export, source/run-bound publication approval, actual protected deployment reviews, registry publication and independent public verification remain separate gates. No 4.0.1 package, tag, or GitHub Release was created by this certification task.
+
+## Preserved historical candidate reports
+
+The following reports retain their original source identities and results. They do not certify 4.0.1.
+
 # Live-protocol-corrected publication candidate
 
 Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.

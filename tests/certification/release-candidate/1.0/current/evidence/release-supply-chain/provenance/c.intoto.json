@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:c"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "github-tag:c-vVERSION",
                 "support": {
                     "external_prerequisites": [
@@ -37,7 +37,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "b30a9fc475de8b03077f5947e0a20ea59af47733724af215cabd0a72e3722446",
@@ -104,9 +104,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
@@ -116,7 +116,7 @@
                 },
                 {
                     "digest": {
-                        "sha256": "7224851c3ef582eb78d2f45194fb66ce2c04a036c22bc8c95c60b7f68864c9f2"
+                        "sha256": "2c431f6257453e83bd9ad0b9b83a85d770dc55ba0fb577d17f511d0957f9cdc7"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -128,7 +128,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:c",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:c",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -143,13 +143,13 @@
         },
         {
             "digest": {
-                "sha256": "1dab1078d77be81837cd763e21e54243f3cfe98925c2e1ec08232563893076a6"
+                "sha256": "12279838137ad14a66cc73c9ede52fdb36bfbf7e98362ab9b6860c9d2d0a5256"
             },
             "name": "bindings/c"
         },
         {
             "digest": {
-                "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+                "sha256": "16c8582b20fedbbdfef9e0546702c650c723f73a1a4b57ac3d4d6fa28a6715a2"
             },
             "name": "bindings/interop"
         },

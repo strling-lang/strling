@@ -5,13 +5,13 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"csharp-nuget\",\"inputs\":[{\"path\":\"bindings/csharp/src/STRling/STRling.csproj\",\"sha256\":\"baeb59c83365112c1356757143d9e1b898677e01ec4ea95bd2f4ea8bb69e9454\"},{\"path\":\"bindings/csharp/src/STRling.Cli/STRling.Cli.csproj\",\"sha256\":\"672986ab8aa6a0e792b2ed946e80755be546ca1a4af30a6ff25ec00dea27975f\"},{\"path\":\"bindings/csharp/tests/STRling.Tests/STRling.Tests.csproj\",\"sha256\":\"bb50c7778739372348464a0f50abe156cabb5ccfaee8ab8efbb4f17701a2e744\"}],\"policy\":{\"ecosystem\":\"nuget\",\"integrity_mode\":\"inventory_only\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Microsoft.NET.Test.Sdk\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"17.12.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"coverlet.collector\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"6.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.9.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit.runner.visualstudio\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.8.2\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"023f38b551be465af7c22f0b351fae56f196fc860c97addac2adbddbda1eaebd\"}"
+            "comment": "{\"id\":\"csharp-nuget\",\"inputs\":[{\"path\":\"bindings/csharp/src/STRling/STRling.csproj\",\"sha256\":\"18e84c82fe152850abda91c40d38700c08d3175e94f379fa833ff08b045c2848\"},{\"path\":\"bindings/csharp/src/STRling.Cli/STRling.Cli.csproj\",\"sha256\":\"46ebb6b9cdc0eb9232cf1269014974a765f412117c901aade8c99ad4e2048b05\"},{\"path\":\"bindings/csharp/tests/STRling.Tests/STRling.Tests.csproj\",\"sha256\":\"bb50c7778739372348464a0f50abe156cabb5ccfaee8ab8efbb4f17701a2e744\"}],\"policy\":{\"ecosystem\":\"nuget\",\"integrity_mode\":\"inventory_only\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Microsoft.NET.Test.Sdk\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"17.12.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"coverlet.collector\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"6.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.9.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit.runner.visualstudio\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.8.2\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"d3a4472c0a0ccd4e285977d0b36cfc09a6e17cc2ea8e491716b67bdc4e6b4f2e\"}"
         },
         {
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"d54c8c9166d4afd24f9ed3dc83ebbce6e8f738f7894afd9f510540c4bb0b69c1\"}"
+            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"2de6a027597a8ea81de701f9ba648eb1a56c7c4e9438d5e7a9ad8e7a8e3e8b3b\"}"
         }
     ],
     "creationInfo": {
@@ -25,22 +25,22 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/c#/41903a41f259c5ff6fee333aff90d9b40259db6e2c9d2459aea7b89de7962327",
+    "documentNamespace": "https://strling.dev/sbom/c#/c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "7f05a4e059caf2b83856625cc7bde26d0df8672b59152c17b87b1609e317f3e1"
+                    "checksumValue": "49271ab12cab756d7eccace47562ae8629bf3fc015b08699ac5eed4a615492b0"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "62a2e47c120b2af11079f50880b1eca2f01bf62f"
+                    "checksumValue": "830b8e5bfc638dd66c8145d02f79b79bdde1a92f"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/README.md",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/README.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -51,15 +51,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "a635cb754a5a351a63cc51441f7c33a669e0442fe3292d381ea0edb5e97dcf3f"
+                    "checksumValue": "9b82145b04e5ce66d6a38f9ea59d1d5b8d1244aa75715232c62476f3d107ab9a"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "858d466a901d769f832624994f85040a9de6fc42"
+                    "checksumValue": "e453b78a9c725972cc201557f1e9975e029ef2a8"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/STRling.nuspec",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/STRling.nuspec",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -78,7 +78,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/THIRD_PARTY_NOTICES.txt",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/THIRD_PARTY_NOTICES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -97,7 +97,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/[Content_Types].xml",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/[Content_Types].xml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -108,15 +108,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "9c06ba3dfc29f72525f5999ad5f0a2f7725326ad34986249356b1e592837c4ef"
+                    "checksumValue": "1e2a4ce3834c5db8d6277649737a231bbca9f616d3365cff3617122bcdd3f7bc"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6cad6322243986e2646d431fbc4e925d6f6bc1d4"
+                    "checksumValue": "bd7af9e5d80d33307406b95d4ff5e37ba1dc3f6e"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/_rels/.rels",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/_rels/.rels",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -127,15 +127,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c76306abd0017a974705b64653a2c1b7c3bfac74d4dc24dbe51ae7e3c49a4062"
+                    "checksumValue": "91beab80308fde7934a25e8f34687af400ff181242b4dcf550ade59cc79022a7"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "31573e53a3762b2385a5af423d408a163dab694f"
+                    "checksumValue": "aadd2e10ea0a3c7ce5d80aca8a58f7d1ebd2240b"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/lib/net9.0/STRling.dll",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/lib/net9.0/STRling.dll",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -154,7 +154,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/lib/net9.0/STRling.xml",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/lib/net9.0/STRling.xml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -165,15 +165,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "e12af4a027bde1f99a37b493a8e96b0adb95135feb15ad330a840d816961a02a"
+                    "checksumValue": "7065f1fb7426d7beb9631c732c6a325a788f389e7121e95cc907c1ad4255e5d8"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6fede756448adc6c9cd41aabe3bdc4ad8ea6f705"
+                    "checksumValue": "1ffdbb34d73b84ff87b1e5b37e4bf32dca7988e3"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/package/services/metadata/core-properties/e12af4a027bde1f99a37b493a8e96b0a.psmdcp",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/package/services/metadata/core-properties/7065f1fb7426d7beb9631c732c6a325a.psmdcp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -184,15 +184,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5542b10913723bacc28b0977f95fbdc13f8ee28415007973748a423f17b660f3"
+                    "checksumValue": "5bf4c63f0f2b67cdd58bdb995d12097a8d53908a6101e02dcd1a9d80ecef3462"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "a6e99117765d5a6b441bbc59b6385572f152933c"
+                    "checksumValue": "f9064b5096cfc9ef9288915e6fea0113dc5aa80b"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg!/runtimes/win-x64/native/strling_interop.dll",
+            "fileName": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg!/runtimes/win-x64/native/strling_interop.dll",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -206,7 +206,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "41903a41f259c5ff6fee333aff90d9b40259db6e2c9d2459aea7b89de7962327"
+                    "checksumValue": "c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -223,9 +223,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "STRling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "4833333fc8716027ca84a121f03955acd418e134"
+                "packageVerificationCodeValue": "1ba9260e042b6257337e353a436661c2bce92fdd"
             },
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-b578fc9be75f",

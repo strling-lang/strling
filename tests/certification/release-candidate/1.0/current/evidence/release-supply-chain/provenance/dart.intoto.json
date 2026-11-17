@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:dart"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "pub.dev",
                 "support": {
                     "external_prerequisites": [
@@ -35,7 +35,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "b30a9fc475de8b03077f5947e0a20ea59af47733724af215cabd0a72e3722446",
@@ -67,13 +67,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
-                        "sha256": "397a658d4f7b8dc5a887d5b36066a5795a03cb38ea9e0805bde9edd0b0ae19ae"
+                        "sha256": "47dcae74aaf7beef6ecdb2f3a18ce1ec389a252d9fd8d466a5fc34971c839aae"
                     },
                     "uri": "strling:dependency-root:dart-pub"
                 }
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:dart",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:dart",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -94,7 +94,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "eb3478a57fd517ff3d1ac1c0ce3330c0cf939dca74ee20ef672449c07c017fcf"
+                "sha256": "3df11e57b9c3f21863a6c3961c878c8acecaeae6cf1cebf9632491177d44e087"
             },
             "name": "target/release-packaging/dart"
         }

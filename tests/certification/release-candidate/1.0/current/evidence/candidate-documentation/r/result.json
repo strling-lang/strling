@@ -7,23 +7,23 @@
         "R",
         "CMD",
         "INSTALL",
-        "--library=/tmp/strling-preview-documentation-m7z3bs3b/r-library",
-        "/tmp/strling-preview-documentation-m7z3bs3b/package"
+        "--library=/tmp/strling-preview-documentation-bem_rz4p/r-library",
+        "/tmp/strling-preview-documentation-bem_rz4p/package"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0000.json",
-      "metadata_sha256": "71d346acf6ffeb1b309524a133e4a28658867e594b9028dacb1d2f640a4e8d37"
+      "metadata_sha256": "30cfcb90e113df920ba9cf9ad7a6216a87190422490030124c16d3391cd0a662"
     },
     {
       "command": [
         "Rscript",
         "--vanilla",
-        "/tmp/strling-preview-documentation-m7z3bs3b/example.R",
-        "/tmp/strling-preview-documentation-m7z3bs3b/libstrling_interop.so"
+        "/tmp/strling-preview-documentation-bem_rz4p/example.R",
+        "/tmp/strling-preview-documentation-bem_rz4p/libstrling_interop.so"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0001.json",
-      "metadata_sha256": "53dbfaaee2e9210828a3f367a48ef54b3f2eabb6b2b7959f578c9a8a7161048e"
+      "metadata_sha256": "c9936944b5d423409bdf7cd4c426d61cd87d5c43e6cd5ccfb080aa8043928af4"
     }
   ],
   "documentation_examples": [
@@ -33,30 +33,30 @@
       "status": "passed"
     }
   ],
-  "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
+  "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
   "engineering": false,
-  "evidence_fingerprint": "9c151900e82f852b98659621970928b878bb61c0844a7d4dcebb87b92afb89b6",
+  "evidence_fingerprint": "b0aa956922101d63e5b211be254eb9d5f9aa27f7147af5b6fe85ac838d948801",
   "fixture_sha256": {
     "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
     "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
     "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
     "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
   },
-  "invocation_id": "c1ae3dedb5d1452787cde4d36e1b688d",
+  "invocation_id": "c4589893a84c43c6a5121035379652a0",
   "limitations": [
     "Preview policy and dependency-locking limits remain unchanged.",
     "Browser-safe factory execution on Node is not an actual browser support claim."
   ],
-  "native_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e",
-  "product_version": "4.0.0",
+  "native_sha256": "2da649b6971d49cc1e389b5a6b31ead7a2b36dc667a0c2c70e8b9e1fa40da0c8",
+  "product_version": "4.0.1",
   "public_retrieval": false,
   "runner_scope": "linux-x86_64",
   "source": {
-    "commit": "a58f126b2721773ab9346d4dc449910371adccd9",
+    "commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
     "dirty": false,
-    "tree_sha256": "a902b14eb881e59e4218c826b40a2417d9da7a27020acd382eb02eefb8271e16"
+    "tree_sha256": "09ff765e9cd302e34e29679b1414ea57578c123b4fcac2396cef7c9e7e729500"
   },
   "status": "passed",
-  "subject_sha256": "6bcb529188266cf8dea147e530a21117905584383d0de452b8277e6b196319b4",
+  "subject_sha256": "af45f99fc452b9b8340afed18f32ae86a2e23214ec80b3e98d0b0cb4083a40c8",
   "supported_claim": false
 }

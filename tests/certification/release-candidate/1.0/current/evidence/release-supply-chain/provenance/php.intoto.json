@@ -13,7 +13,7 @@
                     "release:php",
                     "--preview"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "github-tag:php-vVERSION",
                 "support": {
                     "external_prerequisites": [
@@ -36,7 +36,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "5cf51f9912671912136317d889df7a5b8219f2a77f2b311b9a100989106847e2",
@@ -58,13 +58,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
-                        "sha256": "fee424db9a84a9db29bf8e77deff5a588fc8446f1770048ec254450259b4dede"
+                        "sha256": "4c91f60c7d4327d29fdddb107b29e8ce488ac5115684e9c63f7091289b58a998"
                     },
                     "uri": "strling:dependency-root:php-composer"
                 }
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:php",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:php",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -91,13 +91,13 @@
         },
         {
             "digest": {
-                "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+                "sha256": "16c8582b20fedbbdfef9e0546702c650c723f73a1a4b57ac3d4d6fa28a6715a2"
             },
             "name": "bindings/interop"
         },
         {
             "digest": {
-                "sha256": "5fa1655fbc429ba7314b25573ddc8a580501fa0201ce7b756ca2d8d116b7f178"
+                "sha256": "16cdeff1cc7633dd6b4c63d559f66f7733879d0e580df2600fa278fb01777e4d"
             },
             "name": "bindings/php"
         },

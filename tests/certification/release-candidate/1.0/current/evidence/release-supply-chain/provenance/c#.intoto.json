@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:csharp"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "nuget.org",
                 "support": {
                     "external_prerequisites": [
@@ -35,7 +35,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "7f2357adb9b7dca9f7b6e9eb9a0e0a0b4e7e516c19f34d3a348b298701692c80",
@@ -67,19 +67,19 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
-                        "sha256": "e69edb95a4aeddbf8d86085fbcaf0f697d551f8119001c947794f23bd64e8c07"
+                        "sha256": "f31fad9213f450d001c2d4f08596407c79c06c249d6484078d76fa866069cf2c"
                     },
                     "uri": "strling:dependency-root:csharp-nuget"
                 },
                 {
                     "digest": {
-                        "sha256": "7224851c3ef582eb78d2f45194fb66ce2c04a036c22bc8c95c60b7f68864c9f2"
+                        "sha256": "2c431f6257453e83bd9ad0b9b83a85d770dc55ba0fb577d17f511d0957f9cdc7"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -91,7 +91,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:csharp",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:csharp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -100,9 +100,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "41903a41f259c5ff6fee333aff90d9b40259db6e2c9d2459aea7b89de7962327"
+                "sha256": "c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5"
             },
-            "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.0.nupkg"
+            "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg"
         }
     ]
 }

@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "luarocks install strling 4.0.0-1",
+            "command": "luarocks install strling 4.0.1-1",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "9b78694ec5ea02c2126694e89b5eb4037ba15f7967dd83de096a92f760cf1ade",
+      "sha256": "9e3848326830a4c398fe411222b1ac617ffd529873e3d58f9273a28296b7ecb3",
       "source_path": "bindings/lua/README.md",
       "url": "https://evidence.example.test/bindings/lua/README.md"
     },
     "provenance": {
-      "sha256": "530d03c280122756264151a85feced2eebea1f974dd07fb6751064a036de44ca",
+      "sha256": "36190a923b6e458a8c7547a12b4164b26e49145f9d44058c219d187ab81611c7",
       "url": "https://evidence.example.test/release-lua.intoto.json"
     },
     "sbom": {
-      "sha256": "7032c117acc4bbc4e2963e5c431ee15822631414e699b5a8d216e22a029330bf",
+      "sha256": "e0700e1cdf2568d99758e5bda75ab7ae9caac721262aec241b719826aa46fe04",
       "url": "https://evidence.example.test/release-lua.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.1569913660059683,
+  "elapsed_seconds": 0.22588979499414563,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:lua:coordinate",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:lua:metadata",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:lua:artifact",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:lua:source",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:lua:sbom",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:lua:provenance",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:lua:documentation",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     },
@@ -110,45 +110,45 @@
       "check": "scope",
       "id": "release:lua:scope",
       "platform": null,
-      "retrieval_sha256": "d78cab638d316a81b98555e2ae65ec9a9a47b60d87a4493a038b1e023ca259dd",
+      "retrieval_sha256": "a5a6118075fa315486642998f0f3701c03dc842496c59579eed6057848995333",
       "status": "READY",
       "tier": "Preview"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/lua/strling-4.0.0-1.rockspec": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a",
-    "bindings/lua/strling-4.0.0-1.src.rock": "3cbd17c0b39a8240540281ff48ec79e64c6464b60ace87c1f3933622b48baec3"
+    "bindings/lua/strling-4.0.1-1.rockspec": "1d01ab7a685e8d6731f4f1f0ecbd1fcbfcb1cee607374356514780af5043b560",
+    "bindings/lua/strling-4.0.1-1.src.rock": "11666b94ed17d0f87ff9d651106b79fb531bf24b46811872b3072263038d1af1"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://luarocks.org/manifests/STRLING/strling-4.0.0-1.rockspec",
-      "sha256": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a",
+      "request_url": "https://luarocks.org/manifests/STRLING/strling-4.0.1-1.rockspec",
+      "sha256": "1d01ab7a685e8d6731f4f1f0ecbd1fcbfcb1cee607374356514780af5043b560",
       "size": 847
     },
     {
       "authority": "synthetic",
-      "request_url": "https://luarocks.org/manifests/STRLING/strling-4.0.0-1.src.rock",
-      "sha256": "3cbd17c0b39a8240540281ff48ec79e64c6464b60ace87c1f3933622b48baec3",
+      "request_url": "https://luarocks.org/manifests/STRLING/strling-4.0.1-1.src.rock",
+      "sha256": "11666b94ed17d0f87ff9d651106b79fb531bf24b46811872b3072263038d1af1",
       "size": 12017
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-lua.spdx.json",
-      "sha256": "7032c117acc4bbc4e2963e5c431ee15822631414e699b5a8d216e22a029330bf",
+      "sha256": "e0700e1cdf2568d99758e5bda75ab7ae9caac721262aec241b719826aa46fe04",
       "size": 10214
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-lua.intoto.json",
-      "sha256": "530d03c280122756264151a85feced2eebea1f974dd07fb6751064a036de44ca",
+      "sha256": "36190a923b6e458a8c7547a12b4164b26e49145f9d44058c219d187ab81611c7",
       "size": 4382
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/lua/README.md",
-      "sha256": "9b78694ec5ea02c2126694e89b5eb4037ba15f7967dd83de096a92f760cf1ade",
+      "sha256": "9e3848326830a4c398fe411222b1ac617ffd529873e3d58f9273a28296b7ecb3",
       "size": 3533
     }
   ]

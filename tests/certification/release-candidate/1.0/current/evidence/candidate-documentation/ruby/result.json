@@ -10,22 +10,22 @@
         "--ignore-dependencies",
         "--no-document",
         "--install-dir",
-        "/tmp/strling-preview-documentation-k0hagr77/gems",
-        "/var/tmp/strling-pub-a58f126b-aggregate-first/bindings/ruby/strling-4.0.0.gem"
+        "/tmp/strling-preview-documentation-g1lb8h8r/gems",
+        "/var/tmp/strling-pub-17be3e0c-aggregate-first/bindings/ruby/strling-4.0.1.gem"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0000.json",
-      "metadata_sha256": "07310d113476d0aade2c8beb5505798e379f955ce6e91115634003e87e2fb6f9"
+      "metadata_sha256": "7ffb65a93230d37b5b5715d7e709c20689e39e6a5ba62a1840fd4fc6eedce143"
     },
     {
       "command": [
         "ruby",
-        "/tmp/strling-preview-documentation-k0hagr77/example.rb",
-        "/tmp/strling-preview-documentation-k0hagr77/libstrling_interop.so"
+        "/tmp/strling-preview-documentation-g1lb8h8r/example.rb",
+        "/tmp/strling-preview-documentation-g1lb8h8r/libstrling_interop.so"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0001.json",
-      "metadata_sha256": "aa2ec023e52a35f98a19f32cd79d20fc14a2c4ebe4a7e782a26ece71357a799b"
+      "metadata_sha256": "03bb039a927fd7d40d74de98548285973f39f270448d2fd3ed2b66e28bc2ff49"
     }
   ],
   "documentation_examples": [
@@ -35,30 +35,30 @@
       "status": "passed"
     }
   ],
-  "documentation_manifest_sha256": "b5cfcc79813a53724a4f1780e650b3179c5ef53a2266d4bab90a6a12e0771168",
+  "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
   "engineering": false,
-  "evidence_fingerprint": "7fe6f4cc25bcca835dadb6f96ac472926c6cdcb2caff0a0a418755e869acbcd0",
+  "evidence_fingerprint": "ff1ae419b584019025817c781e33ac4ad50cc9b5a896942c0f07a1b1490cdf5a",
   "fixture_sha256": {
     "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
     "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
     "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
     "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
   },
-  "invocation_id": "f1d1d7aaed1d496b8c3788d350be85f7",
+  "invocation_id": "00bdd7dfd86e4a88a3be1465b07a5f2b",
   "limitations": [
     "Preview policy and dependency-locking limits remain unchanged.",
     "Browser-safe factory execution on Node is not an actual browser support claim."
   ],
-  "native_sha256": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e",
-  "product_version": "4.0.0",
+  "native_sha256": "2da649b6971d49cc1e389b5a6b31ead7a2b36dc667a0c2c70e8b9e1fa40da0c8",
+  "product_version": "4.0.1",
   "public_retrieval": false,
   "runner_scope": "linux-x86_64",
   "source": {
-    "commit": "a58f126b2721773ab9346d4dc449910371adccd9",
+    "commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
     "dirty": false,
-    "tree_sha256": "a902b14eb881e59e4218c826b40a2417d9da7a27020acd382eb02eefb8271e16"
+    "tree_sha256": "09ff765e9cd302e34e29679b1414ea57578c123b4fcac2396cef7c9e7e729500"
   },
   "status": "passed",
-  "subject_sha256": "4a6c99e91a734d9022d6e3416668c2e8dc5f6cac811e5a3ca148a83b676c39eb",
+  "subject_sha256": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05",
   "supported_claim": false
 }

@@ -13,7 +13,7 @@
                     "release:typescript",
                     "--preview"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "npmjs.org",
                 "support": {
                     "external_prerequisites": [
@@ -31,7 +31,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "b30a9fc475de8b03077f5947e0a20ea59af47733724af215cabd0a72e3722446",
@@ -63,19 +63,19 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
-                        "sha256": "7224851c3ef582eb78d2f45194fb66ce2c04a036c22bc8c95c60b7f68864c9f2"
+                        "sha256": "2c431f6257453e83bd9ad0b9b83a85d770dc55ba0fb577d17f511d0957f9cdc7"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 },
                 {
                     "digest": {
-                        "sha256": "f0839d16c948de1fe450a7422e2eef152832a274bc0f3c56d6f52895a56a6480"
+                        "sha256": "2d36953245c65c79558cc93212193813284fa0720910dd1cb6013fa4f0cdbf5b"
                     },
                     "uri": "strling:dependency-root:typescript-npm"
                 }
@@ -87,7 +87,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:typescript",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:typescript",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -96,9 +96,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "5789d1d3e9117d9f7b5316a95273958459b9335afdb7cb55af4a6c510150fd6b"
+                "sha256": "2c45da76f7f9da54800d26ae5c9584c0b3ce2ad5d393fc3467ba5d6801e0903a"
             },
-            "name": "bindings/typescript/strling-lang-strling-4.0.0.tgz"
+            "name": "bindings/typescript/strling-lang-strling-4.0.1.tgz"
         }
     ]
 }

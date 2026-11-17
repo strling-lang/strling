@@ -5,13 +5,13 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"d54c8c9166d4afd24f9ed3dc83ebbce6e8f738f7894afd9f510540c4bb0b69c1\"}"
+            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"2de6a027597a8ea81de701f9ba648eb1a56c7c4e9438d5e7a9ad8e7a8e3e8b3b\"}"
         },
         {
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"python-binding\",\"inputs\":[{\"path\":\"bindings/python/pyproject.toml\",\"sha256\":\"28b86ea5f2484c60576f787b9b2e23e610b6906a05e76293c8c34733f921a5b0\"},{\"path\":\"bindings/python/requirements.txt\",\"sha256\":\"1eebf8fafe8ae5a0d949e79fd2d3de48d66694de6ce12b1d246eb3fef076c02a\"},{\"path\":\"bindings/python/requirements.lock.txt\",\"sha256\":\"d1b9d2e5f131870c3630be28aac2bdff19ef3c0dc349d02f576b3ce4f58ebe82\"}],\"policy\":{\"ecosystem\":\"python\",\"integrity_mode\":\"hash_pinned_requirements\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"build\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.5.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"colorama\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.4.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"iniconfig\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.3.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"packaging\",\"reported_license\":\"Apache-2.0 OR BSD-2-Clause\",\"selected_license\":null,\"version\":\"26.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pluggy\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.6.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pygments\",\"reported_license\":\"BSD-2-Clause\",\"selected_license\":null,\"version\":\"2.21.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pyproject-hooks\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.2.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pytest\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"9.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"setuptools\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"84.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"wheel\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.48.0\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"4e54d3fadddf37fe29ebc8451937a1d124b1295c5f2253df1ee084e0f59f92ac\"}"
+            "comment": "{\"id\":\"python-binding\",\"inputs\":[{\"path\":\"bindings/python/pyproject.toml\",\"sha256\":\"d958dfde285b3a1178c400d6a9b6b3d32b2572028e81957154a35e5a2c521309\"},{\"path\":\"bindings/python/requirements.txt\",\"sha256\":\"ac5bbb1311e17c52b9cb17c379ea3faa071bd5fb8129c24219a275ea46dac0d0\"},{\"path\":\"bindings/python/requirements.lock.txt\",\"sha256\":\"c4b4d2600b622fa36ce63953bb3e65b1cfc502cc0e4b770aa18759b3c147641f\"}],\"policy\":{\"ecosystem\":\"python\",\"integrity_mode\":\"hash_pinned_requirements\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"auditwheel\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"6.8.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"build\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.5.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"colorama\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"0.4.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"iniconfig\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.3.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"packaging\",\"reported_license\":\"Apache-2.0 OR BSD-2-Clause\",\"selected_license\":null,\"version\":\"26.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pluggy\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.6.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pyelftools\",\"reported_license\":\"Unlicense AND MIT\",\"selected_license\":null,\"version\":\"0.33\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pygments\",\"reported_license\":\"BSD-2-Clause\",\"selected_license\":null,\"version\":\"2.21.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pyproject-hooks\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.2.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pytest\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"9.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"setuptools\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"84.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"wheel\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.48.0\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"fae8fa8ce1eb1b894790cf232733b6d7a2c02d71691d28b815793aebd32d08b1\"}"
         }
     ],
     "creationInfo": {
@@ -25,7 +25,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/python/4de0855b5e5a382431273a2057785145a8313b4769bd590459bd2b574e92649c",
+    "documentNamespace": "https://strling.dev/sbom/python/e0806718000be74967d5141b1cae951f800c0747197f0e405dfb7ee5ae4a73f7",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -40,7 +40,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/__init__.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/__init__.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -59,7 +59,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/_native/THIRD_PARTY_NOTICES.txt",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/_native/THIRD_PARTY_NOTICES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -70,15 +70,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "033bf451dd933d88f1b03bf509fede91b4fe3b0012926cc809038c8da528687b"
+                    "checksumValue": "959bbbc5f9b503269e20edc4c6f4948e573577ad7187d92051d8d6b8f1754ad8"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "66cd7be0e32ca7ce1b9bd14d69233b30bf9dc028"
+                    "checksumValue": "ca4b98c1f9c2dbf081a6333e94b259d088432526"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/_native/kernel-identity.json",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/_native/kernel-identity.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -89,15 +89,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "6a23904fe0cb83f86cee090f68858c93eee710c5986fea2463925115acbbd06e"
+                    "checksumValue": "2da649b6971d49cc1e389b5a6b31ead7a2b36dc667a0c2c70e8b9e1fa40da0c8"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "1235d5b7b721a5580c487759f7a7b0d5b5ea2adc"
+                    "checksumValue": "2958851acef4219a6b3fd5025b35e8761f8c46c9"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/_native/libstrling_interop.so",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/_native/libstrling_interop.so",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -108,15 +108,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "fbef084adea5ec918a518710f73ded893dc06a5b8f46282d0e7c3f84749eaed8"
+                    "checksumValue": "c42f1af1b3a56222f663c4728755c306777f46a760c94777a209ca9d640be31a"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "19f7addeb52270ba582666ef5adf247db210a850"
+                    "checksumValue": "f1ada79de472e09681e1d7d88c1689b6762a5be6"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/_product_version.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/_product_version.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -135,7 +135,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/compiler.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/compiler.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -154,7 +154,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/interop.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/interop.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -173,7 +173,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/__init__.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/__init__.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -192,7 +192,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/constructors.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/constructors.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -211,7 +211,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/lookarounds.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/lookarounds.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -230,7 +230,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/pattern.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/pattern.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -249,7 +249,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/preview.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/preview.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -268,7 +268,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/sets.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/sets.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -287,7 +287,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/static.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/static.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -306,7 +306,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.data/purelib/STRling/simply/stdlib_generated.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/STRling/simply/stdlib_generated.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -317,15 +317,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "53b53e30718b992f225dfe6704696bb4a0dcf7e1f27b1d15df0b7c6c3873caca"
+                    "checksumValue": "0ac50527f8b1c7739ff3d2a6c0f766a002b0e90e2adf7dfd27f1c4b8f8551b55"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "73fd7a34dff39065035a761aee49471da267e5e1"
+                    "checksumValue": "83093d21ab5dc9d6bd7dbb179dde130262c2d5cf"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.dist-info/METADATA",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/strling-4.0.1.dist-info/METADATA",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -336,15 +336,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4d907227c90086b2bcdc89beb18265e0dddc4516727f42031d299322c98c0050"
+                    "checksumValue": "512d50c339ca99b8951f8388df835a378eaa1973ae3d15d3f897b90ddca33283"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "3798c77369223df923a63136399ba8a87f868b62"
+                    "checksumValue": "221bd95aa88210f25b12b72526d2182d871df40d"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.dist-info/RECORD",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/strling-4.0.1.dist-info/RECORD",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -355,15 +355,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "8c5080ceed1becf88d682173209b0600b4d2517be19b782fd3335323d744e427"
+                    "checksumValue": "17beebd6689b8daa596771dea655f6a69259f00fc0bfd7f096327fbb3e04ca32"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "3b830c254fd58cda130f664342bfae37e8d00240"
+                    "checksumValue": "7b86753f35224f5740001c3ee444881960397460"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.dist-info/WHEEL",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/strling-4.0.1.dist-info/WHEEL",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -382,7 +382,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.dist-info/licenses/LICENSE",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/strling-4.0.1.dist-info/licenses/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -401,7 +401,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl!/strling-4.0.0.dist-info/top_level.txt",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl!/strling-4.0.1.dist-info/top_level.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -420,7 +420,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/__init__.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/__init__.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -439,7 +439,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/_native/THIRD_PARTY_NOTICES.txt",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/_native/THIRD_PARTY_NOTICES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -450,15 +450,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "0452fcf8f297f8e91ba44e7c10bacbb8273684e8011876cf1017a2e1b6120a47"
+                    "checksumValue": "c3b510a0c943ff3ac7aa33431fb77462f993e5618307e18368da404dbbe91e34"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "503a809338959e8ba7d0698036cb18082c6cab8f"
+                    "checksumValue": "12107091171aa3b699f5cc2d6cebfe2222a254da"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/_native/kernel-identity.json",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/_native/kernel-identity.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -469,15 +469,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5542b10913723bacc28b0977f95fbdc13f8ee28415007973748a423f17b660f3"
+                    "checksumValue": "5bf4c63f0f2b67cdd58bdb995d12097a8d53908a6101e02dcd1a9d80ecef3462"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "a6e99117765d5a6b441bbc59b6385572f152933c"
+                    "checksumValue": "f9064b5096cfc9ef9288915e6fea0113dc5aa80b"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/_native/strling_interop.dll",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/_native/strling_interop.dll",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -488,15 +488,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "fbef084adea5ec918a518710f73ded893dc06a5b8f46282d0e7c3f84749eaed8"
+                    "checksumValue": "c42f1af1b3a56222f663c4728755c306777f46a760c94777a209ca9d640be31a"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "19f7addeb52270ba582666ef5adf247db210a850"
+                    "checksumValue": "f1ada79de472e09681e1d7d88c1689b6762a5be6"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/_product_version.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/_product_version.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -515,7 +515,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/compiler.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/compiler.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -534,7 +534,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/interop.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/interop.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -553,7 +553,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/__init__.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/__init__.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -572,7 +572,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/constructors.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/constructors.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -591,7 +591,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/lookarounds.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/lookarounds.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -610,7 +610,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/pattern.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/pattern.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -629,7 +629,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/preview.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/preview.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -648,7 +648,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/sets.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/sets.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -667,7 +667,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/static.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/static.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -686,7 +686,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.data/purelib/STRling/simply/stdlib_generated.py",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/STRling/simply/stdlib_generated.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -697,15 +697,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c49306cf2d3a184b7575625f33ba969a10f19787246c4a08fb5633a4ba38188c"
+                    "checksumValue": "cdf5b2ad850cda7b4c243b42f8f77f7ab0650d98704ca07fc6a1fa7bc716a4df"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "38b6fcebc9e83338548f2942b7ab76b3261ea8e3"
+                    "checksumValue": "a32bef43202cbaa9782ecefddec3757577484b0d"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.dist-info/METADATA",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/strling-4.0.1.dist-info/METADATA",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -716,15 +716,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "07b918f410aa6911016e4dc7b453ba9af19246f35983b480d874ea94d93c664a"
+                    "checksumValue": "e1f2b3c032290110803dc3d25116af39604db7314f97e0b7a0c42ce280072f49"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6c860bf341c420c7f85be84a6e3f900e98226441"
+                    "checksumValue": "55cb17e8ea259aea140c3bb6c0ccfb28c7f62db9"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.dist-info/RECORD",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/strling-4.0.1.dist-info/RECORD",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -743,7 +743,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.dist-info/WHEEL",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/strling-4.0.1.dist-info/WHEEL",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -762,7 +762,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.dist-info/licenses/LICENSE",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/strling-4.0.1.dist-info/licenses/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -781,7 +781,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl!/strling-4.0.0.dist-info/top_level.txt",
+            "fileName": "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl!/strling-4.0.1.dist-info/top_level.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -800,7 +800,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/LICENSE",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -819,7 +819,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/MANIFEST.in",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/MANIFEST.in",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -830,15 +830,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "37138baed8d5b4ebb5c22dad8673eae2639895aa9a38a46536b2988f45c2901d"
+                    "checksumValue": "1c5e61c74ab927354b72169ada48cd933c39649c395834141fc2e0d379c2b1f0"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "67d48a8a9b5118fffaaeac80622015bcff4e0bb3"
+                    "checksumValue": "ecbde683f5fd7f28599860b41b5ee9fb29c75c37"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/PKG-INFO",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/PKG-INFO",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -849,15 +849,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5fcabe6766389f46e609aab4e90c5c00e54894ad7235505880e55a349d7642be"
+                    "checksumValue": "c17fe3a33b08b3e11b1ae44b7e6db06e8cb2418cf08005fcb3c8f051933524c3"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "01272d09724a4efdf29a3401845f7b9792a373fe"
+                    "checksumValue": "f69f308885716c152809f31fe9ad5d567f3e9477"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/README.md",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/README.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -876,7 +876,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/Cargo.lock",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/Cargo.lock",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -895,7 +895,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/Cargo.toml",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/Cargo.toml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -914,7 +914,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/Cargo.toml",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/Cargo.toml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -933,7 +933,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/common.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/common.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -952,7 +952,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/deep_compiler_protocol.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/deep_compiler_protocol.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -971,7 +971,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/deep_legacy_regex.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/deep_legacy_regex.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -990,7 +990,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/deep_normalization_analysis.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/deep_normalization_analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1009,7 +1009,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/deep_semantic_dsl.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/deep_semantic_dsl.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1028,7 +1028,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/deep_target_serialization.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/deep_target_serialization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1047,7 +1047,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_arbitrary_bytes.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_arbitrary_bytes.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1066,7 +1066,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_length_boundaries.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_length_boundaries.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1085,7 +1085,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_ownership_sequences.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_ownership_sequences.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1104,7 +1104,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_simply_graphs.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_simply_graphs.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1123,7 +1123,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_structured_envelope.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_structured_envelope.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1142,7 +1142,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_target_profiles.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/fuzz/fuzz_targets/fuzz_target_profiles.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1161,7 +1161,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/src/lib.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/src/lib.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1180,7 +1180,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/src/native.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/src/native.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1191,15 +1191,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "3659dae4cd9c8e23f12be8e6843d7cdb776eade5389155295a00eccf3ec47c43"
+                    "checksumValue": "4abc6f30678f860eaa1206f2970e1435bd62855c683e2b3e83c1cec605642833"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "f5e8026341c62c80e78def4b970a3031eab3942d"
+                    "checksumValue": "7be09f76bdc89925176b8cd63b9d41fc126427c9"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/src/product_version.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/src/product_version.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1218,7 +1218,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/src/protocol.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/src/protocol.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1237,7 +1237,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/bindings/interop/src/wasm.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/bindings/interop/src/wasm.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1256,7 +1256,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/internal/Cargo.lock",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/internal/Cargo.lock",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1275,7 +1275,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/internal/Cargo.toml",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/internal/Cargo.toml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1294,7 +1294,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/capability_evaluation.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/capability_evaluation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1313,7 +1313,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/capability_pipeline.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/capability_pipeline.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1332,7 +1332,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/compiler_pipeline.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/compiler_pipeline.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1351,7 +1351,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/conformance/mod.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/conformance/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1370,7 +1370,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/diagnostic/mod.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/diagnostic/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1389,7 +1389,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/diagnostic_generation.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/diagnostic_generation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1408,7 +1408,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/diagnostic_generation/quality.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/diagnostic_generation/quality.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1427,7 +1427,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/ecmascript_lowering.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/ecmascript_lowering.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1446,7 +1446,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/ecmascript_serialization.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/ecmascript_serialization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1465,7 +1465,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/editor_intelligence.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/editor_intelligence.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1484,7 +1484,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/explanation.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/explanation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1503,7 +1503,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/kernel.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/kernel.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1522,7 +1522,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/lib.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/lib.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1541,7 +1541,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/lib_public.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/lib_public.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1560,7 +1560,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/no_match_explanation.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/no_match_explanation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1579,7 +1579,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/normalization.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/normalization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1598,7 +1598,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/portability_diagnostics.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/portability_diagnostics.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1617,7 +1617,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/portability_planning.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/portability_planning.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1636,7 +1636,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/portability_planning/equivalence.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/portability_planning/equivalence.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1655,7 +1655,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/portability_planning/validation.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/portability_planning/validation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1674,7 +1674,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/post_lowering_requirements.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/post_lowering_requirements.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1693,7 +1693,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/protocol/analysis.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/protocol/analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1712,7 +1712,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/protocol/exchange.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/protocol/exchange.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1731,7 +1731,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/protocol/mod.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/protocol/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1750,7 +1750,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/protocol/request.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/protocol/request.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1769,7 +1769,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/protocol/result.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/protocol/result.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1788,7 +1788,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/python_re_lowering.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/python_re_lowering.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1807,7 +1807,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/python_re_serialization.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/python_re_serialization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1826,7 +1826,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/regex_frontend.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/regex_frontend.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1845,7 +1845,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/safety_analysis.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/safety_analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1864,7 +1864,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/safety_analysis/repetition.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/safety_analysis/repetition.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1883,7 +1883,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic/mod.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1902,7 +1902,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic_analysis.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic_analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1921,7 +1921,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic_analysis/capture.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic_analysis/capture.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1940,7 +1940,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic_analysis/consumption.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic_analysis/consumption.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1959,7 +1959,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic_compatibility.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic_compatibility.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1978,7 +1978,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic_conversion.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic_conversion.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1997,7 +1997,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic_frontend.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic_frontend.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2016,7 +2016,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/semantic_rewrite.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/semantic_rewrite.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2035,7 +2035,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/simply.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/simply.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2054,7 +2054,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/source/mod.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/source/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2073,7 +2073,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/stdlib.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/stdlib.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2092,7 +2092,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/structural_analysis.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/structural_analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2111,7 +2111,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/target/mod.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/target/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2130,7 +2130,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/target/profile.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/target/profile.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2149,7 +2149,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/target_lowering.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/target_lowering.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2168,7 +2168,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/target_serialization.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/target_serialization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2187,7 +2187,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/core/src/validation/mod.rs",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/core/src/validation/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2206,7 +2206,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/interop/1.0/abi.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/interop/1.0/abi.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2225,7 +2225,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/portability/equivalence/1.0/atomic-literal-elision.cases.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/portability/equivalence/1.0/atomic-literal-elision.cases.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2244,7 +2244,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/portability/equivalence/1.0/exact-once-repetition-elision.cases.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/portability/equivalence/1.0/exact-once-repetition-elision.cases.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2263,7 +2263,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/portability/equivalence/1.0/registry.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/portability/equivalence/1.0/registry.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2282,7 +2282,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/portability/equivalence/1.0/registry.schema.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/portability/equivalence/1.0/registry.schema.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2301,7 +2301,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/stdlib/registry/1.0/canonical-semantics.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/stdlib/registry/1.0/canonical-semantics.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2320,7 +2320,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/targets/profiles/ecmascript-2024.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/targets/profiles/ecmascript-2024.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2339,7 +2339,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/targets/profiles/pcre2-10.42.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/targets/profiles/pcre2-10.42.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2358,7 +2358,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/targets/profiles/pcre2-10.43.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/targets/profiles/pcre2-10.43.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2377,7 +2377,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/targets/profiles/python-re-3.11-bytes.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/targets/profiles/python-re-3.11-bytes.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2396,7 +2396,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/spec/targets/profiles/python-re-3.11.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/spec/targets/profiles/python-re-3.11.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2415,7 +2415,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/tests/conformance/ecmascript-runtime-certification.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/tests/conformance/ecmascript-runtime-certification.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2434,7 +2434,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/tests/conformance/pcre2-runtime-certification.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/tests/conformance/pcre2-runtime-certification.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2453,7 +2453,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/tests/conformance/python-re-runtime-certification.json",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/tests/conformance/python-re-runtime-certification.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2472,7 +2472,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/tooling/native_release_build.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/tooling/native_release_build.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2491,7 +2491,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/_native_source/tooling/release_notices.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/_native_source/tooling/release_notices.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2502,15 +2502,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "28b86ea5f2484c60576f787b9b2e23e610b6906a05e76293c8c34733f921a5b0"
+                    "checksumValue": "d958dfde285b3a1178c400d6a9b6b3d32b2572028e81957154a35e5a2c521309"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "949c9f8648e19803f55f30494e3cd4a8f200883b"
+                    "checksumValue": "4363f0f899775aa5f7282135b5f5e18dfa82168e"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/pyproject.toml",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/pyproject.toml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2529,7 +2529,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/scripts/assemble_native.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/scripts/assemble_native.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2548,7 +2548,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/setup.cfg",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/setup.cfg",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2559,15 +2559,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "d88034b368c40191d5af5182e136cc768e6d9cb4b173d14c39e1a9fdb3ef837c"
+                    "checksumValue": "ea87cc8755a76bacd45f555d473cb1a2d2144e01cbf27d5a6be8e74cf65c2a1b"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "32f31b980072b98c4727701433016f0d6ee20351"
+                    "checksumValue": "92cda8b3240f2b49f8260130e1bf43abb340ffed"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/setup.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/setup.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2578,15 +2578,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "37138baed8d5b4ebb5c22dad8673eae2639895aa9a38a46536b2988f45c2901d"
+                    "checksumValue": "1c5e61c74ab927354b72169ada48cd933c39649c395834141fc2e0d379c2b1f0"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "67d48a8a9b5118fffaaeac80622015bcff4e0bb3"
+                    "checksumValue": "ecbde683f5fd7f28599860b41b5ee9fb29c75c37"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling.egg-info/PKG-INFO",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling.egg-info/PKG-INFO",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2605,7 +2605,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling.egg-info/SOURCES.txt",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling.egg-info/SOURCES.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2624,7 +2624,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling.egg-info/dependency_links.txt",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling.egg-info/dependency_links.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2643,7 +2643,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling.egg-info/not-zip-safe",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling.egg-info/not-zip-safe",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2662,7 +2662,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling.egg-info/top_level.txt",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling.egg-info/top_level.txt",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2681,7 +2681,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/__init__.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/__init__.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2692,15 +2692,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "fbef084adea5ec918a518710f73ded893dc06a5b8f46282d0e7c3f84749eaed8"
+                    "checksumValue": "c42f1af1b3a56222f663c4728755c306777f46a760c94777a209ca9d640be31a"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "19f7addeb52270ba582666ef5adf247db210a850"
+                    "checksumValue": "f1ada79de472e09681e1d7d88c1689b6762a5be6"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/_product_version.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/_product_version.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2719,7 +2719,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/compiler.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/compiler.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2738,7 +2738,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/interop.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/interop.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2757,7 +2757,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/__init__.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/__init__.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2776,7 +2776,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/constructors.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/constructors.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2795,7 +2795,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/lookarounds.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/lookarounds.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2814,7 +2814,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/pattern.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/pattern.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2833,7 +2833,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/preview.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/preview.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2852,7 +2852,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/sets.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/sets.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2871,7 +2871,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/static.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/static.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2890,7 +2890,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/src/STRling/simply/stdlib_generated.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/src/STRling/simply/stdlib_generated.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2909,7 +2909,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/tests/test_compiler.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/tests/test_compiler.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2928,7 +2928,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/tests/test_interop.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/tests/test_interop.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2947,7 +2947,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/tests/test_package.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/tests/test_package.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2966,7 +2966,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/python/dist/strling-4.0.0.tar.gz!/strling-4.0.0/tests/test_simply.py",
+            "fileName": "bindings/python/dist/strling-4.0.1.tar.gz!/strling-4.0.1/tests/test_simply.py",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2980,7 +2980,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4de0855b5e5a382431273a2057785145a8313b4769bd590459bd2b574e92649c"
+                    "checksumValue": "e0806718000be74967d5141b1cae951f800c0747197f0e405dfb7ee5ae4a73f7"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -2997,9 +2997,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "STRling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "8aec9e046c8ed96a2d50358bd3757135632731ab"
+                "packageVerificationCodeValue": "eff7404f91e4ff1b9e1f4d5edaa9f4ded1ed4d0b"
             },
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-b0caa67097f1",
@@ -3527,7 +3527,32 @@
             "versionInfo": "1.0.23"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-22-0a8531230c4f",
+            "SPDXID": "SPDXRef-Dependency-22-f477bffe2f13",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"python-binding\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"python-binding\",\"ecosystem\":\"python\",\"name\":\"auditwheel\",\"version\":\"6.8.2\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "MIT",
+            "licenseDeclared": "MIT",
+            "name": "auditwheel",
+            "versionInfo": "6.8.2"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-23-0a8531230c4f",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3552,7 +3577,7 @@
             "versionInfo": "1.5.0"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-23-7d76ac286c85",
+            "SPDXID": "SPDXRef-Dependency-24-7d76ac286c85",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3577,7 +3602,7 @@
             "versionInfo": "0.4.6"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-24-aedb6b680d50",
+            "SPDXID": "SPDXRef-Dependency-25-aedb6b680d50",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3602,7 +3627,7 @@
             "versionInfo": "2.3.0"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-25-fa653288414c",
+            "SPDXID": "SPDXRef-Dependency-26-fa653288414c",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3627,7 +3652,7 @@
             "versionInfo": "26.3"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-26-656ff9618ba5",
+            "SPDXID": "SPDXRef-Dependency-27-656ff9618ba5",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3652,7 +3677,32 @@
             "versionInfo": "1.6.0"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-27-2664e1353009",
+            "SPDXID": "SPDXRef-Dependency-28-db0a75acce6a",
+            "annotations": [
+                {
+                    "annotationDate": "1970-01-01T00:00:00Z",
+                    "annotationType": "OTHER",
+                    "annotator": "Tool: strling-release-supply-chain",
+                    "comment": "{\"classification\":\"permitted\",\"dependency_root\":\"python-binding\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\"}"
+                }
+            ],
+            "copyrightText": "NOASSERTION",
+            "downloadLocation": "NOASSERTION",
+            "externalRefs": [
+                {
+                    "referenceCategory": "OTHER",
+                    "referenceLocator": "{\"dependency_root\":\"python-binding\",\"ecosystem\":\"python\",\"name\":\"pyelftools\",\"version\":\"0.33\"}",
+                    "referenceType": "strling-dependency-coordinate"
+                }
+            ],
+            "filesAnalyzed": false,
+            "licenseConcluded": "Unlicense AND MIT",
+            "licenseDeclared": "Unlicense AND MIT",
+            "name": "pyelftools",
+            "versionInfo": "0.33"
+        },
+        {
+            "SPDXID": "SPDXRef-Dependency-29-2664e1353009",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3677,7 +3727,7 @@
             "versionInfo": "2.21.0"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-28-65e2dfdb1aba",
+            "SPDXID": "SPDXRef-Dependency-30-65e2dfdb1aba",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3702,7 +3752,7 @@
             "versionInfo": "1.2.0"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-29-d264abfb6d00",
+            "SPDXID": "SPDXRef-Dependency-31-d264abfb6d00",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3727,7 +3777,7 @@
             "versionInfo": "9.1.1"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-30-99964962b4a7",
+            "SPDXID": "SPDXRef-Dependency-32-99964962b4a7",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -3752,7 +3802,7 @@
             "versionInfo": "84.0.0"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-31-f30d2ce88132",
+            "SPDXID": "SPDXRef-Dependency-33-f30d2ce88132",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -4664,52 +4714,62 @@
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-22-0a8531230c4f",
+            "relatedSpdxElement": "SPDXRef-Dependency-22-f477bffe2f13",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-23-7d76ac286c85",
+            "relatedSpdxElement": "SPDXRef-Dependency-23-0a8531230c4f",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-24-aedb6b680d50",
+            "relatedSpdxElement": "SPDXRef-Dependency-24-7d76ac286c85",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-25-fa653288414c",
+            "relatedSpdxElement": "SPDXRef-Dependency-25-aedb6b680d50",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-26-656ff9618ba5",
+            "relatedSpdxElement": "SPDXRef-Dependency-26-fa653288414c",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-27-2664e1353009",
+            "relatedSpdxElement": "SPDXRef-Dependency-27-656ff9618ba5",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-28-65e2dfdb1aba",
+            "relatedSpdxElement": "SPDXRef-Dependency-28-db0a75acce6a",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-29-d264abfb6d00",
+            "relatedSpdxElement": "SPDXRef-Dependency-29-2664e1353009",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-30-99964962b4a7",
+            "relatedSpdxElement": "SPDXRef-Dependency-30-65e2dfdb1aba",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-31-f30d2ce88132",
+            "relatedSpdxElement": "SPDXRef-Dependency-31-d264abfb6d00",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-32-99964962b4a7",
+            "relationshipType": "DEPENDS_ON",
+            "spdxElementId": "SPDXRef-Package"
+        },
+        {
+            "relatedSpdxElement": "SPDXRef-Dependency-33-f30d2ce88132",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         }

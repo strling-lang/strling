@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:cpp"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "conan",
                 "support": {
                     "external_prerequisites": [
@@ -38,7 +38,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "b30a9fc475de8b03077f5947e0a20ea59af47733724af215cabd0a72e3722446",
@@ -115,9 +115,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
@@ -127,13 +127,13 @@
                 },
                 {
                     "digest": {
-                        "sha256": "9c80df4f83d8b38dc0da0b093d8f198bfe70af1fdfe5b027d66243b21ae93920"
+                        "sha256": "3b202fe623134c3b404ee9089803f6daf21a48d743455ce8a0c40e8e63717aa1"
                     },
                     "uri": "strling:dependency-root:cpp-cmake"
                 },
                 {
                     "digest": {
-                        "sha256": "7224851c3ef582eb78d2f45194fb66ce2c04a036c22bc8c95c60b7f68864c9f2"
+                        "sha256": "2c431f6257453e83bd9ad0b9b83a85d770dc55ba0fb577d17f511d0957f9cdc7"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -145,7 +145,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:cpp",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:cpp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -154,27 +154,27 @@
     "subject": [
         {
             "digest": {
-                "sha256": "1e04e93cf14ed711b17a4bf34bdf2e6d9de40a49650953feff8bf048955ff257"
+                "sha256": "1f5d489dae86169fc38a290835f02a207877bab4b0f1d782483d9569ad42e820"
             },
-            "name": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.tgz"
+            "name": "bindings/cpp/dist/strling-4.0.1-linux-x86_64.tgz"
         },
         {
             "digest": {
-                "sha256": "56517322f9f54d365fb8a1b92ed63e44b9aab0be8b1abcdeef2fa9d83026222a"
+                "sha256": "7aa2801187f06016d10f44024299d23028e99a252e0b77cc60237c4752c82c15"
             },
-            "name": "bindings/cpp/dist/strling-4.0.0-linux-x86_64.upload.zip"
+            "name": "bindings/cpp/dist/strling-4.0.1-linux-x86_64.upload.zip"
         },
         {
             "digest": {
-                "sha256": "7771386aa6effc4153cf21347c88458d9c7c63d1bae62c7e027aaa4eca8e1668"
+                "sha256": "5ef54c974061ab22efdc87ffd6bbdd284f1f5a7a9c56600d6e34d6c3df32887a"
             },
-            "name": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.tgz"
+            "name": "bindings/cpp/dist/strling-4.0.1-windows-x86_64.tgz"
         },
         {
             "digest": {
-                "sha256": "0027d56d1709b04dde0a92bb9754508dc9a45c2596679b70f716699bb088a679"
+                "sha256": "ade08c265836d1b4a34452da46bfbc48e37e127a453165a6ca3d81dc1d336676"
             },
-            "name": "bindings/cpp/dist/strling-4.0.0-windows-x86_64.upload.zip"
+            "name": "bindings/cpp/dist/strling-4.0.1-windows-x86_64.upload.zip"
         }
     ]
 }

@@ -10168,3 +10168,7 @@ Linux Supported consumer scopes, and all six bounded Preview producers. The
 successor still requires new source-bound profiles and complete evidence;
 no prior-source acceptance or failed operation is transferred. Publication and
 release tags remain separately gated.
+
+## 4.0.1 fix-forward — source certification accepted
+
+Product source 17be3e0c81fb2816803653b73f0f9198d6711d5d; qualified immutable reader ea03dd4cbe35b5614fb862c1568cc7356a5bd16f; candidate evidence root 7ad3c371ce7251d3fe244e756c0dad0d8c9bc9466bf2e6a9da8c49bef099d902; nested package root 0af021bcd956dfcf54c5d9ea23bf6a07850bdc0c9707dda4715ed2b6074182a0. Fresh profiles: {"full": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0, "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request": {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived": 0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred. Hosted acceptance remains pending; no publication is authorized.

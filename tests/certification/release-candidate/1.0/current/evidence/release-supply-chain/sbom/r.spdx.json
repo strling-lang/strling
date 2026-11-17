@@ -5,7 +5,7 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"r-package\",\"inputs\":[{\"path\":\"bindings/r/DESCRIPTION\",\"sha256\":\"7ac7a56c33cbb161fc6f486b0ffe2fc08a6aa4b0ba22de8d6da912c1544afd13\"},{\"path\":\"bindings/r/renv.lock\",\"sha256\":\"b42495d877caaf4816d0eb1d8c85cd7630d9b04a3c2949ebe76d0eae47cbf987\"}],\"policy\":{\"ecosystem\":\"r\",\"integrity_mode\":\"renv_lock\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"R6\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.6.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"brio\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.1.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"callr\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.8.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cli\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.6.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crayon\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.5.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"desc\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.4.3\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-R-DIFFOBJ-0.3.8\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"diffobj\",\"reported_license\":\"GPL-2.0-only OR GPL-3.0-only\",\"selected_license\":null,\"version\":\"0.3.8\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"evaluate\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"fs\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.1.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"glue\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.8.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"jsonlite\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"lifecycle\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"magrittr\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"otel\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.2.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pkgbuild\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.4.8\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pkgload\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.5.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"praise\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"processx\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.9.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"ps\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.9.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rlang\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.3.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rprojroot\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"testthat\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.3.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"waldo\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.6.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"withr\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.0.3\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"a92cf1d6c97746e8d82a1b19371d11562daa84132e88e4bea943a30ef8a1d837\"}"
+            "comment": "{\"id\":\"r-package\",\"inputs\":[{\"path\":\"bindings/r/DESCRIPTION\",\"sha256\":\"6225314ae48ccd0930abb887eefbf7e18627ef67ae54fdcea83e78625a83c763\"},{\"path\":\"bindings/r/renv.lock\",\"sha256\":\"b42495d877caaf4816d0eb1d8c85cd7630d9b04a3c2949ebe76d0eae47cbf987\"}],\"policy\":{\"ecosystem\":\"r\",\"integrity_mode\":\"renv_lock\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"R6\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.6.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"brio\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.1.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"callr\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.8.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cli\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.6.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crayon\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.5.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"desc\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.4.3\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-R-DIFFOBJ-0.3.8\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"diffobj\",\"reported_license\":\"GPL-2.0-only OR GPL-3.0-only\",\"selected_license\":null,\"version\":\"0.3.8\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"evaluate\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"fs\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.1.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"glue\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.8.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"jsonlite\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"lifecycle\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"magrittr\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"otel\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.2.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pkgbuild\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.4.8\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"pkgload\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.5.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"praise\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"processx\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.9.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"ps\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.9.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rlang\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.3.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"rprojroot\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"2.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"testthat\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.3.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"waldo\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.6.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"withr\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"3.0.3\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"a92cf1d6c97746e8d82a1b19371d11562daa84132e88e4bea943a30ef8a1d837\"}"
         }
     ],
     "creationInfo": {
@@ -19,7 +19,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/r/6bcb529188266cf8dea147e530a21117905584383d0de452b8277e6b196319b4",
+    "documentNamespace": "https://strling.dev/sbom/r/af45f99fc452b9b8340afed18f32ae86a2e23214ec80b3e98d0b0cb4083a40c8",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -539,11 +539,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "3659dae4cd9c8e23f12be8e6843d7cdb776eade5389155295a00eccf3ec47c43"
+                    "checksumValue": "4abc6f30678f860eaa1206f2970e1435bd62855c683e2b3e83c1cec605642833"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "f5e8026341c62c80e78def4b970a3031eab3942d"
+                    "checksumValue": "7be09f76bdc89925176b8cd63b9d41fc126427c9"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -672,11 +672,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "7ac7a56c33cbb161fc6f486b0ffe2fc08a6aa4b0ba22de8d6da912c1544afd13"
+                    "checksumValue": "6225314ae48ccd0930abb887eefbf7e18627ef67ae54fdcea83e78625a83c763"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "34c4afc70a31d35a2ad5882d50870ea476a912a2"
+                    "checksumValue": "f887c5ab85411a2c7f49f7a157e0a88a849fa8d4"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -786,11 +786,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "21142c92c4ae2fd862c44aa97f6cf0e4eb2dba9f8d2bb4af6371c2a23cf2d0a6"
+                    "checksumValue": "de2902acfad56849fced419b98f5adce4c65a8b081ee31f76214155df58d65f6"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "0807aabb7bd8ea7235d6bbb1306343b98fdfbfbe"
+                    "checksumValue": "0a979f2d292553e8d19a01ff9a0953287e471aef"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -8693,7 +8693,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "6bcb529188266cf8dea147e530a21117905584383d0de452b8277e6b196319b4"
+                    "checksumValue": "af45f99fc452b9b8340afed18f32ae86a2e23214ec80b3e98d0b0cb4083a40c8"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -8710,9 +8710,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "af0a46474573eed2c0ab4fa3911f444082902ecc"
+                "packageVerificationCodeValue": "0c8e31679eb8e31d4180b88a8882ac4fd0ed67a2"
             },
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-74e2cac5fbeb",

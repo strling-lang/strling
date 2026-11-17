@@ -19,22 +19,22 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/ruby/4a6c99e91a734d9022d6e3416668c2e8dc5f6cac811e5a3ca148a83b676c39eb",
+    "documentNamespace": "https://strling.dev/sbom/ruby/6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "6ecdf61ab8bd87770e8ead49a3e36f5bd088355df5c0007b21db2fb9c49bbe4d"
+                    "checksumValue": "30a26cbb753716d47099008b544e102021baaa4e0fc3b28a6a67a46ae2ad01b0"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "740cca0f9421af118c524502089a88f22fa135e2"
+                    "checksumValue": "91ef4e215ac397c8e4458cc3e6973a5264f5c593"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/checksums.yaml.gz",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/checksums.yaml.gz",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -45,15 +45,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "1e21cd9af5d5d93eeb8899a273169d9c7bb7838e20e1346c49765c2c555d64f7"
+                    "checksumValue": "0d5b51771a99a333248f9416b82dd62e7b11b4365df1a51c6117b9ae309adf77"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6e4a46f5766be4cc95ed0b7f373b7f3117bf37ef"
+                    "checksumValue": "59191b9ec2350ab1806b7a40c6d85aa958d1fc06"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/data.tar.gz",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -72,7 +72,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/LICENSE",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/data.tar.gz!/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -83,15 +83,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "84326c9b6d81793551594f550121b7f1141f2ce46d17400907b1458f2e70972b"
+                    "checksumValue": "4040ccc7d2fd989b015510b1180e9596a8773340faf688e3e614a482215c088c"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "fb5a73cb8d9deb69059310602b8c2d68cd49efa0"
+                    "checksumValue": "5abb5585c0089c3209b17a97d6379cbd491ba84b"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/README.md",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/data.tar.gz!/README.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -102,15 +102,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "a93ef4f8fbe0906ead37fd87762f0440d44e089405d94bedd6bde745dd2dfde2"
+                    "checksumValue": "2e0c6bf90adfab43e03cb2522f5b2ace2b91bd55463f6891c80133f383c25ec6"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "14c1704f23cdf4ee34c631ee1d17476f0303e893"
+                    "checksumValue": "01c80c8eaeff842bd45bff9e9277096bf3844469"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling.rb",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/data.tar.gz!/lib/strling.rb",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -129,7 +129,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling/native_client.rb",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/data.tar.gz!/lib/strling/native_client.rb",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -148,7 +148,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling/requests.rb",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/data.tar.gz!/lib/strling/requests.rb",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -167,7 +167,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/data.tar.gz!/lib/strling/stdlib_generated.rb",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/data.tar.gz!/lib/strling/stdlib_generated.rb",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -178,15 +178,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "570c122af1b85ad83b1131f25ffc55ce697781e02f8464ddd6248f64656b2e49"
+                    "checksumValue": "92e0cfe31ef33c7a25939675e900f19312bc4d5f1a6b8017065ed7a3e8d98b8e"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "081af7f13d10c8a0567e9e489c9fe103696fe966"
+                    "checksumValue": "3a733c9c7f3c9cd21a113143f8602efa27c9c412"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/ruby/strling-4.0.0.gem!/metadata.gz",
+            "fileName": "bindings/ruby/strling-4.0.1.gem!/metadata.gz",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -200,7 +200,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4a6c99e91a734d9022d6e3416668c2e8dc5f6cac811e5a3ca148a83b676c39eb"
+                    "checksumValue": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -217,9 +217,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "521ddfd5003f5cf2c9b232afe156ebed7f5a977b"
+                "packageVerificationCodeValue": "2793e67e73d8d0f9a1cde696e451faff8e842665"
             },
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-049ad4e0c832",

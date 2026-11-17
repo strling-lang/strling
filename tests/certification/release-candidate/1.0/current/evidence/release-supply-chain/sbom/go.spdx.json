@@ -19,7 +19,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/go/c85ce4418cdbcc785b71c7db490c03ebe72a137eb1d91cbd7959bfced275beab",
+    "documentNamespace": "https://strling.dev/sbom/go/61043e0b700fc210ca59eabec85fd58f5c573af0a75406ac157b406bd11619d5",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -64,11 +64,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "edd1550ae595488c63b1051f9b0a4848fd357269357368404a7bda6920d15cf9"
+                    "checksumValue": "8ff500d2f178f30a57123ceeed258c25b25efd306f15d2202d9d816bedc76a4f"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "85936ffd1a32f3c013b3654a6e0acdf72ca8493d"
+                    "checksumValue": "94df902682e1e4c18bcd8fe37c603db86767c306"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -159,11 +159,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c32e97eecaa824266c7e4c186823c3e96c57ed8929c5a0196dcc22f9ec13ae73"
+                    "checksumValue": "bb82cd636a7cd589e6754c43d3e0b7c39ea3ff95829a937069ea2476ee79552f"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "f555a3cb9b4a7706caad276dce7ba6d5978c76f2"
+                    "checksumValue": "ac7a4a9122bc1af43e5a56ba8f4e4f68b395da15"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -748,11 +748,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "3659dae4cd9c8e23f12be8e6843d7cdb776eade5389155295a00eccf3ec47c43"
+                    "checksumValue": "4abc6f30678f860eaa1206f2970e1435bd62855c683e2b3e83c1cec605642833"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "f5e8026341c62c80e78def4b970a3031eab3942d"
+                    "checksumValue": "7be09f76bdc89925176b8cd63b9d41fc126427c9"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -8579,7 +8579,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c85ce4418cdbcc785b71c7db490c03ebe72a137eb1d91cbd7959bfced275beab"
+                    "checksumValue": "61043e0b700fc210ca59eabec85fd58f5c573af0a75406ac157b406bd11619d5"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -8596,9 +8596,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "github.com/strling-lang/strling/bindings/go",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "3ccf57b2be272bcb2de2a4d453563277a025b312"
+                "packageVerificationCodeValue": "8b8c2b644fa1d2bf8b54cc19e21661d459011d0a"
             },
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         }
     ],
     "relationships": [

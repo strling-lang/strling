@@ -5,7 +5,7 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"fsharp-nuget\",\"inputs\":[{\"path\":\"bindings/fsharp/src/STRling.FSharp/STRling.FSharp.fsproj\",\"sha256\":\"fa2d7bd005e2d9f3ee51b7c43b6b05657f88cbd93692baee36d6a4d3f4b86f2b\"},{\"path\":\"bindings/fsharp/test/STRling.FSharp.Tests/STRling.FSharp.Tests.fsproj\",\"sha256\":\"11c2a12882322f2ec7e1b5ac483cadbe8e11c912c32fa9f078b2ebd67f0e92b4\"}],\"policy\":{\"ecosystem\":\"nuget\",\"integrity_mode\":\"inventory_only\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"FSharp.Core\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"9.0.300\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"STRling\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Microsoft.NET.Test.Sdk\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"17.12.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.9.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit.runner.visualstudio\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.8.2\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"68025decf9c02fc5eb04fc146575899646b94814e04f4a0834e380c11cd41d1d\"}"
+            "comment": "{\"id\":\"fsharp-nuget\",\"inputs\":[{\"path\":\"bindings/fsharp/src/STRling.FSharp/STRling.FSharp.fsproj\",\"sha256\":\"35a882c3b62fbe6b0a55152dbc953c4d00296d47214f892ca299af24824a3b22\"},{\"path\":\"bindings/fsharp/test/STRling.FSharp.Tests/STRling.FSharp.Tests.fsproj\",\"sha256\":\"11c2a12882322f2ec7e1b5ac483cadbe8e11c912c32fa9f078b2ebd67f0e92b4\"}],\"policy\":{\"ecosystem\":\"nuget\",\"integrity_mode\":\"inventory_only\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"FSharp.Core\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"9.0.300\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"STRling\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Microsoft.NET.Test.Sdk\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"17.12.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.9.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"xunit.runner.visualstudio\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.8.2\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"d7c5bc346e17598dbf216955cdb2f46599c8982a3cbd3ecafbd68e42839068d3\"}"
         }
     ],
     "creationInfo": {
@@ -19,22 +19,22 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/f#/1e68a4d0598fc67f2d48fee44c22e8b8ecbb26917b45c84049244f1208d4d197",
+    "documentNamespace": "https://strling.dev/sbom/f#/76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4dddda0dc5c93c2a053b74f9642393a54409a4bea428302c7b8b32a724b945da"
+                    "checksumValue": "5b6b1a477caa32335f47d0550bd1ad67a0c7aca2cdffec96863aaf73c5b3a8a5"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "2c59249c7504bd45b88710190430fc06ac5b415e"
+                    "checksumValue": "e95c3ff06b881105e2a255705f94145267b492f1"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg!/README.md",
+            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg!/README.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -45,15 +45,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "d7e1f518479dbca091f110dde8fa0c687f741d44c47ef01bebc364f8e4e4f118"
+                    "checksumValue": "71d6fa43934dce05f9876d5dc2d2d31474cd0a5bbe9384dbc2eb188eef043f99"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "7c792010df4e58792456868d3ded48a2fbb37b50"
+                    "checksumValue": "71c272617ec39d9a7effde33a756fbb8ee7e7a53"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg!/STRling.FSharp.nuspec",
+            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg!/STRling.FSharp.nuspec",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -72,7 +72,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg!/[Content_Types].xml",
+            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg!/[Content_Types].xml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -83,15 +83,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "3e7ed5fc978c6c4e85f6eb627de201087cc976ac94b5214f70655b74c1a5bf55"
+                    "checksumValue": "118a678c692a97a000c8fd367caeaff8cf246bbc3479e067944d9724761d1ee6"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "84ab7be8c59da19cc413c6a91633f772dc1306b3"
+                    "checksumValue": "658b7b64e5c8c33fe74a34498bfcc2cb6a1d6710"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg!/_rels/.rels",
+            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg!/_rels/.rels",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -102,15 +102,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "8ce24a410cbdad130ec66e0f42041c15d4a5a44434084531d8c16bf95108f9f5"
+                    "checksumValue": "d96477da24afd99aa9744b8bd98344a864931dcf0bc7b459b5a5d8d9eb6af3cc"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "e8d91f105da5f3b79fa98ab3735a5b82091e8feb"
+                    "checksumValue": "541e31bbd1fddd7bd8033d1fb56068a28ce17fe4"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg!/lib/net9.0/STRling.FSharp.dll",
+            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg!/lib/net9.0/STRling.FSharp.dll",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -129,7 +129,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg!/lib/net9.0/STRling.FSharp.xml",
+            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg!/lib/net9.0/STRling.FSharp.xml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -140,15 +140,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "ca957004c80643eeee6f4744fa279be2029df70ce6ab18288d70b55da53f42cf"
+                    "checksumValue": "02fa0bf9eef5060f34d9328868a150c24ead5162213f8861a1b832be4ea5cbe1"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "2b37771f147ef92aed7a4d5ca6e3599525ddefaa"
+                    "checksumValue": "7aed85c0290d4db308eed30ee2385741b6468d7f"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.0.nupkg!/package/services/metadata/core-properties/ca957004c80643eeee6f4744fa279be2.psmdcp",
+            "fileName": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg!/package/services/metadata/core-properties/02fa0bf9eef5060f34d9328868a150c2.psmdcp",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -162,7 +162,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "1e68a4d0598fc67f2d48fee44c22e8b8ecbb26917b45c84049244f1208d4d197"
+                    "checksumValue": "76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -179,9 +179,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "STRling.FSharp",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "a615d17ae83cf79358c6198eb6bc0e6895eca9f2"
+                "packageVerificationCodeValue": "94f446896bc9f73764444ac96d1248d3d5e01ec6"
             },
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-f3dbe1578f8b",
@@ -209,7 +209,7 @@
             "versionInfo": "9.0.300"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-2-b1ca7183c4dc",
+            "SPDXID": "SPDXRef-Dependency-2-85576a7620a5",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -223,7 +223,7 @@
             "externalRefs": [
                 {
                     "referenceCategory": "OTHER",
-                    "referenceLocator": "{\"dependency_root\":\"fsharp-nuget\",\"ecosystem\":\"nuget\",\"name\":\"STRling\",\"version\":\"4.0.0\"}",
+                    "referenceLocator": "{\"dependency_root\":\"fsharp-nuget\",\"ecosystem\":\"nuget\",\"name\":\"STRling\",\"version\":\"4.0.1\"}",
                     "referenceType": "strling-dependency-coordinate"
                 }
             ],
@@ -231,7 +231,7 @@
             "licenseConcluded": "Apache-2.0",
             "licenseDeclared": "Apache-2.0",
             "name": "STRling",
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         },
         {
             "SPDXID": "SPDXRef-Dependency-3-91892588ab6c",
@@ -356,7 +356,7 @@
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-2-b1ca7183c4dc",
+            "relatedSpdxElement": "SPDXRef-Dependency-2-85576a7620a5",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },

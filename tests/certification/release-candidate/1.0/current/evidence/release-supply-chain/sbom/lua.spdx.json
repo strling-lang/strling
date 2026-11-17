@@ -19,22 +19,22 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/lua/570c2b84a13e6a440efd56a774d58d8f7f463f5cb9ff090b52b279b73cfcce91",
+    "documentNamespace": "https://strling.dev/sbom/lua/5dbd8f6fc71bfa4dde784044650b1ccb26c4d773494ff27fd5423e92cf9444e9",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a"
+                    "checksumValue": "1d01ab7a685e8d6731f4f1f0ecbd1fcbfcb1cee607374356514780af5043b560"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "940a01bf94f4555b8434a68aa632418fdeaf5f19"
+                    "checksumValue": "f322499687ad75cb5650a6fefc34829337cad74c"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/lua/strling-4.0.0-1.rockspec!/strling-4.0.0-1.rockspec",
+            "fileName": "bindings/lua/strling-4.0.1-1.rockspec!/strling-4.0.1-1.rockspec",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -45,15 +45,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a"
+                    "checksumValue": "1d01ab7a685e8d6731f4f1f0ecbd1fcbfcb1cee607374356514780af5043b560"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "940a01bf94f4555b8434a68aa632418fdeaf5f19"
+                    "checksumValue": "f322499687ad75cb5650a6fefc34829337cad74c"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling-4.0.0-1.rockspec",
+            "fileName": "bindings/lua/strling-4.0.1-1.src.rock!/strling-4.0.1-1.rockspec",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -72,7 +72,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/LICENSE",
+            "fileName": "bindings/lua/strling-4.0.1-1.src.rock!/strling/bindings/lua/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -83,15 +83,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "9b78694ec5ea02c2126694e89b5eb4037ba15f7967dd83de096a92f760cf1ade"
+                    "checksumValue": "9e3848326830a4c398fe411222b1ac617ffd529873e3d58f9273a28296b7ecb3"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "2934d1d3f924a7e515ebcd31cd76bd96d710c353"
+                    "checksumValue": "6243d7c20183b3ed3af9e96e4524a111631cc6bf"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/README.md",
+            "fileName": "bindings/lua/strling-4.0.1-1.src.rock!/strling/bindings/lua/README.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -102,15 +102,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "9163aaa7a79e720d5c284b98cf83941f12b59da728992463b1d1108d72c81161"
+                    "checksumValue": "7dd205acb5d3e6224a33b509400c4a89bd21c22a7c6d6fca5c6020e21afaef6e"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "56ccb54656ea2b8ce277b42417295d15598837f9"
+                    "checksumValue": "335cd1cff6847fbbe77b0151f2200e4437040c55"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/src/adapter.lua",
+            "fileName": "bindings/lua/strling-4.0.1-1.src.rock!/strling/bindings/lua/src/adapter.lua",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -129,7 +129,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/src/stdlib_generated.lua",
+            "fileName": "bindings/lua/strling-4.0.1-1.src.rock!/strling/bindings/lua/src/stdlib_generated.lua",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -148,7 +148,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/lua/strling-4.0.0-1.src.rock!/strling/bindings/lua/src/strling_native.c",
+            "fileName": "bindings/lua/strling-4.0.1-1.src.rock!/strling/bindings/lua/src/strling_native.c",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -162,7 +162,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "570c2b84a13e6a440efd56a774d58d8f7f463f5cb9ff090b52b279b73cfcce91"
+                    "checksumValue": "5dbd8f6fc71bfa4dde784044650b1ccb26c4d773494ff27fd5423e92cf9444e9"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -179,9 +179,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "d04dc7b2aedc53b68fd156dbf37a7817e64754f0"
+                "packageVerificationCodeValue": "f1180f258b702da5245fa5f829f02be371da6583"
             },
-            "versionInfo": "4.0.0"
+            "versionInfo": "4.0.1"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-39ae900d33fe",

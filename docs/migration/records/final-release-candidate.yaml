@@ -1,7 +1,7 @@
 record_version: 2.0.0
 scope:
     diff:
-        base: a58f126b2721773ab9346d4dc449910371adccd9
+        base: 17be3e0c81fb2816803653b73f0f9198d6711d5d
         head: working-tree
     allowed_paths:
         - tests/certification/release-candidate/1.0/current/**
@@ -37,44 +37,44 @@ change_classification:
     semantic_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
               policy or trusted-pin change.
     public_api_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
               policy or trusted-pin change.
     schema_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
               policy or trusted-pin change.
     diagnostic_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
               policy or trusted-pin change.
     target_behavior_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
               policy or trusted-pin change.
     architecture_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
               policy or trusted-pin change.
     generated_output_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified CPAN-protocol successor; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
               policy or trusted-pin change.
     documentation_only: false
     internal_implementation: false
 title: Final product candidate preparation and clean-room certification
-status: complete
+status: in_progress
 objective:
-    Close the independently certified live-CPAN-protocol successor while preserving historical certification
+    Close the independently certified 4.0.1 fix-forward candidate while preserving historical certification
     and the separate publication boundary.
 required_verification:
     - name: Focused source-helper and documentation regressions
@@ -295,6 +295,24 @@ checkpoints:
                 preserves identical product source, signed evidence and immutable reader68; its final run is retained separately
                 in the operational handoff."
             command: gh run view 43775078870 --repo strling-lang/strling --json headSha,conclusion,jobs
+    - name: 4.0.1 fix-forward source certification
+      status: in_progress
+      evidence:
+          - check: Fresh source-bound profiles, reconstruction and original-authority signatures
+            result: passed
+            details:
+                'Product source 17be3e0c81fb2816803653b73f0f9198d6711d5d; qualified immutable reader ea03dd4cbe35b5614fb862c1568cc7356a5bd16f;
+                candidate evidence root 7ad3c371ce7251d3fe244e756c0dad0d8c9bc9466bf2e6a9da8c49bef099d902; nested package root
+                0af021bcd956dfcf54c5d9ea23bf6a07850bdc0c9707dda4715ed2b6074182a0. Fresh profiles: {"full": {"failed": 0, "incomplete":
+                0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0,
+                "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request":
+                {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived":
+                0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable":
+                0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable
+                public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.'
+          - check: Actual immutable hosted acceptance
+            result: not_run
+            details: Pending exact successor closure dispatch; no historical hosted run is reused.
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -322,6 +340,8 @@ commits:
       subject: Promote independently qualified CPAN protocol verifier
     - sha: fe65e00f05664a7c09c99a30fe788fab7831f555
       subject: Preserve independently certified publication candidate evidence
+    - sha: 17be3e0c81fb2816803653b73f0f9198d6711d5d
+      subject: Normalize staged CPAN metadata and test producer compatibility
 completion:
     accomplished:
         - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
@@ -389,9 +409,8 @@ completion:
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
     next_task:
-        Protected immutable artifact export, remaining owner-only account/custody actions, exact source/run
-        publication approval and actual independent public verification.
+        Immutable hosted acceptance, certified byte transport, final owner-dependent release prerequisites
+        and exact publication authorization.
     rationale:
-        Fresh successor source-bound certification, independent reconstruction, original-authority signatures
-        and actual immutable hosted checks passed. This closes certification only; official publication remains separately
-        gated.
+        All current-source local certification and signed evidence accepted; actual hosted acceptance remains
+        pending. Historical completion facts retain their original identities.

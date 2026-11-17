@@ -13,7 +13,7 @@
                     "release:lua",
                     "--preview"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "luarocks.org",
                 "support": {
                     "external_prerequisites": [
@@ -36,7 +36,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "f4c21415ff473d159567589c38d1dd59beaa2d825b1ec8c651bce44c60388409",
@@ -58,9 +58,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:lua",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:lua",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -85,15 +85,15 @@
     "subject": [
         {
             "digest": {
-                "sha256": "656ab956c4a1415b89ef332b5d954a5ba390f678bac54dd1c29bd8672d2deb9a"
+                "sha256": "1d01ab7a685e8d6731f4f1f0ecbd1fcbfcb1cee607374356514780af5043b560"
             },
-            "name": "bindings/lua/strling-4.0.0-1.rockspec"
+            "name": "bindings/lua/strling-4.0.1-1.rockspec"
         },
         {
             "digest": {
-                "sha256": "3cbd17c0b39a8240540281ff48ec79e64c6464b60ace87c1f3933622b48baec3"
+                "sha256": "11666b94ed17d0f87ff9d651106b79fb531bf24b46811872b3072263038d1af1"
             },
-            "name": "bindings/lua/strling-4.0.0-1.src.rock"
+            "name": "bindings/lua/strling-4.0.1-1.src.rock"
         }
     ]
 }

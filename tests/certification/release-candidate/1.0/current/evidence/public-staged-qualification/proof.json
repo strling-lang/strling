@@ -1,5 +1,5 @@
 {
-  "source": "a58f126b2721773ab9346d4dc449910371adccd9",
+  "source": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
   "status": "passed-current-source-staged-qualification",
   "artifact_routes": 17,
   "supported_consumer_scopes": 15,
@@ -8,294 +8,294 @@
     {
       "artifact_id": "release:c",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
-      "seconds": 169.2029999999795
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
+      "seconds": 269.8430000001099
     },
     {
       "artifact_id": "release:cpp",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
-      "seconds": 31.562000000150874
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
+      "seconds": 30.484999999869615
     },
     {
       "artifact_id": "release:csharp",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
-      "seconds": 13.891000000061467
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
+      "seconds": 13.547000000020489
     },
     {
       "artifact_id": "release:fsharp",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
-      "seconds": 15.75
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
+      "seconds": 15.108999999938533
     },
     {
       "artifact_id": "release:java",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
-      "seconds": 6.140000000130385
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
+      "seconds": 6.187000000150874
     },
     {
       "artifact_id": "release:kotlin",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
-      "seconds": 66.14100000006147
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
+      "seconds": 102.04699999978766
     },
     {
       "artifact_id": "release:python",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
-      "seconds": 7.047000000020489
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
+      "seconds": 9.985000000102445
     },
     {
       "artifact_id": "release:rust",
       "scope": "windows-x86_64",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
-      "seconds": 71.2180000001099
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
+      "seconds": 104.71900000004098
     },
     {
       "artifact_id": "release:c",
       "scope": "linux-x86_64",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
-      "seconds": 183.50315699900966
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
+      "seconds": 226.62997558596544
     },
     {
       "artifact_id": "release:cpp",
       "scope": "linux-x86_64",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
-      "seconds": 30.72139431600226
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
+      "seconds": 44.12085607199697
     },
     {
       "artifact_id": "release:dart",
       "scope": "linux-x86_64",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
-      "seconds": 27.858800441026688
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
+      "seconds": 39.65048708097311
     },
     {
       "artifact_id": "release:go",
       "scope": "linux-x86_64",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
-      "seconds": 63.90700691699749
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
+      "seconds": 88.44456451601582
     },
     {
       "artifact_id": "release:python",
       "scope": "linux-x86_64",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
-      "seconds": 55.4793698269641
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
+      "seconds": 71.70412697899155
     },
     {
       "artifact_id": "release:rust",
       "scope": "linux-x86_64",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
-      "seconds": 59.861766769958194
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
+      "seconds": 69.0401417830144
     },
     {
       "artifact_id": "release:swift",
       "scope": "linux-x86_64",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
-      "seconds": 67.81453200802207
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
+      "seconds": 86.66492891596863
     }
   ],
   "evidence_files": [
     {
       "path": "artifacts/qualification.json",
-      "bytes": 3214,
-      "sha256": "a1da243a91f0661a96ca71c0752788403d7c0eda85f7a3f28a5b1cc56c8043a5"
+      "bytes": 3215,
+      "sha256": "de18baf9d0b5b9179bf95c509bba4afb1e087ea744c4f2a373d84f9a7ca7e13f"
     },
     {
       "path": "artifacts/release-c.json",
       "bytes": 66574,
-      "sha256": "b7d6b99ef4d09fd11d32134313a69438d9cd39ffbf9170215bfe3ee16f90f6e4"
+      "sha256": "443d438cf07ed1d02ff9c9071bf452a4431f46e789881355896fe72e409a184a"
     },
     {
       "path": "artifacts/release-cpp.json",
       "bytes": 17130,
-      "sha256": "631a10b70e41f31c0f65d21331a6e2ef383af4931842e26d8b7e7b109403e128"
+      "sha256": "06c184da161f09c48591167870ddd9a4f89baf866306cf3deb44b73a9b247350"
     },
     {
       "path": "artifacts/release-csharp.json",
       "bytes": 8265,
-      "sha256": "f81c4f1ac9886ab17a08a927fc28f368bc14cd2109360f7bf9e58a304c6e6b63"
+      "sha256": "00555a87680c0d0a984a4572064f9c669aac440f04d56f1ab584de97bae93eba"
     },
     {
       "path": "artifacts/release-dart.json",
-      "bytes": 8935,
-      "sha256": "14d45e7ee4525e83921ace48522bb5f5b952279203a720d1d8d3220695558bd2"
+      "bytes": 8818,
+      "sha256": "b65f3c12a7ae58094521976b2c19054260f569a2b6a147c3ff49f522ac33b46c"
     },
     {
       "path": "artifacts/release-fsharp.json",
       "bytes": 8313,
-      "sha256": "b3a726a89cac8793a7a14c97c9c0e13375b35ee6c7fa6fd940e4199c8dc7805e"
+      "sha256": "ddd612a7d392ea258efd562121a3459c72f49eaf7193cbe0552f595ddfdc1105"
     },
     {
       "path": "artifacts/release-go.json",
-      "bytes": 62971,
-      "sha256": "e55beee9af52ae7eb872a22ff486827d44188e0b1c94540ac9df83be27b9de48"
+      "bytes": 62972,
+      "sha256": "42c7aac57090f0bf78a0098f3c9f3d5ba918ba9566ef2ae668f70accf8ee9636"
     },
     {
       "path": "artifacts/release-java.json",
       "bytes": 10487,
-      "sha256": "55440e79342378a3545891059de2685cbb1eeeb6b89c1d1bc7d1b91c0cfd6f0e"
+      "sha256": "c5187f2cf3da4b389e5dd1d72f39222e7e868d69b45ef83e82dba0ab22c32c01"
     },
     {
       "path": "artifacts/release-kotlin.json",
       "bytes": 9153,
-      "sha256": "77b3ba2db3de347f4686bcb7c643d5fc2e705c7269120df1f88eaac47c54abd7"
+      "sha256": "979869dfa1e193ad311649f99c4edc61c15f6e22bb688aed04e8883aeebac57f"
     },
     {
       "path": "artifacts/release-lua.json",
-      "bytes": 5142,
-      "sha256": "1e1966604e4814c0cb917b0e93623b532f5aaebb40681d1a79becdc35755eb3f"
+      "bytes": 5143,
+      "sha256": "78fdac413ccaeef585d4be2c6ec9348edc0358cbe3b122d6120e8ac456c68ff5"
     },
     {
       "path": "artifacts/release-perl.json",
       "bytes": 5053,
-      "sha256": "a8509375399adcfe3dad98ad1941069b9cfd3388489560374a6169042c9d6806"
+      "sha256": "70e9d9659a33feb8680dc51f393e199d3a3ec218a3f473d65f5dd28f7c7e2e92"
     },
     {
       "path": "artifacts/release-php.json",
       "bytes": 60701,
-      "sha256": "54c27949f3f88cf718016d81ccf84eb92b97aadbb3ea76bdffb77c342989d9c3"
+      "sha256": "1d7a1296132adf8b3ed61cfcb182d8c7ddff5fc4d2f4f61e136130715a0884cd"
     },
     {
       "path": "artifacts/release-python.json",
-      "bytes": 11765,
-      "sha256": "73a49beb2a1239ef764af448f008fc10d4bbe6f145a7348ab866620b2ab804f4"
+      "bytes": 11784,
+      "sha256": "67b169a1df7501299ca110559721f6dca770927d773ae8d9fd73d497091ac042"
     },
     {
       "path": "artifacts/release-r.json",
-      "bytes": 60779,
-      "sha256": "5c8f9f22e978fb5bd36a5d9b6f4d721edb734690d30ee451b6255e3c85003e7e"
+      "bytes": 60778,
+      "sha256": "835aa67b1da4140bcf07788d9ab8fcf1a59031a288f6299a54635edac6734bd7"
     },
     {
       "path": "artifacts/release-ruby.json",
       "bytes": 5101,
-      "sha256": "29ba2de6881e1f023b7011bc07d767135b65b0a011c4b6912d464cea6e56ba01"
+      "sha256": "9ba3ec2c006beee9243d20c762446e0e79f2772fe27dd7341da92b8da3431ac7"
     },
     {
       "path": "artifacts/release-rust.json",
       "bytes": 10851,
-      "sha256": "b0e22939ed226a1437ef6d45a37bce74bc0bdcc4ced81103da60b145f27dbe11"
+      "sha256": "157e1f02b0e496e60c90cfd594581c8a2e7023f5aa5a0fadafc6744bf10d601f"
     },
     {
       "path": "artifacts/release-swift.json",
       "bytes": 63467,
-      "sha256": "390a6994f7bfcfd2deb50f58c9215928fba992c96d46315843e71365f12123cc"
+      "sha256": "bdfc3ab632878c085efcd9fdf593d959aa38e9f21a04e7d72ae950fea2d9c6f1"
     },
     {
       "path": "artifacts/release-typescript.json",
-      "bytes": 5368,
-      "sha256": "ee00dc6ec7edcc0c2fe55658378d9daaf3825bcff43ac9b7bb21c6062eb08757"
+      "bytes": 5367,
+      "sha256": "c941cfb8fe914e0434341b0826adc2ea7ebd9a93050165ffa383f0cc78120e84"
     },
     {
       "path": "consumers/windows-x86_64/summary.json",
       "bytes": 384,
-      "sha256": "f9242f982195e96c046fae19061aa60f204c5eb9dda555b2bbb7fcac5a7fd293"
+      "sha256": "d82c6910bd5d825c8c512c211b2108169610601418fbb92e0384c13372a31c38"
     },
     {
       "path": "consumers/windows-x86_64/c.json",
       "bytes": 6238,
-      "sha256": "c4bf3db1fa49745dd53078c7bf01d2bb8d6fb89dccd815ed53b3cceadc705fdc"
+      "sha256": "ecdd847e0819b91a672315a35f450bf21ca418e0a426893dcd00e934c0c8b1b3"
     },
     {
       "path": "consumers/windows-x86_64/cpp.json",
       "bytes": 5846,
-      "sha256": "945a5efc9033d96e081ef3e429ef05415faaa8bde66b35b6b08f56b48493e494"
+      "sha256": "e42604249f5e8f0a5f04e23f49494411bf1ed27d1aba8a4357d663d30fcf21f8"
     },
     {
       "path": "consumers/windows-x86_64/csharp.json",
       "bytes": 4327,
-      "sha256": "10e9c1896f25b17f86b7b2853863f7f385256c77fcd3a8c8208fcefb8c68a1f9"
+      "sha256": "9d212185b0caee0aa86e32cbaaaf3a0d6f848c50b06ed8daee11fa201d8daeb1"
     },
     {
       "path": "consumers/windows-x86_64/fsharp.json",
-      "bytes": 4231,
-      "sha256": "3850eca83dc8f89369bccaa2a46fac161e38ad1cca7512c53c49a9989c02a2da"
+      "bytes": 4244,
+      "sha256": "333f4cf1d9e05f8074ba6ab426f7b4abd68a338d8ca6f4e721c8491a11651ffb"
     },
     {
       "path": "consumers/windows-x86_64/java.json",
       "bytes": 4993,
-      "sha256": "6340161184e6c14d2d1963ff06011a53e2b216055058e38d66c73dc6ebb201f4"
+      "sha256": "ec961b6a72472033e2ca16cc29e873799fe1c2384ecf5b186cba88a7d1bcdc12"
     },
     {
       "path": "consumers/windows-x86_64/kotlin.json",
-      "bytes": 6301,
-      "sha256": "132585050b665c0501a8e9ea0c98503de9871aab8fcead42708f8e39d977767b"
+      "bytes": 6302,
+      "sha256": "328bb87187e6d3e4bb6f1afd7bd1ae9df95783efc6d76fb7ba7682762f34ded3"
     },
     {
       "path": "consumers/windows-x86_64/python.json",
       "bytes": 4392,
-      "sha256": "092b979ff53079a6debc9b4b8c8d7dd9483d8e35482432c28dd631e11785187b"
+      "sha256": "b9b49b0d901de716cfe16dab970feac773039aeb820086b698344a72be55d3e2"
     },
     {
       "path": "consumers/windows-x86_64/rust.json",
-      "bytes": 5068,
-      "sha256": "1cf34b5853679f04852ed0c22a53a9bae32c710b837b8f9196efea864c6682fd"
+      "bytes": 5070,
+      "sha256": "7a8371686b4c66340134b211fe58d813666b17fdf3a32d92c633bbd11577b817"
     },
     {
       "path": "consumers/linux-x86_64/summary.json",
-      "bytes": 385,
-      "sha256": "c953a022bee64f14be29cbaf4fd42b762692f9edab5a5e2a1f5f59b5a8c07102"
+      "bytes": 394,
+      "sha256": "9c91a43629986d923e269e948c218c17c71fa874204ca5ef3b45487fc1f67d6a"
     },
     {
       "path": "consumers/linux-x86_64/c.json",
       "bytes": 5693,
-      "sha256": "f6262d0dbe1ed1985d63bad3100180c6ff8be183eddbc37fdad044202a7cbc71"
+      "sha256": "5e6af3e146259d25460904367f57de149e123b0cb21eac2308586f16ebf55561"
     },
     {
       "path": "consumers/linux-x86_64/cpp.json",
       "bytes": 5242,
-      "sha256": "68f0ad5f8e1836cf12133d7692fab790009eb57462b935f457d765b831359a5e"
+      "sha256": "590272075de9be4bb909c4cda8befde477e5392b7423bf007afe7f7590606fb2"
     },
     {
       "path": "consumers/linux-x86_64/dart.json",
-      "bytes": 3878,
-      "sha256": "7792508f62d15320687c8e4689f885b8a5813712adbfa8dec76b1b6dcadfa704"
+      "bytes": 3877,
+      "sha256": "501fc512554d1fc7bc1e428b7dd8df3e40ddf2b710e6e8ace15f3e463daace32"
     },
     {
       "path": "consumers/linux-x86_64/go.json",
       "bytes": 4649,
-      "sha256": "816ac4b21cd2cc0521b5ae5efe2eb61e7472e4b2c84e6ebcc3612405780d2287"
+      "sha256": "20458c00baa58926e7c4ed43fafd9cff900f714b12830a64df5b7f55ec64df98"
     },
     {
       "path": "consumers/linux-x86_64/python.json",
-      "bytes": 3989,
-      "sha256": "0dacab04c944ae3ba2b05776931e1ab32f9214e4c9cdc5ebbd14f4980cf29926"
+      "bytes": 3990,
+      "sha256": "90ec3b171316e6f74fbc32758ad8345b5f7ab81397fc0ee0509472760c56a9fc"
     },
     {
       "path": "consumers/linux-x86_64/rust.json",
-      "bytes": 4636,
-      "sha256": "6f82c398f8a5449737ecb96df82ac86a5734692c7298be813ff8917a49ae78d9"
+      "bytes": 4634,
+      "sha256": "7dc10e913b01095106998003a9ecadc128af7db1c292f3eb726f81c6677644a2"
     },
     {
       "path": "consumers/linux-x86_64/swift.json",
       "bytes": 3913,
-      "sha256": "1254f7540cac143a10b88ac309fd1eb9905e02d2eca63b4bdace4a3f25bb3556"
+      "sha256": "03b131e40095a4a601b276ca3e102088612d3c8ce7cc337975a51b99a9b997d3"
     },
     {
       "path": "prerequisites/jvm/receipt.json",
       "bytes": 1103,
-      "sha256": "ccaa4fffe443c710533ea12c133b3ae6d5b9d4a2131ffeca04edc26b790b2856"
+      "sha256": "926d66e7795e0ce94b4979f8416acf8658857390768b24513b9773418add5e69"
     },
     {
       "path": "prerequisites/kotlin/receipt.json",
       "bytes": 325,
-      "sha256": "d01b0d0c0e612e1779318bbfb2507697e59e988d2208ac3547c28167ac9b02bb"
+      "sha256": "04a81ec3e4808188c025324f1601daa28b00e65c568d89faafc2eb4f86629448"
     },
     {
       "path": "prerequisites/kotlin/preparation-output.json",
       "bytes": 1029,
-      "sha256": "c23c1a7b686ae88bab54673a98c7ecebd431f2b6a34333da317c6831791f9ea4"
+      "sha256": "6e974b1bb783c493a36b0edd6b3ef68d201dd3f2bfba7d78dbc42224e0f9f1be"
     },
     {
       "path": "prerequisites/dart/receipt.json",
       "bytes": 876,
-      "sha256": "28cb0af99d002236f1ac3518fdeea19d06be0cc3050589d53204b9cee3e4c4bd"
+      "sha256": "ab6205e3f6faa569214b3071f160c64fa25abe7613fef82029a0245f54337cf0"
     },
     {
       "path": "prerequisites/dart/preparation-output.json",
       "bytes": 597,
-      "sha256": "b2ed3ce77980e6ab3279354a2cf8577f572f78f997e36cc79ab633dc04631135"
+      "sha256": "ced1096a02373b0c1eb5f3f2db6f7daee0e2d42be68d81d42e0339be1d1f9cc7"
     }
   ],
   "authority": "engineering-only",
@@ -390,7 +390,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -401,7 +401,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -412,7 +412,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -423,7 +423,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -434,7 +434,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -445,7 +445,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -456,7 +456,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -467,7 +467,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "4dec2a09a3d43371c3c89ce104bf40ba007368f5e5eef02013c1eb3cd9cb4421",
+      "receipt_fingerprint": "ca4058df5e43a827c1722cda5de3232695d725b7711baf1e8b5e7b67a4c57f7f",
       "evidence": "consumers/windows-x86_64/c.json"
     },
     {
@@ -478,7 +478,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -489,7 +489,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -500,7 +500,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -511,7 +511,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -522,7 +522,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -533,7 +533,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -544,7 +544,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -555,7 +555,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7ebdabb8fbfb3e2e2e65572be3f966c85fe1f83b4d8a3c28cc1bcf97ef8fdbdc",
+      "receipt_fingerprint": "5e4e9214bc92a083613ba1bc4205e2b87874831ea8f6678ae607b84049871573",
       "evidence": "consumers/linux-x86_64/c.json"
     },
     {
@@ -646,7 +646,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -657,7 +657,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -668,7 +668,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -679,7 +679,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -690,7 +690,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -701,7 +701,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -712,7 +712,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -723,7 +723,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "d7caeb2c0b10c1647f96e9654eaf2ecea245f247583a00140fbb618bea6795e7",
+      "receipt_fingerprint": "584c1069580d761ba1e1c55a7f5cb578eea825a2a76fbe48b9c86a8f73928add",
       "evidence": "consumers/windows-x86_64/cpp.json"
     },
     {
@@ -734,7 +734,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -745,7 +745,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -756,7 +756,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -767,7 +767,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -778,7 +778,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -789,7 +789,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -800,7 +800,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -811,7 +811,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9c796a832c688cca53bad6de25e3d2f6c483ffa3639cc8f4ec7f8dfd7dc4563c",
+      "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96",
       "evidence": "consumers/linux-x86_64/cpp.json"
     },
     {
@@ -902,7 +902,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -913,7 +913,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -924,7 +924,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -935,7 +935,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -946,7 +946,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -957,7 +957,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -968,7 +968,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -979,7 +979,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "fd085c7cb4df7d979c612d4ef6882049486c7e9d6f931e327c05e2ef74dc0066",
+      "receipt_fingerprint": "d700635680ff549d150eee0b6c00bf5fabfa958cca1a15a3048dd61a651ff5a8",
       "evidence": "consumers/windows-x86_64/csharp.json"
     },
     {
@@ -1070,7 +1070,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1081,7 +1081,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1092,7 +1092,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1103,7 +1103,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1114,7 +1114,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1125,7 +1125,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1136,7 +1136,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1147,7 +1147,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "f9e666a19d4b51c4cd1603d49afc0a4cac05b7f70306b31adafd4f1837634311",
+      "receipt_fingerprint": "3c8d6095f4ce06f0cb24123f8af59423ccf20285ea7ecb0ec3427b749a1fba1b",
       "evidence": "consumers/linux-x86_64/dart.json"
     },
     {
@@ -1238,7 +1238,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1249,7 +1249,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1260,7 +1260,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1271,7 +1271,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1282,7 +1282,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1293,7 +1293,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1304,7 +1304,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1315,7 +1315,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2a1ad7798a192ceb1ca5bb193194dd8357dcd56112de216cc4144f722e7b8e28",
+      "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa",
       "evidence": "consumers/windows-x86_64/fsharp.json"
     },
     {
@@ -1406,7 +1406,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1417,7 +1417,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1428,7 +1428,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1439,7 +1439,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1450,7 +1450,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1461,7 +1461,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1472,7 +1472,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1483,7 +1483,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "2427ee350c178ccb38a028cf9c9e6d66d63faabf4c13e5f77cf28b91871693f5",
+      "receipt_fingerprint": "1d9af810067f0ac7f3530ae04e39f960f45e7bee5e48d663f8b1574b90d7bc81",
       "evidence": "consumers/linux-x86_64/go.json"
     },
     {
@@ -1574,7 +1574,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1585,7 +1585,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1596,7 +1596,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1607,7 +1607,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1618,7 +1618,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1629,7 +1629,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1640,7 +1640,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1651,7 +1651,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "caa0f4f4f875d6669a12f87cbab4065c779909b1f8e7eb8a14883cdc4e184483",
+      "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384",
       "evidence": "consumers/windows-x86_64/java.json"
     },
     {
@@ -1742,7 +1742,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -1753,7 +1753,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -1764,7 +1764,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -1775,7 +1775,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -1786,7 +1786,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -1797,7 +1797,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -1808,7 +1808,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -1819,7 +1819,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "a3222870c182bb5591e1e61e738437ee10a22ba525d48ed66545c4d81bd9c22f",
+      "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a",
       "evidence": "consumers/windows-x86_64/kotlin.json"
     },
     {
@@ -2150,7 +2150,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2161,7 +2161,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2172,7 +2172,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2183,7 +2183,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2194,7 +2194,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2205,7 +2205,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2216,7 +2216,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2227,7 +2227,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "7b5ed236ad2c915ff3f0825e363c8ad0a2c3c62f4cc7b4d86d58bcb65102b929",
+      "receipt_fingerprint": "03d89fc845c700541c83ba56863fbec72cfe0c8aba3f63a982ea08ee2f04197f",
       "evidence": "consumers/windows-x86_64/python.json"
     },
     {
@@ -2238,7 +2238,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2249,7 +2249,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2260,7 +2260,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2271,7 +2271,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2282,7 +2282,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2293,7 +2293,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2304,7 +2304,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2315,7 +2315,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "00de6a96321acc0ecddfc0ce31ec9e8906703bd4fba83a131d7c644c73bce74d",
+      "receipt_fingerprint": "99e51f88a5bd1c4f46db82636832e7428bf823598b913ecdb173170bf0b9e90e",
       "evidence": "consumers/linux-x86_64/python.json"
     },
     {
@@ -2566,7 +2566,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2577,7 +2577,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2588,7 +2588,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2599,7 +2599,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2610,7 +2610,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2621,7 +2621,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2632,7 +2632,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2643,7 +2643,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "ea91f6acb958187765f291cf67fd100782cb0d5473413c1ae2efa73070470135",
+      "receipt_fingerprint": "aa9a486d70c1cfc3a875979fbeef58204f6259ede606a927c83e0c29c61c5a52",
       "evidence": "consumers/windows-x86_64/rust.json"
     },
     {
@@ -2654,7 +2654,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2665,7 +2665,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2676,7 +2676,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2687,7 +2687,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2698,7 +2698,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2709,7 +2709,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2720,7 +2720,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2731,7 +2731,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "9f38bdf85b1f32d15e5e3c91f887df535257804248c5c81a814890acbf0fe3ce",
+      "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5",
       "evidence": "consumers/linux-x86_64/rust.json"
     },
     {
@@ -2822,7 +2822,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2833,7 +2833,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2844,7 +2844,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2855,7 +2855,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2866,7 +2866,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2877,7 +2877,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2888,7 +2888,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2899,7 +2899,7 @@
       "tier": "Supported",
       "authority": "staged",
       "status": "READY",
-      "receipt_fingerprint": "50ea64dc725941a08aeb7fc0d535fdd2689740ea54a5d9ea35ce1332ba40f432",
+      "receipt_fingerprint": "8a50d39f0603c904f294687f2432eb6737390adecc803c306e6db5cfc7f126b2",
       "evidence": "consumers/linux-x86_64/swift.json"
     },
     {
@@ -2984,7 +2984,7 @@
     }
   ],
   "transport_projection": {
-    "original_proof_sha256": "7f44e2b0a6af7765e66e6811f3dea1adb9d847da42b5b408a5e73e4d8162f22c",
+    "original_proof_sha256": "6d8ba5a266d39522ab4c03acfccaa836c04cff638c3e9d7d0954efa2cd03f36c",
     "diagnostic_bytes_preserved": true,
     "normalization_applied": false
   }

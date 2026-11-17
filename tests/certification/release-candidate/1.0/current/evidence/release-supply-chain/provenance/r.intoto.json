@@ -13,7 +13,7 @@
                     "release:r",
                     "--preview"
                 ],
-                "productVersion": "4.0.0",
+                "productVersion": "4.0.1",
                 "registry": "github-tag:r-vVERSION",
                 "support": {
                     "external_prerequisites": [
@@ -36,7 +36,7 @@
                 }
             },
             "internalParameters": {
-                "manifestSha256": "611696301a3a2c8f33b1e1345b7fc311950eea545db69efd0741310201f817d9",
+                "manifestSha256": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
                 "toolchains": [
                     {
                         "executable_sha256": "7e81c985bf0207a38b4a7b9cf407bc7417daec3896a022f5e47fea0f7c6d7cc2",
@@ -53,13 +53,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "a58f126b2721773ab9346d4dc449910371adccd9"
+                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@a58f126b2721773ab9346d4dc449910371adccd9"
+                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
                 },
                 {
                     "digest": {
-                        "sha256": "3fdde10ecd19a0734f2143309ca399dfb8eb530b587918a0b05aa8d78f7dce05"
+                        "sha256": "6e7db899a4ad56f3ec9637c75e85bddafb79007cff58f2239e757b66a8f2cc16"
                     },
                     "uri": "strling:dependency-root:r-package"
                 }
@@ -71,7 +71,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "a58f126b2721773ab9346d4dc449910371adccd9:release:r",
+                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:r",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -86,13 +86,13 @@
         },
         {
             "digest": {
-                "sha256": "529c75e390a8e99e76fd2201241ba12c6587d9367e47421ed5506aa3e419bc75"
+                "sha256": "16c8582b20fedbbdfef9e0546702c650c723f73a1a4b57ac3d4d6fa28a6715a2"
             },
             "name": "bindings/interop"
         },
         {
             "digest": {
-                "sha256": "ddc031189e2d6cf4ab54b8efd228a6857e101cb6fa33ec61f6c7b6c8be14f34d"
+                "sha256": "aa187f79b2a6cb7cc1dbd5f54dd1fc37f149e3bc207aa169a7f5d201bf42c136"
             },
             "name": "bindings/r"
         },

@@ -1,1 +1,1 @@
-{"command": ["npm", "install", "--offline", "--ignore-scripts", "--no-audit", "--no-fund", "--save-exact", "/var/tmp/strling-pub-a58f126b-aggregate-first/bindings/typescript/strling-lang-strling-4.0.0.tgz"], "exit_code": 0, "elapsed_seconds": 1.1420734580024146}
+{"command": ["npm", "install", "--offline", "--ignore-scripts", "--no-audit", "--no-fund", "--save-exact", "/var/tmp/strling-pub-17be3e0c-aggregate-first/bindings/typescript/strling-lang-strling-4.0.1.tgz"], "exit_code": 0, "elapsed_seconds": 5.056988446973264}

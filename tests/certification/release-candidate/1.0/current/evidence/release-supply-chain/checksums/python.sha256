@@ -1,4 +1,4 @@
-# surface-sha256 4de0855b5e5a382431273a2057785145a8313b4769bd590459bd2b574e92649c
-f27f8b3c7251042cd7100be6c06cce57e435276511d6e16fe29be22f6ed36856  bindings/python/dist/strling-4.0.0-cp312-none-linux_x86_64.whl
-6609a159b48db58f3f22f572d71a6461500e170fd9c5099b2bd5dd8d1192d76b  bindings/python/dist/strling-4.0.0-cp312-none-win_amd64.whl
-5e28bc5192fec6d76b5f633a1840dc6509e0d004775181a97c0002c0d6d2a2d7  bindings/python/dist/strling-4.0.0.tar.gz
+# surface-sha256 e0806718000be74967d5141b1cae951f800c0747197f0e405dfb7ee5ae4a73f7
+b4dcc7eb06067f9d3cfa74d17b5f76cdabd33def922c4f9dc82884c77ec98764  bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl
+14e3b1358d4cd19825c7fc6c18a19be98308dface7bc016f8b6d5a9fe92898ff  bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl
+3d229c83b50927e21bf525c24b1e58877a91306c52b12cb72dc31b5c15036026  bindings/python/dist/strling-4.0.1.tar.gz

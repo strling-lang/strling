@@ -12,22 +12,22 @@
         },
         "artifact_identities": {
             "product": {
-                "sha256": "2d73a13b2249c57048d07be3cb9e7084be0d2072f48773c43c51147fba6fa1dd",
-                "size_bytes": 2421353
+                "sha256": "23d78a63cab75cf922694a24cbad7c9f64fc0a9d6c5b0d1f9b65bbba41d1b6e8",
+                "size_bytes": 2424513
             },
             "product_report": {
-                "sha256": "6157c897f822378952313ec26d280f01fd36e90504afc55404788d5fa4cb01bc",
+                "sha256": "b51f58e133ba318ee3bb34713b7fe384942651239974537e2a3d1c48ccc1fbd7",
                 "size_bytes": 1177
             },
             "profile": {
-                "sha256": "febba5a0d34a5a9c8e0944c2f2467c14f4ec251dba5f727259ad71b055b6029e",
-                "size_bytes": 1185824
+                "sha256": "32f8ba19dc951539284ee9d4b3b7b18d94bd4737072dfc0a6ca4728ad475548b",
+                "size_bytes": 1187364
             }
         },
         "artifacts": {
-            "product": "/var/tmp/strling-publication-a58f126b-certification/artifacts/production-certification/a58f126b2721773ab9346d4dc449910371adccd9/a58f126b2721-20261115T203844Z/product-certification-release.json",
-            "product_report": "/var/tmp/strling-publication-a58f126b-certification/artifacts/production-certification/a58f126b2721773ab9346d4dc449910371adccd9/a58f126b2721-20261115T203844Z/product-certification-release.md",
-            "profile": "/var/tmp/strling-publication-a58f126b-certification/artifacts/production-certification/a58f126b2721773ab9346d4dc449910371adccd9/a58f126b2721-20261115T203844Z/profile-release.json"
+            "product": "/var/tmp/strling-publication-17be3e0c-certification/artifacts/production-certification/17be3e0c81fb2816803653b73f0f9198d6711d5d/17be3e0c81fb-20261117T090328Z/product-certification-release.json",
+            "product_report": "/var/tmp/strling-publication-17be3e0c-certification/artifacts/production-certification/17be3e0c81fb2816803653b73f0f9198d6711d5d/17be3e0c81fb-20261117T090328Z/product-certification-release.md",
+            "profile": "/var/tmp/strling-publication-17be3e0c-certification/artifacts/production-certification/17be3e0c81fb2816803653b73f0f9198d6711d5d/17be3e0c81fb-20261117T090328Z/profile-release.json"
         },
         "certification": {
             "claim_summary": {
@@ -90,7 +90,7 @@
                     "passed": 7
                 }
             },
-            "product_evidence_fingerprint": "923163f27224cf6124db2a471b03752f927ee1ae41d547f526c220edf40d3899",
+            "product_evidence_fingerprint": "aee2c1f6952e51c5af1ff8a5ea8bae57e20074c5fd89d6c37d2d83d4d27b2159",
             "product_schema_version": "1.0.0",
             "profile_artifact_schema_version": "2.0.0",
             "profile_definition_fingerprint": "cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3",
@@ -123,7 +123,7 @@
                     "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
                 }
             },
-            "disk_free_bytes": 420781125632,
+            "disk_free_bytes": 373071482880,
             "exact_runtime_toolchains": {
                 "manifest_sha256": "c79424081e94168fdb394dfe1f258b0cb1644a6d40e2bbb8d95bd0da37a0ff76",
                 "schema_version": "1.0.0",
@@ -181,7 +181,7 @@
             "preserved_execution_evidence": [
                 {
                     "path": "adversarial-semantic-runtime/evidence.json",
-                    "sha256": "5931c1d9c097151e3cf475c0ac26f5ea257c3ff474a60e08524cf8d22f68deb0",
+                    "sha256": "a18de4f38203a8c7c06285300a930c35e5a9d27d93381c602787d931edf8d113",
                     "size_bytes": 26105
                 },
                 {
@@ -390,18 +390,18 @@
                     "size_bytes": 101384
                 },
                 {
-                    "path": "operation-results/0b04b69088e84baa9ea266eead2868ed/result.json",
-                    "sha256": "4f04a8bb9ab38c95b3c9be9cfa57faf920ec46152a09c600230c90c7d1a7d26f",
+                    "path": "operation-results/8be190b7b7774abeb82d905f0d49af99/result.json",
+                    "sha256": "5dd53d9af0fda8933c01262a9a6b13f11f112838c079e5854515dcf57dcbf2ed",
                     "size_bytes": 47038
                 },
                 {
-                    "path": "operation-results/0b04b69088e84baa9ea266eead2868ed/stderr.txt",
+                    "path": "operation-results/8be190b7b7774abeb82d905f0d49af99/stderr.txt",
                     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                     "size_bytes": 0
                 },
                 {
-                    "path": "operation-results/0b04b69088e84baa9ea266eead2868ed/stdout.txt",
-                    "sha256": "466bee05a6b2a370cd0d5d5b93645c6a4a5084f4057b88ecb72abb0fa4e9c846",
+                    "path": "operation-results/8be190b7b7774abeb82d905f0d49af99/stdout.txt",
+                    "sha256": "5099b436fe050d32c9ed99d1b86322fd6bb80a2c381c09774c17de153d0e72bf",
                     "size_bytes": 40874
                 }
             ],
@@ -708,7 +708,7 @@
             "storage_capacity": {
                 "contract_fingerprint": "bdaedd6454f2a965a113237ca6513e444dbf5d6dab106814b714b24979a34779",
                 "contract_path": "governance/production-certification-capacity.json",
-                "free_bytes": 420781125632,
+                "free_bytes": 373071482880,
                 "maximum_expected_transient_bytes": 103079215104,
                 "required_free_bytes": 120259084288,
                 "rounded_workspace_envelope_bytes": 34359738368,
@@ -719,7 +719,7 @@
         },
         "failure": null,
         "no_reuse": {
-            "clean_detached_worktree": "/var/tmp/strling-publication-a58f126b-certification/.cert/production-certification/a58f126b2721-20261115T203844Z/source",
+            "clean_detached_worktree": "/var/tmp/strling-publication-17be3e0c-certification/.cert/production-certification/17be3e0c81fb-20261117T090328Z/source",
             "final_root_status": "",
             "final_source_status": "",
             "generated_artifacts_recreated": true,
@@ -730,14 +730,14 @@
         "publication_authorized": false,
         "source": {
             "branch": "dev",
-            "sha": "a58f126b2721773ab9346d4dc449910371adccd9",
+            "sha": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
             "status_porcelain": ""
         },
         "status": "passed"
     },
-    "evidence_fingerprint": "2856c4b191b5e042316e36a293d0d24a32d240d166ab6c859ba08fa13622d410",
+    "evidence_fingerprint": "d083ddbbb94be66aadceab07354a0dd29acfac01ae950a504d673320ca4206a4",
     "execution_metadata": {
-        "generated_at": "2026-11-15T22:25:14.445103+00:00"
+        "generated_at": "2026-11-17T10:55:34.059095+00:00"
     },
     "schema_version": "1.0.0"
 }

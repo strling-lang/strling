@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(strling_c VERSION 4.0.1 LANGUAGES C)
+project(strling_c VERSION 4.0.2 LANGUAGES C)
 
 if(MSVC)
     # MSVC otherwise records the absolute object path even without /Zi.

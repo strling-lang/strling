@@ -1,14 +1,14 @@
 {
     "schema_version": "dotnet-release-graph-v1",
     "roots": {
-        "csharp": ["STRling:4.0.1"],
+        "csharp": ["STRling:4.0.2"],
         "fsharp": [
             "FSharp.Core:9.0.300",
-            "STRling:4.0.1",
-            "STRling.FSharp:4.0.1"
+            "STRling:4.0.2",
+            "STRling.FSharp:4.0.2"
         ],
         "csharp-tests": [
-            "STRling:4.0.1",
+            "STRling:4.0.2",
             "Microsoft.CodeCoverage:17.12.0",
             "Microsoft.NET.Test.Sdk:17.12.0",
             "Microsoft.TestPlatform.ObjectModel:17.12.0",
@@ -26,8 +26,8 @@
             "xunit.runner.visualstudio:2.8.2"
         ],
         "fsharp-tests": [
-            "STRling:4.0.1",
-            "STRling.FSharp:4.0.1",
+            "STRling:4.0.2",
+            "STRling.FSharp:4.0.2",
             "FSharp.Core:9.0.300",
             "Microsoft.CodeCoverage:17.12.0",
             "Microsoft.NET.Test.Sdk:17.12.0",
@@ -103,14 +103,14 @@
             "scopes": ["test"]
         },
         {
-            "coordinate": "STRling.FSharp:4.0.1",
+            "coordinate": "STRling.FSharp:4.0.2",
             "ecosystem": "NuGet",
             "internal": true,
             "license": "Apache-2.0",
             "scopes": ["runtime"]
         },
         {
-            "coordinate": "STRling:4.0.1",
+            "coordinate": "STRling:4.0.2",
             "ecosystem": "NuGet",
             "internal": true,
             "license": "Apache-2.0",
@@ -196,5 +196,5 @@
         "source": "governed release build injected at pack time",
         "unclaimed_rids": ["linux-x64", "osx-arm64", "osx-x64"]
     },
-    "fingerprint": "sha256:bcb187107d181f5ba9106bcb68a60d32f8e9972a7e2822ceaa618cfa77c9285f"
+    "fingerprint": "sha256:f6b4f8deed689e511a31fa8264e67888977386ab336205aaf5382e73d1b3cb01"
 }

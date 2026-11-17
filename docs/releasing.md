@@ -10,7 +10,7 @@ package metadata or release automation.
 
 ## Current preparation boundary
 
-STRling `4.0.1` is the owner-authorized fix-forward identity and active coordinated
+STRling `4.0.2` is the owner-authorized fix-forward identity and active coordinated
 package projection. The version generator reads `product/version` in the release
 policy and validates the complete inventory before updating any file. Independent
 specification, protocol, ABI, transport-crate, and editor versions are preserved.
@@ -43,7 +43,7 @@ does not create a replacement signing authority or bypass deployment review.
 
 CPAN retrieval checks MetaCPAN's normalized metadata version separately from
 the exact archive coordinate. The indexer normalizes a three-part version to
-`v4.0.1`; its metadata omits a prerelease suffix. The approved owner, full
+`v4.0.2`; its metadata omits a prerelease suffix. The approved owner, full
 stable or prerelease archive URL and authenticated artifact checksum must still
 match exactly. This normalization does not permit substituting a stable archive
 for a requested prerelease.
@@ -343,7 +343,7 @@ coordinate and scope checks; they do not acquire Supported consumer claims.
 The implementation derives these rows from the manifest rather than storing
 the total as an acceptance constant.
 
-The owner's 4.0.0 publication scope and authorized 4.0.1 fix forward defer
+The owner's 4.0.0 publication scope and authorized 4.0.2 fix forward defer
 ConanCenter. All 17 build
 routes and all 256 controlled implementation obligations remain mandatory.
 Actual initial public execution covers 16 destinations and 13 Supported platform

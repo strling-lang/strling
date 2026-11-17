@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageId>STRling</PackageId>
-    <Version>4.0.1</Version>
+    <Version>4.0.2</Version>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

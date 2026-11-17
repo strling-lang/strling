@@ -1,8 +1,9 @@
 # Migrating STRling 3.x applications to 4.0
 
 This guide describes the implemented Fourth Edition interfaces and intentional
-retirements. STRling 4.0.1 remains prepublication. Installation commands are
-proposed public-release commands; no public 4.0.1 installation is claimed.
+retirements. STRling 4.0.2 installation commands require the separately authorized
+public release. Check its release certificate for public availability and
+independent acceptance; staged candidate tests do not prove public installation.
 The [4.0.0 partial-publication record](migration/publication-400-partial.md)
 records the earlier release's incomplete public verification.
 
@@ -77,7 +78,7 @@ is not an independent parser or target emitter.
 
 ## Bind the exact product kernel
 
-Fourth Edition packages coordinate on product 4.0.1 and require its exact
+Fourth Edition packages coordinate on product 4.0.2 and require its exact
 native/WASM product marker, ABI 1 and interop protocol 1.0.0. Matching the ABI
 number alone is insufficient. Unmarked older kernels and mismatched product
 libraries are rejected before normal client use. This deliberately tightens
@@ -91,7 +92,7 @@ that a compatible filename authenticates the bytes. See the
 
 Product, specification, source dialect, ABI, transport, compiler-description and
 target-profile versions are separate identities. Do not change protocol or
-specification versions to 4.0.1 merely because the package version is 4.0.1.
+specification versions to 4.0.2 merely because the package version is 4.0.2.
 
 ## Use the verified WASM construction path
 

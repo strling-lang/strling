@@ -1,7 +1,8 @@
 # STRling PHP adapter
 
-STRling 4.0.1 is not publicly published. Public installation commands describe
-the proposed separately authorized release. Candidate tests use staged artifacts.
+STRling 4.0.2 public installation requires the separately authorized release.
+Check the release certificate for public availability and independent acceptance.
+Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
 This package is a thin PHP 8.2+ projection of the canonical STRling compiler. It uses the PHP FFI extension to call a caller-selected `strling.c-abi` version 1 library. It owns request construction, host data projection, and native lifecycle only; no PHP parser, semantic model, validator, target planner, or emitter remains.
@@ -51,7 +52,7 @@ See the [canonical interop contract](../../spec/interop/1.0/README.md) and the [
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-git clone --branch php-v4.0.1 --single-branch https://github.com/strling-lang/strling.git
+git clone --branch php-v4.0.2 --single-branch https://github.com/strling-lang/strling.git
 ```
 
 Install from the authenticated `strling/bindings/php` subtree with Composer, then run the program from its consumer project root. PHP FFI must permit native calls; the bounded example runner uses `php -d ffi.enable=1 example.php <absolute-native-path>`. Do not infer a Packagist upload from this governed Git route.

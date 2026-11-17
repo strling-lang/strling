@@ -1,7 +1,8 @@
 # STRling R adapter
 
-STRling 4.0.1 is not publicly published. Public installation commands describe
-the proposed separately authorized release. Candidate tests use staged artifacts.
+STRling 4.0.2 public installation requires the separately authorized release.
+Check the release certificate for public availability and independent acceptance.
+Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
 This package is a thin R projection of the canonical STRling compiler. Registered `.Call` routines perform explicit dynamic loading and bounded byte transport over a caller-selected `strling.c-abi` version 1 library; R functions project versioned requests and canonical results. The package does not implement parsing, semantics, validation, target planning, or emission.
@@ -47,7 +48,7 @@ See the [canonical interop contract](../../spec/interop/1.0/README.md) and the [
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-git clone --branch r-v4.0.1 --single-branch https://github.com/strling-lang/strling.git
+git clone --branch r-v4.0.2 --single-branch https://github.com/strling-lang/strling.git
 ```
 
 Install the authenticated subtree with `R CMD INSTALL strling/bindings/r`. The application supplies the exact matching native library; the source package does not discover or download it.

@@ -38,21 +38,29 @@ scope:
         - docs/migration/records/publication-402-fix-forward.yaml
     permitted_generated_changes:
         - binding-support-certification-evidence
-        - version-synchronized-metadata
-        - lua-release-rockspec
-        - release-policy-documentation
-        - kotlin-product-verification
-        - product-support-matrix
-        - release-supply-chain-contract-fixture
-        - release-certification-trust
-        - package-manager-lockfiles
         - dependency-license-evidence
-        - profile-source-definitions
-        - jvm-adapter-release-graph
         - dotnet-adapter-release-graph
-        - public-contract-snapshots
+        - jvm-adapter-release-graph
+        - kotlin-product-verification
         - legacy-removal-inventory-evidence
-    expected_generated_outputs: []
+        - lua-release-rockspec
+        - package-manager-lockfiles
+        - product-support-matrix
+        - profile-source-definitions
+        - public-contract-snapshots
+        - release-certification-trust
+        - release-policy-documentation
+        - release-supply-chain-contract-fixture
+        - version-synchronized-metadata
+    expected_generated_outputs:
+        - dotnet-adapter-release-graph
+        - jvm-adapter-release-graph
+        - kotlin-product-verification
+        - package-manager-lockfiles
+        - product-support-matrix
+        - public-contract-snapshots
+        - release-policy-documentation
+        - version-synchronized-metadata
     required_verification_levels:
         - contract
         - unit
@@ -63,43 +71,42 @@ change_classification:
     semantic_change:
         level: none
         evidence:
-            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
-              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
-              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
-              fresh certification.
+            - Canonical compiler and language-contract semantics are unchanged. The authorized 4.0.2 product identity
+              and narrow publisher repairs require fresh source-bound certification; no existing result is transferred.
     public_api_change:
-        level: none
+        level: intentional-correction
+        affected_surfaces:
+            - c-public-api
+            - cpp-public-api
+            - csharp-public-api
+            - fsharp-public-api
+            - php-public-api
         evidence:
-            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
-              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
-              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
-              fresh certification.
+            - Project only the authorized 4.0.1-to-4.0.2 product-version literals on the five existing governed surfaces.
+              API shapes, compiler semantics and exact snapshot comparisons remain unchanged. Fresh source-bound certification
+              is mandatory.
     diagnostic_change:
         level: none
         evidence:
-            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
-              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
-              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
-              fresh certification.
+            - Canonical diagnostic contracts are unchanged. Registry availability failures retain only nonsecret HTTP
+              status for operational diagnosis and continue to fail closed before publication.
     target_behavior_change:
         level: none
         evidence:
-            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
-              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
-              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
-              fresh certification.
+            - Compiler lowering, supported runtime/platform scopes and target-profile claims are unchanged. Existing Preview
+              boundaries and the owner-deferred ConanCenter route remain enforced.
     generated_output_change:
-        level: none
+        level: intentional-correction
         evidence:
-            - Both affected registered producers (contract fixture and release trust) ran under unchanged 4.0.1 inputs
-              and reproduced original bytes. No signed/live historical evidence is regenerated.
+            - Registered version/policy/lock/fixture/snapshot projections are regenerated from the owner-authorized 4.0.2
+              authority. Record exact changed families before freezing; preserve all historical signed evidence.
     schema_change:
-        level: none
+        level: intentional-correction
         evidence:
-            - Reader-only phase changes publisher companion lookup, scoped availability transport/diagnostics and explicitly
-              authorized successor applicability. Product version, compiler/API semantics, supported scopes and trust
-              authorities are unchanged; subsequent 4.0.2 projections require declared source-bound change control and
-              fresh certification.
+            - Add only the exact owner-approved 4.0.2 ConanCenter deferral constant to the candidate-bound public-distribution
+              schema, matching the qualified reader's explicit version allowlist. Preserve the 4.0.0/4.0.1 constants and
+              every other schema field. No evidence/result shape, mandatory operation, public-success criterion or general
+              future-version allowance changes.
     architecture_change:
         level: intentional-correction
         evidence:
@@ -143,7 +150,7 @@ checkpoints:
                 are retained. Publication routing is disabled. Owner explicitly authorizes 4.0.2 engineering and fresh certification
                 only; no 4.0.2 publication or tags.
     - name: Reproduce and repair publisher prerequisites
-      status: in_progress
+      status: passed
       evidence:
           - check: Failing incident regressions and narrow source repairs
             result: passed
@@ -169,7 +176,7 @@ checkpoints:
                 formatting restores the exact original Git blob; no trust policy, signing authority, waiver or signed historical
                 record changes.
     - name: Immutable reader qualification before 4.0.2 activation
-      status: in_progress
+      status: passed
       evidence:
           - check: Bound existing ConanCenter deferral to the explicitly approved successor only
             result: passed
@@ -179,4 +186,90 @@ checkpoints:
                 obligations.4.0.3 and other future/unapproved versions remain rejected. Qualify the frozen successor reader
                 and replay original source-bound certificates before promotion. Product/version projections remain 4.0.1
                 during this reader-only phase.
-commits: []
+          - check: Exact immutable reader qualification and historical replay
+            result: passed
+            details:
+                "Reader 03abf070600016f60ed7c7f43a1a17f662cf5348 satisfies all seventeen qualification stages: both
+                host test suites, closed certificates, A58 and source17 evidence reconstruction, original-authority verification
+                and exact certified-byte restoration. Retain fifteen exact-source passes and rerun only two path probes
+                after correcting their artifact-root/output-location harness errors; preserve the original failed terminal
+                records. No verifier code or acceptance criterion changes. Promote only this reader; historical subjects,
+                signatures and authorities remain unchanged. Fresh 4.0.2 product certification remains mandatory."
+    - name: Prepare 4.0.2 separately from the frozen reader
+      status: passed
+      evidence:
+          - check: Canonical authority and authored installation commands
+            result: passed
+            details:
+                The product worktree is separate from immutable reader03abf070. Canonical version and literal coordinated
+                inventory select4.0.2 while the Ruby sentinel, Lua template and Go/Swift tag placeholders remain unchanged.
+                Initial public scope retains the existing ConanCenter deferral. Authored current-version prose changes to4.0.2;
+                historical records and changelogs remain preserved. Generated outputs use registered producers only.
+          - check: Actual JVM compiler variants and generator-owned projections
+            result: passed
+            details:
+                Actual isolated offline JDK11 and JDK21 builds bind the same reviewed 4.0.2 bridge sources. Registered
+                Kotlin verification generation/check changes only the local product component; all third-party checksums
+                remain unchanged. Registered version, policy, graph and support-matrix checks pass. Five actual API snapshots
+                contain only the product version and derived assembly signature-key updates; API shape remains identical.
+          - check: Preserved preparation failures and focused regression reconciliation
+            result: passed
+            details:
+                Retain initial missing .NET restore assets and missing Cargo process-path diagnostics. Registered
+                restores resolve both .NET generators; governed native Cargo setup resolves the actual documentation leaf
+                without tracked mutation. Sixty-seven other focused leaves already pass; one Windows symlink capability
+                skip is covered by Linux reader qualification. Correct the single current-release test assertion to 4.0.2;
+                version/lock/policy tests pass71 tests and21 subtests with one bounded Windows capability skip. Preserve
+                diagnostic command/formatting failures and correct only the harness and controller-owned serialization.
+          - check: Explicit dependency identity review
+            result: passed
+            details:
+                "The immutable lock check correctly rejects stale reviewed identities. Independently review fourteen
+                manifest/lock changes and three first-party security-policy version projections: no new dependencies, upgraded
+                third-party pins, changed archive identities, license exceptions or waiver. Composer changes only its root
+                metadata hash; Kotlin changes only actual JVM product hashes. Update the existing reviewed authority catalog
+                without changing its membership or refresh policy. Registered read-only verification passes with zero findings."
+          - check: Publication boundary and draft operation registry
+            result: passed
+            details:
+                All seventeen authored adapter installation boundaries remain accurate before and after separately
+                authorized publication; code fences, support tiers and installation commands are preserved. Draft registry
+                derives Local38, Pull Request80, Full125, Release125 operations, with the mandatory public_distribution_contract
+                exactly once in every profile. Require42 fresh receipts across17 routes and21 independent comparisons; retain256
+                engineering obligations,232 applicable public obligations and24 deferred ConanCenter obligations. This is
+                engineering readiness only; the source is not yet frozen or certified.
+          - check: Native Linux version and lock review, including symlink rejection
+            result: passed
+            details:
+                The exact unfrozen draft patch SHA256 ec53cefb7a97fdd254244ccc6ef8a103930aec282735f56263eda79ce37e61ff
+                passes72 native Linux version/lock/policy tests and21 subtests, with no skip and no source patch mutation.
+                This independently covers the Windows symlink limitation. Preserve the exact patch and all terminal evidence,
+                then retire only its two named disposable engineering scratch directories (116789110 ordinary-file bytes).
+                Both frozen verifier roots and all historical evidence remain unchanged. This is preparation evidence, not
+                a certified product source.
+          - check: Reproduce and narrowly reconcile the source-data schema
+            result: passed
+            details:
+                The post-promotion diagnostic rejects 4.0.2 because the source schema registers only 4.0.0/4.0.1.
+                A targeted positive regression fails exactly for4.0.2 while nine existing/negative cases pass. Extend only
+                its exact constant; preserve all other schema bytes semantically. The immutable reader loads this source-bound
+                data schema and already explicitly permits the owner-approved successor; its code and qualification remain
+                unchanged. Retain initial diagnostic failures, including the separate launcher Git-ceiling omission, and
+                rerun all affected positive/adversarial tests before source freeze.
+    - name: Freeze and independently certify 4.0.2
+      status: in_progress
+      evidence:
+          - check: Owner-authorized local integration and final engineering prerequisites
+            result: passed
+            details:
+                Owner explicitly approves the local dev C2-to-03abf070 fast-forward and prepared-worktree checkout.
+                Preserve the complete draft byte for byte and the canonical C2 checkout. Registered legacy generation/check
+                and binding-support checks pass with byte-identical evidence. All seventeen reader criteria are accepted
+                with original harness failures retained. Version/lock/policy tests pass71 Windows and72 Linux tests plus21
+                subtests; post-promotion governance/public-distribution tests pass206 tests and70 subtests. All ten new
+                schema cases pass on Linux as well. Preserve the exact bounded 4.0.2 schema correction, reviewed dependency
+                identities, current scoped waiver and historical certificates. Fresh product builds, profiles, reconstruction,
+                signing, consumers and hosted acceptance remain mandatory; no publication or release tags are authorized.
+commits:
+    - sha: 03abf070600016f60ed7c7f43a1a17f662cf5348
+      subject: Harden registry preflight and governed NuGet companion lookup

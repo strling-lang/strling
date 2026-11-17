@@ -5,9 +5,9 @@ execute a regex engine for your application. Use Semantic STRling for textual
 authoring, Simply for programmatic construction, and the regex frontend for
 explicit compatibility imports.
 
-STRling 4.0.1 is not yet publicly published. Public installation commands in
+STRling 4.0.2 is not yet publicly published. Public installation commands in
 this guide and the binding guides are proposed release commands. Candidate
-validation uses independently built staged packages, not public 4.0.1 downloads.
+validation uses independently built staged packages, not public 4.0.2 downloads.
 The [4.0.0 partial-publication record](migration/publication-400-partial.md)
 preserves the earlier release's actual outcomes.
 Check the [support matrix](support-matrix.md) before selecting an operating
@@ -61,7 +61,7 @@ frontend. Neither command infers a target from the filename or host runtime.
 After a separately authorized public release, the proposed command is:
 
 ```bash
-python -m pip install "STRling==4.0.1"
+python -m pip install "STRling==4.0.2"
 ```
 
 The Supported package scope is CPython 3.12 on the exact registered Windows and

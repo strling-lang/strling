@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.strling-lang"
-val productVersion = "4.0.1"
+val productVersion = "4.0.2"
 require(providers.gradleProperty("version").orElse(productVersion).get() == productVersion) {
     "Release version override must equal the governed product coordinate"
 }
@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    api("io.github.strling-lang:strling-jvm:4.0.1") { version { strictly(productVersion) } }
+    api("io.github.strling-lang:strling-jvm:4.0.2") { version { strictly(productVersion) } }
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation(kotlin("test"))
 }

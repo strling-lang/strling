@@ -1,7 +1,8 @@
 # STRling Dart adapter
 
-STRling 4.0.1 is not publicly published. Public installation commands describe
-the proposed separately authorized release. Candidate tests use staged artifacts.
+STRling 4.0.2 public installation requires the separately authorized release.
+Check the release certificate for public availability and independent acceptance.
+Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
 The Dart package is a semantic-free `dart:ffi` facade for Dart VM/native
@@ -41,7 +42,7 @@ not promise deterministic operating-system unload.
 
 ## Product compatibility
 
-Fourth Edition packages require the exact 4.0.1 native product identity in
+Fourth Edition packages require the exact 4.0.2 native product identity in
 addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
 product marker before loading; installed CMake packages check their static
 archive during configuration. Unmarked older kernels and mismatched product
@@ -54,7 +55,7 @@ The compiler semantics and versioned ABI/protocol are unchanged.
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-dart pub add strling:4.0.1
+dart pub add strling:4.0.2
 ```
 
 Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

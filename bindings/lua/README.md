@@ -1,7 +1,8 @@
 # STRling Lua adapter
 
-STRling 4.0.1 is not publicly published. Public installation commands describe
-the proposed separately authorized release. Candidate tests use staged artifacts.
+STRling 4.0.2 public installation requires the separately authorized release.
+Check the release certificate for public availability and independent acceptance.
+Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
 This rock is a thin Lua projection of the canonical STRling compiler. A minimal C module performs dynamic loading and bounded byte transport over a caller-selected `strling.c-abi` version 1 library; the Lua facade projects canonical requests and results. Neither layer implements STRling semantics.
@@ -70,7 +71,7 @@ See the [canonical interop contract](../../spec/interop/1.0/README.md) and the [
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-luarocks install strling 4.0.1-1
+luarocks install strling 4.0.2-1
 ```
 
 The exact approved LuaRocks owner and immutable rock revision must be reconciled in the protected publication handoff. Dependencies and runtime observations remain Preview.

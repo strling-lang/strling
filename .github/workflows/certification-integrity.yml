@@ -61,7 +61,7 @@ jobs:
             - name: Checkout qualified transport verifier
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: ea03dd4cbe35b5614fb862c1568cc7356a5bd16f
+                  ref: 03abf070600016f60ed7c7f43a1a17f662cf5348
                   path: export-trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -269,7 +269,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ea03dd4cbe35b5614fb862c1568cc7356a5bd16f
+                  ref: 03abf070600016f60ed7c7f43a1a17f662cf5348
                   path: candidate-trusted
             - name: Checkout candidate evidence as data
               id: checkout_candidate
@@ -313,7 +313,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ea03dd4cbe35b5614fb862c1568cc7356a5bd16f
+                  ref: 03abf070600016f60ed7c7f43a1a17f662cf5348
                   path: public-trusted
             - name: Checkout public evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -355,7 +355,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ea03dd4cbe35b5614fb862c1568cc7356a5bd16f
+                  ref: 03abf070600016f60ed7c7f43a1a17f662cf5348
                   path: packaging-trusted
             - name: Checkout packaging evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -397,7 +397,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: ea03dd4cbe35b5614fb862c1568cc7356a5bd16f
+                  ref: 03abf070600016f60ed7c7f43a1a17f662cf5348
                   path: trusted
 
             - name: Require original authority in preservation history

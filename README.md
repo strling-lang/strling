@@ -11,14 +11,17 @@ PCRE2 wrapper, a TypeScript-centric builder, or an editor-only tool.
 
 This repository is the engineering authority for the STRling language,
 specifications, canonical compiler, host integrations, and developer tooling.
-The Fourth Edition implementation is prepublication. Versioned contracts,
+Versioned contracts,
 the broader draft specification, implemented capability, and source-bound
 certification are identified separately in the linked authority documents.
-STRling 4.0.1 is the unpublished fix-forward candidate; installation commands
-for that version describe a proposed release. The 4.0.0 publication was partial
-and has not achieved complete public verification. Its immutable packages, tags
-and certification evidence are preserved; see the
-[publication incident record](docs/migration/publication-400-partial.md).
+STRling 4.0.2 installation commands require the separately authorized release.
+Check its release certificate for public availability and independent acceptance;
+source-bound certification alone does not prove publication. The 4.0.0 and 4.0.1 publications
+were partial and have not achieved complete public verification. Their immutable
+packages, tags and certification evidence are preserved. The original
+[4.0.0 incident record](docs/migration/publication-400-partial.md) and
+[4.0.2 recovery record](docs/migration/records/publication-402-fix-forward.yaml)
+identify the separate historical releases and current engineering scope.
 
 ## Why STRling
 

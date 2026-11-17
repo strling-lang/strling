@@ -1,7 +1,8 @@
 # STRling Ruby adapter
 
-STRling 4.0.1 is not publicly published. Public installation commands describe
-the proposed separately authorized release. Candidate tests use staged artifacts.
+STRling 4.0.2 public installation requires the separately authorized release.
+Check the release certificate for public availability and independent acceptance.
+Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
 
 This package is a thin Ruby projection of the canonical STRling compiler. It does not contain a parser, semantic model, validator, target planner, or regex emitter. The caller supplies an absolute path to a `strling.c-abi` version 1 library; Ruby's standard `Fiddle` interface carries strict JSON requests and canonical results across that boundary.
@@ -46,7 +47,7 @@ See the [canonical interop contract](../../spec/interop/1.0/README.md) and the [
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-gem install strling --version 4.0.1
+gem install strling --version 4.0.2
 ```
 
 Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

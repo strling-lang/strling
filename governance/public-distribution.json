@@ -3,10 +3,10 @@
     "contract": "strling-public-distribution-v1",
     "identity_authority": "governance/release-policy.json",
     "artifact_authority": "tests/certification/release-supply-chain/1.0/manifest.json",
-    "certification_verifier": "ea03dd4cbe35b5614fb862c1568cc7356a5bd16f",
+    "certification_verifier": "03abf070600016f60ed7c7f43a1a17f662cf5348",
     "certification_trust": "governance/release-certification-trust.json",
     "initial_publication_scope": {
-        "release_line": "4.0.1",
+        "release_line": "4.0.2",
         "owner_deferred_artifacts": ["release:cpp"],
         "engineering_coverage_required": true,
         "deferred_is_publicly_verified": false

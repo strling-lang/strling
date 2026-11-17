@@ -31,6 +31,51 @@ def test_versioned_contract_matches_registry():
     assert validate_contract(ROOT)["artifacts"] == 17
 
 
+@pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2"])
+def test_public_scope_schema_accepts_exact_owner_approved_versions(version):
+    from jsonschema import Draft202012Validator
+
+    schema = json.loads(
+        (ROOT / "governance/schemas/public-distribution.schema.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    contract = json.loads(
+        (ROOT / "governance/public-distribution.json").read_text(encoding="utf-8")
+    )
+    contract["initial_publication_scope"]["release_line"] = version
+    Draft202012Validator(schema).validate(contract)
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("release_line", "4.0.3"),
+        ("release_line", "4.1.0"),
+        ("release_line", "4.0.2-rc.1"),
+        ("owner_deferred_artifacts", []),
+        ("owner_deferred_artifacts", ["release:cpp", "release:python"]),
+        ("engineering_coverage_required", False),
+        ("deferred_is_publicly_verified", True),
+    ],
+)
+def test_public_scope_schema_rejects_unapproved_or_weakened_scope(field, value):
+    from jsonschema import Draft202012Validator
+    from jsonschema.exceptions import ValidationError
+
+    schema = json.loads(
+        (ROOT / "governance/schemas/public-distribution.schema.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    contract = json.loads(
+        (ROOT / "governance/public-distribution.json").read_text(encoding="utf-8")
+    )
+    contract["initial_publication_scope"][field] = value
+    with pytest.raises(ValidationError):
+        Draft202012Validator(schema).validate(contract)
+
+
 def test_consumer_environment_drops_secrets_and_developer_paths(tmp_path):
     from tooling.release_consumers import public_consumer_environment
 

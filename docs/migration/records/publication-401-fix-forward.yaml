@@ -326,6 +326,41 @@ checkpoints:
                 before dependent signing/submission. The exact publisher patch passes Windows (207 passed, 2 skipped in 30.76s)
                 and Linux (209 passed in 25.53s). Governance, security and the standalone public contract pass. The patch
                 is integrated before final source freeze; no upload retry or authorization bypass is added.
+    - name: Source 91 profile acceptance and staged fixture correction
+      status: in_progress
+      evidence:
+          - check: Fresh profiles and distribution acquisition for 91a71c35
+            result: passed
+            details:
+                Source 91a71c35a429bb2b3042dde444671a42bb111e3e passed Local 38/38,
+                Pull Request 80/80, and Full and fresh independent no-reuse Release
+                with 124 passed and the sole authorized VSCE waiver out of 125 each.
+                All 42 fresh receipts and 21 rebuild comparisons passed. Package
+                evidence was independently reconstructed and signed under the original
+                SSH authority; root 4bbe5e3c5e88f7fed3a7d15297d27022b2097c9e35fca3aac77188f5aa791435.
+                These accepted source-bound results remain historical and do not transfer.
+          - check: Complete staged artifact qualification for 91a71c35
+            result: failed
+            details:
+                Sixteen routes passed; the Perl synthetic fixture emitted an unprefixed
+                metadata version, which the independently corrected CPAN decoder rightly
+                rejected. The exact fixture and all 1121 retained files are inventoried in
+                target/official-publication/campaign-ea64d594-20261113/source91-profiles-and-staged-failure-preservation.json.
+                No public artifact was requested and no complete candidate acceptance is claimed.
+          - check: Narrow CPAN fixture regression qualification
+            result: passed
+            details:
+                Correct only synthetic metadata to the v-prefixed stable version while
+                preserving the complete stable or prerelease archive coordinate. Seven new
+                cases exercise the actual staged producer against the independent decoder,
+                including wrong version, owner and substituted archive rejection. All 148
+                focused tests passed on Windows and Linux. Decoder, trusted reader, package
+                bytes, compiler semantics, support policy and generated projections are unchanged.
+                Grouped non-authoritative diagnostics passed all seventeen staged routes,
+                eight Windows and seven Linux Supported consumer scopes, and six bounded
+                Preview producers before another source freeze. The exact worker record is
+                target/official-publication/campaign-ea64d594-20261113/cpan-successor-consumer-diagnostic/worker.json.
+                These engineering observations are not transferred certification.
     - name: Publication authorization
       status: blocked
       evidence:
@@ -342,11 +377,12 @@ commits:
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
     next_task:
-        Freeze the qualified test-only successor, complete fresh canonical preparation
+        Freeze the corrected synthetic-fixture successor after complete grouped diagnostics;
+        complete fresh canonical preparation
         and all authoritative profiles, then reconstruct, sign and obtain immutable
         hosted acceptance before reporting publication readiness.
     rationale:
-        Grouped dependency-ready diagnostics passed. The qualified immutable reader
-        remains unchanged. Historical 4f Local acceptance and failed PR retain their
-        source identity; no profile result transfers to a successor. Publication,
+        The qualified immutable reader remains unchanged. Historical 4f Local acceptance
+        and failed PR, and source 91 profile acceptance and failed staged fixture, retain
+        their exact identities. No profile result transfers to a successor. Publication,
         release tags and remote permanent-branch updates remain separately gated.

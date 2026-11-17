@@ -10145,3 +10145,26 @@ remain unchanged. A clean successor still requires every complete fresh profile,
 fresh builds, reconstruction, original-authority signatures and hosted acceptance;
 neither partial profile results nor old source evidence are transferred. No
 4.0.1 tags, packages or public Release are authorized.
+
+## 4.0.1 staged CPAN fixture correction
+
+Source `91a71c35a429bb2b3042dde444671a42bb111e3e` passed fresh Local
+38/38, Pull Request 80/80, Full and independent no-reuse Release (124 passed
+plus the existing authorized VSCE waiver out of 125 each). All 42 distribution
+receipts, 21 rebuild comparisons, independent package reconstruction and original
+authority package signing passed. These results retain that exact source identity.
+The subsequent staged qualification passed sixteen routes but exposed an authored
+CPAN fixture still emitting an unprefixed version. The decoder correctly rejected
+it. The retained failing result is not complete candidate acceptance.
+
+The narrow correction changes synthetic metadata to MetaCPAN's v-prefixed stable
+version while preserving the entire stable or prerelease archive coordinate.
+Seven regression cases run the actual staged producer against the independent
+decoder; all 148 focused cases passed on Windows and Linux. No decoder, trusted
+reader, package payload, compiler semantics or support boundary changed. The
+generated-artifact registry matches no affected family. Grouped engineering
+diagnostics then passed all seventeen staged routes, eight Windows and seven
+Linux Supported consumer scopes, and all six bounded Preview producers. The
+successor still requires new source-bound profiles and complete evidence;
+no prior-source acceptance or failed operation is transferred. Publication and
+release tags remain separately gated.

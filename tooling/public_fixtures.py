@@ -288,7 +288,7 @@ def protocol_fixture(
                 "release": {
                     "author": "STRLING",
                     "distribution": name,
-                    "version": version,
+                    "version": "v" + version.partition("-rc.")[0],
                     "download_url": url,
                     "license": ["apache_2_0"],
                 },

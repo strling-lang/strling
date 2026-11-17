@@ -10199,3 +10199,5 @@ not resolved or downgraded. Exact matching, runtime-source and lock boundaries,
 scanner coverage, generated trust policies, source-distinct reader qualification,
 fresh product certification and final publication authorization remain mandatory.
 See [the assessment](picomatch-402-exposure.md) and the active fix-forward record.
+
+Immutable reader `596577cc89c2216a2c077f44b87f192fb7fb2aa8` qualifies eighteen context-explicit criteria: thirteen exact-successor passes including both host suites, four fresh historical certificate and byte-restoration checks through preceding qualified reader03 with its own policy, and one signed current-two-waiver positive/expiry fixture proof through the successor. Four mismatched-context guard rejections remain failed evidence. Historical signatures and A58/source17 bytes retain their original source identities; no old result is recertified or relabeled. The exact owner-authorized development-only picomatch waiver and inclusive UTC expiry remain enforced. Promote this reader, then freeze and freshly certify a distinct 4.0.2 product source. Publication remains separately gated.

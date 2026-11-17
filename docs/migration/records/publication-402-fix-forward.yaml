@@ -279,27 +279,41 @@ checkpoints:
                 identities, current scoped waiver and historical certificates. Fresh product builds, profiles, reconstruction,
                 signing, consumers and hosted acceptance remain mandatory; no publication or release tags are authorized.
     - name: Conditional development-only picomatch risk acceptance
-      status: in_progress
+      status: passed
       evidence:
           - check: Owner authorization and independent frozen-source exposure assessment
             result: passed
-            details: >-
-                The owner explicitly authorizes exact GHSA-fc5q-39xc-vjpf / CVE-2026-112366 development-only
-                acceptance through 2026-11-24 inclusive UTC, conditional on no demonstrated published-runtime path.
-                All six locked picomatch paths are dev-only. The npm dry-run excludes their dependency tree and
-                an independently generated extension graph excludes picomatch/tinyglobby/VSCE while reproducing
-                the prepared bundle byte for byte. Record exact runtime-source identities and lock hashes.
-                Preserve the failed61fb prerequisite: 52 passed, two failed checks and one VSCE license waiver;
-                no authoritative profile or fresh distribution build ran. The actual ReDoS remains reproducible.
+            details:
+                "The owner explicitly authorizes exact GHSA-fc5q-39xc-vjpf / CVE-2026-112366 development-only acceptance
+                through 2026-11-24 inclusive UTC, conditional on no demonstrated published-runtime path. All six locked
+                picomatch paths are dev-only. The npm dry-run excludes their dependency tree and an independently generated
+                extension graph excludes picomatch/tinyglobby/VSCE while reproducing the prepared bundle byte for byte.
+                Record exact runtime-source identities and lock hashes. Preserve the failed61fb prerequisite: 52 passed,
+                two failed checks and one VSCE license waiver; no authoritative profile or fresh distribution build ran.
+                The actual ReDoS remains reproducible."
           - check: Exact governed waiver, adversarial matching and trust integration
-            result: not_run
-            details: >-
-                Register only WVR-SEC-PICOMATCH-REDOS-001 alongside the unchanged VSCE exception. Preserve all
-                scanners, thresholds and matching semantics. Bind three findings by package/version/advisory/high
-                severity/check IDs and four exact input paths; reject drift, stale/missing/duplicate findings,
-                unrelated advisories and expiration. Generate trust projections through their registered sources.
-                Qualify a source-distinct immutable reader with the amended exact trust records before promotion.
-                Historical certificates retain their original trust policy and evidence; no record is relabeled.
+            result: passed
+            details:
+                Register only WVR-SEC-PICOMATCH-REDOS-001 alongside the unchanged VSCE exception. Preserve all scanners,
+                thresholds and matching semantics. Bind three findings by package/version/advisory/high severity/check IDs
+                and four exact input paths; reject drift, stale/missing/duplicate findings, unrelated advisories and expiration.
+                Generate trust projections through their registered sources. Qualify a source-distinct immutable reader
+                with the amended exact trust records before promotion. Historical certificates retain their original trust
+                policy and evidence; no record is relabeled.
+          - check: Context-explicit reader qualification, UTC expiry and preserved historical authority
+            result: passed
+            details:
+                "Reader 596577cc89c2216a2c077f44b87f192fb7fb2aa8 qualifies eighteen criteria: thirteen exact-successor
+                passes including both host suites, four fresh historical candidate/byte-restoration checks through preceding
+                qualified reader03 and its own policy, and a new signed current-two-waiver positive/expiry fixture proof
+                through the successor. Four original mismatched-context guard rejections remain failed evidence; the qualification
+                context correction and additional criterion are explicit. The new exact waiver and existing VSCE exception
+                remain visible; a fresh risk prerequisite has 52 passed and 3 waived checks, zero failures/unavailable/incomplete.
+                Inclusive UTC expiry and explicit test clocks are enforced. Preserve original historical source identities,
+                signatures and artifact bytes. The original failed 61fb prerequisite remains failed. Fresh product certification
+                and final publication authorization remain mandatory."
 commits:
     - sha: 03abf070600016f60ed7c7f43a1a17f662cf5348
       subject: Harden registry preflight and governed NuGet companion lookup
+    - sha: 596577cc89c2216a2c077f44b87f192fb7fb2aa8
+      subject: Bound temporary development-tooling risk acceptance and UTC expiry

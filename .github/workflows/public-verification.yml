@@ -71,7 +71,7 @@ jobs:
             - name: Checkout immutable certification verifier
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 03abf070600016f60ed7c7f43a1a17f662cf5348
+                  ref: 596577cc89c2216a2c077f44b87f192fb7fb2aa8
                   path: certification-verifier
                   fetch-depth: 0
                   persist-credentials: false

@@ -10188,3 +10188,14 @@ The owner explicitly authorizes 4.0.2 engineering and fresh certification, with 
 Immutable reader `03abf070600016f60ed7c7f43a1a17f662cf5348` passed all seventeen qualification stages, including original A58/source17 signed-evidence and certified-byte replay. Promote this exact reader for the owner-authorized 4.0.2 fix forward. Preserve every historical source, signature and public artifact. Regenerate affected architecture evidence before freezing and freshly certifying the 4.0.2 product; no publication is authorized.
 
 The owner-authorized local development integration preserves the qualified reader `03abf070600016f60ed7c7f43a1a17f662cf5348` and the separately prepared 4.0.2 source. Registered architecture evidence regenerates and verifies without changing historical bytes. Focused preparation, reviewed version/dependency projections and the exact owner-scoped public schema correction pass. Freeze the new source and execute fresh independent product certification; 4.0.2 publication and release tags remain separately gated.
+
+### 2026-11-17 — conditional development-tooling security exception
+
+The owner authorizes the exact temporary picomatch GHSA-fc5q-39xc-vjpf exception
+through November 24 inclusive UTC after independent exposure assessment establishes
+development-only reachability and no demonstrated published-runtime exploit path.
+Preserve frozen61fb and its failed prerequisite unchanged. The vulnerability is
+not resolved or downgraded. Exact matching, runtime-source and lock boundaries,
+scanner coverage, generated trust policies, source-distinct reader qualification,
+fresh product certification and final publication authorization remain mandatory.
+See [the assessment](picomatch-402-exposure.md) and the active fix-forward record.

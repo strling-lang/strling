@@ -318,7 +318,7 @@ If verification fails:
 
 ## Waivers and stable blockers
 
-Active governed waiver: `WVR-SEC-VSCE-LICENSE-001`.
+Active governed waiver: `WVR-SEC-VSCE-LICENSE-001`, `WVR-SEC-PICOMATCH-REDOS-001`.
 
 Waiver rules:
 

@@ -178,11 +178,19 @@ expiry dates, and state planned remediation. Expired, unknown, malformed,
 over-broad, or mismatched waivers fail. A match is a Cartesian set of exact
 finding fields; every declared combination must exist, every matched check input
 must equal the declared path scope, and overlapping matches fail.
+Creation and inclusive expiry dates use the UTC calendar date regardless of
+the validation host's local timezone.
 
-One security waiver remains active and expires on 2026-10-11:
+Accepted security exceptions are listed in the normative policy and their exact records:
 
 -   `WVR-SEC-VSCE-LICENSE-001` covers only ten enumerated VSCE signing
     package/version bindings whose metadata remains `SEE LICENSE IN LICENSE.txt`.
+    Its current approved expiry is 2026-12-13 inclusive UTC.
+-   `WVR-SEC-PICOMATCH-REDOS-001` accepts only the three enumerated high-severity
+    GHSA-fc5q-39xc-vjpf findings for development-only picomatch 2.3.2/4.0.7 in
+    LSP packaging and TypeScript testing through 2026-11-24 inclusive UTC.
+    The vulnerability remains unresolved. The [exposure assessment](../docs/migration/picomatch-402-exposure.md)
+    records the absence of a demonstrated published-runtime path and required controls.
 
 The record retains exact scope, owner, review context, rationale, expiry, and
 replacement work. It does not classify the unknown license as permitted. The

@@ -11,7 +11,7 @@ import sys
 import tempfile
 import unittest
 from collections import Counter
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
@@ -107,6 +107,12 @@ class LocalCertificationAttestationTests(unittest.TestCase):
             destination = self.repository / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, destination)
+        # This historical fixture exercises only its enumerated VSCE findings.
+        # Do not inherit unrelated current exceptions without their records.
+        security_path = self.repository / "governance/security-policy.json"
+        security_policy = json.loads(security_path.read_text())
+        security_policy["security_waivers"] = ["WVR-SEC-VSCE-LICENSE-001"]
+        security_path.write_text(json.dumps(security_policy))
         shutil.copytree(
             ROOT / "tests/conformance/adversarial/1.0/observations",
             self.repository / "tests/conformance/adversarial/1.0/observations",
@@ -1248,8 +1254,8 @@ class LocalCertificationAttestationTests(unittest.TestCase):
 
     def test_scoped_current_waiver_passes(self) -> None:
         self._add_scoped_waiver()
-        with patch("tooling.security.date", wraps=date) as today:
-            today.today.return_value = date(2026, 9, 12)
+        with patch("tooling.security.datetime", wraps=datetime) as clock:
+            clock.now.return_value = datetime(2026, 9, 12, tzinfo=timezone.utc)
             self.assertEqual("CLOUD_VERIFIED", self._verify()["certification_state"])
 
     def test_security_failed_check_cannot_be_hidden_by_passing_aggregate(self) -> None:
@@ -1315,15 +1321,17 @@ class LocalCertificationAttestationTests(unittest.TestCase):
             ).read_text()
         )
         expiry = date.fromisoformat(waiver["retirement"]["expires_on"])
-        with patch("tooling.security.date", wraps=date) as today:
-            today.today.return_value = expiry + timedelta(days=1)
+        with patch("tooling.security.datetime", wraps=datetime) as clock:
+            clock.now.return_value = datetime.combine(
+                expiry + timedelta(days=1), datetime.min.time(), timezone.utc
+            )
             with self.assertRaisesRegex(AttestationError, "SEC-WAIVER-EXPIRED"):
                 self._verify()
 
     def test_changed_waiver_dependency_version_is_rejected(self) -> None:
         self._add_scoped_waiver(wrong_version=True)
-        with patch("tooling.security.date", wraps=date) as today:
-            today.today.return_value = date(2026, 9, 12)
+        with patch("tooling.security.datetime", wraps=datetime) as clock:
+            clock.now.return_value = datetime(2026, 9, 12, tzinfo=timezone.utc)
             with self.assertRaisesRegex(AttestationError, "SEC-WAIVER-SCOPE-STALE"):
                 self._verify()
 

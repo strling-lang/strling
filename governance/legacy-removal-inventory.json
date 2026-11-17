@@ -163,7 +163,10 @@
             "dotnet-stdlib-surface-projections",
             "explanation-rendering-fixtures"
         ],
-        "waiver_ids": ["WVR-SEC-VSCE-LICENSE-001"]
+        "waiver_ids": [
+            "WVR-SEC-VSCE-LICENSE-001",
+            "WVR-SEC-PICOMATCH-REDOS-001"
+        ]
     },
     "fixture_population": {
         "governed_rule_id": "implementation-derived-shared-fixtures",
@@ -2264,6 +2267,42 @@
             "temporary_retention": null,
             "risk_notes": [
                 "Expiry is 2026-09-10 and any package/version/license-metadata change remains blocking."
+            ]
+        },
+        {
+            "id": "WAIVER-PICOMATCH-REDOS",
+            "title": "Development-only picomatch temporary security exception",
+            "ecosystem": "npm",
+            "surface": "waiver",
+            "category": "Non-semantic security exception; vulnerability remains real",
+            "semantic_family": "non-semantic",
+            "paths": [
+                "governance/waivers/WVR-SEC-PICOMATCH-REDOS-001.yaml",
+                "tooling/lsp-server/package-lock.json",
+                "bindings/typescript/package-lock.json"
+            ],
+            "current_consumers": [
+                "security dependency-risk operation",
+                "source-bound certification reconstruction"
+            ],
+            "disposition": "FALSE_POSITIVE_NON_SEMANTIC",
+            "semantic_responsibility": "No compiler or language authority. The inventory classification means unrelated to legacy semantic removal, not a false vulnerability finding.",
+            "canonical_replacement": null,
+            "replacement_evidence": [
+                "docs/migration/picomatch-402-exposure.json",
+                "docs/migration/picomatch-402-exposure.md"
+            ],
+            "reachability_evidence": [
+                "All six locked paths are development-only. The independently rebuilt extension client excludes picomatch; npm packaging excludes its development dependency tree."
+            ],
+            "retention_rationale": "Owner-authorized exact development-tooling risk acceptance through2026-11-24 inclusive UTC; the real vulnerability remains reported and is not resolved.",
+            "generated_artifact_ids": [],
+            "architecture_rule_ids": [],
+            "waiver_ids": ["WVR-SEC-PICOMATCH-REDOS-001"],
+            "deletion": null,
+            "temporary_retention": null,
+            "risk_notes": [
+                "Reject a demonstrated published-runtime exploit path or any scope drift. Preserve original failed61fb evidence. Existing VSCE waiver scope is unchanged."
             ]
         }
     ]

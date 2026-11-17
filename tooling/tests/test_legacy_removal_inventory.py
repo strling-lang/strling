@@ -20,7 +20,7 @@ class LegacyRemovalInventoryTests(unittest.TestCase):
 
     def test_repository_inventory_certifies(self) -> None:
         report = inventory._certify()
-        self.assertEqual(52, report.finding_count)
+        self.assertEqual(53, report.finding_count)
         self.assertEqual(1094, report.fixture_count)
         self.assertEqual(17, report.binding_count)
         self.assertEqual(9, report.remove_now_count)

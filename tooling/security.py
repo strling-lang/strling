@@ -18,7 +18,7 @@ import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass, field, replace
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Callable, Iterable, Mapping, Sequence
 
@@ -394,7 +394,7 @@ class SecurityEngine:
         )
         self.engine_version = engine_version
         self._command_runner = command_runner
-        self.today = today or date.today()
+        self.today = today or datetime.now(timezone.utc).date()
 
     def run_integrity(self) -> SecurityOperation:
         checks = [self._check_engine_pin(), self._check_dependency_inventory()]

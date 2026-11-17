@@ -33,8 +33,12 @@ scope:
         - tests/certification/release-packaging/**
         - tests/certification/public-verification/**
         - tests/certification/release-candidate/1.0/current/**
-        - governance/waivers/**
+        - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
     expected_files:
+        - governance/waivers/WVR-SEC-PICOMATCH-REDOS-001.yaml
+        - docs/migration/picomatch-402-exposure.json
+        - docs/migration/picomatch-402-exposure.md
+        - tooling/tests/test_picomatch_waiver.py
         - docs/migration/records/publication-402-fix-forward.yaml
     permitted_generated_changes:
         - binding-support-certification-evidence
@@ -49,10 +53,14 @@ scope:
         - profile-source-definitions
         - public-contract-snapshots
         - release-certification-trust
+        - release-candidate-certification-trust
         - release-policy-documentation
         - release-supply-chain-contract-fixture
         - version-synchronized-metadata
     expected_generated_outputs:
+        - legacy-removal-inventory-evidence
+        - release-certification-trust
+        - release-candidate-certification-trust
         - dotnet-adapter-release-graph
         - jvm-adapter-release-graph
         - kotlin-product-verification
@@ -270,6 +278,28 @@ checkpoints:
                 schema cases pass on Linux as well. Preserve the exact bounded 4.0.2 schema correction, reviewed dependency
                 identities, current scoped waiver and historical certificates. Fresh product builds, profiles, reconstruction,
                 signing, consumers and hosted acceptance remain mandatory; no publication or release tags are authorized.
+    - name: Conditional development-only picomatch risk acceptance
+      status: in_progress
+      evidence:
+          - check: Owner authorization and independent frozen-source exposure assessment
+            result: passed
+            details: >-
+                The owner explicitly authorizes exact GHSA-fc5q-39xc-vjpf / CVE-2026-112366 development-only
+                acceptance through 2026-11-24 inclusive UTC, conditional on no demonstrated published-runtime path.
+                All six locked picomatch paths are dev-only. The npm dry-run excludes their dependency tree and
+                an independently generated extension graph excludes picomatch/tinyglobby/VSCE while reproducing
+                the prepared bundle byte for byte. Record exact runtime-source identities and lock hashes.
+                Preserve the failed61fb prerequisite: 52 passed, two failed checks and one VSCE license waiver;
+                no authoritative profile or fresh distribution build ran. The actual ReDoS remains reproducible.
+          - check: Exact governed waiver, adversarial matching and trust integration
+            result: not_run
+            details: >-
+                Register only WVR-SEC-PICOMATCH-REDOS-001 alongside the unchanged VSCE exception. Preserve all
+                scanners, thresholds and matching semantics. Bind three findings by package/version/advisory/high
+                severity/check IDs and four exact input paths; reject drift, stale/missing/duplicate findings,
+                unrelated advisories and expiration. Generate trust projections through their registered sources.
+                Qualify a source-distinct immutable reader with the amended exact trust records before promotion.
+                Historical certificates retain their original trust policy and evidence; no record is relabeled.
 commits:
     - sha: 03abf070600016f60ed7c7f43a1a17f662cf5348
       subject: Harden registry preflight and governed NuGet companion lookup

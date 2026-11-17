@@ -1614,7 +1614,7 @@
         ]
     },
     "waivers": {
-        "active": ["WVR-SEC-VSCE-LICENSE-001"],
+        "active": ["WVR-SEC-VSCE-LICENSE-001", "WVR-SEC-PICOMATCH-REDOS-001"],
         "requirements": [
             "Every waiver has a unique identifier, exact check/path/dependency scope, evidence-backed justification, named owner, review or expiry, retirement condition, and visible release evidence",
             "No implicit waiver or status inference from a passing aggregate",

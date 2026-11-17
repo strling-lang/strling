@@ -5,7 +5,10 @@
     "signature_namespace": "strling-local-certification-v1",
     "bundle_path": "tests/certification/hardened-core/1.0/current",
     "required_profiles": ["full", "release"],
-    "allowed_waivers": ["WVR-SEC-VSCE-LICENSE-001"],
+    "allowed_waivers": [
+        "WVR-SEC-VSCE-LICENSE-001",
+        "WVR-SEC-PICOMATCH-REDOS-001"
+    ],
     "closure_paths": [
         "tests/certification/hardened-core/1.0/current/**",
         "docs/migration/fourth-edition-hardening-recertification.md",

@@ -1,0 +1,64 @@
+record_version: 1.0.0
+waiver_id: WVR-SEC-PICOMATCH-REDOS-001
+status: accepted
+rule: SEC-VULN-BLOCKING
+scope:
+    description: Three exact high-severity picomatch advisory findings in two development-only dependency roots; no runtime or service exception.
+    paths:
+        - tooling/lsp-server/package.json
+        - tooling/lsp-server/package-lock.json
+        - bindings/typescript/package.json
+        - bindings/typescript/package-lock.json
+rationale: >-
+    GHSA-fc5q-39xc-vjpf / CVE-2026-112366 remains an unresolved and locally
+    reproduced denial-of-service vulnerability. The frozen 4.0.2 source
+    61fb4141faa5034964c5de17eb8b39a559b6cec9 has six locked picomatch paths,
+    all dev=true, with no production dependency declarations in either root.
+    The npm dry-run package excludes node_modules; the extension bundle graph
+    excludes picomatch, tinyglobby and VSCE and reproduces its prepared bytes.
+    No demonstrated attacker-controlled glob path exists in published runtime
+    functionality or exposed services. Development packaging and Jest still
+    contain the vulnerable library. Execute them only on reviewed exact source
+    and repository-controlled patterns in bounded isolated build/test jobs,
+    never as a service for untrusted glob inputs. This exception does not permit
+    packaging new runtime reachability or processing malicious developer inputs.
+    All scanners, severity thresholds, completeness checks, source-bound evidence,
+    manual production approvals and unrelated security findings remain enforced.
+    Reassess the boundary in fresh artifacts and reject the exception if a
+    published-runtime exploit path is demonstrated. The assessment and exact
+    package paths are in docs/migration/picomatch-402-exposure.json and
+    docs/migration/picomatch-402-exposure.md. A waived result is not a fix.
+security:
+    operation_id: security.dependency-risk
+    finding_code: SEC-VULN-BLOCKING
+    owner: STRling Program Owner (TheCyberLocal)
+    subsystem: lsp-packaging-and-typescript-development-tools
+    created_on: "2026-11-17"
+    review_context: >-
+        The Program Owner explicitly authorized preparation and conditional
+        acceptance on 2026-11-17, only for development-only dependencies with no
+        demonstrated attacker-controlled published-runtime or exposed-service
+        path, through 2026-11-24 inclusive UTC. The independently recorded
+        frozen61fb exposure assessment satisfies those conditions. Official npm
+        and GitHub snapshots show latest4.0.7 affected and no patched release.
+        The referenced upstream PR194 remains unmerged. Retain the original
+        failed prerequisite; this record applies only to fresh successor evidence.
+    matches:
+        - check_id: security.vulnerability.lsp-npm
+          packages: [picomatch]
+          versions: ["4.0.7"]
+          advisories: ["https://github.com/advisories/GHSA-fc5q-39xc-vjpf"]
+          severities: [high]
+        - check_id: security.vulnerability.typescript-npm
+          packages: [picomatch]
+          versions: ["2.3.2", "4.0.7"]
+          advisories: ["https://github.com/advisories/GHSA-fc5q-39xc-vjpf"]
+          severities: [high]
+retirement:
+    condition: Retire by expiry or immediately upon a verified compatible patched release, scope drift, or demonstrated published-runtime exposure; do not renew implicitly.
+    expires_on: "2026-11-24"
+    replacement_work:
+        - Check the official npm registry and upstream GitHub releases during continuing release preparation and before publication authorization.
+        - Qualify a verified compatible upstream fix in the next governed release, updating exact dependency locks and required source-bound evidence.
+        - Reassess artifact and runtime reachability during fresh builds; reject runtime exposure, new versions, other advisories, new roots and severity drift.
+        - Remove the exact waiver and its trust/policy registrations when its findings disappear; stale scope must fail closed rather than silently pass.

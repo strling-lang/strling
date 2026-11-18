@@ -20,11 +20,18 @@ class LegacyRemovalInventoryTests(unittest.TestCase):
 
     def test_repository_inventory_certifies(self) -> None:
         report = inventory._certify()
-        self.assertEqual(53, report.finding_count)
+        self.assertEqual(52, report.finding_count)
         self.assertEqual(1094, report.fixture_count)
         self.assertEqual(17, report.binding_count)
         self.assertEqual(9, report.remove_now_count)
         self.assertEqual(0, report.temporary_count)
+
+    def test_retired_picomatch_waiver_is_absent_from_active_inventory(self) -> None:
+        finding_ids = {finding["id"] for finding in self.manifest["findings"]}
+        self.assertNotIn("WAIVER-PICOMATCH-REDOS", finding_ids)
+        self.assertEqual(
+            ["WVR-SEC-VSCE-LICENSE-001"], self.manifest["coverage"]["waiver_ids"]
+        )
 
     def test_fixture_baseline_and_current_population_reconcile(self) -> None:
         evidence = self.build(copy.deepcopy(self.manifest))

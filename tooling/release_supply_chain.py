@@ -17,6 +17,7 @@ import tarfile
 import tempfile
 import zipfile
 import uuid
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Mapping, Sequence, cast
 
@@ -3019,6 +3020,145 @@ def _normalized_surface_sha256(
     return hashlib.sha256(canonical_json(normalized)).hexdigest()
 
 
+def _reconstruct_dependency_waivers(
+    root: Path, risk_checks: Mapping[str, Mapping[str, object]]
+) -> bool:
+    """Reapply the security authority to observed findings stripped of claims."""
+    from tooling.security import (
+        Finding,
+        SecurityCheck,
+        SecurityEngine,
+        SecurityOperation,
+        load_policy,
+    )
+
+    policy = load_policy(
+        root / "governance/security-policy.json",
+        ROOT / "governance/schemas/security-policy.schema.json",
+    )
+    trusted = load_json(ROOT / "governance/security-policy.json")
+    waiver_ids = cast(list[str], policy["security_waivers"])
+    allowed = load_json(ROOT / "governance/release-certification-trust.json")
+    if waiver_ids != trusted["security_waivers"] or not set(waiver_ids).issubset(
+        allowed["allowed_waivers"]
+    ):
+        return False
+    for waiver_id in waiver_ids:
+        relative = Path("governance/waivers") / f"{waiver_id}.yaml"
+        if (root / relative).read_bytes() != (ROOT / relative).read_bytes():
+            return False
+    roots = {
+        item["id"]: item
+        for item in cast(list[dict[str, Any]], policy["dependency_roots"])
+    }
+    trusted_roots = {item["id"]: item for item in trusted["dependency_roots"]}
+    checks = []
+    claimed = {}
+    if risk_checks.get("security.waivers", {}).get("status") != "passed":
+        return False
+    for check_id, row in risk_checks.items():
+        if check_id == "security.waivers":
+            continue
+        prefix, _, root_id = check_id.rpartition(".")
+        kind = prefix.removeprefix("security.")
+        dependency = roots.get(root_id)
+        if (
+            kind not in {"vulnerability", "license"}
+            or dependency is None
+            or row.get("category") != kind
+            or row.get("ecosystem") != dependency["ecosystem"]
+            or row.get("inputs")
+            != sorted(set(dependency["manifests"] + dependency["locks"]))
+            or row.get("status") not in {"passed", "waived"}
+            or not isinstance(row.get("findings"), list)
+        ):
+            return False
+        findings = [
+            Finding(**observed)
+            for observed in cast(list[dict[str, Any]], row["findings"])
+        ]
+        if row["status"] == "waived" and (
+            dependency != trusted_roots.get(root_id)
+            or (
+                kind == "vulnerability"
+                and not _verified_development_vulnerability(root, dependency, row)
+            )
+        ):
+            return False
+        if row["status"] == "passed" and any(
+            finding.waiver_id or finding.code == "SEC-VULN-BLOCKING"
+            for finding in findings
+        ):
+            return False
+        claimed[check_id] = (row["status"], [f.waiver_id for f in findings])
+        checks.append(
+            SecurityCheck(
+                check_id,
+                kind,
+                "failed" if row["status"] == "waived" else "passed",
+                cast(list[str], row["inputs"]),
+                findings=[replace(finding, waiver_id=None) for finding in findings],
+            )
+        )
+    # Run the existing schema, accepted-status, UTC expiry, exact match cardinality,
+    # overlap, and scope-path checks in the pinned authority.
+    engine = SecurityEngine(ROOT, trusted, tracked_files=[])
+    rebuilt = engine._apply_security_waivers(
+        SecurityOperation("security.dependency-risk", "local", checks)
+    )
+    return rebuilt.status == "waived" and all(
+        (check.status, [finding.waiver_id for finding in check.findings])
+        == claimed[check.check_id]
+        for check in rebuilt.checks
+        if check.check_id != "security.waivers"
+    )
+
+
+def _verified_development_vulnerability(
+    root: Path, dependency: Mapping[str, Any], check: Mapping[str, Any]
+) -> bool:
+    """Limit this SBOM input treatment to observed locked npm dev findings."""
+    from tooling.security import SecurityEngine
+
+    scanner = check.get("scanner")
+    if (
+        dependency.get("risk_mode") != "npm_audit"
+        or dependency.get("integrity_mode") != "npm_lock_v3"
+        or not isinstance(scanner, dict)
+        or scanner.get("name") != "npm audit"
+        or scanner.get("retrieval") != "completed"
+        or scanner.get("source") != "npm-registry"
+        or not isinstance(scanner.get("version"), str)
+        or not scanner["version"].strip()
+        or len(dependency["locks"]) != 1
+    ):
+        return False
+    lock = load_json(root / dependency["locks"][0])
+    if lock.get("lockfileVersion") != 3 or not isinstance(lock.get("packages"), dict):
+        return False
+    findings = [f for f in check["findings"] if f["code"] != "SEC-VULN-NONBLOCKING"]
+    if not findings:
+        return False
+    for finding in findings:
+        matches = [
+            package
+            for path, package in lock["packages"].items()
+            if SecurityEngine._npm_package_name(path) == finding.get("package")
+            and package.get("version") == finding.get("version")
+        ]
+        if (
+            finding["code"] != "SEC-VULN-BLOCKING"
+            or not all(
+                finding.get(key)
+                for key in ("package", "version", "advisory", "severity", "waiver_id")
+            )
+            or not matches
+            or not all(package.get("dev") is True for package in matches)
+        ):
+            return False
+    return True
+
+
 def _dependency_resolution(
     root: Path,
     manifest: Mapping[str, object],
@@ -3056,7 +3196,12 @@ def _dependency_resolution(
                 raise ReleaseSupplyChainError(
                     "dependency-risk", "live dependency-risk evidence is malformed"
                 )
-            risk_checks[cast(str, check["check_id"])] = check
+            check_id = cast(str, check["check_id"])
+            if check_id in risk_checks:
+                raise ReleaseSupplyChainError(
+                    "dependency-risk", "duplicate dependency-risk check"
+                )
+            risk_checks[check_id] = check
     for dependency_id in cast(list[str], artifact["dependency_roots"]):
         policy = policies[dependency_id]
         manifest_hashes = []
@@ -3079,13 +3224,41 @@ def _dependency_resolution(
 
             reachable = {(row["name"], row["version"]) for row in locked_packages(root)}
         evidence_hash: str | None = None
+        accepted_waived_vulnerability = False
         if risk_evidence is not None:
             vulnerability = risk_checks.get(f"security.vulnerability.{dependency_id}")
             license_check = risk_checks.get(f"security.license.{dependency_id}")
+            vulnerability_findings = (
+                vulnerability.get("findings", []) if vulnerability is not None else []
+            )
+            unwaived_vulnerability_passed = (
+                vulnerability is not None
+                and vulnerability.get("status") == "passed"
+                and isinstance(vulnerability_findings, list)
+                and not any(
+                    not isinstance(finding, dict)
+                    or finding.get("waiver_id")
+                    or finding.get("code") == "SEC-VULN-BLOCKING"
+                    for finding in vulnerability_findings
+                )
+            )
+            if vulnerability is not None and vulnerability.get("status") == "waived":
+                try:
+                    accepted_waived_vulnerability = (
+                        risk_evidence.get("status") == "waived"
+                        and sum(
+                            row.get("status") == "waived"
+                            for row in risk_checks.values()
+                        )
+                        == summary.get("waived")
+                        and _reconstruct_dependency_waivers(root, risk_checks)
+                    )
+                except (KeyError, OSError, TypeError, ValueError, AttributeError):
+                    accepted_waived_vulnerability = False
             if (
                 vulnerability is None
                 or license_check is None
-                or vulnerability.get("status") != "passed"
+                or not (unwaived_vulnerability_passed or accepted_waived_vulnerability)
                 or license_check.get("status") != "passed"
             ):
                 unresolved += 1
@@ -3163,6 +3336,11 @@ def _dependency_resolution(
                 "resolved_without_external": resolved_without_external,
                 "resolved_components": resolved_components,
                 "risk_evidence_sha256": evidence_hash,
+                **(
+                    {"waived_vulnerability_evidence": vulnerability}
+                    if accepted_waived_vulnerability and evidence_hash
+                    else {}
+                ),
             }
         )
     return components, unresolved

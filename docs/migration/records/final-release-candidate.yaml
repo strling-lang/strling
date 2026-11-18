@@ -72,7 +72,7 @@ change_classification:
     documentation_only: false
     internal_implementation: false
 title: Final product candidate preparation and clean-room certification
-status: in_progress
+status: complete
 objective:
     Close the independently certified 4.0.2 fix-forward candidate while preserving historical certification
     and the separate publication boundary.
@@ -321,7 +321,7 @@ checkpoints:
                 of another commit.
             command: gh run view 44078159816 --repo strling-lang/strling --json headSha,conclusion,jobs
     - name: 4.0.2 fix-forward source certification
-      status: in_progress
+      status: passed
       evidence:
           - check: Fresh source-bound profiles, reconstruction and original-authority signatures
             result: passed
@@ -336,8 +336,13 @@ checkpoints:
                 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable
                 public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.'
           - check: Actual immutable hosted acceptance
-            result: not_run
-            details: Pending exact successor closure dispatch; no historical hosted run is reused.
+            result: passed
+            details:
+                All four required immutable hosted jobs accepted evidence closure `c3eba2e02b5b3deaa5ee5de575a62255f7143fd3`
+                in [run 44343235427](https://github.com/strling-lang/strling/actions/runs/44343235427). The export job was
+                skipped. The certified product is `87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6` and its qualified verifier is
+                `4154155adcf60c74d145936d442b4a45d7865145`. The successor closure retains these exact signed bytes and receives
+                its own hosted integrity check.
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -371,6 +376,8 @@ commits:
       subject: Record independently certified 4.0.1 candidate evidence
     - sha: 87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6
       subject: Promote supply-chain waiver verifier for 4.0.2 certification
+    - sha: c3eba2e02b5b3deaa5ee5de575a62255f7143fd3
+      subject: Record verified 4.0.2 source certification evidence
 completion:
     accomplished:
         - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
@@ -383,6 +390,8 @@ completion:
         - Completed fresh source-bound 4.0.1 certification, 42 build receipts, 21 reproducibility comparisons, 17 staged
           artifact routes, 15 Supported consumer scopes, six bounded Preview producers, independent reconstruction, original-authority
           signing and actual immutable hosted acceptance for product 17be3e0c81fb2816803653b73f0f9198d6711d5d.
+        - Completed fresh source-bound 4.0.2 certification, 42 receipts, 21 paired comparisons, 17 staged routes, consumer
+          qualification, reconstruction and original-authority signing.
     verified:
         - Source ea64d59467ef73a90e57bc23412daf78539bf69f; Local 38/38, PR 80/80, Full/Release 124passed plus the sole
           authorized waiver /125; zero unauthorized mandatory nonpasses.
@@ -416,6 +425,12 @@ completion:
         - Candidate evidence root 7ad3c371ce7251d3fe244e756c0dad0d8c9bc9466bf2e6a9da8c49bef099d902; nested package root
           0af021bcd956dfcf54c5d9ea23bf6a07850bdc0c9707dda4715ed2b6074182a0; sole scoped VSCE waiver owner-authorized through
           December 13, 2026 inclusive UTC.
+        - All four required immutable hosted jobs accepted evidence closure `c3eba2e02b5b3deaa5ee5de575a62255f7143fd3`
+          in [run 44343235427](https://github.com/strling-lang/strling/actions/runs/44343235427). The export job was skipped.
+          The certified product is `87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6` and its qualified verifier is `4154155adcf60c74d145936d442b4a45d7865145`.
+          The successor closure retains these exact signed bytes and receives its own hosted integrity check.
+        - Candidate evidence root eb0588d2f126be20b86f4e6fd4492850eabac9fed797db1596183a27c61c75c1. The scoped picomatch
+          waiver expires November 24, 2026 inclusive UTC.
     behavior_changed:
         Corrected obsolete frontend defaults, reconciled package documentation/examples and independently
         verified the complete-product certificate and publication handoff.
@@ -445,6 +460,8 @@ completion:
         - Historical H08, packaging, public-verification and 4.0.0 certification subjects and all immutable partial-publication
           identities remain unchanged. No 4.0.1 package, tag, production Maven signature, artifact upload or GitHub Release
           was created by this certification milestone.
+        - All historical signed subjects and immutable partial release coordinates are preserved. No 4.0.2 package or
+          tag was published.
     transitional_architecture: []
     deferred_work:
         - Separately authorized publication, owner/publisher/protected-environment prerequisites, coordinate-specific
@@ -452,9 +469,7 @@ completion:
           is deferred.
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
-    next_task:
-        Immutable hosted acceptance, certified byte transport, final owner-dependent release prerequisites
-        and exact publication authorization.
+    next_task: Verify final closure and transport, then obtain exact export and publication authorization.
     rationale:
-        All current-source local certification and signed evidence accepted; actual hosted acceptance remains
-        pending. Historical completion facts retain their original identities.
+        The source and signed evidence passed the hosted certificate check. Release execution requires separate
+        authorization.

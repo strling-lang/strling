@@ -378,14 +378,14 @@
                 "historical_delivery_reference": {
                     "source_sha": "2d8d897504663211d3768517f0be9f0e28d0f11e",
                     "verifier_sha": "dd9d7702237ba9c56e1269418d5a9bd5b582b9f0",
-                    "preservation_verifier_sha": "4154155adcf60c74d145936d442b4a45d7865145"
+                    "preservation_verifier_sha": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0"
                 },
                 "historical_integrity_reference": {
                     "source_sha": "2d8d897504663211d3768517f0be9f0e28d0f11e",
                     "verifier_sha": "dd9d7702237ba9c56e1269418d5a9bd5b582b9f0",
-                    "preservation_verifier_sha": "4154155adcf60c74d145936d442b4a45d7865145"
+                    "preservation_verifier_sha": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0"
                 },
-                "closed_preservation_verifier_sha": "4154155adcf60c74d145936d442b4a45d7865145"
+                "closed_preservation_verifier_sha": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0"
             }
         },
         {

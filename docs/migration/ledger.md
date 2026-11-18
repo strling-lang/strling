@@ -10207,3 +10207,5 @@ Verifier `4154155adcf60c74d145936d442b4a45d7865145` reconstructs exact accepted 
 ## 4.0.3 fix-forward preparation
 
 The [4.0.3 recovery record](records/publication-403-fix-forward.yaml) tracks waiver retirement and fresh certification. The 4.0.2 security preflight rejected a stale picomatch waiver after the advisory withdrawal. Preserve its certified source, signatures, export and control tag.
+
+The qualified 4.0.3 verifier 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0 passed all 20 criteria and preserved the original historical replay contexts. Fresh product certification remains required.

@@ -146,4 +146,15 @@ checkpoints:
                 The withdrawn advisory resolved to zero findings. The 4.0.2 gate correctly failed closed. The owner
                 authorized retirement and fresh 4.0.3 certification while retaining the VSCE waiver, scanner enforcement
                 and existing dependency pins.
-commits: []
+    - name: Qualify exact 4.0.3 immutable verifier
+      status: passed
+      evidence:
+          - check: Governed cross-host tests, active waiver disposition and historical signed replay
+            result: passed
+            details:
+                The distinct 4.0.3 verifier passed 20 criteria. The active risk report contains only the exact VSCE
+                waiver. The prior 4.0.2 capsule was independently restored using its original qualified verifier. Fresh
+                4.0.3 product certification remains required.
+commits:
+    - sha: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
+      subject: Prepare STRling 4.0.3 and retire stale picomatch waiver

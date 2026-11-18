@@ -14,7 +14,7 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: trusted
             - name: Checkout closed reference evidence as data
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
@@ -1932,7 +1932,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2041,7 +2041,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2147,7 +2147,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2254,7 +2254,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2360,7 +2360,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2464,7 +2464,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2570,7 +2570,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2685,7 +2685,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2793,7 +2793,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -2904,7 +2904,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3016,7 +3016,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3127,7 +3127,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3234,7 +3234,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3347,7 +3347,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3457,7 +3457,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3571,7 +3571,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3683,7 +3683,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0
@@ -3801,7 +3801,7 @@ jobs:
             - name: Checkout qualified packaging trust root
               uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
               with:
-                  ref: 4154155adcf60c74d145936d442b4a45d7865145
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
                   path: .cert/trusted
                   persist-credentials: false
                   fetch-depth: 0

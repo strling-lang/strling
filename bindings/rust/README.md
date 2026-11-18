@@ -1,6 +1,6 @@
 # STRling for Rust
 
-STRling 4.0.2 public installation requires the separately authorized release.
+STRling 4.0.3 public installation requires the separately authorized release.
 Check the release certificate for public availability and independent acceptance.
 Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
@@ -52,7 +52,7 @@ See [`docs/api_reference.md`](docs/api_reference.md) for the facade layout.
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-cargo add strling@=4.0.2
+cargo add strling@=4.0.3
 ```
 
 Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

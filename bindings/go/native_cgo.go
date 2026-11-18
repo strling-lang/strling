@@ -121,7 +121,7 @@ import (
 )
 
 // Generated product projection; tooling/sync_versions.py owns this value.
-const productVersion = "4.0.2"
+const productVersion = "4.0.3"
 
 type nativeState struct {
 	pointer *C.sl_native_state

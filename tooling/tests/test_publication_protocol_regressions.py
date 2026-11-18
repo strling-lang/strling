@@ -445,7 +445,7 @@ def test_ruby_publication_pins_reviewed_client_and_preserves_protected_provenanc
     assert actions[0]["with"]["subject-checksums"] == ".cert/subjects.sha256"
 
 
-@pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2"])
+@pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2", "4.0.3"])
 @pytest.mark.parametrize("layout", ["platlib", "purelib"])
 @pytest.mark.parametrize("metadata", ["valid", "wrong-tag", "pure-root"])
 def test_native_wheel_contract_preserves_history_and_rejects_new_bad_layouts(

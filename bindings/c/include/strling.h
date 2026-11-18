@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 #define STRLING_C_ADAPTER_ABI_VERSION 1
-#define STRLING_C_PACKAGE_VERSION "4.0.2"
+#define STRLING_C_PACKAGE_VERSION "4.0.3"
 
 /*
  * A transport status and, on RESPONSE_WRITTEN, one response buffer owned by

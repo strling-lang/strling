@@ -1,6 +1,6 @@
 # STRling Java adapter
 
-STRling 4.0.2 public installation requires the separately authorized release.
+STRling 4.0.3 public installation requires the separately authorized release.
 Check the release certificate for public availability and independent acceptance.
 Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
@@ -86,7 +86,7 @@ See the [Java API reference](docs/api_reference.md), the
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-mvn dependency:get -Dartifact=io.github.strling-lang:strling:4.0.2 -DremoteRepositories=https://repo1.maven.org/maven2
+mvn dependency:get -Dartifact=io.github.strling-lang:strling:4.0.3 -DremoteRepositories=https://repo1.maven.org/maven2
 ```
 
-This proposed command resolves the exact Maven coordinate. Add the same `io.github.strling-lang:strling:4.0.2` dependency to the application POM and use the shared JVM bridge dependency graph. The application supplies the authenticated native library.
+This proposed command resolves the exact Maven coordinate. Add the same `io.github.strling-lang:strling:4.0.3` dependency to the application POM and use the shared JVM bridge dependency graph. The application supplies the authenticated native library.

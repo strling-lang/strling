@@ -1,9 +1,6 @@
 {
     "$schema": "https://strling.dev/governance/local-certification-trust.schema.json",
-    "allowed_waivers": [
-        "WVR-SEC-VSCE-LICENSE-001",
-        "WVR-SEC-PICOMATCH-REDOS-001"
-    ],
+    "allowed_waivers": ["WVR-SEC-VSCE-LICENSE-001"],
     "authorized_certifiers": [
         {
             "authorized_profiles": ["full", "release"],

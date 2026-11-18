@@ -1,20 +1,20 @@
 {
     "schema_version": "1.0.0",
-    "product_version": "4.0.2",
+    "product_version": "4.0.3",
     "source_files": {
         "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
-        "bindings/jvm/pom.xml": "f68b21f3365a8b0d67e1a49122f0d93b710ea06df99a1f0bedc0c12966b06c9b",
+        "bindings/jvm/pom.xml": "4f88ed95d32dbb42d0fed0e9f41a2edf7bcab21fd993af566c0fe6cd312739e7",
         "bindings/jvm/src/main/java/com/strling/jvm/AbiMismatchException.java": "c21a6d5f1423571afdadc808067432d490aff9297bfa741c32b576420ba590b1",
         "bindings/jvm/src/main/java/com/strling/jvm/ClosedClientException.java": "9a393b1a21b0f55acd2db2eed57b33cd486c51a6ec5d1e1c7f4f96380aa3d390",
         "bindings/jvm/src/main/java/com/strling/jvm/InteropLibrary.java": "33b2d7cbe8e199a130d9653ce57987567fdb3968a853a8044f4ebeaa7fc13482",
         "bindings/jvm/src/main/java/com/strling/jvm/NativeAdapterException.java": "cb1b458905cb821b4d12487b23c69488b2d0476c4ef1eec238b46b6c20c65e7f",
-        "bindings/jvm/src/main/java/com/strling/jvm/NativeClient.java": "3a6af1e00a6064abc2b61b6119c15bec82f8f2e25f773a477fb0ec12e09cc8a9",
+        "bindings/jvm/src/main/java/com/strling/jvm/NativeClient.java": "90754af5c72c76cf7635c969b6529c50eaa9d9db62b3ca8ce3edac8720a22e87",
         "bindings/jvm/src/main/java/com/strling/jvm/NativeLoadException.java": "a4a9370fba8159144f27d0626c0520aedfe3bd1e4aaee652ba957ef218612542",
         "bindings/jvm/src/main/java/com/strling/jvm/ProtocolException.java": "66a33d5098202b3c4789a8e3794cc77619fd2d8219ada0e47444c25858fa2ff0",
         "bindings/jvm/src/main/java/com/strling/jvm/TransportException.java": "376e846471dd57737f03049b68dcc97352a6fdf253bbac3698640d5f5a8f196b"
     },
     "compiler_variants": {
-        "11": "c161f8d55383fde4f1e0b8459f9cf558414899e4efaaac80fac505443cb292a0",
-        "21": "dc97cc5d386709ed8516bfb2dc4f2989901d0a77c54095b348697ddb9016796a"
+        "11": "c3efa7268f7eef051a8b7327c6f71987e23793fa6e6d341f10dcf265810ede56",
+        "21": "4491ae5d8c166c0119b4053ca738a43a10f20413d6f1eeea67d97ab76ef6a764"
     }
 }

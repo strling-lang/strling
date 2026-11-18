@@ -6,7 +6,7 @@ require_relative 'strling/stdlib_generated'
 
 # Thin Ruby projection of the versioned canonical STRling interop protocol.
 module Strling
-  VERSION = '4.0.2'
+  VERSION = '4.0.3'
   INTEROP_PROTOCOL_VERSION = '1.0.0'
   NATIVE_ABI_VERSION = 1
   MAX_INTEROP_REQUEST_BYTES = 10_485_760

@@ -1,6 +1,6 @@
 # STRling TypeScript adapter
 
-STRling 4.0.2 public installation requires the separately authorized release.
+STRling 4.0.3 public installation requires the separately authorized release.
 Check the release certificate for public availability and independent acceptance.
 Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
@@ -13,7 +13,7 @@ emitter, or independent standard-library implementation.
 ## Installation
 
 ```bash
-npm install @strling-lang/strling@4.0.2
+npm install @strling-lang/strling@4.0.3
 ```
 
 Node 22 is the declared runtime. The package is ESM-only. The ratified support

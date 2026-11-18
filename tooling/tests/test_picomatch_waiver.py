@@ -77,6 +77,8 @@ class PicomatchWaiverTests(unittest.TestCase):
             record = yaml.safe_load(
                 (ROOT / f"governance/waivers/{WAIVER}.yaml").read_text(encoding="utf-8")
             )
+            self.assertEqual("retired", record["status"])
+            record["status"] = "accepted"
             if record_change:
                 record_change(record)
             target = root / f"governance/waivers/{WAIVER}.yaml"
@@ -202,19 +204,27 @@ class PicomatchWaiverTests(unittest.TestCase):
         self.assertEqual(
             "61fb4141faa5034964c5de17eb8b39a559b6cec9", assessment["source"]
         )
+        version = json.loads((ROOT / "governance/release-policy.json").read_bytes())[
+            "product"
+        ]["version"]
         for relative, expected in assessment["runtime_source_sha256"].items():
             with self.subTest(path=relative):
-                self.assertEqual(
-                    expected, hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
-                )
+                data = (ROOT / relative).read_bytes()
+                if relative == "bindings/typescript/src/STRling/product_version.ts":
+                    data = data.replace(version.encode(), b"4.0.2")
+                self.assertEqual(expected, hashlib.sha256(data).hexdigest())
         for dependency in assessment["dependency_roots"]:
             path = ROOT / dependency["root"]
             manifest = json.loads((path / "package.json").read_text(encoding="utf-8"))
             self.assertFalse(manifest.get("dependencies"))
             self.assertFalse(manifest.get("optionalDependencies"))
+            lock_bytes = (path / "package-lock.json").read_bytes()
+            if dependency["root"] == "bindings/typescript":
+                lock_bytes = lock_bytes.replace(
+                    f'"version": "{version}"'.encode(), b'"version": "4.0.2"', 2
+                )
             self.assertEqual(
-                dependency["lock_sha256"],
-                hashlib.sha256((path / "package-lock.json").read_bytes()).hexdigest(),
+                dependency["lock_sha256"], hashlib.sha256(lock_bytes).hexdigest()
             )
             lock = json.loads((path / "package-lock.json").read_text(encoding="utf-8"))
             for item in dependency["affected"]:
@@ -236,8 +246,8 @@ class PicomatchWaiverTests(unittest.TestCase):
             )
         )
 
-    def test_registrations_include_only_the_two_authorized_exceptions(self):
-        expected = {WAIVER, "WVR-SEC-VSCE-LICENSE-001"}
+    def test_retired_advisory_has_no_active_security_or_trust_registration(self):
+        expected = {"WVR-SEC-VSCE-LICENSE-001"}
         policy = json.loads(
             (ROOT / "governance/security-policy.json").read_text(encoding="utf-8")
         )
@@ -248,6 +258,12 @@ class PicomatchWaiverTests(unittest.TestCase):
         )
         self.assertEqual(expected, set(policy["security_waivers"]))
         self.assertEqual(expected, set(trust["allowed_waivers"]))
+        self.assertEqual(
+            "retired",
+            yaml.safe_load((ROOT / f"governance/waivers/{WAIVER}.yaml").read_bytes())[
+                "status"
+            ],
+        )
         self.assertEqual(
             ["high", "critical"], policy["vulnerability_policy"]["blocking_severities"]
         )

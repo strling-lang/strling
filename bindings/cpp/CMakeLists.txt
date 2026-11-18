@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(strling_cpp VERSION 4.0.2 LANGUAGES CXX)
+project(strling_cpp VERSION 4.0.3 LANGUAGES CXX)
 
 if(MSVC)
     get_filename_component(STRLING_NATIVE_BUILD_ROOT "${CMAKE_BINARY_DIR}/.." ABSOLUTE)

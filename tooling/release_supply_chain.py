@@ -44,7 +44,7 @@ SPDX_SCHEMA_PATH = (
 SECURITY_POLICY_PATH = ROOT / "governance/security-policy.json"
 TOOLCHAIN_PATH = ROOT / "toolchain.json"
 DEFERRED_CPP_ELIGIBILITY = "owner-deferred-conancenter-4.0.0"
-OWNER_DEFERRED_RELEASES = frozenset({"4.0.0", "4.0.1", "4.0.2"})
+OWNER_DEFERRED_RELEASES = frozenset({"4.0.0", "4.0.1", "4.0.2", "4.0.3"})
 INITIAL_PUBLICATION_SCOPE = {
     "release_line": "4.0.0",
     "owner_deferred_artifacts": ["release:cpp"],

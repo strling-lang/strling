@@ -186,11 +186,10 @@ Accepted security exceptions are listed in the normative policy and their exact 
 -   `WVR-SEC-VSCE-LICENSE-001` covers only ten enumerated VSCE signing
     package/version bindings whose metadata remains `SEE LICENSE IN LICENSE.txt`.
     Its current approved expiry is 2026-12-13 inclusive UTC.
--   `WVR-SEC-PICOMATCH-REDOS-001` accepts only the three enumerated high-severity
-    GHSA-fc5q-39xc-vjpf findings for development-only picomatch 2.3.2/4.0.7 in
-    LSP packaging and TypeScript testing through 2026-11-24 inclusive UTC.
-    The vulnerability remains unresolved. The [exposure assessment](../docs/migration/picomatch-402-exposure.md)
-    records the absence of a demonstrated published-runtime path and required controls.
+-   `WVR-SEC-PICOMATCH-REDOS-001` was retired on 2026-11-18 UTC after the advisory
+    was withdrawn and a fresh governed scan found zero matches in either root.
+    The historical waiver and [exposure assessment](../docs/migration/picomatch-402-exposure.md)
+    remain available. Existing development-only dependency pins and scanner enforcement remain in force.
 
 The record retains exact scope, owner, review context, rationale, expiry, and
 replacement work. It does not classify the unknown license as permitted. The

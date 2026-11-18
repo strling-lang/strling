@@ -1,6 +1,6 @@
 # STRling C++ adapter
 
-STRling 4.0.2 public installation requires the separately authorized release.
+STRling 4.0.3 public installation requires the separately authorized release.
 Check the release certificate for public availability and independent acceptance.
 Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
@@ -81,7 +81,7 @@ See [the API reference](docs/api_reference.md) and the
 
 ## Product compatibility
 
-Fourth Edition packages require the exact 4.0.2 native product identity in
+Fourth Edition packages require the exact 4.0.3 native product identity in
 addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
 product marker before loading; installed CMake packages check their static
 archive during configuration. Unmarked older kernels and mismatched product
@@ -96,7 +96,7 @@ installation above. The following coordinate is reserved in the STRling
 verification contract for a possible future ConanCenter deployment:
 
 ```bash
-conan install --requires=strling/4.0.2 --build=never
+conan install --requires=strling/4.0.3 --build=never
 ```
 
 Configure only the exact approved public Conan remote and registered host/build profile from the release handoff before this command. No Conan Center availability or alternate ABI/platform is implied. The binary consumer uses `--build=never`.

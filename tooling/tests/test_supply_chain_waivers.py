@@ -10,18 +10,63 @@ from unittest.mock import patch
 import pytest
 import yaml
 
+from tooling import release_supply_chain
 from tooling.release_supply_chain import ROOT, _dependency_resolution, _spdx_document
 from tooling.security import load_policy
 
 
 @pytest.fixture
-def risk():
+def historical_authority(tmp_path, monkeypatch):
+    root = tmp_path / "historical-authority"
     policy = load_policy()
+    waiver_id = "WVR-SEC-PICOMATCH-REDOS-001"
+    assert waiver_id not in policy["security_waivers"]
+    policy["security_waivers"].append(waiver_id)
+    paths = [
+        "governance/schemas/security-policy.schema.json",
+        "governance/schemas/waiver.schema.json",
+        *(
+            f"governance/waivers/{identity}.yaml"
+            for identity in policy["security_waivers"]
+        ),
+        *(
+            f"{directory}/{name}"
+            for directory in ("tooling/lsp-server", "bindings/typescript")
+            for name in ("package.json", "package-lock.json")
+        ),
+    ]
+    for relative in paths:
+        destination = root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / relative, destination)
+    waiver = root / f"governance/waivers/{waiver_id}.yaml"
+    record = yaml.safe_load(waiver.read_bytes())
+    assert record["status"] == "retired"
+    record["status"] = "accepted"
+    waiver.write_text(yaml.safe_dump(record), encoding="utf-8")
+    trust = json.loads(
+        (ROOT / "governance/release-certification-trust.json").read_bytes()
+    )
+    trust["allowed_waivers"].append(waiver_id)
+    for name, value in (
+        ("security-policy", policy),
+        ("release-certification-trust", trust),
+    ):
+        (root / f"governance/{name}.json").write_text(
+            json.dumps(value), encoding="utf-8"
+        )
+    monkeypatch.setattr(release_supply_chain, "ROOT", root)
+    return root, policy
+
+
+@pytest.fixture
+def risk(historical_authority):
+    authority, policy = historical_authority
     roots = {root["id"]: root for root in policy["dependency_roots"]}
     rows = {}
     for waiver in policy["security_waivers"]:
         record = yaml.safe_load(
-            (ROOT / f"governance/waivers/{waiver}.yaml").read_bytes()
+            (authority / f"governance/waivers/{waiver}.yaml").read_bytes()
         )
         for scope in record["security"]["matches"]:
             check_id = scope["check_id"]
@@ -93,11 +138,11 @@ def risk():
     }
 
 
-def resolve(risk, day=24, root=ROOT):
+def resolve(risk, day=24, root=None):
     with patch("tooling.security.datetime") as clock:
         clock.now.return_value = datetime(2026, 11, day, tzinfo=timezone.utc)
         return _dependency_resolution(
-            root,
+            root if root is not None else release_supply_chain.ROOT,
             {"security_policy": "governance/security-policy.json"},
             {"dependency_roots": ["typescript-npm"]},
             risk,
@@ -151,6 +196,11 @@ def test_expired_scope_rejected(risk):
     assert resolve(risk, day=25)[1] == 1
 
 
+def test_historical_waiver_rejected_under_current_policy(risk, monkeypatch):
+    monkeypatch.setattr(release_supply_chain, "ROOT", ROOT)
+    assert resolve(risk)[1] == 1
+
+
 def test_missing_scanner_and_wrong_input_rejected(risk):
     risk["checks"][0]["scanner"]["retrieval"] = "failed"
     assert resolve(risk)[1] == 1
@@ -159,11 +209,14 @@ def test_missing_scanner_and_wrong_input_rejected(risk):
     assert resolve(risk)[1] == 1
 
 
-def test_locked_runtime_copy_or_altered_authority_rejected(risk, tmp_path):
+def test_locked_runtime_copy_or_altered_authority_rejected(
+    risk, tmp_path, historical_authority
+):
+    authority, policy = historical_authority
+    tmp_path = tmp_path / "candidate"
     paths = ["governance/security-policy.json"]
     paths.extend(
-        f"governance/waivers/{identity}.yaml"
-        for identity in load_policy()["security_waivers"]
+        f"governance/waivers/{identity}.yaml" for identity in policy["security_waivers"]
     )
     for directory in ("tooling/lsp-server", "bindings/typescript"):
         paths.extend(
@@ -172,7 +225,7 @@ def test_locked_runtime_copy_or_altered_authority_rejected(risk, tmp_path):
     for relative in paths:
         destination = tmp_path / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(ROOT / relative, destination)
+        shutil.copyfile(authority / relative, destination)
     assert resolve(risk, root=tmp_path)[1] == 0
     lock_path = tmp_path / "bindings/typescript/package-lock.json"
     original = lock_path.read_bytes()

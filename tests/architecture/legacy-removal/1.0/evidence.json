@@ -35,21 +35,18 @@
             "dotnet-stdlib-surface-projections",
             "explanation-rendering-fixtures"
         ],
-        "covered_waiver_ids": [
-            "WVR-SEC-VSCE-LICENSE-001",
-            "WVR-SEC-PICOMATCH-REDOS-001"
-        ]
+        "covered_waiver_ids": ["WVR-SEC-VSCE-LICENSE-001"]
     },
-    "manifest_fingerprint": "sha256:10bde457824e4d4cd8e466bad8facd4cd1edd008f120a59c8bb139a5d875db28",
+    "manifest_fingerprint": "sha256:325eafe2bbaafcf6f057566881589e40a4fb740986e5e906a4d3fd5443673d77",
     "production_certification": {
         "path": "tests/architecture/legacy-removal/1.0/source-production-candidate-certification.json",
         "sha256": "d4b90eeca9c3d2d5c82a311ea99b7bd3ed1edf9a0310bcb62f3cb5b780544ab3",
         "accessible": true
     },
     "counts": {
-        "findings": 53,
+        "findings": 52,
         "by_disposition": {
-            "FALSE_POSITIVE_NON_SEMANTIC": 4,
+            "FALSE_POSITIVE_NON_SEMANTIC": 3,
             "REMOVE_NOW": 9,
             "RETAIN_GENERATED_ARTIFACT": 12,
             "RETAIN_NON_NORMATIVE_HISTORY": 6,
@@ -79,7 +76,6 @@
             "lsp": 1,
             "lua": 2,
             "migration": 3,
-            "npm": 1,
             "perl": 2,
             "php": 1,
             "python": 1,
@@ -102,7 +98,7 @@
             "documentation-history": 1,
             "generated-projection": 2,
             "migration-oracle": 4,
-            "non-semantic": 4,
+            "non-semantic": 3,
             "package-build": 4,
             "stdlib-helpers": 6
         },
@@ -114,7 +110,7 @@
             "generated-artifact": 14,
             "package": 3,
             "tooling": 7,
-            "waiver": 3
+            "waiver": 2
         }
     },
     "fixture_reconciliation": {
@@ -407,5 +403,5 @@
         "status": "ready",
         "blocking_requirements": []
     },
-    "fingerprint": "sha256:278bf8bba5c9f8815a103c8b52a952f0f67c554cbcf756be8021c476669023aa"
+    "fingerprint": "sha256:02826cd9e7ba7912948740d6643e3e235e81b38ced4214476744619336456724"
 }

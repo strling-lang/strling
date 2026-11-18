@@ -9,8 +9,7 @@
         "release"
     ],
     "allowed_waivers": [
-        "WVR-SEC-VSCE-LICENSE-001",
-        "WVR-SEC-PICOMATCH-REDOS-001"
+        "WVR-SEC-VSCE-LICENSE-001"
     ],
     "closure_paths": [
         "tests/certification/release-candidate/1.0/current/**",

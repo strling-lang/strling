@@ -6,7 +6,7 @@
     "certification_verifier": "4154155adcf60c74d145936d442b4a45d7865145",
     "certification_trust": "governance/release-certification-trust.json",
     "initial_publication_scope": {
-        "release_line": "4.0.2",
+        "release_line": "4.0.3",
         "owner_deferred_artifacts": ["release:cpp"],
         "engineering_coverage_required": true,
         "deferred_is_publicly_verified": false

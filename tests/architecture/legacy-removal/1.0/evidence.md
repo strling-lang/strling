@@ -3,15 +3,15 @@
 > This report is mechanically derived from the governed JSON manifest and live repository evidence. It is not an independent source of truth.
 
 -   Baseline SHA: `9c069d1dacda0054e59fc99aaddffbbba8e81109`
--   Manifest fingerprint: `sha256:10bde457824e4d4cd8e466bad8facd4cd1edd008f120a59c8bb139a5d875db28`
--   Evidence fingerprint: `sha256:278bf8bba5c9f8815a103c8b52a952f0f67c554cbcf756be8021c476669023aa`
+-   Manifest fingerprint: `sha256:325eafe2bbaafcf6f057566881589e40a4fb740986e5e906a4d3fd5443673d77`
+-   Evidence fingerprint: `sha256:02826cd9e7ba7912948740d6643e3e235e81b38ced4214476744619336456724`
 -   Readiness: **READY**
 
 ## Aggregate findings
 
 | Disposition                    | Count |
 | ------------------------------ | ----: |
-| `FALSE_POSITIVE_NON_SEMANTIC`  |     4 |
+| `FALSE_POSITIVE_NON_SEMANTIC`  |     3 |
 | `REMOVE_NOW`                   |     9 |
 | `RETAIN_GENERATED_ARTIFACT`    |    12 |
 | `RETAIN_NON_NORMATIVE_HISTORY` |     6 |
@@ -125,7 +125,6 @@ The product semantic-path scan reports exactly five permitted compiler-named fac
 | `TRANSPORT-INTEROP`               | `interop`             | `adapter-transport`        | `RETAIN_THIN_ADAPTER`          | The bridge is the stable host-neutral transport boundary required by the architecture.                                                                                                                                      |
 | `TRANSPORT-JVM`                   | `jvm`                 | `adapter-transport`        | `RETAIN_THIN_ADAPTER`          | One shared bridge prevents Java/Kotlin transport duplication and contains no semantics.                                                                                                                                     |
 | `WAIVER-PERL-PARSER-CASE`         | `perl`                | `architecture-governance`  | `REMOVE_NOW`                   | Neither bindings/perl/lib/STRling/Core/Parser.pm nor bindings/perl/lib/STRling/Core/parser.pm is tracked or present; the certified Perl route contains no parser.                                                           |
-| `WAIVER-PICOMATCH-REDOS`          | `npm`                 | `non-semantic`             | `FALSE_POSITIVE_NON_SEMANTIC`  | Owner-authorized exact development-tooling risk acceptance through2026-11-24 inclusive UTC; the real vulnerability remains reported and is not resolved.                                                                    |
 | `WAIVER-VSCE-LICENSE`             | `vscode`              | `non-semantic`             | `FALSE_POSITIVE_NON_SEMANTIC`  | P19 must preserve the existing security waiver unchanged; its retirement remains governed by license classification or dependency isolation, not legacy architecture removal.                                               |
 
 ## Readiness conclusion

@@ -9,7 +9,7 @@ import 'package:path/path.dart' as path;
 const interopProtocolVersion = '1.0.0';
 const nativeAbiVersion = 1;
 // Generated product projection; tooling/sync_versions.py owns this value.
-const _productVersion = '4.0.2';
+const _productVersion = '4.0.3';
 const maxInteropRequestBytes = 10485760;
 const maxInteropResponseBytes = 33554432;
 

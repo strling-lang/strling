@@ -174,7 +174,7 @@ def publication_obligations(manifest: dict) -> tuple[list[dict], list[dict]]:
     """Initial public scope is source authority, never a caller-selected subset.
 
     All implementation/build obligations remain registered. Only the owner's
-    exact owner-approved 4.0.0/4.0.1/4.0.2 ConanCenter deferral can be outside public execution.
+    Only an exact owner-approved ConanCenter deferral can be outside public execution.
     """
     deferred_ids = set()
     for artifact in manifest["artifacts"]:

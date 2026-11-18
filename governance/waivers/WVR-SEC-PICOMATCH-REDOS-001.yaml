@@ -1,6 +1,6 @@
 record_version: 1.0.0
 waiver_id: WVR-SEC-PICOMATCH-REDOS-001
-status: accepted
+status: retired
 rule: SEC-VULN-BLOCKING
 scope:
     description: Three exact high-severity picomatch advisory findings in two development-only dependency roots; no runtime or service exception.
@@ -57,6 +57,8 @@ security:
 retirement:
     condition: Retire by expiry or immediately upon a verified compatible patched release, scope drift, or demonstrated published-runtime exposure; do not renew implicitly.
     expires_on: "2026-11-24"
+    # Retired 2026-11-18 UTC after the advisory withdrawal and a live
+    # scan confirmed zero matches in both governed roots.
     replacement_work:
         - Check the official npm registry and upstream GitHub releases during continuing release preparation and before publication authorization.
         - Qualify a verified compatible upstream fix in the next governed release, updating exact dependency locks and required source-bound evidence.

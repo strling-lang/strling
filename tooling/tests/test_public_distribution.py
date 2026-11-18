@@ -31,7 +31,7 @@ def test_versioned_contract_matches_registry():
     assert validate_contract(ROOT)["artifacts"] == 17
 
 
-@pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2"])
+@pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2", "4.0.3"])
 def test_public_scope_schema_accepts_exact_owner_approved_versions(version):
     from jsonschema import Draft202012Validator
 
@@ -50,7 +50,7 @@ def test_public_scope_schema_accepts_exact_owner_approved_versions(version):
 @pytest.mark.parametrize(
     "field,value",
     [
-        ("release_line", "4.0.3"),
+        ("release_line", "4.0.4"),
         ("release_line", "4.1.0"),
         ("release_line", "4.0.2-rc.1"),
         ("owner_deferred_artifacts", []),
@@ -365,7 +365,7 @@ def test_deferral_cannot_be_transferred_to_another_route(manifest, field, value)
         publication_obligations(manifest)
 
 
-@pytest.mark.parametrize("version", ["4.0.3", "4.1.0", "5.0.0", "4.0.0-rc.0"])
+@pytest.mark.parametrize("version", ["4.0.4", "4.1.0", "5.0.0", "4.0.0-rc.0"])
 def test_deferral_is_bound_to_initial_release_version(manifest, version):
     from tooling import release_supply_chain as supply
 
@@ -382,7 +382,7 @@ def test_deferral_is_bound_to_initial_release_version(manifest, version):
             supply.validate_manifest(manifest, root=ROOT)
 
 
-@pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2"])
+@pytest.mark.parametrize("version", ["4.0.0", "4.0.1", "4.0.2", "4.0.3"])
 def test_deferral_preserves_only_owner_approved_release_versions(manifest, version):
     from tooling import release_supply_chain as supply
 

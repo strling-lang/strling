@@ -1,6 +1,6 @@
 # STRling Go adapter
 
-STRling 4.0.2 public installation requires the separately authorized release.
+STRling 4.0.3 public installation requires the separately authorized release.
 Check the release certificate for public availability and independent acceptance.
 Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
@@ -47,7 +47,7 @@ socket route, package-local parser, target selection, or regex emitter exists.
 
 ## Product compatibility
 
-Fourth Edition packages require the exact 4.0.2 native product identity in
+Fourth Edition packages require the exact 4.0.3 native product identity in
 addition to ABI 1 and protocol 1.0.0. Dynamic loaders check the bounded binary
 product marker before loading; installed CMake packages check their static
 archive during configuration. Unmarked older kernels and mismatched product
@@ -60,11 +60,11 @@ The compiler semantics and versioned ABI/protocol are unchanged.
 Install the immutable product source tag explicitly:
 
 ```sh
-go get github.com/strling-lang/strling/bindings/go@go-v4.0.2
+go get github.com/strling-lang/strling/bindings/go@go-v4.0.3
 ```
 
 Go records a canonical pseudo-version for this non-semantic-version tag. The
-product release remains STRling 4.0.2, mapped to the exact certified source
-commit by `go-v4.0.2`. The module path remains unchanged. Verification compares
+product release remains STRling 4.0.3, mapped to the exact certified source
+commit by `go-v4.0.3`. The module path remains unchanged. Verification compares
 the resolved Git commit with release provenance; it does not infer product
 identity from the pseudo-version's leading module major number.

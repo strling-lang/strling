@@ -85,6 +85,14 @@
                         "engineering_coverage_required": true,
                         "deferred_is_publicly_verified": false
                     }
+                },
+                {
+                    "const": {
+                        "release_line": "4.0.3",
+                        "owner_deferred_artifacts": ["release:cpp"],
+                        "engineering_coverage_required": true,
+                        "deferred_is_publicly_verified": false
+                    }
                 }
             ]
         },

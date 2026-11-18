@@ -1,0 +1,149 @@
+record_version: 2.0.0
+scope:
+    diff:
+        base: 87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/**
+        - bindings/**
+        - Cargo.toml
+        - Cargo.lock
+        - core/internal/Cargo.toml
+        - core/internal/Cargo.lock
+        - toolchain.json
+        - tooling/**
+        - governance/**
+        - docs/**
+        - README.md
+        - tests/certification/release-supply-chain/1.0/manifest.json
+        - tests/certification/release-supply-chain/1.0/jvm-product-builds.json
+        - tests/certification/release-supply-chain/1.0/fixtures/**
+        - tests/certification/profile-source/1.0/definitions.json
+        - tests/certification/performance-resource/1.0/runner/Cargo.lock
+        - tests/adapters/3.0/release-graph.json
+        - tests/adapters/binding-support-4.0/evidence.json
+        - tests/adapters/dotnet-3.0/release-graph.json
+        - tests/documentation/1.0/manifest.json
+        - tests/architecture/legacy-removal/1.0/evidence.json
+        - tests/architecture/legacy-removal/1.0/evidence.md
+    forbidden_paths:
+        - core/src/**
+        - spec/**
+        - tests/certification/hardened-core/**
+        - tests/certification/release-packaging/**
+        - tests/certification/public-verification/**
+        - tests/certification/release-candidate/1.0/current/**
+        - governance/waivers/WVR-SEC-VSCE-LICENSE-001.yaml
+        - docs/migration/records/publication-402-fix-forward.yaml
+    expected_files:
+        - governance/release-policy.json
+        - governance/security-policy.json
+        - governance/waivers/WVR-SEC-PICOMATCH-REDOS-001.yaml
+        - docs/migration/records/publication-403-fix-forward.yaml
+    permitted_generated_changes:
+        - binding-support-certification-evidence
+        - dependency-license-evidence
+        - dotnet-adapter-release-graph
+        - jvm-adapter-release-graph
+        - kotlin-product-verification
+        - legacy-removal-inventory-evidence
+        - lua-release-rockspec
+        - package-manager-lockfiles
+        - product-support-matrix
+        - profile-source-definitions
+        - public-contract-snapshots
+        - release-certification-trust
+        - release-candidate-certification-trust
+        - release-policy-documentation
+        - release-supply-chain-contract-fixture
+        - version-synchronized-metadata
+    expected_generated_outputs:
+        - legacy-removal-inventory-evidence
+        - release-certification-trust
+        - release-candidate-certification-trust
+        - dotnet-adapter-release-graph
+        - jvm-adapter-release-graph
+        - kotlin-product-verification
+        - package-manager-lockfiles
+        - product-support-matrix
+        - public-contract-snapshots
+        - release-policy-documentation
+        - version-synchronized-metadata
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Canonical compiler semantics, diagnostics and supported target behavior remain in force.
+    public_api_change:
+        level: intentional-correction
+        affected_surfaces:
+            - c-public-api
+            - cpp-public-api
+            - csharp-public-api
+            - fsharp-public-api
+            - php-public-api
+        evidence:
+            - Existing binding version identities advance to 4.0.3. Public API shapes and canonical semantics are preserved.
+    diagnostic_change:
+        level: none
+        evidence:
+            - Canonical compiler semantics, diagnostics and supported target behavior remain in force.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Canonical compiler semantics, diagnostics and supported target behavior remain in force.
+    generated_output_change:
+        level: intentional-correction
+        evidence:
+            - Regenerate registered version, trust, and documentation projections for the authorized coordinate and exact
+              active waiver inventory.
+    schema_change:
+        level: intentional-correction
+        evidence:
+            - Register the exact 4.0.3 coordinate with the existing ConanCenter deferral. Preserve prior candidate coordinates
+              and mandatory checks.
+    architecture_change:
+        level: intentional-correction
+        evidence:
+            - Current trust removes only the retired development-tooling waiver. Preserve the verifier code and historical
+              policy contexts.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: contract
+      command: Registered version, release-policy, generated-artifact, public-distribution, package and trust checks
+      expected_result: Exact 4.0.3 projections with unchanged trust authorities and support boundaries.
+    - name: unit
+      command: Affected positive and adversarial Windows/Linux tests and actual-client nonpublishing protocol qualification
+      expected_result: No deterministic registry/toolchain prerequisite remains unresolved.
+    - name: integration
+      command:
+          Fresh 17-route distribution builds, independent comparisons and applicable consumers; Local, Pull Request,
+          Full and no-reuse Release; independent reconstruction/signing/hosted acceptance
+      expected_result: All registered required operations pass or retain only the exact authorized existing waiver.
+    - name: quality
+      command: Governed security, licensing, architecture, lint and formatting checks
+      expected_result: No new waiver or unbounded dependency/platform claim.
+title: Fourth Edition 4.0.3 fix forward after advisory withdrawal
+status: in_progress
+objective:
+    Retire the exact stale picomatch waiver, preserve the pinned development dependencies, and independently
+    certify the 4.0.3 release coordinate. Preserve the 4.0.2 certificate, export and immutable publication-control
+    tag.
+checkpoints:
+    - name: Preserve 4.0.2 security stop and retire stale waiver
+      status: in_progress
+      evidence:
+          - check: Fresh 4.0.2 scan and exact waiver reconstruction
+            result: passed
+            details:
+                The withdrawn advisory resolved to zero findings. The 4.0.2 gate correctly failed closed. The owner
+                authorized retirement and fresh 4.0.3 certification while retaining the VSCE waiver, scanner enforcement
+                and existing dependency pins.
+commits: []

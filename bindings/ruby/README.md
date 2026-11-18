@@ -1,6 +1,6 @@
 # STRling Ruby adapter
 
-STRling 4.0.2 public installation requires the separately authorized release.
+STRling 4.0.3 public installation requires the separately authorized release.
 Check the release certificate for public availability and independent acceptance.
 Candidate tests use staged artifacts; certification alone does not prove publication.
 See the [support matrix](../../docs/support-matrix.md) for exact supported scopes.
@@ -47,7 +47,7 @@ See the [canonical interop contract](../../spec/interop/1.0/README.md) and the [
 After separately authorized publication, the exact proposed coordinate is:
 
 ```bash
-gem install strling --version 4.0.2
+gem install strling --version 4.0.3
 ```
 
 Use only the runtime, OS, CPU and native/WASM loading scope declared above and in the support matrix.

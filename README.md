@@ -14,13 +14,13 @@ specifications, canonical compiler, host integrations, and developer tooling.
 Versioned contracts,
 the broader draft specification, implemented capability, and source-bound
 certification are identified separately in the linked authority documents.
-STRling 4.0.2 installation commands require the separately authorized release.
+STRling 4.0.3 installation commands require the separately authorized release.
 Check its release certificate for public availability and independent acceptance;
 source-bound certification alone does not prove publication. The 4.0.0 and 4.0.1 publications
 were partial and have not achieved complete public verification. Their immutable
 packages, tags and certification evidence are preserved. The original
 [4.0.0 incident record](docs/migration/publication-400-partial.md) and
-[4.0.2 recovery record](docs/migration/records/publication-402-fix-forward.yaml)
+[4.0.3 recovery record](docs/migration/records/publication-403-fix-forward.yaml)
 identify the separate historical releases and current engineering scope.
 
 ## Why STRling

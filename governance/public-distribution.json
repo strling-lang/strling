@@ -3,7 +3,7 @@
     "contract": "strling-public-distribution-v1",
     "identity_authority": "governance/release-policy.json",
     "artifact_authority": "tests/certification/release-supply-chain/1.0/manifest.json",
-    "certification_verifier": "596577cc89c2216a2c077f44b87f192fb7fb2aa8",
+    "certification_verifier": "4154155adcf60c74d145936d442b4a45d7865145",
     "certification_trust": "governance/release-certification-trust.json",
     "initial_publication_scope": {
         "release_line": "4.0.2",

@@ -312,8 +312,19 @@ checkpoints:
                 Inclusive UTC expiry and explicit test clocks are enforced. Preserve original historical source identities,
                 signatures and artifact bytes. The original failed 61fb prerequisite remains failed. Fresh product certification
                 and final publication authorization remain mandatory."
+    - name: Independent supply-chain waiver reconstruction
+      status: passed
+      evidence:
+          - check: Qualified immutable verifier and all 17 historical-byte diagnostic routes
+            result: passed
+            details:
+                Verifier 4154155adcf60c74d145936d442b4a45d7865145 passed 19 criteria. The earlier 5efe2bfb candidate
+                and its aggregation failure remain historical. The diagnostic used its retained artifacts. A fresh distinct
+                product must reconstruct exact scanner, waiver, and SBOM evidence through all certification phases.
 commits:
     - sha: 03abf070600016f60ed7c7f43a1a17f662cf5348
       subject: Harden registry preflight and governed NuGet companion lookup
     - sha: 596577cc89c2216a2c077f44b87f192fb7fb2aa8
       subject: Bound temporary development-tooling risk acceptance and UTC expiry
+    - sha: 4154155adcf60c74d145936d442b4a45d7865145
+      subject: Verify development vulnerability waivers in supply-chain evidence

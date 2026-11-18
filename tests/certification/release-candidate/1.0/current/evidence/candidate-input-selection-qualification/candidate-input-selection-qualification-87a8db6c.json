@@ -1,0 +1,46 @@
+{
+  "status": "passed-archive-role-regression-and-adversarial-selection",
+  "source": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
+  "helper_sha256": "57ed150ce5168247c9083a47919c9b4db0f10399017f2a2ea8aa9afb412c2fca",
+  "qualification_code_sha256": "2296348da03e6987b04129517f94d23ab89804563e0a98995286c5c49997d9fc",
+  "original_failure_reproduced": true,
+  "cases": [
+    {
+      "name": "valid archive selected and exact index retained under separate role",
+      "status": "passed"
+    },
+    {
+      "name": "unregistered nonarchive rejected",
+      "status": "passed"
+    },
+    {
+      "name": "wrong-source archive rejected",
+      "status": "passed"
+    },
+    {
+      "name": "index-shaped document rejected as codec archive",
+      "status": "passed"
+    },
+    {
+      "name": "missing required index rejected",
+      "status": "passed"
+    },
+    {
+      "name": "substituted selected bytes rejected",
+      "status": "passed"
+    },
+    {
+      "name": "unexpected selected file rejected",
+      "status": "passed"
+    },
+    {
+      "name": "linked archive rejected",
+      "status": "passed"
+    }
+  ],
+  "count": 8,
+  "verifier_changed": false,
+  "producer_bytes_changed": false,
+  "publication_authorized": false,
+  "actual_archive_files": 157
+}

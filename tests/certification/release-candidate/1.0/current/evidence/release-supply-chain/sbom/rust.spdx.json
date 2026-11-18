@@ -5,7 +5,7 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"rust-binding-cargo\",\"inputs\":[{\"path\":\"Cargo.toml\",\"sha256\":\"66f997597877498f787a4aabc3dfa2c62c9cac97fb9ec5a36b3d3583d4e19c6a\"},{\"path\":\"Cargo.lock\",\"sha256\":\"6485962f8aad1623e96de7a6508fc343b927fa010bcd6723bc0907cc58774fa3\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.15\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.7.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.103\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.42\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"ryu\",\"reported_license\":\"Apache-2.0 OR BSL-1.0\",\"selected_license\":null,\"version\":\"1.0.23\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.228\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.228\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.228\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.145\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.110\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.22\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"a2f1c0461769e8ef7bd1eefc9bdcf58ce318c28947275532b075b6a6f732fddb\"}"
+            "comment": "{\"id\":\"rust-binding-cargo\",\"inputs\":[{\"path\":\"Cargo.toml\",\"sha256\":\"5f0193780e779912968e496997cfbd762a0ab10635f41d6cde9f36db21268915\"},{\"path\":\"Cargo.lock\",\"sha256\":\"bbec00b3a3b5b367d1d74dee658c6fecdc5555590c47b695496d9ebf84fbbec9\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.15\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.7.6\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.103\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.42\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"ryu\",\"reported_license\":\"Apache-2.0 OR BSL-1.0\",\"selected_license\":null,\"version\":\"1.0.23\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.228\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.228\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.228\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.145\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"2.0.110\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.22\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"bc386d9c7a5c4964fe6dd499a1679ee26300352ef34e7a9070ae832dcfd5eb44\"}"
         }
     ],
     "creationInfo": {
@@ -19,22 +19,22 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/rust/6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3",
+    "documentNamespace": "https://strling.dev/sbom/rust/08f7a2d3324c2deb40af7d7a6f28f649149eadf12cab689e11e012f41a9a7134",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "3fe537e60dec55afd710d98feaef2097ffcf83f2b813f06cdb82c6d40652ca19"
+                    "checksumValue": "ed92e816a7fde49e0d6c89079f2bf3a7f9ca9622f67be9a004357babe9bcd9c3"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "5f9f7e1db1dd8e4fe308de050dd4d01af1f245ae"
+                    "checksumValue": "5f44bbaf54e5e7fc2d23a07ce97b9ae0fa6b1969"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/.cargo_vcs_info.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/.cargo_vcs_info.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -45,15 +45,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "6485962f8aad1623e96de7a6508fc343b927fa010bcd6723bc0907cc58774fa3"
+                    "checksumValue": "bbec00b3a3b5b367d1d74dee658c6fecdc5555590c47b695496d9ebf84fbbec9"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "4665590adb04f9198d4afddd1553d0718dd19c33"
+                    "checksumValue": "3f87a6ef81ed47f6345441e1aa286fb0f62c3284"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/Cargo.lock",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/Cargo.lock",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -64,15 +64,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4dfdf555639f1732a0dc82cfa48b33e403bca4980c454ccc8011262c40462421"
+                    "checksumValue": "aef64952edc383a0e4f5a3fece1f0bcd7482598cdc8ae411c6b78ee9b1e672b5"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "2cc24c7cff89dceee4915a7603eed90c91286d64"
+                    "checksumValue": "a17e3091a9254f21c309dee579db10f4f679c97b"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/Cargo.toml",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/Cargo.toml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -83,15 +83,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "66f997597877498f787a4aabc3dfa2c62c9cac97fb9ec5a36b3d3583d4e19c6a"
+                    "checksumValue": "5f0193780e779912968e496997cfbd762a0ab10635f41d6cde9f36db21268915"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "a9c6543a39bff34f264f0fe25105e06e35bded9c"
+                    "checksumValue": "f61f7ccaa4d8f90e1cf6e10b642c6129cea399b4"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/Cargo.toml.orig",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/Cargo.toml.orig",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -110,7 +110,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/LICENSE",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -121,15 +121,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "636c52557f1d9832b3736c83fbe961f03fd499122078f5684cee6680b36b9c18"
+                    "checksumValue": "828017891af21e2ff9d2a531b76dcc5338bd9bd280ac12a248c2fd8f5417b8ab"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "063adcf0a37530d4c228461438cefd186eb49978"
+                    "checksumValue": "dd2a7ea85b763be0c02a8dc598564d504ca369e8"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/bindings/rust/README.md",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/bindings/rust/README.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -148,7 +148,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/bindings/rust/docs/api_reference.md",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/bindings/rust/docs/api_reference.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -167,7 +167,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/bindings/rust/examples/adapter_projection.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/bindings/rust/examples/adapter_projection.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -186,7 +186,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/bindings/rust/examples/demo.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/bindings/rust/examples/demo.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -205,7 +205,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/bindings/rust/tests/facade.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/bindings/rust/tests/facade.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -224,7 +224,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/capability_evaluation.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/capability_evaluation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -243,7 +243,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/capability_pipeline.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/capability_pipeline.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -262,7 +262,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/compiler_pipeline.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/compiler_pipeline.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -281,7 +281,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/conformance/mod.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/conformance/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -300,7 +300,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/diagnostic/mod.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/diagnostic/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -319,7 +319,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/diagnostic_generation.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/diagnostic_generation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -338,7 +338,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/diagnostic_generation/quality.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/diagnostic_generation/quality.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -357,7 +357,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/ecmascript_lowering.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/ecmascript_lowering.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -376,7 +376,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/ecmascript_serialization.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/ecmascript_serialization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -395,7 +395,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/editor_intelligence.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/editor_intelligence.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -414,7 +414,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/explanation.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/explanation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -433,7 +433,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/kernel.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/kernel.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -452,7 +452,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/lib_public.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/lib_public.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -471,7 +471,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/no_match_explanation.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/no_match_explanation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -490,7 +490,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/normalization.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/normalization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -509,7 +509,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/portability_diagnostics.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/portability_diagnostics.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -528,7 +528,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/portability_planning.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/portability_planning.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -547,7 +547,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/portability_planning/equivalence.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/portability_planning/equivalence.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -566,7 +566,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/portability_planning/validation.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/portability_planning/validation.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -585,7 +585,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/post_lowering_requirements.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/post_lowering_requirements.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -604,7 +604,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/protocol/analysis.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/protocol/analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -623,7 +623,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/protocol/exchange.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/protocol/exchange.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -642,7 +642,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/protocol/mod.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/protocol/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -661,7 +661,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/protocol/request.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/protocol/request.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -680,7 +680,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/protocol/result.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/protocol/result.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -699,7 +699,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/python_re_lowering.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/python_re_lowering.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -718,7 +718,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/python_re_serialization.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/python_re_serialization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -737,7 +737,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/regex_frontend.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/regex_frontend.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -756,7 +756,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/safety_analysis.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/safety_analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -775,7 +775,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/safety_analysis/repetition.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/safety_analysis/repetition.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -794,7 +794,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic/mod.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -813,7 +813,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic_analysis.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic_analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -832,7 +832,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic_analysis/capture.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic_analysis/capture.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -851,7 +851,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic_analysis/consumption.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic_analysis/consumption.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -870,7 +870,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic_compatibility.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic_compatibility.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -889,7 +889,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic_conversion.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic_conversion.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -908,7 +908,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic_frontend.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic_frontend.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -927,7 +927,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/semantic_rewrite.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/semantic_rewrite.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -946,7 +946,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/simply.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/simply.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -965,7 +965,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/source/mod.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/source/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -984,7 +984,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/stdlib.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/stdlib.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1003,7 +1003,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/structural_analysis.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/structural_analysis.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1022,7 +1022,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/target/mod.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/target/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1041,7 +1041,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/target/profile.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/target/profile.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1060,7 +1060,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/target_lowering.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/target_lowering.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1079,7 +1079,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/target_serialization.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/target_serialization.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1098,7 +1098,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/core/src/validation/mod.rs",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/core/src/validation/mod.rs",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1117,7 +1117,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/contracts/1.0/examples/compile-request/regex-compat-malformed.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/contracts/1.0/examples/compile-request/regex-compat-malformed.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1136,7 +1136,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/contracts/1.0/examples/compile-request/regex-compat-success.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/contracts/1.0/examples/compile-request/regex-compat-success.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1155,7 +1155,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/contracts/1.0/examples/compile-request/target-artifact.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/contracts/1.0/examples/compile-request/target-artifact.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1174,7 +1174,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/portability/equivalence/1.0/atomic-literal-elision.cases.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/portability/equivalence/1.0/atomic-literal-elision.cases.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1193,7 +1193,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/portability/equivalence/1.0/exact-once-repetition-elision.cases.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/portability/equivalence/1.0/exact-once-repetition-elision.cases.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1212,7 +1212,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/portability/equivalence/1.0/registry.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/portability/equivalence/1.0/registry.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1231,7 +1231,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/stdlib/essential_5.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/stdlib/essential_5.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1250,7 +1250,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/stdlib/registry/1.0/canonical-semantics.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/stdlib/registry/1.0/canonical-semantics.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1269,7 +1269,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/targets/profiles/ecmascript-2024.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/targets/profiles/ecmascript-2024.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1288,7 +1288,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/targets/profiles/pcre2-10.42.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/targets/profiles/pcre2-10.42.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1307,7 +1307,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/targets/profiles/pcre2-10.43.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/targets/profiles/pcre2-10.43.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1326,7 +1326,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/targets/profiles/python-re-3.11-bytes.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/targets/profiles/python-re-3.11-bytes.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1345,7 +1345,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/spec/targets/profiles/python-re-3.11.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/spec/targets/profiles/python-re-3.11.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1364,7 +1364,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/tests/conformance/ecmascript-runtime-certification.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/tests/conformance/ecmascript-runtime-certification.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1383,7 +1383,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/tests/conformance/pcre2-runtime-certification.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/tests/conformance/pcre2-runtime-certification.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1402,7 +1402,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "target/package/strling-4.0.1.crate!/strling-4.0.1/tests/conformance/python-re-runtime-certification.json",
+            "fileName": "target/package/strling-4.0.2.crate!/strling-4.0.2/tests/conformance/python-re-runtime-certification.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1416,7 +1416,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3"
+                    "checksumValue": "08f7a2d3324c2deb40af7d7a6f28f649149eadf12cab689e11e012f41a9a7134"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -1433,9 +1433,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "cfc7a17576538612e7533dc70e5978a8c87ad9b7"
+                "packageVerificationCodeValue": "ff6896351b5bec1004df15dda1e0027d7ce3e697"
             },
-            "versionInfo": "4.0.1"
+            "versionInfo": "4.0.2"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-c66319700a92",

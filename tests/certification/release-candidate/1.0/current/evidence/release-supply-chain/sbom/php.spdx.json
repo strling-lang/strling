@@ -5,7 +5,7 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"php-composer\",\"inputs\":[{\"path\":\"bindings/php/composer.json\",\"sha256\":\"44f1954b04f1226ce14ca68606e2895936eae74de3f68ffbc1d40d3f8cc0d516\"},{\"path\":\"bindings/php/composer.lock\",\"sha256\":\"5fff568b2f12caed6543841fe153c1cef7e349d8483e5bd0a190ba2725ca1f22\"}],\"policy\":{\"ecosystem\":\"composer\",\"integrity_mode\":\"composer_lock\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"myclabs/deep-copy\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.14.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"nikic/php-parser\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"v5.8.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phar-io/manifest\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phar-io/version\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.2.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-code-coverage\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"10.1.16\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-file-iterator\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.1.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-invoker\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-text-template\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-timer\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"6.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/phpunit\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"10.5.64\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/cli-parser\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/code-unit\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/code-unit-reverse-lookup\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/comparator\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/complexity\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.2.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/diff\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/environment\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"6.1.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/exporter\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.1.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/global-state\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"6.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/lines-of-code\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/object-enumerator\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/object-reflector\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/recursion-context\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/type\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/version\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"theseer/tokenizer\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.3.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"253355e3bce5650be68f6f3ca5c7879f8583e14d31c4ab8a18b2a28d59c1d341\"}"
+            "comment": "{\"id\":\"php-composer\",\"inputs\":[{\"path\":\"bindings/php/composer.json\",\"sha256\":\"873e0cd116e2e9485e1c2081cada84adf1b03ee01db45e39084b47a734bb00d5\"},{\"path\":\"bindings/php/composer.lock\",\"sha256\":\"a2f739c707272984fa87bd1f4a908658b630134f270a562a6274e0455558aef9\"}],\"policy\":{\"ecosystem\":\"composer\",\"integrity_mode\":\"composer_lock\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"myclabs/deep-copy\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.14.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"nikic/php-parser\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"v5.8.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phar-io/manifest\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phar-io/version\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.2.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-code-coverage\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"10.1.16\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-file-iterator\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.1.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-invoker\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-text-template\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/php-timer\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"6.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"phpunit/phpunit\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"10.5.64\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/cli-parser\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/code-unit\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/code-unit-reverse-lookup\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/comparator\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.0.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/complexity\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.2.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/diff\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.1.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/environment\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"6.1.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/exporter\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.1.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/global-state\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"6.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/lines-of-code\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"2.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/object-enumerator\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/object-reflector\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"3.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/recursion-context\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"5.0.2\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/type\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.0\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sebastian/version\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"4.0.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"theseer/tokenizer\",\"reported_license\":\"BSD-3-Clause\",\"selected_license\":null,\"version\":\"1.3.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"253355e3bce5650be68f6f3ca5c7879f8583e14d31c4ab8a18b2a28d59c1d341\"}"
         }
     ],
     "creationInfo": {
@@ -19,7 +19,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/php/f7506f2e302803dda974a6d70ed72256bb00bfbbc7c2287ca545786c164cbf36",
+    "documentNamespace": "https://strling.dev/sbom/php/91668557b1867d48c12e8781f0dc0b5172649a8374d96f87a46d0ac39b816ffb",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -539,11 +539,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4abc6f30678f860eaa1206f2970e1435bd62855c683e2b3e83c1cec605642833"
+                    "checksumValue": "0beabbb9db2fbf3ccbdc3d8d0baf65680100e9279b3d9afa41edccb95b78174d"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "7be09f76bdc89925176b8cd63b9d41fc126427c9"
+                    "checksumValue": "66d21dba146f9f137f06457b79a3d09c40dbbedf"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -672,11 +672,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5bdb086ce780744a126cef88111329235484adda15a05617bf3b5718d9fd0df9"
+                    "checksumValue": "5b3042fdb41896c18f9a58325f6d300b887d7d3c986cd9bc1f11be8c0150a251"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "d80d217cb5d40512f65ec1b5067978bc7fa16189"
+                    "checksumValue": "cdeaf083dbc8176b6deb4d00dabd2733002883c5"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -691,11 +691,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "44f1954b04f1226ce14ca68606e2895936eae74de3f68ffbc1d40d3f8cc0d516"
+                    "checksumValue": "873e0cd116e2e9485e1c2081cada84adf1b03ee01db45e39084b47a734bb00d5"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "887cdaed0dd57caaf5d7828731f0ba87ffbaa0d3"
+                    "checksumValue": "a504fa249b8b2bef8fb020a15510085e73101329"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -710,11 +710,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "5fff568b2f12caed6543841fe153c1cef7e349d8483e5bd0a190ba2725ca1f22"
+                    "checksumValue": "a2f739c707272984fa87bd1f4a908658b630134f270a562a6274e0455558aef9"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "e35d67d4641999a9e1d5b1440076c63cd6c60a9a"
+                    "checksumValue": "e01cdc3766ece05ee8df9270986ef610d95dbc4b"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -862,11 +862,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "cc4ba06f648d0e0483a8ab6d2f493ca953d72be615632032ecf40b214c58a58b"
+                    "checksumValue": "e0a1daa85bbf3b4f280d1835ab9ebc8b8d193be32c9039703d8461ef6cef3b8e"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "eb7b51ad8743b9f7615042172336697a0a80cd92"
+                    "checksumValue": "b60ff26246cbe5ac72aba9f8f13a81eb5d8d33b3"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -8655,7 +8655,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "f7506f2e302803dda974a6d70ed72256bb00bfbbc7c2287ca545786c164cbf36"
+                    "checksumValue": "91668557b1867d48c12e8781f0dc0b5172649a8374d96f87a46d0ac39b816ffb"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -8672,9 +8672,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "strling/strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "4a4b24b937cf74ec64dd35b95610eb6d4958e7ce"
+                "packageVerificationCodeValue": "c3890afa609db193478d5509ebdafa8fc68b4abe"
             },
-            "versionInfo": "4.0.1"
+            "versionInfo": "4.0.2"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-4555bba3f715",

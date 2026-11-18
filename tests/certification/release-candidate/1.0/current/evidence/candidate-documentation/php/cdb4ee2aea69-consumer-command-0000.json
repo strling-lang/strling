@@ -1,1 +1,1 @@
-{"command": ["php", "-d", "ffi.enable=1", "/tmp/strling-preview-documentation-kri7kg93/package/example.php", "/tmp/strling-preview-documentation-kri7kg93/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.03838417801307514}
+{"command": ["php", "-d", "ffi.enable=1", "/tmp/strling-preview-documentation-pg6c_v5g/package/example.php", "/tmp/strling-preview-documentation-pg6c_v5g/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.033830312080681324}

@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "python -m pip install STRling==4.0.1",
+            "command": "python -m pip install STRling==4.0.2",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "c17fe3a33b08b3e11b1ae44b7e6db06e8cb2418cf08005fcb3c8f051933524c3",
+      "sha256": "22cef75f17c31b7eb53c529a079fafc55629df63589cb7262ea3add3346f7cc3",
       "source_path": "bindings/python/README.md",
       "url": "https://evidence.example.test/bindings/python/README.md"
     },
     "provenance": {
-      "sha256": "9a2169c6c11157920a5e22f42cfe9516750b90eeef1422b83ae80b2df69e5b15",
+      "sha256": "b465043ea16e5490cc0b1786226b586bb0ddd73604d4be101422c649bbe35243",
       "url": "https://evidence.example.test/release-python.intoto.json"
     },
     "sbom": {
-      "sha256": "bdcdad791c9b1cb611f45b584dfdc7021c9dd87b2619dbd7ea511e9af6458693",
+      "sha256": "ddc1d5f4ed0908f85703b374371b3258bcf7257be720451ad2282d5a2596121f",
       "url": "https://evidence.example.test/release-python.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.6484472749871202,
+  "elapsed_seconds": 1.3381998689146712,
   "metadata": {
     "fields": [
       "license_expression",
@@ -47,7 +47,7 @@
       "check": "coordinate",
       "id": "release:python:coordinate",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -57,7 +57,7 @@
       "check": "metadata",
       "id": "release:python:metadata",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -67,7 +67,7 @@
       "check": "artifact",
       "id": "release:python:artifact",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -77,7 +77,7 @@
       "check": "source",
       "id": "release:python:source",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -87,7 +87,7 @@
       "check": "sbom",
       "id": "release:python:sbom",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -97,7 +97,7 @@
       "check": "provenance",
       "id": "release:python:provenance",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -107,7 +107,7 @@
       "check": "documentation",
       "id": "release:python:documentation",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -117,7 +117,7 @@
       "check": "scope",
       "id": "release:python:scope",
       "platform": null,
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "READY",
       "tier": "Supported"
     },
@@ -127,7 +127,7 @@
       "check": "installation",
       "id": "release:python:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -137,7 +137,7 @@
       "check": "public-api",
       "id": "release:python:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -147,7 +147,7 @@
       "check": "product-version",
       "id": "release:python:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -157,7 +157,7 @@
       "check": "canonical-compiler",
       "id": "release:python:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -167,7 +167,7 @@
       "check": "native-wasm",
       "id": "release:python:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -177,7 +177,7 @@
       "check": "target-compatibility",
       "id": "release:python:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -187,7 +187,7 @@
       "check": "kernel-rejection",
       "id": "release:python:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -197,7 +197,7 @@
       "check": "isolation",
       "id": "release:python:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -207,7 +207,7 @@
       "check": "installation",
       "id": "release:python:linux-x86_64:installation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -217,7 +217,7 @@
       "check": "public-api",
       "id": "release:python:linux-x86_64:public-api",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -227,7 +227,7 @@
       "check": "product-version",
       "id": "release:python:linux-x86_64:product-version",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -237,7 +237,7 @@
       "check": "canonical-compiler",
       "id": "release:python:linux-x86_64:canonical-compiler",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -247,7 +247,7 @@
       "check": "native-wasm",
       "id": "release:python:linux-x86_64:native-wasm",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -257,7 +257,7 @@
       "check": "target-compatibility",
       "id": "release:python:linux-x86_64:target-compatibility",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -267,7 +267,7 @@
       "check": "kernel-rejection",
       "id": "release:python:linux-x86_64:kernel-rejection",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -277,59 +277,59 @@
       "check": "isolation",
       "id": "release:python:linux-x86_64:isolation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d6ecf53b6e8e5758395c69369263a34bccb578ec0cda25835cd5df6f3970f84c",
+      "retrieval_sha256": "08a586689f5fbe204d110cfc32967bd665af29ede479854bb1a4b912d783b218",
       "status": "VERIFYING",
       "tier": "Supported"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/python/dist/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl": "b4dcc7eb06067f9d3cfa74d17b5f76cdabd33def922c4f9dc82884c77ec98764",
-    "bindings/python/dist/strling-4.0.1-cp312-none-win_amd64.whl": "14e3b1358d4cd19825c7fc6c18a19be98308dface7bc016f8b6d5a9fe92898ff",
-    "bindings/python/dist/strling-4.0.1.tar.gz": "3d229c83b50927e21bf525c24b1e58877a91306c52b12cb72dc31b5c15036026"
+    "bindings/python/dist/strling-4.0.2-cp312-none-manylinux_2_34_x86_64.whl": "5d451436718f12eac3ebdbe66d0ceee6e24635ab745ce0c2488d52feb3c8d10c",
+    "bindings/python/dist/strling-4.0.2-cp312-none-win_amd64.whl": "28199b16fa52afa1870fb39cff2d84d4ab555bd947947c7e0df5c0bf52fc30b8",
+    "bindings/python/dist/strling-4.0.2.tar.gz": "38843066068a09e24704c8f268543d1b46e88df8bfcadf9746201a97313b8e8c"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://pypi.org/pypi/STRling/4.0.1/json",
-      "sha256": "b687ce95ab813629fe2e95b90c6a5a2e7625c67aa262f250994e9122bcf81902",
+      "request_url": "https://pypi.org/pypi/STRling/4.0.2/json",
+      "sha256": "cd0ad289fffe2aa240bbe13fd4bddbd2b4fed63e125f8ad183b93a19b160920a",
       "size": 1141
     },
     {
       "authority": "synthetic",
-      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.1-cp312-none-manylinux_2_34_x86_64.whl",
-      "sha256": "b4dcc7eb06067f9d3cfa74d17b5f76cdabd33def922c4f9dc82884c77ec98764",
-      "size": 2773048
+      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.2-cp312-none-manylinux_2_34_x86_64.whl",
+      "sha256": "5d451436718f12eac3ebdbe66d0ceee6e24635ab745ce0c2488d52feb3c8d10c",
+      "size": 2773136
     },
     {
       "authority": "synthetic",
-      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.1-cp312-none-win_amd64.whl",
-      "sha256": "14e3b1358d4cd19825c7fc6c18a19be98308dface7bc016f8b6d5a9fe92898ff",
-      "size": 1657526
+      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.2-cp312-none-win_amd64.whl",
+      "sha256": "28199b16fa52afa1870fb39cff2d84d4ab555bd947947c7e0df5c0bf52fc30b8",
+      "size": 1657551
     },
     {
       "authority": "synthetic",
-      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.1.tar.gz",
-      "sha256": "3d229c83b50927e21bf525c24b1e58877a91306c52b12cb72dc31b5c15036026",
-      "size": 335982
+      "request_url": "https://files.pythonhosted.org/packages/synthetic/strling-4.0.2.tar.gz",
+      "sha256": "38843066068a09e24704c8f268543d1b46e88df8bfcadf9746201a97313b8e8c",
+      "size": 336041
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-python.spdx.json",
-      "sha256": "bdcdad791c9b1cb611f45b584dfdc7021c9dd87b2619dbd7ea511e9af6458693",
+      "sha256": "ddc1d5f4ed0908f85703b374371b3258bcf7257be720451ad2282d5a2596121f",
       "size": 196039
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-python.intoto.json",
-      "sha256": "9a2169c6c11157920a5e22f42cfe9516750b90eeef1422b83ae80b2df69e5b15",
+      "sha256": "b465043ea16e5490cc0b1786226b586bb0ddd73604d4be101422c649bbe35243",
       "size": 6571
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/python/README.md",
-      "sha256": "c17fe3a33b08b3e11b1ae44b7e6db06e8cb2418cf08005fcb3c8f051933524c3",
-      "size": 4310
+      "sha256": "22cef75f17c31b7eb53c529a079fafc55629df63589cb7262ea3add3346f7cc3",
+      "size": 4395
     }
   ]
 }

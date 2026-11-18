@@ -12,22 +12,22 @@
         },
         "artifact_identities": {
             "product": {
-                "sha256": "23d78a63cab75cf922694a24cbad7c9f64fc0a9d6c5b0d1f9b65bbba41d1b6e8",
-                "size_bytes": 2424513
+                "sha256": "2426d97f11e896d51e9f59b12a7652ef8b9fbe738f8016bb0532cc9d61d366d8",
+                "size_bytes": 2429073
             },
             "product_report": {
-                "sha256": "b51f58e133ba318ee3bb34713b7fe384942651239974537e2a3d1c48ccc1fbd7",
+                "sha256": "46191894e3cab753c1adb837bd25834ae93d1fed61183780063a8b8da0e349f1",
                 "size_bytes": 1177
             },
             "profile": {
-                "sha256": "32f8ba19dc951539284ee9d4b3b7b18d94bd4737072dfc0a6ca4728ad475548b",
-                "size_bytes": 1187364
+                "sha256": "9e37a4b7ae48f9984e5037eeb4acfa50ea9f29452c970d1abc87c15f649cac67",
+                "size_bytes": 1189565
             }
         },
         "artifacts": {
-            "product": "/var/tmp/strling-publication-17be3e0c-certification/artifacts/production-certification/17be3e0c81fb2816803653b73f0f9198d6711d5d/17be3e0c81fb-20261117T090328Z/product-certification-release.json",
-            "product_report": "/var/tmp/strling-publication-17be3e0c-certification/artifacts/production-certification/17be3e0c81fb2816803653b73f0f9198d6711d5d/17be3e0c81fb-20261117T090328Z/product-certification-release.md",
-            "profile": "/var/tmp/strling-publication-17be3e0c-certification/artifacts/production-certification/17be3e0c81fb2816803653b73f0f9198d6711d5d/17be3e0c81fb-20261117T090328Z/profile-release.json"
+            "product": "/var/tmp/strling-publication-87a8db6c-certification/artifacts/production-certification/87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6/87a8db6c1d08-20261118T130611Z/product-certification-release.json",
+            "product_report": "/var/tmp/strling-publication-87a8db6c-certification/artifacts/production-certification/87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6/87a8db6c1d08-20261118T130611Z/product-certification-release.md",
+            "profile": "/var/tmp/strling-publication-87a8db6c-certification/artifacts/production-certification/87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6/87a8db6c1d08-20261118T130611Z/profile-release.json"
         },
         "certification": {
             "claim_summary": {
@@ -90,12 +90,13 @@
                     "passed": 7
                 }
             },
-            "product_evidence_fingerprint": "aee2c1f6952e51c5af1ff8a5ea8bae57e20074c5fd89d6c37d2d83d4d27b2159",
+            "product_evidence_fingerprint": "36b2145a93e57a60a1c6c92a343b5a3eb86868fea92d2d82796744b6b767000e",
             "product_schema_version": "1.0.0",
             "profile_artifact_schema_version": "2.0.0",
             "profile_definition_fingerprint": "cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3",
             "profile_definition_version": "1.33.0",
             "waiver_references": [
+                "WVR-SEC-PICOMATCH-REDOS-001",
                 "WVR-SEC-VSCE-LICENSE-001"
             ]
         },
@@ -123,7 +124,7 @@
                     "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
                 }
             },
-            "disk_free_bytes": 373071482880,
+            "disk_free_bytes": 436097114112,
             "exact_runtime_toolchains": {
                 "manifest_sha256": "c79424081e94168fdb394dfe1f258b0cb1644a6d40e2bbb8d95bd0da37a0ff76",
                 "schema_version": "1.0.0",
@@ -181,7 +182,7 @@
             "preserved_execution_evidence": [
                 {
                     "path": "adversarial-semantic-runtime/evidence.json",
-                    "sha256": "a18de4f38203a8c7c06285300a930c35e5a9d27d93381c602787d931edf8d113",
+                    "sha256": "88349b729e0255af32f85ce116220aa1cdec030f4b61079c75af38815c222626",
                     "size_bytes": 26105
                 },
                 {
@@ -390,18 +391,18 @@
                     "size_bytes": 101384
                 },
                 {
-                    "path": "operation-results/8be190b7b7774abeb82d905f0d49af99/result.json",
-                    "sha256": "5dd53d9af0fda8933c01262a9a6b13f11f112838c079e5854515dcf57dcbf2ed",
+                    "path": "operation-results/c49229fc7df4462095e66784c5e65e01/result.json",
+                    "sha256": "7bcb614860cd49aa1abac7ff80ce19cd29217d06d0f80c897d2a6d1020f9cf14",
                     "size_bytes": 47038
                 },
                 {
-                    "path": "operation-results/8be190b7b7774abeb82d905f0d49af99/stderr.txt",
+                    "path": "operation-results/c49229fc7df4462095e66784c5e65e01/stderr.txt",
                     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                     "size_bytes": 0
                 },
                 {
-                    "path": "operation-results/8be190b7b7774abeb82d905f0d49af99/stdout.txt",
-                    "sha256": "5099b436fe050d32c9ed99d1b86322fd6bb80a2c381c09774c17de153d0e72bf",
+                    "path": "operation-results/c49229fc7df4462095e66784c5e65e01/stdout.txt",
+                    "sha256": "1be2b2b5466feb317abbec31ee17c4f78fb1ece5a50340d91f58d56e50ec7d31",
                     "size_bytes": 40874
                 }
             ],
@@ -708,7 +709,7 @@
             "storage_capacity": {
                 "contract_fingerprint": "bdaedd6454f2a965a113237ca6513e444dbf5d6dab106814b714b24979a34779",
                 "contract_path": "governance/production-certification-capacity.json",
-                "free_bytes": 373071482880,
+                "free_bytes": 436097114112,
                 "maximum_expected_transient_bytes": 103079215104,
                 "required_free_bytes": 120259084288,
                 "rounded_workspace_envelope_bytes": 34359738368,
@@ -719,7 +720,7 @@
         },
         "failure": null,
         "no_reuse": {
-            "clean_detached_worktree": "/var/tmp/strling-publication-17be3e0c-certification/.cert/production-certification/17be3e0c81fb-20261117T090328Z/source",
+            "clean_detached_worktree": "/var/tmp/strling-publication-87a8db6c-certification/.cert/production-certification/87a8db6c1d08-20261118T130611Z/source",
             "final_root_status": "",
             "final_source_status": "",
             "generated_artifacts_recreated": true,
@@ -730,14 +731,14 @@
         "publication_authorized": false,
         "source": {
             "branch": "dev",
-            "sha": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+            "sha": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
             "status_porcelain": ""
         },
         "status": "passed"
     },
-    "evidence_fingerprint": "d083ddbbb94be66aadceab07354a0dd29acfac01ae950a504d673320ca4206a4",
+    "evidence_fingerprint": "742dfdbd7bf23ed85bdb75e60d21ff94ccdc6cfd26f5c61c8d6e031cec9017e8",
     "execution_metadata": {
-        "generated_at": "2026-11-17T10:55:34.059095+00:00"
+        "generated_at": "2026-11-18T14:57:07.875897+00:00"
     },
     "schema_version": "1.0.0"
 }

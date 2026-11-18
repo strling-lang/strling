@@ -5,7 +5,7 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"perl-cpan\",\"inputs\":[{\"path\":\"bindings/perl/Makefile.PL\",\"sha256\":\"99172efca347ef49f0a1bc58bb01edb81fa35cdd6e368a50f47bad97c63b772a\"},{\"path\":\"bindings/perl/dist.ini\",\"sha256\":\"52fb0ce5f3eabfedee9824f3dcb5fdc96de0de40d775cca57e0c272ae3595b7c\"},{\"path\":\"bindings/perl/cpanfile\",\"sha256\":\"c63805db07aaeeb167fce9a569ef1db5eee9e0f1f4109ab89c989254aa717b73\"},{\"path\":\"bindings/perl/cpanfile.snapshot\",\"sha256\":\"f3b54b3304b0e9faed6bce49a55f099418bd761cb6e56ab3e8e85e6de740d766\"}],\"policy\":{\"ecosystem\":\"cpan\",\"integrity_mode\":\"carton_snapshot\",\"risk_mode\":\"cpansa_evidence\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Capture-Tiny\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"0.50\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FFI-CHECKLIB-0.31\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"FFI-CheckLib\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"0.31\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FFI-PLATYPUS-2.11\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"FFI-Platypus\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"2.11\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FILE-WHICH-1.27\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"File-Which\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"1.27\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"57f7a0fe9362cdd5552221ed6ef573c0e1dbb24766618898c104b0f325c62d2f\"}"
+            "comment": "{\"id\":\"perl-cpan\",\"inputs\":[{\"path\":\"bindings/perl/Makefile.PL\",\"sha256\":\"99172efca347ef49f0a1bc58bb01edb81fa35cdd6e368a50f47bad97c63b772a\"},{\"path\":\"bindings/perl/dist.ini\",\"sha256\":\"414d33a9c17b82f80c907c138478ccf6d9d4c02bce87c61911af74a1607802b4\"},{\"path\":\"bindings/perl/cpanfile\",\"sha256\":\"c63805db07aaeeb167fce9a569ef1db5eee9e0f1f4109ab89c989254aa717b73\"},{\"path\":\"bindings/perl/cpanfile.snapshot\",\"sha256\":\"f3b54b3304b0e9faed6bce49a55f099418bd761cb6e56ab3e8e85e6de740d766\"}],\"policy\":{\"ecosystem\":\"cpan\",\"integrity_mode\":\"carton_snapshot\",\"risk_mode\":\"cpansa_evidence\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"Capture-Tiny\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"0.50\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FFI-CHECKLIB-0.31\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"FFI-CheckLib\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"0.31\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FFI-PLATYPUS-2.11\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"FFI-Platypus\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"2.11\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-CPAN-FILE-WHICH-1.27\",\"distribution_scope\":\"distributed-runtime\",\"name\":\"File-Which\",\"reported_license\":\"Artistic-1.0-Perl OR GPL-1.0-or-later\",\"selected_license\":\"Artistic-1.0-Perl\",\"version\":\"1.27\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"57f7a0fe9362cdd5552221ed6ef573c0e1dbb24766618898c104b0f325c62d2f\"}"
         }
     ],
     "creationInfo": {
@@ -19,7 +19,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/perl/830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811",
+    "documentNamespace": "https://strling.dev/sbom/perl/dac9ec47e871afc97679ff422ad3ced82cd6ab49cf09c261f619f7ba58748391",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -34,7 +34,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/LICENSE",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -53,7 +53,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/MANIFEST",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/MANIFEST",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -64,15 +64,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "75633609df501f3f8e8620ca7419ff0ce78f96838919c863acf332d751ecb148"
+                    "checksumValue": "bdecd6239c929f28d649060894ac2d39e21ed41567545918eeb096b847848909"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "5b9e62e69d0e155e4ec9d3ee984f5f93fed79d41"
+                    "checksumValue": "933321d6b84ed08b53641361b4824cc302a22fae"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/META.json",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/META.json",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -83,15 +83,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "21bc846d7b6beb15392f8d87b90766ef376684da4827fa217bbbcd03aacccb2e"
+                    "checksumValue": "f26e2996f636a46c00b88e1c814ca01af598d704d3dea34cf93b8c02cedd1aed"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "dae1431489ccb6783837d38a247471ca6cae57b3"
+                    "checksumValue": "f7a25ce97cc3c9e24213270e043feeaa9bfa3701"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/META.yml",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/META.yml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -110,7 +110,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/Makefile.PL",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/Makefile.PL",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -121,15 +121,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "320590ba3172602cff3336b5ae495136e12e5fc2d9d8e9f4b19e8885f29b3829"
+                    "checksumValue": "22f320c5ec7ef42e2afa92ecf9fba54ab96d84c53da1f10f01ea5225c1bee011"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "dc808239523cf9745b30245ffc9eaa19f2b0b7f3"
+                    "checksumValue": "c52ee9d612b023624125ba150d78b4b9770b1003"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/README.md",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/README.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -148,7 +148,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/cpanfile",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/cpanfile",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -159,15 +159,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "d741aa65a84a857b2f98ce12898bfe3280784b27b0e0ecb7af2dd224ae8d6a2c"
+                    "checksumValue": "749b6156742429db67aa84d412d9082829bad2ed4c4646571d6e36c30d573410"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "a736a4974205435eee1875bf4db9c8d61d1824b7"
+                    "checksumValue": "02fb971608177543e8f3f4a4c9ee9eabe82112ed"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/lib/STRling.pm",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/lib/STRling.pm",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -186,7 +186,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/lib/STRling/NativeClient.pm",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/lib/STRling/NativeClient.pm",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -205,7 +205,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/lib/STRling/Requests.pm",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/lib/STRling/Requests.pm",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -224,7 +224,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/lib/STRling/StdlibGenerated.pm",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/lib/STRling/StdlibGenerated.pm",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -243,7 +243,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/lib/STRling/StrictJSON.pm",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/lib/STRling/StrictJSON.pm",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -262,7 +262,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/perl/STRling-4.0.1.tar.gz!/STRling-4.0.1/t/adapter.t",
+            "fileName": "bindings/perl/STRling-4.0.2.tar.gz!/STRling-4.0.2/t/adapter.t",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -276,7 +276,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811"
+                    "checksumValue": "dac9ec47e871afc97679ff422ad3ced82cd6ab49cf09c261f619f7ba58748391"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -293,9 +293,9 @@
             "licenseDeclared": "Apache-2.0",
             "name": "STRling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "af7e752e2877e8298027b4af0a3ab0074745cbf6"
+                "packageVerificationCodeValue": "b894049ccdaa80aee6ba5b8598681ef9262431b6"
             },
-            "versionInfo": "4.0.1"
+            "versionInfo": "4.0.2"
         },
         {
             "SPDXID": "SPDXRef-Dependency-1-54dd268fcaa7",

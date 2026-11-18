@@ -13,7 +13,7 @@
                     "release:lua",
                     "--preview"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.2",
                 "registry": "luarocks.org",
                 "support": {
                     "external_prerequisites": [
@@ -58,9 +58,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                 },
                 {
                     "digest": {
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:lua",
+                "invocationId": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6:release:lua",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -85,15 +85,15 @@
     "subject": [
         {
             "digest": {
-                "sha256": "1d01ab7a685e8d6731f4f1f0ecbd1fcbfcb1cee607374356514780af5043b560"
+                "sha256": "e15733805f07f8fd704865a5eae3ebd355bb08a7f5eff8a85865d9fe84302881"
             },
-            "name": "bindings/lua/strling-4.0.1-1.rockspec"
+            "name": "bindings/lua/strling-4.0.2-1.rockspec"
         },
         {
             "digest": {
-                "sha256": "11666b94ed17d0f87ff9d651106b79fb531bf24b46811872b3072263038d1af1"
+                "sha256": "6f8f7210469d598e06d2d65a743c635ba1600d1a644ab3a86134bc3aca1b8b8d"
             },
-            "name": "bindings/lua/strling-4.0.1-1.src.rock"
+            "name": "bindings/lua/strling-4.0.2-1.src.rock"
         }
     ]
 }

@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "go get github.com/strling-lang/strling/bindings/go@go-v4.0.1",
+            "command": "go get github.com/strling-lang/strling/bindings/go@go-v4.0.2",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "8ff500d2f178f30a57123ceeed258c25b25efd306f15d2202d9d816bedc76a4f",
+      "sha256": "d13a64fc038f70ec8270cf63af81bdf7e05de7e212180154f1733521e3d4412d",
       "source_path": "bindings/go/README.md",
       "url": "https://evidence.example.test/bindings/go/README.md"
     },
     "provenance": {
-      "sha256": "137c1da211be9b5a353ec6cc3727c5be27dcdf67053a3e66657e667f6dc2b4e3",
+      "sha256": "22a0d9b39628632c02c1d139e65b6f3e2301762375385d3e60fc8d562572dd14",
       "url": "https://evidence.example.test/release-go.intoto.json"
     },
     "sbom": {
-      "sha256": "e0dde4862ef5279f25799a2606d89b9a11fecaf2475818f3413422596f40877f",
+      "sha256": "01cbaea343e9c520e3bdced3b6cec5c36f2ba5d49a3434d6eecfe24bd6283153",
       "url": "https://evidence.example.test/release-go.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 35.277422543033026,
+  "elapsed_seconds": 37.2569958550157,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:go:coordinate",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:go:metadata",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:go:artifact",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:go:source",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:go:sbom",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:go:provenance",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:go:documentation",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:go:scope",
       "platform": null,
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:go:linux-x86_64:installation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:go:linux-x86_64:public-api",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:go:linux-x86_64:product-version",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:go:linux-x86_64:canonical-compiler",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:go:linux-x86_64:native-wasm",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:go:linux-x86_64:target-compatibility",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:go:linux-x86_64:kernel-rejection",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,7 +190,7 @@
       "check": "isolation",
       "id": "release:go:linux-x86_64:isolation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12b6511ffb11900227870dc490a222bdef2f2056b146abb415fa34116f879cb",
+      "retrieval_sha256": "c8e191c70a62f253b8025adfeedc7f2d8dcd43cbd27f51491b4602d98d14b713",
       "status": "VERIFYING",
       "tier": "Supported"
     }
@@ -199,12 +199,12 @@
   "retrieval_files": {
     "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
     "bindings/go/.gitignore": "a3d1d8ad5bbd58e9ecdf34c50aa76c3a90e71d50d7c8391d143a5ac4d5382c00",
-    "bindings/go/README.md": "8ff500d2f178f30a57123ceeed258c25b25efd306f15d2202d9d816bedc76a4f",
+    "bindings/go/README.md": "d13a64fc038f70ec8270cf63af81bdf7e05de7e212180154f1733521e3d4412d",
     "bindings/go/client.go": "2a31e62a3fb2c803199f05f7e37e0a98a63adedddcdd54a1b18859a1b6b12c1a",
     "bindings/go/client_test.go": "04599148018342cb61aef5ddb026cd8c697282afa728dd76715c9051eb5423bb",
     "bindings/go/docs/api_reference.md": "e361c20472fb1ae04022579468b008b1856556a8b73bd4173ae9afc0b2bc56df",
     "bindings/go/go.mod": "bf83ab13f597311f0c2d86402c0220226424a684aa8f2c1617b5594a2cad3ceb",
-    "bindings/go/native_cgo.go": "bb82cd636a7cd589e6754c43d3e0b7c39ea3ff95829a937069ea2476ee79552f",
+    "bindings/go/native_cgo.go": "3104c19b1a89f72a48b1fb7d9ed6aa35588212beddc2a3a9decd4c86aaf9c415",
     "bindings/go/native_nocgo.go": "b3a9ecd59d6e6279a7897516257aa1201b13dd61c61f83be3962b0734fa7c69f",
     "bindings/go/requests.go": "eddd63c7ae3143617e8e22f7d698a21f4381a0d86f728fc0fc5213db7954637b",
     "bindings/go/stdlib_generated.go": "6523bead5714702b26b15ac5bc2a3f7c0914c836e15d50cd1e940073a7b7a2e1",
@@ -235,7 +235,7 @@
     "bindings/interop/include/strling_interop.h": "935456d92b7ab9aed8c46768d9d7ad4912b3e584b2c959d717de89c30fb27b37",
     "bindings/interop/src/lib.rs": "24c8bee85c36a3d80702bbfbe66c46044408667c55ab1ffc1e099da7c0892149",
     "bindings/interop/src/native.rs": "6af89e881c2a01509ad534632ffca0ff33a9659d528d3725d9e606a297a0b443",
-    "bindings/interop/src/product_version.rs": "4abc6f30678f860eaa1206f2970e1435bd62855c683e2b3e83c1cec605642833",
+    "bindings/interop/src/product_version.rs": "0beabbb9db2fbf3ccbdc3d8d0baf65680100e9279b3d9afa41edccb95b78174d",
     "bindings/interop/src/protocol.rs": "9931aba62810fccec0ad464e03916caeb51375e7a8a95721741cb40a05b4921c",
     "bindings/interop/src/wasm.rs": "8f9840c8c73a823e2dc2836972955cfd37ccb6126b64522b39c6921070aef2e0",
     "bindings/interop/tests/native.rs": "aec9e54d905a0bcc6be5f9e60cf264f56444b35f285512db2fdcc2c7abda16cd",
@@ -651,39 +651,39 @@
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.1",
-      "sha256": "fd75e4ef362800bcb933acc59410eeb5e922d77dc0e544f46bffcd0e3605eb52",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.2",
+      "sha256": "d239025de854c38b320786165eaa8b5ea4004003c2d8487933b9b572917b9868",
       "size": 105
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/17be3e0c81fb2816803653b73f0f9198d6711d5d",
-      "sha256": "6f23aa97de935cd46871e8e9c35f3629b8791b5991df60563f31e5bd94993f86",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
+      "sha256": "ff7bb3050c7956a3580cf3c1b2f5541f5d2a5006a5e84546e632fabcac34d495",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/17be3e0c81fb2816803653b73f0f9198d6711d5d",
-      "sha256": "b45998e36c64424f90ac1e73e1c1f6f85954e98002628b973e487b9f60c279fd",
-      "size": 723356
+      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
+      "sha256": "2e558fb37d6d1ee07a0e36d0147ba0b749760f057187cd213859c4ca41559256",
+      "size": 723333
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-go.spdx.json",
-      "sha256": "e0dde4862ef5279f25799a2606d89b9a11fecaf2475818f3413422596f40877f",
+      "sha256": "01cbaea343e9c520e3bdced3b6cec5c36f2ba5d49a3434d6eecfe24bd6283153",
       "size": 387862
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-go.intoto.json",
-      "sha256": "137c1da211be9b5a353ec6cc3727c5be27dcdf67053a3e66657e667f6dc2b4e3",
+      "sha256": "22a0d9b39628632c02c1d139e65b6f3e2301762375385d3e60fc8d562572dd14",
       "size": 6720
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/go/README.md",
-      "sha256": "8ff500d2f178f30a57123ceeed258c25b25efd306f15d2202d9d816bedc76a4f",
-      "size": 2918
+      "sha256": "d13a64fc038f70ec8270cf63af81bdf7e05de7e212180154f1733521e3d4412d",
+      "size": 3003
     }
   ]
 }

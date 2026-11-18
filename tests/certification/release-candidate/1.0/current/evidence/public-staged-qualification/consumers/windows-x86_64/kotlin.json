@@ -6,10 +6,10 @@
     "schema_version": "1.0.0",
     "artifact_id": "release:kotlin",
     "scope": "windows-x86_64",
-    "product_version": "4.0.1",
+    "product_version": "4.0.2",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "43d783fff8e5d987300f2f01b3595d7034d7259ee59a76e3292ae0013ce89add",
+    "retrieval_files_sha256": "84d8c0543874a240e5186e8a54064d3c70a85c3cabe9bb1483ccdf426a7e2184",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -21,7 +21,7 @@
       "source_outcome": "succeeded",
       "target_pattern": "abc",
       "kernel_mismatch_rejected": true,
-      "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
+      "documentation_manifest_sha256": "40fdb490f6fb860a6797794566cdd7702a796f2dac6ae8537d7af06cda55e227",
       "documentation_examples": [
         {
           "id": "bindings/kotlin/README.md#2",
@@ -29,7 +29,7 @@
           "status": "passed"
         }
       ],
-      "native_sha256": "5bf4c63f0f2b67cdd58bdb995d12097a8d53908a6101e02dcd1a9d80ecef3462",
+      "native_sha256": "4a9f9d8f09bf676a4f4fb1ebb6306150d1b6eb50ef3ff55c7b2e8c275b9af042",
       "runtime_dependency_sha256": {
         "com.fasterxml.jackson.core:jackson-annotations:2.18.11": "9eab0d36da981645392427eedcb087e13be542488e37f935723dc0be50d18a53",
         "com.fasterxml.jackson.core:jackson-core:2.18.11": "825fa72dfb9e2f8a642322f1390dbac22c30d15ebd6dc6b3772158821ee124eb",
@@ -38,7 +38,7 @@
         "org.jetbrains:annotations:13.0": "ace2a10dc8e2d5fd34925ecac03e4988b2c0f851650c94b8cef49ba1bd111478",
         "org.jetbrains.kotlin:kotlin-stdlib:2.0.20": "fb169596659a518357c4b2c16f43dc75ab1c4980565ed4b4a317a050e5e39006"
       },
-      "companion_subject_sha256": "2ed2f8f4d802647adb3eaa0dc2d064835ef9e2f8b1b3f4df9eb8259357dfbb34"
+      "companion_subject_sha256": "f3a1afcf4a905c70b64a42e83a0b31d5dcfe25eb2e0be824e2e5b70907ce5d6f"
     },
     "environment_keys": [
       "ALLUSERSPROFILE",
@@ -137,7 +137,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "7f396916427ca1a99244b00c8e38dc7762e6713e01e1191a648be40ec44fdf1a"
+    "receipt_fingerprint": "f08126efce3f59017407f067e375b116d3281caf7309a9370ad62c67f553a5c1"
   },
-  "elapsed_seconds": 102.04699999978766
+  "elapsed_seconds": 94.04700000002049
 }

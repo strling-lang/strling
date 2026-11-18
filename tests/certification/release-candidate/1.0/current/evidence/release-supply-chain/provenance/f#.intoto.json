@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:fsharp"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.2",
                 "registry": "nuget.org",
                 "support": {
                     "external_prerequisites": [
@@ -67,13 +67,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                 },
                 {
                     "digest": {
-                        "sha256": "da0b2ef1bf6f7f1ed50ffe3cd9c16d3ddb729410903c865584c06946d09ea2cd"
+                        "sha256": "04b179a0ae1e7cf73ffd52e84f0e92c5d924414b31152fc8a0a35213fab75275"
                     },
                     "uri": "strling:dependency-root:fsharp-nuget"
                 }
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:fsharp",
+                "invocationId": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6:release:fsharp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -94,9 +94,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f"
+                "sha256": "a1ae683703d4203f3c6337bbd7c076854c947c71b49863210973f8fb158b7648"
             },
-            "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg"
+            "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.2.nupkg"
         }
     ]
 }

@@ -13,7 +13,7 @@
                     "release:ruby",
                     "--preview"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.2",
                 "registry": "rubygems.org",
                 "support": {
                     "external_prerequisites": [
@@ -58,9 +58,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                 },
                 {
                     "digest": {
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:ruby",
+                "invocationId": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6:release:ruby",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -85,9 +85,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05"
+                "sha256": "2f9511415bb1894c73ecb6790b05c38ccbdfe021da3e409d5e5b3552650cb718"
             },
-            "name": "bindings/ruby/strling-4.0.1.gem"
+            "name": "bindings/ruby/strling-4.0.2.gem"
         }
     ]
 }

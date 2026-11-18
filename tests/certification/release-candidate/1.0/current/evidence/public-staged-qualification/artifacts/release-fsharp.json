@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "dotnet add package STRling.FSharp --version 4.0.1",
+            "command": "dotnet add package STRling.FSharp --version 4.0.2",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "5b6b1a477caa32335f47d0550bd1ad67a0c7aca2cdffec96863aaf73c5b3a8a5",
+      "sha256": "19ac5f8276915bc1d1e37382230d87a5934005a55e3873d8a84e1def8d8ef47b",
       "source_path": "bindings/fsharp/README.md",
       "url": "https://evidence.example.test/bindings/fsharp/README.md"
     },
     "provenance": {
-      "sha256": "14bf22b633d6067970b055014a83e87f1c32adb0899c47a7adf84f667f35d6ee",
+      "sha256": "472eff3697d02f43599d0fa24b65c437f45b143e004e83774ced050470db9f46",
       "url": "https://evidence.example.test/release-fsharp.intoto.json"
     },
     "sbom": {
-      "sha256": "541872d4da276347797aceaf0a00c1ccaafadbdf2d177d60efadb2ca2302c52b",
+      "sha256": "462bcda0c415473e494bfbaa352fc3f7d2bb60d08e6591431fca90d65ec55577",
       "url": "https://evidence.example.test/release-fsharp.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.28535771899623796,
+  "elapsed_seconds": 0.31710144702810794,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:fsharp:coordinate",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:fsharp:metadata",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:fsharp:artifact",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:fsharp:source",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:fsharp:sbom",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:fsharp:provenance",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:fsharp:documentation",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:fsharp:scope",
       "platform": null,
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:fsharp:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:fsharp:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:fsharp:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:fsharp:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:fsharp:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:fsharp:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:fsharp:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,14 +190,14 @@
       "check": "isolation",
       "id": "release:fsharp:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "4beca773f92f1d82208c1c2f480e2e56d4898aa1b1fe7b4734c43679e0364f28",
+      "retrieval_sha256": "7006c726402e9187e378bfcb9096e86c13fe18ea76474f7fcf08917a758afaa6",
       "status": "VERIFYING",
       "tier": "Supported"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg": "76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f"
+    "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.2.nupkg": "a1ae683703d4203f3c6337bbd7c076854c947c71b49863210973f8fb158b7648"
   },
   "retrieval_observations": [
     {
@@ -208,33 +208,33 @@
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.1/strling.fsharp.nuspec",
-      "sha256": "71d6fa43934dce05f9876d5dc2d2d31474cd0a5bbe9384dbc2eb188eef043f99",
+      "request_url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.2/strling.fsharp.nuspec",
+      "sha256": "a21d5f0bf4705e7836700299e64ded010cf9bdcab5ff3b735de9e00441c54198",
       "size": 844
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.1/strling.fsharp.4.0.1.nupkg",
-      "sha256": "76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f",
-      "size": 15813
+      "request_url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.2/strling.fsharp.4.0.2.nupkg",
+      "sha256": "a1ae683703d4203f3c6337bbd7c076854c947c71b49863210973f8fb158b7648",
+      "size": 15810
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-fsharp.spdx.json",
-      "sha256": "541872d4da276347797aceaf0a00c1ccaafadbdf2d177d60efadb2ca2302c52b",
+      "sha256": "462bcda0c415473e494bfbaa352fc3f7d2bb60d08e6591431fca90d65ec55577",
       "size": 16747
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-fsharp.intoto.json",
-      "sha256": "14bf22b633d6067970b055014a83e87f1c32adb0899c47a7adf84f667f35d6ee",
+      "sha256": "472eff3697d02f43599d0fa24b65c437f45b143e004e83774ced050470db9f46",
       "size": 4855
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/fsharp/README.md",
-      "sha256": "5b6b1a477caa32335f47d0550bd1ad67a0c7aca2cdffec96863aaf73c5b3a8a5",
-      "size": 3014
+      "sha256": "19ac5f8276915bc1d1e37382230d87a5934005a55e3873d8a84e1def8d8ef47b",
+      "size": 3099
     }
   ]
 }

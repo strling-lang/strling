@@ -13,7 +13,7 @@
                     "release:typescript",
                     "--preview"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.2",
                 "registry": "npmjs.org",
                 "support": {
                     "external_prerequisites": [
@@ -63,19 +63,19 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                 },
                 {
                     "digest": {
-                        "sha256": "2c431f6257453e83bd9ad0b9b83a85d770dc55ba0fb577d17f511d0957f9cdc7"
+                        "sha256": "4302f48d1d50d02a0ef94c55a1ec4ba6bd9fe291a543abc50bed76eeb90728b7"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 },
                 {
                     "digest": {
-                        "sha256": "2d36953245c65c79558cc93212193813284fa0720910dd1cb6013fa4f0cdbf5b"
+                        "sha256": "33ecaabe14b5d870de9758217dab10a8c459eb281bf4e07a468b6e227f7cb294"
                     },
                     "uri": "strling:dependency-root:typescript-npm"
                 }
@@ -87,7 +87,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:typescript",
+                "invocationId": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6:release:typescript",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -96,9 +96,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "2c45da76f7f9da54800d26ae5c9584c0b3ce2ad5d393fc3467ba5d6801e0903a"
+                "sha256": "f56077522de06dc65368c8e66ca1a3b9d1fc59fb26c20892e2d93dd6ddd2522d"
             },
-            "name": "bindings/typescript/strling-lang-strling-4.0.1.tgz"
+            "name": "bindings/typescript/strling-lang-strling-4.0.2.tgz"
         }
     ]
 }

@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "cpanm STRling@4.0.1",
+            "command": "cpanm STRling@4.0.2",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "320590ba3172602cff3336b5ae495136e12e5fc2d9d8e9f4b19e8885f29b3829",
+      "sha256": "22f320c5ec7ef42e2afa92ecf9fba54ab96d84c53da1f10f01ea5225c1bee011",
       "source_path": "bindings/perl/README.md",
       "url": "https://evidence.example.test/bindings/perl/README.md"
     },
     "provenance": {
-      "sha256": "eac437eecda504aa3968bd7939215dcbd7ffe9a29d92cc2d01c7f686f4f9bc93",
+      "sha256": "2752c9dad781ca341d0ffad92c022628d6783206fb9960dc97bf2af14ea9635f",
       "url": "https://evidence.example.test/release-perl.intoto.json"
     },
     "sbom": {
-      "sha256": "d3e9c43935ef3754ab0edf4edd53f47bb2cac982a051674ec60de82c6b388a42",
+      "sha256": "522e0c8329cddf8d789ef913b5d62ee7f023fb0f50e7b95afd81600d6b8f2bb5",
       "url": "https://evidence.example.test/release-perl.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.14549041201826185,
+  "elapsed_seconds": 0.12201821501366794,
   "metadata": {
     "fields": [
       "distribution",
@@ -43,7 +43,7 @@
       "check": "coordinate",
       "id": "release:perl:coordinate",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     },
@@ -53,7 +53,7 @@
       "check": "metadata",
       "id": "release:perl:metadata",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     },
@@ -63,7 +63,7 @@
       "check": "artifact",
       "id": "release:perl:artifact",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     },
@@ -73,7 +73,7 @@
       "check": "source",
       "id": "release:perl:source",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     },
@@ -83,7 +83,7 @@
       "check": "sbom",
       "id": "release:perl:sbom",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     },
@@ -93,7 +93,7 @@
       "check": "provenance",
       "id": "release:perl:provenance",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     },
@@ -103,7 +103,7 @@
       "check": "documentation",
       "id": "release:perl:documentation",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     },
@@ -113,45 +113,45 @@
       "check": "scope",
       "id": "release:perl:scope",
       "platform": null,
-      "retrieval_sha256": "41f19a9500d1202f62804d8ef6a810ee78f7d60ee954f65e917fe1f10d860123",
+      "retrieval_sha256": "7853d49af4a2f3d68848ea57518f1c81870f4c7e2ce9e4939b15c8c78fce4834",
       "status": "READY",
       "tier": "Preview"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/perl/STRling-4.0.1.tar.gz": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811"
+    "bindings/perl/STRling-4.0.2.tar.gz": "dac9ec47e871afc97679ff422ad3ced82cd6ab49cf09c261f619f7ba58748391"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://fastapi.metacpan.org/v1/release/STRLING/STRling-4.0.1",
-      "sha256": "1c69c8c0223f1211f7e9497ba42faf9054665786e4241f7768e35f2f57f1ea95",
+      "request_url": "https://fastapi.metacpan.org/v1/release/STRLING/STRling-4.0.2",
+      "sha256": "2601a66d0bad5b10b34ff69a8e6f766e89fab910dab3c3973d0bc8a687eb65df",
       "size": 208
     },
     {
       "authority": "synthetic",
-      "request_url": "https://cpan.metacpan.org/authors/id/S/ST/STRLING/STRling-4.0.1.tar.gz",
-      "sha256": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811",
-      "size": 12280
+      "request_url": "https://cpan.metacpan.org/authors/id/S/ST/STRLING/STRling-4.0.2.tar.gz",
+      "sha256": "dac9ec47e871afc97679ff422ad3ced82cd6ab49cf09c261f619f7ba58748391",
+      "size": 12300
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-perl.spdx.json",
-      "sha256": "d3e9c43935ef3754ab0edf4edd53f47bb2cac982a051674ec60de82c6b388a42",
+      "sha256": "522e0c8329cddf8d789ef913b5d62ee7f023fb0f50e7b95afd81600d6b8f2bb5",
       "size": 20701
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-perl.intoto.json",
-      "sha256": "eac437eecda504aa3968bd7939215dcbd7ffe9a29d92cc2d01c7f686f4f9bc93",
+      "sha256": "2752c9dad781ca341d0ffad92c022628d6783206fb9960dc97bf2af14ea9635f",
       "size": 5200
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/perl/README.md",
-      "sha256": "320590ba3172602cff3336b5ae495136e12e5fc2d9d8e9f4b19e8885f29b3829",
-      "size": 2395
+      "sha256": "22f320c5ec7ef42e2afa92ecf9fba54ab96d84c53da1f10f01ea5225c1bee011",
+      "size": 2480
     }
   ]
 }

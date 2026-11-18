@@ -13,7 +13,7 @@
                     "release:perl",
                     "--preview"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.2",
                 "registry": "cpan",
                 "support": {
                     "external_prerequisites": [
@@ -59,13 +59,13 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6"
                 },
                 {
                     "digest": {
-                        "sha256": "e52a559357145c0fee2ee9db09b153b2161c9dfca6da06d83e1d3ea04c810721"
+                        "sha256": "3b592191aa6aaa41016839423e3f3dd217b792dd24b589985e3a8f986dd12d46"
                     },
                     "uri": "strling:dependency-root:perl-cpan"
                 }
@@ -77,7 +77,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:perl",
+                "invocationId": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6:release:perl",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -86,9 +86,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811"
+                "sha256": "dac9ec47e871afc97679ff422ad3ced82cd6ab49cf09c261f619f7ba58748391"
             },
-            "name": "bindings/perl/STRling-4.0.1.tar.gz"
+            "name": "bindings/perl/STRling-4.0.2.tar.gz"
         }
     ]
 }

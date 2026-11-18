@@ -1,0 +1,10 @@
+{
+  "schema_version": "strling-evidence-byte-archive-v1",
+  "document_kind": "supplemental-evidence-bytes",
+  "source": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
+  "original_name": "evidence-3055226141780e9dc7bcfe1734d2b90a995869de18e0f5ec0b7f215f9ac65473.bin",
+  "bytes": 560,
+  "sha256": "3055226141780e9dc7bcfe1734d2b90a995869de18e0f5ec0b7f215f9ac65473",
+  "encoding": "gzip+base64",
+  "payload": "H4sIAAAAAAACA5WQS06DMQyE9z1FJdZt40f8OA1y4gQqIaj4WxVxetIdO8TOGo80M9/Tfrt9zujjsL0GVtlnoLVMpsmOE6vJEJCwmVwNmoLNjnW0Odi1awgBmiOkUVQC3cloPsm6xFDQOqybt4kG0SwNzSCpN0Cc5pDVeEJJWbZeWNBiv2/n9zy/v2ynfrmc8rxdT9v1820pBz6WIx7Wefs6fJk8Cx+vL9+7rjRMcEi0Jk5cm4tXx+5mChMSeXboXKAHeVObrrMCuqP4SP5n5O3y9hF5/D5fdkOFxTm5LEKjkDYrk8NggbNKhQa04FrUGB/GbnVhUPOCWhvk38n39f+4b7/nLuBWDEuDOepIqdjpMdC00ZJUCjyA00I8Q4XMhChLxDAqq8G/Q38N/gEPMMW0MAIAAA=="
+}

@@ -1,15 +1,15 @@
 {
   "status": "read-only-preflight-completed",
   "authoritative": false,
-  "source_head": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+  "source_head": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
   "publication_authorized": false,
   "registry_mutation_authorized": false,
-  "provisional_rc": "4.0.1-rc.1",
+  "provisional_rc": "4.0.2-rc.1",
   "rc_reserved": false,
   "repository_publicly_resolved": true,
   "repository_observation": {
     "status": "metadata-retrieved",
-    "sha256": "cad824d9f2a912cbc89dc4a80e814638ad74b30b3e68d47b68d78bcf9d85fcfd"
+    "sha256": "dda813359694ebef78471002566b955feff26d13fa2a460b9e6932f16795dfea"
   },
   "observations": [
     {
@@ -17,16 +17,16 @@
       "registry": "github-tag:c-vVERSION",
       "package_name": "strling-c",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:26.717109+00:00",
+      "observed_utc": "2026-11-18T15:11:19.936681+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -34,9 +34,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -47,7 +47,7 @@
       "registry": "conan",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:28.102800+00:00",
+      "observed_utc": "2026-11-18T15:11:21.314575+00:00",
       "status": "owner-specific-coordinate-unverified",
       "reason": "ConanCenter publication is explicitly deferred; direct C++ developer installation remains supported."
     },
@@ -56,16 +56,16 @@
       "registry": "nuget.org",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:28.120977+00:00",
+      "observed_utc": "2026-11-18T15:11:21.343802+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.1-rc.1/strling.nuspec",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.2-rc.1/strling.nuspec",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -73,9 +73,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.1/strling.nuspec",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.2/strling.nuspec",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -86,16 +86,16 @@
       "registry": "pub.dev",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:29.250955+00:00",
+      "observed_utc": "2026-11-18T15:11:22.631341+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://pub.dev/api/packages/strling/versions/4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://pub.dev/api/packages/strling/versions/4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -103,9 +103,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://pub.dev/api/packages/strling/versions/4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://pub.dev/api/packages/strling/versions/4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -116,16 +116,16 @@
       "registry": "nuget.org",
       "package_name": "STRling.FSharp",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:30.312443+00:00",
+      "observed_utc": "2026-11-18T15:11:25.247034+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.1-rc.1/strling.fsharp.nuspec",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.2-rc.1/strling.fsharp.nuspec",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -133,9 +133,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.1/strling.fsharp.nuspec",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.2/strling.fsharp.nuspec",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -146,16 +146,16 @@
       "registry": "github-tag:go-vVERSION",
       "package_name": "github.com/strling-lang/strling/bindings/go",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:31.408625+00:00",
+      "observed_utc": "2026-11-18T15:11:26.796583+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -163,9 +163,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -176,16 +176,16 @@
       "registry": "maven-central",
       "package_name": "io.github.strling-lang:strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:32.830352+00:00",
+      "observed_utc": "2026-11-18T15:11:28.603435+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1-rc.1/strling-4.0.1-rc.1.pom",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.2-rc.1/strling-4.0.2-rc.1.pom",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -193,9 +193,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1/strling-4.0.1.pom",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.2/strling-4.0.2.pom",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -206,16 +206,16 @@
       "registry": "maven-central",
       "package_name": "io.github.strling-lang:strling-kotlin",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:34.249203+00:00",
+      "observed_utc": "2026-11-18T15:11:30.301341+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.1-rc.1/strling-kotlin-4.0.1-rc.1.pom",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.2-rc.1/strling-kotlin-4.0.2-rc.1.pom",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -223,9 +223,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.1/strling-kotlin-4.0.1.pom",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.2/strling-kotlin-4.0.2.pom",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -236,7 +236,7 @@
       "registry": "luarocks.org",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:35.632451+00:00",
+      "observed_utc": "2026-11-18T15:11:31.977113+00:00",
       "status": "owner-specific-coordinate-unverified",
       "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately."
     },
@@ -245,7 +245,7 @@
       "registry": "cpan",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:35.660213+00:00",
+      "observed_utc": "2026-11-18T15:11:32.021164+00:00",
       "status": "owner-specific-coordinate-unverified",
       "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately."
     },
@@ -254,16 +254,16 @@
       "registry": "github-tag:php-vVERSION",
       "package_name": "strling/strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:35.681526+00:00",
+      "observed_utc": "2026-11-18T15:11:32.059957+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -271,9 +271,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -284,16 +284,16 @@
       "registry": "pypi.org",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:37.202906+00:00",
+      "observed_utc": "2026-11-18T15:11:33.744870+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1rc1",
-          "url": "https://pypi.org/pypi/STRling/4.0.1rc1/json",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2rc1",
+          "url": "https://pypi.org/pypi/STRling/4.0.2rc1/json",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -301,9 +301,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://pypi.org/pypi/STRling/4.0.1/json",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://pypi.org/pypi/STRling/4.0.2/json",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -314,16 +314,16 @@
       "registry": "github-tag:r-vVERSION",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:38.357226+00:00",
+      "observed_utc": "2026-11-18T15:11:35.302246+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -331,9 +331,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -344,16 +344,16 @@
       "registry": "rubygems.org",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:39.592061+00:00",
+      "observed_utc": "2026-11-18T15:11:37.139755+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1.rc.1",
-          "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.1.rc.1.json",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2.rc.1",
+          "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.2.rc.1.json",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -361,9 +361,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.1.json",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.2.json",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -374,16 +374,16 @@
       "registry": "crates.io",
       "package_name": "strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:41.011363+00:00",
+      "observed_utc": "2026-11-18T15:11:38.716880+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://crates.io/api/v1/crates/strling/4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://crates.io/api/v1/crates/strling/4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -391,9 +391,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://crates.io/api/v1/crates/strling/4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://crates.io/api/v1/crates/strling/4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -404,16 +404,16 @@
       "registry": "github-tag:swift-vVERSION",
       "package_name": "STRling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:42.197133+00:00",
+      "observed_utc": "2026-11-18T15:11:39.971472+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -421,9 +421,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }
@@ -434,16 +434,16 @@
       "registry": "npmjs.org",
       "package_name": "@strling-lang/strling",
       "ownership_confirmed": false,
-      "observed_utc": "2026-11-17T10:56:43.467979+00:00",
+      "observed_utc": "2026-11-18T15:11:41.800745+00:00",
       "status": "read-only-coordinate-observation",
       "coordinates": [
         {
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1-rc.1",
-          "coordinate": "4.0.1-rc.1",
-          "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.1-rc.1",
+          "version": "4.0.2-rc.1",
+          "coordinate": "4.0.2-rc.1",
+          "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.2-rc.1",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         },
@@ -451,9 +451,9 @@
           "status": "unavailable",
           "classification": "missing-coordinate",
           "detail": "exact public coordinate is absent",
-          "version": "4.0.1",
-          "coordinate": "4.0.1",
-          "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.1",
+          "version": "4.0.2",
+          "coordinate": "4.0.2",
+          "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.2",
           "http_status": 404,
           "coordinate_observation": "not-resolved-at-observation-time"
         }

@@ -1,10 +1,10 @@
 {
   "schema_version": "strling-evidence-byte-archive-v1",
   "document_kind": "supplemental-evidence-bytes",
-  "source": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+  "source": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
   "original_name": "bc4a71180870-consumer-command-0001.stdout",
   "bytes": 313,
-  "sha256": "95a5dde9eef644aa3e8d32422aba5c185f2ff59158f0148da8647c7b56e24cdc",
+  "sha256": "1e5f99c5b715f5578413e60db79929db842efaa401cbcaf9895c5c597f194cdc",
   "encoding": "gzip+base64",
-  "payload": "H4sIAAAAAAACA0suUMjJTNIPDgnKycxL1yvIVUgC8VHFuJJRVOn7JZZklqU652Sm5pVg04KuAF1/UGphaWpxSTFWvUiS6PqCS1KAXPfUvNSixJLUFKzaMdVgmlKUmVziFezvh8MAJGku38S8zLRKoLiCoUJBfopCSn5yaS7QV1wABQFeKzkBAAA="
+  "payload": "H4sIAAAAAAACA0suUMjJTNIPDgnKycxL1w8uKcpMLvEK9vfTK8hVSAJJ4ZTmSkbXmwLkuqfmpRYllqSm4DAAXQ2aKdh0YbHLL7EksyzVOSczNa8Eq0VoCtD1B6UWlqYWlxRj1YskyeWbmJeZVgkUVTBUKMhPUUjJTy7NBZrJBQAJRSfeOQEAAA=="
 }

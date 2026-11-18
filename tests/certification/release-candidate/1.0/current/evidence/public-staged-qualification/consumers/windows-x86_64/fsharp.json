@@ -6,10 +6,10 @@
     "schema_version": "1.0.0",
     "artifact_id": "release:fsharp",
     "scope": "windows-x86_64",
-    "product_version": "4.0.1",
+    "product_version": "4.0.2",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "43d783fff8e5d987300f2f01b3595d7034d7259ee59a76e3292ae0013ce89add",
+    "retrieval_files_sha256": "84d8c0543874a240e5186e8a54064d3c70a85c3cabe9bb1483ccdf426a7e2184",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -21,7 +21,7 @@
       "source_outcome": "succeeded",
       "status": "passed",
       "target_pattern": "abc",
-      "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
+      "documentation_manifest_sha256": "40fdb490f6fb860a6797794566cdd7702a796f2dac6ae8537d7af06cda55e227",
       "documentation_examples": [
         {
           "id": "bindings/fsharp/README.md#1",
@@ -29,7 +29,7 @@
           "status": "passed"
         }
       ],
-      "companion_subject_sha256": "c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5"
+      "companion_subject_sha256": "034999698f3d2bbd2a2aa5218cc927b52ae1d1a19ccd282d15be50747b2035c6"
     },
     "environment_keys": [
       "ALLUSERSPROFILE",
@@ -114,7 +114,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "18c78220f0886d68fd2e5f10eca6dcc25f7d44ab7b03c7abd3eb40b4e81c5daa"
+    "receipt_fingerprint": "ddfbf36e0ebd86b644789f1f2d724fa6a9b94993bd39e5888c3e1b7bea7514f2"
   },
-  "elapsed_seconds": 15.108999999938533
+  "elapsed_seconds": 15.077999999979511
 }

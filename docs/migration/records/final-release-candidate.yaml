@@ -1,7 +1,7 @@
 record_version: 2.0.0
 scope:
     diff:
-        base: 17be3e0c81fb2816803653b73f0f9198d6711d5d
+        base: 87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6
         head: working-tree
     allowed_paths:
         - tests/certification/release-candidate/1.0/current/**
@@ -37,44 +37,44 @@ change_classification:
     semantic_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.2 fix-forward candidate; no product,
               policy or trusted-pin change.
     public_api_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.2 fix-forward candidate; no product,
               policy or trusted-pin change.
     schema_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.2 fix-forward candidate; no product,
               policy or trusted-pin change.
     diagnostic_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.2 fix-forward candidate; no product,
               policy or trusted-pin change.
     target_behavior_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.2 fix-forward candidate; no product,
               policy or trusted-pin change.
     architecture_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.2 fix-forward candidate; no product,
               policy or trusted-pin change.
     generated_output_change:
         level: none
         evidence:
-            - Evidence-only closure of the separately frozen and freshly certified 4.0.1 fix-forward candidate; no product,
+            - Evidence-only closure of the separately frozen and freshly certified 4.0.2 fix-forward candidate; no product,
               policy or trusted-pin change.
     documentation_only: false
     internal_implementation: false
 title: Final product candidate preparation and clean-room certification
-status: complete
+status: in_progress
 objective:
-    Close the independently certified 4.0.1 fix-forward candidate while preserving historical certification
+    Close the independently certified 4.0.2 fix-forward candidate while preserving historical certification
     and the separate publication boundary.
 required_verification:
     - name: Focused source-helper and documentation regressions
@@ -320,6 +320,24 @@ checkpoints:
                 result is retained separately in the operational handoff; the preceding run is not relabeled as verification
                 of another commit.
             command: gh run view 44078159816 --repo strling-lang/strling --json headSha,conclusion,jobs
+    - name: 4.0.2 fix-forward source certification
+      status: in_progress
+      evidence:
+          - check: Fresh source-bound profiles, reconstruction and original-authority signatures
+            result: passed
+            details:
+                'Product source 87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6; qualified immutable reader 4154155adcf60c74d145936d442b4a45d7865145;
+                candidate evidence root eb0588d2f126be20b86f4e6fd4492850eabac9fed797db1596183a27c61c75c1; nested package root
+                67aaf84cd648b66a6f5f43da60c1c068e158870f1cdc3bfcfb9d70f634b384da. Fresh profiles: {"full": {"failed": 0, "incomplete":
+                0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0,
+                "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request":
+                {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived":
+                0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable":
+                0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable
+                public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.'
+          - check: Actual immutable hosted acceptance
+            result: not_run
+            details: Pending exact successor closure dispatch; no historical hosted run is reused.
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -351,6 +369,8 @@ commits:
       subject: Normalize staged CPAN metadata and test producer compatibility
     - sha: 655641e7f6e90feeb38d24c35275c7f2f0a3ae82
       subject: Record independently certified 4.0.1 candidate evidence
+    - sha: 87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6
+      subject: Promote supply-chain waiver verifier for 4.0.2 certification
 completion:
     accomplished:
         - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
@@ -433,9 +453,8 @@ completion:
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
     next_task:
-        Complete local certified transport handoff, revalidate npm settings after owner authentication, and
-        obtain new exact certified-artifact export and source/run-bound publication approvals.
+        Immutable hosted acceptance, certified byte transport, final owner-dependent release prerequisites
+        and exact publication authorization.
     rationale:
-        This closes independently accepted 4.0.1 certification only. Official publication, protected deployment
-        reviews and real public retrieval remain separately gated. Maven off-device recovery custody is owner-confirmed
-        complete; ConanCenter admission remains explicitly deferred.
+        All current-source local certification and signed evidence accepted; actual hosted acceptance remains
+        pending. Historical completion facts retain their original identities.

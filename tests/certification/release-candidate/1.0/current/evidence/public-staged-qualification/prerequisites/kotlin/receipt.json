@@ -2,7 +2,7 @@
   "purpose": "compiler-prerequisite-only",
   "status": "passed",
   "strling_packages": [],
-  "verification_metadata_sha256": "24a17db4bb30259f40c9533acfb18f0ff0c4c3c2ce3ee0b6a7be116d3f47baca",
-  "gradle_cache": "D:\\Projects\\strling-lang\\strling\\target\\k17be3e0c\\dependency-cache",
+  "verification_metadata_sha256": "a0ecd4443c0fb48f20be8ba3458dd8d009e2f30f75c8d56f3d209cb9e83791cd",
+  "gradle_cache": "D:\\Projects\\strling-lang\\strling\\target\\k87a8db6c\\dependency-cache",
   "publication_authorized": false
 }

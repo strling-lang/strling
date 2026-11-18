@@ -11,123 +11,123 @@
         "--no-audit",
         "--no-fund",
         "--save-exact",
-        "/var/tmp/strling-pub-17be3e0c-aggregate-first/bindings/typescript/strling-lang-strling-4.0.1.tgz"
+        "/var/tmp/strling-pub-87a8db6c-aggregate-first/bindings/typescript/strling-lang-strling-4.0.2.tgz"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0000.json",
-      "metadata_sha256": "0cb4661b1dd1848914f08f4a70b8c14d10f8abfc12102a97289b67150377df97"
+      "metadata_sha256": "d896bb53d8b5fc1bfe4c064217feb3c170dac077ee77447c30decca51bd7e6a7"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-0.ts"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-0.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0001.json",
-      "metadata_sha256": "546f6281af5fe07c390e7144f981399e9553ded15f27393dc87e56d7d73a7ef5"
+      "metadata_sha256": "4982f7086ff7baaed7d54932da1d88151d548e3ef0a7623dc2ced8f951d58cf5"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-0.js"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-0.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0002.json",
-      "metadata_sha256": "69a960cdebf17b329f55fa60d44782b11bdae19fdd713ab15312b5986f510a3e"
+      "metadata_sha256": "1010c9ae8d9dbad5b89955ab9fceaf183a6c449b33fbdd109c290ed9d7a7f1f9"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-1.ts"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-1.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0003.json",
-      "metadata_sha256": "612e4ebea33529d8f33dec79dc428c68f705dedee579b2f3fdd774d80e47b7d1"
+      "metadata_sha256": "ea93f142363ff6c280f19e76923075690abf421fc833969ade7c6a2807d3a548"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-1.js"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-1.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0004.json",
-      "metadata_sha256": "59a9dd845d8bb1e0bd1c733b47c452db5e7cb8aa71a64f80d03cf12e45db20c5"
+      "metadata_sha256": "f9f7dad5ca051642c1fa48166fbd366923ba404621e46a6ec3f5826f0f3b0e8b"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-2.ts"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-2.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0005.json",
-      "metadata_sha256": "c422dc60a4f6c6c35582dc51ba1e9fdaa0f4bc9de5afd9099887f3f5aee421a6"
+      "metadata_sha256": "08eed2bde1d6c64d290ca0d31388a3c79c2bf5e10b3ce9531e9bb10c303f4e9e"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-2.js"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-2.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0006.json",
-      "metadata_sha256": "403997ca9b7ff9f50fac354e1dc153e864c84b3444dc1e735684894e91b67019"
+      "metadata_sha256": "20919998663f28b345edc4547462e67f39c9cc53154258d7ad2487efd3c86e6e"
     },
     {
       "command": [
         "node",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/typescript/bin/tsc",
         "--module",
         "nodenext",
         "--target",
         "ES2022",
         "--strict",
         "--typeRoots",
-        "/var/tmp/strling-publication-17be3e0c-certification/bindings/typescript/node_modules/@types",
+        "/var/tmp/strling-publication-87a8db6c-certification/bindings/typescript/node_modules/@types",
         "--types",
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-3.ts"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-3.ts"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0007.json",
-      "metadata_sha256": "e96baeb8ba5dde679596b0dc75814972beab2579946b56e1092979cd39cac4f8"
+      "metadata_sha256": "ca635305611ddc28d6b9551d2504c1aa70a956ac622583e370a795c42e514cd7"
     },
     {
       "command": [
         "node",
-        "/tmp/strling-preview-documentation-fod7pdm3/example-3.js"
+        "/tmp/strling-preview-documentation-xv5rflnt/example-3.js"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0008.json",
-      "metadata_sha256": "72dad850ba2ff3f3add2c44b2fef1ccff92de60be38ffd4f9a4aaf278d94ae17"
+      "metadata_sha256": "7ef085c9799c9760238d3baee62edffc91b3fdf99b431b6f10b609d3ed5bc6d5"
     }
   ],
   "documentation_examples": [
@@ -152,30 +152,30 @@
       "status": "passed"
     }
   ],
-  "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
+  "documentation_manifest_sha256": "40fdb490f6fb860a6797794566cdd7702a796f2dac6ae8537d7af06cda55e227",
   "engineering": false,
-  "evidence_fingerprint": "fad9ec27198bcf739b69180bcdaad28fef069feb01e44f151ca7679cf2b22990",
+  "evidence_fingerprint": "d5db3e3b25111333ad471eb8596828d1b943fb41716cd2c4c2263f9df6be26eb",
   "fixture_sha256": {
     "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
     "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
     "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
     "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
   },
-  "invocation_id": "12223f15dbbf478893120d0c5a0df455",
+  "invocation_id": "25a1489f8db54b92bb0b1a1cce510c62",
   "limitations": [
     "Preview policy and dependency-locking limits remain unchanged.",
     "Browser-safe factory execution on Node is not an actual browser support claim."
   ],
   "native_sha256": null,
-  "product_version": "4.0.1",
+  "product_version": "4.0.2",
   "public_retrieval": false,
   "runner_scope": "linux-x86_64",
   "source": {
-    "commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+    "commit": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
     "dirty": false,
-    "tree_sha256": "09ff765e9cd302e34e29679b1414ea57578c123b4fcac2396cef7c9e7e729500"
+    "tree_sha256": "05ba784d944fa32f4fdd7bf26e2c8835550b06a456bce65efcf5b590282e4db2"
   },
   "status": "passed",
-  "subject_sha256": "2c45da76f7f9da54800d26ae5c9584c0b3ce2ad5d393fc3467ba5d6801e0903a",
+  "subject_sha256": "f56077522de06dc65368c8e66ca1a3b9d1fc59fb26c20892e2d93dd6ddd2522d",
   "supported_claim": false
 }

@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "mvn dependency:get -Dartifact=io.github.strling-lang:strling:4.0.1 -DremoteRepositories=https://repo1.maven.org/maven2",
+            "command": "mvn dependency:get -Dartifact=io.github.strling-lang:strling:4.0.2 -DremoteRepositories=https://repo1.maven.org/maven2",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "87af3703bff7b9958ba9bcf842e9ac32c4ed70a68c537af57e62d848457799b3",
+      "sha256": "5e7538a19029e3eebe6149e798818a79f1d729e79746a43f0aacb2a76d2127fd",
       "source_path": "bindings/java/README.md",
       "url": "https://evidence.example.test/bindings/java/README.md"
     },
     "provenance": {
-      "sha256": "c20d5ca7108cfbac07687928e8cd231682e68ab487dd33ac2f1bf2acc17b752e",
+      "sha256": "5a80cd5cc585f1f44a412525057b43a7ec99f2b2c727a1d1efbf5b4e52054020",
       "url": "https://evidence.example.test/release-java.intoto.json"
     },
     "sbom": {
-      "sha256": "2152fc901091fe49d60fce2aa02a04d8bbae0194908f7b7b0aba34943d40711d",
+      "sha256": "31bb45432a72dc71b1c2dac89e4d3d73d3d0a0cc7f6abf9cede75bdaee513314",
       "url": "https://evidence.example.test/release-java.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 1.0950251669855788,
+  "elapsed_seconds": 1.2897168879862875,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:java:coordinate",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:java:metadata",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:java:artifact",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:java:source",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:java:sbom",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:java:provenance",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:java:documentation",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:java:scope",
       "platform": null,
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:java:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:java:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:java:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:java:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:java:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:java:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:java:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,88 +190,88 @@
       "check": "isolation",
       "id": "release:java:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "135e29649a9274fdf7b2b86f252c7e1fd35ac0ebec8163091ebd860e45422d83",
+      "retrieval_sha256": "793174c931e674d638732bfa2afc9f25052e130f8db2b7ea5a9d5612f41b5aae",
       "status": "VERIFYING",
       "tier": "Supported"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/java/pom.xml": "38ea85528c374d374d826804f205730aa753087ce82de68ad9676357c7bc3e60",
-    "bindings/java/target/strling-4.0.1-javadoc.jar": "e9f718f97b27cb8dc1ce209a7ae15665e4fb34971e45e9257cab1c8017fe7af1",
-    "bindings/java/target/strling-4.0.1-sources.jar": "cefdbcb68c9cb06adc78a7070988dafe5394a10eaf307030084a99309881c534",
-    "bindings/java/target/strling-4.0.1.jar": "7a997ea4e712bde8feb86a77b985b5821df7464f280a61477aa1a615ba6b1782",
-    "bindings/jvm/pom.xml": "79bdd897ac49113fee2a496e77bcb4ad8b904174431fc190a7729b84c6d538a9",
-    "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar": "0273d518a29466b3d561a520c9b64b593bb7c05018b496fd817d3f30ae97b0f1",
-    "bindings/jvm/target/strling-jvm-4.0.1-sources.jar": "27f88af4256228fb18d410bc7908889a8f36e19262f450f86314d754f26e8701",
-    "bindings/jvm/target/strling-jvm-4.0.1.jar": "b9d0637009b244ca06278ff0f9955752d83329c6c85f4008a72d8b9f281f0153"
+    "bindings/java/pom.xml": "af45898500cd16fecec35d7baa62dd7ac32452f1254fb42987b52fd0e5dd233b",
+    "bindings/java/target/strling-4.0.2-javadoc.jar": "956ccf364e511120dbb0eb7f1e090a0dcf1788ee01b465de931dc3dc573199be",
+    "bindings/java/target/strling-4.0.2-sources.jar": "00b26fb2b1127c33161dc3bc8ffca583992a9599f61a688da5d22dce0ac6db98",
+    "bindings/java/target/strling-4.0.2.jar": "eabde792f5c1103dc64a899f6eb1ce9d4245275970dacbdf00156a3496f1be47",
+    "bindings/jvm/pom.xml": "f68b21f3365a8b0d67e1a49122f0d93b710ea06df99a1f0bedc0c12966b06c9b",
+    "bindings/jvm/target/strling-jvm-4.0.2-javadoc.jar": "0273d518a29466b3d561a520c9b64b593bb7c05018b496fd817d3f30ae97b0f1",
+    "bindings/jvm/target/strling-jvm-4.0.2-sources.jar": "3d5e68b483e22441c7c7f806d003d8521491b6b85d69d193a5e1c4c3d966e71c",
+    "bindings/jvm/target/strling-jvm-4.0.2.jar": "dc97cc5d386709ed8516bfb2dc4f2989901d0a77c54095b348697ddb9016796a"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1/strling-4.0.1.pom",
-      "sha256": "38ea85528c374d374d826804f205730aa753087ce82de68ad9676357c7bc3e60",
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.2/strling-4.0.2.pom",
+      "sha256": "af45898500cd16fecec35d7baa62dd7ac32452f1254fb42987b52fd0e5dd233b",
       "size": 4042
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1/strling-4.0.1-javadoc.jar",
-      "sha256": "e9f718f97b27cb8dc1ce209a7ae15665e4fb34971e45e9257cab1c8017fe7af1",
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.2/strling-4.0.2-javadoc.jar",
+      "sha256": "956ccf364e511120dbb0eb7f1e090a0dcf1788ee01b465de931dc3dc573199be",
       "size": 124775
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1/strling-4.0.1-sources.jar",
-      "sha256": "cefdbcb68c9cb06adc78a7070988dafe5394a10eaf307030084a99309881c534",
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.2/strling-4.0.2-sources.jar",
+      "sha256": "00b26fb2b1127c33161dc3bc8ffca583992a9599f61a688da5d22dce0ac6db98",
       "size": 12764
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1/strling-4.0.1.jar",
-      "sha256": "7a997ea4e712bde8feb86a77b985b5821df7464f280a61477aa1a615ba6b1782",
-      "size": 25405
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.2/strling-4.0.2.jar",
+      "sha256": "eabde792f5c1103dc64a899f6eb1ce9d4245275970dacbdf00156a3496f1be47",
+      "size": 25404
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.1/strling-jvm-4.0.1.pom",
-      "sha256": "79bdd897ac49113fee2a496e77bcb4ad8b904174431fc190a7729b84c6d538a9",
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.2/strling-jvm-4.0.2.pom",
+      "sha256": "f68b21f3365a8b0d67e1a49122f0d93b710ea06df99a1f0bedc0c12966b06c9b",
       "size": 3877
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.1/strling-jvm-4.0.1-javadoc.jar",
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.2/strling-jvm-4.0.2-javadoc.jar",
       "sha256": "0273d518a29466b3d561a520c9b64b593bb7c05018b496fd817d3f30ae97b0f1",
       "size": 109663
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.1/strling-jvm-4.0.1-sources.jar",
-      "sha256": "27f88af4256228fb18d410bc7908889a8f36e19262f450f86314d754f26e8701",
-      "size": 10818
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.2/strling-jvm-4.0.2-sources.jar",
+      "sha256": "3d5e68b483e22441c7c7f806d003d8521491b6b85d69d193a5e1c4c3d966e71c",
+      "size": 10819
     },
     {
       "authority": "synthetic",
-      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.1/strling-jvm-4.0.1.jar",
-      "sha256": "b9d0637009b244ca06278ff0f9955752d83329c6c85f4008a72d8b9f281f0153",
-      "size": 17988
+      "request_url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-jvm/4.0.2/strling-jvm-4.0.2.jar",
+      "sha256": "dc97cc5d386709ed8516bfb2dc4f2989901d0a77c54095b348697ddb9016796a",
+      "size": 17987
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-java.spdx.json",
-      "sha256": "2152fc901091fe49d60fce2aa02a04d8bbae0194908f7b7b0aba34943d40711d",
+      "sha256": "31bb45432a72dc71b1c2dac89e4d3d73d3d0a0cc7f6abf9cede75bdaee513314",
       "size": 134928
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-java.intoto.json",
-      "sha256": "c20d5ca7108cfbac07687928e8cd231682e68ab487dd33ac2f1bf2acc17b752e",
+      "sha256": "5a80cd5cc585f1f44a412525057b43a7ec99f2b2c727a1d1efbf5b4e52054020",
       "size": 7690
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/java/README.md",
-      "sha256": "87af3703bff7b9958ba9bcf842e9ac32c4ed70a68c537af57e62d848457799b3",
-      "size": 4127
+      "sha256": "5e7538a19029e3eebe6149e798818a79f1d729e79746a43f0aacb2a76d2127fd",
+      "size": 4212
     }
   ]
 }

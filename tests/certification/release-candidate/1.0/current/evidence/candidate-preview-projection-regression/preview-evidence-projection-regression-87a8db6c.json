@@ -1,0 +1,26 @@
+{
+  "status": "passed-real-copier-and-adversarial-preview-projection-qualification",
+  "source": "87a8db6c1d08efceb13045dbcde69d2d4ed6d9d6",
+  "cases": [
+    "empty-and-non-normalized-diagnostic-bytes-round-trip",
+    "immutable-copier-reproduces-original-empty-file-refusal",
+    "immutable-copier-retains-all-mandatory-json-and-diagnostic-archives",
+    "different-source",
+    "changed-original-diagnostic",
+    "changed-mandatory-json",
+    "missing-command-metadata",
+    "corrupt-byte-archive",
+    "duplicate-index-entry",
+    "missing-index-entry",
+    "archive-path-traversal",
+    "unindexed-original-diagnostic",
+    "extra-projected-json",
+    "missing-producer-result",
+    "source-symlink"
+  ],
+  "count": 15,
+  "seconds": 0.2918646880425513,
+  "helper_sha256": "16b81e5b5a9ba2e7e630a475c072521b1a27c8d3e8aa7a1c36ca5a1c17a802f5",
+  "private_key_read": false,
+  "publication_authorized": false
+}

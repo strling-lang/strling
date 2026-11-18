@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "gem install strling --version 4.0.1",
+            "command": "gem install strling --version 4.0.2",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "4040ccc7d2fd989b015510b1180e9596a8773340faf688e3e614a482215c088c",
+      "sha256": "abc950e9b9e7f4d8b75f5caf0589d5ca9b0f5c0275d7ce06af3b601418bb9911",
       "source_path": "bindings/ruby/README.md",
       "url": "https://evidence.example.test/bindings/ruby/README.md"
     },
     "provenance": {
-      "sha256": "e9fe2bde3fa92a7d9a3f4af8322b98c9f6a3a4e6948adb047304074bb9ef750b",
+      "sha256": "e7325e1052b00a17f20557d131f43ac259a2af2aff803a9bd32e9f4f032a8c4d",
       "url": "https://evidence.example.test/release-ruby.intoto.json"
     },
     "sbom": {
-      "sha256": "0b57051330d6acccc89c357e7f7190a53ddfc0c3ba756106a5453db2717b1c7e",
+      "sha256": "5bc65079226b1d88e94f03df19a2f75157f31d4f00f25dd145363c6f8cb2e2f8",
       "url": "https://evidence.example.test/release-ruby.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.10893547401065007,
+  "elapsed_seconds": 0.2778746660333127,
   "metadata": {
     "fields": [
       "homepage_uri",
@@ -46,7 +46,7 @@
       "check": "coordinate",
       "id": "release:ruby:coordinate",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     },
@@ -56,7 +56,7 @@
       "check": "metadata",
       "id": "release:ruby:metadata",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     },
@@ -66,7 +66,7 @@
       "check": "artifact",
       "id": "release:ruby:artifact",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     },
@@ -76,7 +76,7 @@
       "check": "source",
       "id": "release:ruby:source",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     },
@@ -86,7 +86,7 @@
       "check": "sbom",
       "id": "release:ruby:sbom",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     },
@@ -96,7 +96,7 @@
       "check": "provenance",
       "id": "release:ruby:provenance",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     },
@@ -106,7 +106,7 @@
       "check": "documentation",
       "id": "release:ruby:documentation",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     },
@@ -116,45 +116,45 @@
       "check": "scope",
       "id": "release:ruby:scope",
       "platform": null,
-      "retrieval_sha256": "e1ad4ab74cfa2f3f9e4570f29a3bcb8de7eb5cc8cf2e26a8b0288c0471e63a53",
+      "retrieval_sha256": "e7ac902bfa25b284d0b6f665d38754f90d0810d939e2e63269b41546b87798cc",
       "status": "READY",
       "tier": "Preview"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/ruby/strling-4.0.1.gem": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05"
+    "bindings/ruby/strling-4.0.2.gem": "2f9511415bb1894c73ecb6790b05c38ccbdfe021da3e409d5e5b3552650cb718"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.1.json",
-      "sha256": "923fdd46c43e8a063348470d8b80d5deb1833e18a4d9847aa1c20d1ef736b0e2",
+      "request_url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.2.json",
+      "sha256": "31709709ed28a4c3a6335cd037c803a1b4a53d6074a5bb7b7c108991c510fffe",
       "size": 364
     },
     {
       "authority": "synthetic",
-      "request_url": "https://rubygems.org/downloads/strling-4.0.1.gem",
-      "sha256": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05",
+      "request_url": "https://rubygems.org/downloads/strling-4.0.2.gem",
+      "sha256": "2f9511415bb1894c73ecb6790b05c38ccbdfe021da3e409d5e5b3552650cb718",
       "size": 13312
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-ruby.spdx.json",
-      "sha256": "0b57051330d6acccc89c357e7f7190a53ddfc0c3ba756106a5453db2717b1c7e",
+      "sha256": "5bc65079226b1d88e94f03df19a2f75157f31d4f00f25dd145363c6f8cb2e2f8",
       "size": 24385
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-ruby.intoto.json",
-      "sha256": "e9fe2bde3fa92a7d9a3f4af8322b98c9f6a3a4e6948adb047304074bb9ef750b",
+      "sha256": "e7325e1052b00a17f20557d131f43ac259a2af2aff803a9bd32e9f4f032a8c4d",
       "size": 4145
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/ruby/README.md",
-      "sha256": "4040ccc7d2fd989b015510b1180e9596a8773340faf688e3e614a482215c088c",
-      "size": 2478
+      "sha256": "abc950e9b9e7f4d8b75f5caf0589d5ca9b0f5c0275d7ce06af3b601418bb9911",
+      "size": 2563
     }
   ]
 }

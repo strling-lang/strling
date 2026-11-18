@@ -1,3 +1,8 @@
+# 4.0.2
+
+Require the matching STRling 4.0.2 native library. The Dart API and supported
+runtime scope are unchanged.
+
 # 4.0.1
 
 Fix-forward packaging excludes Pub's selection-control file from the certified

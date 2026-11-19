@@ -16,8 +16,9 @@ jobs:
             contents: read
             actions: read
         if:
-            github.repository == 'strling-lang/strling' && (github.ref_name == github.event.repository.default_branch ||
-            (github.ref == vars.PUBLIC_WORKFLOW_REF && github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA))
+            github.repository == 'strling-lang/strling' && github.event_name == 'workflow_dispatch' &&
+            vars.PUBLIC_VERIFICATION_ENABLED == 'true' && github.ref == vars.PUBLIC_WORKFLOW_REF &&
+            github.sha == vars.PUBLIC_WORKFLOW_SHA && github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA
         environment: public-verification
         strategy:
             fail-fast: false
@@ -31,6 +32,8 @@ jobs:
         timeout-minutes: 120
         env:
             PUBLIC_VERIFICATION_ENABLED: ${{ vars.PUBLIC_VERIFICATION_ENABLED }}
+            PUBLIC_WORKFLOW_REF: ${{ vars.PUBLIC_WORKFLOW_REF }}
+            PUBLIC_WORKFLOW_SHA: ${{ vars.PUBLIC_WORKFLOW_SHA }}
             STRLING_PUBLIC_VERIFIER_SHA: ${{ vars.PUBLIC_VERIFIER_SHA }}
             STRLING_PUBLIC_REQUEST_SHA256: ${{ vars.PUBLIC_REQUEST_SHA256 }}
         defaults:
@@ -123,7 +126,9 @@ jobs:
                   from pathlib import Path
                   git = ['git', '-C', 'public-request-source']
                   source = subprocess.check_output([*git, 'rev-parse', 'HEAD'], text=True).strip()
-                  assert source == os.environ['GITHUB_WORKFLOW_SHA']
+                  assert os.environ['PUBLIC_VERIFICATION_ENABLED'] == 'true'
+                  assert os.environ['GITHUB_REF'] == os.environ['PUBLIC_WORKFLOW_REF']
+                  assert source == os.environ['GITHUB_WORKFLOW_SHA'] == os.environ['PUBLIC_WORKFLOW_SHA']
                   raw = subprocess.check_output([*git, 'show', 'HEAD:.github/public-verification/request.json'])
                   assert hashlib.sha256(raw).hexdigest() == os.environ['STRLING_PUBLIC_REQUEST_SHA256']
                   Path('request.json').write_bytes(raw)
@@ -202,12 +207,16 @@ jobs:
     reconcile:
         needs: verify
         if:
-            always() && !cancelled() && github.repository == 'strling-lang/strling' && (github.ref_name == github.event.repository.default_branch ||
-            (github.ref == vars.PUBLIC_WORKFLOW_REF && github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA))
+            always() && !cancelled() && github.repository == 'strling-lang/strling' && github.event_name == 'workflow_dispatch' &&
+            vars.PUBLIC_VERIFICATION_ENABLED == 'true' && github.ref == vars.PUBLIC_WORKFLOW_REF &&
+            github.sha == vars.PUBLIC_WORKFLOW_SHA && github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA
         environment: public-verification
         runs-on: ubuntu-24.04
         timeout-minutes: 15
         env:
+            PUBLIC_VERIFICATION_ENABLED: ${{ vars.PUBLIC_VERIFICATION_ENABLED }}
+            PUBLIC_WORKFLOW_REF: ${{ vars.PUBLIC_WORKFLOW_REF }}
+            PUBLIC_WORKFLOW_SHA: ${{ vars.PUBLIC_WORKFLOW_SHA }}
             STRLING_PUBLIC_VERIFIER_SHA: ${{ vars.PUBLIC_VERIFIER_SHA }}
             STRLING_PUBLIC_REQUEST_SHA256: ${{ vars.PUBLIC_REQUEST_SHA256 }}
         steps:
@@ -245,7 +254,10 @@ jobs:
                   from pathlib import Path
                   git = ['git', '-C', 'public-request-source']
                   source = subprocess.check_output([*git, 'rev-parse', 'HEAD'], text=True).strip()
-                  assert source == os.environ['GITHUB_WORKFLOW_SHA']
+                  assert os.environ['PUBLIC_VERIFICATION_ENABLED'] == 'true'
+                  assert os.environ['GITHUB_REF'] == os.environ['PUBLIC_WORKFLOW_REF']
+                  assert source == os.environ['GITHUB_WORKFLOW_SHA'] == os.environ['PUBLIC_WORKFLOW_SHA']
+                  assert subprocess.check_output(['git', '-C', 'verifier', 'rev-parse', 'HEAD'], text=True).strip() == os.environ['STRLING_PUBLIC_VERIFIER_SHA']
                   raw = subprocess.check_output([*git, 'show', 'HEAD:.github/public-verification/request.json'])
                   assert hashlib.sha256(raw).hexdigest() == os.environ['STRLING_PUBLIC_REQUEST_SHA256']
                   Path('request.json').write_bytes(raw)

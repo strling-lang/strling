@@ -24,6 +24,13 @@ The [release policy](docs/release-policy.md#repository-branches-and-tags)
 governs product tags, ecosystem tag exceptions, and publication control
 references. Use an exact source SHA for ordinary certification work.
 
+For this post-release maintenance scope, repository administrators can bind a
+reviewed `dev` push to its full SHA with `REPOSITORY_MAINTENANCE_SHA`. The
+integrity workflow verifies the original signed Fourth Edition closure and
+checks the approved maintenance commit against the permitted paths and focused
+regressions. This acceptance applies only to that `dev` push. Product
+candidate, export, and publication checks retain their own authorities.
+
 ## Quick start
 
 ```bash

@@ -6,10 +6,10 @@
     "schema_version": "1.0.0",
     "artifact_id": "release:cpp",
     "scope": "linux-x86_64",
-    "product_version": "4.0.1",
+    "product_version": "4.0.3",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "0df5c76deb489f0b9a0858e4655344691b337592400e228dea279b135060aafe",
+    "retrieval_files_sha256": "c92229ab517a3c8af96c91b84844da35fbf4df22139ae6eb0d255db7677d2a1b",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -21,8 +21,8 @@
       "source_outcome": "succeeded",
       "target_pattern": "abc",
       "kernel_mismatch_rejected": true,
-      "native_sha256": "ef7689160ea3774ebb01e9149ef5592de28a30aadf392e62bd068ce0f1dbc49d",
-      "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
+      "native_sha256": "a8026ea409ec975780d6ab6312efcca815f6e517255e6d895f64b66d6afd46ab",
+      "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
       "documentation_examples": [
         {
           "id": "bindings/cpp/README.md#4",
@@ -129,7 +129,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "7a5c16d11f0f642e18bf81fc9c26d376039c7fa216a6f28794d5835f86d44b96"
+    "receipt_fingerprint": "dd4192535304f46576fb63d46a0ba6175e52165197cb9eb0d6feb65a3a432e3e"
   },
-  "elapsed_seconds": 44.12085607199697
+  "elapsed_seconds": 37.738468220923096
 }

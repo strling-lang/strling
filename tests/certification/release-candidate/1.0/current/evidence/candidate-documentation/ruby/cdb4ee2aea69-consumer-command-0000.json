@@ -1,1 +1,1 @@
-{"command": ["gem", "install", "--local", "--ignore-dependencies", "--no-document", "--install-dir", "/tmp/strling-preview-documentation-g1lb8h8r/gems", "/var/tmp/strling-pub-17be3e0c-aggregate-first/bindings/ruby/strling-4.0.1.gem"], "exit_code": 0, "elapsed_seconds": 1.8753247260465287}
+{"command": ["gem", "install", "--local", "--ignore-dependencies", "--no-document", "--install-dir", "/tmp/strling-preview-documentation-crj6i4d2/gems", "/var/tmp/strling-pub-d01ac378-aggregate-first/bindings/ruby/strling-4.0.3.gem"], "exit_code": 0, "elapsed_seconds": 0.6810377559158951}

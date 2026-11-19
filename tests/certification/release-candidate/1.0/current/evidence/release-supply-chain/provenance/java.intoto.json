@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:java"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.3",
                 "registry": "maven-central",
                 "support": {
                     "external_prerequisites": [
@@ -74,19 +74,19 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
-                        "sha256": "ae9ca02f2d01a2f02c410dab7ad7c24a11f720e812bf2d95a947a61c59fbfc4c"
+                        "sha256": "31fcb3557afd4619c89ed7f17d8ded16d65b39aae8ad81df08c9c3d7fe3d2aa6"
                     },
                     "uri": "strling:dependency-root:java-maven"
                 },
                 {
                     "digest": {
-                        "sha256": "c9b1008dd84ede1b4e3266ce2af2bea955b93062a01568ec5170e419dd0014a7"
+                        "sha256": "cd405a303dc54f688410b04e73c9d41ba7ed0ce88cb06bbf7cb9516dc891cd82"
                     },
                     "uri": "strling:dependency-root:jvm-maven"
                 }
@@ -98,7 +98,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:java",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:java",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -107,31 +107,31 @@
     "subject": [
         {
             "digest": {
-                "sha256": "38ea85528c374d374d826804f205730aa753087ce82de68ad9676357c7bc3e60"
+                "sha256": "0c4dd5dc71d0a1c8189245e85a3be88fa215df490a0a294b949ab091468a3b99"
             },
             "name": "bindings/java/pom.xml"
         },
         {
             "digest": {
-                "sha256": "e9f718f97b27cb8dc1ce209a7ae15665e4fb34971e45e9257cab1c8017fe7af1"
+                "sha256": "bf16e2ec9307529d9a26d460f7d2bc4752545a63bdbe941a64a68fa6749e1484"
             },
-            "name": "bindings/java/target/strling-4.0.1-javadoc.jar"
+            "name": "bindings/java/target/strling-4.0.3-javadoc.jar"
         },
         {
             "digest": {
-                "sha256": "cefdbcb68c9cb06adc78a7070988dafe5394a10eaf307030084a99309881c534"
+                "sha256": "1548cb58246b90669a230e66e57623c60be1e8db3a5d209774431636223deb53"
             },
-            "name": "bindings/java/target/strling-4.0.1-sources.jar"
+            "name": "bindings/java/target/strling-4.0.3-sources.jar"
         },
         {
             "digest": {
-                "sha256": "7a997ea4e712bde8feb86a77b985b5821df7464f280a61477aa1a615ba6b1782"
+                "sha256": "97e9f00bf317e7abeb47470e8ccb3baa6e19274a55b766d063f4a3b5ca88a064"
             },
-            "name": "bindings/java/target/strling-4.0.1.jar"
+            "name": "bindings/java/target/strling-4.0.3.jar"
         },
         {
             "digest": {
-                "sha256": "79bdd897ac49113fee2a496e77bcb4ad8b904174431fc190a7729b84c6d538a9"
+                "sha256": "4f88ed95d32dbb42d0fed0e9f41a2edf7bcab21fd993af566c0fe6cd312739e7"
             },
             "name": "bindings/jvm/pom.xml"
         },
@@ -139,19 +139,19 @@
             "digest": {
                 "sha256": "0273d518a29466b3d561a520c9b64b593bb7c05018b496fd817d3f30ae97b0f1"
             },
-            "name": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar"
+            "name": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar"
         },
         {
             "digest": {
-                "sha256": "27f88af4256228fb18d410bc7908889a8f36e19262f450f86314d754f26e8701"
+                "sha256": "63edf4210ccb40a23ad30477dad0ce77d25708a71638a5477697bc389af18bdb"
             },
-            "name": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar"
+            "name": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar"
         },
         {
             "digest": {
-                "sha256": "b9d0637009b244ca06278ff0f9955752d83329c6c85f4008a72d8b9f281f0153"
+                "sha256": "4491ae5d8c166c0119b4053ca738a43a10f20413d6f1eeea67d97ab76ef6a764"
             },
-            "name": "bindings/jvm/target/strling-jvm-4.0.1.jar"
+            "name": "bindings/jvm/target/strling-jvm-4.0.3.jar"
         }
     ]
 }

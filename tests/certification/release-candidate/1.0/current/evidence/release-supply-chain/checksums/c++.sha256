@@ -1,5 +1,5 @@
-# surface-sha256 b455cda963f6fc033ef672c971a91efb5de96183780ef384aa041fa90b9a2b13
-1f5d489dae86169fc38a290835f02a207877bab4b0f1d782483d9569ad42e820  bindings/cpp/dist/strling-4.0.1-linux-x86_64.tgz
-7aa2801187f06016d10f44024299d23028e99a252e0b77cc60237c4752c82c15  bindings/cpp/dist/strling-4.0.1-linux-x86_64.upload.zip
-5ef54c974061ab22efdc87ffd6bbdd284f1f5a7a9c56600d6e34d6c3df32887a  bindings/cpp/dist/strling-4.0.1-windows-x86_64.tgz
-ade08c265836d1b4a34452da46bfbc48e37e127a453165a6ca3d81dc1d336676  bindings/cpp/dist/strling-4.0.1-windows-x86_64.upload.zip
+# surface-sha256 78603bc0ea08d1f566a384c1157eb97cb2898e1b0b1f8080efaed01c3e9c5e22
+b8d09474d06390995ecdaff04fb96a387cab6838dce9f335b491e9958dd73267  bindings/cpp/dist/strling-4.0.3-linux-x86_64.tgz
+614aa9188d461da490ff70f0418f34b61b9530248e4af7d51b6f5261803ac6b2  bindings/cpp/dist/strling-4.0.3-linux-x86_64.upload.zip
+d1c1b8fc0672f44d2dd64fbbebb01fca3c2677518064bdc33369ef7c7edd9628  bindings/cpp/dist/strling-4.0.3-windows-x86_64.tgz
+bf20e53f270f18172bef09ef25e97126119ddced9cc623c7ce2619a49555bd87  bindings/cpp/dist/strling-4.0.3-windows-x86_64.upload.zip

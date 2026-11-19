@@ -1,1 +1,1 @@
-{"command": ["luarocks", "--lua-version=5.1", "--tree=/tmp/strling-preview-documentation-olyv9u8x/lua-tree", "install", "--deps-mode=none", "/var/tmp/strling-pub-17be3e0c-aggregate-first/bindings/lua/strling-4.0.1-1.src.rock"], "exit_code": 0, "elapsed_seconds": 1.171954694960732}
+{"command": ["luarocks", "--lua-version=5.1", "--tree=/tmp/strling-preview-documentation-a1da5cgd/lua-tree", "install", "--deps-mode=none", "/var/tmp/strling-pub-d01ac378-aggregate-first/bindings/lua/strling-4.0.3-1.src.rock"], "exit_code": 0, "elapsed_seconds": 0.8967419150285423}

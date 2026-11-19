@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:swift"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.3",
                 "registry": "github-tag:swift-vVERSION",
                 "support": {
                     "external_prerequisites": [
@@ -67,9 +67,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:swift",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:swift",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -100,13 +100,13 @@
         },
         {
             "digest": {
-                "sha256": "16c8582b20fedbbdfef9e0546702c650c723f73a1a4b57ac3d4d6fa28a6715a2"
+                "sha256": "d701466360c8ac80ba6056a5e0e24315e2dbdd4a85c899405400fea0beb95258"
             },
             "name": "bindings/interop"
         },
         {
             "digest": {
-                "sha256": "ea0f8d2cae75af9894761a470113c98a993c55b8921fc0cd921ad28dc10bfb52"
+                "sha256": "95d5a502321606f631d1111d2c6c7e3d0708ea5d6ca244e30ed00fbc50c49cf8"
             },
             "name": "bindings/swift"
         },

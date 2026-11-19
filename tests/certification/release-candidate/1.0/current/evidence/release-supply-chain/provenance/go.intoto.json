@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:go"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.3",
                 "registry": "github-tag:go-vVERSION",
                 "support": {
                     "external_prerequisites": [
@@ -67,9 +67,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:go",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:go",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -100,13 +100,13 @@
         },
         {
             "digest": {
-                "sha256": "46f521281017fe5272451d5936ca2654966df9a3c14f98dd8f994444aa83caa3"
+                "sha256": "0d02099938d40e4021f768dbc38270dc6b003b2dcdf00e5f3e5f050b66a47ee7"
             },
             "name": "bindings/go"
         },
         {
             "digest": {
-                "sha256": "16c8582b20fedbbdfef9e0546702c650c723f73a1a4b57ac3d4d6fa28a6715a2"
+                "sha256": "d701466360c8ac80ba6056a5e0e24315e2dbdd4a85c899405400fea0beb95258"
             },
             "name": "bindings/interop"
         },

@@ -6,10 +6,10 @@
     "schema_version": "1.0.0",
     "artifact_id": "release:rust",
     "scope": "linux-x86_64",
-    "product_version": "4.0.1",
+    "product_version": "4.0.3",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "0df5c76deb489f0b9a0858e4655344691b337592400e228dea279b135060aafe",
+    "retrieval_files_sha256": "c92229ab517a3c8af96c91b84844da35fbf4df22139ae6eb0d255db7677d2a1b",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -17,12 +17,12 @@
       "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8"
     },
     "result": {
-      "linked_package_version": "4.0.1",
+      "linked_package_version": "4.0.3",
       "source_outcome": "succeeded",
       "status": "passed",
       "target_pattern": "abc",
       "target_profile_mismatch_rejected": true,
-      "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
+      "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
       "documentation_examples": [
         {
           "id": "bindings/rust/README.md#1",
@@ -119,7 +119,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "58928bf17f077206d3bc5acb0a89c133475ffc840024c46205c6be08255e5eb5"
+    "receipt_fingerprint": "1ac05a7a5425d27b02be0e934738caa60130f1a462b98f949ca2ed7087db9ab3"
   },
-  "elapsed_seconds": 69.0401417830144
+  "elapsed_seconds": 71.53817818895914
 }

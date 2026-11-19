@@ -6,10 +6,10 @@
     "schema_version": "1.0.0",
     "artifact_id": "release:java",
     "scope": "windows-x86_64",
-    "product_version": "4.0.1",
+    "product_version": "4.0.3",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "43d783fff8e5d987300f2f01b3595d7034d7259ee59a76e3292ae0013ce89add",
+    "retrieval_files_sha256": "a7ed79c1a3cd3f3115ea476ec15bf7aa0e3e093968ac3028f1c3aeaef6a91f6c",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -17,11 +17,11 @@
       "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8"
     },
     "result": {
-      "status": "passed",
       "source_outcome": "succeeded",
       "kernel_mismatch_rejected": true,
       "target_pattern": "abc",
-      "documentation_manifest_sha256": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c",
+      "status": "passed",
+      "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
       "documentation_examples": [
         {
           "id": "bindings/java/README.md#2",
@@ -29,7 +29,7 @@
           "status": "passed"
         }
       ],
-      "native_sha256": "5bf4c63f0f2b67cdd58bdb995d12097a8d53908a6101e02dcd1a9d80ecef3462",
+      "native_sha256": "b41e8a65635a0055c65a9f733a019e7c3f3e66ba7e24f3ecae3be413a3cc9ae2",
       "runtime_dependency_sha256": {
         "com.fasterxml.jackson.core:jackson-annotations:2.18.11": "9eab0d36da981645392427eedcb087e13be542488e37f935723dc0be50d18a53",
         "com.fasterxml.jackson.core:jackson-core:2.18.11": "825fa72dfb9e2f8a642322f1390dbac22c30d15ebd6dc6b3772158821ee124eb",
@@ -120,7 +120,7 @@
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "f73c4e4fa8b6cb72ebdb9aa966e069aa56186ddbd4d76261555a928e6618a384"
+    "receipt_fingerprint": "ed2fda2db94b829688e8fa5204888e7c60c0177670f5dabcd5a6c10da25457c5"
   },
-  "elapsed_seconds": 6.187000000150874
+  "elapsed_seconds": 5.530999999959022
 }

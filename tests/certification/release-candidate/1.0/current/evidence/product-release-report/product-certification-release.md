@@ -1,9 +1,9 @@
 # STRling Product Certification
 
-- Repository: `17be3e0c81fb2816803653b73f0f9198d6711d5d` (clean)
-- Source profile: `release` (`607c02addb76b9e0360a38c3a2077004db042da3058cffa03a7114d50619a15f`)
+- Repository: `d01ac3785736ad552c90f00b4ca13c0e2e5c9c62` (clean)
+- Source profile: `release` (`5a060473a5d15aa7d2656392c512a62620b4bf31705e20e64de0fe716c3a45d9`)
 - Producer manifest: `28b9b40a54c49558568dbb8bcee0942589d4ca67610c53eed08fc7d37ff47c7e`
-- Product evidence: `aee2c1f6952e51c5af1ff8a5ea8bae57e20074c5fd89d6c37d2d83d4d27b2159`
+- Product evidence: `0c852c96af29e95718100840e0ae2bde6ac7ce40b2949c3bb8729282636d2226`
 - Aggregate: **WAIVED** (exit 0; passed=124, waived=1)
 - Coverage: 125/125 results; 33/33 structured producers
 

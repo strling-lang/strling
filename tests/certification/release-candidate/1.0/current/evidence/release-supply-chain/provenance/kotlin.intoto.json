@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:kotlin"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.3",
                 "registry": "maven-central",
                 "support": {
                     "external_prerequisites": [
@@ -79,19 +79,19 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
-                        "sha256": "c9b1008dd84ede1b4e3266ce2af2bea955b93062a01568ec5170e419dd0014a7"
+                        "sha256": "cd405a303dc54f688410b04e73c9d41ba7ed0ce88cb06bbf7cb9516dc891cd82"
                     },
                     "uri": "strling:dependency-root:jvm-maven"
                 },
                 {
                     "digest": {
-                        "sha256": "4c18576c712f52a3107e967c95fbf543eb1f0d05f7c9c50979c6c6218c120d60"
+                        "sha256": "74022a00526bc9df248cae609615e6ff9eec7f30c58e6ef348ae559ca91e17f2"
                     },
                     "uri": "strling:dependency-root:kotlin-gradle"
                 }
@@ -103,7 +103,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:kotlin",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:kotlin",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -112,25 +112,25 @@
     "subject": [
         {
             "digest": {
-                "sha256": "e48bd0f5a5c3fc0d37a77e009568fe1f3117951fa2738293b69bc41fbd20deda"
+                "sha256": "7dceb375233f2fb428f3b46e969a04d0fbca34bd3820174c50fba2d023962c5f"
             },
-            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.1-javadoc.jar"
+            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.3-javadoc.jar"
         },
         {
             "digest": {
-                "sha256": "e3ab0e910bb6e04c3dea66cab30105f69c43de04eb7aa469adb49cfc1cca82c7"
+                "sha256": "eed0e2041973bf885ef7f3ec692bc940fbab8f5b47960a0b29f0ab027303226c"
             },
-            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.1-sources.jar"
+            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.3-sources.jar"
         },
         {
             "digest": {
-                "sha256": "4b3fa2a7d8d2df541338bf0dcfac656c3d3c66d091f4991301d9b26ab1de8d2d"
+                "sha256": "e1c04a5b9b653b9d9c00fe10a88568e79556f1ffe54cddbfc40ad259a54d50a2"
             },
-            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.1.jar"
+            "name": "bindings/kotlin/build/libs/strling-kotlin-4.0.3.jar"
         },
         {
             "digest": {
-                "sha256": "a4307ffcae614ba9a3e0c0dc586f34e72bf0372d598d31cc55608a60fb2145d3"
+                "sha256": "d5fe49dc1fa117bf9d2d8785e58d115368dd40ca8b11f9a563577f2b8a08d166"
             },
             "name": "bindings/kotlin/build/publications/maven/pom-default.xml"
         }

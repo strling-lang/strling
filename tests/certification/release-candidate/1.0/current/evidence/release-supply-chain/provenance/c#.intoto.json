@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:csharp"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.3",
                 "registry": "nuget.org",
                 "support": {
                     "external_prerequisites": [
@@ -67,19 +67,19 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
-                        "sha256": "f31fad9213f450d001c2d4f08596407c79c06c249d6484078d76fa866069cf2c"
+                        "sha256": "ea8ca5190d6999e771432519376e0ed6083c1d10f0247f84e151643cf1f17822"
                     },
                     "uri": "strling:dependency-root:csharp-nuget"
                 },
                 {
                     "digest": {
-                        "sha256": "2c431f6257453e83bd9ad0b9b83a85d770dc55ba0fb577d17f511d0957f9cdc7"
+                        "sha256": "d34724bfe36c865abbbef0f01389ccbdc3b664ca116ca890731687840eb0bff2"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -91,7 +91,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:csharp",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:csharp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -100,9 +100,9 @@
     "subject": [
         {
             "digest": {
-                "sha256": "c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5"
+                "sha256": "ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8"
             },
-            "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg"
+            "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.3.nupkg"
         }
     ]
 }

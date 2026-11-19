@@ -1,6 +1,6 @@
 {
     "certification": {
-        "attestation_sha256": "8adab2fc290af541c1a9b2883e343f33e4c7b9fbaf9877905c4ec7f479b1a77c",
+        "attestation_sha256": "6f46f04c52c4c63182ce2e33cdb158db63e001aacc71bdac5f3f0bdd9de941b0",
         "certification_contract": {
             "operation_registry_fingerprint": "b37fd0e49f28f4c4604b5cb37fcdef7bdbf9acd44c016cb071ed782d07e4989e",
             "profile_registry_fingerprint": "0ea34ea746e711efcb1d12d0a41c6c3fb1f6a637340c95504cf0bc2a891ac68a",
@@ -12,7 +12,7 @@
             "certifier_id": "strling-local-release-certifier-2026-01",
             "ssh_key_fingerprint": "SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA"
         },
-        "evidence_root_sha256": "7ad3c371ce7251d3fe244e756c0dad0d8c9bc9466bf2e6a9da8c49bef099d902",
+        "evidence_root_sha256": "4b938eb8189a815e6f463150146730fe9b0b400f36e3de04a7f2d3dc2c1ef554",
         "profile_results": [
             {
                 "counts": {
@@ -27,7 +27,7 @@
                 },
                 "definition_fingerprint": "0ed74f964b7b83f27a9912f14bb3bed9decf0264d603606a4827252f2c6f0112",
                 "definition_version": "1.33.0",
-                "evidence_fingerprint": "68df9ad3da2568d9dea97b2bae1cc145522bae3f817e1d9e05ac6d4878287681",
+                "evidence_fingerprint": "3fa44f6dc1f41b626cfc8ca180a4330fc6e95c243f4d05f43c1eef1a8a87d071",
                 "evidence_path": "evidence/profile-full/profile-full.json",
                 "exit_code": 0,
                 "operation_count": 125,
@@ -47,7 +47,7 @@
                 },
                 "definition_fingerprint": "cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3",
                 "definition_version": "1.33.0",
-                "evidence_fingerprint": "607c02addb76b9e0360a38c3a2077004db042da3058cffa03a7114d50619a15f",
+                "evidence_fingerprint": "5a060473a5d15aa7d2656392c512a62620b4bf31705e20e64de0fe716c3a45d9",
                 "evidence_path": "evidence/profile-release/profile-release.json",
                 "exit_code": 0,
                 "operation_count": 125,
@@ -55,11 +55,11 @@
                 "status": "waived"
             }
         ],
-        "signature_sha256": "197dedf4ac379768088590e50df808a823de866da333f2cc11d3f977889dd374",
-        "trusted_verifier_sha": "ea03dd4cbe35b5614fb862c1568cc7356a5bd16f",
+        "signature_sha256": "ee5fd5d5e4f983fc825dbf7f32c01adaefe9d36049300a19005705d8423d29f0",
+        "trusted_verifier_sha": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0",
         "waiver_inventory": ["WVR-SEC-VSCE-LICENSE-001"]
     },
-    "certified_artifact_coordinate": "4.0.1",
+    "certified_artifact_coordinate": "4.0.3",
     "coordinate_preflight": {
         "limitations": [
             "The provisional RC lookup is diagnostic only; no prerelease or tag creation is authorized or reserved.",
@@ -73,26 +73,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:26.717109+00:00",
+                "observed_utc": "2026-11-19T05:23:33.669269+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling-c",
                 "registry": "github-tag:c-vVERSION",
@@ -100,7 +100,7 @@
             },
             {
                 "artifact_id": "release:cpp",
-                "observed_utc": "2026-11-17T10:56:28.102800+00:00",
+                "observed_utc": "2026-11-19T05:23:35.208919+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling",
                 "reason": "ConanCenter publication is explicitly deferred; direct C++ developer installation remains supported.",
@@ -112,26 +112,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.1-rc.1/strling.nuspec",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.3-rc.1/strling.nuspec",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.1/strling.nuspec",
-                        "version": "4.0.1"
+                        "url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.3/strling.nuspec",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:28.120977+00:00",
+                "observed_utc": "2026-11-19T05:23:35.228736+00:00",
                 "ownership_confirmed": false,
                 "package_name": "STRling",
                 "registry": "nuget.org",
@@ -142,26 +142,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://pub.dev/api/packages/strling/versions/4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://pub.dev/api/packages/strling/versions/4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://pub.dev/api/packages/strling/versions/4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://pub.dev/api/packages/strling/versions/4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:29.250955+00:00",
+                "observed_utc": "2026-11-19T05:23:36.488946+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling",
                 "registry": "pub.dev",
@@ -172,26 +172,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.1-rc.1/strling.fsharp.nuspec",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.3-rc.1/strling.fsharp.nuspec",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.1/strling.fsharp.nuspec",
-                        "version": "4.0.1"
+                        "url": "https://api.nuget.org/v3-flatcontainer/strling.fsharp/4.0.3/strling.fsharp.nuspec",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:30.312443+00:00",
+                "observed_utc": "2026-11-19T05:23:37.736306+00:00",
                 "ownership_confirmed": false,
                 "package_name": "STRling.FSharp",
                 "registry": "nuget.org",
@@ -202,26 +202,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/go-v4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:31.408625+00:00",
+                "observed_utc": "2026-11-19T05:23:39.145981+00:00",
                 "ownership_confirmed": false,
                 "package_name": "github.com/strling-lang/strling/bindings/go",
                 "registry": "github-tag:go-vVERSION",
@@ -232,26 +232,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1-rc.1/strling-4.0.1-rc.1.pom",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.3-rc.1/strling-4.0.3-rc.1.pom",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.1/strling-4.0.1.pom",
-                        "version": "4.0.1"
+                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling/4.0.3/strling-4.0.3.pom",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:32.830352+00:00",
+                "observed_utc": "2026-11-19T05:23:40.441516+00:00",
                 "ownership_confirmed": false,
                 "package_name": "io.github.strling-lang:strling",
                 "registry": "maven-central",
@@ -262,26 +262,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.1-rc.1/strling-kotlin-4.0.1-rc.1.pom",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.3-rc.1/strling-kotlin-4.0.3-rc.1.pom",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.1/strling-kotlin-4.0.1.pom",
-                        "version": "4.0.1"
+                        "url": "https://repo1.maven.org/maven2/io/github/strling-lang/strling-kotlin/4.0.3/strling-kotlin-4.0.3.pom",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:34.249203+00:00",
+                "observed_utc": "2026-11-19T05:23:42.130745+00:00",
                 "ownership_confirmed": false,
                 "package_name": "io.github.strling-lang:strling-kotlin",
                 "registry": "maven-central",
@@ -289,7 +289,7 @@
             },
             {
                 "artifact_id": "release:lua",
-                "observed_utc": "2026-11-17T10:56:35.632451+00:00",
+                "observed_utc": "2026-11-19T05:23:43.761522+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling",
                 "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately.",
@@ -298,7 +298,7 @@
             },
             {
                 "artifact_id": "release:perl",
-                "observed_utc": "2026-11-17T10:56:35.660213+00:00",
+                "observed_utc": "2026-11-19T05:23:43.794084+00:00",
                 "ownership_confirmed": false,
                 "package_name": "STRling",
                 "reason": "This anonymous planning lookup does not prove owner-specific registry permissions; authenticated readiness is recorded separately.",
@@ -310,26 +310,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:35.681526+00:00",
+                "observed_utc": "2026-11-19T05:23:43.816393+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling/strling",
                 "registry": "github-tag:php-vVERSION",
@@ -340,26 +340,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1rc1",
+                        "coordinate": "4.0.3rc1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://pypi.org/pypi/STRling/4.0.1rc1/json",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://pypi.org/pypi/STRling/4.0.3rc1/json",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://pypi.org/pypi/STRling/4.0.1/json",
-                        "version": "4.0.1"
+                        "url": "https://pypi.org/pypi/STRling/4.0.3/json",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:37.202906+00:00",
+                "observed_utc": "2026-11-19T05:23:45.426498+00:00",
                 "ownership_confirmed": false,
                 "package_name": "STRling",
                 "registry": "pypi.org",
@@ -370,26 +370,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/r-v4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:38.357226+00:00",
+                "observed_utc": "2026-11-19T05:23:46.723937+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling",
                 "registry": "github-tag:r-vVERSION",
@@ -400,26 +400,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1.rc.1",
+                        "coordinate": "4.0.3.rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.1.rc.1.json",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.3.rc.1.json",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.1.json",
-                        "version": "4.0.1"
+                        "url": "https://rubygems.org/api/v2/rubygems/strling/versions/4.0.3.json",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:39.592061+00:00",
+                "observed_utc": "2026-11-19T05:23:48.194227+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling",
                 "registry": "rubygems.org",
@@ -430,26 +430,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://crates.io/api/v1/crates/strling/4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://crates.io/api/v1/crates/strling/4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://crates.io/api/v1/crates/strling/4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://crates.io/api/v1/crates/strling/4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:41.011363+00:00",
+                "observed_utc": "2026-11-19T05:23:50.019263+00:00",
                 "ownership_confirmed": false,
                 "package_name": "strling",
                 "registry": "crates.io",
@@ -460,26 +460,26 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/swift-v4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:42.197133+00:00",
+                "observed_utc": "2026-11-19T05:23:51.311969+00:00",
                 "ownership_confirmed": false,
                 "package_name": "STRling",
                 "registry": "github-tag:swift-vVERSION",
@@ -490,40 +490,40 @@
                 "coordinates": [
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1-rc.1",
+                        "coordinate": "4.0.3-rc.1",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.1-rc.1",
-                        "version": "4.0.1-rc.1"
+                        "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.3-rc.1",
+                        "version": "4.0.3-rc.1"
                     },
                     {
                         "classification": "missing-coordinate",
-                        "coordinate": "4.0.1",
+                        "coordinate": "4.0.3",
                         "coordinate_observation": "not-resolved-at-observation-time",
                         "detail": "exact public coordinate is absent",
                         "http_status": 404,
                         "status": "unavailable",
-                        "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.1",
-                        "version": "4.0.1"
+                        "url": "https://registry.npmjs.org/@strling-lang%2Fstrling/4.0.3",
+                        "version": "4.0.3"
                     }
                 ],
-                "observed_utc": "2026-11-17T10:56:43.467979+00:00",
+                "observed_utc": "2026-11-19T05:23:52.647949+00:00",
                 "ownership_confirmed": false,
                 "package_name": "@strling-lang/strling",
                 "registry": "npmjs.org",
                 "status": "read-only-coordinate-observation"
             }
         ],
-        "report_sha256": "ed8b3abc15e73eb376b05121a6675459384e469857cd91d41c51c7ab8b2c274f"
+        "report_sha256": "1ca68041e9247a35a48cb6196930d67cfb23a70a832a12afb662c6e6971e991d"
     },
     "distributions": [
         {
             "artifact_id": "release:c",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "30f00f4b99766b9bb5720825b42c3b781e1f603bc0ed48d8addaf640427fedfb"
+                "digest": "837f78d54645ce39529ee6a84b60fa9710d72c6155068d5bf1e4f283003ddc8e"
             },
             "credential_policy": {
                 "mode": "github-token",
@@ -548,30 +548,30 @@
             "provenance": {
                 "build_command_sha256": "0afbecd2cf9cefe348c3c6c6a32ed07545347ebf46cd14ecd4feda31bf583829",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "4c19a94ddcc5f606b41a8b4e900cf393abdf6b09f072615a41b1a6d6a20148da",
+                "predicate_sha256": "928843e6bc7021c7695a9aa9d25c0f3c36c34b8a7f6b20b5c588819d4ff10959",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
                 "subject_name": "strling-release-set:6b83d0b27f3df455",
-                "subject_sha256": "30f00f4b99766b9bb5720825b42c3b781e1f603bc0ed48d8addaf640427fedfb"
+                "subject_sha256": "837f78d54645ce39529ee6a84b60fa9710d72c6155068d5bf1e4f283003ddc8e"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "github-tag:c-vVERSION",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 22,
-                "document_namespace": "https://strling.dev/sbom/c/30f00f4b99766b9bb5720825b42c3b781e1f603bc0ed48d8addaf640427fedfb",
+                "document_namespace": "https://strling.dev/sbom/c/837f78d54645ce39529ee6a84b60fa9710d72c6155068d5bf1e4f283003ddc8e",
                 "relationship_count": 479,
-                "sha256": "6bc4caef11dd7bb4eb34b06e0eda244b7ebb79d34f1c3eef9cc01a00d03a8272",
+                "sha256": "d429bb26105cbdc14cab6175dc92f1fe1ec64d9476bc5905789f2eb5c56e32d4",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 and linux-x86_64 interop routes",
             "subject": {
-                "bytes": 4658893,
+                "bytes": 4658978,
                 "kind": "source-tree",
                 "name": "strling-release-set:6b83d0b27f3df455",
-                "sha256": "30f00f4b99766b9bb5720825b42c3b781e1f603bc0ed48d8addaf640427fedfb"
+                "sha256": "837f78d54645ce39529ee6a84b60fa9710d72c6155068d5bf1e4f283003ddc8e"
             },
             "tier": "Supported",
             "toolchains": [
@@ -755,7 +755,7 @@
             "artifact_id": "release:cpp",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "b455cda963f6fc033ef672c971a91efb5de96183780ef384aa041fa90b9a2b13"
+                "digest": "78603bc0ea08d1f566a384c1157eb97cb2898e1b0b1f8080efaed01c3e9c5e22"
             },
             "credential_policy": {
                 "mode": "external-review",
@@ -781,30 +781,30 @@
             "provenance": {
                 "build_command_sha256": "35dc5547e074fdaba4d90ac2bbe113ed93446a856107d73d66de6c6c4c8e8fab",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "2115fa5255a7d921cd9ffb3126926faeff4a6c17d3135fb477eb58acadb7ea12",
+                "predicate_sha256": "d9b31b735055e5f715fe2052d323e5f622c9ce4faaf13ac22f88d65a48f99051",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "strling-release-set:2eb507c455f86235",
-                "subject_sha256": "b455cda963f6fc033ef672c971a91efb5de96183780ef384aa041fa90b9a2b13"
+                "subject_name": "strling-release-set:5f5befd0deaddf17",
+                "subject_sha256": "78603bc0ea08d1f566a384c1157eb97cb2898e1b0b1f8080efaed01c3e9c5e22"
             },
             "publication_eligibility": "owner-deferred-conancenter-4.0.0",
             "registry": "conan",
             "registry_owner": "existing registry owner/uploader; organization repository strling-lang/strling",
             "sbom": {
                 "component_count": 22,
-                "document_namespace": "https://strling.dev/sbom/c++/b455cda963f6fc033ef672c971a91efb5de96183780ef384aa041fa90b9a2b13",
+                "document_namespace": "https://strling.dev/sbom/c++/78603bc0ea08d1f566a384c1157eb97cb2898e1b0b1f8080efaed01c3e9c5e22",
                 "relationship_count": 2224,
-                "sha256": "e23a6d00eca0759f2c45f16c71d2c9d59e77d5c263a5fb83c0cfc2d0779e61c1",
+                "sha256": "f3080c5d594ec9582c17c5e4df981cc118b07d8068df6fcbe7a456b22a34dfa2",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 and linux-x86_64 interop routes",
             "subject": {
-                "bytes": 38226310,
+                "bytes": 38228923,
                 "kind": "file",
-                "name": "strling-release-set:2eb507c455f86235",
-                "sha256": "b455cda963f6fc033ef672c971a91efb5de96183780ef384aa041fa90b9a2b13"
+                "name": "strling-release-set:5f5befd0deaddf17",
+                "sha256": "78603bc0ea08d1f566a384c1157eb97cb2898e1b0b1f8080efaed01c3e9c5e22"
             },
             "tier": "Supported",
             "toolchains": [
@@ -1016,7 +1016,7 @@
             "artifact_id": "release:csharp",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5"
+                "digest": "ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8"
             },
             "credential_policy": {
                 "mode": "long-lived-secret",
@@ -1040,30 +1040,30 @@
             "provenance": {
                 "build_command_sha256": "d487205ebefdba765caf21ed0ab6ee920297ea5ef9e56f91b57717dfe907b1fd",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "4d81e697c51c5f2c14af9c4e672c8336a81dc9b7889ec2aa2a89c1427c3fee5a",
+                "predicate_sha256": "8b030be3bd0096611949c194278db15c4dad79fee65e2316565084189616df72",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg",
-                "subject_sha256": "c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5"
+                "subject_name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.3.nupkg",
+                "subject_sha256": "ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "nuget.org",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 26,
-                "document_namespace": "https://strling.dev/sbom/c#/c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5",
+                "document_namespace": "https://strling.dev/sbom/c#/ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8",
                 "relationship_count": 35,
-                "sha256": "17e4f6b15bf33d28ffe71a7009e768f4613cf2f38d1cb9995acac764249613cb",
+                "sha256": "64dd554749b7a2960db718504b006b770b8d35d08cde9b52385639784795110f",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 clean-consumer native assets",
             "subject": {
-                "bytes": 1658086,
+                "bytes": 1658107,
                 "kind": "file",
-                "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.1.nupkg",
-                "sha256": "c4ddcfd4e8e0a269ae23468cdb85f539d359b19216b42b76aeec96f46c19a8d5"
+                "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.3.nupkg",
+                "sha256": "ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8"
             },
             "tier": "Supported",
             "toolchains": [
@@ -1149,7 +1149,7 @@
             "artifact_id": "release:dart",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "3df11e57b9c3f21863a6c3961c878c8acecaeae6cf1cebf9632491177d44e087"
+                "digest": "35da85d55c83d21f75b404e8c66fd2659e047188d32ef5466a04cbb0c7ec788d"
             },
             "credential_policy": {
                 "mode": "oidc",
@@ -1173,30 +1173,30 @@
             "provenance": {
                 "build_command_sha256": "19b7f8469eba5744d4a22bda9c3585788045a4eb63be4215433623a4226d0c81",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "bee854145ad210303e3f923044dff512b34a450fa503c02eff4215a4caf16911",
+                "predicate_sha256": "b906778688b42f69239dd2bf28d1a17d798677149a17147f77fb921b77907fb4",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
                 "subject_name": "target/release-packaging/dart",
-                "subject_sha256": "3df11e57b9c3f21863a6c3961c878c8acecaeae6cf1cebf9632491177d44e087"
+                "subject_sha256": "35da85d55c83d21f75b404e8c66fd2659e047188d32ef5466a04cbb0c7ec788d"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "pub.dev",
             "registry_owner": "pub.dev legacy uploader sha256:cc219ebed9b06fe346aec03c0e6bbd0e3b2292383d965c9813839cb99c3b602d",
             "sbom": {
                 "component_count": 49,
-                "document_namespace": "https://strling.dev/sbom/dart/3df11e57b9c3f21863a6c3961c878c8acecaeae6cf1cebf9632491177d44e087",
+                "document_namespace": "https://strling.dev/sbom/dart/35da85d55c83d21f75b404e8c66fd2659e047188d32ef5466a04cbb0c7ec788d",
                 "relationship_count": 57,
-                "sha256": "67527c773ab286bc92105fa890c2c2209b483354555ff4173a0182ecc6efa194",
+                "sha256": "9f5e0f1166c1da1101a157219c02a4a04775cbcf6f7ca0c0d8b19bce0bd3e3fb",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "linux-x86_64",
             "subject": {
-                "bytes": 30461,
+                "bytes": 30780,
                 "kind": "registry-assembled",
                 "name": "target/release-packaging/dart",
-                "sha256": "3df11e57b9c3f21863a6c3961c878c8acecaeae6cf1cebf9632491177d44e087"
+                "sha256": "35da85d55c83d21f75b404e8c66fd2659e047188d32ef5466a04cbb0c7ec788d"
             },
             "tier": "Supported",
             "toolchains": [
@@ -1282,7 +1282,7 @@
             "artifact_id": "release:fsharp",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f"
+                "digest": "8664ad2f74721e5221cd56fbbfd9543af202e748a67351839bae7eab0051ee61"
             },
             "credential_policy": {
                 "mode": "long-lived-secret",
@@ -1306,30 +1306,30 @@
             "provenance": {
                 "build_command_sha256": "c57737646d66bfdc3fb033d5a1182bf136500b940cdd37759fa22b7e11fb548c",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "fc5a8689feccaabbebf85d6a2fb252c29d81f8dfa3e1ef24b07732f47b977c3c",
+                "predicate_sha256": "6df1f906f2b5eedc56571cb01c1faa79c1f3e18606a871a014457d9aaed10f3b",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg",
-                "subject_sha256": "76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f"
+                "subject_name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.3.nupkg",
+                "subject_sha256": "8664ad2f74721e5221cd56fbbfd9543af202e748a67351839bae7eab0051ee61"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "nuget.org",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 6,
-                "document_namespace": "https://strling.dev/sbom/f#/76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f",
+                "document_namespace": "https://strling.dev/sbom/f#/8664ad2f74721e5221cd56fbbfd9543af202e748a67351839bae7eab0051ee61",
                 "relationship_count": 13,
-                "sha256": "a387f26ea8123dbbf596cb0bfc0842935c79850a8f9311bf4f12651f78e39582",
+                "sha256": "e29f3c54f0848227c50123b109065468c0d0d4a79cb3563bba8d5109a27f100f",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 clean-consumer native assets",
             "subject": {
-                "bytes": 15813,
+                "bytes": 15827,
                 "kind": "file",
-                "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.1.nupkg",
-                "sha256": "76742dce8fd9ee0fd16cd68ead441413a92f52b3fbb28eaca5d040cb9045149f"
+                "name": "bindings/fsharp/src/STRling.FSharp/bin/Release/STRling.FSharp.4.0.3.nupkg",
+                "sha256": "8664ad2f74721e5221cd56fbbfd9543af202e748a67351839bae7eab0051ee61"
             },
             "tier": "Supported",
             "toolchains": [
@@ -1415,7 +1415,7 @@
             "artifact_id": "release:go",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "61043e0b700fc210ca59eabec85fd58f5c573af0a75406ac157b406bd11619d5"
+                "digest": "4a32306aafc3ff9adb0f4f3268cb7a3450c3569ed3994db16d2303bbca376d89"
             },
             "credential_policy": {
                 "mode": "github-token",
@@ -1439,30 +1439,30 @@
             "provenance": {
                 "build_command_sha256": "336577fbb5fbb0c554170c07a4e35421ed89f4fe6ab6124b0f6130508d6d2be3",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "d4c9222433f2b3bc30de95d509e401865f0ab5bc61eb0324295be5d4d006ed22",
+                "predicate_sha256": "a612b8c61376293ddf7d4f62e61cbee66f088cfaf7325908afe9e6db42df2f06",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
                 "subject_name": "strling-release-set:6c18b1391ce412a0",
-                "subject_sha256": "61043e0b700fc210ca59eabec85fd58f5c573af0a75406ac157b406bd11619d5"
+                "subject_sha256": "4a32306aafc3ff9adb0f4f3268cb7a3450c3569ed3994db16d2303bbca376d89"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "github-tag:go-vVERSION",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 1,
-                "document_namespace": "https://strling.dev/sbom/go/61043e0b700fc210ca59eabec85fd58f5c573af0a75406ac157b406bd11619d5",
+                "document_namespace": "https://strling.dev/sbom/go/4a32306aafc3ff9adb0f4f3268cb7a3450c3569ed3994db16d2303bbca376d89",
                 "relationship_count": 451,
-                "sha256": "5640be54023726fea8dc9a87f0486e27a0e22ddf622b193b094b21d28cabcf56",
+                "sha256": "06610ce0d5499d07859529d88edf55a9bc73d464bc19bd910f4fb57e3ff19f32",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "linux-x86_64 with cgo",
             "subject": {
-                "bytes": 4630937,
+                "bytes": 4631022,
                 "kind": "source-tree",
                 "name": "strling-release-set:6c18b1391ce412a0",
-                "sha256": "61043e0b700fc210ca59eabec85fd58f5c573af0a75406ac157b406bd11619d5"
+                "sha256": "4a32306aafc3ff9adb0f4f3268cb7a3450c3569ed3994db16d2303bbca376d89"
             },
             "tier": "Supported",
             "toolchains": [
@@ -1548,7 +1548,7 @@
             "artifact_id": "release:java",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "2ed2f8f4d802647adb3eaa0dc2d064835ef9e2f8b1b3f4df9eb8259357dfbb34"
+                "digest": "612d52c1230ba583224185e1f58a9ba6bc4affb938e18fc4957a19aa762cd8ad"
             },
             "credential_policy": {
                 "mode": "long-lived-secret",
@@ -1579,30 +1579,30 @@
             "provenance": {
                 "build_command_sha256": "35ffb35982a991c28caeea8fd6ab1ec3ce1385d1ae266ef0309b4c79f52fe5e8",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "15b8b4f4c7b056edf4faee40405f9f419f8558dbc0681e2f924e9a4e165c33f0",
+                "predicate_sha256": "0afccd11bce1a9faec3323bb322676a25012cc1acbac0e896219cd93f9d897bf",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "strling-release-set:c5a3fdff62e505a0",
-                "subject_sha256": "2ed2f8f4d802647adb3eaa0dc2d064835ef9e2f8b1b3f4df9eb8259357dfbb34"
+                "subject_name": "strling-release-set:a980fff52d8cd3b0",
+                "subject_sha256": "612d52c1230ba583224185e1f58a9ba6bc4affb938e18fc4957a19aa762cd8ad"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "maven-central",
             "registry_owner": "Strling-lang",
             "sbom": {
                 "component_count": 8,
-                "document_namespace": "https://strling.dev/sbom/java/2ed2f8f4d802647adb3eaa0dc2d064835ef9e2f8b1b3f4df9eb8259357dfbb34",
+                "document_namespace": "https://strling.dev/sbom/java/612d52c1230ba583224185e1f58a9ba6bc4affb938e18fc4957a19aa762cd8ad",
                 "relationship_count": 144,
-                "sha256": "ffdaa2f8386347948b3d8c969428e114f8df7fc082f659b725369b0c5ada380c",
+                "sha256": "c07b00193f26f3504e877e1fbff60ef59d4f5324bf8815bfb8affe0d8bc5a279",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 with caller-supplied absolute native path",
             "subject": {
-                "bytes": 309332,
+                "bytes": 309334,
                 "kind": "file",
-                "name": "strling-release-set:c5a3fdff62e505a0",
-                "sha256": "2ed2f8f4d802647adb3eaa0dc2d064835ef9e2f8b1b3f4df9eb8259357dfbb34"
+                "name": "strling-release-set:a980fff52d8cd3b0",
+                "sha256": "612d52c1230ba583224185e1f58a9ba6bc4affb938e18fc4957a19aa762cd8ad"
             },
             "tier": "Supported",
             "toolchains": [
@@ -1702,7 +1702,7 @@
             "artifact_id": "release:kotlin",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "9f83cae2cbf9ee5fa194b506ad5cc4d599d51a8e6725c28fd28ede9b126370ca"
+                "digest": "52e6edf7c2019c77fdeb1358119e1040de394c5e47aa90d36459998c520731a9"
             },
             "credential_policy": {
                 "mode": "long-lived-secret",
@@ -1733,30 +1733,30 @@
             "provenance": {
                 "build_command_sha256": "d4b01ef3d8ab9bd17ef5c81d2fcb54404d2780a29a542449e8145369a38bc25d",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "cb3bbb76b92fa6c554764ae48583f1862d7fae966615c0463bd2a0ae2e258226",
+                "predicate_sha256": "6b33099cc6fe3073f63014c57af68ae58fcf0d436af062773c4b7307ecf4f3aa",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "strling-release-set:0fc7bc7decf412b2",
-                "subject_sha256": "9f83cae2cbf9ee5fa194b506ad5cc4d599d51a8e6725c28fd28ede9b126370ca"
+                "subject_name": "strling-release-set:65bdad0f06b684fa",
+                "subject_sha256": "52e6edf7c2019c77fdeb1358119e1040de394c5e47aa90d36459998c520731a9"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "maven-central",
             "registry_owner": "Strling-lang",
             "sbom": {
                 "component_count": 38,
-                "document_namespace": "https://strling.dev/sbom/kotlin/9f83cae2cbf9ee5fa194b506ad5cc4d599d51a8e6725c28fd28ede9b126370ca",
+                "document_namespace": "https://strling.dev/sbom/kotlin/52e6edf7c2019c77fdeb1358119e1040de394c5e47aa90d36459998c520731a9",
                 "relationship_count": 65,
-                "sha256": "f60ec712b95dc7d6dc34c366a1b03ff6e15ecb1f18aa6de9a0fa9425988c1495",
+                "sha256": "a7c4b66b173f0381051eab5f3ce815b35e27eb4c9224a013ea0104b0dd4c76fa",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 with caller-supplied absolute native path",
             "subject": {
-                "bytes": 55617,
+                "bytes": 55659,
                 "kind": "file",
-                "name": "strling-release-set:0fc7bc7decf412b2",
-                "sha256": "9f83cae2cbf9ee5fa194b506ad5cc4d599d51a8e6725c28fd28ede9b126370ca"
+                "name": "strling-release-set:65bdad0f06b684fa",
+                "sha256": "52e6edf7c2019c77fdeb1358119e1040de394c5e47aa90d36459998c520731a9"
             },
             "tier": "Supported",
             "toolchains": [
@@ -1870,7 +1870,7 @@
             "artifact_id": "release:lua",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "5dbd8f6fc71bfa4dde784044650b1ccb26c4d773494ff27fd5423e92cf9444e9"
+                "digest": "888a7fd73828842400f614dbb46326216a342ca3272f5e94dae42605c5409884"
             },
             "credential_policy": {
                 "mode": "long-lived-secret",
@@ -1894,30 +1894,30 @@
             "provenance": {
                 "build_command_sha256": "a2667a080810ec2a178fee514b7d3220c08f316e542bc803ca151b16a0c3129a",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "6f16af6f9fd07f6aa754f8a97e21f80273480cd57335036d9aa09777f34594da",
+                "predicate_sha256": "6c83a408502d4b78aaa55749b808c5ad9dbbc3e6192410d5f0e002a3e0d4099f",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "strling-release-set:42e9ef1bc36fb382",
-                "subject_sha256": "5dbd8f6fc71bfa4dde784044650b1ccb26c4d773494ff27fd5423e92cf9444e9"
+                "subject_name": "strling-release-set:900af4fc285e473e",
+                "subject_sha256": "888a7fd73828842400f614dbb46326216a342ca3272f5e94dae42605c5409884"
             },
             "publication_eligibility": "preview-only-explicit-authorization",
             "registry": "luarocks.org",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 2,
-                "document_namespace": "https://strling.dev/sbom/lua/5dbd8f6fc71bfa4dde784044650b1ccb26c4d773494ff27fd5423e92cf9444e9",
+                "document_namespace": "https://strling.dev/sbom/lua/888a7fd73828842400f614dbb46326216a342ca3272f5e94dae42605c5409884",
                 "relationship_count": 9,
-                "sha256": "18c7131e08eba7b3b84608f6d996237d1284fe6883940d71d82120363ae0fe29",
+                "sha256": "e9467e54d5241929be39c8ae414fafdb0496f89c269dfd81f95380f42db6949a",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "linux-x86_64",
             "subject": {
-                "bytes": 12864,
+                "bytes": 12884,
                 "kind": "file",
-                "name": "strling-release-set:42e9ef1bc36fb382",
-                "sha256": "5dbd8f6fc71bfa4dde784044650b1ccb26c4d773494ff27fd5423e92cf9444e9"
+                "name": "strling-release-set:900af4fc285e473e",
+                "sha256": "888a7fd73828842400f614dbb46326216a342ca3272f5e94dae42605c5409884"
             },
             "tier": "Preview",
             "toolchains": [
@@ -1975,7 +1975,7 @@
             "artifact_id": "release:perl",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811"
+                "digest": "ca35071b2b23cec7598fde149f2ae90bd11f07a61bfc1c8e0c83198ed8fe8bcd"
             },
             "credential_policy": {
                 "mode": "long-lived-secret",
@@ -2000,30 +2000,30 @@
             "provenance": {
                 "build_command_sha256": "5e7aeeb8b0d6946de05162d1ec72e4e5fc177b34abebb8090991d18c83302d2e",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "b5c900bcfcc3f9846929466b0f56281c0294a3d4f590a483cb2616058b350539",
+                "predicate_sha256": "14795d9160d44f025c58846682a29f4c7c637e9bc0bbb21d982f950011a18eab",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "bindings/perl/STRling-4.0.1.tar.gz",
-                "subject_sha256": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811"
+                "subject_name": "bindings/perl/STRling-4.0.3.tar.gz",
+                "subject_sha256": "ca35071b2b23cec7598fde149f2ae90bd11f07a61bfc1c8e0c83198ed8fe8bcd"
             },
             "publication_eligibility": "preview-only-explicit-authorization",
             "registry": "cpan",
             "registry_owner": "STRLING",
             "sbom": {
                 "component_count": 5,
-                "document_namespace": "https://strling.dev/sbom/perl/830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811",
+                "document_namespace": "https://strling.dev/sbom/perl/ca35071b2b23cec7598fde149f2ae90bd11f07a61bfc1c8e0c83198ed8fe8bcd",
                 "relationship_count": 18,
-                "sha256": "3b81cbb237719af19a4387efdcbbdfc9c1f6d99b4975f812dd38d9ff7bc58639",
+                "sha256": "d2d47652b6d013c43157162dcee40895b9a3d004599f07870a257650ea06e56c",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "linux-x86_64",
             "subject": {
-                "bytes": 12280,
+                "bytes": 12304,
                 "kind": "file",
-                "name": "bindings/perl/STRling-4.0.1.tar.gz",
-                "sha256": "830c2ac8f4076b83d11ccc640ffc083fdc86d0a0bd360325f881eb7a0460b811"
+                "name": "bindings/perl/STRling-4.0.3.tar.gz",
+                "sha256": "ca35071b2b23cec7598fde149f2ae90bd11f07a61bfc1c8e0c83198ed8fe8bcd"
             },
             "tier": "Preview",
             "toolchains": [
@@ -2081,7 +2081,7 @@
             "artifact_id": "release:php",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "f7506f2e302803dda974a6d70ed72256bb00bfbbc7c2287ca545786c164cbf36"
+                "digest": "c7d4ce211a98f4298d74806bdcf60887f132c4970e74a70ad79454d7a70178b2"
             },
             "credential_policy": {
                 "mode": "github-token",
@@ -2105,30 +2105,30 @@
             "provenance": {
                 "build_command_sha256": "eb625a55ae24e874e945abeae3fd25ef115a7120d3e8d5ba7b89eba88dce1f73",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "bcef949c362583281044bd624953011cf146ae202b20f5dd04a116f8efe99e60",
+                "predicate_sha256": "672db458ff44b404fef4aed49dff00abbbf31108b81cd51520d5d609f5ab943e",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
                 "subject_name": "strling-release-set:ec5916df8bdf4db2",
-                "subject_sha256": "f7506f2e302803dda974a6d70ed72256bb00bfbbc7c2287ca545786c164cbf36"
+                "subject_sha256": "c7d4ce211a98f4298d74806bdcf60887f132c4970e74a70ad79454d7a70178b2"
             },
             "publication_eligibility": "preview-only-explicit-authorization",
             "registry": "github-tag:php-vVERSION",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 27,
-                "document_namespace": "https://strling.dev/sbom/php/f7506f2e302803dda974a6d70ed72256bb00bfbbc7c2287ca545786c164cbf36",
+                "document_namespace": "https://strling.dev/sbom/php/c7d4ce211a98f4298d74806bdcf60887f132c4970e74a70ad79454d7a70178b2",
                 "relationship_count": 481,
-                "sha256": "d9f33071665e69999a2f2afa8b4258b2eda6a652fe243e8fb4ab1d355cc22a95",
+                "sha256": "d96e11282ef76494c7a9ccce28b795cb0730c18df5b9d71e0dd67fd6d418acd8",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "linux-x86_64 with caller-owned native payload discovery",
             "subject": {
-                "bytes": 4696729,
+                "bytes": 4696814,
                 "kind": "source-tree",
                 "name": "strling-release-set:ec5916df8bdf4db2",
-                "sha256": "f7506f2e302803dda974a6d70ed72256bb00bfbbc7c2287ca545786c164cbf36"
+                "sha256": "c7d4ce211a98f4298d74806bdcf60887f132c4970e74a70ad79454d7a70178b2"
             },
             "tier": "Preview",
             "toolchains": [
@@ -2186,7 +2186,7 @@
             "artifact_id": "release:python",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "e0806718000be74967d5141b1cae951f800c0747197f0e405dfb7ee5ae4a73f7"
+                "digest": "65e73d25339a3a494c5fb8affab7160f126c98a3a3bde6cac3a4d5c9222e2dcc"
             },
             "credential_policy": {
                 "mode": "oidc",
@@ -2211,30 +2211,30 @@
             "provenance": {
                 "build_command_sha256": "65b51b7a5f7844d4d18f184ff94aede7118a8ed86d32975c32afbb60378cce4b",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "9c01032da6b50216a9ba45f48deffc3dc78bbe1c45052490c5e63b05844fa747",
+                "predicate_sha256": "c14adcefeb4effb7a6ed605e73455f2fba65cda2af8425dfc8e9e75833784480",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "strling-release-set:91cbf60a7e9cdae9",
-                "subject_sha256": "e0806718000be74967d5141b1cae951f800c0747197f0e405dfb7ee5ae4a73f7"
+                "subject_name": "strling-release-set:f2b2c1b7102e573b",
+                "subject_sha256": "65e73d25339a3a494c5fb8affab7160f126c98a3a3bde6cac3a4d5c9222e2dcc"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "pypi.org",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 34,
-                "document_namespace": "https://strling.dev/sbom/python/e0806718000be74967d5141b1cae951f800c0747197f0e405dfb7ee5ae4a73f7",
+                "document_namespace": "https://strling.dev/sbom/python/65e73d25339a3a494c5fb8affab7160f126c98a3a3bde6cac3a4d5c9222e2dcc",
                 "relationship_count": 189,
-                "sha256": "17961dec79e892f3a4e9107b8b309fa370ce8420dc8f0489f2e5d189bf2a8448",
+                "sha256": "a869e9b7dcd6ce2065304f602583f5dcb7cb2250cc313efe89c28e952be2308c",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 and linux-x86_64 with CPython 3.12 evidence",
             "subject": {
-                "bytes": 4766556,
+                "bytes": 4766601,
                 "kind": "file",
-                "name": "strling-release-set:91cbf60a7e9cdae9",
-                "sha256": "e0806718000be74967d5141b1cae951f800c0747197f0e405dfb7ee5ae4a73f7"
+                "name": "strling-release-set:f2b2c1b7102e573b",
+                "sha256": "65e73d25339a3a494c5fb8affab7160f126c98a3a3bde6cac3a4d5c9222e2dcc"
             },
             "tier": "Supported",
             "toolchains": [
@@ -2362,7 +2362,7 @@
             "artifact_id": "release:r",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "af45f99fc452b9b8340afed18f32ae86a2e23214ec80b3e98d0b0cb4083a40c8"
+                "digest": "aa997670a3ab59f8fc808f3ed0b2c67c274efedb016671b0db19774776fb69f3"
             },
             "credential_policy": {
                 "mode": "github-token",
@@ -2386,30 +2386,30 @@
             "provenance": {
                 "build_command_sha256": "095b5d4b973f247ece20f286b8c50aa06c57fceaa3e7f068a2676cda2c440337",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "f464cd8d6890921c46665b565ae41fb5efc8119b69d1b2e844ac0d4c3992425b",
+                "predicate_sha256": "14e99398ea3476a202c14eb837a74434d280788f7335949c55f09bed724ef593",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
                 "subject_name": "strling-release-set:e3155c2310af4716",
-                "subject_sha256": "af45f99fc452b9b8340afed18f32ae86a2e23214ec80b3e98d0b0cb4083a40c8"
+                "subject_sha256": "aa997670a3ab59f8fc808f3ed0b2c67c274efedb016671b0db19774776fb69f3"
             },
             "publication_eligibility": "preview-only-explicit-authorization",
             "registry": "github-tag:r-vVERSION",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 25,
-                "document_namespace": "https://strling.dev/sbom/r/af45f99fc452b9b8340afed18f32ae86a2e23214ec80b3e98d0b0cb4083a40c8",
+                "document_namespace": "https://strling.dev/sbom/r/aa997670a3ab59f8fc808f3ed0b2c67c274efedb016671b0db19774776fb69f3",
                 "relationship_count": 481,
-                "sha256": "545ea1a4f75e1de09ed486605dd82af17d137b8a234a2162d35d7af25f5b2b5c",
+                "sha256": "57aad7531d5be4f66f02e500a165066b8c09087a3e1b206b5dace2850c3eaf26",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "linux-x86_64",
             "subject": {
-                "bytes": 4673450,
+                "bytes": 4673535,
                 "kind": "source-tree",
                 "name": "strling-release-set:e3155c2310af4716",
-                "sha256": "af45f99fc452b9b8340afed18f32ae86a2e23214ec80b3e98d0b0cb4083a40c8"
+                "sha256": "aa997670a3ab59f8fc808f3ed0b2c67c274efedb016671b0db19774776fb69f3"
             },
             "tier": "Preview",
             "toolchains": [
@@ -2453,7 +2453,7 @@
             "artifact_id": "release:ruby",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05"
+                "digest": "bc707b55141de6147a5ff82f84fc4c9869e98cf883e8e517ec4904b435013bb8"
             },
             "credential_policy": {
                 "mode": "oidc",
@@ -2477,21 +2477,21 @@
             "provenance": {
                 "build_command_sha256": "893aac61ad4cf824673b458e7b2fde241f1a9c8cb18e7fc0c492094b4615742e",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "9f9515e5c9d18b35909209bdef1f4e08aefcb3c004350f494556a46b6a45e1af",
+                "predicate_sha256": "6a7fad09d1f1f269a9062c30d1a491e2b79c1b9b16e159fc2db4d90c0b54ae0f",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "bindings/ruby/strling-4.0.1.gem",
-                "subject_sha256": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05"
+                "subject_name": "bindings/ruby/strling-4.0.3.gem",
+                "subject_sha256": "bc707b55141de6147a5ff82f84fc4c9869e98cf883e8e517ec4904b435013bb8"
             },
             "publication_eligibility": "preview-only-explicit-authorization",
             "registry": "rubygems.org",
             "registry_owner": "TheCyberLocal",
             "sbom": {
                 "component_count": 10,
-                "document_namespace": "https://strling.dev/sbom/ruby/6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05",
+                "document_namespace": "https://strling.dev/sbom/ruby/bc707b55141de6147a5ff82f84fc4c9869e98cf883e8e517ec4904b435013bb8",
                 "relationship_count": 19,
-                "sha256": "99d3f7849a123c03e185bae9ba07676032bb6a61f2fa9c0bb94faa663a0302f2",
+                "sha256": "056b0fc33cc501d6dffa9085490c61105762823482282fcb49b1be38a910ac44",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
@@ -2499,8 +2499,8 @@
             "subject": {
                 "bytes": 13312,
                 "kind": "file",
-                "name": "bindings/ruby/strling-4.0.1.gem",
-                "sha256": "6961a54becd408a6b924ea412389e25577796710c6b32a2bff7811c4c40fdf05"
+                "name": "bindings/ruby/strling-4.0.3.gem",
+                "sha256": "bc707b55141de6147a5ff82f84fc4c9869e98cf883e8e517ec4904b435013bb8"
             },
             "tier": "Preview",
             "toolchains": [
@@ -2558,7 +2558,7 @@
             "artifact_id": "release:rust",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3"
+                "digest": "55bed106a04e687c9f61111554e2b47c7d65555759c4c12bebc99d1e525398ed"
             },
             "credential_policy": {
                 "mode": "oidc",
@@ -2580,30 +2580,30 @@
             "provenance": {
                 "build_command_sha256": "ce8b0db4d06cc7c1a8f6dc9b1ca0b4a645c50586f884f35b519c2e5fee9d9e4f",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "d956a5bb7efd9fad3ff5e968fbe92349ce0516ffccc1d1c1dbfd8e42789e7e63",
+                "predicate_sha256": "0e0f0b392403a08c907ab5999d25c8f6ff89e20e7645ed6fb33b0c87865cd2ff",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "target/package/strling-4.0.1.crate",
-                "subject_sha256": "6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3"
+                "subject_name": "target/package/strling-4.0.3.crate",
+                "subject_sha256": "55bed106a04e687c9f61111554e2b47c7d65555759c4c12bebc99d1e525398ed"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "crates.io",
             "registry_owner": "github:strling-lang:release-managers",
             "sbom": {
                 "component_count": 22,
-                "document_namespace": "https://strling.dev/sbom/rust/6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3",
+                "document_namespace": "https://strling.dev/sbom/rust/55bed106a04e687c9f61111554e2b47c7d65555759c4c12bebc99d1e525398ed",
                 "relationship_count": 95,
-                "sha256": "9d033aa98ef8ab43ff9fd6745a74ae1cf0a35f6578a98d3bc60b73bdc419f802",
+                "sha256": "d39907c4089c8511302f10a888f17e5202ebe5c6295459050c165b1428af673f",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "windows-x86_64 and linux-x86_64 reference kernel/facade",
             "subject": {
-                "bytes": 295983,
+                "bytes": 295970,
                 "kind": "file",
-                "name": "target/package/strling-4.0.1.crate",
-                "sha256": "6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3"
+                "name": "target/package/strling-4.0.3.crate",
+                "sha256": "55bed106a04e687c9f61111554e2b47c7d65555759c4c12bebc99d1e525398ed"
             },
             "tier": "Supported",
             "toolchains": [
@@ -2703,7 +2703,7 @@
             "artifact_id": "release:swift",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "583f1b551154ee198cf8d84f9c86b021e388b63b3d41fc4c6f3f48e33c21cd2a"
+                "digest": "d053154e1c57d9cb5e9d72edafcfc6da63f485c9cac5d89f5eddf816cb533166"
             },
             "credential_policy": {
                 "mode": "github-token",
@@ -2727,30 +2727,30 @@
             "provenance": {
                 "build_command_sha256": "68f13184e6b154e9b5793b919174ee71c0f5fc4b4747debb1ef42faf1a990314",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "51145bd0c07020053c63ff14b45bebe799fc11a7525aadfb1008303715468ed1",
+                "predicate_sha256": "706adcf1e65836544463447c32f82580fb6dad7ed9cca7952b8ca0cf1556fc01",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
                 "subject_name": "strling-release-set:2c1a8ef15dc98081",
-                "subject_sha256": "583f1b551154ee198cf8d84f9c86b021e388b63b3d41fc4c6f3f48e33c21cd2a"
+                "subject_sha256": "d053154e1c57d9cb5e9d72edafcfc6da63f485c9cac5d89f5eddf816cb533166"
             },
             "publication_eligibility": "requires-supported-evidence-and-owner-authorization",
             "registry": "github-tag:swift-vVERSION",
             "registry_owner": "strling-lang",
             "sbom": {
                 "component_count": 1,
-                "document_namespace": "https://strling.dev/sbom/swift/583f1b551154ee198cf8d84f9c86b021e388b63b3d41fc4c6f3f48e33c21cd2a",
+                "document_namespace": "https://strling.dev/sbom/swift/d053154e1c57d9cb5e9d72edafcfc6da63f485c9cac5d89f5eddf816cb533166",
                 "relationship_count": 452,
-                "sha256": "2a7af2dfa1278d350d3153389519a8384335f15601eef39f6169564e8da77b9a",
+                "sha256": "630df9b7b37a37d6581acdccfba45ddff1e4b5862a21b68ea81d6e233e0b918f",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "linux-x86_64",
             "subject": {
-                "bytes": 4637145,
+                "bytes": 4637230,
                 "kind": "source-tree",
                 "name": "strling-release-set:2c1a8ef15dc98081",
-                "sha256": "583f1b551154ee198cf8d84f9c86b021e388b63b3d41fc4c6f3f48e33c21cd2a"
+                "sha256": "d053154e1c57d9cb5e9d72edafcfc6da63f485c9cac5d89f5eddf816cb533166"
             },
             "tier": "Supported",
             "toolchains": [
@@ -2836,7 +2836,7 @@
             "artifact_id": "release:typescript",
             "checksum": {
                 "algorithm": "sha256",
-                "digest": "2c45da76f7f9da54800d26ae5c9584c0b3ce2ad5d393fc3467ba5d6801e0903a"
+                "digest": "3697ed259950fc7a501921a8c231de54ba27de86809f533d9ff9cef4d33816d8"
             },
             "credential_policy": {
                 "mode": "oidc",
@@ -2858,30 +2858,30 @@
             "provenance": {
                 "build_command_sha256": "a2079a211095215775c9934c70a35dcfd5dd6cec71c8c3fddf52f8797e72a2a8",
                 "builder_id": "https://strling.dev/builders/release-supply-chain/v1",
-                "predicate_sha256": "8079c1c8b8d8776dfcb3c27d1439a19453d28db00ec94ed9f56fcf9090027bf8",
+                "predicate_sha256": "ec6ac872b37f4164057190c6eb95516848e9b508775b1ddfb4a2e23d87ef695d",
                 "predicate_type": "https://slsa.dev/provenance/v1",
-                "source_commit": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+                "source_commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
                 "statement_type": "https://in-toto.io/Statement/v1",
-                "subject_name": "bindings/typescript/strling-lang-strling-4.0.1.tgz",
-                "subject_sha256": "2c45da76f7f9da54800d26ae5c9584c0b3ce2ad5d393fc3467ba5d6801e0903a"
+                "subject_name": "bindings/typescript/strling-lang-strling-4.0.3.tgz",
+                "subject_sha256": "3697ed259950fc7a501921a8c231de54ba27de86809f533d9ff9cef4d33816d8"
             },
             "publication_eligibility": "preview-only-explicit-authorization",
             "registry": "npmjs.org",
             "registry_owner": "thecyberlocal",
             "sbom": {
                 "component_count": 356,
-                "document_namespace": "https://strling.dev/sbom/typescript/2c45da76f7f9da54800d26ae5c9584c0b3ce2ad5d393fc3467ba5d6801e0903a",
+                "document_namespace": "https://strling.dev/sbom/typescript/3697ed259950fc7a501921a8c231de54ba27de86809f533d9ff9cef4d33816d8",
                 "relationship_count": 388,
-                "sha256": "67a20df7630f6e7e4824ec76b62107d4be68c36225bbdbd1af05675578bff013",
+                "sha256": "9214c14c1f154f07b6f1fdc04ce5e3af8de20c87e2ae7f78d924f22049b13e68",
                 "spdx_version": "SPDX-2.3",
                 "unresolved_components": 0
             },
             "scope": "Windows Node 24 observation and Chrome browser WASM certification harness",
             "subject": {
-                "bytes": 1331045,
+                "bytes": 1331077,
                 "kind": "file",
-                "name": "bindings/typescript/strling-lang-strling-4.0.1.tgz",
-                "sha256": "2c45da76f7f9da54800d26ae5c9584c0b3ce2ad5d393fc3467ba5d6801e0903a"
+                "name": "bindings/typescript/strling-lang-strling-4.0.3.tgz",
+                "sha256": "3697ed259950fc7a501921a8c231de54ba27de86809f533d9ff9cef4d33816d8"
             },
             "tier": "Preview",
             "toolchains": [
@@ -2971,10 +2971,10 @@
         "subjects": {
             "docs/architecture.md": "1d99ffcfd2b6088f2fa6478c6e11512f0661f39bb4fe5691a4804c489f3c2a51",
             "docs/benchmark-report.md": "96d9c85cf704227180c7227d1d47ccbc2af8b1dac30de0f59a8307f7f7fec125",
-            "docs/getting-started.md": "aa45d5f57eb9f096b01b1806daa9890e7aa6f59f2f38a180a19b358bfd09795a",
-            "docs/migration-guide.md": "ba67e260595607e4ebed5f84b8b09be817375f3516319810cd80611d03b5f225",
-            "docs/support-matrix.md": "4dab50b5def249e695f6466b05a41168af75dbea79a304f49a313664625cc58f",
-            "tests/documentation/1.0/manifest.json": "a5f7fe93b2bd57ff6202c2d23b21dd9b3085001ad2b1279049fca04b0b3fd03c"
+            "docs/getting-started.md": "43bcf135e2ddb25b0bcd1ae811a43a03698d8f11d839b3f12c528c0b2aaa15d4",
+            "docs/migration-guide.md": "59b9170a5f5adecec59898a116eafca79384bff93b4b54ba750ff0358d60bbfd",
+            "docs/support-matrix.md": "9a7e61ef37fad9c7959694f571d4c035b83c84cad8d8f640580f6cb201ee9368",
+            "tests/documentation/1.0/manifest.json": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc"
         }
     },
     "future_publication_prerequisites": [
@@ -2985,13 +2985,13 @@
         "A published terminal RC and its stable promotion must use the same source and fresh required stable certification.",
         "After publication execute the qualified independent public verifier against actual authorized coordinates; preserve partial-publication failures."
     ],
-    "handoff_fingerprint": "dbd8fa11a562604c27228c08b4a093dcb6c47218009a1e88c87c447878aa1b10",
+    "handoff_fingerprint": "f4f87bc31bc6741977780d5f16eaeac8cef36cfd2fb78d9065388a47735d5f64",
     "lifecycle": "certified",
     "manifest_fingerprint": "c6ab6b6c647d0b2a9866616cee90d6d3e508c70ffdc712271e35f882b1cf8499",
     "product_authority": "governance/release-policy.json#/product/version",
-    "product_version": "4.0.1",
+    "product_version": "4.0.3",
     "provisional_public_rc": {
-        "coordinate": "4.0.1-rc.1",
+        "coordinate": "4.0.3-rc.1",
         "coordinate_specific_certification_required": true,
         "provisional": true,
         "rc_artifacts_certified": false,
@@ -3172,24 +3172,24 @@
                 "tier": "Supported"
             }
         ],
-        "packaging_verifier_sha": "ea03dd4cbe35b5614fb862c1568cc7356a5bd16f",
-        "product_version": "4.0.1",
+        "packaging_verifier_sha": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0",
+        "product_version": "4.0.3",
         "public_registry_results_available": false,
         "publication_request_requires_exact_owner_destinations": true,
-        "qualified_consumer_harness_sha": "ea03dd4cbe35b5614fb862c1568cc7356a5bd16f",
-        "qualified_protocol_verifier_sha": "ea03dd4cbe35b5614fb862c1568cc7356a5bd16f",
+        "qualified_consumer_harness_sha": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0",
+        "qualified_protocol_verifier_sha": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0",
         "registered_obligations": 256,
-        "source_sha": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+        "source_sha": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
     },
     "publication_authorized": false,
     "registry_mutation_authorized": false,
     "release_channel_proposal": "release-candidate",
     "schema_version": "1.0.0",
-    "source_sha": "17be3e0c81fb2816803653b73f0f9198d6711d5d",
+    "source_sha": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
     "stable_promotion": {
         "change_rule": "Any source change, governed input change, dependency/lock change, generated-output change, artifact-content change beyond approved coordinate metadata, or waiver change requires a new monotonically numbered RC and fresh required certification.",
         "evidence_binding": "No evidence may be transferred between candidates unless the governing producer explicitly authenticates identical inputs and policy permits reuse; Release remains no-reuse where registered.",
-        "notation": "4.0.1-rc.N for Fourth Edition candidates",
+        "notation": "4.0.3-rc.N for Fourth Edition candidates",
         "promotion": "Stable must use the same exact source commit as the terminal RC. Version-only package metadata changes are generated from policy, and stable artifacts are rebuilt, compared for allowed coordinate-only differences, and fully re-certified.",
         "public_coordinates": true,
         "replaceable": false,

@@ -5,7 +5,7 @@
       "installation_commands": {
         "commands": [
           {
-            "command": "cargo add strling@=4.0.1",
+            "command": "cargo add strling@=4.0.3",
             "executed": false,
             "status": "passed"
           }
@@ -14,21 +14,21 @@
         "execution_authority": "trusted-clean-consumer-contract",
         "status": "passed"
       },
-      "sha256": "636c52557f1d9832b3736c83fbe961f03fd499122078f5684cee6680b36b9c18",
+      "sha256": "22cefd7f2ae156dcd808373738c25c111a8edab74298a9ab6ac1edd4b6bf8bfd",
       "source_path": "bindings/rust/README.md",
       "url": "https://evidence.example.test/bindings/rust/README.md"
     },
     "provenance": {
-      "sha256": "6f3a6fba7d739c0f23df29541e72ac98b27a1582d13d51589fccbcf9484fb516",
+      "sha256": "2d3edcc2e4452f78afd10156e966623f8e508af430fcda8c315fe62e0450ac4d",
       "url": "https://evidence.example.test/release-rust.intoto.json"
     },
     "sbom": {
-      "sha256": "8c85f91d4fed000244221e7b2b83977ba1fd19a451310c052ed441f41286518e",
+      "sha256": "aa78e8e25a438ad1edff4fb900c200a7187b8a57baf289e2240545107ccd789c",
       "url": "https://evidence.example.test/release-rust.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.18520174495643005,
+  "elapsed_seconds": 0.19501330296043307,
   "metadata": {
     "fields": [
       "crate",
@@ -49,7 +49,7 @@
       "check": "coordinate",
       "id": "release:rust:coordinate",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -59,7 +59,7 @@
       "check": "metadata",
       "id": "release:rust:metadata",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -69,7 +69,7 @@
       "check": "artifact",
       "id": "release:rust:artifact",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -79,7 +79,7 @@
       "check": "source",
       "id": "release:rust:source",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -89,7 +89,7 @@
       "check": "sbom",
       "id": "release:rust:sbom",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -99,7 +99,7 @@
       "check": "provenance",
       "id": "release:rust:provenance",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -109,7 +109,7 @@
       "check": "documentation",
       "id": "release:rust:documentation",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -119,7 +119,7 @@
       "check": "scope",
       "id": "release:rust:scope",
       "platform": null,
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -129,7 +129,7 @@
       "check": "installation",
       "id": "release:rust:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -139,7 +139,7 @@
       "check": "public-api",
       "id": "release:rust:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -149,7 +149,7 @@
       "check": "product-version",
       "id": "release:rust:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -159,7 +159,7 @@
       "check": "canonical-compiler",
       "id": "release:rust:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -169,7 +169,7 @@
       "check": "native-wasm",
       "id": "release:rust:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -179,7 +179,7 @@
       "check": "target-compatibility",
       "id": "release:rust:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -189,7 +189,7 @@
       "check": "kernel-rejection",
       "id": "release:rust:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -199,7 +199,7 @@
       "check": "isolation",
       "id": "release:rust:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -209,7 +209,7 @@
       "check": "installation",
       "id": "release:rust:linux-x86_64:installation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -219,7 +219,7 @@
       "check": "public-api",
       "id": "release:rust:linux-x86_64:public-api",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -229,7 +229,7 @@
       "check": "product-version",
       "id": "release:rust:linux-x86_64:product-version",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -239,7 +239,7 @@
       "check": "canonical-compiler",
       "id": "release:rust:linux-x86_64:canonical-compiler",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -249,7 +249,7 @@
       "check": "native-wasm",
       "id": "release:rust:linux-x86_64:native-wasm",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -259,7 +259,7 @@
       "check": "target-compatibility",
       "id": "release:rust:linux-x86_64:target-compatibility",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -269,7 +269,7 @@
       "check": "kernel-rejection",
       "id": "release:rust:linux-x86_64:kernel-rejection",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -279,45 +279,45 @@
       "check": "isolation",
       "id": "release:rust:linux-x86_64:isolation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "f12c3551b4aa728bd2e6499bcc733b2d38c1653f6d17519fec569480d69be744",
+      "retrieval_sha256": "b4d89f0f0da9c09c264bd49afc9e8b1130d235cc17339e64d3100f2c9508e56a",
       "status": "VERIFYING",
       "tier": "Supported"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "target/package/strling-4.0.1.crate": "6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3"
+    "target/package/strling-4.0.3.crate": "55bed106a04e687c9f61111554e2b47c7d65555759c4c12bebc99d1e525398ed"
   },
   "retrieval_observations": [
     {
       "authority": "synthetic",
-      "request_url": "https://crates.io/api/v1/crates/strling/4.0.1",
-      "sha256": "905596def90eeb24375aa3460a58c555af54fbd7662f551661d38b63a60babba",
+      "request_url": "https://crates.io/api/v1/crates/strling/4.0.3",
+      "sha256": "1d0174ee0de43d387ea33ee2448f8c1fc322150633b2787d6d04d1e2dd0ba6a6",
       "size": 442
     },
     {
       "authority": "synthetic",
-      "request_url": "https://static.crates.io/crates/strling/strling-4.0.1.crate",
-      "sha256": "6a478f0f5f9df91676066fc6c55742a93f2eed727074a06169446fce4764a4e3",
-      "size": 295983
+      "request_url": "https://static.crates.io/crates/strling/strling-4.0.3.crate",
+      "sha256": "55bed106a04e687c9f61111554e2b47c7d65555759c4c12bebc99d1e525398ed",
+      "size": 295970
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-rust.spdx.json",
-      "sha256": "8c85f91d4fed000244221e7b2b83977ba1fd19a451310c052ed441f41286518e",
+      "sha256": "aa78e8e25a438ad1edff4fb900c200a7187b8a57baf289e2240545107ccd789c",
       "size": 100928
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-rust.intoto.json",
-      "sha256": "6f3a6fba7d739c0f23df29541e72ac98b27a1582d13d51589fccbcf9484fb516",
+      "sha256": "2d3edcc2e4452f78afd10156e966623f8e508af430fcda8c315fe62e0450ac4d",
       "size": 4800
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/bindings/rust/README.md",
-      "sha256": "636c52557f1d9832b3736c83fbe961f03fd499122078f5684cee6680b36b9c18",
-      "size": 2453
+      "sha256": "22cefd7f2ae156dcd808373738c25c111a8edab74298a9ab6ac1edd4b6bf8bfd",
+      "size": 2538
     }
   ]
 }

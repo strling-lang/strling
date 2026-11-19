@@ -1,3 +1,53 @@
+# STRling 4.0.3 fix-forward certification
+
+Status: **SOURCE CERTIFICATION PASSED — HOSTED ACCEPTANCE PENDING**.
+
+Product source d01ac3785736ad552c90f00b4ca13c0e2e5c9c62; qualified immutable reader 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0; candidate evidence root 4b938eb8189a815e6f463150146730fe9b0b400f36e3de04a7f2d3dc2c1ef554; nested package root 9064e081c6529cd7d6c100a189197b0a6726b268e6612242e68c562ad3a246e9. Fresh profiles: {"full": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0, "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request": {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived": 0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.
+
+Both preceding partial releases retain their original tags, published bytes,
+failure records and source-bound certificates. This report does not relabel or
+complete their public verification. The new candidate corrects the F# SBOM
+filename lookup and authenticated Git tag-availability preflight, registers the
+bounded 4.0.3 source-data contract, and retains the approved direct C++ route,
+deferred ConanCenter admission and existing support classifications. No canonical
+compiler semantics were changed.
+
+The fresh 4.0.2 publication preflight found no matches for the withdrawn
+picomatch advisory and rejected its now-stale waiver. The owner authorized
+retirement for 4.0.3. The stale waiver is retained historically, the exact
+development dependency pins remain, and the active VSCE license waiver retains
+its existing scope and December 13, 2026 inclusive UTC expiry.
+Both current-source supply-chain bundles verified all 17 routes.
+The prior 4.0.2 certificate, export and control tag retain their original identities.
+
+Candidate detached signature SHA-256: `ee5fd5d5e4f983fc825dbf7f32c01adaefe9d36049300a19005705d8423d29f0`.
+Certifier: `strling-local-release-certifier-2026-01`. SSH fingerprint:
+`SHA256:ZebV/h+7zLn9D6T4tUO0tI62oHiJV54iGWqmYla7oBA`. Both package and candidate were
+independently reconstructed before original-authority signing. Reader `59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0`
+passed twenty qualification criteria, including the fresh Windows and Linux
+suites, the signed successor-policy positive and expiry fixture, and the
+17-route diagnostic. Four historical replays used unchanged qualified reader03
+code with the original policies and recorded handoff identities. Historical
+signatures, bytes and verification outcomes retain their original contexts.
+
+Staged artifact and clean-consumer qualification is implementation evidence,
+not a public 4.0.3 retrieval claim. Applicable Supported scopes and bounded
+Preview observations remain in signed evidence. The diagnostic 4.0.3-rc.1
+coordinate is neither reserved nor authorized for publication.
+
+Maven primary fingerprint remains
+`FC743D45327F6528D9AF26108BBC359CDE8F7505`. The owner confirmed off-device encrypted
+recovery transfer with the paper recovery record held separately. Existing
+repository-scoped Maven tokens and protected signing secrets are preserved.
+Registry freshness, exact certified-byte export, source/run-bound publication
+approval and actual protected deployment reviews remain separate gates.
+No package, release tag or public GitHub Release was created by this certification.
+
+## Preserved historical candidate reports
+
+The following reports retain their original source identities and results.
+They do not certify 4.0.3.
+
 # STRling 4.0.1 fix-forward certification
 
 Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.

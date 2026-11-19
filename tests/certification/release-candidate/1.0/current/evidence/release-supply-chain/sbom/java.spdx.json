@@ -5,13 +5,13 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"java-maven\",\"inputs\":[{\"path\":\"bindings/java/pom.xml\",\"sha256\":\"38ea85528c374d374d826804f205730aa753087ce82de68ad9676357c7bc3e60\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"io.github.strling-lang:strling-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-PARAMS-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-params\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"c45863aeca7916ba677b3daf10e0e61ae506db45d06fb0555ddf18184088c888\"}"
+            "comment": "{\"id\":\"java-maven\",\"inputs\":[{\"path\":\"bindings/java/pom.xml\",\"sha256\":\"0c4dd5dc71d0a1c8189245e85a3be88fa215df490a0a294b949ab091468a3b99\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"io.github.strling-lang:strling-jvm\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"4.0.3\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-API-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-api\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-ENGINE-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-engine\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JAVA-JUNIT-PARAMS-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter-params\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"1c561ad6bd53490d03ac4157a1d2739a7d21f1bbcd226414ca00d920d49894e1\"}"
         },
         {
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"jvm-maven\",\"inputs\":[{\"path\":\"bindings/jvm/pom.xml\",\"sha256\":\"79bdd897ac49113fee2a496e77bcb4ad8b904174431fc190a7729b84c6d538a9\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"net.java.dev.jna:jna\",\"reported_license\":\"Apache-2.0 OR LGPL-2.1-or-later\",\"selected_license\":null,\"version\":\"5.19.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"5672bc3a0842e83f04176f25c7f25f72804fae88b67e6c7b3eed3f5ee0b4be49\"}"
+            "comment": "{\"id\":\"jvm-maven\",\"inputs\":[{\"path\":\"bindings/jvm/pom.xml\",\"sha256\":\"4f88ed95d32dbb42d0fed0e9f41a2edf7bcab21fd993af566c0fe6cd312739e7\"}],\"policy\":{\"ecosystem\":\"maven\",\"integrity_mode\":\"direct_pins\",\"risk_mode\":\"osv_scan\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"com.fasterxml.jackson.core:jackson-databind\",\"reported_license\":\"Apache-2.0\",\"selected_license\":null,\"version\":\"2.18.11\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"net.java.dev.jna:jna\",\"reported_license\":\"Apache-2.0 OR LGPL-2.1-or-later\",\"selected_license\":null,\"version\":\"5.19.1\"},{\"classification\":\"scoped_permitted\",\"disposition_id\":\"LIC-MAVEN-JVM-JUNIT-JUPITER-5.10.1\",\"distribution_scope\":\"non-distributed-build-test\",\"name\":\"org.junit.jupiter:junit-jupiter\",\"reported_license\":\"EPL-2.0\",\"selected_license\":null,\"version\":\"5.10.1\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"5672bc3a0842e83f04176f25c7f25f72804fae88b67e6c7b3eed3f5ee0b4be49\"}"
         }
     ],
     "creationInfo": {
@@ -25,18 +25,18 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/java/2ed2f8f4d802647adb3eaa0dc2d064835ef9e2f8b1b3f4df9eb8259357dfbb34",
+    "documentNamespace": "https://strling.dev/sbom/java/612d52c1230ba583224185e1f58a9ba6bc4affb938e18fc4957a19aa762cd8ad",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "38ea85528c374d374d826804f205730aa753087ce82de68ad9676357c7bc3e60"
+                    "checksumValue": "0c4dd5dc71d0a1c8189245e85a3be88fa215df490a0a294b949ab091468a3b99"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6cfb28ad82c018dc293c1f1da96c224e708684f0"
+                    "checksumValue": "af870bb6433eaa97cfe355ba8c3cb30e35d37bf9"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -59,7 +59,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/META-INF/LICENSE",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/META-INF/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -78,7 +78,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/allclasses-index.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/allclasses-index.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -97,7 +97,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/allpackages-index.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/allpackages-index.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -116,7 +116,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/Compiler.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/Compiler.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -135,7 +135,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/SourceCompileOptions.Builder.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/SourceCompileOptions.Builder.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -154,7 +154,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/SourceCompileOptions.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/SourceCompileOptions.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -173,7 +173,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/Strling.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/Strling.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -192,7 +192,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/package-summary.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/package-summary.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -211,7 +211,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/package-tree.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/package-tree.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -230,7 +230,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/Essential.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/Essential.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -249,7 +249,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/Pattern.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/Pattern.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -268,7 +268,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/STRlingError.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/STRlingError.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -287,7 +287,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/Simply.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/Simply.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -306,7 +306,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/SimplyBuilder.Value.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/SimplyBuilder.Value.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -325,7 +325,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/SimplyBuilder.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/SimplyBuilder.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -344,7 +344,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/package-summary.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/package-summary.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -363,7 +363,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/com/strling/simply/package-tree.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/com/strling/simply/package-tree.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -374,15 +374,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "73f7aeadebaaf3e6892b93ca8cb7af401fd8eaf122fe77ff76cef4d0146c062e"
+                    "checksumValue": "024bd423a3a6506ee237eb9f81962843f952a41e7d89536350c86493a4fc4b8e"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "46049e68df021556296b6efdcec103cb53082747"
+                    "checksumValue": "6bc2aa07792fda401455517c6a63a67c1d98ce96"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/constant-values.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/constant-values.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -401,7 +401,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/copy.svg",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/copy.svg",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -420,7 +420,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/element-list",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/element-list",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -439,7 +439,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/help-doc.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/help-doc.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -458,7 +458,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/index-all.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/index-all.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -477,7 +477,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/index.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/index.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -496,7 +496,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/legal/ADDITIONAL_LICENSE_INFO",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/legal/ADDITIONAL_LICENSE_INFO",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -515,7 +515,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/legal/ASSEMBLY_EXCEPTION",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/legal/ASSEMBLY_EXCEPTION",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -534,7 +534,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/legal/LICENSE",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/legal/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -553,7 +553,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/legal/jquery.md",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/legal/jquery.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -572,7 +572,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/legal/jqueryUI.md",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/legal/jqueryUI.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -591,7 +591,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/link.svg",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/link.svg",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -610,7 +610,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/member-search-index.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/member-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -629,7 +629,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/module-search-index.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/module-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -648,7 +648,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/overview-summary.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/overview-summary.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -667,7 +667,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/overview-tree.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/overview-tree.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -686,7 +686,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/package-search-index.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/package-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -705,7 +705,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/resources/glass.png",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/resources/glass.png",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -724,7 +724,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/resources/x.png",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/resources/x.png",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -743,7 +743,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/script-dir/jquery-3.7.1.min.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/script-dir/jquery-3.7.1.min.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -762,7 +762,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/script-dir/jquery-ui.min.css",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/script-dir/jquery-ui.min.css",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -781,7 +781,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/script-dir/jquery-ui.min.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/script-dir/jquery-ui.min.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -800,7 +800,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/script.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/script.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -819,7 +819,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/search-page.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/search-page.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -838,7 +838,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/search.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/search.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -857,7 +857,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/search.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/search.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -876,7 +876,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/serialized-form.html",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/serialized-form.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -895,7 +895,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/stylesheet.css",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/stylesheet.css",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -914,7 +914,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/tag-search-index.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/tag-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -933,7 +933,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-javadoc.jar!/type-search-index.js",
+            "fileName": "bindings/java/target/strling-4.0.3-javadoc.jar!/type-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -952,7 +952,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/META-INF/LICENSE",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/META-INF/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -971,7 +971,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/Compiler.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/Compiler.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -990,7 +990,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/SourceCompileOptions.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/SourceCompileOptions.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1001,15 +1001,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "ab59141dce58864a5d5e11f4744937b0bb0ba5d9033a7a47f5e693baef99cde3"
+                    "checksumValue": "8639bc94f3ad45a24570dac66b16a3869be578c7fa99aa9c1a7f4819e8fd477d"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "c1d8cf448e986df2a52dab2e3dd1458de7a2e3dd"
+                    "checksumValue": "3ccd14df72eb64e4e33f0eff8f915e997a22f5bb"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/Strling.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/Strling.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1028,7 +1028,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/simply/Essential.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/simply/Essential.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1047,7 +1047,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/simply/Pattern.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/simply/Pattern.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1066,7 +1066,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/simply/STRlingError.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/simply/STRlingError.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1085,7 +1085,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/simply/Simply.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/simply/Simply.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1104,7 +1104,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1-sources.jar!/com/strling/simply/SimplyBuilder.java",
+            "fileName": "bindings/java/target/strling-4.0.3-sources.jar!/com/strling/simply/SimplyBuilder.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1123,7 +1123,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/META-INF/LICENSE",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/META-INF/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1142,7 +1142,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/META-INF/MANIFEST.MF",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/META-INF/MANIFEST.MF",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1153,15 +1153,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "ad3cadcc605233fc81d4b4a594ee6dbfde15a4eb3fcb6b2d4b1d1164d9a1ad97"
+                    "checksumValue": "2d74d97bf0ebba1abf2c597a9549e7cb706f3e694d55c7b232ee9ba41cce17d5"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "17daf85bf18d5d86621b937a36949e65754e6233"
+                    "checksumValue": "4d64da644287b88dbd5f6b114b5ee99718fcddf7"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/META-INF/maven/io.github.strling-lang/strling/pom.properties",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/META-INF/maven/io.github.strling-lang/strling/pom.properties",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1172,15 +1172,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "38ea85528c374d374d826804f205730aa753087ce82de68ad9676357c7bc3e60"
+                    "checksumValue": "0c4dd5dc71d0a1c8189245e85a3be88fa215df490a0a294b949ab091468a3b99"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6cfb28ad82c018dc293c1f1da96c224e708684f0"
+                    "checksumValue": "af870bb6433eaa97cfe355ba8c3cb30e35d37bf9"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/META-INF/maven/io.github.strling-lang/strling/pom.xml",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/META-INF/maven/io.github.strling-lang/strling/pom.xml",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1199,7 +1199,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/Compiler.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/Compiler.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1218,7 +1218,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/SourceCompileOptions$Builder.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/SourceCompileOptions$Builder.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1237,7 +1237,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/SourceCompileOptions.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/SourceCompileOptions.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1248,15 +1248,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4111115918aa31a9fe919f122b63f01e2dac23b19804ea0409c31ced63656c29"
+                    "checksumValue": "e372d70ddd907753277099d7f8806316f313a0262bb3e01ef44d1cd7c1c02fc0"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "336abd792e633d2272bebfd7d3b69035829a22bc"
+                    "checksumValue": "e037e14778ddb8fd536b6c7f52670fe866157d76"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/Strling.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/Strling.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1275,7 +1275,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/Essential.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/Essential.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1294,7 +1294,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/Pattern$Context.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/Pattern$Context.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1313,7 +1313,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/Pattern$Recipe.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/Pattern$Recipe.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1332,7 +1332,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/Pattern.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/Pattern.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1351,7 +1351,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/STRlingError.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/STRlingError.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1370,7 +1370,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/Simply.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/Simply.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1389,7 +1389,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/SimplyBuilder$Value.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/SimplyBuilder$Value.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1408,7 +1408,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/java/target/strling-4.0.1.jar!/com/strling/simply/SimplyBuilder.class",
+            "fileName": "bindings/java/target/strling-4.0.3.jar!/com/strling/simply/SimplyBuilder.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1419,11 +1419,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "79bdd897ac49113fee2a496e77bcb4ad8b904174431fc190a7729b84c6d538a9"
+                    "checksumValue": "4f88ed95d32dbb42d0fed0e9f41a2edf7bcab21fd993af566c0fe6cd312739e7"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "8932003e1d487994a642cc21c90398d3f89808d3"
+                    "checksumValue": "d7af47710f50d115515c42773b35ab94df62a8dd"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -1446,7 +1446,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/META-INF/LICENSE",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/META-INF/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1465,7 +1465,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/allclasses-index.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/allclasses-index.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1484,7 +1484,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/allpackages-index.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/allpackages-index.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1503,7 +1503,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/AbiMismatchException.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/AbiMismatchException.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1522,7 +1522,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/ClosedClientException.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/ClosedClientException.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1541,7 +1541,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/NativeAdapterException.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/NativeAdapterException.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1560,7 +1560,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/NativeClient.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/NativeClient.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1579,7 +1579,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/NativeLoadException.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/NativeLoadException.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1598,7 +1598,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/ProtocolException.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/ProtocolException.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1617,7 +1617,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/TransportException.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/TransportException.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1636,7 +1636,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/package-summary.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/package-summary.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1655,7 +1655,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/com/strling/jvm/package-tree.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/com/strling/jvm/package-tree.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1674,7 +1674,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/constant-values.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/constant-values.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1693,7 +1693,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/copy.svg",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/copy.svg",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1712,7 +1712,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/element-list",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/element-list",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1731,7 +1731,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/help-doc.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/help-doc.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1750,7 +1750,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/index-all.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/index-all.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1769,7 +1769,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/index.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/index.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1788,7 +1788,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/legal/ADDITIONAL_LICENSE_INFO",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/legal/ADDITIONAL_LICENSE_INFO",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1807,7 +1807,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/legal/ASSEMBLY_EXCEPTION",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/legal/ASSEMBLY_EXCEPTION",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1826,7 +1826,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/legal/LICENSE",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/legal/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1845,7 +1845,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/legal/jquery.md",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/legal/jquery.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1864,7 +1864,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/legal/jqueryUI.md",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/legal/jqueryUI.md",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1883,7 +1883,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/link.svg",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/link.svg",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1902,7 +1902,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/member-search-index.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/member-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1921,7 +1921,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/module-search-index.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/module-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1940,7 +1940,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/overview-tree.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/overview-tree.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1959,7 +1959,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/package-search-index.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/package-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1978,7 +1978,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/resources/glass.png",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/resources/glass.png",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -1997,7 +1997,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/resources/x.png",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/resources/x.png",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2016,7 +2016,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/script-dir/jquery-3.7.1.min.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/script-dir/jquery-3.7.1.min.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2035,7 +2035,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/script-dir/jquery-ui.min.css",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/script-dir/jquery-ui.min.css",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2054,7 +2054,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/script-dir/jquery-ui.min.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/script-dir/jquery-ui.min.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2073,7 +2073,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/script.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/script.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2092,7 +2092,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/search-page.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/search-page.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2111,7 +2111,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/search.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/search.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2130,7 +2130,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/search.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/search.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2149,7 +2149,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/serialized-form.html",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/serialized-form.html",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2168,7 +2168,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/stylesheet.css",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/stylesheet.css",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2187,7 +2187,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/tag-search-index.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/tag-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2206,7 +2206,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-javadoc.jar!/type-search-index.js",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-javadoc.jar!/type-search-index.js",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2225,7 +2225,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/META-INF/LICENSE",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/META-INF/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2244,7 +2244,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/AbiMismatchException.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/AbiMismatchException.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2263,7 +2263,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/ClosedClientException.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/ClosedClientException.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2282,7 +2282,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/InteropLibrary.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/InteropLibrary.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2301,7 +2301,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/NativeAdapterException.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/NativeAdapterException.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2312,15 +2312,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "a596639f2b15b67f15087cc69014c28275159c6274803e78af8d4d68c2560136"
+                    "checksumValue": "90754af5c72c76cf7635c969b6529c50eaa9d9db62b3ca8ce3edac8720a22e87"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6f145510efc611f7daf0d9a083d1ea34364ead05"
+                    "checksumValue": "e3148f08c8c96abb709ba985c911c78e00429afa"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/NativeClient.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/NativeClient.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2339,7 +2339,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/NativeLoadException.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/NativeLoadException.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2358,7 +2358,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/ProtocolException.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/ProtocolException.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2377,7 +2377,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1-sources.jar!/com/strling/jvm/TransportException.java",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3-sources.jar!/com/strling/jvm/TransportException.java",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2396,7 +2396,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/META-INF/LICENSE",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/META-INF/LICENSE",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2415,7 +2415,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/META-INF/MANIFEST.MF",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/META-INF/MANIFEST.MF",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2434,7 +2434,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/AbiMismatchException.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/AbiMismatchException.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2453,7 +2453,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/ClosedClientException.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/ClosedClientException.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2472,7 +2472,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/InteropLibrary$OwnedBytes.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/InteropLibrary$OwnedBytes.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2491,7 +2491,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/InteropLibrary$SizeT.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/InteropLibrary$SizeT.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2510,7 +2510,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/InteropLibrary.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/InteropLibrary.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2529,7 +2529,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/NativeAdapterException.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/NativeAdapterException.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2540,15 +2540,15 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "38ac4c0037b83252097457167caaa30a3b0208707b552e91c498eb9854eb252a"
+                    "checksumValue": "8d0a0a26d1877667b0eace9f62c7913311ff86b6c1fc8bc3d0589626144e9968"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "253274db27f9df7211568c2630f31cffbc670464"
+                    "checksumValue": "6feed2eab126cdeaac312cb5128fd3f20f5455d6"
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/NativeClient.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/NativeClient.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2567,7 +2567,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/NativeLoadException.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/NativeLoadException.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2586,7 +2586,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/ProtocolException.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/ProtocolException.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2605,7 +2605,7 @@
                 }
             ],
             "copyrightText": "NOASSERTION",
-            "fileName": "bindings/jvm/target/strling-jvm-4.0.1.jar!/com/strling/jvm/TransportException.class",
+            "fileName": "bindings/jvm/target/strling-jvm-4.0.3.jar!/com/strling/jvm/TransportException.class",
             "licenseConcluded": "NOASSERTION",
             "licenseInfoInFiles": [
                 "NOASSERTION"
@@ -2619,7 +2619,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "2ed2f8f4d802647adb3eaa0dc2d064835ef9e2f8b1b3f4df9eb8259357dfbb34"
+                    "checksumValue": "612d52c1230ba583224185e1f58a9ba6bc4affb938e18fc4957a19aa762cd8ad"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -2636,12 +2636,12 @@
             "licenseDeclared": "Apache-2.0",
             "name": "io.github.strling-lang:strling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "af3916dc3381bd3e23aed5e09bebe83ee2b3a879"
+                "packageVerificationCodeValue": "302e1bdc3c55af96bf0c1f062665c57b6371eaf7"
             },
-            "versionInfo": "4.0.1"
+            "versionInfo": "4.0.3"
         },
         {
-            "SPDXID": "SPDXRef-Dependency-1-65176f10901b",
+            "SPDXID": "SPDXRef-Dependency-1-9765affa665f",
             "annotations": [
                 {
                     "annotationDate": "1970-01-01T00:00:00Z",
@@ -2655,7 +2655,7 @@
             "externalRefs": [
                 {
                     "referenceCategory": "OTHER",
-                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"io.github.strling-lang:strling-jvm\",\"version\":\"4.0.1\"}",
+                    "referenceLocator": "{\"dependency_root\":\"java-maven\",\"ecosystem\":\"maven\",\"name\":\"io.github.strling-lang:strling-jvm\",\"version\":\"4.0.3\"}",
                     "referenceType": "strling-dependency-coordinate"
                 }
             ],
@@ -2663,7 +2663,7 @@
             "licenseConcluded": "Apache-2.0",
             "licenseDeclared": "Apache-2.0",
             "name": "io.github.strling-lang:strling-jvm",
-            "versionInfo": "4.0.1"
+            "versionInfo": "4.0.3"
         },
         {
             "SPDXID": "SPDXRef-Dependency-2-0ee4f4efc594",
@@ -3503,7 +3503,7 @@
             "spdxElementId": "SPDXRef-Package"
         },
         {
-            "relatedSpdxElement": "SPDXRef-Dependency-1-65176f10901b",
+            "relatedSpdxElement": "SPDXRef-Dependency-1-9765affa665f",
             "relationshipType": "DEPENDS_ON",
             "spdxElementId": "SPDXRef-Package"
         },

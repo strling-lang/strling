@@ -12,7 +12,7 @@
                     "--artifact-id",
                     "release:c"
                 ],
-                "productVersion": "4.0.1",
+                "productVersion": "4.0.3",
                 "registry": "github-tag:c-vVERSION",
                 "support": {
                     "external_prerequisites": [
@@ -104,9 +104,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@17be3e0c81fb2816803653b73f0f9198d6711d5d"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
@@ -116,7 +116,7 @@
                 },
                 {
                     "digest": {
-                        "sha256": "2c431f6257453e83bd9ad0b9b83a85d770dc55ba0fb577d17f511d0957f9cdc7"
+                        "sha256": "d34724bfe36c865abbbef0f01389ccbdc3b664ca116ca890731687840eb0bff2"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -128,7 +128,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "17be3e0c81fb2816803653b73f0f9198d6711d5d:release:c",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:c",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -143,13 +143,13 @@
         },
         {
             "digest": {
-                "sha256": "12279838137ad14a66cc73c9ede52fdb36bfbf7e98362ab9b6860c9d2d0a5256"
+                "sha256": "1f85176decca53f8e02d74edac0b23b3c95fa803123236f98ebc1ac15f1c1d28"
             },
             "name": "bindings/c"
         },
         {
             "digest": {
-                "sha256": "16c8582b20fedbbdfef9e0546702c650c723f73a1a4b57ac3d4d6fa28a6715a2"
+                "sha256": "d701466360c8ac80ba6056a5e0e24315e2dbdd4a85c899405400fea0beb95258"
             },
             "name": "bindings/interop"
         },

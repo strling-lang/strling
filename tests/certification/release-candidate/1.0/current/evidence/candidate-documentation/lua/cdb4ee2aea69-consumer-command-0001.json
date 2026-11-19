@@ -1,1 +1,1 @@
-{"command": ["lua", "/tmp/strling-preview-documentation-olyv9u8x/example.lua", "/tmp/strling-preview-documentation-olyv9u8x/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.0195825650007464}
+{"command": ["lua", "/tmp/strling-preview-documentation-a1da5cgd/example.lua", "/tmp/strling-preview-documentation-a1da5cgd/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.016571971005760133}

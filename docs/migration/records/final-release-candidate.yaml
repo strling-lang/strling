@@ -343,6 +343,17 @@ checkpoints:
                 skipped. The certified product is `d01ac3785736ad552c90f00b4ca13c0e2e5c9c62` and its qualified verifier is
                 `59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0`. The successor closure retains these exact signed bytes and receives
                 its own hosted integrity check.
+    - name: Fourth Edition official release and independent public verification
+      status: passed
+      evidence:
+          - check: Authorized 16-destination publication and attestation
+            result: passed
+            details: https://github.com/strling-lang/strling/actions/runs/44567784868/attempts/2 and https://github.com/strling-lang/strling/releases/tag/v4.0.3.
+          - check: Complete independent Windows and Linux public verification
+            result: passed
+            details:
+                232 verified, zero findings and 24 owner-deferred ConanCenter obligations. Reconstructed from exact reports
+                in https://github.com/strling-lang/strling/actions/runs/44580786117.
 commits:
     - sha: 5ff18fe59c6dfee907a35522dfe988cf943b3e84
       subject: Lock final product candidate scope and recovery evidence
@@ -380,7 +391,9 @@ commits:
       subject: Close source-bound STRling 4.0.3 certification evidence
 completion:
     accomplished:
-        - RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING.
+        - STRling 4.0.3 officially released and independently publicly verified. Fourth Edition release closure is complete.
+        - The preceding candidate-certification milestone established certification and left publication authorization
+          pending.
         - Completed architecture, product documentation, migration/examples, governed support matrices, benchmark report
           and independently certified clean-room candidate.
         - Independently recertified and closed successor product source 8a0c1ca31484b537bcff596922182bb66ab1e392; publication
@@ -431,6 +444,8 @@ completion:
           The successor closure retains these exact signed bytes and receives its own hosted integrity check.
         - Candidate evidence root 4b938eb8189a815e6f463150146730fe9b0b400f36e3de04a7f2d3dc2c1ef554. The stale picomatch
           waiver is retired. The existing scoped VSCE waiver expires December 13, 2026 inclusive UTC.
+        - V0–V12 audit SHA-256 4b61270bc0d29a4925c54c6f4159d50050213dfcee097829e3a3986d32318e59. All 232 applicable
+          public obligations verified in https://github.com/strling-lang/strling/actions/runs/44580786117.
     behavior_changed:
         Corrected obsolete frontend defaults, reconciled package documentation/examples and independently
         verified the complete-product certificate and publication handoff.
@@ -461,15 +476,14 @@ completion:
           identities remain unchanged. No 4.0.1 package, tag, production Maven signature, artifact upload or GitHub Release
           was created by this certification milestone.
         - All historical signed subjects and immutable partial release coordinates are preserved. No 4.0.3 package or
-          tag was published.
+          tag was published during that certification milestone.
     transitional_architecture: []
     deferred_work:
-        - Separately authorized publication, owner/publisher/protected-environment prerequisites, coordinate-specific
-          certification and actual post-publication verification. No current engineering or certification requirement
-          is deferred.
+        - Owner-approved ConanCenter admission remains deferred. All 24 deferred obligations are explicitly recorded
+          and direct C++ distribution remains Supported.
 readiness:
     status: READY WITH RECORDED CARRY-FORWARD
-    next_task: Verify final closure and transport, then obtain exact export and publication authorization.
+    next_task: Fourth Edition release closure is complete.
     rationale:
-        The source and signed evidence passed the hosted certificate check. Release execution requires separate
-        authorization.
+        Certified source, real publication, and 232 applicable public-verification obligations were accepted. The
+        24 ConanCenter obligations are the approved carry-forward.

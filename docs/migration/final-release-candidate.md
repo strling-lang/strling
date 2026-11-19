@@ -1,6 +1,6 @@
 # STRling 4.0.3 fix-forward certification
 
-Status: **SOURCE CERTIFICATION PASSED — HOSTED ACCEPTANCE PENDING**.
+Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.
 
 Product source d01ac3785736ad552c90f00b4ca13c0e2e5c9c62; qualified immutable reader 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0; candidate evidence root 4b938eb8189a815e6f463150146730fe9b0b400f36e3de04a7f2d3dc2c1ef554; nested package root 9064e081c6529cd7d6c100a189197b0a6726b268e6612242e68c562ad3a246e9. Fresh profiles: {"full": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0, "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request": {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived": 0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.
 
@@ -42,6 +42,8 @@ repository-scoped Maven tokens and protected signing secrets are preserved.
 Registry freshness, exact certified-byte export, source/run-bound publication
 approval and actual protected deployment reviews remain separate gates.
 No package, release tag or public GitHub Release was created by this certification.
+
+All four required immutable hosted jobs accepted evidence closure `65ac450125b8a1e286e0299411d46c90f3ba2004` in [run 44470630810](https://github.com/strling-lang/strling/actions/runs/44470630810). The export job was skipped. The certified product is `d01ac3785736ad552c90f00b4ca13c0e2e5c9c62` and its qualified verifier is `59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0`. The successor closure retains these exact signed bytes and receives its own hosted integrity check.
 
 ## Preserved historical candidate reports
 

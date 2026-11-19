@@ -48,6 +48,7 @@ jobs:
             - name: Configure isolated verification storage
               env:
                   CARGO_HOME: ${{ runner.temp }}/public-cargo
+                  RUSTUP_HOME: ${{ runner.temp }}/public-rustup
                   STRLING_MAVEN_REPOSITORY: ${{ runner.temp }}/public-jvm/repository
                   STRLING_GRADLE_CACHE: ${{ runner.temp }}/public-kotlin/dependency-cache
                   STRLING_PUB_CACHE: ${{ runner.temp }}/public-dart/dependency-cache
@@ -55,7 +56,7 @@ jobs:
                   python - <<'PY'
                   import os
                   with open(os.environ['GITHUB_ENV'], 'a', encoding='utf-8') as output:
-                      for key in ('CARGO_HOME', 'STRLING_MAVEN_REPOSITORY', 'STRLING_GRADLE_CACHE', 'STRLING_PUB_CACHE'):
+                      for key in ('CARGO_HOME', 'RUSTUP_HOME', 'STRLING_MAVEN_REPOSITORY', 'STRLING_GRADLE_CACHE', 'STRLING_PUB_CACHE'):
                           value = os.environ[key]
                           assert '\n' not in value and '\r' not in value
                           output.write(f'{key}={value}\n')
@@ -131,8 +132,23 @@ jobs:
               with:
                   toolchain: 1.75.0
             - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
+              if: runner.os == 'Windows'
+              env:
+                  DOTNET_INSTALL_DIR: ${{ runner.temp }}/public-dotnet
               with:
                   dotnet-version: 9.0.302
+            - name: Verify the isolated Windows .NET SDK selection
+              if: runner.os == 'Windows'
+              run: |
+                  python - <<'PY'
+                  import os, shutil, subprocess
+                  from pathlib import Path
+                  sdk = Path(os.environ['RUNNER_TEMP']) / 'public-dotnet'
+                  dotnet = Path(shutil.which('dotnet')).resolve()
+                  assert dotnet.parent == sdk.resolve()
+                  assert Path(os.environ['DOTNET_ROOT']).resolve() == sdk.resolve()
+                  assert subprocess.check_output([dotnet, '--version'], cwd=sdk, text=True).strip() == '9.0.302'
+                  PY
             - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961
               if: runner.os == 'Windows'
               with:
@@ -152,6 +168,7 @@ jobs:
                   test "$(git -C verifier rev-parse HEAD)" = "$STRLING_PUBLIC_VERIFIER_SHA"
                   python -m pip install --requirement verifier/tooling/requirements-quality.txt
                   python -m pip install conan==2.31.2 cmake==3.31.10
+                  cargo +1.75.0 fetch --manifest-path verifier/Cargo.toml --locked
                   cargo +1.75.0 fetch --manifest-path verifier/bindings/interop/Cargo.toml --locked
             - name: Prepare verified JVM runtime and Kotlin compiler dependencies
               if: runner.os == 'Windows'

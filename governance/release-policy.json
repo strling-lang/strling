@@ -1,10 +1,10 @@
 {
-    "policy_version": "1.3.0",
+    "policy_version": "1.4.0",
     "repository_refs": {
-        "permanent_branches": ["main", "dev"],
+        "permanent_branches": ["main"],
         "default_branch": "main",
         "canonical_stable_tag": "vMAJOR.MINOR.PATCH",
-        "branch_lifecycle": "Keep main as the authoritative integrated source with governed release acceptance and dev for ongoing development. Remove temporary branches after unique work is integrated, preserved through an immutable reference, or explicitly discarded. Resolve active dependencies before removal. Release and certification workflows must remain usable after temporary branches are deleted.",
+        "branch_lifecycle": "Keep main as the sole permanent branch and authoritative integrated source. Base temporary review branches on main and integrate through governed review. Before retiring a branch, resolve its active dependencies and integrate its unique work or preserve it through a verified archive or immutable reference. Keep release and certification workflows usable after temporary branches are deleted.",
         "tag_lifecycle": "Assign one immutable canonical product tag per published stable version at the exact certified product source. Preserve all published canonical and binding coordinates and required historical refs. Create ecosystem aliases only for governed distribution contracts. Preserve distinct publication and certification closure identities. Use exact commit SHAs for ordinary development and certification. Use a publication control tag only where the governed publisher requires a tag-push event.",
         "binding_tags": {
             "c-vVERSION": "The governed Git checkout pins this ref. A future release can use the canonical tag after switching its manifest, installation guide, publisher and verification together.",

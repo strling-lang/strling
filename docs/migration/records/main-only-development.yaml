@@ -1,0 +1,117 @@
+record_version: 2.0.0
+title: Governed main-only development and exact release verification
+status: in_progress
+objective: >
+    Integrate the retained development history and establish main as the sole
+    permanent branch while preserving exact signed release identities.
+    Maintain independent development qualification and release verification.
+scope:
+    diff:
+        base: 4e58730bbf67eaff683268e285e7084ccda5fadd
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/certification-integrity.yml
+        - .github/workflows/ci.yml
+        - .github/workflows/development-qualification.yml
+        - CONTRIBUTING.md
+        - docs/migration/ledger.md
+        - docs/migration/records/main-only-development.yaml
+        - docs/release-policy.md
+        - governance/certification-profiles.md
+        - governance/change-control.json
+        - governance/release-policy.json
+        - governance/repository-hygiene.json
+        - governance/schemas/release-policy.schema.json
+        - tooling/architecture_fitness.py
+        - tooling/release_policy.py
+        - tooling/tests/test_certified_transport.py
+        - tooling/tests/test_governance.py
+        - tooling/tests/test_public_workflow_contexts.py
+        - tooling/tests/test_release_policy.py
+        - tooling/tests/test_repository_maintenance.py
+        - tooling/verify_repository_maintenance.py
+    forbidden_paths:
+        - .github/public-verification/request.json
+        - .github/workflows/cd.yml
+        - .github/workflows/public-verification.yml
+        - bindings/**
+        - core/**
+        - governance/closed-certifications.json
+        - governance/*trust.json
+        - spec/**
+        - tests/certification/**
+    expected_files:
+        - .github/workflows/certification-integrity.yml
+        - .github/workflows/development-qualification.yml
+        - docs/release-policy.md
+        - governance/release-policy.json
+        - governance/schemas/release-policy.schema.json
+    permitted_generated_changes:
+        - release-policy-documentation
+    expected_generated_outputs:
+        - release-policy-documentation
+    required_verification_levels:
+        - contract
+        - unit
+        - quality
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence: []
+    public_api_change:
+        level: none
+        evidence: []
+    schema_change:
+        level: breaking
+        evidence:
+            - Release-policy 1.4.0 admits main as the sole permanent branch. The
+              product version, language contracts, and release identities retain
+              their existing scope.
+    diagnostic_change:
+        level: none
+        evidence: []
+    target_behavior_change:
+        level: none
+        evidence: []
+    architecture_change:
+        level: compatible
+        evidence:
+            - Exact development qualification and signed complete-product
+              verification report separate states. Historical verification and
+              protected export retain their immutable authentication.
+    generated_output_change:
+        level: compatible
+        evidence:
+            - The registered release-policy projection emits the sole permanent
+              branch and preserves the certified product version.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Release policy projection and existing version coordinates
+      command: python3 tooling/release_policy.py --check && python3 tooling/sync_versions.py --check
+      expected_result: Main-only policy is enforced and output is deterministic. Product version and public coordinates retain their exact identities.
+    - name: Scope, governance and repository hygiene
+      command: python3 tooling/governance.py && python3 tooling/hygiene.py
+      expected_result: The exact task scope passes. The byte-authenticated public-verification request is excluded from text normalization only.
+    - name: Release, routing and public verification regressions
+      command: python3 -m pytest -q tooling/tests/test_release_policy.py tooling/tests/test_governance.py tooling/tests/test_certified_transport.py tooling/tests/test_public_workflow_contexts.py
+      expected_result: A second permanent branch and implicit release verification are refused while protected exact-source paths remain valid.
+checkpoints:
+    - name: Baselines and prior release preservation
+      status: passed
+      evidence:
+          - check: Exact historical heads and local merge
+            result: passed
+            details: >
+                The ordinary merge of eba5dad3de3fa620eb1ea13e0514d02f4b23e288
+                and 4e58730bbf67eaff683268e285e7084ccda5fadd keeps both
+                parents and all six unique development commits. The published
+                source and authenticated current request remain byte-identical.
+    - name: Policy and local routing verification
+      status: planned
+      evidence: []
+    - name: Hosted development checks and permanent branch cutover
+      status: planned
+      evidence: []
+commits: []

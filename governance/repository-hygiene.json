@@ -471,6 +471,7 @@
             "strling"
         ],
         "excluded_paths": [
+            ".github/public-verification/request.json",
             "tests/spec/**",
             "package-lock.json",
             "**/package-lock.json",

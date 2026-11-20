@@ -1849,7 +1849,7 @@ def ci_profile_routing_findings(
                     "candidate",
                     "release-candidate-certification-trust.json",
                     "release-candidate",
-                    "${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}",
+                    "${{ github.sha }}",
                 ),
             ):
                 packaging = jobs.get(job_name)
@@ -1884,6 +1884,9 @@ def ci_profile_routing_findings(
                     row for row in checkouts if row.get("path") == prefix + "-candidate"
                 ]
                 export_output = "${{ steps.checkout_candidate.outputs.commit }}"
+                candidate_gate = "github.event_name == 'workflow_dispatch'"
+                if relative == ".github/workflows/ci.yml":
+                    candidate_gate += " && inputs.verify_release_candidate == true"
                 if prefix == "candidate" and packaging.get("outputs") == {
                     "verified_closure_sha": export_output
                 }:
@@ -1916,9 +1919,10 @@ def ci_profile_routing_findings(
                             )
                         )
                     candidate_ref = (
-                        "${{ github.event_name == 'workflow_dispatch' && vars.RELEASE_EXPORT_ENABLED == 'true' "
-                        "&& vars.RELEASE_EXPORT_CLOSURE_SHA || (github.event_name == 'pull_request_target' "
-                        "&& github.event.pull_request.head.sha || github.sha) }}"
+                        "${{ github.repository == 'strling-lang/strling' "
+                        "&& vars.RELEASE_EXPORT_ENABLED == 'true' && github.sha == vars.RELEASE_EXPORT_WORKFLOW_SHA "
+                        "&& github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA "
+                        "&& vars.RELEASE_EXPORT_CLOSURE_SHA || github.sha }}"
                     )
                 commands = [step["run"] for step in steps if "run" in step]
                 expected_command = (
@@ -1977,6 +1981,10 @@ def ci_profile_routing_findings(
                         and (
                             any(row.get("fetch-depth") != 0 for row in checkouts)
                             or steps[4].get("shell") != "bash"
+                            or " ".join(str(packaging.get("if", "")).split())
+                            != candidate_gate
+                            or candidates[0].get("repository")
+                            != "${{ github.repository }}"
                         )
                     )
                     or any(

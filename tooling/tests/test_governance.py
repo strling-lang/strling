@@ -878,10 +878,15 @@ class ArchitectureValidationTests(unittest.TestCase):
             )
 
         originals = {}
+        candidates = {}
         for name in ("ci.yml", "certification-integrity.yml"):
             path = self.root / ".github/workflows" / name
             originals[path] = path.read_text(encoding="utf-8")
-            path.write_text(originals[path] + serialized(actual), encoding="utf-8")
+            candidate = copy.deepcopy(actual)
+            if name == "certification-integrity.yml":
+                candidate["if"] = "github.event_name == 'workflow_dispatch'"
+            candidates[path] = candidate
+            path.write_text(originals[path] + serialized(candidate), encoding="utf-8")
         (self.root / "governance").mkdir(exist_ok=True)
         (
             self.root / "governance/release-candidate-certification-trust.json"
@@ -889,6 +894,10 @@ class ArchitectureValidationTests(unittest.TestCase):
         result = self.evaluate(self.ci_profile_rule())
         self.assertEqual("passed", result.status, result.findings)
         mutations = {
+            "implicit-release-context": lambda job: job.pop("if"),
+            "untrusted-evidence-repository": lambda job: job["steps"][1]["with"].update(
+                repository="${{ github.event.pull_request.head.repo.full_name }}"
+            ),
             "branch-verifier": lambda job: job["steps"][0]["with"].update(
                 ref="refs/heads/dev"
             ),
@@ -923,14 +932,16 @@ class ArchitectureValidationTests(unittest.TestCase):
         for path, original in originals.items():
             for name, mutate in {"missing-job": None, **mutations}.items():
                 with self.subTest(workflow=path.name, mutation=name):
-                    job = copy.deepcopy(actual) if mutate is not None else None
+                    job = (
+                        copy.deepcopy(candidates[path]) if mutate is not None else None
+                    )
                     if mutate is not None:
                         mutate(job)
                     path.write_text(original + serialized(job), encoding="utf-8")
                     self.assertEqual(
                         "failed", self.evaluate(self.ci_profile_rule()).status
                     )
-            path.write_text(original + serialized(actual), encoding="utf-8")
+            path.write_text(original + serialized(candidates[path]), encoding="utf-8")
 
     def test_ci_profile_routing_rejects_event_trust_drift(self) -> None:
         cases = (

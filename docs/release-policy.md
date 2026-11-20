@@ -2,7 +2,7 @@
 
 # STRling release policy
 
-Policy version: `1.3.0`. Product version: **STRling 4.0.3**.
+Policy version: `1.4.0`. Product version: **STRling 4.0.3**.
 
 This document is a human-readable projection. The machine authority is
 [`governance/release-policy.json`](../governance/release-policy.json).
@@ -10,9 +10,9 @@ Certification never authorizes publication; explicit owner authorization is requ
 
 ## Repository branches and tags
 
-Permanent branches are `main` and `dev`. The default is `main`.
+The sole permanent branch is `main`. The default is `main`.
 
-Keep main as the authoritative integrated source with governed release acceptance and dev for ongoing development. Remove temporary branches after unique work is integrated, preserved through an immutable reference, or explicitly discarded. Resolve active dependencies before removal. Release and certification workflows must remain usable after temporary branches are deleted.
+Keep main as the sole permanent branch and authoritative integrated source. Base temporary review branches on main and integrate through governed review. Before retiring a branch, resolve its active dependencies and integrate its unique work or preserve it through a verified archive or immutable reference. Keep release and certification workflows usable after temporary branches are deleted.
 
 The canonical stable tag is `vMAJOR.MINOR.PATCH`. Assign one immutable canonical product tag per published stable version at the exact certified product source. Preserve all published canonical and binding coordinates and required historical refs. Create ecosystem aliases only for governed distribution contracts. Preserve distinct publication and certification closure identities. Use exact commit SHAs for ordinary development and certification. Use a publication control tag only where the governed publisher requires a tag-push event.
 

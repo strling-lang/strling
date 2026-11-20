@@ -3,15 +3,16 @@
 # from the trusted base revision. Other events use an immutable reviewed verifier;
 # Preserved compiler and packaging evidence use their historical closures.
 # Historical public-verification evidence retains its fixed accepted closure.
-# The complete-product candidate follows the event source as data only.
+# Manual complete-product verification uses exact signed evidence as data only.
 name: STRling certification integrity
 
 on:
     push:
         branches:
             - main
-            - dev
     pull_request_target:
+        branches:
+            - main
         types: [opened, synchronize, reopened]
     workflow_dispatch:
 
@@ -260,6 +261,7 @@ jobs:
                   retention-days: 90
     verify-release-candidate-certification:
         name: Verify complete product candidate
+        if: github.event_name == 'workflow_dispatch'
         runs-on: ubuntu-24.04
         outputs:
             verified_closure_sha: ${{ steps.checkout_candidate.outputs.commit }}
@@ -277,8 +279,8 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
-                  ref: ${{ github.event_name == 'workflow_dispatch' && vars.RELEASE_EXPORT_ENABLED == 'true' && vars.RELEASE_EXPORT_CLOSURE_SHA || (github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || (github.event_name == 'push' && github.ref == 'refs/heads/dev' && github.sha == vars.REPOSITORY_MAINTENANCE_SHA && 'a9032697222808e69d656cdb6008fbc26995e2d2') || github.sha) }}
+                  repository: ${{ github.repository }}
+                  ref: ${{ github.repository == 'strling-lang/strling' && vars.RELEASE_EXPORT_ENABLED == 'true' && github.sha == vars.RELEASE_EXPORT_WORKFLOW_SHA && github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA && vars.RELEASE_EXPORT_CLOSURE_SHA || github.sha }}
                   path: candidate-candidate
             - name: Install verification runtime
               uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
@@ -303,42 +305,6 @@ jobs:
                   name: candidate-certification-verification-${{ github.run_id }}
                   path: artifacts/candidate-certification-verification.json
                   if-no-files-found: warn
-                  retention-days: 90
-    verify-repository-maintenance:
-        name: Verify exact repository maintenance source
-        if: github.event_name == 'push' && github.ref == 'refs/heads/dev' && github.sha == vars.REPOSITORY_MAINTENANCE_SHA
-        runs-on: ubuntu-24.04
-        timeout-minutes: 10
-        env:
-            HISTORICAL_CLOSURE_SHA: a9032697222808e69d656cdb6008fbc26995e2d2
-            APPROVED_MAINTENANCE_SHA: ${{ vars.REPOSITORY_MAINTENANCE_SHA }}
-        steps:
-            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
-              with:
-                  ref: ${{ github.sha }}
-                  fetch-depth: 0
-                  persist-credentials: false
-            - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
-              with:
-                  python-version: "3.12.10"
-            - name: Verify approved source and maintenance-only changes
-              shell: bash
-              run: |
-                  python -I tooling/verify_repository_maintenance.py | tee repository-maintenance.json
-            - name: Verify policy projection, distribution contracts and regressions
-              shell: bash
-              run: |
-                  python -m pip install --requirement tooling/requirements-quality.txt
-                  python tooling/release_policy.py --check
-                  python tooling/sync_versions.py --check
-                  python -m tooling.public_distribution --check
-                  python -m pytest -q tooling/tests/test_release_policy.py tooling/tests/test_release_supply_chain.py tooling/tests/test_public_verification_boundaries.py tooling/tests/test_publication_protocol_regressions.py tooling/tests/test_publication_incident_regressions.py tooling/tests/test_repository_maintenance.py
-            - name: Retain accepted maintenance source and scope
-              uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-              with:
-                  name: repository-maintenance-${{ github.sha }}
-                  path: repository-maintenance.json
-                  if-no-files-found: error
                   retention-days: 90
     verify-public-distribution-certification:
         name: Preserve exact closed public-verification certification

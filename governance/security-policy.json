@@ -240,6 +240,17 @@
             "risk_mode": "cargo_audit"
         },
         {
+            "id": "language-relations-cargo",
+            "ecosystem": "cargo",
+            "classification": "actively_governed",
+            "usage": "tooling_only",
+            "manifests": ["core/tools/language-relations/Cargo.toml"],
+            "locks": ["core/tools/language-relations/Cargo.lock"],
+            "lock_policy": "required",
+            "integrity_mode": "cargo_lock",
+            "risk_mode": "cargo_audit"
+        },
+        {
             "id": "interop-fuzz-cargo",
             "ecosystem": "cargo",
             "classification": "actively_governed",

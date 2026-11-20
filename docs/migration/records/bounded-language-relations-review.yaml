@@ -1,0 +1,106 @@
+record_version: 2.0.0
+title: Bounded whole-input language relations review
+status: in_progress
+objective: Admit the private compiler-owned, analysis-only comparison tool and verify its declared whole-input scalar model before integrating the source. Any public product interface, broader semantics, or rewrite authorization has a separate approval scope.
+scope:
+    diff:
+        base: d7808c59a50af3700914efabc24c7cd8ac43e109
+        head: working-tree
+    allowed_paths:
+        - core/tools/language-relations/**
+        - docs/migration/records/bounded-language-relations-review.yaml
+        - governance/change-control.json
+        - governance/dependency-lock-verification.json
+        - governance/generated-artifacts.json
+        - governance/security-policy.json
+    forbidden_paths:
+        - bindings/**
+        - core/internal/**
+        - core/cli/**
+        - core/src/**
+        - spec/**
+        - tests/conformance/**
+        - .github/workflows/**
+    expected_files:
+        - core/tools/language-relations/Cargo.toml
+        - core/tools/language-relations/Cargo.lock
+        - core/tools/language-relations/README.md
+        - core/tools/language-relations/fixtures.json
+        - docs/migration/records/bounded-language-relations-review.yaml
+        - governance/change-control.json
+        - governance/dependency-lock-verification.json
+        - governance/generated-artifacts.json
+        - governance/security-policy.json
+    permitted_generated_changes:
+        - package-manager-lockfiles
+        - version-synchronized-metadata
+    expected_generated_outputs:
+        - package-manager-lockfiles
+        - version-synchronized-metadata
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Define controlled whole-input comparison premises for a review model without altering normative language semantics.
+    public_api_change:
+        level: none
+        evidence:
+            - Keep the candidate in a private package outside the released API, CLI, adapters, and interop.
+    schema_change:
+        level: none
+        evidence:
+            - Use closed candidate output within the private tool. Product schemas retain their versions and scope.
+    diagnostic_change:
+        level: none
+        evidence:
+            - Delegate managed frontend diagnostics to the existing canonical parser.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Compare whole scalar words under the review model without lowering, runtime execution, or rewrite registration.
+    architecture_change:
+        level: none
+        evidence:
+            - Depend on the canonical Rust kernel through a private repository tool.
+    generated_output_change:
+        level: compatible
+        evidence:
+            - The candidate-only Cargo lock records the added private package and the unchanged canonical kernel dependency versions.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Candidate contract and independent evidence
+      command: cargo +1.75.0 test --offline --locked --manifest-path core/tools/language-relations/Cargo.toml
+      expected_result: Authored fixtures, independent derivatives, direct replay, Unicode boundaries, and bounded refusal pass on Linux and Windows.
+    - name: Protected existing public boundary
+      command: python tooling/public_contracts.py --check --surface strling-kernel
+      expected_result: The canonical kernel command surface is unchanged.
+    - name: Reviewed locked tooling dependency boundary
+      command: python -m tooling.dependency_lock_verification --check
+      expected_result: The active private tool inventory binds the unchanged transitive package coordinates and lock to independently reviewed identities.
+    - name: Exact-source development qualification
+      command: .github/workflows/development-qualification.yml
+      expected_result: Independent Windows and Linux runners validate the exact base-aligned tree with the broader kernel and bounded analysis suites.
+    - name: Scope admission
+      command: python tooling/governance.py
+      expected_result: The active task governs only the declared private analysis candidate changes and reviewed dependency registration.
+checkpoints:
+    - name: Scope admission
+      status: in_progress
+      evidence:
+          - check: Scope and authority decision
+            result: passed
+            details: The main-only integration directive admits the bounded analysis-only tool into compiler-owned source with a declared scalar whole-input model. It preserves all existing product APIs, protocol and rewrite contracts.
+          - check: Broader kernel and hardened proof input checks
+            result: passed
+            details: The previously incomplete native Windows and WSL2 locked Rust 1.75.0 kernel replays completed. The Windows run passed 512 tests with zero failures or skips after ordinary temporary-directory access was restored. Both platforms passed all six relation tests, including canonical digest stability for different JSON whitespace. The CLI independently replayed a one-scalar supplementary Unicode witness, with identical parsed reports on both systems.
+          - check: Exact-source hosted development qualification
+            result: not_run
+            details: Await the reviewed main-only base and exact-source hosted checks. A product-facing interface and release certification require a separate accepted scope.
+commits: []

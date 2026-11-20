@@ -7,6 +7,7 @@ scope:
         base: f36c59c2275b71ebb832dd410c73ce55639a012a
         head: working-tree
     allowed_paths:
+        - .github/workflows/development-qualification.yml
         - bindings/lab-wasm/**
         - core/src/no_match_explanation.rs
         - docs/migration/records/lab-compiler-tools-candidate.yaml
@@ -23,6 +24,7 @@ scope:
         - spec/**
         - tests/certification/**
     expected_files:
+        - .github/workflows/development-qualification.yml
         - bindings/lab-wasm/.gitattributes
         - bindings/lab-wasm/Cargo.lock
         - bindings/lab-wasm/Cargo.toml

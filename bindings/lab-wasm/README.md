@@ -39,7 +39,7 @@ absolute workspace and Cargo registry source paths embedded by Rust.
 
 ```powershell
 rustup toolchain install 1.97.1 --profile minimal --target wasm32-unknown-unknown
-cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml --target wasm32-unknown-unknown
+cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml
 ./bindings/lab-wasm/build-qualified.ps1 -TargetDirectory target/lab-tools
 Get-FileHash target/lab-tools/wasm32-unknown-unknown/release/strling_lab_wasm.wasm
 ```

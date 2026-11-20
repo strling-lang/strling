@@ -4,7 +4,7 @@ status: in_progress
 objective: Expose the existing canonical formatter, semantic converter, and bounded no-match evaluator in a private browser adapter while preserving the sealed compiler interop boundary.
 scope:
     diff:
-        base: 4e58730bbf67eaff683268e285e7084ccda5fadd
+        base: f36c59c2275b71ebb832dd410c73ce55639a012a
         head: working-tree
     allowed_paths:
         - bindings/lab-wasm/**

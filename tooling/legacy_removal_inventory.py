@@ -18,6 +18,7 @@ import yaml
 from jsonschema import Draft202012Validator
 
 from tooling.binding_support_certification import _semantic_path_findings
+from tooling.release_policy import ReleasePolicyError, load_policy
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -594,25 +595,34 @@ def _validate_coverage(
 
 def _validate_source(manifest: Mapping[str, Any]) -> dict[str, Any]:
     source = manifest["source"]
-    branch = _git("branch", "--show-current").stdout.strip()
-    expected_branch = source["branch"]
-    if not branch:
-        head = _git("rev-parse", "HEAD").stdout.strip()
-        branch_tip = _git(
-            "rev-parse",
-            "--verify",
-            f"refs/heads/{expected_branch}",
-            check=False,
-        )
-        if branch_tip.returncode != 0 or branch_tip.stdout.strip() != head:
-            actual_tip = branch_tip.stdout.strip() or "unavailable"
-            raise LegacyRemovalInventoryError(
-                "inventory detached HEAD does not equal the authorized branch tip: "
-                f"expected {expected_branch} at {actual_tip}, found {head}"
-            )
-    elif branch != expected_branch:
+    try:
+        branch = load_policy()["repository_refs"]["default_branch"]
+    except ReleasePolicyError as error:
+        raise LegacyRemovalInventoryError(str(error)) from error
+
+    # The manifest's branch is provenance for the original audit baseline.
+    # Revalidation follows current integrated source through the release policy.
+    integrated = _git(
+        "rev-parse", "--verify", f"refs/remotes/origin/{branch}", check=False
+    )
+    if integrated.returncode != 0:
+        integrated = _git("rev-parse", "--verify", f"refs/heads/{branch}", check=False)
+    if integrated.returncode != 0:
         raise LegacyRemovalInventoryError(
-            f"inventory branch changed: expected {expected_branch}, found {branch}"
+            f"governed integrated branch {branch} is unavailable"
+        )
+    if (
+        _git(
+            "merge-base",
+            "--is-ancestor",
+            integrated.stdout.strip(),
+            "HEAD",
+            check=False,
+        ).returncode
+        != 0
+    ):
+        raise LegacyRemovalInventoryError(
+            f"inventory source does not descend from integrated branch {branch}"
         )
     _git("cat-file", "-e", f"{source['baseline_sha']}^{{commit}}")
     ancestor = _git(

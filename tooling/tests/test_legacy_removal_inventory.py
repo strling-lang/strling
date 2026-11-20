@@ -40,47 +40,40 @@ class LegacyRemovalInventoryTests(unittest.TestCase):
         self.assertEqual(596, reconciliation["current_classified"])
         self.assertEqual(498, reconciliation["removed"])
 
-    def test_detached_worktree_at_authorized_branch_tip_certifies(self) -> None:
+    def test_integrated_source_retains_original_audit_branch_provenance(self) -> None:
         real_git = inventory._git
 
-        def detached_git(*args: str, check: bool = True):
-            if args == ("branch", "--show-current"):
-                return subprocess.CompletedProcess(args, 0, "\n", "")
-            if args == ("rev-parse", "HEAD"):
+        def main_lineage(*args: str, check: bool = True):
+            if args == ("rev-parse", "--verify", "refs/remotes/origin/main"):
                 return subprocess.CompletedProcess(args, 0, "a" * 40 + "\n", "")
-            if args == (
-                "rev-parse",
-                "--verify",
-                "refs/heads/dev",
-            ):
-                return subprocess.CompletedProcess(args, 0, "a" * 40 + "\n", "")
+            if args == ("merge-base", "--is-ancestor", "a" * 40, "HEAD"):
+                return subprocess.CompletedProcess(args, 0, "", "")
             return real_git(*args, check=check)
 
         manifest = copy.deepcopy(self.manifest)
-        with patch.object(inventory, "_git", side_effect=detached_git):
+        with patch.object(inventory, "_git", side_effect=main_lineage) as git:
             evidence = self.build(manifest)
         self.assertEqual("dev", evidence["source"]["branch"])
+        self.assertFalse(
+            any("refs/heads/dev" in call.args for call in git.call_args_list)
+        )
 
-    def test_detached_worktree_away_from_authorized_branch_tip_fails(self) -> None:
+    def test_source_outside_integrated_lineage_fails(self) -> None:
         real_git = inventory._git
 
         def detached_git(*args: str, check: bool = True):
-            if args == ("branch", "--show-current"):
-                return subprocess.CompletedProcess(args, 0, "\n", "")
-            if args == ("rev-parse", "HEAD"):
-                return subprocess.CompletedProcess(args, 0, "a" * 40 + "\n", "")
-            if args == (
-                "rev-parse",
-                "--verify",
-                "refs/heads/dev",
-            ):
+            if args == ("rev-parse", "--verify", "refs/remotes/origin/main"):
+                return subprocess.CompletedProcess(args, 1, "", "")
+            if args == ("rev-parse", "--verify", "refs/heads/main"):
                 return subprocess.CompletedProcess(args, 0, "b" * 40 + "\n", "")
+            if args == ("merge-base", "--is-ancestor", "b" * 40, "HEAD"):
+                return subprocess.CompletedProcess(args, 1, "", "")
             return real_git(*args, check=check)
 
         with patch.object(inventory, "_git", side_effect=detached_git):
             with self.assertRaisesRegex(
                 inventory.LegacyRemovalInventoryError,
-                "detached HEAD does not equal the authorized branch tip",
+                "inventory source does not descend from integrated branch main",
             ):
                 self.build(copy.deepcopy(self.manifest))
 

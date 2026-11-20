@@ -27,6 +27,26 @@ environment. Cloud automation verifies their signed evidence through the
 canonical `./strling certification verify` path; it does not reinterpret or
 re-execute those profiles.
 
+## Development, qualification, and release
+
+An authorized task admits source to development review. Its scope identifies
+the allowed source delta, the claimed contract, and the checks it must pass.
+The hosted development qualification verifies the exact tested commit against
+that scope and retains its test results. Candidate qualification refers to the
+identified behavior, platform coverage, and artifact digests in that record.
+
+Release certification requires an independent no-reuse Release execution, all
+required producer evidence, and an authenticated signed bundle bound to the
+exact product source. Use the manual certification integrity workflow for
+complete-product verification, or select it explicitly when dispatching the
+canonical CI profile. Protected export still verifies the separately
+authorized exact closure and artifact. Historical preservation checks remain
+independent of the change proposed for development.
+
+Development qualification authorizes only the acceptance stated in its
+record. Release certification, package publication, downstream deployment,
+and Conformance status each have their own governing authority.
+
 ## Canonical operation identity
 
 A canonical operation has one stable registry ID, one implementation kind, one

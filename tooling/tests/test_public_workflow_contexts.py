@@ -18,6 +18,27 @@ def workflow():
     )
 
 
+def test_public_workflow_requires_protected_exact_ref_and_digest_for_each_job():
+    for job in workflow()["jobs"].values():
+        assert job["environment"] == "public-verification"
+        for guard in (
+            "github.event_name == 'workflow_dispatch'",
+            "vars.PUBLIC_VERIFICATION_ENABLED == 'true'",
+            "github.ref == vars.PUBLIC_WORKFLOW_REF",
+            "github.sha == vars.PUBLIC_WORKFLOW_SHA",
+            "github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA",
+        ):
+            assert guard in job["if"]
+        assert "default_branch" not in job["if"]
+        materialize = next(
+            step
+            for step in job["steps"]
+            if step.get("name") == "Authenticate and materialize the protected request"
+        )
+        assert "hashlib.sha256(raw).hexdigest()" in materialize["run"]
+        assert "os.environ['PUBLIC_WORKFLOW_SHA']" in materialize["run"]
+
+
 def test_runner_context_is_only_used_after_runner_allocation():
     definition = workflow()
     assert set(definition["on"]) == {"workflow_dispatch"}
@@ -28,7 +49,13 @@ def test_runner_context_is_only_used_after_runner_allocation():
     setup = next(
         s for s in steps if s.get("name") == "Configure isolated verification storage"
     )
-    assert len(setup["env"]) == 4
+    assert set(setup["env"]) == {
+        "CARGO_HOME",
+        "RUSTUP_HOME",
+        "STRLING_MAVEN_REPOSITORY",
+        "STRLING_GRADLE_CACHE",
+        "STRLING_PUB_CACHE",
+    }
     assert all(
         v.startswith("${{ runner.temp }}/public-") for v in setup["env"].values()
     )
@@ -63,23 +90,47 @@ def test_isolated_storage_export_preserves_paths_and_rejects_injection(
 
 
 @pytest.mark.parametrize(
-    "repository,ref,ref_name,pin,approved_ref,approved_pin,accepted",
+    "repository,event,enabled,ref,source,pin,approved_ref,approved_pin,accepted",
     [
-        ("strling-lang/strling", "refs/heads/main", "main", "a" * 40, "", "", True),
         (
             "strling-lang/strling",
+            "workflow_dispatch",
+            "true",
+            "refs/heads/main",
+            "a" * 40,
+            "a" * 40,
+            "",
+            "",
+            False,
+        ),
+        (
+            "strling-lang/strling",
+            "workflow_dispatch",
+            "true",
             "refs/heads/ops",
-            "ops",
+            "a" * 40,
             "a" * 40,
             "refs/heads/ops",
             "a" * 40,
             True,
         ),
-        ("strling-lang/strling", "refs/heads/ops", "ops", "a" * 40, "", "", False),
         (
             "strling-lang/strling",
+            "workflow_dispatch",
+            "false",
             "refs/heads/ops",
-            "ops",
+            "a" * 40,
+            "a" * 40,
+            "refs/heads/ops",
+            "a" * 40,
+            False,
+        ),
+        (
+            "strling-lang/strling",
+            "workflow_dispatch",
+            "true",
+            "refs/heads/ops",
+            "a" * 40,
             "a" * 40,
             "refs/heads/ops",
             "b" * 40,
@@ -87,8 +138,10 @@ def test_isolated_storage_export_preserves_paths_and_rejects_injection(
         ),
         (
             "strling-lang/strling",
+            "workflow_dispatch",
+            "true",
             "refs/heads/other",
-            "other",
+            "a" * 40,
             "a" * 40,
             "refs/heads/ops",
             "a" * 40,
@@ -96,8 +149,32 @@ def test_isolated_storage_export_preserves_paths_and_rejects_injection(
         ),
         (
             "untrusted/fork",
+            "workflow_dispatch",
+            "true",
             "refs/heads/ops",
-            "ops",
+            "a" * 40,
+            "a" * 40,
+            "refs/heads/ops",
+            "a" * 40,
+            False,
+        ),
+        (
+            "strling-lang/strling",
+            "workflow_dispatch",
+            "true",
+            "refs/heads/ops",
+            "b" * 40,
+            "a" * 40,
+            "refs/heads/ops",
+            "a" * 40,
+            False,
+        ),
+        (
+            "strling-lang/strling",
+            "push",
+            "true",
+            "refs/heads/ops",
+            "a" * 40,
             "a" * 40,
             "refs/heads/ops",
             "a" * 40,
@@ -106,14 +183,15 @@ def test_isolated_storage_export_preserves_paths_and_rejects_injection(
     ],
 )
 def test_operational_dispatch_requires_exact_repository_ref_and_workflow(
-    repository, ref, ref_name, pin, approved_ref, approved_pin, accepted
+    repository, event, enabled, ref, source, pin, approved_ref, approved_pin, accepted
 ):
     values = {
         "github.repository": repository,
-        "github.ref_name": ref_name,
-        "github.event.repository.default_branch": "main",
+        "github.event_name": event,
         "github.ref": ref,
+        "github.sha": source,
         "github.workflow_sha": pin,
+        "vars.PUBLIC_VERIFICATION_ENABLED": enabled,
         "vars.PUBLIC_WORKFLOW_REF": approved_ref,
         "vars.PUBLIC_WORKFLOW_SHA": approved_pin,
     }

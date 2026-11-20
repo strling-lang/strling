@@ -1,7 +1,8 @@
 # Bounded language relations review candidate
 
-This repository-only tool proposes `strling.language-relation.review/1`.
-The language relation has draft status and awaits compiler-owner acceptance.
+This repository-only tool defines the admitted analysis scope of
+`strling.language-relation.review/1`. Its premises retain the draft Semantic
+Specification identity.
 The package is private, the tool consumes the canonical kernel, and the
 published Rust facade, CLI, interop and rewrite registry have no dependency on
 it. The compiler's [authority rules](../../../governance/authority.md) and
@@ -69,7 +70,8 @@ by closing all representative transitions. A direct finite-word denotation
 evaluated from the original IR independently replays both acceptance bits
 before a refutation can be returned.
 
-The candidate serializes source bytes and canonical program digests separately,
+The tool hashes the original input bytes and the kernel's canonical JSON
+projection of the validated Semantic IR separately,
 pins the model in each result, and reports actual search work and hard limits.
 It returns `invalid` on a malformed input, `unsupported` on an unmodeled
 construct, and `unknown` on work, graph, search, witness or independent replay
@@ -96,13 +98,10 @@ an accepted scoped contract, independent review of the mapping and fixtures,
 and certification of the intended public surface. The existing rewrite
 registry is independent of this decision.
 
-The [candidate task record](../../../docs/migration/records/bounded-language-relations-review.yaml)
-is available for owner scope review. Compiler development currently selects
-the historical final release candidate task. Its scope excludes this private
-tool, so a normal governance run cannot clear promotion. The candidate does
-not switch the active governance task. The smallest owner decision is to
-review the declared relation and admit the scoped tool task. Product exposure
-and certification require a separate accepted contract.
+The [admission record](../../../docs/migration/records/bounded-language-relations-review.yaml)
+binds active change control to the private analysis scope for source
+integration. Product exposure and certification require a separate accepted
+contract.
 
 ## Run the review candidate
 
@@ -125,7 +124,7 @@ candidate evidence and have no normative conformance designation. The
 own finite envelope. The earlier research used a separate implementation and
 finite alphabet. [Bounded language relation study](https://github.com/strling-lang/research-intelligence/blob/dfa8ede1e30607511fc333ad039a9898e22df972/inquiries/regex-equivalence-and-rewrite-verification/reports/bounded-language-relation-study.md)
 
-## Candidate validation
+## Original candidate validation
 
 Base source `4e58730bbf67eaff683268e285e7084ccda5fadd`. On Windows x64 and
 Ubuntu WSL2 x64, six tests passed under Rust and Cargo 1.75.0 with the same
@@ -152,10 +151,11 @@ previous change-declaration failures from the default governance run. The
 candidate's extra path findings came from applying the historical release
 task's allowlist to this branch.
 
-### Release-mode candidate measurements
+### Original release-mode candidate measurements
 
-Both artifacts came from offline locked builds using Rust 1.75.0. These are
-local numbered source candidates and have no release authority.
+Both artifacts came from offline locked builds of the original `cedcdab9`
+review source using Rust 1.75.0. Their original report hashes predate adoption
+of the kernel's canonical JSON hashing helper and remain historical evidence.
 
 ```sh
 cargo +1.75.0 build --release --offline --locked --manifest-path core/tools/language-relations/Cargo.toml

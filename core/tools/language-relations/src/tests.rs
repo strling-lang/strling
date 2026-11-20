@@ -112,9 +112,21 @@ fn canonical_ir_inputs_check_version_case_and_skipped_nodes() {
     let literal = program("text \"a\";");
     let mut ir = serde_json::to_value(&literal).unwrap();
     let bytes = serde_json::to_vec(&ir).unwrap();
+    let decoded = decode(&bytes, InputFormat::Ir, "left").unwrap();
+    assert_eq!(decoded.program, literal);
     assert_eq!(
-        decode(&bytes, InputFormat::Ir, "left").unwrap().program,
-        literal
+        decoded.identity.canonical_ir_sha256.as_str(),
+        format!("{:x}", sha2::Sha256::digest(&bytes))
+    );
+    let alternate_bytes = serde_json::to_vec_pretty(&ir).unwrap();
+    let alternate = decode(&alternate_bytes, InputFormat::Ir, "left").unwrap();
+    assert_eq!(
+        decoded.identity.canonical_ir_sha256,
+        alternate.identity.canonical_ir_sha256
+    );
+    assert_ne!(
+        decoded.identity.input_sha256,
+        alternate.identity.input_sha256
     );
 
     ir["contract_version"] = json!("9.0.0");

@@ -8,7 +8,7 @@ mod oracle;
 mod tests;
 
 use std::env;
-use std::fs::File;
+use std::fs::{metadata, File};
 use std::io::{self, Read};
 use std::path::Path;
 use std::process::ExitCode;
@@ -19,8 +19,8 @@ use serde_json::json;
 use sha2::{Digest, Sha256};
 use strling_kernel::semantic::SemanticProgram;
 use strling_kernel::semantic_frontend::{self, DIALECT_VERSION, FRONTEND_ID, MEDIA_TYPE};
-use strling_kernel::source::{ContractVersion, SourceDocument};
-use strling_kernel::validation::Validate;
+use strling_kernel::source::{ContractVersion, Sha256Digest, SourceDocument};
+use strling_kernel::validation::{canonical_sha256, Validate};
 
 const MODEL: &str = "strling.language-relation.review/1";
 const CONTRACT: &str = "1.0.0";
@@ -91,7 +91,7 @@ enum InputFormat {
 #[derive(Serialize)]
 struct InputIdentity {
     input_sha256: String,
-    canonical_ir_sha256: String,
+    canonical_ir_sha256: Sha256Digest,
     contract_version: String,
     specification_version: String,
 }
@@ -102,10 +102,7 @@ struct Input {
 }
 
 fn read(path: &Path, format: InputFormat, side: &'static str) -> Result<Input, Outcome> {
-    let mut bytes = Vec::new();
-    let mut file = File::open(path).map_err(|error| io_error(side, error))?;
-    if !file
-        .metadata()
+    if !metadata(path)
         .map_err(|error| io_error(side, error))?
         .is_file()
     {
@@ -114,6 +111,8 @@ fn read(path: &Path, format: InputFormat, side: &'static str) -> Result<Input, O
             "input must be a regular file".into(),
         ));
     }
+    let mut bytes = Vec::new();
+    let mut file = File::open(path).map_err(|error| io_error(side, error))?;
     (&mut file)
         .take(INPUT_BYTES + 1)
         .read_to_end(&mut bytes)
@@ -168,11 +167,11 @@ fn decode(bytes: &[u8], format: InputFormat, side: &'static str) -> Result<Input
         let first = &errors.errors[0];
         Outcome::invalid(side, format!("{} {}", first.path, first.message))
     })?;
-    let canonical = serde_json::to_vec(&program).expect("validated Semantic IR serializes");
+    let canonical = canonical_sha256(&program).expect("validated Semantic IR serializes");
     Ok(Input {
         identity: InputIdentity {
             input_sha256: format!("{:x}", Sha256::digest(bytes)),
-            canonical_ir_sha256: format!("{:x}", Sha256::digest(canonical)),
+            canonical_ir_sha256: Sha256Digest::from_bytes(canonical),
             contract_version: CONTRACT.to_string(),
             specification_version: program.specification_version.as_str().to_string(),
         },

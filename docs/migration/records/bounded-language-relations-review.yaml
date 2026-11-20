@@ -1,7 +1,7 @@
 record_version: 2.0.0
 title: Bounded whole-input language relations review
-status: planned
-objective: Review the private compiler-owned comparison candidate and its controlled whole-input language contract before deciding whether to govern and certify a product interface.
+status: in_progress
+objective: Admit the private compiler-owned, analysis-only comparison tool and verify its declared whole-input scalar model before integrating the source. Any public product interface, broader semantics, or rewrite authorization has a separate approval scope.
 scope:
     diff:
         base: 4e58730bbf67eaff683268e285e7084ccda5fadd
@@ -10,6 +10,9 @@ scope:
         - core/tools/language-relations/**
         - docs/migration/records/bounded-language-relations-review.yaml
         - governance/change-control.json
+        - governance/dependency-lock-verification.json
+        - governance/generated-artifacts.json
+        - governance/security-policy.json
     forbidden_paths:
         - bindings/**
         - core/internal/**
@@ -24,9 +27,16 @@ scope:
         - core/tools/language-relations/README.md
         - core/tools/language-relations/fixtures.json
         - docs/migration/records/bounded-language-relations-review.yaml
+        - governance/change-control.json
+        - governance/dependency-lock-verification.json
+        - governance/generated-artifacts.json
+        - governance/security-policy.json
     permitted_generated_changes:
         - package-manager-lockfiles
-    expected_generated_outputs: []
+        - version-synchronized-metadata
+    expected_generated_outputs:
+        - package-manager-lockfiles
+        - version-synchronized-metadata
     required_verification_levels:
         - contract
         - unit
@@ -71,14 +81,23 @@ required_verification:
     - name: Protected existing public boundary
       command: python tooling/public_contracts.py --check --surface strling-kernel
       expected_result: The canonical kernel command surface is unchanged.
+    - name: Reviewed locked tooling dependency boundary
+      command: python -m tooling.dependency_lock_verification --check
+      expected_result: The active private tool inventory binds the unchanged transitive package coordinates and lock to independently reviewed identities.
+    - name: Exact-source development qualification
+      command: .github/workflows/development-qualification.yml
+      expected_result: Independent Windows and Linux runners validate the exact base-aligned tree with the broader kernel and bounded analysis suites.
     - name: Scope admission
       command: python tooling/governance.py
-      expected_result: An explicitly selected owner-approved task governs only the declared private candidate changes. Any inherited issues require separate address or formal disposition.
+      expected_result: The active task governs only the declared private analysis candidate changes and reviewed dependency registration.
 checkpoints:
-    - name: Compiler owner review
-      status: planned
+    - name: Scope admission
+      status: in_progress
       evidence:
           - check: Scope and authority decision
+            result: passed
+            details: The main-only integration directive admits the bounded analysis-only tool into compiler-owned source with a declared scalar whole-input model. It preserves all existing product APIs, protocol and rewrite contracts.
+          - check: Exact-source hosted development qualification
             result: not_run
-            details: This task record has not been selected. Owner review must approve the draft contract and activate an authorized task before promotion. A product-facing interface and certification require a separate accepted scope.
+            details: Await the reviewed main-only base and exact-source hosted checks. A product-facing interface and release certification require a separate accepted scope.
 commits: []

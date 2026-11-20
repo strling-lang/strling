@@ -143,3 +143,63 @@ the Swift toolchain before it could complete. Full repository certification
 and compiler owner disposition remain open. CPython 3.13.5 separately
 reproduced the search span, replacement text, capture value and capture
 participation differences underpinning the analysis-only disposition.
+
+Two isolated source mutations were compiled and exercised against existing
+tests. Replacing a traversal limit result with a proof failed the exhaustion
+test. Reversing left containment failed the authored token-validator fixtures.
+The untouched compiler `dev` baseline reproduced the CI profile-routing and
+previous change-declaration failures from the default governance run. The
+candidate's extra path findings came from applying the historical release
+task's allowlist to this branch.
+
+### Release-mode candidate measurements
+
+Both artifacts came from offline locked builds using Rust 1.75.0. These are
+local numbered source candidates and have no release authority.
+
+```sh
+cargo +1.75.0 build --release --offline --locked --manifest-path core/tools/language-relations/Cargo.toml
+```
+
+| Local target | Binary SHA-256 |
+| --- | --- |
+| Windows MSVC x64 | `e6a770d770eed0b8879e24acbfa4dc54d2aa69ea02af7beb42ca306189717942` |
+| Ubuntu WSL2 GNU x64 | `19e006f0760372b3096fa44cb9e9b24733b2105ce207379fa6d6254abb5ef626` |
+
+Use the following named cases from [the fixtures](fixtures.json). For each
+operand, write UTF-8 bytes with LF line endings. Prefix
+`semantic strling 1.0;\ncase sensitive;\npattern ` and append one LF. For the
+80-scalar case use the same `text` literal on both sides, comprising the 80
+consecutive Unicode scalar values beginning at U+0390.
+
+| Input | Query | Answer | Pairs / transitions | Windows p50 / p95 ms | Ubuntu WSL2 p50 / p95 ms | Peak working set KiB, Windows / WSL2 |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| Variable bounds on a practical token validator | Contains | Proven | 9 / 90 | 33.4 / 36.8 | 159.7 / 196.4 | 6,476 / 2,832 |
+| Newly admitted whole value | Contains | Refuted | 7 / 60 | 33.5 / 39.3 | 164.3 / 208.4 | 6,484 / 2,832 |
+| Nullable unbounded loop closes | Equivalent | Proven | 6 / 24 | 36.9 / 41.8 | 159.3 / 203.3 | 6,456 / 2,840 |
+| Maximum Unicode scalar remains in the alphabet | Disjoint | Refuted | 4 / 12 | 33.8 / 41.2 | 165.1 / 200.9 | 6,468 / 2,824 |
+| 80 distinct scalar literal | Equivalent | Proven | 82 / 6,806 | 36.6 / 42.1 | 185.4 / 216.6 | 6,500 / 2,888 |
+
+For each row, run the release-mode binary with
+`<query> --semantic <left-file> <right-file>`. Make one preliminary run and
+measure 30 fresh processes per row with a monotonic clock. The p95 is the
+29th ordered sample. Peak working set is the maximum of
+`GetProcessMemoryInfo`'s `PeakWorkingSetSize` on Windows and GNU
+`/usr/bin/time -f %M` on WSL2. Timings include startup, I/O, canonical parsing,
+comparison and report emission. The measurements cover Windows 11 build
+26300 and Ubuntu WSL2 kernel 5.15.167.4, with the WSL2 binary on the mounted
+Windows drive. A preliminary timing-only pass showed a higher Windows p95
+for the token validator. These observations establish the tested cases and
+deterministic caps rather than a platform-wide latency or memory guarantee.
+[Microsoft working set counter](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-process_memory_counters)
+
+The five deterministic JSON records were identical between platforms after
+key sorting. Their SHA-256 digests, in table order, are
+`2fa38b8a793b0e6d67ea59671238e5d0c5103cdc9e3ffa3c4dedef9d02091901`,
+`0b26cf281cb35f1e7fd43d635433a6f22eea5babea3944658d41c1ad4d42905d`,
+`44359e8b5f284d262019fc42b3d647502b7361dc2bd7c04adce9787562911eca`,
+`d1f1ea81e0263e0fb273e6997c16a7a354d6179a8f0242b682e07f0be7560c8e`,
+and `63e08586935db59296abf8802d922937a6f2b9e297bacd86cca9ceca57d7c052`.
+For hashing, serialize the parsed report with Python
+`json.dumps(report, ensure_ascii=True, sort_keys=True, separators=(",", ":"))`
+and encode it as UTF-8 without a final newline.

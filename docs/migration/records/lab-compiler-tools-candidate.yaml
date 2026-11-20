@@ -23,6 +23,7 @@ scope:
         - spec/**
         - tests/certification/**
     expected_files:
+        - bindings/lab-wasm/.gitattributes
         - bindings/lab-wasm/Cargo.lock
         - bindings/lab-wasm/Cargo.toml
         - bindings/lab-wasm/README.md

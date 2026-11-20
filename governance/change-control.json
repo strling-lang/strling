@@ -1,5 +1,5 @@
 {
-    "active_task": "docs/migration/records/bounded-language-relations-review.yaml",
+    "active_task": "docs/migration/records/lab-wasm-reproducibility.yaml",
     "architecture_rule_registry": "governance/architecture-rules.json",
     "configuration_version": 1,
     "documentation_paths": ["**/*.md", "docs/**"],

@@ -1,7 +1,7 @@
 # Lab compiler tools candidate
 
 This crate builds the independently versioned browser adapter
-`strling-lab-wasm 0.1.0-rc.3` from compiler base
+`strling-lab-wasm 0.1.0-rc.4` from compiler base
 `4e58730bbf67eaff683268e285e7084ccda5fadd`. The published STRling 4.0.3 package
 and the `strling.interop@1.0.0` wire protocol retain their existing APIs.
 
@@ -33,16 +33,21 @@ can grow linear memory, so obtain the current memory buffer after calling
 an export that supplies a pointer. Calls are serial and the host owns
 cancellation by terminating the worker. The module imports only the clock.
 
-Build from the compiler repository root on Windows with the locked
-dependencies and the reviewed Rust toolchain. The build script remaps
-absolute workspace, Cargo registry, and Rust standard-library source paths
-embedded by the compiler.
+Build from an exact Git revision on Windows with the locked dependencies
+and Rust 1.97.1. The replay stages Git archive bytes at `R:\source`, uses
+verified registry archives in a fresh `R:\cargo`, and builds into
+`R:\target`. It records the Git tree, archive and lock hashes, compiler
+and target library hashes, and the raw Wasm digest. The build also remaps
+paths exposed in compiler diagnostics. The temporary drive is released on
+exit.
 
 ```powershell
 rustup toolchain install 1.97.1 --profile minimal --target wasm32-unknown-unknown
 cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml
-./bindings/lab-wasm/build-qualified.ps1 -TargetDirectory target/lab-tools
-Get-FileHash target/lab-tools/wasm32-unknown-unknown/release/strling_lab_wasm.wasm
+$revision = git rev-parse HEAD
+./bindings/lab-wasm/build-from-source.ps1 -SourceRevision $revision `
+    -Workspace target/lab-tools -RegistrySeed "$env:USERPROFILE/.cargo/registry"
+Get-FileHash target/lab-tools/target/wasm32-unknown-unknown/release/strling_lab_wasm.wasm
 ```
 
 Pin and independently verify the expected bytes declared in
@@ -66,7 +71,7 @@ an installed registry copy of `@strling-lang/strling` 4.0.3. Supply the path and
 SHA-256 of the candidate build. The command reads both artifacts from disk.
 
 ```powershell
-$artifact = 'target/lab-tools/wasm32-unknown-unknown/release/strling_lab_wasm.wasm'
+$artifact = 'target/lab-tools/target/wasm32-unknown-unknown/release/strling_lab_wasm.wasm'
 $digest = (Get-Content ./bindings/lab-wasm/qualification.json -Raw | ConvertFrom-Json).sha256
 node bindings/lab-wasm/verify-browser-artifact.mjs $artifact $digest ../website/node_modules/@strling-lang/strling
 ```
@@ -104,13 +109,36 @@ cache inside the source workspace reproduced the same digest. Hosted Windows
 replay found a remaining difference. Standard-library panic locations still
 contained the Rust installation path, which both local builds shared.
 
-The third artifact maps the exact Rust sysroot as well and keeps the same wire
+The historical third artifact maps the exact Rust sysroot and keeps the same wire
 protocol. Its independent runtime test rejects embedded absolute Windows
 paths to the project, standard library, and Cargo registry sources. An exact
 named Rust 1.97.1 toolchain without `rust-src` and a separate installation
 with `rust-src` built identical bytes from distinct workspace and cache paths.
 The 2,548,656-byte SHA-256 is
 `3da8047dbbc6402885634b4eb49475ad06cdf894c1eced13fee62b400e23cc81`.
+
+Later clean Windows checkouts with identical tracked adapter and kernel
+inputs produced `6df19a4a0c402cc4b88b98abaf3fcca23940276064ec9a0fcb02b5e73a0ee715`
+and `4acdb6413c9c494fdf7f5b4bc90bd5d79030bf414b0f14a08ec34d008b06445b`.
+The imports, exports and memory were identical. Function, element, code and
+data sections differed despite identical sizes. Changing LTO and codegen
+units did not remove the checkout sensitivity. Two independent Git archives
+of compiler main `1cf698751e04d5b2130b0c2500358499657709fc`, with distinct
+registry seeds staged at the same build path, produced identical raw
+bytes at `19cdb2c261f6eeac1c1b5664f6a588c62cb859194d5d33ef91fa42c4eeb92869`.
+Changing only the staged source path to `R:\relocated\source` reproduced the
+`6df19a4a0c402cc4b88b98abaf3fcca23940276064ec9a0fcb02b5e73a0ee715` digest.
+Those experiments use the historical adapter version and serve as diagnostic
+evidence.
+
+The separate RC4 pin uses that replay recipe with its own package identity.
+The proposed immutable distribution is a Preview GitHub release at
+`lab-wasm-v0.1.0-rc.4` with the Wasm asset `strling_lab_wasm.wasm`.
+The release owner must admit the artifact, destination, support tier and
+signing scope. The proposed release needs a source-bound SBOM, provenance,
+signed Full and independent no-reuse Release evidence and a protected
+publication record. GitHub immutability must be enabled before publication.
+The current policy still keeps the crate private.
 
 These checks qualify the declared development artifact scope after
 independent replay. Browser integration and production distribution retain

@@ -108,11 +108,22 @@ jobs:
                   $ErrorActionPreference = 'Stop'
                   $PSNativeCommandUseErrorActionPreference = $true
                   rustup toolchain install 1.97.1 --profile minimal --target wasm32-unknown-unknown
-                  cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml
+                  $seed = Join-Path $env:RUNNER_TEMP lab-tools-cargo-seed
+                  $previousCargoHome = $env:CARGO_HOME
+                  try {
+                      $env:CARGO_HOME = $seed
+                      cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml
+                  } finally {
+                      $env:CARGO_HOME = $previousCargoHome
+                  }
                   $target = Join-Path $env:RUNNER_TEMP lab-tools
-                  & ./bindings/lab-wasm/build-qualified.ps1 -TargetDirectory $target
-                  $artifact = Join-Path $target 'wasm32-unknown-unknown/release/strling_lab_wasm.wasm'
-                  $expected = (Get-Content ./bindings/lab-wasm/qualification.json -Raw | ConvertFrom-Json).sha256
+                  $receipt = & ./bindings/lab-wasm/build-from-source.ps1 -SourceRevision $env:QUALIFICATION_SOURCE -Workspace $target -RegistrySeed (Join-Path $seed registry) | ConvertFrom-Json
+                  $artifact = Join-Path $target 'target/wasm32-unknown-unknown/release/strling_lab_wasm.wasm'
+                  $qualification = Get-Content ./bindings/lab-wasm/qualification.json -Raw | ConvertFrom-Json
+                  if ($receipt.bytes -ne $qualification.bytes -or $receipt.sha256 -cne $qualification.sha256) {
+                      throw "Wasm replay identity mismatch: $($receipt.sha256), $($receipt.bytes) bytes"
+                  }
+                  $expected = $qualification.sha256
                   $release = Join-Path $env:RUNNER_TEMP sealed-release
                   New-Item -ItemType Directory -Path $release | Out-Null
                   $packages = npm pack '@strling-lang/strling@4.0.3' --json --ignore-scripts --pack-destination $release | ConvertFrom-Json

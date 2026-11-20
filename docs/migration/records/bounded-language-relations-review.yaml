@@ -4,7 +4,7 @@ status: in_progress
 objective: Admit the private compiler-owned, analysis-only comparison tool and verify its declared whole-input scalar model before integrating the source. Any public product interface, broader semantics, or rewrite authorization has a separate approval scope.
 scope:
     diff:
-        base: 4e58730bbf67eaff683268e285e7084ccda5fadd
+        base: d7808c59a50af3700914efabc24c7cd8ac43e109
         head: working-tree
     allowed_paths:
         - core/tools/language-relations/**

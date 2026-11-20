@@ -1,0 +1,23 @@
+[package]
+name = "strling-lab-wasm"
+version = "0.1.0-rc.3"
+edition = "2021"
+rust-version = "1.75"
+publish = false
+license = "Apache-2.0"
+description = "Candidate browser adapter for canonical STRling tools"
+
+[workspace]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["unbounded_depth"] }
+strling-kernel = { path = "../../core/internal" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true

@@ -38,7 +38,7 @@
                 "binding_tags"
             ],
             "properties": {
-                "permanent_branches": { "const": ["main", "dev"] },
+                "permanent_branches": { "const": ["main"] },
                 "default_branch": { "const": "main" },
                 "canonical_stable_tag": { "const": "vMAJOR.MINOR.PATCH" },
                 "branch_lifecycle": { "type": "string", "minLength": 1 },

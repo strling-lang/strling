@@ -2,7 +2,7 @@
 
 # STRling release policy
 
-Policy version: `1.3.0`. Product version: **STRling 4.0.3**.
+Policy version: `1.4.0`. Product version: **STRling 4.0.3**.
 
 This document is a human-readable projection. The machine authority is
 [`governance/release-policy.json`](../governance/release-policy.json).
@@ -10,9 +10,9 @@ Certification never authorizes publication; explicit owner authorization is requ
 
 ## Repository branches and tags
 
-Permanent branches are `main` and `dev`. The default is `main`.
+The sole permanent branch is `main`. The default is `main`.
 
-Keep main as the authoritative integrated source with governed release acceptance and dev for ongoing development. Remove temporary branches after unique work is integrated, preserved through an immutable reference, or explicitly discarded. Resolve active dependencies before removal. Release and certification workflows must remain usable after temporary branches are deleted.
+Keep main as the sole permanent branch and authoritative integrated source. Base temporary review branches on main and integrate through governed review. Before retiring a branch, resolve its active dependencies and integrate its unique work or preserve it through a verified archive or immutable reference. Keep release and certification workflows usable after temporary branches are deleted.
 
 The canonical stable tag is `vMAJOR.MINOR.PATCH`. Assign one immutable canonical product tag per published stable version at the exact certified product source. Preserve all published canonical and binding coordinates and required historical refs. Create ecosystem aliases only for governed distribution contracts. Preserve distinct publication and certification closure identities. Use exact commit SHAs for ordinary development and certification. Use a publication control tag only where the governed publisher requires a tag-push event.
 
@@ -81,6 +81,7 @@ Independent version kinds:
 | Swift package                                                           | tag-derived    | product      | github-tag:swift-vVERSION                                        | SwiftPM has no embedded package version; the immutable tag maps exactly to the product release and certified source.                                                                                         |
 | Private Rust interop transport crate                                    | 0.1.0          | independent  | Not published                                                    | Private transport identity only; it cannot imply a second semantic-kernel release or public compatibility claim.                                                                                             |
 | Private interop fuzz harness                                            | 0.0.0          | independent  | Not published                                                    | Non-release harness sentinel; excluded from product coordination and publication.                                                                                                                            |
+| Private Lab compiler WebAssembly adapter                                | 0.1.0-rc.3     | independent  | Not published                                                    | Local browser qualification only; distribution requires separate artifact admission and release authorization.                                                                                               |
 | VS Code extension and language server                                   | 1.0.0          | independent  | VS Code Marketplace only after separately authorized publication | Independent editor-tooling SemVer. Every published extension release must record an exact compatible STRling product range; it is Preview and not part of the 17 implementation-package release coordinates. |
 | cpp public header                                                       | 4.0.3          | product      | Companion package metadata                                       | Exact field projection; unrelated contract and dependency versions remain independent.                                                                                                                       |
 | java bridge dependency                                                  | 4.0.3          | product      | Companion package metadata                                       | Exact field projection; unrelated contract and dependency versions remain independent.                                                                                                                       |

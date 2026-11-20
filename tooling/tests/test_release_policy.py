@@ -8,6 +8,7 @@ from pathlib import Path
 
 from tooling.release_policy import (
     ROOT,
+    ReleasePolicyError,
     check_document,
     load_policy,
     render_document,
@@ -42,6 +43,28 @@ class ReleasePolicyTests(unittest.TestCase):
             product["version_authority"],
         )
         self.assertEqual("active", product["repository_projection"]["status"])
+
+    def test_main_is_the_only_permanent_branch(self) -> None:
+        refs = self.policy["repository_refs"]
+        self.assertEqual(["main"], refs["permanent_branches"])
+        self.assertEqual("main", refs["default_branch"])
+        self.assertIn(
+            "The sole permanent branch is `main`.", render_document(self.policy)
+        )
+
+        for field, value in (
+            ("permanent_branches", ["main", "dev"]),
+            ("default_branch", "dev"),
+        ):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as directory:
+                policy = self.mutated()
+                policy["repository_refs"][field] = value
+                path = Path(directory) / "release-policy.json"
+                path.write_text(json.dumps(policy), encoding="utf-8")
+                with self.assertRaisesRegex(
+                    ReleasePolicyError, f"/repository_refs/{field}"
+                ):
+                    load_policy(path)
 
     def test_missing_or_unused_binding_tag_rule_is_rejected(self) -> None:
         for expected in ("c-vVERSION", "unused-vVERSION"):

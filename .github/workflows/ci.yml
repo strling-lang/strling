@@ -14,6 +14,11 @@ on:
                 options:
                     - local
                     - pull-request
+            verify_release_candidate:
+                description: "Also authenticate the signed complete-product evidence at this revision"
+                required: false
+                default: false
+                type: boolean
 
 permissions:
     contents: read
@@ -21,6 +26,7 @@ permissions:
 jobs:
     verify-release-candidate-certification:
         name: Verify complete product candidate
+        if: github.event_name == 'workflow_dispatch' && inputs.verify_release_candidate == true
         runs-on: ubuntu-24.04
         steps:
             - name: Checkout qualified candidate verifier
@@ -35,8 +41,8 @@ jobs:
               with:
                   persist-credentials: false
                   fetch-depth: 0
-                  repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || github.repository }}
-                  ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
+                  repository: ${{ github.repository }}
+                  ref: ${{ github.sha }}
                   path: candidate-candidate
             - name: Install verification runtime
               uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1

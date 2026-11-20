@@ -213,7 +213,7 @@ def test_private_staging_metadata_cannot_redirect_to_public_or_substituted_asset
     reader = Mock(return_value=json.dumps(metadata).encode())
     download = Mock()
     monkeypatch.setattr(transport.subprocess, "check_output", reader)
-    monkeypatch.setattr(transport.subprocess, "run", download)
+    monkeypatch.setattr(transport.subprocess, "Popen", download)
     monkeypatch.setenv("NPM_TOKEN", "must-not-inherit")
     with pytest.raises(ValueError):
         transport.fetch_draft(
@@ -536,17 +536,21 @@ def test_operational_export_revision_verifies_original_closure_without_extending
         (root / ".github/workflows/certification-integrity.yml").read_text(),
         Loader=yaml.BaseLoader,
     )
+    assert workflow["on"]["push"]["branches"] == ["main"]
+    assert workflow["on"]["pull_request_target"]["branches"] == ["main"]
     job = workflow["jobs"]["verify-release-candidate-certification"]
+    assert job["if"] == "github.event_name == 'workflow_dispatch'"
     checkout = next(
         s
         for s in job["steps"]
         if s.get("name") == "Checkout candidate evidence as data"
     )
-    assert "github.event_name == 'workflow_dispatch'" in checkout["with"]["ref"]
-    assert "vars.RELEASE_EXPORT_ENABLED == 'true'" in checkout["with"]["ref"]
-    assert "vars.RELEASE_EXPORT_CLOSURE_SHA" in checkout["with"]["ref"]
-    assert "pull_request_target" in checkout["with"]["ref"]
-    assert "github.event.pull_request.head.sha || github.sha" in checkout["with"]["ref"]
+    assert checkout["with"]["ref"] == (
+        "${{ github.repository == 'strling-lang/strling' "
+        "&& vars.RELEASE_EXPORT_ENABLED == 'true' && github.sha == vars.RELEASE_EXPORT_WORKFLOW_SHA "
+        "&& github.workflow_sha == vars.RELEASE_EXPORT_WORKFLOW_SHA "
+        "&& vars.RELEASE_EXPORT_CLOSURE_SHA || github.sha }}"
+    )
     verify = next(
         s
         for s in job["steps"]

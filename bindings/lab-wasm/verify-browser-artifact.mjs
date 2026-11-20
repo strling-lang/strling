@@ -45,7 +45,31 @@ for (const operation of ["format", "convert", "explain"]) {
 }
 
 const candidateBytes = await readFile(candidatePath);
-assert.equal(sha256(candidateBytes), candidateDigest);
+const actualCandidateDigest = sha256(candidateBytes);
+const candidateText = candidateBytes.toString("latin1");
+const hasAbsoluteWindowsSourcePath =
+    /[a-z]:[\\/][^\x00-\x1f]{0,256}[\\/](?:registry[\\/]src|rustlib[\\/]src|core[\\/]internal)[\\/]/i.test(
+        candidateText,
+    );
+if (actualCandidateDigest !== candidateDigest) {
+    console.error(
+        JSON.stringify({
+            candidate_sha256: actualCandidateDigest,
+            bytes: candidateBytes.length,
+            absolute_windows_source_path: hasAbsoluteWindowsSourcePath,
+            standard_library_under_compiler_commit:
+                /\/rustc\/[a-f0-9]{40}\/library\//.test(candidateText),
+            standard_library_under_sysroot: candidateText.includes(
+                "/strling/rust-toolchain",
+            ),
+        }),
+    );
+}
+assert.equal(actualCandidateDigest, candidateDigest);
+assert.ok(
+    !hasAbsoluteWindowsSourcePath,
+    "The qualified Wasm must omit absolute Windows source paths.",
+);
 const module = await WebAssembly.compile(candidateBytes);
 assert.deepEqual(WebAssembly.Module.imports(module), [
     { module: "strling_lab", name: "monotonic_milliseconds", kind: "function" },
@@ -81,7 +105,7 @@ function result(request) {
     return reply.result;
 }
 const descriptor = result({ operation: "describe" });
-assert.equal(descriptor.adapter_version, "0.1.0-rc.2");
+assert.equal(descriptor.adapter_version, "0.1.0-rc.3");
 assert.equal(descriptor.compiler_base_revision, baseRevision);
 assert.deepEqual(descriptor.operations, ["format", "convert", "explain"]);
 assert.equal(descriptor.max_request_bytes, 1_048_576);
@@ -297,6 +321,7 @@ console.log(
         explanation_corpus_cases: defaultCases.length,
         explanation_privacy_checked: true,
         explanation_elapsed_limit_checked: true,
+        embedded_absolute_windows_paths_checked: true,
         maximum_memory_bytes: maximumPages * pageSize,
     }),
 );

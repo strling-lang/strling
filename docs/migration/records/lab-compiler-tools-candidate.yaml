@@ -124,13 +124,16 @@ checkpoints:
             details: The 0.1.0-rc.2 artifact retains the existing wire protocol and remaps Windows workspace and Cargo registry roots. The candidate build passed the canonical Wasm replay and a real growth limit check at 64 MiB with SHA-256 283ff9d319b4a28220aeac8b187834b12fc6634c9ad1beb9be3be4d4247cc04b.
           - check: Locked rebuild under relocated source, build output, and Cargo registry
             result: passed
-            details: A second Windows Rust 1.97.1 build from a detached source path containing spaces and a different cached Cargo registry produced identical bytes. The original host roots do not appear in the successor artifact.
+            details: A second Windows Rust 1.97.1 build from a detached source path containing spaces and a different cached Cargo registry produced identical rc.2 bytes. Both builds shared their Rust alias. Hosted Windows later found the remaining Rust standard-library installation path in the artifact identity.
           - check: Internal kernel suite against the adapter's compiler source
             result: passed
             details: The full locked Rust 1.75.0 WSL2 kernel suite passed all 512 tests with zero failures or skips.
           - check: Empty-cache dependency preparation
             result: passed
             details: The complete locked Windows dependency prefetch included cpufeatures 0.2.17 and permitted an offline build. The reviewed map order also reproduced the pinned digest with the Cargo cache under the workspace root.
+          - check: Exact Rust installation path normalization
+            result: passed
+            details: The rc.3 artifact retains wire protocol rc.1 and maps the standard-library source to Rust's compiler-commit identity. Named Rust 1.97.1 and a separate installation containing rust-src from distinct workspaces and Cargo caches reproduced the same 2548656 bytes with SHA-256 3da8047dbbc6402885634b4eb49475ad06cdf894c1eced13fee62b400e23cc81. Replay explicitly rejects embedded absolute Windows source paths.
     - name: Scope-specific source admission
       status: in_progress
       evidence:

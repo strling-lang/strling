@@ -8,6 +8,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 $requiredRust = 'rustc 1.97.1 (8bab26f4f 2026-07-14)'
+$compilerCommit = '8bab26f4f68e0e26f0bb7960be334d5b520ea452'
 if ((rustc "+$Toolchain" --version) -cne $requiredRust) {
     throw "Qualification requires $requiredRust."
 }
@@ -18,13 +19,25 @@ if (-not $cargoHome) {
     $cargoHome = Join-Path $env:USERPROFILE '.cargo'
 }
 $cargoHome = (Resolve-Path -LiteralPath $cargoHome).ProviderPath
+$sysroot = (Resolve-Path -LiteralPath (rustc "+$Toolchain" --print sysroot)).ProviderPath
+$rustLibrary = Join-Path $sysroot 'lib/rustlib/src/rust/library'
 $flags = @('-C', 'link-arg=--max-memory=67108864', '-C', 'link-arg=-zstack-size=2097152')
-foreach ($source in @($repository, $repository.Replace('\', '/')) | Select-Object -Unique) {
-    $flags += "--remap-path-prefix=$source=/strling/source"
-}
-# Rust uses the last matching prefix. Keep Cargo's map last for a cache inside the workspace.
-foreach ($source in @($cargoHome, $cargoHome.Replace('\', '/')) | Select-Object -Unique) {
-    $flags += "--remap-path-prefix=$source=/strling/cargo"
+$remappings = @(
+    @{ location = $repository; logicalPath = '/strling/source' }
+    @{ location = $cargoHome; logicalPath = '/strling/cargo' }
+    @{ location = $sysroot; logicalPath = '/strling/rust-toolchain' }
+    @{ location = $rustLibrary; logicalPath = "/rustc/$compilerCommit/library/" }
+)
+# Rust uses the last matching prefix. Keep more specific paths last.
+foreach ($mapping in $remappings | Sort-Object { $_.location.Length }) {
+    $location = $mapping.location
+    $sources = @($location, $location.Replace('\', '/'))
+    if ($location -match '^[A-Za-z]:\\') {
+        $sources += "\\?\$location"
+    }
+    foreach ($source in $sources | Select-Object -Unique) {
+        $flags += "--remap-path-prefix=$source=$($mapping.logicalPath)"
+    }
 }
 
 $previousFlags = $env:CARGO_ENCODED_RUSTFLAGS

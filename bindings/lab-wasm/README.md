@@ -1,7 +1,7 @@
 # Lab compiler tools candidate
 
 This crate builds the independently versioned browser adapter
-`strling-lab-wasm 0.1.0-rc.2` from compiler base
+`strling-lab-wasm 0.1.0-rc.3` from compiler base
 `4e58730bbf67eaff683268e285e7084ccda5fadd`. The published STRling 4.0.3 package
 and the `strling.interop@1.0.0` wire protocol retain their existing APIs.
 
@@ -35,7 +35,8 @@ cancellation by terminating the worker. The module imports only the clock.
 
 Build from the compiler repository root on Windows with the locked
 dependencies and the reviewed Rust toolchain. The build script remaps
-absolute workspace and Cargo registry source paths embedded by Rust.
+absolute workspace, Cargo registry, and Rust standard-library source paths
+embedded by the compiler.
 
 ```powershell
 rustup toolchain install 1.97.1 --profile minimal --target wasm32-unknown-unknown
@@ -92,15 +93,24 @@ Its live descriptor advertised `describe`, `compile`, `target_profile.inspect`,
 and `simply.compile`. Each candidate operation returned the sealed protocol's
 unsupported-operation error when sent to that released module.
 
-That prior Wasm included absolute Cargo registry paths. The successor
-`0.1.0-rc.2` artifact remaps host paths and retains the same wire protocol.
-Its 2,549,360 bytes have SHA-256
+The original Wasm included absolute Cargo registry paths. The second artifact,
+`0.1.0-rc.2`, remapped the workspace and registry paths. Its 2,549,360 bytes
+have SHA-256
 `283ff9d319b4a28220aeac8b187834b12fc6634c9ad1beb9be3be4d4247cc04b`.
 Two offline Windows builds from different worktrees, Cargo registries, and
 output paths produced identical bytes, including a worktree and output path
 containing spaces. A separate empty-cache prefetch and offline build with the
-cache inside the source workspace reproduced the same digest. The original
-host paths do not appear in the Wasm.
+cache inside the source workspace reproduced the same digest. Hosted Windows
+replay found a remaining difference. Standard-library panic locations still
+contained the Rust installation path, which both local builds shared.
+
+The third artifact maps the exact Rust sysroot as well and keeps the same wire
+protocol. Its independent runtime test rejects embedded absolute Windows
+paths to the project, standard library, and Cargo registry sources. An exact
+named Rust 1.97.1 toolchain without `rust-src` and a separate installation
+with `rust-src` built identical bytes from distinct workspace and cache paths.
+The 2,548,656-byte SHA-256 is
+`3da8047dbbc6402885634b4eb49475ad06cdf894c1eced13fee62b400e23cc81`.
 
 These checks qualify the declared development artifact scope after
 independent replay. Browser integration and production distribution retain

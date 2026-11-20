@@ -1,13 +1,14 @@
 {
-    "adapter_version": "0.1.0-rc.3",
+    "adapter_version": "0.1.0-rc.4",
     "wire_protocol": "strling.lab-compiler-tools@1.0.0-rc.1",
     "compiler_base_revision": "4e58730bbf67eaff683268e285e7084ccda5fadd",
     "build_host": "windows-x86_64-msvc",
     "rustc": "1.97.1",
     "build_target": "wasm32-unknown-unknown",
     "bytes": 2548656,
-    "sha256": "3da8047dbbc6402885634b4eb49475ad06cdf894c1eced13fee62b400e23cc81",
+    "sha256": "266f3167537a40722682f436729468795a1672e3d277e5dac9237bd9c04d0181",
     "maximum_memory_bytes": 67108864,
     "maximum_stack_bytes": 2097152,
-    "scope": "isolated-website-qualification"
+    "scope": "private-development-replay",
+    "replay_recipe": "bindings/lab-wasm/build-from-source.ps1"
 }

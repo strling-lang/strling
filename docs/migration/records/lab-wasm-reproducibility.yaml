@@ -1,0 +1,103 @@
+record_version: 2.0.0
+title: Reproducible private Lab Wasm candidate
+status: in_progress
+objective: Qualify an isolated, source-bound replay of the compiler browser adapter and prepare a separate Preview distribution for release-owner review.
+scope:
+    diff:
+        base: 1cf698751e04d5b2130b0c2500358499657709fc
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/development-qualification.yml
+        - bindings/lab-wasm/**
+        - docs/migration/records/lab-wasm-reproducibility.yaml
+        - docs/release-policy.md
+        - governance/change-control.json
+        - governance/dependency-lock-verification.json
+        - governance/release-policy.json
+        - tests/architecture/semantic-authority/1.0/evidence.json
+        - tests/conformance/adversarial/1.0/evidence.json
+    forbidden_paths:
+        - .github/workflows/cd.yml
+        - bindings/interop/**
+        - core/src/**
+        - packages/**
+        - spec/**
+        - tests/certification/**
+    expected_files:
+        - bindings/lab-wasm/build-from-source.ps1
+        - bindings/lab-wasm/qualification.json
+        - governance/dependency-lock-verification.json
+        - docs/migration/records/lab-wasm-reproducibility.yaml
+    permitted_generated_changes:
+        - adversarial-semantic-observations
+        - package-manager-lockfiles
+        - release-policy-documentation
+        - semantic-authority-retirement-evidence
+        - version-synchronized-metadata
+    expected_generated_outputs:
+        - adversarial-semantic-observations
+        - package-manager-lockfiles
+        - release-policy-documentation
+        - semantic-authority-retirement-evidence
+    required_verification_levels: [contract, unit, integration, quality]
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            [
+                The archived checkout contains the same canonical kernel and contracts.,
+            ]
+    public_api_change:
+        level: none
+        evidence:
+            [
+                The independent RC4 descriptor identifies a new private artifact. Released 4.0.3 continues to expose its four sealed operations.,
+            ]
+    schema_change:
+        level: none
+        evidence: [The adapter retains the RC1 wire protocol.]
+    diagnostic_change:
+        level: none
+        evidence: [The adapter retains canonical diagnostics and UTF-8 spans.]
+    target_behavior_change:
+        level: compatible
+        evidence:
+            [
+                The empirical observations passed a fresh two-run replay with zero findings. Only current-source evidence was refreshed.,
+            ]
+    architecture_change:
+        level: none
+        evidence:
+            [
+                The build stages Git inputs and registry archives before invoking the existing Rust producer.,
+            ]
+    generated_output_change:
+        level: compatible
+        evidence:
+            [
+                The adapter lock records a private version change and retains its dependency coordinates. Current-source evidence uses its registered generators.,
+            ]
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Locked dependency and release-policy projections
+      command: python -m tooling.dependency_lock_verification --check && python tooling/release_policy.py --check
+      expected_result: Only the independently versioned private adapter changes and the lock and policy projections verify.
+    - name: Archived source replay and canonical browser adapter
+      command: bindings/lab-wasm/build-from-source.ps1 followed by bindings/lab-wasm/verify-browser-artifact.mjs
+      expected_result: Separate replay workspaces and registry seeds produce identical raw Wasm that passes the released compiler comparison and resource checks.
+    - name: Exact-source hosted development qualification
+      command: .github/workflows/development-qualification.yml
+      expected_result: The hosted Windows replay matches the reviewed artifact and both development matrices pass.
+checkpoints:
+    - name: Private source and artifact qualification
+      status: in_progress
+      evidence:
+          - check: Build path sensitivity
+            result: passed
+            details: The same Git source and locked package bytes reproduced when staged at a canonical path. Relocated Windows builds changed Wasm function and data layout.
+          - check: Production distribution admission
+            result: not_run
+            details: Preview support, immutable destination, signed certification and protected publication require separate release-owner approval.
+commits: []

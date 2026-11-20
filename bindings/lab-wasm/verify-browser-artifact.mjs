@@ -16,7 +16,9 @@ const sealedDigest =
     "6a24a334d5d7e78b17c09e6d9a62d33299d65ac79e52212c4f8db130250656d7";
 const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const json = async (path) => JSON.parse(await readFile(path, "utf8"));
-const qualification = await json(new URL("./qualification.json", import.meta.url));
+const qualification = await json(
+    new URL("./qualification.json", import.meta.url),
+);
 const expectedVersion = recordedVersion ?? qualification.adapter_version;
 
 const release = resolve(releasePackage);

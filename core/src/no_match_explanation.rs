@@ -3,7 +3,7 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::error::Error;
 use std::fmt;
-use std::time::Instant;
+use std::time::Duration;
 
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
@@ -421,9 +421,10 @@ struct SubjectScalar {
     value: char,
 }
 
-struct Budget {
+struct Budget<'a> {
     limits: NoMatchLimits,
-    started: Instant,
+    now: &'a dyn Fn() -> Duration,
+    started: Duration,
     candidate_starts: usize,
     steps: u64,
     maximum_depth: usize,
@@ -433,11 +434,12 @@ struct Budget {
     reached_limits: BTreeSet<NoMatchLimitKind>,
 }
 
-impl Budget {
-    fn new(limits: NoMatchLimits) -> Self {
+impl<'a> Budget<'a> {
+    fn new(limits: NoMatchLimits, now: &'a dyn Fn() -> Duration) -> Self {
         Self {
             limits,
-            started: Instant::now(),
+            now,
+            started: now(),
             candidate_starts: 0,
             steps: 0,
             maximum_depth: 0,
@@ -450,7 +452,7 @@ impl Budget {
 
     fn check_elapsed(&mut self) -> Result<(), NoMatchLimitKind> {
         if self.limits.max_elapsed_milliseconds == 0
-            || self.started.elapsed().as_millis()
+            || (self.now)().saturating_sub(self.started).as_millis()
                 >= u128::from(self.limits.max_elapsed_milliseconds)
         {
             self.reached_limits.insert(NoMatchLimitKind::Elapsed);
@@ -526,11 +528,16 @@ struct Evaluator<'a> {
     scalars: Vec<SubjectScalar>,
     boundaries: Vec<usize>,
     boundary_indexes: BTreeMap<usize, usize>,
-    budget: Budget,
+    budget: Budget<'a>,
 }
 
 impl<'a> Evaluator<'a> {
-    fn new(input: &'a SemanticProgram, subject: &'a str, limits: NoMatchLimits) -> Self {
+    fn new(
+        input: &'a SemanticProgram,
+        subject: &'a str,
+        limits: NoMatchLimits,
+        now: &'a dyn Fn() -> Duration,
+    ) -> Self {
         let mut scalars = Vec::new();
         let mut boundaries = vec![0];
         for (start, value) in subject.char_indices() {
@@ -550,7 +557,7 @@ impl<'a> Evaluator<'a> {
             scalars,
             boundaries,
             boundary_indexes,
-            budget: Budget::new(limits),
+            budget: Budget::new(limits, now),
         }
     }
 
@@ -1337,6 +1344,22 @@ pub fn explain_no_match(
     execution_mode: NoMatchExecutionMode,
     limits: NoMatchLimits,
 ) -> Result<NoMatchExplanationDocument, NoMatchExplanationErrors> {
+    let epoch = std::time::Instant::now();
+    explain_no_match_with_clock(input, semantic, subject, execution_mode, limits, &|| {
+        epoch.elapsed()
+    })
+}
+
+/// Evaluate with a monotonic host clock measured from an arbitrary origin.
+/// Hosts must also enforce their own deadline for transport and compilation.
+pub fn explain_no_match_with_clock(
+    input: &SemanticProgram,
+    semantic: &ExplanationDocument,
+    subject: &str,
+    execution_mode: NoMatchExecutionMode,
+    limits: NoMatchLimits,
+    now: &dyn Fn() -> Duration,
+) -> Result<NoMatchExplanationDocument, NoMatchExplanationErrors> {
     validate_inputs(input, semantic, subject, limits)?;
     let semantic_program = Sha256Digest::from_bytes(canonical_sha256(input).map_err(|error| {
         NoMatchExplanationErrors::single(
@@ -1399,7 +1422,7 @@ pub fn explain_no_match(
         }
     }
 
-    let mut preflight = Budget::new(limits);
+    let mut preflight = Budget::new(limits, now);
     let subject_limit = if subject.len() > limits.max_subject_utf8_bytes {
         preflight
             .reached_limits
@@ -1429,7 +1452,7 @@ pub fn explain_no_match(
         return Ok(base.unknown_limit(reason, preflight.report()));
     }
 
-    let mut evaluator = Evaluator::new(input, subject, limits);
+    let mut evaluator = Evaluator::new(input, subject, limits, now);
     let evaluation = match evaluator.run() {
         Ok(value) => value,
         Err(limit) => {

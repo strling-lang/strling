@@ -1,0 +1,13 @@
+{
+    "adapter_version": "0.1.0-rc.3",
+    "wire_protocol": "strling.lab-compiler-tools@1.0.0-rc.1",
+    "compiler_base_revision": "4e58730bbf67eaff683268e285e7084ccda5fadd",
+    "build_host": "windows-x86_64-msvc",
+    "rustc": "1.97.1",
+    "build_target": "wasm32-unknown-unknown",
+    "bytes": 2548656,
+    "sha256": "3da8047dbbc6402885634b4eb49475ad06cdf894c1eced13fee62b400e23cc81",
+    "maximum_memory_bytes": 67108864,
+    "maximum_stack_bytes": 2097152,
+    "scope": "isolated-website-qualification"
+}

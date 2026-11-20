@@ -1,0 +1,152 @@
+record_version: 2.0.0
+title: Lab compiler tools candidate
+status: in_progress
+objective: Expose the existing canonical formatter, semantic converter, and bounded no-match evaluator in a private browser adapter while preserving the sealed compiler interop boundary.
+scope:
+    diff:
+        base: f36c59c2275b71ebb832dd410c73ce55639a012a
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/development-qualification.yml
+        - bindings/lab-wasm/**
+        - core/src/no_match_explanation.rs
+        - docs/migration/records/lab-compiler-tools-candidate.yaml
+        - docs/release-policy.md
+        - governance/change-control.json
+        - governance/contracts/snapshots/strling-kernel.json
+        - governance/dependency-lock-verification.json
+        - governance/generated-artifacts.json
+        - governance/release-policy.json
+        - governance/security-policy.json
+    forbidden_paths:
+        - bindings/interop/**
+        - packages/**
+        - spec/**
+        - tests/certification/**
+    expected_files:
+        - .github/workflows/development-qualification.yml
+        - bindings/lab-wasm/.gitattributes
+        - bindings/lab-wasm/Cargo.lock
+        - bindings/lab-wasm/Cargo.toml
+        - bindings/lab-wasm/README.md
+        - bindings/lab-wasm/build-qualified.ps1
+        - bindings/lab-wasm/qualification.json
+        - bindings/lab-wasm/src/lib.rs
+        - bindings/lab-wasm/verify-browser-artifact.mjs
+        - core/src/no_match_explanation.rs
+        - docs/migration/records/lab-compiler-tools-candidate.yaml
+        - docs/release-policy.md
+        - governance/change-control.json
+        - governance/contracts/snapshots/strling-kernel.json
+        - governance/dependency-lock-verification.json
+        - governance/generated-artifacts.json
+        - governance/release-policy.json
+        - governance/security-policy.json
+    permitted_generated_changes:
+        - package-manager-lockfiles
+        - public-contract-snapshots
+        - release-policy-documentation
+        - version-synchronized-metadata
+    expected_generated_outputs:
+        - package-manager-lockfiles
+        - public-contract-snapshots
+        - release-policy-documentation
+        - version-synchronized-metadata
+    required_verification_levels:
+        [contract, unit, integration, quality, certification]
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - The adapter delegates to the existing canonical producer for each operation.
+    public_api_change:
+        level: additive
+        evidence:
+            - The internal kernel adds a monotonic host-clock entry point. The existing native entry point still supplies its monotonic clock.
+        affected_surfaces: [strling-kernel]
+    schema_change:
+        level: none
+        evidence:
+            - The separately versioned private adapter transport leaves the governed schemas unchanged.
+    diagnostic_change:
+        level: none
+        evidence:
+            - The formatter returns the canonical diagnostics and UTF-8 locations.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Existing target portability and compilation results supply the optional explanation context.
+    architecture_change:
+        level: additive
+        evidence:
+            - The standalone adapter consumes canonical kernel operations and one monotonic browser clock import.
+    generated_output_change:
+        level: additive
+        evidence:
+            - Record the lock and dependency identities, native kernel API snapshot, and private adapter version projection.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Canonical operations and profile identity
+      command: python3 tooling/contract_validation.py
+      expected_result: The canonical contracts pass with the existing compiler semantics.
+    - name: Dependency and kernel boundary verification
+      command: python3 -m tooling.dependency_lock_verification --check --json && python3 tooling/public_contracts.py --check --surface strling-kernel
+      expected_result: The registered dependency graph and the additive kernel clock entry point pass their checks.
+    - name: Independent Wasm artifact verification
+      command: node bindings/lab-wasm/verify-browser-artifact.mjs <candidate-wasm> <candidate-sha256> <installed-4.0.3-package>
+      expected_result: The pinned candidate passes authored frontend and explanation fixtures, and exact conversion replays through the sealed 4.0.3 compiler.
+    - name: Lab static hosting and browser checks
+      command: npm run test:e2e
+      expected_result: The website runs the exact local adapter with the pinned digest and verifies canonical outcomes, error coordinates, reconstruction, bounded search, and subject privacy.
+    - name: Exact-source development and Website qualification
+      command: .github/workflows/development-qualification.yml
+      expected_result: Read-only hosted source qualification rebuilds the pinned adapter and clean-room checks the sealed release boundary, canonical operations, privacy, and memory cap. The independently built Website preview exercises the same bytes in the browser.
+    - name: Independent complete-product release certification
+      command: ./strling profile full && npm run test:all -- --profile release --all --no-reuse --plain
+      expected_result: An explicitly authorized complete-product release candidate passes the existing governed release profiles with independently reconstructed signed evidence. No previously certified bytes are re-certified by source admission.
+checkpoints:
+    - name: Local canonical operation and browser evidence
+      status: passed
+      evidence:
+          - check: Canonical contracts and browser execution
+            result: passed
+            details: The exact adapter was evaluated with the compiler regression tests and the website's desktop and mobile Chromium production preview.
+          - check: Independent locked build and Wasm artifact verification
+            result: passed
+            details: Windows Rust 1.97.1 reproduced the candidate digest 640fd5c4c205cff8c69ca46c7933f1351194e3861306cef137d67e1354ea5d72. Node 22.12.0 verified 12 formatter cases, 31 diagnostic spans, 3 exact reconstruction checks, 2 non-exact conversions, and 17 default-limit no-match cases, plus elapsed refusal and subject privacy.
+    - name: Portable artifact identity
+      status: passed
+      evidence:
+          - check: Normalize the previously host-dependent artifact build
+            result: passed
+            details: The 0.1.0-rc.2 artifact retains the existing wire protocol and remaps Windows workspace and Cargo registry roots. The candidate build passed the canonical Wasm replay and a real growth limit check at 64 MiB with SHA-256 283ff9d319b4a28220aeac8b187834b12fc6634c9ad1beb9be3be4d4247cc04b.
+          - check: Locked rebuild under relocated source, build output, and Cargo registry
+            result: passed
+            details: A second Windows Rust 1.97.1 build from a detached source path containing spaces and a different cached Cargo registry produced identical rc.2 bytes. Both builds shared their Rust alias. Hosted Windows later found the remaining Rust standard-library installation path in the artifact identity.
+          - check: Internal kernel suite against the adapter's compiler source
+            result: passed
+            details: The full locked Rust 1.75.0 WSL2 kernel suite passed all 512 tests with zero failures or skips.
+          - check: Empty-cache dependency preparation
+            result: passed
+            details: The complete locked Windows dependency prefetch included cpufeatures 0.2.17 and permitted an offline build. The reviewed map order also reproduced the pinned digest with the Cargo cache under the workspace root.
+          - check: Exact Rust installation path normalization
+            result: passed
+            details: The rc.3 artifact retains wire protocol rc.1 and maps the standard-library source to Rust's compiler-commit identity. Named Rust 1.97.1 and a separate installation containing rust-src from distinct workspaces and Cargo caches reproduced the same 2548656 bytes with SHA-256 3da8047dbbc6402885634b4eb49475ad06cdf894c1eced13fee62b400e23cc81. Replay explicitly rejects embedded absolute Windows source paths.
+    - name: Scope-specific source admission
+      status: in_progress
+      evidence:
+          - check: Authorized development and isolated Website qualification scope
+            result: passed
+            details: The main-only integration directive authorizes source admission and qualification for this private adapter. The admitted artifact path is a locked local or isolated CI rebuild of the exact reviewed compiler source for a digest-matched Website qualification build. Publication and production deployment are separately protected.
+          - check: Fresh independent source and browser qualification
+            result: not_run
+            details: The integrated policy base and candidate head must complete their read-only source qualification checks. The Website must exercise the exact bytes against its review build before deployment approval can be considered.
+    - name: Product release and distribution
+      status: blocked
+      evidence:
+          - check: Newly certified product distribution
+            result: not_run
+            details: Publication requires a new explicitly authorized product release candidate, signed same-source certification and distribution approval. This scope has no release or publication authority.
+commits: []

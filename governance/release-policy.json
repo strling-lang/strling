@@ -514,6 +514,23 @@
             }
         },
         {
+            "id": "lab-wasm-adapter",
+            "surface": "Private Lab compiler WebAssembly adapter",
+            "path": "bindings/lab-wasm/Cargo.toml",
+            "current_version": "0.1.0-rc.3",
+            "authority": "Independently versioned development adapter metadata",
+            "consumer_visible": false,
+            "coordinates_with_product": false,
+            "independently_versioned": true,
+            "publication_destination": "Not published",
+            "disposition": "Local browser qualification only; distribution requires separate artifact admission and release authorization.",
+            "probe": {
+                "kind": "regex",
+                "pattern": "(?ms)^\\[package\\].*?^version\\s*=\\s*\"([^\"]+)\"",
+                "expected": "0.1.0-rc.3"
+            }
+        },
+        {
             "id": "vscode-extension",
             "surface": "VS Code extension and language server",
             "path": "tooling/lsp-server/package.json",

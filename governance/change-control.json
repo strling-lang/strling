@@ -1,5 +1,5 @@
 {
-    "active_task": "docs/migration/records/main-only-development.yaml",
+    "active_task": "docs/migration/records/lab-compiler-tools-candidate.yaml",
     "architecture_rule_registry": "governance/architecture-rules.json",
     "configuration_version": 1,
     "documentation_paths": ["**/*.md", "docs/**"],

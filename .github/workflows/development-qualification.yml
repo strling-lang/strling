@@ -108,7 +108,7 @@ jobs:
                   $ErrorActionPreference = 'Stop'
                   $PSNativeCommandUseErrorActionPreference = $true
                   rustup toolchain install 1.97.1 --profile minimal --target wasm32-unknown-unknown
-                  cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml --target wasm32-unknown-unknown
+                  cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml
                   $target = Join-Path $env:RUNNER_TEMP lab-tools
                   & ./bindings/lab-wasm/build-qualified.ps1 -TargetDirectory $target
                   $artifact = Join-Path $target 'wasm32-unknown-unknown/release/strling_lab_wasm.wasm'

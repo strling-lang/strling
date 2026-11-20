@@ -1,6 +1,8 @@
 # STRling 4.0.3 fix-forward certification
 
-Status: **RELEASE CANDIDATE CERTIFIED — PUBLICATION AUTHORIZATION PENDING**.
+**STRling 4.0.3 is officially released and independently publicly verified.**
+
+The following certification narrative records the prepublication checkpoint.
 
 Product source d01ac3785736ad552c90f00b4ca13c0e2e5c9c62; qualified immutable reader 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0; candidate evidence root 4b938eb8189a815e6f463150146730fe9b0b400f36e3de04a7f2d3dc2c1ef554; nested package root 9064e081c6529cd7d6c100a189197b0a6726b268e6612242e68c562ad3a246e9. Fresh profiles: {"full": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}, "local": {"failed": 0, "incomplete": 0, "passed": 38, "status": "passed", "total": 38, "unavailable": 0, "waived": 0}, "pull-request": {"failed": 0, "incomplete": 0, "passed": 80, "status": "passed", "total": 80, "unavailable": 0, "waived": 0}, "release": {"failed": 0, "incomplete": 0, "passed": 124, "status": "waived", "total": 125, "unavailable": 0, "waived": 1}}. Registered scope: 17 build routes, 256 engineering obligations, 232 initially applicable public obligations and 24 explicitly deferred ConanCenter obligations. No prior-source result is transferred.
 
@@ -831,3 +833,55 @@ Private remote staging and actual immutable hosted export remain unexecuted.
 These changes require a newly frozen, qualified reader and fresh product
 certification after promotion. The `c8f629ef` qualification and `29fc1db4`
 profile results remain bound to their original exact identities.
+
+## Fourth Edition official release and independent public verification
+
+**STRling 4.0.3 is officially released and independently publicly verified.**
+
+The official `v4.0.3` tag identifies certified source `d01ac3785736ad552c90f00b4ca13c0e2e5c9c62`. The accepted certification closure is `eba5dad3de3fa620eb1ea13e0514d02f4b23e288`. The local and Pull Request profiles passed 38/38 and 80/80. Full and independent no-reuse Release each recorded 124 passes and the exact scoped VSCE waiver. The 42 fresh build receipts and 21 paired comparisons cover 17 build routes. [Final hosted certification](https://github.com/strling-lang/strling/actions/runs/44470960546).
+
+The approved publisher retained 16 authenticated receipts and its release attestation. The attached original capsule matches SHA-256 `8ae1c28b99daf31a25fa5dcd397f27bbc5e519330957443d975ee56e91d3f401`. The protected export independently restored 2,460 files. [Protected export](https://github.com/strling-lang/strling/actions/runs/44561772353) · [Publication attempt](https://github.com/strling-lang/strling/actions/runs/44567784868/attempts/2) · [Official release](https://github.com/strling-lang/strling/releases/tag/v4.0.3).
+
+The first independent run retained 200 verified and 32 failed observations. The approved runner correction preloaded the certified Rust dependency graph and isolated Windows .NET 9.0.302. The corrected Windows and Linux jobs and reconciler all passed. Independent reconstruction matched all **232 applicable obligations** with zero findings. Of the 256 registered obligations, **24 are explicitly deferred for ConanCenter**. Direct C++ distribution remains Supported. The Preview routes retain their ratified scopes. [First verification](https://github.com/strling-lang/strling/actions/runs/44575167062) · [Accepted verification](https://github.com/strling-lang/strling/actions/runs/44580786117).
+
+The accepted operational workflow is `ffc2d5213252c9acba9c587d9192319a0e0cce7b`. Its protected request SHA-256 is `e5c67f70f2d9ba49c059bfa9a1db67b63c620daee3cd53bd02ee1c55b3d63619`, and its complete observations digest is `1c9d998d0f1f7f98cc78c27d73f1d4b0549707eac1286cbeed2f40fa70fa0a47`. The independent readback verified both verification activation scopes, export and publication routing were disabled. The detailed local audit SHA-256 is `4b61270bc0d29a4925c54c6f4159d50050213dfcee097829e3a3986d32318e59`.
+
+| Distribution                                  | Tier      | Governed scope                                                            | Verified obligations |
+| --------------------------------------------- | --------- | ------------------------------------------------------------------------- | -------------------- |
+| `strling-c`                                   | Supported | windows-x86_64 and linux-x86_64 interop routes                            | 24                   |
+| `strling`                                     | Supported | windows-x86_64 and linux-x86_64 interop routes                            | 24 deferred          |
+| `STRling`                                     | Supported | windows-x86_64 clean-consumer native assets                               | 16                   |
+| `strling`                                     | Supported | linux-x86_64                                                              | 16                   |
+| `STRling.FSharp`                              | Supported | windows-x86_64 clean-consumer native assets                               | 16                   |
+| `github.com/strling-lang/strling/bindings/go` | Supported | linux-x86_64 with cgo                                                     | 16                   |
+| `io.github.strling-lang:strling`              | Supported | windows-x86_64 with caller-supplied absolute native path                  | 16                   |
+| `io.github.strling-lang:strling-kotlin`       | Supported | windows-x86_64 with caller-supplied absolute native path                  | 16                   |
+| `strling`                                     | Preview   | linux-x86_64                                                              | 8                    |
+| `STRling`                                     | Preview   | linux-x86_64                                                              | 8                    |
+| `strling/strling`                             | Preview   | linux-x86_64 with caller-owned native payload discovery                   | 8                    |
+| `STRling`                                     | Supported | windows-x86_64 and linux-x86_64 with CPython 3.12 evidence                | 24                   |
+| `strling`                                     | Preview   | linux-x86_64                                                              | 8                    |
+| `strling`                                     | Preview   | linux-x86_64                                                              | 8                    |
+| `strling`                                     | Supported | windows-x86_64 and linux-x86_64 reference kernel/facade                   | 24                   |
+| `STRling`                                     | Supported | linux-x86_64                                                              | 16                   |
+| `@strling-lang/strling`                       | Preview   | Windows Node 24 observation and Chrome browser WASM certification harness | 8                    |
+
+### V0–V12 release audit
+
+These operation IDs refer to the exact 4.0.3 source-bound profiles. V10 also includes the independent public consumer reports, and V12 includes both original-authority signatures and the hosted integrity checks. The sole scoped license waiver is `WVR-SEC-VSCE-LICENSE-001` through December 13, 2026 inclusive UTC.
+
+| Level | Evidence                                                                                                           |
+| ----- | ------------------------------------------------------------------------------------------------------------------ |
+| V0    | `generated_integrity`, `hygiene`, `profile_source_identity`                                                        |
+| V1    | `format_check`, `lint`, `typecheck`, `build`                                                                       |
+| V2    | `test`, `interop_adversarial_certification`                                                                        |
+| V3    | `canonical_contracts_check`, `core_contracts_check`, `public_distribution_contract`                                |
+| V4    | `baseline_check`, `migration_explanation_certification`                                                            |
+| V5    | `pcre2_runtime_certification`, `ecmascript_runtime_certification`, `python_re_runtime_certification`               |
+| V6    | `governance`, `semantic_authority_check`, `interop_contract_check`                                                 |
+| V7    | `deep_quality_full_certification`, `functional_resource_certification`, `adversarial_real_engine_equivalence`      |
+| V8    | `documentation_integrity`, `dynamic_language_adapter_package_check`, `go_dart_swift_adapter_package_certification` |
+| V9    | Informational performance reporting. Functional resource safety passed at V7.                                      |
+| V10   | `release_supply_chain_full_certification`                                                                          |
+| V11   | `security_dependency_integrity`, `security_dependency_risk`, `security_content_workflows`                          |
+| V12   | `product_certification_authority`, `local_certification_attestation_contract`                                      |

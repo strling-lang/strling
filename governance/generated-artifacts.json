@@ -2121,6 +2121,7 @@
             "description": "Deterministic P19 removal evidence and human report derived from the governed legacy/transitional inventory, exact 1,094-path fixture denominator, canonical adapter routes, architecture exceptions, waivers, and live repository reachability.",
             "authoritative_sources": [
                 "governance/legacy-removal-inventory.json",
+                "governance/release-policy.json",
                 "governance/architecture-rules.json",
                 "governance/generated-artifacts.json",
                 "governance/waivers/*.yaml",
@@ -2129,7 +2130,9 @@
             ],
             "generator_inputs": [
                 "governance/legacy-removal-inventory.json",
+                "governance/release-policy.json",
                 "governance/schemas/legacy-removal-inventory.schema.json",
+                "governance/schemas/release-policy.schema.json",
                 "governance/architecture-rules.json",
                 "governance/generated-artifacts.json",
                 "governance/waivers/*.yaml",
@@ -2138,7 +2141,8 @@
                 "tests/adapters/binding-support-4.0/evidence.json",
                 "tests/architecture/legacy-removal/1.0/source-production-candidate-certification.json",
                 "tests/architecture/legacy-removal/1.0/evidence.schema.json",
-                "tooling/legacy_removal_inventory.py"
+                "tooling/legacy_removal_inventory.py",
+                "tooling/release_policy.py"
             ],
             "generator": {
                 "implementation_paths": ["tooling/legacy_removal_inventory.py"],

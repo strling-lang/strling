@@ -1,0 +1,145 @@
+name: STRling development qualification
+
+on:
+    pull_request:
+        branches: [main]
+        types: [opened, synchronize, reopened, edited, ready_for_review]
+    push:
+        branches: [main]
+    workflow_dispatch:
+
+permissions:
+    contents: read
+
+jobs:
+    exact-source:
+        name: Verify exact source (${{ matrix.runner }})
+        strategy:
+            fail-fast: false
+            matrix:
+                runner: [ubuntu-24.04, windows-2025]
+        runs-on: ${{ matrix.runner }}
+        timeout-minutes: 45
+        env:
+            QUALIFICATION_SOURCE: ${{ github.event.pull_request.head.sha || github.sha }}
+            QUALIFICATION_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+            CARGO_TERM_COLOR: never
+        steps:
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+              with:
+                  ref: ${{ github.event.pull_request.head.sha || github.sha }}
+                  fetch-depth: 0
+                  persist-credentials: false
+            - name: Check exact source and inventory admitted components
+              id: source
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  [[ "$(git rev-parse HEAD)" == "$QUALIFICATION_SOURCE" ]]
+                  [[ -z "$(git status --porcelain)" ]]
+                  if [[ -n "$QUALIFICATION_BASE" ]]; then
+                      git merge-base --is-ancestor "$QUALIFICATION_BASE" HEAD
+                  fi
+                  echo "Source: $(git rev-parse HEAD)"
+                  echo "Tree: $(git rev-parse 'HEAD^{tree}')"
+                  manifest_state() {
+                      local path="$1"
+                      if git cat-file -e "HEAD:$path"; then
+                          echo present
+                          return
+                      fi
+                      if [[ -n "$QUALIFICATION_BASE" ]] && git cat-file -e "$QUALIFICATION_BASE:$path" 2>/dev/null; then
+                          echo "Admitted component disappeared: $path" >&2
+                          return 1
+                      fi
+                      echo absent
+                  }
+                  relation="$(manifest_state core/tools/language-relations/Cargo.toml)"
+                  adapter="$(manifest_state bindings/lab-wasm/Cargo.toml)"
+                  printf 'relation=%s\nadapter=%s\n' "$relation" "$adapter" >> "$GITHUB_OUTPUT"
+                  printf 'Language relation: %s\nLab adapter: %s\n' "$relation" "$adapter"
+            - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+              if: runner.os == 'Linux'
+              with:
+                  python-version: "3.12.10"
+            - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+              if: runner.os == 'Linux'
+              with:
+                  node-version: "22.23.5"
+                  package-manager-cache: false
+            - name: Verify governed source scope and policy projections
+              if: runner.os == 'Linux'
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  python -m pip install --disable-pip-version-check --requirement tooling/requirements-quality.txt
+                  python tooling/governance.py
+                  python tooling/hygiene.py
+                  python tooling/release_policy.py --check
+                  python tooling/sync_versions.py --check
+                  npm ci --ignore-scripts
+                  python -m tooling.legacy_removal_inventory --check --json
+                  python -m pytest -q tooling/tests/test_release_policy.py tooling/tests/test_governance.py tooling/tests/test_certified_transport.py tooling/tests/test_public_workflow_contexts.py tooling/tests/test_legacy_removal_inventory.py
+            - name: Replay the full applicable kernel suite
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  rustup toolchain install 1.75.0 --profile minimal
+                  cargo +1.75.0 fetch --locked --manifest-path core/internal/Cargo.toml
+                  cargo +1.75.0 test --locked --offline --manifest-path core/internal/Cargo.toml --target-dir "$RUNNER_TEMP/kernel"
+            - name: Independently replay bounded language relations
+              if: steps.source.outputs.relation == 'present'
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  cargo +1.75.0 fetch --locked --manifest-path core/tools/language-relations/Cargo.toml
+                  cargo +1.75.0 test --locked --offline --manifest-path core/tools/language-relations/Cargo.toml --target-dir "$RUNNER_TEMP/language-relations"
+            - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+              if: runner.os == 'Windows' && steps.source.outputs.adapter == 'present'
+              with:
+                  node-version: "22.23.5"
+                  package-manager-cache: false
+            - name: Rebuild and verify the qualified Windows Wasm artifact
+              if: runner.os == 'Windows' && steps.source.outputs.adapter == 'present'
+              shell: pwsh
+              env:
+                  SEALED_PACKAGE_INTEGRITY: sha512-+2MsnAOkb5bE0QblaYbVPqFimV10ZNS/CD0ZH0b5KjNCwBJwMEVdEHwLa4D52G6wk/4LJMBYMCb5sXL/L5gOAA==
+              run: |
+                  $ErrorActionPreference = 'Stop'
+                  $PSNativeCommandUseErrorActionPreference = $true
+                  rustup toolchain install 1.97.1 --profile minimal --target wasm32-unknown-unknown
+                  cargo +1.97.1 fetch --locked --manifest-path bindings/lab-wasm/Cargo.toml --target wasm32-unknown-unknown
+                  $target = Join-Path $env:RUNNER_TEMP lab-tools
+                  & ./bindings/lab-wasm/build-qualified.ps1 -TargetDirectory $target
+                  $artifact = Join-Path $target 'wasm32-unknown-unknown/release/strling_lab_wasm.wasm'
+                  $expected = (Get-Content ./bindings/lab-wasm/qualification.json -Raw | ConvertFrom-Json).sha256
+                  $release = Join-Path $env:RUNNER_TEMP sealed-release
+                  New-Item -ItemType Directory -Path $release | Out-Null
+                  $packages = npm pack '@strling-lang/strling@4.0.3' --json --ignore-scripts --pack-destination $release | ConvertFrom-Json
+                  if (@($packages).Count -ne 1 -or $packages[0].integrity -cne $env:SEALED_PACKAGE_INTEGRITY) {
+                      throw 'Sealed 4.0.3 archive integrity mismatch'
+                  }
+                  $archive = Join-Path $release $packages[0].filename
+                  tar -xf $archive -C $release
+                  node bindings/lab-wasm/verify-browser-artifact.mjs $artifact $expected (Join-Path $release package)
+            - name: Confirm source stayed clean
+              shell: bash
+              run: |
+                  set -euo pipefail
+                  [[ "$(git rev-parse HEAD)" == "$QUALIFICATION_SOURCE" ]]
+                  [[ -z "$(git status --porcelain)" ]]
+
+    qualification:
+        name: Verify development qualification
+        needs: [exact-source]
+        if: ${{ always() }}
+        runs-on: ubuntu-24.04
+        timeout-minutes: 5
+        env:
+            QUALIFICATION_RESULT: ${{ needs.exact-source.result }}
+        steps:
+            - name: Require every source-matrix check to pass
+              shell: bash
+              run: |
+                  test "$QUALIFICATION_RESULT" = success
+                  echo "Exact source development qualification passed. No product release attestation or publication is issued."

@@ -2,11 +2,27 @@
 
 # STRling release policy
 
-Policy version: `1.2.0`. Product version: **STRling 4.0.3**.
+Policy version: `1.4.0`. Product version: **STRling 4.0.3**.
 
 This document is a human-readable projection. The machine authority is
 [`governance/release-policy.json`](../governance/release-policy.json).
 Certification never authorizes publication; explicit owner authorization is required.
+
+## Repository branches and tags
+
+The sole permanent branch is `main`. The default is `main`.
+
+Keep main as the sole permanent branch and authoritative integrated source. Base temporary review branches on main and integrate through governed review. Before retiring a branch, resolve its active dependencies and integrate its unique work or preserve it through a verified archive or immutable reference. Keep release and certification workflows usable after temporary branches are deleted.
+
+The canonical stable tag is `vMAJOR.MINOR.PATCH`. Assign one immutable canonical product tag per published stable version at the exact certified product source. Preserve all published canonical and binding coordinates and required historical refs. Create ecosystem aliases only for governed distribution contracts. Preserve distinct publication and certification closure identities. Use exact commit SHAs for ordinary development and certification. Use a publication control tag only where the governed publisher requires a tag-push event.
+
+Current binding coordinates and migration requirements
+
+-   `c-vVERSION` — The governed Git checkout pins this ref. A future release can use the canonical tag after switching its manifest, installation guide, publisher and verification together.
+-   `go-vVERSION` — The current Go module uses an explicit Git revision query. Native SemVer resolution for a v4 subdirectory module would require a /v4 module path and a bindings/go/v4.* tag.
+-   `php-vVERSION` — The governed checkout selects a subdirectory Composer path package. A canonical checkout can replace the alias after requalification. Direct Packagist discovery would require separate package layout and distribution work.
+-   `r-vVERSION` — The governed source install selects the bindings/r checkout at this ref. A future release can use the canonical tag after coordinating packaging and independent consumer verification.
+-   `swift-vVERSION` — The governed build uses a tagged checkout and a local Swift package. Native remote SwiftPM version resolution would require a root package manifest and an independently qualified remote install route.
 
 ## Version identity
 

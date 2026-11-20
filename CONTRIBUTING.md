@@ -12,6 +12,22 @@ STRling is governed by the
 [`product architecture`](governance/product.md). Read the applicable
 specification and architecture material before changing semantic behavior.
 
+## Branch and release references
+
+`main` is the sole permanent branch and the default integrated source. Base
+temporary review branches on `main`. Before retiring a branch, resolve active
+dependencies and integrate or preserve its unique work. Keep certified release
+tags and exact source identities available independently of development branches.
+
+The [release policy](docs/release-policy.md#repository-branches-and-tags)
+governs product tags, ecosystem tag exceptions, and publication control
+references. Use an exact source SHA for ordinary certification work.
+
+Certification integrity verifies candidate evidence at the exact source
+revision and checks preserved release evidence against its immutable
+historical revisions. Protected export and publication have separate
+authorization and exact revision requirements.
+
 ## Quick start
 
 ```bash

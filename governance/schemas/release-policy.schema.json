@@ -6,6 +6,7 @@
     "additionalProperties": false,
     "required": [
         "policy_version",
+        "repository_refs",
         "product",
         "version_kinds",
         "version_surfaces",
@@ -24,6 +25,32 @@
     "properties": {
         "policy_version": {
             "$ref": "#/$defs/semver"
+        },
+        "repository_refs": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "permanent_branches",
+                "default_branch",
+                "canonical_stable_tag",
+                "branch_lifecycle",
+                "tag_lifecycle",
+                "binding_tags"
+            ],
+            "properties": {
+                "permanent_branches": { "const": ["main", "dev"] },
+                "default_branch": { "const": "main" },
+                "canonical_stable_tag": { "const": "vMAJOR.MINOR.PATCH" },
+                "branch_lifecycle": { "type": "string", "minLength": 1 },
+                "tag_lifecycle": { "type": "string", "minLength": 1 },
+                "binding_tags": {
+                    "type": "object",
+                    "propertyNames": {
+                        "pattern": "^[a-z][a-z0-9-]*-vVERSION$"
+                    },
+                    "additionalProperties": { "type": "string", "minLength": 1 }
+                }
+            }
         },
         "product": {
             "$ref": "#/$defs/product"

@@ -10217,3 +10217,7 @@ Product source d01ac3785736ad552c90f00b4ca13c0e2e5c9c62; qualified immutable rea
 ## 4.0.3 fix-forward — immutable hosted acceptance
 
 All four required immutable hosted jobs accepted evidence closure `65ac450125b8a1e286e0299411d46c90f3ba2004` in [run 44470630810](https://github.com/strling-lang/strling/actions/runs/44470630810). The export job was skipped. The certified product is `d01ac3785736ad552c90f00b4ca13c0e2e5c9c62` and its qualified verifier is `59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0`. The successor closure retains these exact signed bytes and receives its own hosted integrity check.
+
+## Fourth Edition official release closure — 2026-11-19
+
+STRling 4.0.3 was published to all 16 approved destinations from certified source `d01ac3785736ad552c90f00b4ca13c0e2e5c9c62` and closure `eba5dad3de3fa620eb1ea13e0514d02f4b23e288`. Independent Windows and Linux verification reconciled **232 verified obligations, zero findings**, with 24 ConanCenter obligations explicitly deferred under the approved direct C++ distribution decision. The earlier failed verifier result and all historical certificates retain their original source identities and outcomes. [Release](https://github.com/strling-lang/strling/releases/tag/v4.0.3) · [Public verification](https://github.com/strling-lang/strling/actions/runs/44580786117) · [V0–V12 audit](final-release-candidate.md#v0v12-release-audit).

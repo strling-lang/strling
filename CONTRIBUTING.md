@@ -12,6 +12,25 @@ STRling is governed by the
 [`product architecture`](governance/product.md). Read the applicable
 specification and architecture material before changing semantic behavior.
 
+## Branch and release references
+
+`main` is the default integrated source branch. Use `dev` for ongoing
+development and temporary branches for isolated changes. Before deleting a
+temporary branch, account for its unique changes and any active consumers.
+Preserve required history through the integrated branches or an existing
+immutable release reference.
+
+The [release policy](docs/release-policy.md#repository-branches-and-tags)
+governs product tags, ecosystem tag exceptions, and publication control
+references. Use an exact source SHA for ordinary certification work.
+
+For this post-release maintenance scope, repository administrators can bind a
+reviewed `dev` push to its full SHA with `REPOSITORY_MAINTENANCE_SHA`. The
+integrity workflow verifies the original signed Fourth Edition closure and
+checks the approved maintenance commit against the permitted paths and focused
+regressions. This acceptance applies only to that `dev` push. Product
+candidate, export, and publication checks retain their own authorities.
+
 ## Quick start
 
 ```bash

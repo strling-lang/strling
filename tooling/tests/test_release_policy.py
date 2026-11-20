@@ -43,6 +43,17 @@ class ReleasePolicyTests(unittest.TestCase):
         )
         self.assertEqual("active", product["repository_projection"]["status"])
 
+    def test_missing_or_unused_binding_tag_rule_is_rejected(self) -> None:
+        for expected in ("c-vVERSION", "unused-vVERSION"):
+            with self.subTest(tag=expected):
+                policy = self.mutated()
+                tags = policy["repository_refs"]["binding_tags"]
+                if expected in tags:
+                    del tags[expected]
+                else:
+                    tags[expected] = "No corresponding distribution"
+                self.assert_finding(policy, "RP-PUBLISH-008 binding tags")
+
     def test_duplicate_version_surface_is_rejected(self) -> None:
         policy = self.mutated()
         policy["version_surfaces"].append(copy.deepcopy(policy["version_surfaces"][0]))

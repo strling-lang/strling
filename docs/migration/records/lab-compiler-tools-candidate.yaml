@@ -26,6 +26,8 @@ scope:
         - bindings/lab-wasm/Cargo.lock
         - bindings/lab-wasm/Cargo.toml
         - bindings/lab-wasm/README.md
+        - bindings/lab-wasm/build-qualified.ps1
+        - bindings/lab-wasm/qualification.json
         - bindings/lab-wasm/src/lib.rs
         - bindings/lab-wasm/verify-browser-artifact.mjs
         - core/src/no_match_explanation.rs
@@ -95,9 +97,12 @@ required_verification:
     - name: Lab static hosting and browser checks
       command: npm run test:e2e
       expected_result: The website runs the exact local adapter with the pinned digest and verifies canonical outcomes, error coordinates, reconstruction, bounded search, and subject privacy.
-    - name: Independent artifact qualification
+    - name: Exact-source development and Website qualification
+      command: .github/workflows/development-qualification.yml
+      expected_result: Read-only hosted source qualification rebuilds the pinned adapter and clean-room checks the sealed release boundary, canonical operations, privacy, and memory cap. The independently built Website preview exercises the same bytes in the browser.
+    - name: Independent complete-product release certification
       command: ./strling profile full && npm run test:all -- --profile release --all --no-reuse --plain
-      expected_result: The accepted clean source and immutable adapter pass the governed release profiles with independently reviewed evidence.
+      expected_result: An explicitly authorized complete-product release candidate passes the existing governed release profiles with independently reconstructed signed evidence. No previously certified bytes are re-certified by source admission.
 checkpoints:
     - name: Local canonical operation and browser evidence
       status: passed
@@ -108,10 +113,28 @@ checkpoints:
           - check: Independent locked build and Wasm artifact verification
             result: passed
             details: Windows Rust 1.97.1 reproduced the candidate digest 640fd5c4c205cff8c69ca46c7933f1351194e3861306cef137d67e1354ea5d72. Node 22.12.0 verified 12 formatter cases, 31 diagnostic spans, 3 exact reconstruction checks, 2 non-exact conversions, and 17 default-limit no-match cases, plus elapsed refusal and subject privacy.
-    - name: Distribution qualification
+    - name: Portable artifact identity
+      status: passed
+      evidence:
+          - check: Normalize the previously host-dependent artifact build
+            result: passed
+            details: The 0.1.0-rc.2 artifact retains the existing wire protocol and remaps Windows workspace and Cargo registry roots. The candidate build passed the canonical Wasm replay and a real growth limit check at 64 MiB with SHA-256 283ff9d319b4a28220aeac8b187834b12fc6634c9ad1beb9be3be4d4247cc04b.
+          - check: Locked rebuild under relocated source, build output, and Cargo registry
+            result: passed
+            details: A second Windows Rust 1.97.1 build from a detached source path containing spaces and a different cached Cargo registry produced identical bytes. The original host roots do not appear in the successor artifact.
+    - name: Scope-specific source admission
+      status: in_progress
+      evidence:
+          - check: Authorized development and isolated Website qualification scope
+            result: passed
+            details: The main-only integration directive authorizes source admission and qualification for this private adapter. The admitted artifact path is a locked local or isolated CI rebuild of the exact reviewed compiler source for a digest-matched Website qualification build. Publication and production deployment are separately protected.
+          - check: Fresh independent source and browser qualification
+            result: not_run
+            details: The integrated policy base and candidate head must complete their read-only source qualification checks. The Website must exercise the exact bytes against its review build before deployment approval can be considered.
+    - name: Product release and distribution
       status: blocked
       evidence:
-          - check: Independently qualified immutable adapter
+          - check: Newly certified product distribution
             result: not_run
-            details: The compiler release owner must accept the exact source and artifact set before distribution qualification.
+            details: Publication requires a new explicitly authorized product release candidate, signed same-source certification and distribution approval. This scope has no release or publication authority.
 commits: []

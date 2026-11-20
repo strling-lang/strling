@@ -81,7 +81,7 @@ function result(request) {
     return reply.result;
 }
 const descriptor = result({ operation: "describe" });
-assert.equal(descriptor.adapter_version, "0.1.0-rc.1");
+assert.equal(descriptor.adapter_version, "0.1.0-rc.2");
 assert.equal(descriptor.compiler_base_revision, baseRevision);
 assert.deepEqual(descriptor.operations, ["format", "convert", "explain"]);
 assert.equal(descriptor.max_request_bytes, 1_048_576);
@@ -273,6 +273,14 @@ assert.equal(elapsed.outcome, "unknown");
 assert.equal(elapsed.explanation_disposition, "unknown");
 assert.ok(elapsed.work.reached_limits.includes("elapsed"));
 
+const pageSize = 65_536;
+const maximumPages = 1_024;
+const observedPages = wasm.memory.buffer.byteLength / pageSize;
+assert.ok(observedPages <= maximumPages);
+wasm.memory.grow(maximumPages - observedPages);
+assert.equal(wasm.memory.buffer.byteLength, maximumPages * pageSize);
+assert.throws(() => wasm.memory.grow(1), RangeError);
+
 console.log(
     JSON.stringify({
         status: "passed",
@@ -289,5 +297,6 @@ console.log(
         explanation_corpus_cases: defaultCases.length,
         explanation_privacy_checked: true,
         explanation_elapsed_limit_checked: true,
+        maximum_memory_bytes: maximumPages * pageSize,
     }),
 );

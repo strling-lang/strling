@@ -8,7 +8,7 @@
         "bindings/dart/pubspec.yaml": "f1414902fd19721ff46dbc0060e1096ee7600b5a9d7938fd1fa17257ae7776e4",
         "bindings/interop/Cargo.toml": "5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66",
         "bindings/interop/fuzz/Cargo.toml": "8d3bc5439c8c2372bd6aa10081f9308987acc36d40145c3dc9d73a2d5611328b",
-        "bindings/lab-wasm/Cargo.toml": "fbe46bf1c525777de27ce4b5b0c60adeae48c89cbca19b7a78a810355779f9a0",
+        "bindings/lab-wasm/Cargo.toml": "ebf1c99df53cfed814235d1f5d81b63e478beb530f3377b56e3ed3379f5a01cb",
         "bindings/kotlin/build.gradle.kts": "152105d441ab670ec8550e007d929e4d767758df75aef00aa49a83fa2af7e9a4",
         "bindings/lua/strling-template.rockspec": "00c54623999e760c2dc45eb0c818c8c52ca2aa0de85155f3f2478ad8795591e9",
         "bindings/perl/cpanfile": "c63805db07aaeeb167fce9a569ef1db5eee9e0f1f4109ab89c989254aa717b73",
@@ -30,7 +30,7 @@
     "lock_hashes": {
         "bindings/dart/pubspec.lock": "59c530f1a37d19eb43045be8999e5460571d293369e1dade31c19af6bb324241",
         "bindings/interop/Cargo.lock": "dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f",
-        "bindings/lab-wasm/Cargo.lock": "a7be57cf063564b705971a3b1b77604dfb1a335309a7f745594719c5bfcdf3d6",
+        "bindings/lab-wasm/Cargo.lock": "0bef21e79409aee69671b8b5fc507de46d6a425dcea40d026d609a148b7e5c87",
         "bindings/kotlin/gradle.lockfile": "3543d14db0cf0d22bfdf21c1e9bb0c6df9d2c5126d5f88b531741a1265846318",
         "bindings/kotlin/gradle/verification-metadata.xml": "4f6b465002750c62d8ff48982dd14ed78b2a31da348ee735ff83d865b17614eb",
         "bindings/lua/luarocks.lock": "f2fb2e3ca14e5ff386d032589b23ab545c30a84ade477a6ab7191a5c9a22439a",

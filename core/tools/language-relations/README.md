@@ -203,3 +203,21 @@ and `63e08586935db59296abf8802d922937a6f2b9e297bacd86cca9ceca57d7c052`.
 For hashing, serialize the parsed report with Python
 `json.dumps(report, ensure_ascii=True, sort_keys=True, separators=(",", ":"))`
 and encode it as UTF-8 without a final newline.
+
+## Source admission follow-up
+
+Locked Rust 1.75.0 tests on Windows and WSL2 passed all six relation tests,
+including the canonical program digest check against independent ordered JSON
+serialization and the distinct raw input hashes for different whitespace.
+The entire internal kernel suite completed on both systems. The Windows run
+passed 512 tests in 89 test targets with zero skips after the test process used
+its ordinary temporary directory. WSL2 also passed formatting and Clippy with
+warnings denied for this tool.
+
+For an executable check, use an exact Semantic STRling document containing
+`choice { text "ß"; text "🙂"; }` on the left and `text "ß";` on the right, with
+each document prefixed by `semantic strling 1.0; case sensitive; pattern ` and
+terminated with LF. Windows and WSL2 both refuted `equivalent` with the
+shortest scalar witness `🙂`, independently accepted on the left and refused
+on the right. The canonical report SHA-256 is
+`95f9c13b378ee22bed31713fa18894c0892d3fca1fa4fd961f49c8476967c86d`.

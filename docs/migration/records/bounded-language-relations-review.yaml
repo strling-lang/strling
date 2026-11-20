@@ -97,6 +97,9 @@ checkpoints:
           - check: Scope and authority decision
             result: passed
             details: The main-only integration directive admits the bounded analysis-only tool into compiler-owned source with a declared scalar whole-input model. It preserves all existing product APIs, protocol and rewrite contracts.
+          - check: Broader kernel and hardened proof input checks
+            result: passed
+            details: The previously incomplete native Windows and WSL2 locked Rust 1.75.0 kernel replays completed. The Windows run passed 512 tests with zero failures or skips after ordinary temporary-directory access was restored. Both platforms passed all six relation tests, including canonical digest stability for different JSON whitespace. The CLI independently replayed a one-scalar supplementary Unicode witness, with identical parsed reports on both systems.
           - check: Exact-source hosted development qualification
             result: not_run
             details: Await the reviewed main-only base and exact-source hosted checks. A product-facing interface and release certification require a separate accepted scope.

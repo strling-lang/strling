@@ -4,7 +4,8 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
-const [candidatePath, candidateDigest, releasePackage] = process.argv.slice(2);
+const [candidatePath, candidateDigest, releasePackage, recordedVersion] =
+    process.argv.slice(2);
 assert.ok(
     candidatePath && candidateDigest && releasePackage,
     "Provide the candidate Wasm path, expected SHA-256, and installed 4.0.3 package directory.",
@@ -15,6 +16,8 @@ const sealedDigest =
     "6a24a334d5d7e78b17c09e6d9a62d33299d65ac79e52212c4f8db130250656d7";
 const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const json = async (path) => JSON.parse(await readFile(path, "utf8"));
+const qualification = await json(new URL("./qualification.json", import.meta.url));
+const expectedVersion = recordedVersion ?? qualification.adapter_version;
 
 const release = resolve(releasePackage);
 const releaseMetadata = await json(resolve(release, "package.json"));
@@ -105,7 +108,7 @@ function result(request) {
     return reply.result;
 }
 const descriptor = result({ operation: "describe" });
-assert.equal(descriptor.adapter_version, "0.1.0-rc.3");
+assert.equal(descriptor.adapter_version, expectedVersion);
 assert.equal(descriptor.compiler_base_revision, baseRevision);
 assert.deepEqual(descriptor.operations, ["format", "convert", "explain"]);
 assert.equal(descriptor.max_request_bytes, 1_048_576);

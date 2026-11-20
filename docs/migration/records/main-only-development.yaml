@@ -19,13 +19,16 @@ scope:
         - docs/release-policy.md
         - governance/certification-profiles.md
         - governance/change-control.json
+        - governance/generated-artifacts.json
         - governance/release-policy.json
         - governance/repository-hygiene.json
         - governance/schemas/release-policy.schema.json
         - tooling/architecture_fitness.py
+        - tooling/legacy_removal_inventory.py
         - tooling/release_policy.py
         - tooling/tests/test_certified_transport.py
         - tooling/tests/test_governance.py
+        - tooling/tests/test_legacy_removal_inventory.py
         - tooling/tests/test_public_workflow_contexts.py
         - tooling/tests/test_release_policy.py
         - tooling/tests/test_repository_maintenance.py
@@ -97,6 +100,9 @@ required_verification:
     - name: Release, routing and public verification regressions
       command: python3 -m pytest -q tooling/tests/test_release_policy.py tooling/tests/test_governance.py tooling/tests/test_certified_transport.py tooling/tests/test_public_workflow_contexts.py
       expected_result: A second permanent branch and implicit release verification are refused while protected exact-source paths remain valid.
+    - name: Legacy audit revalidation under current source lineage
+      command: python3 -m tooling.legacy_removal_inventory --check --json
+      expected_result: Revalidate on main-derived source using the unchanged original certified baseline, evidence digest, and historical dev provenance.
 checkpoints:
     - name: Baselines and prior release preservation
       status: passed

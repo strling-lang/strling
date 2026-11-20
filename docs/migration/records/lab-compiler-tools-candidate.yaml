@@ -122,6 +122,9 @@ checkpoints:
           - check: Locked rebuild under relocated source, build output, and Cargo registry
             result: passed
             details: A second Windows Rust 1.97.1 build from a detached source path containing spaces and a different cached Cargo registry produced identical bytes. The original host roots do not appear in the successor artifact.
+          - check: Internal kernel suite against the adapter's compiler source
+            result: passed
+            details: The full locked Rust 1.75.0 WSL2 kernel suite passed all 512 tests with zero failures or skips.
     - name: Scope-specific source admission
       status: in_progress
       evidence:

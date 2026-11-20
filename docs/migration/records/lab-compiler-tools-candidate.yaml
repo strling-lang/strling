@@ -128,6 +128,9 @@ checkpoints:
           - check: Internal kernel suite against the adapter's compiler source
             result: passed
             details: The full locked Rust 1.75.0 WSL2 kernel suite passed all 512 tests with zero failures or skips.
+          - check: Empty-cache dependency preparation
+            result: passed
+            details: The complete locked Windows dependency prefetch included cpufeatures 0.2.17 and permitted an offline build. The reviewed map order also reproduced the pinned digest with the Cargo cache under the workspace root.
     - name: Scope-specific source admission
       status: in_progress
       evidence:

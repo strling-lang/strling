@@ -19,11 +19,12 @@ if (-not $cargoHome) {
 }
 $cargoHome = (Resolve-Path -LiteralPath $cargoHome).ProviderPath
 $flags = @('-C', 'link-arg=--max-memory=67108864', '-C', 'link-arg=-zstack-size=2097152')
-foreach ($source in @($cargoHome, $cargoHome.Replace('\', '/')) | Select-Object -Unique) {
-    $flags += "--remap-path-prefix=$source=/strling/cargo"
-}
 foreach ($source in @($repository, $repository.Replace('\', '/')) | Select-Object -Unique) {
     $flags += "--remap-path-prefix=$source=/strling/source"
+}
+# Rust uses the last matching prefix. Keep Cargo's map last for a cache inside the workspace.
+foreach ($source in @($cargoHome, $cargoHome.Replace('\', '/')) | Select-Object -Unique) {
+    $flags += "--remap-path-prefix=$source=/strling/cargo"
 }
 
 $previousFlags = $env:CARGO_ENCODED_RUSTFLAGS

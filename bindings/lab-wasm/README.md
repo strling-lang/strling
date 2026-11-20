@@ -98,7 +98,9 @@ Its 2,549,360 bytes have SHA-256
 `283ff9d319b4a28220aeac8b187834b12fc6634c9ad1beb9be3be4d4247cc04b`.
 Two offline Windows builds from different worktrees, Cargo registries, and
 output paths produced identical bytes, including a worktree and output path
-containing spaces. The original host paths do not appear in the Wasm.
+containing spaces. A separate empty-cache prefetch and offline build with the
+cache inside the source workspace reproduced the same digest. The original
+host paths do not appear in the Wasm.
 
 These checks qualify the declared development artifact scope after
 independent replay. Browser integration and production distribution retain

@@ -1,0 +1,84 @@
+record_version: 2.0.0
+title: Bounded whole-input language relations review
+status: planned
+objective: Review the private compiler-owned comparison candidate and its controlled whole-input language contract before deciding whether to govern and certify a product interface.
+scope:
+    diff:
+        base: 4e58730bbf67eaff683268e285e7084ccda5fadd
+        head: working-tree
+    allowed_paths:
+        - core/tools/language-relations/**
+        - docs/migration/records/bounded-language-relations-review.yaml
+        - governance/change-control.json
+    forbidden_paths:
+        - bindings/**
+        - core/internal/**
+        - core/cli/**
+        - core/src/**
+        - spec/**
+        - tests/conformance/**
+        - .github/workflows/**
+    expected_files:
+        - core/tools/language-relations/Cargo.toml
+        - core/tools/language-relations/Cargo.lock
+        - core/tools/language-relations/README.md
+        - core/tools/language-relations/fixtures.json
+        - docs/migration/records/bounded-language-relations-review.yaml
+    permitted_generated_changes:
+        - package-manager-lockfiles
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - unit
+        - integration
+        - quality
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Define controlled whole-input comparison premises for a review model without altering normative language semantics.
+    public_api_change:
+        level: none
+        evidence:
+            - Keep the candidate in a private package outside the released API, CLI, adapters, and interop.
+    schema_change:
+        level: none
+        evidence:
+            - Use closed candidate output within the private tool. Product schemas retain their versions and scope.
+    diagnostic_change:
+        level: none
+        evidence:
+            - Delegate managed frontend diagnostics to the existing canonical parser.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Compare whole scalar words under the review model without lowering, runtime execution, or rewrite registration.
+    architecture_change:
+        level: none
+        evidence:
+            - Depend on the canonical Rust kernel through a private repository tool.
+    generated_output_change:
+        level: compatible
+        evidence:
+            - The candidate-only Cargo lock records the added private package and the unchanged canonical kernel dependency versions.
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Candidate contract and independent evidence
+      command: cargo +1.75.0 test --offline --locked --manifest-path core/tools/language-relations/Cargo.toml
+      expected_result: Authored fixtures, independent derivatives, direct replay, Unicode boundaries, and bounded refusal pass on Linux and Windows.
+    - name: Protected existing public boundary
+      command: python tooling/public_contracts.py --check --surface strling-kernel
+      expected_result: The canonical kernel command surface is unchanged.
+    - name: Scope admission
+      command: python tooling/governance.py
+      expected_result: An explicitly selected owner-approved task governs only the declared private candidate changes. Any inherited issues require separate address or formal disposition.
+checkpoints:
+    - name: Compiler owner review
+      status: planned
+      evidence:
+          - check: Scope and authority decision
+            result: not_run
+            details: This task record has not been selected. Owner review must approve the draft contract and activate an authorized task before promotion. A product-facing interface and certification require a separate accepted scope.
+commits: []

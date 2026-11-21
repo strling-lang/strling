@@ -23,6 +23,7 @@
         "bindings/jvm/README.md",
         "bindings/kotlin/README.md",
         "bindings/kotlin/docs/api_reference.md",
+        "bindings/lab-wasm/README.md",
         "bindings/lua/README.md",
         "bindings/lua/docs/api_reference.md",
         "bindings/perl/README.md",
@@ -319,6 +320,22 @@
             "kind": "installation",
             "reason": "Proposed public install or explicit local-prefix install; public 4.0.3 commands remain unexecuted pending publication, equivalent staged installation is mandatory.",
             "evidence": "release_supply_chain_full_certification and publication handoff"
+        },
+        {
+            "id": "bindings/lab-wasm/README.md#1",
+            "language": "powershell",
+            "sha256": "a0c0042b0be1b394e44c16921303a05f696331a6edfbc48cffab2fa5a9b7e3d5",
+            "kind": "procedure",
+            "reason": "Windows build and digest-check procedure for the frozen Wasm candidate.",
+            "evidence": "bindings/lab-wasm/build-from-source.ps1 and bindings/lab-wasm/qualification.json"
+        },
+        {
+            "id": "bindings/lab-wasm/README.md#2",
+            "language": "powershell",
+            "sha256": "7af89403eb5e66fa291f410d9ba3fa6e5575994253deaad92d20844bafa5d4ae",
+            "kind": "procedure",
+            "reason": "Runs the canonical browser-artifact comparison against the sealed compiler.",
+            "evidence": "bindings/lab-wasm/verify-browser-artifact.mjs and bindings/lab-wasm/qualification.json"
         },
         {
             "id": "bindings/lua/README.md#1",

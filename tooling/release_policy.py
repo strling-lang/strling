@@ -538,9 +538,9 @@ def render_document(policy: Mapping[str, object]) -> str:
         "Current binding coordinates and migration requirements",
         "",
     ]
-    lines.extend(
-        f"-   `{tag}` — {reason}" for tag, reason in refs["binding_tags"].items()
-    )
+    for tag, reason in refs["binding_tags"].items():
+        rendered_reason = reason.replace(".*", r".\*")
+        lines.append(f"-   `{tag}` — {rendered_reason}")
     lines.extend(
         [
             "",

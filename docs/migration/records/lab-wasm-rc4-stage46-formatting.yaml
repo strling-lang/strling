@@ -1,0 +1,86 @@
+record_version: 2.0.0
+title: Preserve protected bytes and normalize the compiler formatting baseline
+status: in_progress
+objective: Reconcile the four Stage 46 formatter findings without changing the RC4 artifact, release contracts, or historical certification bytes.
+scope:
+    diff:
+        base: 33859ee4d1ab5cc9a8e1f380870f1fa51c0bdf76
+        head: working-tree
+    allowed_paths:
+        - core/tools/language-relations/README.md
+        - core/tools/language-relations/fixtures.json
+        - docs/migration/records/lab-wasm-rc4-stage46-formatting.yaml
+        - docs/release-policy.md
+        - governance/change-control.json
+        - governance/formatting.json
+        - tooling/formatting.py
+        - tooling/release_policy.py
+    forbidden_paths:
+        - .github/**
+        - bindings/**
+        - governance/lab-wasm-preview.json
+        - governance/release-policy.json
+        - spec/**
+        - tests/certification/**
+    expected_files:
+        - docs/migration/records/lab-wasm-rc4-stage46-formatting.yaml
+        - docs/release-policy.md
+        - governance/formatting.json
+        - tooling/formatting.py
+        - tooling/release_policy.py
+    permitted_generated_changes: [release-policy-documentation]
+    expected_generated_outputs: [release-policy-documentation]
+    required_verification_levels: [contract, unit, integration, quality]
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence: [The relation fixture values are unchanged.]
+    public_api_change:
+        level: none
+        evidence: [This updates formatting checks and generated prose.]
+    schema_change:
+        level: none
+        evidence: [No compiler protocol or certification result changes.]
+    diagnostic_change:
+        level: none
+        evidence: [Compiler diagnostics are unchanged.]
+    target_behavior_change:
+        level: none
+        evidence:
+            [Compiler target behavior and frozen Wasm bytes are unchanged.]
+    architecture_change:
+        level: none
+        evidence:
+            [
+                The formatting operation verifies one immutable transport input by SHA-256.,
+            ]
+    generated_output_change:
+        level: compatible
+        evidence:
+            [
+                The release policy renderer escapes the same literal wildcard as Prettier.,
+            ]
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Governed repository formatting
+      command: python3 tooling/formatting.py repository --check
+      expected_result: The protected request digest and all applicable formatters pass.
+    - name: Canonical release policy projection
+      command: python3 tooling/release_policy.py --check
+      expected_result: The generated Markdown matches the unchanged machine-readable release policy.
+    - name: Full qualification
+      command: ./strling profile full
+      expected_result: All mandatory operations pass using fresh evidence for the reviewed merged source.
+    - name: Independent Release qualification
+      command: npm run test:all -- --profile release --all --no-reuse --plain
+      expected_result: All mandatory operations pass with independent evidence and reuse disabled.
+checkpoints:
+    - name: Stage 46 findings reproduced on the merged source
+      status: in_progress
+      evidence:
+          - check: Governed formatter
+            result: failed
+            details: The clean source reported four Prettier findings after the RC4 producer passed Stage 19.
+commits: []

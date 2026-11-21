@@ -1,5 +1,8 @@
 {
     "schema_version": 1,
+    "byte_preserved_inputs": {
+        ".github/public-verification/request.json": "e5c67f70f2d9ba49c059bfa9a1db67b63c620daee3cd53bd02ee1c55b3d63619"
+    },
     "authority": "This file assigns exactly one canonical formatting strategy to every active source class. toolchain.json remains authoritative for executable versions and quality commands.",
     "dispositions": [
         "ready_for_integration",
@@ -283,6 +286,12 @@
             "reason": "The immutable verifier owns exact certificate serialization and derives the publication handoff from authenticated evidence; neighboring authored data remains governed by its normal formatter."
         },
         {
+            "paths": [".github/public-verification/request.json"],
+            "disposition": "not_applicable",
+            "strategy": "SHA-256 byte verification",
+            "reason": "The protected public verification workflow authenticates exact raw request bytes at its immutable source. Repository formatting checks those same bytes before running Prettier on the other paths."
+        },
+        {
             "paths": ["tests/certification/public-verification/1.0/current/**"],
             "disposition": "not_applicable",
             "strategy": "Signed public-verification attestation producer",
@@ -447,6 +456,7 @@
                         "tests/certification/hardened-core/1.0/current/*",
                         "tests/certification/release-packaging/1.0/current/*",
                         "tests/certification/public-verification/1.0/current/*",
+                        ".github/public-verification/request.json",
                         "bindings/python/src/STRling/simply/stdlib_generated.py",
                         "bindings/typescript/src/STRling/simply/stdlib.generated.ts",
                         "docs/reference/standard-library.md",

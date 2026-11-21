@@ -20,14 +20,14 @@ kernel can produce the inputs. The owner's
 and [source mapping](../../../spec/frontends/semantic/1.0/mapping.json) are the
 representation evidence.
 
-| Canonical node | Projected whole-input language |
-| --- | --- |
-| `empty` | {ε} |
-| `literal` | The exact scalar sequence in the literal |
-| Nonnegated `character_set` with literal and inclusive range members | Union of one-scalar languages over the described ranges |
-| `sequence` | Concatenation in item order |
-| `alternation` | Union of branch languages for membership |
-| Greedy or lazy `repeat` | Union of concatenation powers from min to max or unbounded, with power zero equal to {ε} |
+| Canonical node                                                      | Projected whole-input language                                                           |
+| ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `empty`                                                             | {ε}                                                                                      |
+| `literal`                                                           | The exact scalar sequence in the literal                                                 |
+| Nonnegated `character_set` with literal and inclusive range members | Union of one-scalar languages over the described ranges                                  |
+| `sequence`                                                          | Concatenation in item order                                                              |
+| `alternation`                                                       | Union of branch languages for membership                                                 |
+| Greedy or lazy `repeat`                                             | Union of concatenation powers from min to max or unbounded, with power zero equal to {ε} |
 
 The candidate refuses insensitive, complemented, builtin and Unicode-property
 members, wildcard, positions, lookaround, captures, references, atomic nodes,
@@ -161,9 +161,9 @@ of the kernel's canonical JSON hashing helper and remain historical evidence.
 cargo +1.75.0 build --release --offline --locked --manifest-path core/tools/language-relations/Cargo.toml
 ```
 
-| Local target | Binary SHA-256 |
-| --- | --- |
-| Windows MSVC x64 | `e6a770d770eed0b8879e24acbfa4dc54d2aa69ea02af7beb42ca306189717942` |
+| Local target        | Binary SHA-256                                                     |
+| ------------------- | ------------------------------------------------------------------ |
+| Windows MSVC x64    | `e6a770d770eed0b8879e24acbfa4dc54d2aa69ea02af7beb42ca306189717942` |
 | Ubuntu WSL2 GNU x64 | `19e006f0760372b3096fa44cb9e9b24733b2105ce207379fa6d6254abb5ef626` |
 
 Use the following named cases from [the fixtures](fixtures.json). For each
@@ -172,13 +172,13 @@ operand, write UTF-8 bytes with LF line endings. Prefix
 80-scalar case use the same `text` literal on both sides, comprising the 80
 consecutive Unicode scalar values beginning at U+0390.
 
-| Input | Query | Answer | Pairs / transitions | Windows p50 / p95 ms | Ubuntu WSL2 p50 / p95 ms | Peak working set KiB, Windows / WSL2 |
-| --- | --- | --- | ---: | ---: | ---: | ---: |
-| Variable bounds on a practical token validator | Contains | Proven | 9 / 90 | 33.4 / 36.8 | 159.7 / 196.4 | 6,476 / 2,832 |
-| Newly admitted whole value | Contains | Refuted | 7 / 60 | 33.5 / 39.3 | 164.3 / 208.4 | 6,484 / 2,832 |
-| Nullable unbounded loop closes | Equivalent | Proven | 6 / 24 | 36.9 / 41.8 | 159.3 / 203.3 | 6,456 / 2,840 |
-| Maximum Unicode scalar remains in the alphabet | Disjoint | Refuted | 4 / 12 | 33.8 / 41.2 | 165.1 / 200.9 | 6,468 / 2,824 |
-| 80 distinct scalar literal | Equivalent | Proven | 82 / 6,806 | 36.6 / 42.1 | 185.4 / 216.6 | 6,500 / 2,888 |
+| Input                                          | Query      | Answer  | Pairs / transitions | Windows p50 / p95 ms | Ubuntu WSL2 p50 / p95 ms | Peak working set KiB, Windows / WSL2 |
+| ---------------------------------------------- | ---------- | ------- | ------------------: | -------------------: | -----------------------: | -----------------------------------: |
+| Variable bounds on a practical token validator | Contains   | Proven  |              9 / 90 |          33.4 / 36.8 |            159.7 / 196.4 |                        6,476 / 2,832 |
+| Newly admitted whole value                     | Contains   | Refuted |              7 / 60 |          33.5 / 39.3 |            164.3 / 208.4 |                        6,484 / 2,832 |
+| Nullable unbounded loop closes                 | Equivalent | Proven  |              6 / 24 |          36.9 / 41.8 |            159.3 / 203.3 |                        6,456 / 2,840 |
+| Maximum Unicode scalar remains in the alphabet | Disjoint   | Refuted |              4 / 12 |          33.8 / 41.2 |            165.1 / 200.9 |                        6,468 / 2,824 |
+| 80 distinct scalar literal                     | Equivalent | Proven  |          82 / 6,806 |          36.6 / 42.1 |            185.4 / 216.6 |                        6,500 / 2,888 |
 
 For each row, run the release-mode binary with
 `<query> --semantic <left-file> <right-file>`. Make one preliminary run and

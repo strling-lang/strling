@@ -1,133 +1,133 @@
 [
-  {
-    "name": "literal and singleton range",
-    "query": "equivalent",
-    "left": "text \"😀\";",
-    "right": "character from { range \"😀\" through \"😀\"; }",
-    "status": "proven"
-  },
-  {
-    "name": "range crosses the excluded surrogate interval",
-    "query": "equivalent",
-    "left": "character from { range \"\\u{D7FF}\" through \"\\u{E000}\"; }",
-    "right": "character from { scalar \"\\u{D7FF}\"; scalar \"\\u{E000}\"; }",
-    "status": "proven"
-  },
-  {
-    "name": "empty word differs from one scalar",
-    "query": "equivalent",
-    "left": "empty;",
-    "right": "text \"a\";",
-    "status": "refuted",
-    "witness": "",
-    "left_accepts": true,
-    "right_accepts": false
-  },
-  {
-    "name": "reordered alternatives preserve these whole words",
-    "query": "equivalent",
-    "left": "choice { text \"a\"; text \"ab\"; }",
-    "right": "choice { text \"ab\"; text \"a\"; }",
-    "status": "proven"
-  },
-  {
-    "name": "variable bounds on a practical token validator",
-    "query": "contains",
-    "left": "sequence { text \"ID-\"; repeat from 2 to 4 using greedy { character from { range \"0\" through \"9\"; } } }",
-    "right": "sequence { text \"ID-\"; repeat from 3 to 3 using lazy { character from { range \"0\" through \"9\"; } } }",
-    "status": "proven"
-  },
-  {
-    "name": "newly admitted whole value",
-    "query": "contains",
-    "left": "sequence { text \"ID-\"; repeat from 3 to 3 using greedy { character from { range \"0\" through \"9\"; } } }",
-    "right": "sequence { text \"ID-\"; repeat from 2 to 4 using greedy { character from { range \"0\" through \"9\"; } } }",
-    "status": "refuted",
-    "witness": "ID-00",
-    "left_accepts": false,
-    "right_accepts": true
-  },
-  {
-    "name": "disjoint non-ASCII ranges",
-    "query": "disjoint",
-    "left": "character from { range \"α\" through \"ω\"; }",
-    "right": "character from { range \"中\" through \"文\"; }",
-    "status": "proven"
-  },
-  {
-    "name": "overlap on shared inclusive endpoint",
-    "query": "disjoint",
-    "left": "character from { range \"α\" through \"γ\"; }",
-    "right": "character from { range \"γ\" through \"ω\"; }",
-    "status": "refuted",
-    "witness": "γ",
-    "left_accepts": true,
-    "right_accepts": true
-  },
-  {
-    "name": "nullable unbounded loop closes",
-    "query": "equivalent",
-    "left": "repeat from 3 to unbounded using greedy { choice { empty; text \"a\"; } }",
-    "right": "repeat from 0 to unbounded using lazy { text \"a\"; }",
-    "status": "proven"
-  },
-  {
-    "name": "zero repetitions accept epsilon only",
-    "query": "equivalent",
-    "left": "repeat from 0 to 0 using greedy { text \"z\"; }",
-    "right": "empty;",
-    "status": "proven"
-  },
-  {
-    "name": "unmodeled even when unreachable under zero repeats",
-    "query": "equivalent",
-    "left": "repeat from 0 to 0 using greedy { capture value { text \"a\"; } }",
-    "right": "empty;",
-    "status": "unsupported"
-  },
-  {
-    "name": "target dependent predicate refusal",
-    "query": "disjoint",
-    "left": "character from { unicode digit; }",
-    "right": "text \"a\";",
-    "status": "unsupported"
-  },
-  {
-    "name": "complement is outside the model",
-    "query": "disjoint",
-    "left": "character except { scalar \"a\"; }",
-    "right": "text \"a\";",
-    "status": "unsupported"
-  },
-  {
-    "name": "property without resolved case policy is outside the model",
-    "query": "contains",
-    "left": "character from { property \"General_Category\" value \"Lu\"; }",
-    "right": "text \"A\";",
-    "status": "unsupported"
-  },
-  {
-    "name": "maximum Unicode scalar remains in the alphabet",
-    "query": "disjoint",
-    "left": "text \"\\u{10FFFF}\";",
-    "right": "character from { range \"\\u{10FFFE}\" through \"\\u{10FFFF}\"; }",
-    "status": "refuted",
-    "witness": "\udbff\udfff",
-    "left_accepts": true,
-    "right_accepts": true
-  },
-  {
-    "name": "possessive repeat refusal",
-    "query": "contains",
-    "left": "repeat from 0 to 2 using possessive { text \"a\"; }",
-    "right": "text \"a\";",
-    "status": "unsupported"
-  },
-  {
-    "name": "compilation budget exhaustion stays unknown",
-    "query": "equivalent",
-    "left": "repeat from 4294967295 to 4294967295 using greedy { text \"a\"; }",
-    "right": "empty;",
-    "status": "unknown"
-  }
+    {
+        "name": "literal and singleton range",
+        "query": "equivalent",
+        "left": "text \"😀\";",
+        "right": "character from { range \"😀\" through \"😀\"; }",
+        "status": "proven"
+    },
+    {
+        "name": "range crosses the excluded surrogate interval",
+        "query": "equivalent",
+        "left": "character from { range \"\\u{D7FF}\" through \"\\u{E000}\"; }",
+        "right": "character from { scalar \"\\u{D7FF}\"; scalar \"\\u{E000}\"; }",
+        "status": "proven"
+    },
+    {
+        "name": "empty word differs from one scalar",
+        "query": "equivalent",
+        "left": "empty;",
+        "right": "text \"a\";",
+        "status": "refuted",
+        "witness": "",
+        "left_accepts": true,
+        "right_accepts": false
+    },
+    {
+        "name": "reordered alternatives preserve these whole words",
+        "query": "equivalent",
+        "left": "choice { text \"a\"; text \"ab\"; }",
+        "right": "choice { text \"ab\"; text \"a\"; }",
+        "status": "proven"
+    },
+    {
+        "name": "variable bounds on a practical token validator",
+        "query": "contains",
+        "left": "sequence { text \"ID-\"; repeat from 2 to 4 using greedy { character from { range \"0\" through \"9\"; } } }",
+        "right": "sequence { text \"ID-\"; repeat from 3 to 3 using lazy { character from { range \"0\" through \"9\"; } } }",
+        "status": "proven"
+    },
+    {
+        "name": "newly admitted whole value",
+        "query": "contains",
+        "left": "sequence { text \"ID-\"; repeat from 3 to 3 using greedy { character from { range \"0\" through \"9\"; } } }",
+        "right": "sequence { text \"ID-\"; repeat from 2 to 4 using greedy { character from { range \"0\" through \"9\"; } } }",
+        "status": "refuted",
+        "witness": "ID-00",
+        "left_accepts": false,
+        "right_accepts": true
+    },
+    {
+        "name": "disjoint non-ASCII ranges",
+        "query": "disjoint",
+        "left": "character from { range \"α\" through \"ω\"; }",
+        "right": "character from { range \"中\" through \"文\"; }",
+        "status": "proven"
+    },
+    {
+        "name": "overlap on shared inclusive endpoint",
+        "query": "disjoint",
+        "left": "character from { range \"α\" through \"γ\"; }",
+        "right": "character from { range \"γ\" through \"ω\"; }",
+        "status": "refuted",
+        "witness": "γ",
+        "left_accepts": true,
+        "right_accepts": true
+    },
+    {
+        "name": "nullable unbounded loop closes",
+        "query": "equivalent",
+        "left": "repeat from 3 to unbounded using greedy { choice { empty; text \"a\"; } }",
+        "right": "repeat from 0 to unbounded using lazy { text \"a\"; }",
+        "status": "proven"
+    },
+    {
+        "name": "zero repetitions accept epsilon only",
+        "query": "equivalent",
+        "left": "repeat from 0 to 0 using greedy { text \"z\"; }",
+        "right": "empty;",
+        "status": "proven"
+    },
+    {
+        "name": "unmodeled even when unreachable under zero repeats",
+        "query": "equivalent",
+        "left": "repeat from 0 to 0 using greedy { capture value { text \"a\"; } }",
+        "right": "empty;",
+        "status": "unsupported"
+    },
+    {
+        "name": "target dependent predicate refusal",
+        "query": "disjoint",
+        "left": "character from { unicode digit; }",
+        "right": "text \"a\";",
+        "status": "unsupported"
+    },
+    {
+        "name": "complement is outside the model",
+        "query": "disjoint",
+        "left": "character except { scalar \"a\"; }",
+        "right": "text \"a\";",
+        "status": "unsupported"
+    },
+    {
+        "name": "property without resolved case policy is outside the model",
+        "query": "contains",
+        "left": "character from { property \"General_Category\" value \"Lu\"; }",
+        "right": "text \"A\";",
+        "status": "unsupported"
+    },
+    {
+        "name": "maximum Unicode scalar remains in the alphabet",
+        "query": "disjoint",
+        "left": "text \"\\u{10FFFF}\";",
+        "right": "character from { range \"\\u{10FFFE}\" through \"\\u{10FFFF}\"; }",
+        "status": "refuted",
+        "witness": "\udbff\udfff",
+        "left_accepts": true,
+        "right_accepts": true
+    },
+    {
+        "name": "possessive repeat refusal",
+        "query": "contains",
+        "left": "repeat from 0 to 2 using possessive { text \"a\"; }",
+        "right": "text \"a\";",
+        "status": "unsupported"
+    },
+    {
+        "name": "compilation budget exhaustion stays unknown",
+        "query": "equivalent",
+        "left": "repeat from 4294967295 to 4294967295 using greedy { text \"a\"; }",
+        "right": "empty;",
+        "status": "unknown"
+    }
 ]

@@ -19,7 +19,7 @@ The canonical stable tag is `vMAJOR.MINOR.PATCH`. Assign one immutable canonical
 Current binding coordinates and migration requirements
 
 -   `c-vVERSION` — The governed Git checkout pins this ref. A future release can use the canonical tag after switching its manifest, installation guide, publisher and verification together.
--   `go-vVERSION` — The current Go module uses an explicit Git revision query. Native SemVer resolution for a v4 subdirectory module would require a /v4 module path and a bindings/go/v4.* tag.
+-   `go-vVERSION` — The current Go module uses an explicit Git revision query. Native SemVer resolution for a v4 subdirectory module would require a /v4 module path and a bindings/go/v4.\* tag.
 -   `php-vVERSION` — The governed checkout selects a subdirectory Composer path package. A canonical checkout can replace the alias after requalification. Direct Packagist discovery would require separate package layout and distribution work.
 -   `r-vVERSION` — The governed source install selects the bindings/r checkout at this ref. A future release can use the canonical tag after coordinating packaging and independent consumer verification.
 -   `swift-vVERSION` — The governed build uses a tagged checkout and a local Swift package. Native remote SwiftPM version resolution would require a root package manifest and an independently qualified remote install route.

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import fnmatch
+import hashlib
 import json
 import os
 import subprocess
@@ -229,13 +230,23 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parse_args(sys.argv[1:] if argv is None else argv)
     try:
         policy = load_policy()
+        if args.target == "repository":
+            preserved = policy.get("byte_preserved_inputs")
+            if not isinstance(preserved, dict) or not preserved:
+                raise FormattingConfigurationError("byte-preserved inputs are required")
+            for path, expected in preserved.items():
+                digest = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
+                if digest != expected:
+                    raise FormattingConfigurationError(
+                        f"byte-preserved input changed: {path}"
+                    )
         return format_target(
             args.target,
             args.check,
             policy,
             tracked_files(),
         )
-    except FormattingConfigurationError as exc:
+    except (FormattingConfigurationError, OSError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 2
 

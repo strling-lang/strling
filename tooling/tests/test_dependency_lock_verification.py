@@ -438,10 +438,19 @@ class DependencyLockVerificationTests(unittest.TestCase):
     def test_repository_catalog_initialization_preserves_current_inputs(self) -> None:
         result = locks.verify_lockfiles()
         self.assertEqual("passed", result["status"], result)
-        self.assertEqual(16, result["approved_lock_count"])
-        self.assertEqual(20, result["approved_manifest_count"])
+        # The independent Lab Wasm and language-relations Cargo roots each add
+        # one manifest, one lockfile, and one native integrity check.
+        self.assertEqual(18, result["approved_lock_count"])
+        self.assertEqual(22, result["approved_manifest_count"])
         self.assertEqual(
-            30, sum(result["native_dependency_integrity"]["summary"].values())
+            {
+                "passed": 32,
+                "failed": 0,
+                "waived": 0,
+                "unavailable": 0,
+                "incomplete": 0,
+            },
+            result["native_dependency_integrity"]["summary"],
         )
 
 

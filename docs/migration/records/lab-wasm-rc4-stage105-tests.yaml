@@ -1,0 +1,79 @@
+record_version: 2.0.0
+title: Reconcile repository tests with authorized lock and workflow controls
+status: in_progress
+objective: Correct two outdated repository test expectations while preserving the approved lock identities, protected workflow, and historical certificates.
+scope:
+    diff:
+        base: 800a74666ecf3b77185a854ee0940964aea8bdc9
+        head: working-tree
+    allowed_paths:
+        - docs/migration/records/lab-wasm-rc4-stage105-tests.yaml
+        - governance/change-control.json
+        - tooling/tests/test_dependency_lock_verification.py
+        - tooling/tests/test_public_execution.py
+    forbidden_paths:
+        - .github/**
+        - bindings/**
+        - core/**
+        - governance/dependency-lock-verification.json
+        - governance/security-policy.json
+        - spec/**
+        - tests/certification/**
+        - toolchain.json
+    expected_files:
+        - docs/migration/records/lab-wasm-rc4-stage105-tests.yaml
+        - tooling/tests/test_dependency_lock_verification.py
+        - tooling/tests/test_public_execution.py
+    permitted_generated_changes: []
+    expected_generated_outputs: []
+    required_verification_levels: [contract, unit, integration, quality]
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            [Only repository test expectations and their scope record change.]
+    public_api_change:
+        level: none
+        evidence: [No binding or public contract changes.]
+    schema_change:
+        level: none
+        evidence: [Neither dependency catalog nor certification schemas change.]
+    diagnostic_change:
+        level: none
+        evidence: [Compiler diagnostics stay frozen.]
+    target_behavior_change:
+        level: none
+        evidence: [The compiler targets and RC4 artifact remain unchanged.]
+    architecture_change:
+        level: none
+        evidence:
+            [
+                The protected workflow deployment and lock verifier retain their current definitions.,
+            ]
+    generated_output_change:
+        level: none
+        evidence:
+            [
+                The repository tests reference already authorized source configurations.,
+            ]
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Focused dependency catalog and protected workflow tests
+      command: python3 -m pytest tooling/tests/test_dependency_lock_verification.py tooling/tests/test_public_execution.py
+      expected_result: Current lock inventory and the exact read-only protected workflow gates pass.
+    - name: Full qualification
+      command: ./strling profile full
+      expected_result: The exact reviewed merge passes all required operations with fresh evidence.
+    - name: Independent Release qualification
+      command: npm run test:all -- --profile release --all --no-reuse --plain
+      expected_result: All required operations pass using independently acquired evidence and no reuse.
+checkpoints:
+    - name: Exact-source failure isolated
+      status: in_progress
+      evidence:
+          - check: Full repository tests
+            result: failed
+            details: Stage 105 reproduced the stale catalog totals and the retired default-branch predicate assertion.
+commits: []

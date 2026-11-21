@@ -1241,8 +1241,8 @@ class QualityRoutingTests(unittest.TestCase):
             release_ids.index("stdlib_runtime_certification") + 1,
             release_ids.index("portability_matrix_certification"),
         )
-        self.assertEqual("1.33.0", toolchain.profile("full")["definition_version"])
-        self.assertEqual("1.33.0", toolchain.profile("release")["definition_version"])
+        self.assertEqual("1.34.0", toolchain.profile("full")["definition_version"])
+        self.assertEqual("1.34.0", toolchain.profile("release")["definition_version"])
         self.assertNotIn(
             "security_dependency_risk",
             [member["operation"] for member in local_members],

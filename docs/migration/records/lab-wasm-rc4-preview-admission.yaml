@@ -1,0 +1,104 @@
+record_version: 2.0.0
+title: Governed RC4 Lab Wasm Preview admission
+status: in_progress
+objective: Admit the exact owner-approved private RC4 bytes into Full and independent Release certification and prepare the unpublished distribution.
+scope:
+    diff:
+        base: a13009516b81d4acebf0cba6acf9a37877b41d58
+        head: working-tree
+    allowed_paths:
+        - docs/migration/lab-wasm-rc4-preview-admission.md
+        - docs/migration/records/lab-wasm-rc4-preview-admission.yaml
+        - docs/release-policy.md
+        - governance/change-control.json
+        - governance/lab-wasm-preview.json
+        - governance/release-policy.json
+        - tests/architecture/semantic-authority/1.0/evidence.json
+        - tests/certification/profile-source/1.0/definitions.json
+        - toolchain.json
+        - tooling/lab_preview_certification.py
+        - tooling/tests/test_lab_preview_certification.py
+        - tooling/tests/test_profile_source_identity.py
+        - tooling/tests/test_quality.py
+    forbidden_paths:
+        - .github/workflows/cd.yml
+        - bindings/**
+        - core/**
+        - packages/**
+        - spec/**
+        - tests/certification/release-candidate/**
+    expected_files:
+        - docs/migration/lab-wasm-rc4-preview-admission.md
+        - docs/migration/records/lab-wasm-rc4-preview-admission.yaml
+        - governance/lab-wasm-preview.json
+        - toolchain.json
+        - tooling/lab_preview_certification.py
+    permitted_generated_changes:
+        - profile-source-definitions
+        - release-policy-documentation
+        - semantic-authority-retirement-evidence
+    expected_generated_outputs:
+        - profile-source-definitions
+        - release-policy-documentation
+        - semantic-authority-retirement-evidence
+    required_verification_levels: [contract, unit, integration, quality]
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence: [The verifier replays the frozen canonical compiler.]
+    public_api_change:
+        level: none
+        evidence:
+            [RC4 stays private and the four released operations are preserved.]
+    schema_change:
+        level: none
+        evidence:
+            [
+                Preview uses the existing RC1 wire protocol and certification result contract.,
+            ]
+    diagnostic_change:
+        level: none
+        evidence:
+            [
+                The program compares the frozen adapter with sealed compiler behavior.,
+            ]
+    target_behavior_change:
+        level: none
+        evidence:
+            [
+                Compiler sources and target profiles remain at the frozen revision.,
+            ]
+    architecture_change:
+        level: none
+        evidence:
+            [A new profile operation uses the existing runner and trust policy.]
+    generated_output_change:
+        level: compatible
+        evidence:
+            [
+                Registered generators project the revised mandatory profile definitions and release policy.,
+            ]
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: Preview admission and sealed compiler replay
+      command: python -m tooling.lab_preview_certification --qualify --json
+      expected_result: The admitted source and Wasm identities match the frozen inputs and canonical replay passes.
+    - name: Full qualification
+      command: ./strling profile full
+      expected_result: All mandatory operations pass for the certification source with exact live distribution evidence.
+    - name: Independent Release qualification
+      command: npm run test:all -- --profile release --all --no-reuse --plain
+      expected_result: The Release runner produces independent evidence with reuse disabled.
+checkpoints:
+    - name: Exact RC4 Preview admission
+      status: in_progress
+      evidence:
+          - check: Two clean Windows source replays
+            result: passed
+            details: Both replays of the reviewed Git source produced the approved raw Wasm and source-bound build receipt.
+          - check: Trusted closure and publication
+            result: not_run
+            details: Preview scope is approved. Trusted certification and P20-T05 publication use their separate authorizations.
+commits: []

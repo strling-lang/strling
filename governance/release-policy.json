@@ -515,15 +515,15 @@
         },
         {
             "id": "lab-wasm-adapter",
-            "surface": "Private Lab compiler WebAssembly adapter",
+            "surface": "Lab compiler WebAssembly Preview candidate",
             "path": "bindings/lab-wasm/Cargo.toml",
             "current_version": "0.1.0-rc.4",
-            "authority": "Independently versioned development adapter metadata",
+            "authority": "Independently versioned Preview certification admission in governance/lab-wasm-preview.json",
             "consumer_visible": false,
             "coordinates_with_product": false,
             "independently_versioned": true,
             "publication_destination": "Not published",
-            "disposition": "Local browser qualification only; distribution requires separate artifact admission and release authorization.",
+            "disposition": "Admitted for governed Preview certification; public distribution requires exact signed evidence and separate P20-T05 authorization.",
             "probe": {
                 "kind": "regex",
                 "pattern": "(?ms)^\\[package\\].*?^version\\s*=\\s*\"([^\"]+)\"",

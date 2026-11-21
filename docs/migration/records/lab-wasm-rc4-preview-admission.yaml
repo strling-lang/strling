@@ -15,6 +15,7 @@ scope:
         - governance/release-policy.json
         - tests/architecture/semantic-authority/1.0/evidence.json
         - tests/certification/profile-source/1.0/definitions.json
+        - tests/documentation/1.0/manifest.json
         - toolchain.json
         - tooling/lab_preview_certification.py
         - tooling/tests/test_lab_preview_certification.py

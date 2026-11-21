@@ -291,9 +291,23 @@ def test_post_publication_workflow_is_protected_read_only_and_pinned():
     assert "id-token" not in text
     assert "publish_certified_artifact" not in text
     assert "inputs." not in text
-    for job in workflow["jobs"].values():
+    pinned_conditions = [
+        "github.repository == 'strling-lang/strling'",
+        "github.event_name == 'workflow_dispatch'",
+        "vars.PUBLIC_VERIFICATION_ENABLED == 'true'",
+        "github.ref == vars.PUBLIC_WORKFLOW_REF",
+        "github.sha == vars.PUBLIC_WORKFLOW_SHA",
+        "github.workflow_sha == vars.PUBLIC_WORKFLOW_SHA",
+    ]
+    assert set(workflow["jobs"]) == {"verify", "reconcile"}
+    for name, job in workflow["jobs"].items():
         assert job["environment"] == "public-verification"
-        assert "default_branch" in job["if"]
+        expected = pinned_conditions
+        if name == "reconcile":
+            assert job["needs"] == "verify"
+            expected = [*pinned_conditions, "always()", "!cancelled()"]
+        terms = " ".join(job["if"].split()).split(" && ")
+        assert sorted(terms) == sorted(expected)
         assert job.get("permissions", {"contents": "read"}) in (
             {"contents": "read"},
             {"contents": "read", "actions": "read"},

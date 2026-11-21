@@ -14,6 +14,7 @@ scope:
         - governance/lab-wasm-preview.json
         - governance/release-policy.json
         - tests/architecture/semantic-authority/1.0/evidence.json
+        - tests/certification/product/1.0/producer-manifest.json
         - tests/certification/profile-source/1.0/definitions.json
         - tests/documentation/1.0/manifest.json
         - toolchain.json

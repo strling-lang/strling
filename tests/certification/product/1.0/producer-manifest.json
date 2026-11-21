@@ -123,6 +123,13 @@
             "structured_operation_id": "certification.release-supply-chain-profile"
         },
         {
+            "operation_id": "lab_wasm_preview_certification",
+            "evidence_area": "adapter-package",
+            "requirement": "required",
+            "result_contract": "certification-result-v1",
+            "structured_operation_id": "certification.lab-wasm-preview"
+        },
+        {
             "operation_id": "release_supply_chain_full_certification",
             "evidence_area": "security-provenance",
             "requirement": "required",

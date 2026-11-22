@@ -1,1 +1,1 @@
-{"command": ["Rscript", "--vanilla", "/tmp/strling-preview-documentation-alkip4qa/example.R", "/tmp/strling-preview-documentation-alkip4qa/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.22943782200309215}
+{"command": ["Rscript", "--vanilla", "/tmp/strling-preview-documentation-lh8nbblv/example.R", "/tmp/strling-preview-documentation-lh8nbblv/libstrling_interop.so"], "exit_code": 0, "elapsed_seconds": 0.3005882139550522}

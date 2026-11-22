@@ -19,7 +19,7 @@
       "url": "https://evidence.example.test/bindings/java/README.md"
     },
     "provenance": {
-      "sha256": "d81eceae5890901d059196311421323c190ecfac0a479a477ae4a7594c684515",
+      "sha256": "3b475dafd911049cf57c45002768813144ca4c06275bc067af886ef65b7d0922",
       "url": "https://evidence.example.test/release-java.intoto.json"
     },
     "sbom": {
@@ -28,7 +28,7 @@
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.614474939000047,
+  "elapsed_seconds": 0.9844710719771683,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:java:coordinate",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:java:metadata",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:java:artifact",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:java:source",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:java:sbom",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:java:provenance",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:java:documentation",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:java:scope",
       "platform": null,
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:java:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:java:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:java:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:java:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:java:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:java:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:java:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,7 +190,7 @@
       "check": "isolation",
       "id": "release:java:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "dc5966c36db28b379fa239f17027cdad89d1721bf77695f25e79e389480b6ffe",
+      "retrieval_sha256": "0b63e3e15f1fa2b903fc388953e0263e1260d3e12605cbfe10ad8435fd95056a",
       "status": "VERIFYING",
       "tier": "Supported"
     }
@@ -264,7 +264,7 @@
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-java.intoto.json",
-      "sha256": "d81eceae5890901d059196311421323c190ecfac0a479a477ae4a7594c684515",
+      "sha256": "3b475dafd911049cf57c45002768813144ca4c06275bc067af886ef65b7d0922",
       "size": 7690
     },
     {

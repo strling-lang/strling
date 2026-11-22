@@ -1,0 +1,17 @@
+{
+  "status": "passed-lossless-candidate-evidence-projection",
+  "source": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+  "original_proof_sha256": "cfa44490325eda64f4a107d1b6c6dd7b3e30b56900f6fb85cdbe83f1f238f036",
+  "projected_proof_sha256": "90440613f80e1d70167b8b7253c24bdf6a29b5058c34a823dea07d78481faeb9",
+  "nested_package_root": "9064e081c6529cd7d6c100a189197b0a6726b268e6612242e68c562ad3a246e9",
+  "nested_package_files": 156,
+  "coverage_unchanged": true,
+  "artifact_routes": 17,
+  "consumer_scopes": 15,
+  "obligations": 256,
+  "helper_sha256": "8286b42bf29b83764414b18f6316ab7e700ed73ef0d568f9a4eb6fcafee4cb72",
+  "codec_sha256": "925b3fc9559cbce4fc0c2c7a6acd441e97ef6a45f7714d9cc3ed3fc5ef266183",
+  "product_artifact_normalization_applied": false,
+  "private_key_read": false,
+  "publication_authorized": false
+}

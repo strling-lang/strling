@@ -58,9 +58,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702:release:lua",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:lua",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }

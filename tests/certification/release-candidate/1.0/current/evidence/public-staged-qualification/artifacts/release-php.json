@@ -19,16 +19,16 @@
       "url": "https://evidence.example.test/bindings/php/README.md"
     },
     "provenance": {
-      "sha256": "f5d369db2bf665d4ccb2ecf110c6350a56bab29eecdb1ae21900eb60266c305a",
+      "sha256": "6d87277bfacbca6c72bb6ce8e867949c21c46085fb2499b58915f9c6ff0c6918",
       "url": "https://evidence.example.test/release-php.intoto.json"
     },
     "sbom": {
-      "sha256": "f380c9f1bcf0d42b8cd62952820625b4715b1ccd0a6810ae2f8ff4eec2f46fc3",
+      "sha256": "14d4347ec3d3855f4352bf34cdb7d630d0ccb9ad1e3e1a9c70fd1f21b01d139f",
       "url": "https://evidence.example.test/release-php.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 33.26351014599993,
+  "elapsed_seconds": 38.83028639596887,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:php:coordinate",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:php:metadata",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:php:artifact",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:php:source",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:php:sbom",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:php:provenance",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:php:documentation",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:php:scope",
       "platform": null,
-      "retrieval_sha256": "d23cd04c6fc743ba91db7b744d9dc075028d67af029b24b7e029b88e081879a8",
+      "retrieval_sha256": "f2b9a159958c5831a45a76ef4b16488fb6c9593ad1664444537f654b9529d662",
       "status": "READY",
       "tier": "Preview"
     }
@@ -189,7 +189,7 @@
     "core/src/kernel.rs": "181d14c475bc8757021812ea323c994e067b0e7546483172fe4ed887b2395ed4",
     "core/src/lib.rs": "a875a07b9a3ff266d4e7285282ba37530418c81dad290d151963f59d33e05d5b",
     "core/src/lib_public.rs": "a3da3dea66f6d4e09bc6e44008b7ba132f4791dd923b71ab7c0559a4a8e16949",
-    "core/src/no_match_explanation.rs": "91a4ca8ed1e3b3502f9ecd3b49622c536e49017ee91a90522e518c08428910be",
+    "core/src/no_match_explanation.rs": "65ec99fc9f71058add6604ec8887afc1a21695110a72d8b3d9072f321f4482c7",
     "core/src/normalization.rs": "3d87a151d21ed5b9d43ebc11fbebfaaca0f5e7fec066c7cec23ea1bdcb886f13",
     "core/src/portability_diagnostics.rs": "4ef85127c799df29d5b81c17b06fc3638faa31a95d2e44513f87905db33d583e",
     "core/src/portability_planning.rs": "7b61ee0c8518d3a21e5550431dface31eeeed975e50f6000e459e0ba46d54dc8",
@@ -308,14 +308,6 @@
     "core/tests/target_artifact_orchestration.rs": "369a3e3fff0686ac21b20abf6da6e95c8c3996bda98412e99ab0ae4369880552",
     "core/tests/target_contracts.rs": "1272a0789d8830231f3eda14789987568c04a3f7ca4c22f37a9c917d8d0d30a6",
     "core/tests/target_semantic_profiles.rs": "bcace3a0dd4385b4b89025e0eb38183032b71c5b93142bdf98386235b1e64c39",
-    "core/tools/language-relations/Cargo.lock": "d85ce4a4adbc063ee811d33891bc3d24f4b4513c0cab3b37fc13e7e4c446a9da",
-    "core/tools/language-relations/Cargo.toml": "6650b6b5a51f19a9f5553f2aaa8f530e0a16f56a5c82919979ad7998b141cfb2",
-    "core/tools/language-relations/README.md": "9af0eac72865f4f94a86ab57b089024ee8c18f089ca61344c03235d8aa3d0060",
-    "core/tools/language-relations/fixtures.json": "1fedc4475a8dd630da6d449ecd16d09785f9c56f504e373ef3cfc81721bd710a",
-    "core/tools/language-relations/src/engine.rs": "a7533da504f13a3574eabb6d5a91674e2b78f42b7095faf95e2c9d2583c8d433",
-    "core/tools/language-relations/src/main.rs": "49241b89934f198fa69229b1018f53a2accb4dfd58650a58bc1ade82b150a9c3",
-    "core/tools/language-relations/src/oracle.rs": "803a918599077246d1321841e9442dc135d26f01aad0e0ca1b52a16817cd4532",
-    "core/tools/language-relations/src/tests.rs": "06139be4d658a9dd0692162fa524b0fbb0674bde1f12102490637a90b57ab621",
     "spec/AGENTS.md": "57215cf00e60eab12293a92814ca5ee8b18f5e7f64d910cc418d3c53de67c450",
     "spec/README.md": "16516382ce97088258f88f55d672e226e37b108aa33df39b575de47b98a449e0",
     "spec/VERSIONING.md": "d7bf39071c9fb9155706778b5bbd4efec7331f6a8b2c7a8dfb123ab71ab55d3d",
@@ -584,32 +576,32 @@
     {
       "authority": "synthetic",
       "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/php-v4.0.3",
-      "sha256": "e8c55919dec2021ce7a72bf83602b4dc78225d44e478e3a3499e3ae317466850",
+      "sha256": "ad166e1d12d4fd29173cea1dee380f7a0dbd3a9add43db4fded6e52a8d4b2cc3",
       "size": 106
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
-      "sha256": "6b7909d5478063b7f327809517144572606864658b8808e2e6d7e71cbff1612e",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+      "sha256": "ba5b51bc6bec4e27e420830c0a3dce217a4585b65a075804ac98c788a30b2395",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
-      "sha256": "8fb3c971b59f4274b722d2225fc9461be6529b1621bd8d93fd68cfe9c48af75f",
-      "size": 746126
+      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+      "sha256": "b0f8af173f47503878098101fb8b3c3d99956fec4bc5ae554dcc4241c7f2a351",
+      "size": 727295
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-php.spdx.json",
-      "sha256": "f380c9f1bcf0d42b8cd62952820625b4715b1ccd0a6810ae2f8ff4eec2f46fc3",
-      "size": 439675
+      "sha256": "14d4347ec3d3855f4352bf34cdb7d630d0ccb9ad1e3e1a9c70fd1f21b01d139f",
+      "size": 432856
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-php.intoto.json",
-      "sha256": "f5d369db2bf665d4ccb2ecf110c6350a56bab29eecdb1ae21900eb60266c305a",
-      "size": 6406
+      "sha256": "6d87277bfacbca6c72bb6ce8e867949c21c46085fb2499b58915f9c6ff0c6918",
+      "size": 6154
     },
     {
       "authority": "synthetic",

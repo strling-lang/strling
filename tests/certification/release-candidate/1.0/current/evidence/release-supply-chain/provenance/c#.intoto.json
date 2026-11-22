@@ -67,9 +67,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
+                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
+                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
                 },
                 {
                     "digest": {
@@ -79,7 +79,7 @@
                 },
                 {
                     "digest": {
-                        "sha256": "8a87955b8a83d599e9dfb5b8f6d1761bbf6b7572eb89196a6c3a2776471ab1b9"
+                        "sha256": "d34724bfe36c865abbbef0f01389ccbdc3b664ca116ca890731687840eb0bff2"
                     },
                     "uri": "strling:dependency-root:interop-cargo"
                 }
@@ -91,7 +91,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702:release:csharp",
+                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:csharp",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -100,7 +100,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "84f6fc88682b714725e0eff99fc9cdb9ba5c8348e91642836dabb287bfe8a064"
+                "sha256": "ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8"
             },
             "name": "bindings/csharp/src/STRling/bin/Release/STRling.4.0.3.nupkg"
         }

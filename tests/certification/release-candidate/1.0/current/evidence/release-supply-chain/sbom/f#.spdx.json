@@ -19,7 +19,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/f#/174bb53917405a1545a99cffd161fcc930fe90357889f2d942e605e2023f4978",
+    "documentNamespace": "https://strling.dev/sbom/f#/8664ad2f74721e5221cd56fbbfd9543af202e748a67351839bae7eab0051ee61",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -45,11 +45,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "443649b597fd659cd1fe4d35b7b40f1867ceda5cc1e9217c7905b89290021be4"
+                    "checksumValue": "fea8888f7edacb642e83fb93b6583ce738bca20c1be2f08e18e5833fa9eb91b9"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "6737c1d6e92688b9677017436dbbb7ddcf555daf"
+                    "checksumValue": "1cd6d36ddf31abc07b66a85563dd15e936ffd0cd"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -102,11 +102,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "7461dc10eec79e9aed205c33b94d061fb2149f32c39266d66f1ff9110dc7ec94"
+                    "checksumValue": "ecc9a33cfe9d0de1ea91ad13702d5252aac2f3510d7b96009f9122e8f9e95a73"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "ac623dffaf58c1507b81c99c4085bc67da095e64"
+                    "checksumValue": "a41ca0199f0beea8a92653ab4e57f6c614d6c216"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -162,7 +162,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "174bb53917405a1545a99cffd161fcc930fe90357889f2d942e605e2023f4978"
+                    "checksumValue": "8664ad2f74721e5221cd56fbbfd9543af202e748a67351839bae7eab0051ee61"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -179,7 +179,7 @@
             "licenseDeclared": "Apache-2.0",
             "name": "STRling.FSharp",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "40c0032e369a46295dea4f97e38585b16d1b059d"
+                "packageVerificationCodeValue": "96e98033ff400d5143f42d4f54caba05513fd691"
             },
             "versionInfo": "4.0.3"
         },

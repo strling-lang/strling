@@ -4,8 +4,8 @@
   "selected": 8,
   "passed": 8,
   "failed": 0,
-  "source": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
+  "source": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
   "public_release_verified": false,
   "native_companion_wheel": "bindings/python/dist/strling-4.0.3-cp312-none-win_amd64.whl",
-  "native_companion_sha256": "c8508357dd261c1ed2930faccd80edf65a99b870fd3fa31fb825e72a2e84131a"
+  "native_companion_sha256": "b41e8a65635a0055c65a9f733a019e7c3f3e66ba7e24f3ecae3be413a3cc9ae2"
 }

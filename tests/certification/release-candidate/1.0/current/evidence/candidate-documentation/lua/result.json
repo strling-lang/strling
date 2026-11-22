@@ -6,24 +6,24 @@
       "command": [
         "luarocks",
         "--lua-version=5.1",
-        "--tree=/tmp/strling-preview-documentation-1b7nt52k/lua-tree",
+        "--tree=/tmp/strling-preview-documentation-a1da5cgd/lua-tree",
         "install",
         "--deps-mode=none",
-        "/var/tmp/strling-rc4-stage105-preview-docs.GWzYIu/source/bindings/lua/strling-4.0.3-1.src.rock"
+        "/var/tmp/strling-pub-d01ac378-aggregate-first/bindings/lua/strling-4.0.3-1.src.rock"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0000.json",
-      "metadata_sha256": "d67dbe10cde12515a7f2009b6eefd1ee64d2ea7c6c57fd622504ccd15f6482fa"
+      "metadata_sha256": "d7e046d15f2cdf80c27c2eba871ef40a91f53d07d24895273b3fb6ab08f1a0e6"
     },
     {
       "command": [
         "lua",
-        "/tmp/strling-preview-documentation-1b7nt52k/example.lua",
-        "/tmp/strling-preview-documentation-1b7nt52k/libstrling_interop.so"
+        "/tmp/strling-preview-documentation-a1da5cgd/example.lua",
+        "/tmp/strling-preview-documentation-a1da5cgd/libstrling_interop.so"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0001.json",
-      "metadata_sha256": "46c7a47eb2d2528df24e207b45a68edc91a8ac7ef9001778e1c3c1ca49bd8bc5"
+      "metadata_sha256": "e47e4042581aea8df294aa8577459ec8ca894fd77115c5dd7f82c436085ed27f"
     }
   ],
   "documentation_examples": [
@@ -33,28 +33,28 @@
       "status": "passed"
     }
   ],
-  "documentation_manifest_sha256": "85643523090f643c9cf59b12e5c002bd3029015790638cefd431fb24cd4218ae",
+  "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
   "engineering": false,
-  "evidence_fingerprint": "a66612607d013a3d2f4e1ac9dd4bc2343fd7a527c4f9060c39f6fe85b7b287b1",
+  "evidence_fingerprint": "7673b4f1e717a1d9e062377e5af33228b9ee6342e7185652be14b92b2cabb9e6",
   "fixture_sha256": {
     "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
     "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
     "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
     "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
   },
-  "invocation_id": "025aa6db25384f21a2d272d7bdf48f51",
+  "invocation_id": "870ba1dd532b49aea28caaaf48414a14",
   "limitations": [
     "Preview policy and dependency-locking limits remain unchanged.",
     "Browser-safe factory execution on Node is not an actual browser support claim."
   ],
-  "native_sha256": "4e8caa51f9fe9de55afe59ba50b23e3988170ec767414449e57460ae31ab6ed7",
+  "native_sha256": "105b5e1268dcc24abbdd9bf84822be487cf40ad2fbad04319385449c201499c3",
   "product_version": "4.0.3",
   "public_retrieval": false,
   "runner_scope": "linux-x86_64",
   "source": {
-    "commit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
+    "commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
     "dirty": false,
-    "tree_sha256": "047d44c377c3b089fc69083a9b5bf5d8feec543107e0cd0b1bc239a6df0f6c92"
+    "tree_sha256": "aa02e71305eb52c6c657fb2c5188fc1c8dd316260c4ee2a90374a5aa90a74b09"
   },
   "status": "passed",
   "subject_sha256": "888a7fd73828842400f614dbb46326216a342ca3272f5e94dae42605c5409884",

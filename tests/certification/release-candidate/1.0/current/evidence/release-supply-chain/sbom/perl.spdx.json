@@ -19,7 +19,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/perl/571c6b990b938f2359c18c1224bb9965b25d19c06926bcfcac15642fce5d2989",
+    "documentNamespace": "https://strling.dev/sbom/perl/ca35071b2b23cec7598fde149f2ae90bd11f07a61bfc1c8e0c83198ed8fe8bcd",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -276,7 +276,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "571c6b990b938f2359c18c1224bb9965b25d19c06926bcfcac15642fce5d2989"
+                    "checksumValue": "ca35071b2b23cec7598fde149f2ae90bd11f07a61bfc1c8e0c83198ed8fe8bcd"
                 }
             ],
             "copyrightText": "NOASSERTION",

@@ -1,0 +1,10 @@
+{
+  "schema_version": "strling-evidence-byte-archive-v1",
+  "document_kind": "supplemental-evidence-bytes",
+  "source": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+  "original_name": "cdb4ee2aea69-consumer-command-0002.stdout",
+  "bytes": 31,
+  "sha256": "a672fa4eb94918dcabf1b768fb66ad615e3ab02a38158e8b4f9a5df879298c31",
+  "encoding": "gzip+base64",
+  "payload": "H4sIAAAAAAACAysuTU5OTU1JTeFKyU8uzU3NK0ksyczPUyhILC4GCgIA/HtJLx8AAAA="
+}

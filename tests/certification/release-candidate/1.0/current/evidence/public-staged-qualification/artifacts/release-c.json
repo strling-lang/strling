@@ -19,16 +19,16 @@
       "url": "https://evidence.example.test/bindings/c/README.md"
     },
     "provenance": {
-      "sha256": "c2a314c04c0c4998fe9d38034ca1482fb06883b98f3ecbd3313af4d87542473f",
+      "sha256": "60e85dc3d6ede0b9e17cb62c75119a423013bb1c41c8caf873ce88230e2e7048",
       "url": "https://evidence.example.test/release-c.intoto.json"
     },
     "sbom": {
-      "sha256": "9641b503a4c4b24757d2ff447767f488d3519ea18364468b20fc92a91300a203",
+      "sha256": "0e42804b0cdbdcb296b62b16edeea80c3b114633bfaf28d36950d175e70807e3",
       "url": "https://evidence.example.test/release-c.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 37.252490406000106,
+  "elapsed_seconds": 45.30253839807119,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:c:coordinate",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:c:metadata",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:c:artifact",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:c:source",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:c:sbom",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:c:provenance",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:c:documentation",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:c:scope",
       "platform": null,
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:c:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:c:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:c:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:c:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:c:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:c:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:c:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,7 +190,7 @@
       "check": "isolation",
       "id": "release:c:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -200,7 +200,7 @@
       "check": "installation",
       "id": "release:c:linux-x86_64:installation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -210,7 +210,7 @@
       "check": "public-api",
       "id": "release:c:linux-x86_64:public-api",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -220,7 +220,7 @@
       "check": "product-version",
       "id": "release:c:linux-x86_64:product-version",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -230,7 +230,7 @@
       "check": "canonical-compiler",
       "id": "release:c:linux-x86_64:canonical-compiler",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -240,7 +240,7 @@
       "check": "native-wasm",
       "id": "release:c:linux-x86_64:native-wasm",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -250,7 +250,7 @@
       "check": "target-compatibility",
       "id": "release:c:linux-x86_64:target-compatibility",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -260,7 +260,7 @@
       "check": "kernel-rejection",
       "id": "release:c:linux-x86_64:kernel-rejection",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -270,7 +270,7 @@
       "check": "isolation",
       "id": "release:c:linux-x86_64:isolation",
       "platform": "linux-x86_64",
-      "retrieval_sha256": "d784346f340da6da198130a796112ef2a41ff7048c7fdde11ec20e19499dc76d",
+      "retrieval_sha256": "1bfff9a95bab7ea3c83aa190f9ee27ffaf999b195c329a5314d3a954fc7d808c",
       "status": "VERIFYING",
       "tier": "Supported"
     }
@@ -352,7 +352,7 @@
     "core/src/kernel.rs": "181d14c475bc8757021812ea323c994e067b0e7546483172fe4ed887b2395ed4",
     "core/src/lib.rs": "a875a07b9a3ff266d4e7285282ba37530418c81dad290d151963f59d33e05d5b",
     "core/src/lib_public.rs": "a3da3dea66f6d4e09bc6e44008b7ba132f4791dd923b71ab7c0559a4a8e16949",
-    "core/src/no_match_explanation.rs": "91a4ca8ed1e3b3502f9ecd3b49622c536e49017ee91a90522e518c08428910be",
+    "core/src/no_match_explanation.rs": "65ec99fc9f71058add6604ec8887afc1a21695110a72d8b3d9072f321f4482c7",
     "core/src/normalization.rs": "3d87a151d21ed5b9d43ebc11fbebfaaca0f5e7fec066c7cec23ea1bdcb886f13",
     "core/src/portability_diagnostics.rs": "4ef85127c799df29d5b81c17b06fc3638faa31a95d2e44513f87905db33d583e",
     "core/src/portability_planning.rs": "7b61ee0c8518d3a21e5550431dface31eeeed975e50f6000e459e0ba46d54dc8",
@@ -471,14 +471,6 @@
     "core/tests/target_artifact_orchestration.rs": "369a3e3fff0686ac21b20abf6da6e95c8c3996bda98412e99ab0ae4369880552",
     "core/tests/target_contracts.rs": "1272a0789d8830231f3eda14789987568c04a3f7ca4c22f37a9c917d8d0d30a6",
     "core/tests/target_semantic_profiles.rs": "bcace3a0dd4385b4b89025e0eb38183032b71c5b93142bdf98386235b1e64c39",
-    "core/tools/language-relations/Cargo.lock": "d85ce4a4adbc063ee811d33891bc3d24f4b4513c0cab3b37fc13e7e4c446a9da",
-    "core/tools/language-relations/Cargo.toml": "6650b6b5a51f19a9f5553f2aaa8f530e0a16f56a5c82919979ad7998b141cfb2",
-    "core/tools/language-relations/README.md": "9af0eac72865f4f94a86ab57b089024ee8c18f089ca61344c03235d8aa3d0060",
-    "core/tools/language-relations/fixtures.json": "1fedc4475a8dd630da6d449ecd16d09785f9c56f504e373ef3cfc81721bd710a",
-    "core/tools/language-relations/src/engine.rs": "a7533da504f13a3574eabb6d5a91674e2b78f42b7095faf95e2c9d2583c8d433",
-    "core/tools/language-relations/src/main.rs": "49241b89934f198fa69229b1018f53a2accb4dfd58650a58bc1ade82b150a9c3",
-    "core/tools/language-relations/src/oracle.rs": "803a918599077246d1321841e9442dc135d26f01aad0e0ca1b52a16817cd4532",
-    "core/tools/language-relations/src/tests.rs": "06139be4d658a9dd0692162fa524b0fbb0674bde1f12102490637a90b57ab621",
     "spec/AGENTS.md": "57215cf00e60eab12293a92814ca5ee8b18f5e7f64d910cc418d3c53de67c450",
     "spec/README.md": "16516382ce97088258f88f55d672e226e37b108aa33df39b575de47b98a449e0",
     "spec/VERSIONING.md": "d7bf39071c9fb9155706778b5bbd4efec7331f6a8b2c7a8dfb123ab71ab55d3d",
@@ -747,31 +739,31 @@
     {
       "authority": "synthetic",
       "request_url": "https://api.github.com/repos/strling-lang/strling/git/ref/tags/c-v4.0.3",
-      "sha256": "b1ec0e5385f8d881dd3b03b54d842ce8d8e16d40f2b76742875d38be72e7def5",
+      "sha256": "45beedcf9444b137dd493d842c5b572c6db17f63c39090c8d809445ebb68b6c3",
       "size": 104
     },
     {
       "authority": "synthetic",
-      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
-      "sha256": "6b7909d5478063b7f327809517144572606864658b8808e2e6d7e71cbff1612e",
+      "request_url": "https://api.github.com/repos/strling-lang/strling/git/commits/d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+      "sha256": "ba5b51bc6bec4e27e420830c0a3dce217a4585b65a075804ac98c788a30b2395",
       "size": 108
     },
     {
       "authority": "synthetic",
-      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
-      "sha256": "960d6b23ded64030c79f2762eb0aa5261b81c1b31fc68fb23a26271c2f9b1c8c",
-      "size": 746997
+      "request_url": "https://codeload.github.com/strling-lang/strling/tar.gz/d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+      "sha256": "0af79691360fe30b2c07bbcac34960f014a5a148b823b5ce98f31d57bfc76532",
+      "size": 728148
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-c.spdx.json",
-      "sha256": "9641b503a4c4b24757d2ff447767f488d3519ea18364468b20fc92a91300a203",
-      "size": 434383
+      "sha256": "0e42804b0cdbdcb296b62b16edeea80c3b114633bfaf28d36950d175e70807e3",
+      "size": 427564
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-c.intoto.json",
-      "sha256": "c2a314c04c0c4998fe9d38034ca1482fb06883b98f3ecbd3313af4d87542473f",
+      "sha256": "60e85dc3d6ede0b9e17cb62c75119a423013bb1c41c8caf873ce88230e2e7048",
       "size": 9998
     },
     {

@@ -5,7 +5,7 @@
             "annotationDate": "1970-01-01T00:00:00Z",
             "annotationType": "OTHER",
             "annotator": "Tool: strling-release-supply-chain",
-            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"6ab925ae5994859d55bcc4c2a7699ed1c259686e14ea6b1c3c2f2782f12754ff\"}"
+            "comment": "{\"id\":\"interop-cargo\",\"inputs\":[{\"path\":\"bindings/interop/Cargo.toml\",\"sha256\":\"5bcb3272f8ef96432fe1fe1b4da4180f59fba4c57815c005c0844f895f976e66\"},{\"path\":\"bindings/interop/Cargo.lock\",\"sha256\":\"dbeaba68feacab6f025dbafbf6d47798441f9b9adb0c111bda46c9af05cf5d9f\"}],\"policy\":{\"ecosystem\":\"cargo\",\"integrity_mode\":\"cargo_lock\",\"risk_mode\":\"cargo_audit\"},\"resolved_components\":[{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"block-buffer\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cfg-if\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.4\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"cpufeatures\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.17\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"crypto-common\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.1.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"digest\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"generic-array\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"0.14.7\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"itoa\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.18\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"libc\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.2.189\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"memchr\",\"reported_license\":\"Unlicense OR MIT\",\"selected_license\":null,\"version\":\"2.8.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"proc-macro2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.107\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"quote\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.47\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_core\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_derive\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.229\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"serde_json\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.0.151\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"sha2\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"0.10.9\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"syn\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"3.0.3\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"typenum\",\"reported_license\":\"MIT OR Apache-2.0\",\"selected_license\":null,\"version\":\"1.20.1\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"unicode-ident\",\"reported_license\":\"(MIT OR Apache-2.0) AND Unicode-3.0\",\"selected_license\":null,\"version\":\"1.0.24\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"version_check\",\"reported_license\":\"MIT/Apache-2.0\",\"selected_license\":null,\"version\":\"0.9.5\"},{\"classification\":\"permitted\",\"disposition_id\":null,\"distribution_scope\":\"distributed-runtime\",\"name\":\"zmij\",\"reported_license\":\"MIT\",\"selected_license\":null,\"version\":\"1.0.23\"}],\"resolved_without_external\":false,\"risk_evidence_sha256\":\"816737bc433f0a137a71e1e19b52b6885fed56161c4940a6e88f03d42a05600d\"}"
         },
         {
             "annotationDate": "1970-01-01T00:00:00Z",
@@ -25,7 +25,7 @@
     "documentDescribes": [
         "SPDXRef-Package"
     ],
-    "documentNamespace": "https://strling.dev/sbom/python/7e8d16c7632060b07c0adc4cb15f11f107faa86bc60d59ffaeff27aef20deadf",
+    "documentNamespace": "https://strling.dev/sbom/python/65e73d25339a3a494c5fb8affab7160f126c98a3a3bde6cac3a4d5c9222e2dcc",
     "files": [
         {
             "SPDXID": "SPDXRef-File-1",
@@ -70,11 +70,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "357ca369c12ba2b94baba6f3c090ae54a90f869d04c0a19ab70ff8a8663ca7ed"
+                    "checksumValue": "71a5e5bdd7b10c3a55d6c3d0df5e3c2712524b75882abae808053bbb8667faa3"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "36736f1d1d853b08b3403d82db797cebba74d16d"
+                    "checksumValue": "e96e71468afaa54597327ac52c7e954a8f1e24f3"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -89,11 +89,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "4e8caa51f9fe9de55afe59ba50b23e3988170ec767414449e57460ae31ab6ed7"
+                    "checksumValue": "105b5e1268dcc24abbdd9bf84822be487cf40ad2fbad04319385449c201499c3"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "89c5045996de46920ece9025805b1147c8b2191e"
+                    "checksumValue": "86a8d0e9e312c7ec7b0c3e070ec88c2acdc3be8a"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -336,11 +336,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "04f94a00f85bebea083a4ce447cdd5b784f4e329b5784f952f1e66a8615f0c39"
+                    "checksumValue": "93fdc27791a5b468d4318a3589ca7be2811bd85b887dddd631c0abc731c6d170"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "8eb75122b593f6a2a227750da32bfa79d78490dc"
+                    "checksumValue": "52373510572d653c7b00706a1142d71d60f51eb4"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -450,11 +450,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "ea92529ddf290a4df179b15b9f4dc6c3ecccf47689e6606115ec169caa971580"
+                    "checksumValue": "7337c640662b5ed362329613e74428f22ffb849f7e0408c1b81a07819a3c973c"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "4539fc4d31520f4cc6b637795b9d1d4cb69a27f7"
+                    "checksumValue": "b5e2bfda190551d6cf09266f8a91ce6c30423aae"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -469,11 +469,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c8508357dd261c1ed2930faccd80edf65a99b870fd3fa31fb825e72a2e84131a"
+                    "checksumValue": "b41e8a65635a0055c65a9f733a019e7c3f3e66ba7e24f3ecae3be413a3cc9ae2"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "665e2fc86456b3470b39af8650465a5a7cee2cd8"
+                    "checksumValue": "4b2b2fa4770afc414fb08413771e06c19aa8ae75"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -716,11 +716,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "c6fc59d012a1d0422bd98863c147bae4a557cfc91673c599449df13fc180a4d4"
+                    "checksumValue": "8253184b86a58f6bf3e79b1dd1e70a3ff6927da60f99b9e0c1e720dd8630f080"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "4380c56c1c03eb05a41342dba91aa8915173ba4f"
+                    "checksumValue": "c179ea87b0a80420fec9c60601a2deb9f9492cde"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -1552,11 +1552,11 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "91a4ca8ed1e3b3502f9ecd3b49622c536e49017ee91a90522e518c08428910be"
+                    "checksumValue": "65ec99fc9f71058add6604ec8887afc1a21695110a72d8b3d9072f321f4482c7"
                 },
                 {
                     "algorithm": "SHA1",
-                    "checksumValue": "9b9397bcf3a31c9552aa5623c15c3864ce2822a3"
+                    "checksumValue": "28ddfc60cd108eaf705ccf3b8f32c88f61499794"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -2980,7 +2980,7 @@
             "checksums": [
                 {
                     "algorithm": "SHA256",
-                    "checksumValue": "7e8d16c7632060b07c0adc4cb15f11f107faa86bc60d59ffaeff27aef20deadf"
+                    "checksumValue": "65e73d25339a3a494c5fb8affab7160f126c98a3a3bde6cac3a4d5c9222e2dcc"
                 }
             ],
             "copyrightText": "NOASSERTION",
@@ -2997,7 +2997,7 @@
             "licenseDeclared": "Apache-2.0",
             "name": "STRling",
             "packageVerificationCode": {
-                "packageVerificationCodeValue": "5af014b41e8ff3cf28bae3f30901b7d02a477937"
+                "packageVerificationCodeValue": "dd53c63eb4ac6fd7a76bc81acba938831c19ab4e"
             },
             "versionInfo": "4.0.3"
         },

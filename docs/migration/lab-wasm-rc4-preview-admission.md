@@ -5,6 +5,8 @@ Owner decision `STRL-LAB-WASM-RC4-PREVIEW-ADMISSION-2026-11-20` admits
 formatting, proof-carrying semantic conversion, and bounded no-match explanation.
 Interactive browser observations carry no Regex Conformance certification.
 
+The table records the admission checkpoint. See the later [trusted certification](#rc4-preview-trusted-certification) for the signed disposition.
+
 | Stage                     | Evidence                                                                                                                                                                                                                                                                                                                  |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Scope                     | **ADMITTED FOR PREVIEW CERTIFICATION** by [the machine record](../../governance/lab-wasm-preview.json).                                                                                                                                                                                                                   |
@@ -110,3 +112,30 @@ manifest can name the reserved asset URL and pinned bytes, digest, bounds,
 protocol, sealed compiler version, artifact source, compiler base, and verified
 closure SHA-256. Build from a clean website checkout and repeat shipping browser
 and static-host acceptance. Netlify production release has its own approval.
+
+## RC4 Preview trusted certification
+
+The certified compiler source is `bab5a0aaf8d04a437d5c5f1aac3379a3c0511702`. The evidence-only
+snapshot `c67080f17b0755a32c0a18dbb784fb623b5611ad` is retained in Git history and was
+accepted by all four [hosted integrity jobs](https://github.com/strling-lang/strling/actions/runs/44983451950). The immutable
+verification reader is `59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0`.
+
+Full 1.34.0 and independent no-reuse Release 1.34.0 each completed all
+126 operations, with 125 passes, the existing `WVR-SEC-VSCE-LICENSE-001`
+waiver, and zero failures. Both independently authenticated all 17 producer
+routes and passed RC4 Preview replay. Staged product qualification passed
+all 17 artifact protocols and all 15 Supported clean consumer scopes.
+
+The signed evidence root is `95753563a98e1473fc065fa0256f058075ee702bf3706f661b154dccc9583a76`.
+Attestation SHA-256 is `9ed60971bc08247b2f207864b3a912ca0f490a0a644c5d75e1670368a89614fa`.
+Signature SHA-256 is `19f0720213ae1f8e9f3a30c2fe55fc6565785f2d1c4aaf6f84a0ec58e17c65ef`.
+The nested package certificate root is
+`efb5d2463a46ec38f5f34ccccab41664ce45517d452c78b0cf6f5d3078500aa5`.
+The frozen 2,548,656-byte Wasm has SHA-256
+`266f3167537a40722682f436729468795a1672e3d277e5dac9237bd9c04d0181`.
+
+The published Fourth Edition certificate and fixed source remain available
+through their recorded immutable refs. The default current-candidate view
+continues to point to that product snapshot. P20-T05 approval, configured
+GitHub release immutability, and a reviewed protected RC4 publication run
+remain required. Website shipping and Netlify production have separate gates.

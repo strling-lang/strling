@@ -1,5 +1,5 @@
 {
-    "active_task": "docs/migration/records/lab-wasm-rc4-stage105-tests.yaml",
+    "active_task": "docs/migration/records/lab-wasm-rc4-trusted-closure.yaml",
     "architecture_rule_registry": "governance/architecture-rules.json",
     "configuration_version": 1,
     "documentation_paths": ["**/*.md", "docs/**"],

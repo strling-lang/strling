@@ -1,1 +1,1 @@
-{"command": ["composer", "install", "--no-dev", "--no-scripts", "--no-plugins", "--no-interaction", "--prefer-dist"], "exit_code": 0, "elapsed_seconds": 2.646793987998535}
+{"command": ["composer", "install", "--no-dev", "--no-scripts", "--no-plugins", "--no-interaction", "--prefer-dist"], "exit_code": 0, "elapsed_seconds": 0.4213883930351585}

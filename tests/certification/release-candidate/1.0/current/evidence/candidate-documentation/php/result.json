@@ -14,19 +14,19 @@
       ],
       "exit_code": 0,
       "metadata": "bc4a71180870-consumer-command-0000.json",
-      "metadata_sha256": "6b624dd579c9b038abed0baf320db970bbe16bc94f1a0d8b789c75a295d7ef7c"
+      "metadata_sha256": "228d3d5de85fcd6efd3c8e53420fd0f0e2acd8350f5fbf1820428fef405a135d"
     },
     {
       "command": [
         "php",
         "-d",
         "ffi.enable=1",
-        "/tmp/strling-preview-documentation-b2ep_q2s/package/example.php",
-        "/tmp/strling-preview-documentation-b2ep_q2s/libstrling_interop.so"
+        "/tmp/strling-preview-documentation-jr3clp7o/package/example.php",
+        "/tmp/strling-preview-documentation-jr3clp7o/libstrling_interop.so"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0000.json",
-      "metadata_sha256": "46b5da0b6b69e0125957060e56327282a4ed1a0e0e2a44d853fb89d24ee521c0"
+      "metadata_sha256": "b9f7fafafdc83cc20b0ba098996dc23d56c70de5b56f7712bb8ade28e9734a21"
     }
   ],
   "documentation_examples": [
@@ -36,30 +36,30 @@
       "status": "passed"
     }
   ],
-  "documentation_manifest_sha256": "85643523090f643c9cf59b12e5c002bd3029015790638cefd431fb24cd4218ae",
+  "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
   "engineering": false,
-  "evidence_fingerprint": "2e25718d5d2644189b5d746e40381e4501c5aefaf3ccf75e7f2bd181ea68a0c1",
+  "evidence_fingerprint": "1e07389966b8ced2efd7dfd85211044d2ffdcfe8eb653a891a719e298af71628",
   "fixture_sha256": {
     "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
     "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
     "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
     "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
   },
-  "invocation_id": "aec3776f8260424d8577b533117f08a2",
+  "invocation_id": "c7f0e25d10b84c91aef644458896f205",
   "limitations": [
     "Preview policy and dependency-locking limits remain unchanged.",
     "Browser-safe factory execution on Node is not an actual browser support claim."
   ],
-  "native_sha256": "4e8caa51f9fe9de55afe59ba50b23e3988170ec767414449e57460ae31ab6ed7",
+  "native_sha256": "105b5e1268dcc24abbdd9bf84822be487cf40ad2fbad04319385449c201499c3",
   "product_version": "4.0.3",
   "public_retrieval": false,
   "runner_scope": "linux-x86_64",
   "source": {
-    "commit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
+    "commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
     "dirty": false,
-    "tree_sha256": "047d44c377c3b089fc69083a9b5bf5d8feec543107e0cd0b1bc239a6df0f6c92"
+    "tree_sha256": "aa02e71305eb52c6c657fb2c5188fc1c8dd316260c4ee2a90374a5aa90a74b09"
   },
   "status": "passed",
-  "subject_sha256": "d7a24c0535f792e776d9653903d1e40feffc12d321de992149fe8aa0744cce7c",
+  "subject_sha256": "c7d4ce211a98f4298d74806bdcf60887f132c4970e74a70ad79454d7a70178b2",
   "supported_claim": false
 }

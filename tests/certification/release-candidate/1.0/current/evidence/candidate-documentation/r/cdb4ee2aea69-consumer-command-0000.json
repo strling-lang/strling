@@ -1,1 +1,1 @@
-{"command": ["R", "CMD", "INSTALL", "--library=/tmp/strling-preview-documentation-alkip4qa/r-library", "/tmp/strling-preview-documentation-alkip4qa/package"], "exit_code": 0, "elapsed_seconds": 4.822741396998026}
+{"command": ["R", "CMD", "INSTALL", "--library=/tmp/strling-preview-documentation-lh8nbblv/r-library", "/tmp/strling-preview-documentation-lh8nbblv/package"], "exit_code": 0, "elapsed_seconds": 1.8958848420297727}

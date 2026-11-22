@@ -9,7 +9,7 @@
     "product_version": "4.0.3",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "a7ed79c1a3cd3f3115ea476ec15bf7aa0e3e093968ac3028f1c3aeaef6a91f6c",
+    "retrieval_files_sha256": "ef88bb439ad3d6b207abee3beb19678680aac21ebb8006237b26fbca1a703708",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -21,8 +21,8 @@
       "source_outcome": "succeeded",
       "target_pattern": "abc",
       "kernel_mismatch_rejected": true,
-      "native_sha256": "46aba882f26eba72688a9adeab40a7174325006f88052e58bfcd995f13cc2d6c",
-      "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
+      "native_sha256": "9a74dea2a962d78d657a8f1a47946ed5dc0adc17a91d8318f2baa3e7fc6d7641",
+      "documentation_manifest_sha256": "85643523090f643c9cf59b12e5c002bd3029015790638cefd431fb24cd4218ae",
       "documentation_examples": [
         {
           "id": "bindings/cpp/README.md#4",
@@ -70,7 +70,6 @@
       "PUB_CACHE",
       "PYTHONHASHSEED",
       "PYTHONNOUSERSITE",
-      "RUSTUP_HOME",
       "STRLING_MAVEN_REPOSITORY",
       "SYSTEMDRIVE",
       "SYSTEMROOT",
@@ -95,7 +94,7 @@
         "scope": "windows-x86_64",
         "runner_os": "Windows",
         "runner_arch": "AMD64",
-        "policy_sha256": "0ae10f7c40aae1d65a214a122678de4c6deb52956cc2b4fd948ba358d632bdd5",
+        "policy_sha256": "4ce09c79e21dee26598cee09d3b07405d8d4cde44e2b662ef455b24768425be8",
         "findings": []
       },
       {
@@ -109,7 +108,7 @@
         "scope": "windows-x86_64",
         "runner_os": "Windows",
         "runner_arch": "AMD64",
-        "policy_sha256": "0ae10f7c40aae1d65a214a122678de4c6deb52956cc2b4fd948ba358d632bdd5",
+        "policy_sha256": "4ce09c79e21dee26598cee09d3b07405d8d4cde44e2b662ef455b24768425be8",
         "findings": []
       },
       {
@@ -123,7 +122,7 @@
         "scope": "windows-x86_64",
         "runner_os": "Windows",
         "runner_arch": "AMD64",
-        "policy_sha256": "0ae10f7c40aae1d65a214a122678de4c6deb52956cc2b4fd948ba358d632bdd5",
+        "policy_sha256": "4ce09c79e21dee26598cee09d3b07405d8d4cde44e2b662ef455b24768425be8",
         "findings": []
       },
       {
@@ -137,13 +136,13 @@
         "scope": "windows-x86_64",
         "runner_os": "Windows",
         "runner_arch": "AMD64",
-        "policy_sha256": "0ae10f7c40aae1d65a214a122678de4c6deb52956cc2b4fd948ba358d632bdd5",
+        "policy_sha256": "4ce09c79e21dee26598cee09d3b07405d8d4cde44e2b662ef455b24768425be8",
         "findings": []
       }
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "085517b4c83592cafc295e4e08ab5286320721c1a419d37910288ef017fa4627"
+    "receipt_fingerprint": "a55cf0727a0aa9c95e3c1e6e3d58546dcf088ee975406608c59ad939db3937dd"
   },
-  "elapsed_seconds": 25.95299999997951
+  "elapsed_seconds": 22.125
 }

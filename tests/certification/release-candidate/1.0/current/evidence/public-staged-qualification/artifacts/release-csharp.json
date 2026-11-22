@@ -19,16 +19,16 @@
       "url": "https://evidence.example.test/bindings/csharp/README.md"
     },
     "provenance": {
-      "sha256": "3d490125f67beb68013bb76fdbc48690fd9a6524f7c18f459e016918853282db",
+      "sha256": "ac79a9c26e596d4ec6ba11dbc470667f5ffd4ce0ce4cff6563100b1adc87f2f3",
       "url": "https://evidence.example.test/release-csharp.intoto.json"
     },
     "sbom": {
-      "sha256": "80ecc7c92d6428d63b0d7c3eca93e4306a934612236da29f24e93a9cdfddbf22",
+      "sha256": "860ac0c0459201854b3c13d8c70c21e898c1f32dc960cf4cdc6fda3f58c2c947",
       "url": "https://evidence.example.test/release-csharp.spdx.json"
     }
   },
   "authority": "synthetic",
-  "elapsed_seconds": 0.5524104429641739,
+  "elapsed_seconds": 0.38205463200006307,
   "metadata": {
     "fields": [],
     "status": "requires-authenticated-payload-metadata"
@@ -40,7 +40,7 @@
       "check": "coordinate",
       "id": "release:csharp:coordinate",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -50,7 +50,7 @@
       "check": "metadata",
       "id": "release:csharp:metadata",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -60,7 +60,7 @@
       "check": "artifact",
       "id": "release:csharp:artifact",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -70,7 +70,7 @@
       "check": "source",
       "id": "release:csharp:source",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -80,7 +80,7 @@
       "check": "sbom",
       "id": "release:csharp:sbom",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -90,7 +90,7 @@
       "check": "provenance",
       "id": "release:csharp:provenance",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -100,7 +100,7 @@
       "check": "documentation",
       "id": "release:csharp:documentation",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -110,7 +110,7 @@
       "check": "scope",
       "id": "release:csharp:scope",
       "platform": null,
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "READY",
       "tier": "Supported"
     },
@@ -120,7 +120,7 @@
       "check": "installation",
       "id": "release:csharp:windows-x86_64:installation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -130,7 +130,7 @@
       "check": "public-api",
       "id": "release:csharp:windows-x86_64:public-api",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -140,7 +140,7 @@
       "check": "product-version",
       "id": "release:csharp:windows-x86_64:product-version",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -150,7 +150,7 @@
       "check": "canonical-compiler",
       "id": "release:csharp:windows-x86_64:canonical-compiler",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -160,7 +160,7 @@
       "check": "native-wasm",
       "id": "release:csharp:windows-x86_64:native-wasm",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -170,7 +170,7 @@
       "check": "target-compatibility",
       "id": "release:csharp:windows-x86_64:target-compatibility",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -180,7 +180,7 @@
       "check": "kernel-rejection",
       "id": "release:csharp:windows-x86_64:kernel-rejection",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     },
@@ -190,14 +190,14 @@
       "check": "isolation",
       "id": "release:csharp:windows-x86_64:isolation",
       "platform": "windows-x86_64",
-      "retrieval_sha256": "b28864f947298a715d8b3857797bd0cab53e0a0b3324af34a3fb4cb91aebdbba",
+      "retrieval_sha256": "4e6237a807eb49e7f9a0286c17461193c7b43ccc67098e7774b20c0627479949",
       "status": "VERIFYING",
       "tier": "Supported"
     }
   ],
   "publication_authorized": false,
   "retrieval_files": {
-    "bindings/csharp/src/STRling/bin/Release/STRling.4.0.3.nupkg": "ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8"
+    "bindings/csharp/src/STRling/bin/Release/STRling.4.0.3.nupkg": "84f6fc88682b714725e0eff99fc9cdb9ba5c8348e91642836dabb287bfe8a064"
   },
   "retrieval_observations": [
     {
@@ -209,25 +209,25 @@
     {
       "authority": "synthetic",
       "request_url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.3/strling.nuspec",
-      "sha256": "29409ddce75e7010cb24d04f7a49aba3d6558c7ca4e86284a861f5d618d27c67",
+      "sha256": "27c2ebb95dc19c68a954556645ceb5cd1bb45f48e74760813b543ce1c4b2e77e",
       "size": 639
     },
     {
       "authority": "synthetic",
       "request_url": "https://api.nuget.org/v3-flatcontainer/strling/4.0.3/strling.4.0.3.nupkg",
-      "sha256": "ca7076791dd4a0286eb8968e0c36004f9591ca7f97dfb44dad7974b8622ca2e8",
-      "size": 1658107
+      "sha256": "84f6fc88682b714725e0eff99fc9cdb9ba5c8348e91642836dabb287bfe8a064",
+      "size": 1665941
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-csharp.spdx.json",
-      "sha256": "80ecc7c92d6428d63b0d7c3eca93e4306a934612236da29f24e93a9cdfddbf22",
+      "sha256": "860ac0c0459201854b3c13d8c70c21e898c1f32dc960cf4cdc6fda3f58c2c947",
       "size": 50816
     },
     {
       "authority": "synthetic",
       "request_url": "https://evidence.example.test/release-csharp.intoto.json",
-      "sha256": "3d490125f67beb68013bb76fdbc48690fd9a6524f7c18f459e016918853282db",
+      "sha256": "ac79a9c26e596d4ec6ba11dbc470667f5ffd4ce0ce4cff6563100b1adc87f2f3",
       "size": 5101
     },
     {

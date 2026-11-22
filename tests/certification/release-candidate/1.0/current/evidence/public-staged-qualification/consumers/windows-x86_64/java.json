@@ -9,7 +9,7 @@
     "product_version": "4.0.3",
     "authority": "staged",
     "status": "READY",
-    "retrieval_files_sha256": "a7ed79c1a3cd3f3115ea476ec15bf7aa0e3e093968ac3028f1c3aeaef6a91f6c",
+    "retrieval_files_sha256": "ef88bb439ad3d6b207abee3beb19678680aac21ebb8006237b26fbca1a703708",
     "fixture_sha256": {
       "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
       "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
@@ -17,11 +17,11 @@
       "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8"
     },
     "result": {
+      "status": "passed",
       "source_outcome": "succeeded",
       "kernel_mismatch_rejected": true,
       "target_pattern": "abc",
-      "status": "passed",
-      "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
+      "documentation_manifest_sha256": "85643523090f643c9cf59b12e5c002bd3029015790638cefd431fb24cd4218ae",
       "documentation_examples": [
         {
           "id": "bindings/java/README.md#2",
@@ -29,7 +29,7 @@
           "status": "passed"
         }
       ],
-      "native_sha256": "b41e8a65635a0055c65a9f733a019e7c3f3e66ba7e24f3ecae3be413a3cc9ae2",
+      "native_sha256": "c8508357dd261c1ed2930faccd80edf65a99b870fd3fa31fb825e72a2e84131a",
       "runtime_dependency_sha256": {
         "com.fasterxml.jackson.core:jackson-annotations:2.18.11": "9eab0d36da981645392427eedcb087e13be542488e37f935723dc0be50d18a53",
         "com.fasterxml.jackson.core:jackson-core:2.18.11": "825fa72dfb9e2f8a642322f1390dbac22c30d15ebd6dc6b3772158821ee124eb",
@@ -75,7 +75,6 @@
       "PUB_CACHE",
       "PYTHONHASHSEED",
       "PYTHONNOUSERSITE",
-      "RUSTUP_HOME",
       "STRLING_MAVEN_REPOSITORY",
       "SYSTEMDRIVE",
       "SYSTEMROOT",
@@ -100,7 +99,7 @@
         "scope": "windows-x86_64",
         "runner_os": "Windows",
         "runner_arch": "AMD64",
-        "policy_sha256": "0ae10f7c40aae1d65a214a122678de4c6deb52956cc2b4fd948ba358d632bdd5",
+        "policy_sha256": "4ce09c79e21dee26598cee09d3b07405d8d4cde44e2b662ef455b24768425be8",
         "findings": []
       },
       {
@@ -114,13 +113,13 @@
         "scope": "windows-x86_64",
         "runner_os": "Windows",
         "runner_arch": "AMD64",
-        "policy_sha256": "0ae10f7c40aae1d65a214a122678de4c6deb52956cc2b4fd948ba358d632bdd5",
+        "policy_sha256": "4ce09c79e21dee26598cee09d3b07405d8d4cde44e2b662ef455b24768425be8",
         "findings": []
       }
     ],
     "runner_environment": "local-staged-qualification",
     "publication_authorized": false,
-    "receipt_fingerprint": "ed2fda2db94b829688e8fa5204888e7c60c0177670f5dabcd5a6c10da25457c5"
+    "receipt_fingerprint": "9f7a3d81332cb3263be12e0142c2fc4bde64a150019e0a433435ce6cc12464ff"
   },
-  "elapsed_seconds": 5.530999999959022
+  "elapsed_seconds": 5.217999999999847
 }

@@ -6,11 +6,11 @@
       "command": [
         "perl",
         "Makefile.PL",
-        "INSTALL_BASE=/tmp/strling-preview-documentation-3hbl03jh/perl"
+        "INSTALL_BASE=/tmp/strling-preview-documentation-vqtmy41m/perl"
       ],
       "exit_code": 0,
       "metadata": "bc4a71180870-consumer-command-0000.json",
-      "metadata_sha256": "f3b964f55181fea41122ba59e24746c7234483fff72ac95d4a447d77d57e62b7"
+      "metadata_sha256": "94a66bccb83ecaea645eb7cee1b394d0d3b1599cf91fa39eac8eb1abf84b2f2a"
     },
     {
       "command": [
@@ -18,7 +18,7 @@
       ],
       "exit_code": 0,
       "metadata": "bc4a71180870-consumer-command-0001.json",
-      "metadata_sha256": "247081f5c813d35e4038aaa0190153abc3f845dbd5616ceee384b053c364a8fd"
+      "metadata_sha256": "c51ab1702d2a488170a824f64fe6c1cfb16759397eabbde2b0cb8bf8944bdb51"
     },
     {
       "command": [
@@ -27,17 +27,17 @@
       ],
       "exit_code": 0,
       "metadata": "bc4a71180870-consumer-command-0002.json",
-      "metadata_sha256": "3e6116bb76d9991bb565e60395f0d46776fad566df3b5935de822854d519d5fe"
+      "metadata_sha256": "27e99eea68de7624250f7ffc28f0242c5c048a35c84727e610683d447cc40bc8"
     },
     {
       "command": [
         "perl",
-        "/tmp/strling-preview-documentation-3hbl03jh/example.pl",
-        "/tmp/strling-preview-documentation-3hbl03jh/libstrling_interop.so"
+        "/tmp/strling-preview-documentation-vqtmy41m/example.pl",
+        "/tmp/strling-preview-documentation-vqtmy41m/libstrling_interop.so"
       ],
       "exit_code": 0,
       "metadata": "cdb4ee2aea69-consumer-command-0000.json",
-      "metadata_sha256": "963205f6e88d0d03fec58bbb08970ea58729743be2f9eb529c2e9178d2df351c"
+      "metadata_sha256": "60003e28c5943c50ebd8e8267b13eaa4cbbda272030a0b4b57c1125e5ff2a9a8"
     }
   ],
   "documentation_examples": [
@@ -47,30 +47,30 @@
       "status": "passed"
     }
   ],
-  "documentation_manifest_sha256": "754fca9205fd287de6dd3ae783a7921f0b677ef65473754af93ec994ad21fedc",
+  "documentation_manifest_sha256": "85643523090f643c9cf59b12e5c002bd3029015790638cefd431fb24cd4218ae",
   "engineering": false,
-  "evidence_fingerprint": "3f3ea2b0da19d6709bd9d446a20fd58bfd04d02e33a33793a775528134154489",
+  "evidence_fingerprint": "110c5574abd75ce46ea5987050ef33c52244a7aee62f0a12156854a353712c1a",
   "fixture_sha256": {
     "spec/contracts/1.0/examples/compile-request/regex-compat-success.json": "47d12f98585228f966a081011ec21a5dd8143ee1e5fd6b9fc1bb44e03d216de2",
     "spec/contracts/1.0/examples/compile-request/target-artifact.json": "a4b321f28ee3d5b837d89f28895136109fb7403cd8af0d3b91fef791d1d50610",
     "spec/targets/profiles/pcre2-10.42.json": "b0231a85c3b65ce87aa8cad8c0a690c1b9f4fa31ff005fa9e372cf5ee4209ea8",
     "spec/targets/profiles/pcre2-10.43.json": "ef55252869e24da49fb7515e04bbb550cbd460d5ef34ac29fac9e0e075c2da77"
   },
-  "invocation_id": "c1ad4bf4b15045e190d12ea980879c51",
+  "invocation_id": "96918744812940f097ff0e6057ea150a",
   "limitations": [
     "Preview policy and dependency-locking limits remain unchanged.",
     "Browser-safe factory execution on Node is not an actual browser support claim."
   ],
-  "native_sha256": "105b5e1268dcc24abbdd9bf84822be487cf40ad2fbad04319385449c201499c3",
+  "native_sha256": "4e8caa51f9fe9de55afe59ba50b23e3988170ec767414449e57460ae31ab6ed7",
   "product_version": "4.0.3",
   "public_retrieval": false,
   "runner_scope": "linux-x86_64",
   "source": {
-    "commit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+    "commit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
     "dirty": false,
-    "tree_sha256": "aa02e71305eb52c6c657fb2c5188fc1c8dd316260c4ee2a90374a5aa90a74b09"
+    "tree_sha256": "047d44c377c3b089fc69083a9b5bf5d8feec543107e0cd0b1bc239a6df0f6c92"
   },
   "status": "passed",
-  "subject_sha256": "ca35071b2b23cec7598fde149f2ae90bd11f07a61bfc1c8e0c83198ed8fe8bcd",
+  "subject_sha256": "571c6b990b938f2359c18c1224bb9965b25d19c06926bcfcac15642fce5d2989",
   "supported_claim": false
 }

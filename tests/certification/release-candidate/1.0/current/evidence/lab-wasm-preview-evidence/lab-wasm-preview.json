@@ -1,0 +1,33 @@
+{
+    "schema_version": "1.0.0",
+    "scope": "browser-compiler-tools-preview",
+    "admission": "approved-for-certification",
+    "publication_authorized": false,
+    "package": "strling-lab-wasm",
+    "version": "0.1.0-rc.4",
+    "wire_protocol": "strling.lab-compiler-tools@1.0.0-rc.1",
+    "compiler_base": "4e58730bbf67eaff683268e285e7084ccda5fadd",
+    "source_revision": "a13009516b81d4acebf0cba6acf9a37877b41d58",
+    "source_tree": "5602a5395bcf1962625f836071d720912dc43027",
+    "source_archive_sha256": "b18356bfe7af370e93888df5a7c92f6e785590a392e8015784aa63a9e820e92f",
+    "cargo_lock_sha256": "7e09a8ec801d0ff7bd49c3de409082bed7651ab61a9c3b70fe060a532f95e506",
+    "rebuild_receipt_sha256": "4cc7cc0d12af1a0c12ea0c772743c7d02bf4f164766aa26a17f4f7fa1a09181e",
+    "draft_spdx_sha256": "86582d8f740bc7f5fcf65c0b3a149ac7ff57f4811e24c1c940656231c4dc6d37",
+    "build_recipe": "bindings/lab-wasm/build-from-source.ps1",
+    "rust_version": "1.97.1",
+    "target": "wasm32-unknown-unknown",
+    "memory_bytes": 67108864,
+    "stack_bytes": 2097152,
+    "sealed_npm_archive_integrity": "sha512-+2MsnAOkb5bE0QblaYbVPqFimV10ZNS/CD0ZH0b5KjNCwBJwMEVdEHwLa4D52G6wk/4LJMBYMCb5sXL/L5gOAA==",
+    "reserved_destination": {
+        "repository": "strling-lang/strling",
+        "tag": "lab-wasm-v0.1.0-rc.4",
+        "asset": "strling_lab_wasm.wasm",
+        "immutable_required": true
+    },
+    "artifact": {
+        "bytes": 2548656,
+        "sha256": "266f3167537a40722682f436729468795a1672e3d277e5dac9237bd9c04d0181"
+    },
+    "required_profiles": ["full", "release"]
+}

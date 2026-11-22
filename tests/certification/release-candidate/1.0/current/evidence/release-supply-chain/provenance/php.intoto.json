@@ -41,12 +41,12 @@
                     {
                         "executable_sha256": "5cf51f9912671912136317d889df7a5b8219f2a77f2b311b9a100989106847e2",
                         "id": "release:php:linux-x86_64:composer",
-                        "version": "Composer version 2.7.1 2024-02-09 15:26:28"
+                        "version": "Composer plugins have been disabled for safety in this non-interactive session. Set COMPOSER_ALLOW_SUPERUSER=1 if you want to allow plugins to run as root/super user. Do not run Composer as root/super user! See https://getcomposer.org/root for details Composer version 2.7.1 2024-02-09 15:26:28"
                     },
                     {
-                        "executable_sha256": "7f1ac2fe89d267364311651c0e7e6651d32ea006c9a701c0cab68eb2394a67d7",
+                        "executable_sha256": "b64619982b3acf737cac1db606aab2ca1b6779b6f341f94eea8450597dcd1291",
                         "id": "release:php:linux-x86_64:php",
-                        "version": "PHP 8.3.6 (cli) (built: Oct 19 2026 15:16:58) (NTS) Copyright (c) The PHP Group Zend Engine v4.3.6, Copyright (c) Zend Technologies with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies"
+                        "version": "PHP 8.3.6 (cli) (built: Nov 18 2026 23:42:07) (NTS) Copyright (c) The PHP Group Zend Engine v4.3.6, Copyright (c) Zend Technologies with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies"
                     },
                     {
                         "executable_sha256": "e50d468e8b0adfb05733f5b87b3cff34829c4a8c1aea50c865aa8bdfe4bb150f",
@@ -58,9 +58,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
+                        "gitCommit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
+                    "uri": "git+https://github.com/strling-lang/strling@bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
                 },
                 {
                     "digest": {
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:php",
+                "invocationId": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702:release:php",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -103,7 +103,7 @@
         },
         {
             "digest": {
-                "sha256": "7a2895234f57e82438eefe3cee07334f979ed1c4f501dbe3297da0399fe10be6"
+                "sha256": "42065db2c51936a97159b37e6ceb7f9747cd6b791bc68ccd641da9b07d64983b"
             },
             "name": "core"
         },

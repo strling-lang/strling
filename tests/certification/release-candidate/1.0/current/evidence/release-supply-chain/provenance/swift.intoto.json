@@ -67,9 +67,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
+                        "gitCommit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
+                    "uri": "git+https://github.com/strling-lang/strling@bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
                 },
                 {
                     "digest": {
@@ -85,7 +85,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:swift",
+                "invocationId": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702:release:swift",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -112,7 +112,7 @@
         },
         {
             "digest": {
-                "sha256": "7a2895234f57e82438eefe3cee07334f979ed1c4f501dbe3297da0399fe10be6"
+                "sha256": "42065db2c51936a97159b37e6ceb7f9747cd6b791bc68ccd641da9b07d64983b"
             },
             "name": "core"
         },

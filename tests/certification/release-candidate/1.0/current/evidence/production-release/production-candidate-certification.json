@@ -4,30 +4,30 @@
         "aggregate": {
             "failed": 0,
             "incomplete": 0,
-            "passed": 124,
+            "passed": 125,
             "status": "waived",
-            "total": 125,
+            "total": 126,
             "unavailable": 0,
             "waived": 1
         },
         "artifact_identities": {
             "product": {
-                "sha256": "68369159d8f1c2966c8d8e947d7ef119a1dd1c370bc92a0e103884b8b118b2d9",
-                "size_bytes": 2425623
+                "sha256": "d6a2b66181ba8fc7d7d35288eaadffaff7a0c7d8c12efecf854036123396ada4",
+                "size_bytes": 2481160
             },
             "product_report": {
-                "sha256": "bb42d72669f64e60bd67c368308af4bca34ffdf29fc4e06efc665042586739e0",
+                "sha256": "bad011e78e3e0424c3b143268a3a1bfe82b41e36b842d3e7f58ad2088d27d7ab",
                 "size_bytes": 1177
             },
             "profile": {
-                "sha256": "83ccc8e361fcfc8cda2b83afb56914a491e3962b2d9004217853697f64077caa",
-                "size_bytes": 1187903
+                "sha256": "d8fb1c507038741ec3d98da643c939cc88b4226ba8011418fc5025e0cd270dab",
+                "size_bytes": 1213983
             }
         },
         "artifacts": {
-            "product": "/var/tmp/strling-publication-d01ac378-certification/artifacts/production-certification/d01ac3785736ad552c90f00b4ca13c0e2e5c9c62/d01ac3785736-20261119T031621Z/product-certification-release.json",
-            "product_report": "/var/tmp/strling-publication-d01ac378-certification/artifacts/production-certification/d01ac3785736ad552c90f00b4ca13c0e2e5c9c62/d01ac3785736-20261119T031621Z/product-certification-release.md",
-            "profile": "/var/tmp/strling-publication-d01ac378-certification/artifacts/production-certification/d01ac3785736ad552c90f00b4ca13c0e2e5c9c62/d01ac3785736-20261119T031621Z/profile-release.json"
+            "product": "/var/tmp/strling-rc4-stage105-release.FIMoeX/source/artifacts/production-certification/bab5a0aaf8d04a437d5c5f1aac3379a3c0511702/bab5a0aaf8d0-20261121T225537Z/product-certification-release.json",
+            "product_report": "/var/tmp/strling-rc4-stage105-release.FIMoeX/source/artifacts/production-certification/bab5a0aaf8d04a437d5c5f1aac3379a3c0511702/bab5a0aaf8d0-20261121T225537Z/product-certification-release.md",
+            "profile": "/var/tmp/strling-rc4-stage105-release.FIMoeX/source/artifacts/production-certification/bab5a0aaf8d04a437d5c5f1aac3379a3c0511702/bab5a0aaf8d0-20261121T225537Z/profile-release.json"
         },
         "certification": {
             "claim_summary": {
@@ -45,18 +45,18 @@
                     "not_applicable": 0,
                     "not_yet_configured": 0,
                     "not_yet_enforceable": 0,
-                    "passed": 124,
+                    "passed": 125,
                     "skipped": 0,
                     "unavailable": 0,
                     "waived": 1
                 },
                 "exit_code": 0,
-                "result_count": 125,
+                "result_count": 126,
                 "status": "waived"
             },
             "evidence_areas": {
                 "adapter-package": {
-                    "passed": 10
+                    "passed": 11
                 },
                 "architecture-governance": {
                     "passed": 7
@@ -90,11 +90,11 @@
                     "passed": 7
                 }
             },
-            "product_evidence_fingerprint": "0c852c96af29e95718100840e0ae2bde6ac7ce40b2949c3bb8729282636d2226",
+            "product_evidence_fingerprint": "2265a1583ee7ef8e66387e4f3c573b5c375fac97407338998540500628ad49e9",
             "product_schema_version": "1.0.0",
             "profile_artifact_schema_version": "2.0.0",
-            "profile_definition_fingerprint": "cb74cea9b780829286c05265f7e6e3b827137cde96934a1ab68a6964496c08f3",
-            "profile_definition_version": "1.33.0",
+            "profile_definition_fingerprint": "805797b84bfc68fad7153ca6ad2a34455212d92ab7cb423b306b6eb9fca6496b",
+            "profile_definition_version": "1.34.0",
             "waiver_references": [
                 "WVR-SEC-VSCE-LICENSE-001"
             ]
@@ -123,7 +123,7 @@
                     "sha256": "c1426544954ea17aa2d006dca0b0c31d641d8fa3a22eeb5e591e2d51bc721b5c"
                 }
             },
-            "disk_free_bytes": 447626899456,
+            "disk_free_bytes": 511852961792,
             "exact_runtime_toolchains": {
                 "manifest_sha256": "c79424081e94168fdb394dfe1f258b0cb1644a6d40e2bbb8d95bd0da37a0ff76",
                 "schema_version": "1.0.0",
@@ -181,7 +181,7 @@
             "preserved_execution_evidence": [
                 {
                     "path": "adversarial-semantic-runtime/evidence.json",
-                    "sha256": "af7d4be5e61ee07e25b89c2780e81e9f3460c9f645a3d53e807c54a3a11a7022",
+                    "sha256": "afb02e680b040b05a46c790a5fc462c9caefd735aca06021156908a5096be3d1",
                     "size_bytes": 26105
                 },
                 {
@@ -390,18 +390,18 @@
                     "size_bytes": 101384
                 },
                 {
-                    "path": "operation-results/c08560c661944496a30bee73a29e0612/result.json",
-                    "sha256": "6afa49ba1e337f0236618386bd06e54bf02d682cf202dc571f7eb10d02927655",
+                    "path": "operation-results/a4e9a162c4674188a836cced0ae29dbc/result.json",
+                    "sha256": "47ec05914e74cef4181c59e38ceab9c2ffdc59d1f988597751ed2b0d215524ce",
                     "size_bytes": 47038
                 },
                 {
-                    "path": "operation-results/c08560c661944496a30bee73a29e0612/stderr.txt",
+                    "path": "operation-results/a4e9a162c4674188a836cced0ae29dbc/stderr.txt",
                     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
                     "size_bytes": 0
                 },
                 {
-                    "path": "operation-results/c08560c661944496a30bee73a29e0612/stdout.txt",
-                    "sha256": "36ca72503c7943fe7cc24da0010a7cab8ada0f0a54ec4a3f68de0cfb2d002551",
+                    "path": "operation-results/a4e9a162c4674188a836cced0ae29dbc/stdout.txt",
+                    "sha256": "bc8965e509eb2861f4e42a33afe71c622cf0d01f5e99369018893ee11e9eac35",
                     "size_bytes": 40874
                 }
             ],
@@ -516,9 +516,9 @@
                         "--format",
                         "{{json .}}"
                     ],
-                    "exit_code": 1,
-                    "stderr": "failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.",
-                    "stdout": "{\"Client\":{\"Version\":\"29.9.3\",\"ApiVersion\":\"1.56\",\"DefaultAPIVersion\":\"1.56\",\"GitCommit\":\"5457199\",\"GoVersion\":\"go1.26.10\",\"Os\":\"windows\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Nov  3 21:46:10 2026\",\"Context\":\"desktop-linux\"},\"Server\":null}"
+                    "exit_code": 0,
+                    "stderr": "",
+                    "stdout": "{\"Client\":{\"Version\":\"29.9.3\",\"ApiVersion\":\"1.56\",\"DefaultAPIVersion\":\"1.56\",\"GitCommit\":\"5457199\",\"GoVersion\":\"go1.26.10\",\"Os\":\"windows\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Nov  3 21:46:10 2026\",\"Context\":\"desktop-linux\"},\"Server\":{\"Platform\":{\"Name\":\"Docker Desktop 4.99.0 (245822)\"},\"Version\":\"29.9.3\",\"ApiVersion\":\"1.56\",\"MinAPIVersion\":\"1.40\",\"Os\":\"linux\",\"Arch\":\"amd64\",\"Components\":[{\"Name\":\"Engine\",\"Version\":\"29.9.3\",\"Details\":{\"ApiVersion\":\"1.56\",\"Arch\":\"amd64\",\"BuildTime\":\"Tue Nov  3 21:41:42 2026\",\"Experimental\":\"false\",\"GitCommit\":\"70efc0e\",\"GoVersion\":\"go1.26.10\",\"KernelVersion\":\"5.15.167.4-microsoft-standard-WSL2\",\"MinAPIVersion\":\"1.40\",\"Module\":\"github.com/moby/moby/v2\",\"ModuleVersion\":\"v2.0.0+unknown\",\"Os\":\"linux\"}},{\"Name\":\"containerd\",\"Version\":\"v2.4.2\",\"Details\":{\"GitCommit\":\"b7a25261e029d68978bbf290df0a62fc819b3c51\"}},{\"Name\":\"runc\",\"Version\":\"1.5.2\",\"Details\":{\"GitCommit\":\"v1.5.2-0-g29dd3dc2\"}},{\"Name\":\"docker-init\",\"Version\":\"0.19.0\",\"Details\":{\"GitCommit\":\"de40ad0\"}}],\"GitCommit\":\"70efc0e\",\"GoVersion\":\"go1.26.10\",\"KernelVersion\":\"5.15.167.4-microsoft-standard-WSL2\",\"BuildTime\":\"2026-11-03T21:41:42.000000000+00:00\"}}"
                 },
                 "dotnet": {
                     "command": [
@@ -627,11 +627,11 @@
                     ],
                     "exit_code": 0,
                     "stderr": "",
-                    "stdout": "PHP 8.3.6 (cli) (built: Oct 19 2026 15:16:58) (NTS)\nCopyright (c) The PHP Group\nZend Engine v4.3.6, Copyright (c) Zend Technologies\n    with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies"
+                    "stdout": "PHP 8.3.6 (cli) (built: Nov 18 2026 23:42:07) (NTS)\nCopyright (c) The PHP Group\nZend Engine v4.3.6, Copyright (c) Zend Technologies\n    with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies"
                 },
                 "python": {
                     "command": [
-                        "/mnt/d/Projects/strling-lang/strling/target/release-packaging/python-env/bin/python3",
+                        "/usr/bin/python3",
                         "--version"
                     ],
                     "exit_code": 0,
@@ -708,7 +708,7 @@
             "storage_capacity": {
                 "contract_fingerprint": "bdaedd6454f2a965a113237ca6513e444dbf5d6dab106814b714b24979a34779",
                 "contract_path": "governance/production-certification-capacity.json",
-                "free_bytes": 447626899456,
+                "free_bytes": 511852961792,
                 "maximum_expected_transient_bytes": 103079215104,
                 "required_free_bytes": 120259084288,
                 "rounded_workspace_envelope_bytes": 34359738368,
@@ -719,7 +719,7 @@
         },
         "failure": null,
         "no_reuse": {
-            "clean_detached_worktree": "/var/tmp/strling-publication-d01ac378-certification/.cert/production-certification/d01ac3785736-20261119T031621Z/source",
+            "clean_detached_worktree": "/var/tmp/strling-rc4-stage105-release.FIMoeX/source/.cert/production-certification/bab5a0aaf8d0-20261121T225537Z/source",
             "final_root_status": "",
             "final_source_status": "",
             "generated_artifacts_recreated": true,
@@ -729,15 +729,15 @@
         "profile": "release",
         "publication_authorized": false,
         "source": {
-            "branch": "dev",
-            "sha": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62",
+            "branch": "",
+            "sha": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
             "status_porcelain": ""
         },
         "status": "passed"
     },
-    "evidence_fingerprint": "e83d71d441e736888bd38ee95d59ae87e288cfb2c3cde4367a471c51fab12a88",
+    "evidence_fingerprint": "125056bc7aafa3bf01b3275613ed14f81786b4e07f9c3c051c5ca500dfd69790",
     "execution_metadata": {
-        "generated_at": "2026-11-19T05:10:33.624513+00:00"
+        "generated_at": "2026-11-22T00:40:37.040670+00:00"
     },
     "schema_version": "1.0.0"
 }

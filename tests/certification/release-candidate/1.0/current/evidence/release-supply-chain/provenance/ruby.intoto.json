@@ -49,7 +49,7 @@
                         "version": "Python 3.12.3"
                     },
                     {
-                        "executable_sha256": "ead53704d7da35c85a28db19070d34e7ecef9461ecf8ae5e9d51ae79125bb731",
+                        "executable_sha256": "104c2acc3bbf6102696bd888ca13f043822545c40a304a881000ab262eb1c40f",
                         "id": "release:ruby:linux-x86_64:ruby",
                         "version": "ruby 3.2.3 (2024-01-18 revision 52bb2ac0a6) [x86_64-linux-gnu]"
                     }
@@ -58,9 +58,9 @@
             "resolvedDependencies": [
                 {
                     "digest": {
-                        "gitCommit": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
+                        "gitCommit": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
                     },
-                    "uri": "git+https://github.com/strling-lang/strling@d01ac3785736ad552c90f00b4ca13c0e2e5c9c62"
+                    "uri": "git+https://github.com/strling-lang/strling@bab5a0aaf8d04a437d5c5f1aac3379a3c0511702"
                 },
                 {
                     "digest": {
@@ -76,7 +76,7 @@
             },
             "metadata": {
                 "finishedOn": "1970-01-01T00:00:00Z",
-                "invocationId": "d01ac3785736ad552c90f00b4ca13c0e2e5c9c62:release:ruby",
+                "invocationId": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702:release:ruby",
                 "startedOn": "1970-01-01T00:00:00Z"
             }
         }
@@ -85,7 +85,7 @@
     "subject": [
         {
             "digest": {
-                "sha256": "bc707b55141de6147a5ff82f84fc4c9869e98cf883e8e517ec4904b435013bb8"
+                "sha256": "d408802be93054e3eaf1a5c912ca5888c87706a79602a6612d008d0f74ec5c6a"
             },
             "name": "bindings/ruby/strling-4.0.3.gem"
         }

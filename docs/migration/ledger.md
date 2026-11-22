@@ -10229,3 +10229,10 @@ the ordinary integration of the six retained development commits and the
 release policy 1.4.0 migration. Development qualification records exact-source
 checks separately from signed complete-product verification and the preserved
 Fourth Edition acceptance.
+
+## RC4 Preview trusted certification
+
+The [RC4 Preview admission and certification record](lab-wasm-rc4-preview-admission.md#rc4-preview-trusted-certification)
+links the exact signed source, preserved evidence and independently verified
+closure. All four hosted integrity jobs passed. The separately governed
+immutable publication request remains pending.

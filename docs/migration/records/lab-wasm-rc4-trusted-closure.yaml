@@ -1,0 +1,95 @@
+record_version: 2.0.0
+title: Archive verified RC4 Preview certification
+status: complete
+objective:
+    Record the authenticated RC4 Preview closure and its separate certification source through
+    the reviewed branch history.
+scope:
+    diff:
+        base: bab5a0aaf8d04a437d5c5f1aac3379a3c0511702
+        head: working-tree
+    allowed_paths:
+        - docs/migration/lab-wasm-rc4-preview-admission.md
+        - docs/migration/ledger.md
+        - docs/migration/records/lab-wasm-rc4-trusted-closure.yaml
+        - governance/change-control.json
+    forbidden_paths:
+        - .github/**
+        - bindings/**
+        - core/**
+        - spec/**
+        - tests/certification/**
+        - governance/*trust.json
+    expected_files:
+        - docs/migration/lab-wasm-rc4-preview-admission.md
+        - docs/migration/ledger.md
+        - docs/migration/records/lab-wasm-rc4-trusted-closure.yaml
+        - governance/change-control.json
+    permitted_generated_changes: []
+    expected_generated_outputs: []
+    required_verification_levels:
+        - contract
+        - quality
+        - certification
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence:
+            - Evidence-only archival record and active-task routing.
+    public_api_change:
+        level: none
+        evidence:
+            - Evidence-only archival record and active-task routing.
+    schema_change:
+        level: none
+        evidence:
+            - Evidence-only archival record and active-task routing.
+    diagnostic_change:
+        level: none
+        evidence:
+            - Evidence-only archival record and active-task routing.
+    target_behavior_change:
+        level: none
+        evidence:
+            - Evidence-only archival record and active-task routing.
+    architecture_change:
+        level: none
+        evidence:
+            - Evidence-only archival record and active-task routing.
+    generated_output_change:
+        level: none
+        evidence:
+            - Evidence-only archival record and active-task routing.
+    documentation_only: false
+    internal_implementation: false
+required_verification:
+    - name: Hosted complete-product integrity
+      command: GitHub certification-integrity.yml workflow_dispatch
+      expected_result: All four read-only verifiers accept the signed evidence snapshot.
+checkpoints:
+    - name: Signed evidence snapshot accepted
+      status: passed
+      evidence:
+          - check: Independent signature and source verification
+            result: passed
+            details: https://github.com/strling-lang/strling/actions/runs/44983451950
+commits: []
+completion:
+    accomplished:
+        - Archived the separately signed RC4 Preview closure and published its source-bound verification
+          record.
+    verified:
+        - All four hosted verification jobs passed in GitHub Actions run 44983451950, attempt 1.
+    behavior_changed: The source ledger records a new RC4 Preview certification.
+    intentional_behavior_changes: []
+    preserved_behavior:
+        - The published STRling 4.0.3 certification and the compiler, trust, and artifact identities retain
+          their existing scopes.
+    transitional_architecture: []
+    deferred_work:
+        - Immutable RC4 Preview publication requires P20-T05 approval and its reviewed protected run.
+readiness:
+    status: READY WITH RECORDED CARRY-FORWARD
+    next_task: Review the separately scoped P20-T05 publication request.
+    rationale: Independent immutable and hosted verification accepted the exact RC4 closure.

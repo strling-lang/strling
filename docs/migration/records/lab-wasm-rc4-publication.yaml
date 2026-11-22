@@ -1,0 +1,93 @@
+record_version: 2.0.0
+title: Prepare the protected immutable RC4 Preview release route
+status: in_progress
+objective: Bind the separately authorized RC4 Preview publication to the existing trusted certificate, frozen bytes, exact GitHub coordinate and one protected workflow attempt.
+scope:
+    diff:
+        base: 8ab465766e0340ae55f3b2616803d8f3d798eefa
+        head: working-tree
+    allowed_paths:
+        - .github/workflows/rc4-preview-publication.yml
+        - docs/migration/lab-wasm-rc4-publication.md
+        - docs/migration/records/lab-wasm-rc4-publication.yaml
+        - governance/change-control.json
+        - governance/lab-wasm-rc4-publication.json
+        - tooling/lab_wasm_rc4_publication.py
+        - tooling/tests/test_lab_wasm_rc4_publication.py
+    forbidden_paths:
+        - bindings/**
+        - core/**
+        - spec/**
+        - tests/certification/**
+        - .github/workflows/cd.yml
+        - .github/workflows/certification-integrity.yml
+        - governance/release-policy.json
+        - governance/lab-wasm-preview.json
+        - governance/*trust.json
+    expected_files:
+        - .github/workflows/rc4-preview-publication.yml
+        - docs/migration/lab-wasm-rc4-publication.md
+        - docs/migration/records/lab-wasm-rc4-publication.yaml
+        - governance/change-control.json
+        - governance/lab-wasm-rc4-publication.json
+        - tooling/lab_wasm_rc4_publication.py
+        - tooling/tests/test_lab_wasm_rc4_publication.py
+    permitted_generated_changes: []
+    expected_generated_outputs: []
+    required_verification_levels: [contract, unit, integration, quality]
+    bounded_exemptions: []
+change_classification:
+    semantic_change:
+        level: none
+        evidence: [The release route uses the existing frozen Preview artifact.]
+    public_api_change:
+        level: none
+        evidence: [The certified product and RC4 ABI stay frozen.]
+    schema_change:
+        level: none
+        evidence:
+            [
+                The release specification and exact approval are scoped to this route.,
+            ]
+    diagnostic_change:
+        level: none
+        evidence: [Compiler diagnostics retain their existing implementation.]
+    target_behavior_change:
+        level: none
+        evidence: [All target behavior is bound to existing certified bytes.]
+    architecture_change:
+        level: none
+        evidence:
+            [
+                The route follows existing source,
+                evidence and owner approval boundaries.,
+            ]
+    generated_output_change:
+        level: none
+        evidence:
+            [
+                The checked-in product and certification outputs retain their identities.,
+            ]
+    documentation_only: false
+    internal_implementation: true
+required_verification:
+    - name: RC4 route and mutation guards
+      command: python -m unittest tooling.tests.test_lab_wasm_rc4_publication
+      expected_result: Wrong subjects, protected run or attempt, coordinates and asset inventory fail closed.
+    - name: Independent release plan
+      command: GitHub rc4-preview-publication.yml workflow_dispatch with default input
+      expected_result: The immutable reader accepts the signed source and the exact plan has no publication authority.
+checkpoints:
+    - name: Existing certificate and repository immutability
+      status: passed
+      evidence:
+          - check: Original immutable verifier and GitHub administrator readback
+            result: passed
+            details: Reauthenticated both signatures and the frozen Wasm and verified repository-scoped immutability enabled.
+    - name: Exact protected publication review
+      status: in_progress
+      evidence:
+          - check: Preparation boundary
+            result: not_run
+            details: The exact run awaits its own affirmative Program Owner authorization before a draft or any asset upload.
+commits: []

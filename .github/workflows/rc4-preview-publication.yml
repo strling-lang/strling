@@ -1,0 +1,111 @@
+name: RC4 Preview immutable release
+
+on:
+    workflow_dispatch:
+        inputs:
+            request_review:
+                description: Queue the exact run for separate Program Owner review
+                type: boolean
+                required: true
+                default: false
+
+permissions:
+    contents: read
+
+concurrency:
+    group: strling-lab-wasm-rc4-immutable-publication
+    cancel-in-progress: false
+
+jobs:
+    plan:
+        name: Verify signed Preview and reserve no public coordinate
+        if: github.repository == 'strling-lang/strling' && github.ref == 'refs/heads/main'
+        runs-on: ubuntu-24.04
+        timeout-minutes: 12
+        steps:
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ github.workflow_sha }}
+                  path: workflow
+                  persist-credentials: false
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: 59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0
+                  path: trusted
+                  persist-credentials: false
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: c67080f17b0755a32c0a18dbb784fb623b5611ad
+                  path: evidence
+                  fetch-depth: 0
+                  persist-credentials: false
+            - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+              with:
+                  python-version: "3.12.10"
+            - name: Verify and record the exact authorization proposal
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  set -euo pipefail
+                  python -m pip install jsonschema==4.10.3 PyYAML==6.0.1
+                  (cd workflow && python -m unittest tooling.tests.test_lab_wasm_rc4_publication)
+                  python -I trusted/tooling/candidate_integrity.py \
+                    --repository-root evidence --trust-root trusted \
+                    --bundle evidence/tests/certification/release-candidate/1.0/current \
+                    --json > certification.json
+                  python -I workflow/tooling/lab_wasm_rc4_publication.py plan \
+                    --evidence-root evidence --verification-receipt certification.json --live | tee rc4-publication-plan.json
+            - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+              with:
+                  name: rc4-publication-plan-${{ github.run_id }}-${{ github.run_attempt }}
+                  path: |
+                      rc4-publication-plan.json
+                      certification.json
+                  if-no-files-found: error
+                  retention-days: 30
+
+    authorize:
+        name: Require the exact recorded Program Owner decision
+        if: inputs.request_review
+        needs: [plan]
+        runs-on: ubuntu-24.04
+        timeout-minutes: 5
+        environment: release
+        permissions:
+            actions: read
+            contents: read
+        outputs:
+            approved: ${{ steps.approval.outputs.approved }}
+        steps:
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ github.workflow_sha }}
+                  persist-credentials: false
+            - name: Verify the protected environment decision
+              id: approval
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  RC4_ENVIRONMENT: release
+              run: python -I tooling/lab_wasm_rc4_publication.py authorize
+
+    publish:
+        name: Publish only the exact approved immutable Preview draft
+        if: needs.authorize.outputs.approved == 'true'
+        needs: [authorize]
+        runs-on: ubuntu-24.04
+        timeout-minutes: 25
+        environment: release
+        permissions:
+            actions: read
+            contents: write
+        steps:
+            - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+              with:
+                  ref: ${{ github.workflow_sha }}
+                  persist-credentials: false
+            - name: Verify the decision again, stage the exact bytes, and publish once
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  RC4_ENVIRONMENT: release
+                  RC4_IMMUTABILITY_READER: ${{ secrets.RC4_IMMUTABILITY_READER }}
+              run: python -I tooling/lab_wasm_rc4_publication.py publish

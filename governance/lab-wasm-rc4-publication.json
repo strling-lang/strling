@@ -1,0 +1,54 @@
+{
+    "repository": "strling-lang/strling",
+    "owner": "TheCyberLocal",
+    "environment": "release",
+    "tag": "lab-wasm-v0.1.0-rc.4",
+    "package": "strling-lab-wasm",
+    "version": "0.1.0-rc.4",
+    "protocol": "strling.lab-compiler-tools@1.0.0-rc.1",
+    "adapter_source": "a13009516b81d4acebf0cba6acf9a37877b41d58",
+    "adapter_tree": "5602a5395bcf1962625f836071d720912dc43027",
+    "certified_source": "bab5a0aaf8d04a437d5c5f1aac3379a3c0511702",
+    "closure_commit": "c67080f17b0755a32c0a18dbb784fb623b5611ad",
+    "certified_root": "95753563a98e1473fc065fa0256f058075ee702bf3706f661b154dccc9583a76",
+    "trusted_verifier": "59f62e68ed72475b5cceb8ee5c8e80844ee3e2b0",
+    "hosted_certification_run": "44983451950",
+    "hosted_certification_attempt": "1",
+    "source_policies": {
+        "governance/lab-wasm-preview.json": "21a8631017c83b78ae96b9339d49861193ffbcd3018201126ca03081e328f40b",
+        "governance/release-policy.json": "b0411e39216de5f998d63bdccc603a28f20bb89bc746d6190085a985a36b8bff",
+        "governance/release-certification-trust.json": "21a3c0ce98eb24d9048bff16fffb43cdd9c2027ce0facab40aab2fb860f559cf",
+        "governance/release-candidate-certification-trust.json": "93a141826a65065d138a0c8b88615ca55ceb40a118dad8b1ab3cc448e285c7b2",
+        "tests/certification/release-supply-chain/1.0/manifest.json": "ae5a45bc260b496a508d6705a58da2291318bb6cf89fb27c350c72cccc2e5285"
+    },
+    "assets": {
+        "strling_lab_wasm.wasm": {
+            "bytes": 2548656,
+            "sha256": "266f3167537a40722682f436729468795a1672e3d277e5dac9237bd9c04d0181"
+        },
+        "SHA256SUMS": {
+            "bytes": 89,
+            "sha256": "5714612cfcf9aff78c367f766a82103bb95ee09b8c9446183bdac6a12a17dabe"
+        },
+        "draft-sbom.spdx.json": {
+            "bytes": 35175,
+            "sha256": "86582d8f740bc7f5fcf65c0b3a149ac7ff57f4811e24c1c940656231c4dc6d37"
+        },
+        "unsigned-provenance.json": {
+            "bytes": 1305,
+            "sha256": "a99bd7854ef3af518881c1f265c575dfbc6a2f7cb769d0fe39318b33450aa1bd"
+        },
+        "rebuild-1-receipt.json": {
+            "bytes": 9376,
+            "sha256": "4cc7cc0d12af1a0c12ea0c772743c7d02bf4f164766aa26a17f4f7fa1a09181e"
+        },
+        "rebuild-2-receipt.json": {
+            "bytes": 9376,
+            "sha256": "4cc7cc0d12af1a0c12ea0c772743c7d02bf4f164766aa26a17f4f7fa1a09181e"
+        },
+        "rc4-certification-attestation.json": {
+            "bytes": 63353,
+            "sha256": "9ed60971bc08247b2f207864b3a912ca0f490a0a644c5d75e1670368a89614fa"
+        }
+    }
+}
